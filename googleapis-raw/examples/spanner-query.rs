@@ -3,25 +3,17 @@ use std::sync::Arc;
 
 use futures::Future;
 use googleapis_raw::spanner::v1::{
-    spanner::CreateSessionRequest, spanner::ExecuteSqlRequest, spanner_grpc::SpannerClient,
+    spanner::{CreateSessionRequest, ExecuteSqlRequest},
+    spanner_grpc::SpannerClient,
 };
 use grpcio::{CallOption, ChannelBuilder, ChannelCredentials, EnvBuilder, MetadataBuilder};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    // Mozilla's Spanner instance configuration.
-    let project = "mozilla-rust-sdk-dev";
-    let instance = "mozilla-spanner-dev";
-    let database = "mydb";
+    // An example database inside Mozilla's Spanner instance.
+    let database = "projects/mozilla-rust-sdk-dev/instances/mozilla-spanner-dev/databases/mydb";
 
     // Google Cloud configuration.
     let endpoint = "spanner.googleapis.com:443";
-    let db_name = "".to_string()
-        + "projects/"
-        + project
-        + "/instances/"
-        + instance
-        + "/databases/"
-        + database;
 
     // Set up the gRPC environment.
     let env = Arc::new(EnvBuilder::new().build());
@@ -36,9 +28,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Connect to the instance and create a Spanner session.
     let mut req = CreateSessionRequest::new();
-    req.set_database(db_name.to_string());
+    req.set_database(database.to_string());
     let mut meta = MetadataBuilder::new();
-    meta.add_str("google-cloud-resource-prefix", &db_name)?;
+    meta.add_str("google-cloud-resource-prefix", database)?;
     meta.add_str("x-goog-api-client", "googleapis-rs")?;
     let opt = CallOption::default().headers(meta.build());
     let session = client.create_session_opt(&req, opt)?;
