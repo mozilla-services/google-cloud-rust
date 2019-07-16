@@ -3,41 +3,51 @@
 set -e
 cd "$(dirname "$0")"
 
-if [[ $# -eq 0 ]] ; then
-    echo "Use at least one of the following arguments:"
-    echo "  - spanner"
+if ! [[ -x "$(command -v grpc_rust_plugin)" ]]; then
+    echo "Error: grpc_rust_plugin was not found"
+    echo
+    echo "To install, run: cargo install grpcio-compiler"
     exit 1
 fi
 
-for service in "$@"; do
-    case "$service" in
-        spanner)
-            version=v1
-            dir=$PWD/src/$service/$version
-            mkdir -p $dir
+echo "Pulling git submodules"
+git submodule update --init --recursive
 
-            for proto in `find grpc/third_party/googleapis/google/$service/$version/*.proto`; do
-                protoc \
-                    --rust_out=$dir \
-                    --grpc_out=$dir \
-                    --plugin=protoc-gen-grpc=`which grpc_rust_plugin` \
-                    --proto_path=grpc/third_party/googleapis \
-                    $proto
-            done
+apis=grpc/third_party/googleapis
 
-            protoc \
-                --rust_out=$dir \
-                --grpc_out=$dir \
-                --plugin=protoc-gen-grpc=`which grpc_rust_plugin` \
-                --proto_path=grpc/src/proto/grpc/testing \
-                grpc/src/proto/grpc/testing/empty.proto
-            ;;
+proto_files="
+grpc/src/proto/grpc/testing/empty.proto
+"
 
-        *)
-            echo "Unrecognized argument: $service"
-            exit 1
-            ;;
-    esac
+for proto in $proto_files; do
+    echo "Processing: $proto"
+    protoc \
+        --rust_out=$PWD/src \
+        --grpc_out=$PWD/src \
+        --plugin=protoc-gen-grpc=`which grpc_rust_plugin` \
+        --proto_path=grpc/src/proto/grpc/testing \
+        $proto
+done
 
-    echo "Bindings written into: $dir"
+proto_dirs="
+spanner/v1
+spanner/admin/instance/v1
+spanner/admin/database/v1
+iam/v1
+longrunning
+rpc
+"
+
+for dir in $proto_dirs; do
+    mkdir -p "$PWD/src/$dir"
+
+    for proto in `find $apis/google/$dir/*.proto`; do
+        echo "Processing: $proto"
+        protoc \
+            --rust_out="$PWD/src/$dir" \
+            --grpc_out="$PWD/src/$dir" \
+            --plugin=protoc-gen-grpc="`which grpc_rust_plugin`" \
+            --proto_path="$apis" \
+            $proto
+    done
 done
