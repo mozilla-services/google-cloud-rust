@@ -1,18 +1,13 @@
-# Generate Rust bindings from `.proto` files
+# googleapis-raw
 
-**NOTE:** You do not need to do this. Rust sources have already been generated, but if
-you want to regenerate them, follow these steps.
 
-Install protobuf and gRPC compilers:
+## Generating Rust bindings from `.proto` files
 
-```
-cargo install protobuf-codegen
-cargo install grpcio-compiler
-```
+**NOTE:** You do not need to do this. Rust sources have already been generated and are
+available in this repository.
 
-Pull `.proto` files and generate Rust bindings:
+But if you want to generate Rust sources from scratch, run:
 
 ```
-git submodule update --init --recursive
-./generate.sh spanner
+./generate.sh
 ```
