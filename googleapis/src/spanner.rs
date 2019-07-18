@@ -17,8 +17,14 @@ pub struct Client {
 impl Client {
     /// Creates a new Spanner client.
     ///
-    /// The database argument should be formatted as
-    /// `projects/PROJECT_ID/instances/INSTANCE_ID/databases/DATABASE_ID`.
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use googleapis::spanner;
+    ///
+    /// let db = "projects/my_project/instances/my_instance/databases/my_database";
+    /// let client = spanner::Client::new(db);
+    /// ```
     pub fn new(database: &str) -> crate::Result<Client> {
         let database = database.to_string();
         let endpoint = "spanner.googleapis.com:443";
