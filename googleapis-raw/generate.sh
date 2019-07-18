@@ -30,12 +30,19 @@ for proto in $proto_files; do
 done
 
 proto_dirs="
-spanner/v1
-spanner/admin/instance/v1
-spanner/admin/database/v1
+bigtable/admin/cluster/v1
+bigtable/admin/table/v1
+bigtable/admin/v2
+bigtable/v1
+bigtable/v2
 iam/v1
 longrunning
+pubsub/v1
+pubsub/v1beta2
 rpc
+spanner/admin/database/v1
+spanner/admin/instance/v1
+spanner/v1
 "
 
 for dir in $proto_dirs; do

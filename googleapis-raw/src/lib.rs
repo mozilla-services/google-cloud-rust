@@ -1,5 +1,7 @@
 #![allow(bare_trait_objects)]
 
+pub mod bigtable;
+pub mod pubsub;
 pub mod spanner;
 
 pub(crate) mod empty;
