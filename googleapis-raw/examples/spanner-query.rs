@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Connect to the instance and create a Spanner session.
     let mut req = CreateSessionRequest::new();
-    req.set_database(database.to_string());
+    req.database = database.to_string();
     let mut meta = MetadataBuilder::new();
     meta.add_str("google-cloud-resource-prefix", database)?;
     meta.add_str("x-goog-api-client", "googleapis-rs")?;
@@ -37,8 +37,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Prepare a SQL command to execute.
     let mut req = ExecuteSqlRequest::new();
-    req.set_session(session.get_name().to_string());
-    req.set_sql("select * from planets".to_string());
+    req.session = session.get_name().to_string();
+    req.sql = "select * from planets".to_string();
 
     // Execute the command synchronously.
     let out = client.execute_sql(&req)?;
