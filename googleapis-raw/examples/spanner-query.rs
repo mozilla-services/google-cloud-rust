@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::sync::Arc;
 
-use futures::Future;
+use futures::prelude::*;
 use googleapis_raw::spanner::v1::{
     spanner::{CreateSessionRequest, ExecuteSqlRequest},
     spanner_grpc::SpannerClient,
