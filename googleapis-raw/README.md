@@ -12,10 +12,11 @@ cargo doc --open
 
 ## Examples
 
-To run a Spanner example, run:
+To run hand-written examples, try:
 
 ```
-cargo run --example spanner
+cargo run --example spanner-query
+cargo run --example bigtable-query
 ```
 
 ## Setting up Google Cloud SDK
