@@ -53,5 +53,8 @@ Google APIs and their `.proto` files:
 Golang clients:
 
 * [Spanner](https://github.com/googleapis/google-cloud-go/tree/master/spanner)
+  ([docs](https://godoc.org/cloud.google.com/go/spanner))
 * [Bigtable](https://github.com/googleapis/google-cloud-go/tree/master/bigtable)
+  ([docs](https://godoc.org/cloud.google.com/go/bigtable))
 * [Pub/Sub](https://github.com/googleapis/google-cloud-go/tree/master/pubsub)
+  ([docs](https://godoc.org/cloud.google.com/go/pubsub))
