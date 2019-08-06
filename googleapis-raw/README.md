@@ -43,6 +43,14 @@ But if you still want to regenerate them from scratch, run:
 ./generate.sh
 ```
 
+## Google Cloud Console
+
+Links to Google Cloud Console for our testing environment:
+
+* [Spanner Console](https://console.cloud.google.com/spanner/instances?project=mozilla-rust-sdk-dev)
+* [Bigtable Console](https://console.cloud.google.com/bigtable/instances?project=mozilla-rust-sdk-dev)
+* [Pub/Sub Console](https://console.cloud.google.com/cloudpubsub/topic/detail/mytopic?project=mozilla-rust-sdk-dev)
+
 ## References
 
 Google APIs and their `.proto` files:
@@ -53,9 +61,9 @@ Google APIs and their `.proto` files:
 
 Golang clients:
 
-* [Spanner](https://github.com/googleapis/google-cloud-go/tree/master/spanner)
+* [Spanner client](https://github.com/googleapis/google-cloud-go/tree/master/spanner)
   ([docs](https://godoc.org/cloud.google.com/go/spanner))
-* [Bigtable](https://github.com/googleapis/google-cloud-go/tree/master/bigtable)
+* [Bigtable client](https://github.com/googleapis/google-cloud-go/tree/master/bigtable)
   ([docs](https://godoc.org/cloud.google.com/go/bigtable))
-* [Pub/Sub](https://github.com/googleapis/google-cloud-go/tree/master/pubsub)
+* [Pub/Sub client](https://github.com/googleapis/google-cloud-go/tree/master/pubsub)
   ([docs](https://godoc.org/cloud.google.com/go/pubsub))
