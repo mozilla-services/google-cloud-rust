@@ -41,3 +41,17 @@ But if you still want to regenerate them from scratch, run:
 ```
 ./generate.sh
 ```
+
+## References
+
+Google APIs and their `.proto` files:
+
+* [Spanner](https://github.com/googleapis/googleapis/tree/master/google/spanner)
+* [Bigtable](https://github.com/googleapis/googleapis/tree/master/google/bigtable)
+* [Pub/Sub](https://github.com/googleapis/googleapis/tree/master/google/pubsub)
+
+Golang clients:
+
+* [Spanner](https://github.com/googleapis/google-cloud-go/tree/master/spanner)
+* [Bigtable](https://github.com/googleapis/google-cloud-go/tree/master/bigtable)
+* [Pub/Sub](https://github.com/googleapis/google-cloud-go/tree/master/pubsub)
