@@ -32,6 +32,7 @@ As a final check:
 
 * Run `gcloud info` to see the SDK configuration.
 * Run `echo $GOOGLE_APPLICATION_CREDENTIALS` to verify that the credentials have been set up.
+* Run `gcloud auth login` to login into Google Cloud
 
 ## Generating Rust bindings from `.proto` files
 

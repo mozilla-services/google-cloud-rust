@@ -1,0 +1,13 @@
+version: "3"
+services:
+  rust:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
+    volumes:
+      - ..:/googleapis-rs
+    tty: true
+    stdin_open: true
+    working_dir: /googleapis-rs
