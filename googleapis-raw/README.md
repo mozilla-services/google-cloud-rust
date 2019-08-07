@@ -43,6 +43,18 @@ But if you still want to regenerate them from scratch, run:
 ./generate.sh
 ```
 
+This requires the installation of [protobuf](https://google.github.io/proto-lens/installing-protoc.html) library
+and [protoc-gen-rust](https://github.com/stepancheg/rust-protobuf/tree/master/protobuf-codegen), a plugin
+for protobuf. The installed protobuf version and the protobuf crate should have the same version, e.g. `2.7.0`.
+Installation of the protoc-gen-rust plugin is done via `cargo`:
+
+```
+cargo install protobuf-codegen
+```
+
+Make sure the `protoc-gen-rust` binary is available in your `$PATH` env variable.
+
+
 ## Google Cloud Console
 
 Links to Google Cloud Console for our testing environment:
