@@ -34,6 +34,10 @@ As a final check:
 * Run `echo $GOOGLE_APPLICATION_CREDENTIALS` to verify that the credentials have been set up.
 * Run `gcloud auth login` to login into Google Cloud
 
+There is Docker setup available that installs all necessary tools, libraries, see the [README](../docker/README.md)
+inside the `./docker` folder.
+
+
 ## Generating Rust bindings from `.proto` files
 
 **NOTE:** You do not need to do this step. Rust bindings are already included in this repository.
