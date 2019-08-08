@@ -2,11 +2,22 @@
 use std::error::Error;
 use std::sync::Arc;
 use std::collections::HashMap;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use protobuf::well_known_types::Duration;
+use protobuf::{
+    RepeatedField,
+};
 
 use futures::prelude::*;
 use googleapis_raw::empty::Empty;
+use googleapis_raw::bigtable::v2::{
+    bigtable::MutateRowsRequest,
+    bigtable::MutateRowsRequest_Entry,
+    bigtable_grpc::BigtableClient,
+    data::Mutation,
+    data::Mutation_SetCell,
+};
 use googleapis_raw::bigtable::admin::v2::{
     bigtable_instance_admin::GetClusterRequest,
     bigtable_table_admin::CreateTableRequest,
@@ -26,6 +37,12 @@ use grpcio::{
     ClientUnaryReceiver,
     EnvBuilder,
 };
+
+fn timestamp() -> u128 {
+    let start = SystemTime::now();
+    let time = start.duration_since(UNIX_EPOCH).expect("Failed to fetch timestamp");
+    time.as_micros()
+}
 
 /// Create a new channel used for the different types of clients
 fn connect(endpoint: &str) -> Channel {
@@ -99,6 +116,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     // The table name
     let table_name = String::from("projects/mozilla-rust-sdk-dev/instances/mozilla-rust-sdk/tables/hello-world");
 
+    let column_family_id = "cf1";
+
     // Create a Bigtable client.
     let channel = connect(admin_endpoint);
     let client = BigtableInstanceAdminClient::new(channel.clone());
@@ -122,7 +141,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut column_family = ColumnFamily::new();
     column_family.set_gc_rule(gc_rule);
     let mut hash_map = HashMap::new();
-    hash_map.insert("cf1".to_string(), column_family);
+    hash_map.insert(column_family_id.to_string(), column_family);
     let mut table = Table::new();
     table.set_column_families(hash_map);
     match create_table(&admin_client, &instance_id, &table_name, table) {
@@ -130,26 +149,45 @@ fn main() -> Result<(), Box<dyn Error>> {
         Err(error) => println!("  failed to created table: {}", error),
     }
 
+    // insert entries into new table
+    println!("Insert entries into table");
+
     let greetings = vec!["Hello World!", "Hello Cloud!", "Hello Rust!"];
+    let mut mutation_requests = Vec::new();
+    let column = "greeting";
     for (i, greeting) in greetings.iter().enumerate() {
         let row_key = format!("greeting{}", i);
+
+        let mut set_cell = Mutation_SetCell::new();
+        set_cell.set_column_qualifier(column.to_string().into_bytes());
+        set_cell.set_timestamp_micros(-1);
+        set_cell.set_value(greeting.to_string().into_bytes());
+        set_cell.set_family_name(column_family_id.to_string());
+
+        let mut mutation = Mutation::new();
+        mutation.set_set_cell(set_cell);
+
+        let mut request = MutateRowsRequest_Entry::new();
+        request.set_row_key(row_key.into_bytes());
+        request.set_mutations(RepeatedField::from_vec(vec![mutation]));
+
+        mutation_requests.push(request);
     }
 
-/*
-print('Writing some greetings to the table.')
-    greetings = ['Hello World!', 'Hello Cloud Bigtable!', 'Hello Python!']
-    rows = []
-    column = 'greeting'.encode()
-    for i, value in enumerate(greetings):
-        row_key = 'greeting{}'.format(i).encode()
-        row = table.row(row_key)
-        row.set_cell(column_family_id,
-                     column,
-                     value,
-                     timestamp=datetime.datetime.utcnow())
-        rows.append(row)
-    table.mutate_rows(rows)
-*/
+    let channel = connect(endpoint);
+    let client = BigtableClient::new(channel.clone());
+    let mut request = MutateRowsRequest::new();
+    request.set_table_name(table_name.to_string());
+    request.set_entries(RepeatedField::from_vec(mutation_requests));
+
+    // apply changes and check responses
+    let response = client.mutate_rows(&request)?.collect().into_future().wait()?;
+    for response in response.iter() {
+        for entry in response.get_entries().iter() {
+            let status = entry.get_status();
+            println!("  entry index: {}, status: {} - {}", entry.get_index(), status.code, status.message);
+        }
+    }
 
     // display all tables, should include new table
     list_tables(&admin_client, &instance_id);
