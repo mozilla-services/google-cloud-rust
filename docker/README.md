@@ -21,5 +21,6 @@ this starts a shell in the container. The project repository is mounted into the
 
 ## Google Authentication
 
-In order to run all examples inside the Docker container, the setup requires the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to be set, pointing to the Google credentials file. An alternative is to create an `.env` file inside the `./docker` folder, containing the variable with the file path.
-When building the container this file is then copied into the Docker image and the env variable points to it.
+In order to run all examples inside the Docker container, the setup requires the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to be set, pointing to the Google credentials file. For this the file `files/credentials.json` is copied into the Docker image.
+Therefore copy the credentials file into this location to make the credentials available in the image. **Note**, this file
+is not under version control.

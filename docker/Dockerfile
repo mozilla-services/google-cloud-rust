@@ -23,7 +23,8 @@ RUN curl -OL https://chromium.googlesource.com/external/github.com/google/protob
 RUN curl -s https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | tar -v -C /usr/local -xz
 ENV PATH $PATH:/usr/local/go/bin
 
-COPY ${GOOGLE_APPLICATION_CREDENTIALS} /root/credentials.json
+# copy Google credentials configuration and set env var
+COPY files/credentials.json /root/credentials.json
 ENV GOOGLE_APPLICATION_CREDENTIALS /root/credentials.json
 
 WORKDIR /googleapis-rs
