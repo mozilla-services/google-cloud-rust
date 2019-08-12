@@ -32,6 +32,11 @@ As a final check:
 
 * Run `gcloud info` to see the SDK configuration.
 * Run `echo $GOOGLE_APPLICATION_CREDENTIALS` to verify that the credentials have been set up.
+* Run `gcloud auth login` to login into Google Cloud
+
+There is Docker setup available that installs all necessary tools, libraries, see the [README](../docker/README.md)
+inside the `./docker` folder.
+
 
 ## Generating Rust bindings from `.proto` files
 
@@ -42,6 +47,18 @@ But if you still want to regenerate them from scratch, run:
 ```
 ./generate.sh
 ```
+
+This requires the installation of [protobuf](https://google.github.io/proto-lens/installing-protoc.html) library
+and [protoc-gen-rust](https://github.com/stepancheg/rust-protobuf/tree/master/protobuf-codegen), a plugin
+for protobuf. The installed protobuf version and the protobuf crate should have the same version, e.g. `2.7.0`.
+Installation of the protoc-gen-rust plugin is done via `cargo`:
+
+```
+cargo install protobuf-codegen
+```
+
+Make sure the `protoc-gen-rust` binary is available in your `$PATH` env variable.
+
 
 ## Google Cloud Console
 
