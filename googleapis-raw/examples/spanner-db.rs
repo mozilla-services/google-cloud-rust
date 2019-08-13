@@ -2,7 +2,6 @@
 use std::error::Error;
 use std::sync::Arc;
 use std::time::{Duration};
-use futures::prelude::*;
 use grpcio::{
     CallOption,
     Channel,
@@ -21,6 +20,8 @@ use googleapis_raw::spanner::v1::{
     spanner::CreateSessionRequest,
     spanner::Session,
     transaction::Transaction,
+    transaction::TransactionOptions,
+    transaction::TransactionOptions_ReadWrite,
     spanner_grpc::SpannerClient,
 };
 use googleapis_raw::longrunning::operations::{
@@ -173,7 +174,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let endpoint = "spanner.googleapis.com";
 
     // global project_id
-    let project_id = "projects/mozilla-rust-sdk-dev";
+    let _project_id = "projects/mozilla-rust-sdk-dev";
     // spanner instance id
     let instance_id = "projects/mozilla-rust-sdk-dev/instances/mozilla-spanner-dev";
     // database name
@@ -192,11 +193,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     // insert data into database by using a transaction
     let client = SpannerClient::new(channel.clone());
     let mut request = BeginTransactionRequest::new();
+    let mut read_write = TransactionOptions::new();
+    read_write.set_read_write(TransactionOptions_ReadWrite::new());
     request.set_session(session.get_name().to_string());
+    request.set_options(read_write);
     let transaction = client.begin_transaction(&request)?;
 
     // the list of singers to add
-    let columns = vec!["SingerId", "FirstName", "LastName"];
+    let columns = vec!["SingerId".to_string(), "FirstName".to_string(), "LastName".to_string()];
     let singers = vec![
         Singer{ id: 1, first_name: "Marc".to_string(),     last_name: "Richards".to_string() },
         Singer{ id: 2, first_name: "Catalina".to_string(), last_name: "Smith".to_string() },
@@ -205,32 +209,40 @@ fn main() -> Result<(), Box<dyn Error>> {
         Singer{ id: 5, first_name: "David".to_string(),    last_name: "Lomond".to_string() },
     ];
 
-    // create a suitable mutation with all values
-    let mutation_write = Mutation_Write::new();
-    mutation_write.set_table("Singers".to_string());
-    mutation_write.set_columns(columns.iter().map(|c| c.to_string()).collect());
-
     // collect all values
-    let ids = singers.iter().map(|s| s.id).collect();
-    let first_names = singers.iter().map(|s| s.first_name).collect();
-    let last_names = singers.iter().map(|s| s.last_name).collect();
+    let mut list_values = Vec::new();
+    for singer in singers {
+        let mut id = Value::new();
+        id.set_string_value(singer.id.to_string());
+        let mut first_name = Value::new();
+        first_name.set_string_value(singer.first_name.clone());
+        let mut last_name = Value::new();
+        last_name.set_string_value(singer.last_name.clone());
 
-    let id_values = ListValue::new();
-    let first_name_values = ListValue::new();
-    let last_name_values = ListValue::new();
-    id_values.set_values(RepeatedField::from_vec(ids));
-    first_name_values.set_values(RepeatedField::from_vec(ids));
-    last_name_values.set_values(RepeatedField::from_vec(ids));
-    mutation_write.set_values(RepeatedField::from_vec(vec![id_values, first_name_values, last_name_values]));
+        let mut list = ListValue::new();
+        list.set_values(RepeatedField::from_vec(vec![id, first_name, last_name]));
+        list_values.push(list);
+    }
+
+    // create a suitable mutation with all values
+    println!("Preparing write mutation to add singers");
+    let mut mutation_write = Mutation_Write::new();
+    mutation_write.set_table("Singers".to_string());
+    mutation_write.set_columns(RepeatedField::from_vec(columns));
+    mutation_write.set_values(RepeatedField::from_vec(list_values));
+    println!("Mutation write object");
+    dbg!(mutation_write.clone());
 
     // finally commit to database
-    let commit = CommitRequest::new();
+    println!("Commit data to database {}", database_name);
+    let mut commit = CommitRequest::new();
     commit.set_transaction_id(transaction.get_id().to_vec());
     commit.set_session(session.get_name().to_string());
-    let mutation = Mutation::new();
+    let mut mutation = Mutation::new();
     mutation.set_insert_or_update(mutation_write);
     commit.set_mutations(RepeatedField::from_vec(vec![mutation]));
-    client.commit(&commit);
+    let response = client.commit(&commit)?;
+    dbg!(response);
 
     // delete database
     // drop_database(&channel, database_name)?.wait()?;
