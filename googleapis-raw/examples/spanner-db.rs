@@ -20,23 +20,26 @@ use googleapis_raw::spanner::admin::database::v1::{
     spanner_database_admin::GetDatabaseRequest,
     spanner_database_admin_grpc::DatabaseAdminClient,
 };
+use protobuf::RepeatedField;
 
-const CREATE_STATEMENTS: &str =
+const CREATE_DATABASE: &str =
+    "CREATE DATABASE music";
+
+const CREATE_SINGER_TABLE: &str =
     "CREATE TABLE Singers (
       SingerId   INT64 NOT NULL,
       FirstName  STRING(1024),
       LastName   STRING(1024),
       SingerInfo BYTES(MAX),
-    ) PRIMARY KEY (SingerId)
-    ;
-    CREATE TABLE Albums (
+    ) PRIMARY KEY (SingerId)";
+
+const CREATE_ALBUMS_TABLE: &str =
+    "CREATE TABLE Albums (
       SingerId     INT64 NOT NULL,
       AlbumId      INT64 NOT NULL,
       AlbumTitle   STRING(MAX),
     ) PRIMARY KEY (SingerId, AlbumId),
-      INTERLEAVE IN PARENT Singers ON DELETE CASCADE
-    ;
-";
+      INTERLEAVE IN PARENT Singers ON DELETE CASCADE";
 
 /// Finds or creates a database, returns it
 ///
@@ -55,10 +58,15 @@ fn find_or_create_database(client: &DatabaseAdminClient, database_name: &str, in
 
     // create a new database
     println!("Create database {}", database_name);
+    let statements = vec![CREATE_SINGER_TABLE, CREATE_ALBUMS_TABLE]
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
+
     let mut request = CreateDatabaseRequest::new();
     request.set_parent(instance_id.to_string());
-    request.set_create_statement(CREATE_STATEMENTS.to_string());
-    request.set_extra_statements(CREATE_STATEMENTS);
+    request.set_create_statement(CREATE_DATABASE.to_string());
+    request.set_extra_statements(RepeatedField::from_vec(statements));
     let operation = client.create_database(&request);
     dbg!(operation);
 }
