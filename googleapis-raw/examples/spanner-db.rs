@@ -2,7 +2,7 @@
 
 use std::error::Error;
 use std::sync::Arc;
-use std::time::{SystemTime};
+use std::time::{Duration, SystemTime};
 use futures::prelude::*;
 use grpcio::{
     Channel,
@@ -11,12 +11,21 @@ use grpcio::{
     ClientUnaryReceiver,
     EnvBuilder,
 };
+use googleapis_raw::empty::Empty;
 use googleapis_raw::spanner::v1::{
     spanner_grpc::SpannerClient,
+};
+use googleapis_raw::longrunning::operations::{
+    GetOperationRequest,
+    Operation,
+};
+use googleapis_raw::longrunning::operations_grpc::{
+    OperationsClient,
 };
 use googleapis_raw::spanner::admin::database::v1::{
     spanner_database_admin::Database,
     spanner_database_admin::CreateDatabaseRequest,
+    spanner_database_admin::DropDatabaseRequest,
     spanner_database_admin::GetDatabaseRequest,
     spanner_database_admin_grpc::DatabaseAdminClient,
 };
@@ -41,16 +50,45 @@ const CREATE_ALBUMS_TABLE: &str =
     ) PRIMARY KEY (SingerId, AlbumId),
       INTERLEAVE IN PARENT Singers ON DELETE CASCADE";
 
-/// Finds or creates a database, returns it
+/// Waits until the operation is finished
 ///
-fn find_or_create_database(client: &DatabaseAdminClient, database_name: &str, instance_id: &str) /*-> ::grpcio::Result<Database> */{
+fn wait_operation_finished(channel: &Channel, operation: &str) {
+    let operations_client = OperationsClient::new(channel.clone());
+
+    let mut request = GetOperationRequest::new();
+    request.set_name(operation.to_string());
+
+    loop {
+        println!("Checking operation: {}", operation);
+        match operations_client.get_operation(&request) {
+            Ok(response) => {
+                if response.get_done() {
+                    println!("Operation {} finished", operation);
+                    break;
+                }
+
+                // wait instead
+                let wait_time = Duration::from_millis(250);
+                std::thread::sleep(wait_time);
+            }
+            Err(error) => {
+                println!("Failed to get operation");
+                dbg!(error);
+            }
+        }
+    }
+}
+
+/// Creates a new database if it does not exist yet.
+///
+fn create_database_if_not_exists(channel: &Channel, database_name: &str, instance_id: &str) {
+    let client = DatabaseAdminClient::new(channel.clone());
     // find database
     println!("Finding database {}", database_name);
     let mut request = GetDatabaseRequest::new();
     request.set_name(database_name.to_string());
     if let Ok(database) = client.get_database(&request) {
         println!("Found database: {}", database.get_name());
-        // return Ok(database);
         return;
     } else {
         println!("Database not found");
@@ -67,8 +105,22 @@ fn find_or_create_database(client: &DatabaseAdminClient, database_name: &str, in
     request.set_parent(instance_id.to_string());
     request.set_create_statement(CREATE_DATABASE.to_string());
     request.set_extra_statements(RepeatedField::from_vec(statements));
-    let operation = client.create_database(&request);
-    dbg!(operation);
+    let operation = client.create_database(&request).expect("Failed to create database");
+    dbg!(operation.clone());
+
+    // check that operation is finished
+    wait_operation_finished(&channel, operation.get_name());
+}
+
+/// Deletes a given database
+///
+fn drop_database(channel: &Channel, database_name: &str) -> ::grpcio::Result<ClientUnaryReceiver<Empty>> {
+    let client = DatabaseAdminClient::new(channel.clone());
+
+    let mut request = DropDatabaseRequest::new();
+    request.set_database(database_name.to_string());
+
+    client.drop_database_async(&request)
 }
 
 /// Create a new channel used for the different types of clients
@@ -98,9 +150,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // create spanner admin client
     let channel = connect(endpoint);
-    let admin_client = DatabaseAdminClient::new(channel);
 
-    find_or_create_database(&admin_client, database_name, instance_id);
+    // create database if it not already exists
+    create_database_if_not_exists(&channel, database_name, instance_id);
+
+    // delete database
+    drop_database(&channel, database_name)?.wait()?;
 
     Ok(())
 }
