@@ -145,15 +145,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // get topic
     let topic_name = format!("projects/{}/topics/greetings", project_id);
-    let topic = find_or_create_topic(&publisher, &topic_name)?;
-    dbg!(topic.clone());
+    let topic = dbg!(find_or_create_topic(&publisher, &topic_name)?);
 
     // publish a number of greeting messages
     let greetings = vec!["hello", "hi", "hola", "bonjour", "ahoi"];
-    for _i in 0..20 {
-        let messages = greetings.iter().map(|g| g.to_string()).collect();
-        publish_msg_async(&publisher, &topic, messages)?.wait()?;
-    }
+    let messages = greetings.iter().map(|g| g.to_string()).collect();
+    publish_msg_async(&publisher, &topic, messages)?.wait()?;
 
     // create a subscriber to consume these messages
     let subscription_name = format!("projects/{}/subscriptions/sub-greetings", project_id);
