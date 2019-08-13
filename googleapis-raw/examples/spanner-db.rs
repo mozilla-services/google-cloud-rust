@@ -1,60 +1,37 @@
+use googleapis_raw::empty::Empty;
+use googleapis_raw::longrunning::operations::GetOperationRequest;
+use googleapis_raw::longrunning::operations_grpc::OperationsClient;
+use googleapis_raw::spanner::admin::database::v1::{
+    spanner_database_admin::CreateDatabaseRequest, spanner_database_admin::DropDatabaseRequest,
+    spanner_database_admin::GetDatabaseRequest, spanner_database_admin_grpc::DatabaseAdminClient,
+};
+use googleapis_raw::spanner::v1::{
+    mutation::Mutation, mutation::Mutation_Write, spanner::BeginTransactionRequest,
+    spanner::CommitRequest, spanner::CreateSessionRequest, spanner::Session,
+    spanner_grpc::SpannerClient, transaction::Transaction, transaction::TransactionOptions,
+    transaction::TransactionOptions_ReadWrite,
+};
+use grpcio::{
+    CallOption, Channel, ChannelBuilder, ChannelCredentials, ClientUnaryReceiver, EnvBuilder,
+    MetadataBuilder,
+};
+use protobuf::well_known_types::{ListValue, Value};
+use protobuf::RepeatedField;
 #[allow(unused_imports)]
 use std::error::Error;
 use std::sync::Arc;
-use std::time::{Duration};
-use grpcio::{
-    CallOption,
-    Channel,
-    ChannelBuilder,
-    ChannelCredentials,
-    ClientUnaryReceiver,
-    EnvBuilder,
-    MetadataBuilder,
-};
-use googleapis_raw::empty::Empty;
-use googleapis_raw::spanner::v1::{
-    mutation::Mutation,
-    mutation::Mutation_Write,
-    spanner::BeginTransactionRequest,
-    spanner::CommitRequest,
-    spanner::CreateSessionRequest,
-    spanner::Session,
-    transaction::Transaction,
-    transaction::TransactionOptions,
-    transaction::TransactionOptions_ReadWrite,
-    spanner_grpc::SpannerClient,
-};
-use googleapis_raw::longrunning::operations::{
-    GetOperationRequest,
-};
-use googleapis_raw::longrunning::operations_grpc::{
-    OperationsClient,
-};
-use googleapis_raw::spanner::admin::database::v1::{
-    spanner_database_admin::CreateDatabaseRequest,
-    spanner_database_admin::DropDatabaseRequest,
-    spanner_database_admin::GetDatabaseRequest,
-    spanner_database_admin_grpc::DatabaseAdminClient,
-};
-use protobuf::RepeatedField;
-use protobuf::well_known_types::{
-    ListValue,
-    Value,
-};
+use std::time::Duration;
 
-const CREATE_DATABASE: &str =
-    "CREATE DATABASE music";
+const CREATE_DATABASE: &str = "CREATE DATABASE music";
 
-const CREATE_SINGER_TABLE: &str =
-    "CREATE TABLE Singers (
+const CREATE_SINGER_TABLE: &str = "CREATE TABLE Singers (
       SingerId   INT64 NOT NULL,
       FirstName  STRING(1024),
       LastName   STRING(1024),
       SingerInfo BYTES(MAX),
     ) PRIMARY KEY (SingerId)";
 
-const CREATE_ALBUMS_TABLE: &str =
-    "CREATE TABLE Albums (
+const CREATE_ALBUMS_TABLE: &str = "CREATE TABLE Albums (
       SingerId     INT64 NOT NULL,
       AlbumId      INT64 NOT NULL,
       AlbumTitle   STRING(MAX),
@@ -124,7 +101,9 @@ fn create_database_if_not_exists(channel: &Channel, database_name: &str, instanc
     request.set_parent(instance_id.to_string());
     request.set_create_statement(CREATE_DATABASE.to_string());
     request.set_extra_statements(RepeatedField::from_vec(statements));
-    let operation = client.create_database(&request).expect("Failed to create database");
+    let operation = client
+        .create_database(&request)
+        .expect("Failed to create database");
     dbg!(operation.clone());
 
     // check that operation is finished
@@ -133,7 +112,10 @@ fn create_database_if_not_exists(channel: &Channel, database_name: &str, instanc
 
 /// Deletes a given database
 ///
-fn drop_database(channel: &Channel, database_name: &str) -> ::grpcio::Result<ClientUnaryReceiver<Empty>> {
+fn drop_database(
+    channel: &Channel,
+    database_name: &str,
+) -> ::grpcio::Result<ClientUnaryReceiver<Empty>> {
     println!("Drop database {}", database_name);
     let client = DatabaseAdminClient::new(channel.clone());
 
@@ -149,8 +131,10 @@ fn create_session(client: &SpannerClient, database_name: &str) -> ::grpcio::Resu
     let mut request = CreateSessionRequest::new();
     request.set_database(database_name.to_string());
     let mut meta = MetadataBuilder::new();
-    meta.add_str("google-cloud-resource-prefix", database_name).expect("Failed to set meta data");
-    meta.add_str("x-goog-api-client", "googleapis-rs").expect("Failed to set meta data");
+    meta.add_str("google-cloud-resource-prefix", database_name)
+        .expect("Failed to set meta data");
+    meta.add_str("x-goog-api-client", "googleapis-rs")
+        .expect("Failed to set meta data");
     let opt = CallOption::default().headers(meta.build());
     client.create_session_opt(&request, opt)
 }
@@ -160,7 +144,8 @@ fn create_session(client: &SpannerClient, database_name: &str) -> ::grpcio::Resu
 fn connect(endpoint: &str) -> Channel {
     // Set up the gRPC environment.
     let env = Arc::new(EnvBuilder::new().build());
-    let creds = ChannelCredentials::google_default_credentials().expect("No Google credentials found");
+    let creds =
+        ChannelCredentials::google_default_credentials().expect("No Google credentials found");
 
     // Create a channel to connect to Gcloud.
     ChannelBuilder::new(env.clone())
@@ -178,7 +163,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     // spanner instance id
     let instance_id = "projects/mozilla-rust-sdk-dev/instances/mozilla-spanner-dev";
     // database name
-    let database_name = "projects/mozilla-rust-sdk-dev/instances/mozilla-spanner-dev/databases/music";
+    let database_name =
+        "projects/mozilla-rust-sdk-dev/instances/mozilla-spanner-dev/databases/music";
 
     // create spanner admin client
     let channel = connect(endpoint);
@@ -200,13 +186,37 @@ fn main() -> Result<(), Box<dyn Error>> {
     let transaction = client.begin_transaction(&request)?;
 
     // the list of singers to add
-    let columns = vec!["SingerId".to_string(), "FirstName".to_string(), "LastName".to_string()];
+    let columns = vec![
+        "SingerId".to_string(),
+        "FirstName".to_string(),
+        "LastName".to_string(),
+    ];
     let singers = vec![
-        Singer{ id: 1, first_name: "Marc".to_string(),     last_name: "Richards".to_string() },
-        Singer{ id: 2, first_name: "Catalina".to_string(), last_name: "Smith".to_string() },
-        Singer{ id: 3, first_name: "Alice".to_string(),    last_name: "Trentor".to_string() },
-        Singer{ id: 4, first_name: "Lea".to_string(),      last_name: "Martin".to_string() },
-        Singer{ id: 5, first_name: "David".to_string(),    last_name: "Lomond".to_string() },
+        Singer {
+            id: 1,
+            first_name: "Marc".to_string(),
+            last_name: "Richards".to_string(),
+        },
+        Singer {
+            id: 2,
+            first_name: "Catalina".to_string(),
+            last_name: "Smith".to_string(),
+        },
+        Singer {
+            id: 3,
+            first_name: "Alice".to_string(),
+            last_name: "Trentor".to_string(),
+        },
+        Singer {
+            id: 4,
+            first_name: "Lea".to_string(),
+            last_name: "Martin".to_string(),
+        },
+        Singer {
+            id: 5,
+            first_name: "David".to_string(),
+            last_name: "Lomond".to_string(),
+        },
     ];
 
     // collect all values
