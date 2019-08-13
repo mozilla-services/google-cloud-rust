@@ -1,46 +1,29 @@
-#[allow(unused_imports)]
-use std::error::Error;
-use std::sync::Arc;
 use std::collections::HashMap;
+use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use protobuf::well_known_types::Duration;
-use protobuf::{
-    RepeatedField,
-};
-
 use futures::prelude::*;
-use googleapis_raw::empty::Empty;
-use googleapis_raw::bigtable::v2::{
-    bigtable::MutateRowsRequest,
-    bigtable::MutateRowsRequest_Entry,
-    bigtable_grpc::BigtableClient,
-    data::Mutation,
-    data::Mutation_SetCell,
-};
 use googleapis_raw::bigtable::admin::v2::{
     bigtable_instance_admin::GetClusterRequest,
-    bigtable_table_admin::CreateTableRequest,
-    bigtable_table_admin::DeleteTableRequest,
-    bigtable_table_admin::ListTablesRequest,
-    bigtable_table_admin_grpc::BigtableTableAdminClient,
     bigtable_instance_admin_grpc::BigtableInstanceAdminClient,
-    instance::Cluster,
-    table::ColumnFamily,
-    table::GcRule,
-    table::Table,
+    bigtable_table_admin::CreateTableRequest, bigtable_table_admin::DeleteTableRequest,
+    bigtable_table_admin::ListTablesRequest, bigtable_table_admin_grpc::BigtableTableAdminClient,
+    instance::Cluster, table::ColumnFamily, table::GcRule, table::Table,
 };
-use grpcio::{
-    Channel,
-    ChannelBuilder,
-    ChannelCredentials,
-    ClientUnaryReceiver,
-    EnvBuilder,
+use googleapis_raw::bigtable::v2::{
+    bigtable::MutateRowsRequest, bigtable::MutateRowsRequest_Entry, bigtable_grpc::BigtableClient,
+    data::Mutation, data::Mutation_SetCell,
 };
+use googleapis_raw::empty::Empty;
+use grpcio::{Channel, ChannelBuilder, ChannelCredentials, ClientUnaryReceiver, EnvBuilder};
+use protobuf::well_known_types::Duration;
+use protobuf::RepeatedField;
 
 fn timestamp() -> u128 {
     let start = SystemTime::now();
-    let time = start.duration_since(UNIX_EPOCH).expect("Failed to fetch timestamp");
+    let time = start
+        .duration_since(UNIX_EPOCH)
+        .expect("Failed to fetch timestamp");
     time.as_micros()
 }
 
@@ -48,7 +31,8 @@ fn timestamp() -> u128 {
 fn connect(endpoint: &str) -> Channel {
     // Set up the gRPC environment.
     let env = Arc::new(EnvBuilder::new().build());
-    let creds = ChannelCredentials::google_default_credentials().expect("No Google credentials found");
+    let creds =
+        ChannelCredentials::google_default_credentials().expect("No Google credentials found");
 
     // Create a channel to connect to Gcloud.
     ChannelBuilder::new(env.clone())
@@ -60,7 +44,10 @@ fn connect(endpoint: &str) -> Channel {
 
 /// Returns the cluster information
 ///
-fn get_cluster(client: &BigtableInstanceAdminClient, cluster_id: &String) -> ::grpcio::Result<Cluster> {
+fn get_cluster(
+    client: &BigtableInstanceAdminClient,
+    cluster_id: &String,
+) -> ::grpcio::Result<Cluster> {
     println!("Get cluster information");
     let mut request = GetClusterRequest::new();
     request.set_name(cluster_id.to_string());
@@ -75,17 +62,23 @@ fn list_tables(client: &BigtableTableAdminClient, instance_id: &String) {
     request.set_parent(instance_id.clone());
     match client.list_tables(&request) {
         Ok(response) => {
-            response.get_tables()
+            response
+                .get_tables()
                 .iter()
-                .for_each(|table| println!("  table: {:?}", table) );
-        },
+                .for_each(|table| println!("  table: {:?}", table));
+        }
         Err(error) => println!("Failed to list tables: {}", error),
     }
 }
 
 /// Create a new table in the BigTable cluster
 ///
-fn create_table(client: &BigtableTableAdminClient, instance_id: &String, table_name: &String, table: Table) -> ::grpcio::Result<Table> {
+fn create_table(
+    client: &BigtableTableAdminClient,
+    instance_id: &String,
+    table_name: &String,
+    table: Table,
+) -> ::grpcio::Result<Table> {
     println!("Creating table {}", table_name);
     let mut request = CreateTableRequest::new();
     request.set_parent(instance_id.clone());
@@ -95,7 +88,10 @@ fn create_table(client: &BigtableTableAdminClient, instance_id: &String, table_n
 }
 
 /// Deletes a table asynchronously, returns a future
-fn delete_table_async(client: &BigtableTableAdminClient, table_name: &String) -> grpcio::Result<ClientUnaryReceiver<Empty>> {
+fn delete_table_async(
+    client: &BigtableTableAdminClient,
+    table_name: &String,
+) -> grpcio::Result<ClientUnaryReceiver<Empty>> {
     println!("Deleting the {} table", table_name);
     let mut request = DeleteTableRequest::new();
     request.set_name(table_name.clone());
@@ -108,13 +104,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     // The BigTable instance id
     let instance_id = String::from("projects/mozilla-rust-sdk-dev/instances/mozilla-rust-sdk");
     // The cluster id
-    let cluster_id = String::from("projects/mozilla-rust-sdk-dev/instances/mozilla-rust-sdk/clusters/mozilla-rust-sdk-c1");
+    let cluster_id = String::from(
+        "projects/mozilla-rust-sdk-dev/instances/mozilla-rust-sdk/clusters/mozilla-rust-sdk-c1",
+    );
     // common table endpoint
     let endpoint = "bigtable.googleapis.com";
     // Google Cloud configuration.
     let admin_endpoint = "bigtableadmin.googleapis.com";
     // The table name
-    let table_name = String::from("projects/mozilla-rust-sdk-dev/instances/mozilla-rust-sdk/tables/hello-world");
+    let table_name =
+        String::from("projects/mozilla-rust-sdk-dev/instances/mozilla-rust-sdk/tables/hello-world");
 
     let column_family_id = "cf1";
 
@@ -181,11 +180,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     request.set_entries(RepeatedField::from_vec(mutation_requests));
 
     // apply changes and check responses
-    let response = client.mutate_rows(&request)?.collect().into_future().wait()?;
+    let response = client
+        .mutate_rows(&request)?
+        .collect()
+        .into_future()
+        .wait()?;
     for response in response.iter() {
         for entry in response.get_entries().iter() {
             let status = entry.get_status();
-            println!("  entry index: {}, status: {} - {}", entry.get_index(), status.code, status.message);
+            println!(
+                "  entry index: {}, status: {} - {}",
+                entry.get_index(),
+                status.code,
+                status.message
+            );
         }
     }
 

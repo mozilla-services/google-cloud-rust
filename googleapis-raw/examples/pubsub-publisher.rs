@@ -1,31 +1,16 @@
-#[allow(unused_imports)]
 use std::collections::HashMap;
 use std::error::Error;
 use std::sync::Arc;
-use std::time::{SystemTime};
+use std::time::SystemTime;
+
 use futures::prelude::*;
-use grpcio::{
-    Channel,
-    ChannelBuilder,
-    ChannelCredentials,
-    ClientUnaryReceiver,
-    EnvBuilder,
-};
 use googleapis_raw::pubsub::v1::{
-    pubsub::AcknowledgeRequest,
-    pubsub::ExpirationPolicy,
-    pubsub::GetSubscriptionRequest,
-    pubsub::GetTopicRequest,
-    pubsub::PublishRequest,
-    pubsub::PublishResponse,
-    pubsub::PullRequest,
-    pubsub::PubsubMessage,
-    pubsub::PushConfig,
-    pubsub::Subscription,
-    pubsub::Topic,
-    pubsub_grpc::PublisherClient,
-    pubsub_grpc::SubscriberClient,
+    pubsub::AcknowledgeRequest, pubsub::ExpirationPolicy, pubsub::GetSubscriptionRequest,
+    pubsub::GetTopicRequest, pubsub::PublishRequest, pubsub::PublishResponse,
+    pubsub::PubsubMessage, pubsub::PullRequest, pubsub::PushConfig, pubsub::Subscription,
+    pubsub::Topic, pubsub_grpc::PublisherClient, pubsub_grpc::SubscriberClient,
 };
+use grpcio::{Channel, ChannelBuilder, ChannelCredentials, ClientUnaryReceiver, EnvBuilder};
 use protobuf::RepeatedField;
 
 /// Creates a topic or finds an existing one, then returns the topic
@@ -54,9 +39,16 @@ fn find_or_create_topic(client: &PublisherClient, topic_name: &str) -> ::grpcio:
 
 /// Creates a subscription or finds an existing one
 ///
-fn find_or_create_subscription(client: &SubscriberClient, subscription_name: &str, topic_name: &str) -> ::grpcio::Result<Subscription> {
+fn find_or_create_subscription(
+    client: &SubscriberClient,
+    subscription_name: &str,
+    topic_name: &str,
+) -> ::grpcio::Result<Subscription> {
     // find subscription
-    println!("Finding subscription {} for topic {}", subscription_name, topic_name);
+    println!(
+        "Finding subscription {} for topic {}",
+        subscription_name, topic_name
+    );
     let mut request = GetSubscriptionRequest::new();
     request.set_subscription(subscription_name.to_string());
     if let Ok(subscription) = client.get_subscription(&request) {
@@ -91,7 +83,9 @@ fn find_or_create_subscription(client: &SubscriberClient, subscription_name: &st
 }
 
 fn timestamp_in_seconds() -> u64 {
-    let timestamp = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap();
+    let timestamp = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap();
     timestamp.as_secs()
 }
 
@@ -110,9 +104,13 @@ fn create_pubsub_msg(message: &str) -> PubsubMessage {
 
 /// Publishes a message asynchronously, returning a future
 ///
-fn publish_msg_async(client: &PublisherClient, topic: &Topic, messages: Vec<String>) -> ::grpcio::Result<ClientUnaryReceiver<PublishResponse>> {
-    let pub_messages = messages.iter().map(|msg| create_pubsub_msg(msg) ).collect();
-    
+fn publish_msg_async(
+    client: &PublisherClient,
+    topic: &Topic,
+    messages: Vec<String>,
+) -> ::grpcio::Result<ClientUnaryReceiver<PublishResponse>> {
+    let pub_messages = messages.iter().map(|msg| create_pubsub_msg(msg)).collect();
+
     let mut request = PublishRequest::new();
     request.set_topic(topic.get_name().to_string());
     request.set_messages(RepeatedField::from_vec(pub_messages));
@@ -124,7 +122,8 @@ fn publish_msg_async(client: &PublisherClient, topic: &Topic, messages: Vec<Stri
 fn connect(endpoint: &str) -> Channel {
     // Set up the gRPC environment.
     let env = Arc::new(EnvBuilder::new().build());
-    let creds = ChannelCredentials::google_default_credentials().expect("No Google redentials found");
+    let creds =
+        ChannelCredentials::google_default_credentials().expect("No Google redentials found");
 
     // Create a channel to connect to Gcloud.
     ChannelBuilder::new(env.clone())
