@@ -38,6 +38,12 @@ There is Docker setup available that installs all necessary tools, libraries, se
 inside the `./docker` folder.
 
 
+Useful links for setting up specific Google services:
+
+* [Setting up Spanner](https://cloud.google.com/spanner/docs/getting-started/set-up)
+* [Installing the Cloud SDK for Cloud Bigtable](https://cloud.google.com/bigtable/docs/installing-cloud-sdk)
+* [Quickstart using the Pub/Sub CLI tool](https://cloud.google.com/pubsub/docs/quickstart-cli)
+
 ## Generating Rust bindings from `.proto` files
 
 **NOTE:** You do not need to do this step. Rust bindings are already included in this repository.
