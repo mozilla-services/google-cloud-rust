@@ -1,35 +1,45 @@
 #[allow(unused_imports)]
-
 use std::error::Error;
 use std::sync::Arc;
-use std::time::{Duration, SystemTime};
+use std::time::{Duration};
 use futures::prelude::*;
 use grpcio::{
+    CallOption,
     Channel,
     ChannelBuilder,
     ChannelCredentials,
     ClientUnaryReceiver,
     EnvBuilder,
+    MetadataBuilder,
 };
 use googleapis_raw::empty::Empty;
 use googleapis_raw::spanner::v1::{
+    mutation::Mutation,
+    mutation::Mutation_Write,
+    spanner::BeginTransactionRequest,
+    spanner::CommitRequest,
+    spanner::CreateSessionRequest,
+    spanner::Session,
+    transaction::Transaction,
     spanner_grpc::SpannerClient,
 };
 use googleapis_raw::longrunning::operations::{
     GetOperationRequest,
-    Operation,
 };
 use googleapis_raw::longrunning::operations_grpc::{
     OperationsClient,
 };
 use googleapis_raw::spanner::admin::database::v1::{
-    spanner_database_admin::Database,
     spanner_database_admin::CreateDatabaseRequest,
     spanner_database_admin::DropDatabaseRequest,
     spanner_database_admin::GetDatabaseRequest,
     spanner_database_admin_grpc::DatabaseAdminClient,
 };
 use protobuf::RepeatedField;
+use protobuf::well_known_types::{
+    ListValue,
+    Value,
+};
 
 const CREATE_DATABASE: &str =
     "CREATE DATABASE music";
@@ -49,6 +59,14 @@ const CREATE_ALBUMS_TABLE: &str =
       AlbumTitle   STRING(MAX),
     ) PRIMARY KEY (SingerId, AlbumId),
       INTERLEAVE IN PARENT Singers ON DELETE CASCADE";
+
+/// A basic struct for a singer
+///
+struct Singer {
+    pub id: i64,
+    pub first_name: String,
+    pub last_name: String,
+}
 
 /// Waits until the operation is finished
 ///
@@ -115,12 +133,25 @@ fn create_database_if_not_exists(channel: &Channel, database_name: &str, instanc
 /// Deletes a given database
 ///
 fn drop_database(channel: &Channel, database_name: &str) -> ::grpcio::Result<ClientUnaryReceiver<Empty>> {
+    println!("Drop database {}", database_name);
     let client = DatabaseAdminClient::new(channel.clone());
 
     let mut request = DropDatabaseRequest::new();
     request.set_database(database_name.to_string());
 
     client.drop_database_async(&request)
+}
+
+/// Create a new session to communicate with Spanner
+///
+fn create_session(client: &SpannerClient, database_name: &str) -> ::grpcio::Result<Session> {
+    let mut request = CreateSessionRequest::new();
+    request.set_database(database_name.to_string());
+    let mut meta = MetadataBuilder::new();
+    meta.add_str("google-cloud-resource-prefix", database_name).expect("Failed to set meta data");
+    meta.add_str("x-goog-api-client", "googleapis-rs").expect("Failed to set meta data");
+    let opt = CallOption::default().headers(meta.build());
+    client.create_session_opt(&request, opt)
 }
 
 /// Create a new channel used for the different types of clients
@@ -154,8 +185,55 @@ fn main() -> Result<(), Box<dyn Error>> {
     // create database if it not already exists
     create_database_if_not_exists(&channel, database_name, instance_id);
 
+    // create session to communicate
+    let client = SpannerClient::new(channel.clone());
+    let session = create_session(&client, database_name)?;
+
+    // insert data into database by using a transaction
+    let client = SpannerClient::new(channel.clone());
+    let mut request = BeginTransactionRequest::new();
+    request.set_session(session.get_name().to_string());
+    let transaction = client.begin_transaction(&request)?;
+
+    // the list of singers to add
+    let columns = vec!["SingerId", "FirstName", "LastName"];
+    let singers = vec![
+        Singer{ id: 1, first_name: "Marc".to_string(),     last_name: "Richards".to_string() },
+        Singer{ id: 2, first_name: "Catalina".to_string(), last_name: "Smith".to_string() },
+        Singer{ id: 3, first_name: "Alice".to_string(),    last_name: "Trentor".to_string() },
+        Singer{ id: 4, first_name: "Lea".to_string(),      last_name: "Martin".to_string() },
+        Singer{ id: 5, first_name: "David".to_string(),    last_name: "Lomond".to_string() },
+    ];
+
+    // create a suitable mutation with all values
+    let mutation_write = Mutation_Write::new();
+    mutation_write.set_table("Singers".to_string());
+    mutation_write.set_columns(columns.iter().map(|c| c.to_string()).collect());
+
+    // collect all values
+    let ids = singers.iter().map(|s| s.id).collect();
+    let first_names = singers.iter().map(|s| s.first_name).collect();
+    let last_names = singers.iter().map(|s| s.last_name).collect();
+
+    let id_values = ListValue::new();
+    let first_name_values = ListValue::new();
+    let last_name_values = ListValue::new();
+    id_values.set_values(RepeatedField::from_vec(ids));
+    first_name_values.set_values(RepeatedField::from_vec(ids));
+    last_name_values.set_values(RepeatedField::from_vec(ids));
+    mutation_write.set_values(RepeatedField::from_vec(vec![id_values, first_name_values, last_name_values]));
+
+    // finally commit to database
+    let commit = CommitRequest::new();
+    commit.set_transaction_id(transaction.get_id().to_vec());
+    commit.set_session(session.get_name().to_string());
+    let mutation = Mutation::new();
+    mutation.set_insert_or_update(mutation_write);
+    commit.set_mutations(RepeatedField::from_vec(vec![mutation]));
+    client.commit(&commit);
+
     // delete database
-    drop_database(&channel, database_name)?.wait()?;
+    // drop_database(&channel, database_name)?.wait()?;
 
     Ok(())
 }
