@@ -6,5 +6,5 @@ pub mod spanner;
 
 pub mod empty;
 pub(crate) mod iam;
-pub(crate) mod longrunning;
+pub mod longrunning;
 pub(crate) mod rpc;
