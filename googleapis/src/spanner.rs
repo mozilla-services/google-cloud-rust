@@ -22,12 +22,14 @@ use googleapis_raw::spanner::v1::{
 };
 use grpcio::{CallOption, ChannelBuilder, ChannelCredentials, EnvBuilder, MetadataBuilder};
 
+#[allow(dead_code)]
 pub struct Client {
     database: String,
     client: SpannerClient,
     session: Session,
 }
 
+#[allow(dead_code)]
 impl Client {
     /// Creates a new Spanner client.
     ///

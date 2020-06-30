@@ -213,7 +213,7 @@ impl SubscriberClient {
     pub fn modify_push_config_async(&self, req: &super::pubsub::ModifyPushConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.modify_push_config_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -259,7 +259,7 @@ pub fn create_subscriber<S: Subscriber + Send + Clone + 'static>(s: S) -> ::grpc
     builder = builder.add_unary_handler(&METHOD_SUBSCRIBER_PULL, move |ctx, req, resp| {
         instance.pull(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_SUBSCRIBER_MODIFY_PUSH_CONFIG, move |ctx, req, resp| {
         instance.modify_push_config(ctx, req, resp)
     });
@@ -415,7 +415,7 @@ impl PublisherClient {
     pub fn delete_topic_async(&self, req: &super::pubsub::DeleteTopicRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_topic_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -451,7 +451,7 @@ pub fn create_publisher<S: Publisher + Send + Clone + 'static>(s: S) -> ::grpcio
     builder = builder.add_unary_handler(&METHOD_PUBLISHER_LIST_TOPIC_SUBSCRIPTIONS, move |ctx, req, resp| {
         instance.list_topic_subscriptions(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_PUBLISHER_DELETE_TOPIC, move |ctx, req, resp| {
         instance.delete_topic(ctx, req, resp)
     });
