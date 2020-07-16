@@ -466,7 +466,7 @@ impl BigtableInstanceAdminClient {
     pub fn test_iam_permissions_async(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
         self.test_iam_permissions_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -567,7 +567,7 @@ pub fn create_bigtable_instance_admin<S: BigtableInstanceAdmin + Send + Clone + 
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_SET_IAM_POLICY, move |ctx, req, resp| {
         instance.set_iam_policy(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, move |ctx, req, resp| {
         instance.test_iam_permissions(ctx, req, resp)
     });
