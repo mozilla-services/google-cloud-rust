@@ -328,7 +328,7 @@ impl BigtableTableAdminClient {
     pub fn delete_snapshot_async(&self, req: &super::bigtable_table_admin::DeleteSnapshotRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_snapshot_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -399,7 +399,7 @@ pub fn create_bigtable_table_admin<S: BigtableTableAdmin + Send + Clone + 'stati
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_SNAPSHOTS, move |ctx, req, resp| {
         instance.list_snapshots(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_SNAPSHOT, move |ctx, req, resp| {
         instance.delete_snapshot(ctx, req, resp)
     });

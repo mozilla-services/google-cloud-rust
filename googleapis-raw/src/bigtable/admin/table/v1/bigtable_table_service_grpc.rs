@@ -236,7 +236,7 @@ impl BigtableTableServiceClient {
     pub fn bulk_delete_rows_async(&self, req: &super::bigtable_table_service_messages::BulkDeleteRowsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.bulk_delete_rows_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -287,7 +287,7 @@ pub fn create_bigtable_table_service<S: BigtableTableService + Send + Clone + 's
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_SERVICE_DELETE_COLUMN_FAMILY, move |ctx, req, resp| {
         instance.delete_column_family(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_SERVICE_BULK_DELETE_ROWS, move |ctx, req, resp| {
         instance.bulk_delete_rows(ctx, req, resp)
     });

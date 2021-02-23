@@ -12,21 +12,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[package]
-name = "googleapis-raw"
-version = "0.0.3"
-authors = ["Ferrous Systems"]
-edition = "2018"
-
-[dependencies]
-futures = "0.3.5"
-grpcio = "0.6.0"
-protobuf = "2.16.2"
-
-[dev-dependencies]
-slog = "2.5"
-slog-scope = "4.3"
-slog-term = "2.6"
-slog-stdlog = "4.0"
-slog-async = "2.5"
-log = "0.4"

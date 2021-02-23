@@ -121,7 +121,7 @@ impl OperationsClient {
     pub fn cancel_operation_async(&self, req: &super::operations::CancelOperationRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.cancel_operation_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -147,7 +147,7 @@ pub fn create_operations<S: Operations + Send + Clone + 'static>(s: S) -> ::grpc
     builder = builder.add_unary_handler(&METHOD_OPERATIONS_DELETE_OPERATION, move |ctx, req, resp| {
         instance.delete_operation(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_OPERATIONS_CANCEL_OPERATION, move |ctx, req, resp| {
         instance.cancel_operation(ctx, req, resp)
     });

@@ -16,13 +16,14 @@ use std::error::Error;
 use std::sync::Arc;
 
 use futures::prelude::*;
+use futures::executor::block_on;
 use googleapis_raw::spanner::v1::{
     spanner::{CreateSessionRequest, ExecuteSqlRequest},
     spanner_grpc::SpannerClient,
 };
 use grpcio::{CallOption, ChannelBuilder, ChannelCredentials, EnvBuilder, MetadataBuilder};
 
-fn main() -> Result<(), Box<dyn Error>> {
+async fn async_main() {
     // An example database inside Mozilla's Spanner instance.
     let database = "projects/mozilla-rust-sdk-dev/instances/mozilla-spanner-dev/databases/mydb";
 
@@ -31,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Set up the gRPC environment.
     let env = Arc::new(EnvBuilder::new().build());
-    let creds = ChannelCredentials::google_default_credentials()?;
+    let creds = ChannelCredentials::google_default_credentials().unwrap();
 
     // Create a Spanner client.
     let chan = ChannelBuilder::new(env.clone())
@@ -44,10 +45,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut req = CreateSessionRequest::new();
     req.database = database.to_string();
     let mut meta = MetadataBuilder::new();
-    meta.add_str("google-cloud-resource-prefix", database)?;
-    meta.add_str("x-goog-api-client", "googleapis-rs")?;
+    meta.add_str("google-cloud-resource-prefix", database).unwrap();
+    meta.add_str("x-goog-api-client", "googleapis-rs").unwrap();
     let opt = CallOption::default().headers(meta.build());
-    let session = client.create_session_opt(&req, opt)?;
+    let session = client.create_session_opt(&req, opt).unwrap();
 
     // Prepare a SQL command to execute.
     let mut req = ExecuteSqlRequest::new();
@@ -55,13 +56,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     req.sql = "select * from planets".to_string();
 
     // Execute the command synchronously.
-    let out = client.execute_sql(&req)?;
+    let out = client.execute_sql(&req).unwrap();
     dbg!(out);
 
     // Execute the command asynchronously.
-    let fut = client.execute_sql_async(&req)?;
-    let out = fut.wait()?;
+    let fut = client.execute_sql_async(&req).unwrap();
+    let out = fut.await.unwrap();
     dbg!(out);
 
-    Ok(())
+}
+
+fn main() {
+    block_on(async_main());
 }

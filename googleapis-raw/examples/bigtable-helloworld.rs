@@ -17,6 +17,7 @@ use std::error::Error;
 use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use futures::executor::block_on;
 use futures::prelude::*;
 use googleapis_raw::bigtable::admin::v2::{
     bigtable_instance_admin::GetClusterRequest,
@@ -113,7 +114,7 @@ fn delete_table_async(
     client.delete_table_async(&request)
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
+async fn async_main() {
     // BigTable project id
     let project_id = String::from("mozilla-rust-sdk-dev");
     // The BigTable instance id
@@ -137,7 +138,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let client = BigtableInstanceAdminClient::new(channel.clone());
 
     // display cluster information
-    let cluster = get_cluster(&client, &cluster_id)?;
+    let cluster = get_cluster(&client, &cluster_id).unwrap();
     dbg!(cluster);
 
     // create admin client for tables
@@ -194,12 +195,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     request.set_table_name(table_name.to_string());
     request.set_entries(RepeatedField::from_vec(mutation_requests));
 
+    /*
+
+    TODO:: fix this.admin_client
+    `.collect()` needs a type.
     // apply changes and check responses
     let response = client
-        .mutate_rows(&request)?
+        .mutate_rows(&request).unwrap()
         .collect()
         .into_future()
-        .wait()?;
+        .wait().unwrap();
     for response in response.iter() {
         for entry in response.get_entries().iter() {
             let status = entry.get_status();
@@ -211,15 +216,18 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
         }
     }
-
+    */
     // display all tables, should include new table
     list_tables(&admin_client, &instance_id);
 
     // delete the table
-    delete_table_async(&admin_client, &table_name)?.wait()?;
+    delete_table_async(&admin_client, &table_name).unwrap().await;
 
     // list of tables should not have deleted table
     list_tables(&admin_client, &instance_id);
 
-    Ok(())
+}
+
+fn main() {
+    block_on(async_main())
 }
