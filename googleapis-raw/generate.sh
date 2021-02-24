@@ -60,6 +60,10 @@ for proto in $proto_files; do
 done
 
 proto_dirs="
+api/
+api/experimental
+api/servicecontrol/v1
+api/servicemanagement/v1
 bigtable/admin/cluster/v1
 bigtable/admin/table/v1
 bigtable/admin/v2
