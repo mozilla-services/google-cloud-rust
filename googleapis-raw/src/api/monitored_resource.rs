@@ -31,6 +31,7 @@ pub struct MonitoredResourceDescriptor {
     pub display_name: ::std::string::String,
     pub description: ::std::string::String,
     pub labels: ::protobuf::RepeatedField<super::label::LabelDescriptor>,
+    pub launch_stage: super::launch_stage::LaunchStage,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -175,6 +176,21 @@ impl MonitoredResourceDescriptor {
     pub fn take_labels(&mut self) -> ::protobuf::RepeatedField<super::label::LabelDescriptor> {
         ::std::mem::replace(&mut self.labels, ::protobuf::RepeatedField::new())
     }
+
+    // .google.api.LaunchStage launch_stage = 7;
+
+
+    pub fn get_launch_stage(&self) -> super::launch_stage::LaunchStage {
+        self.launch_stage
+    }
+    pub fn clear_launch_stage(&mut self) {
+        self.launch_stage = super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_launch_stage(&mut self, v: super::launch_stage::LaunchStage) {
+        self.launch_stage = v;
+    }
 }
 
 impl ::protobuf::Message for MonitoredResourceDescriptor {
@@ -206,6 +222,9 @@ impl ::protobuf::Message for MonitoredResourceDescriptor {
                 4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.labels)?;
                 },
+                7 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.launch_stage, 7, &mut self.unknown_fields)?
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -234,6 +253,9 @@ impl ::protobuf::Message for MonitoredResourceDescriptor {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.launch_stage != super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(7, self.launch_stage);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -257,6 +279,9 @@ impl ::protobuf::Message for MonitoredResourceDescriptor {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.launch_stage != super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED {
+            os.write_enum(7, ::protobuf::ProtobufEnum::value(&self.launch_stage))?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -320,6 +345,11 @@ impl ::protobuf::Message for MonitoredResourceDescriptor {
                 |m: &MonitoredResourceDescriptor| { &m.labels },
                 |m: &mut MonitoredResourceDescriptor| { &mut m.labels },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::launch_stage::LaunchStage>>(
+                "launch_stage",
+                |m: &MonitoredResourceDescriptor| { &m.launch_stage },
+                |m: &mut MonitoredResourceDescriptor| { &mut m.launch_stage },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitoredResourceDescriptor>(
                 "MonitoredResourceDescriptor",
                 fields,
@@ -341,6 +371,7 @@ impl ::protobuf::Clear for MonitoredResourceDescriptor {
         self.display_name.clear();
         self.description.clear();
         self.labels.clear();
+        self.launch_stage = super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED;
         self.unknown_fields.clear();
     }
 }
@@ -766,155 +797,160 @@ impl ::protobuf::reflect::ProtobufValue for MonitoredResourceMetadata {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n#google/api/monitored_resource.proto\x12\ngoogle.api\x1a\x16google/api\
-    /label.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xbf\x01\n\x1bMonitore\
-    dResourceDescriptor\x12\x12\n\x04name\x18\x05\x20\x01(\tR\x04name\x12\
-    \x12\n\x04type\x18\x01\x20\x01(\tR\x04type\x12!\n\x0cdisplay_name\x18\
-    \x02\x20\x01(\tR\x0bdisplayName\x12\x20\n\x0bdescription\x18\x03\x20\x01\
-    (\tR\x0bdescription\x123\n\x06labels\x18\x04\x20\x03(\x0b2\x1b.google.ap\
-    i.LabelDescriptorR\x06labels\"\xa5\x01\n\x11MonitoredResource\x12\x12\n\
-    \x04type\x18\x01\x20\x01(\tR\x04type\x12A\n\x06labels\x18\x02\x20\x03(\
-    \x0b2).google.api.MonitoredResource.LabelsEntryR\x06labels\x1a9\n\x0bLab\
-    elsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\
-    \x18\x02\x20\x01(\tR\x05value:\x028\x01\"\xf0\x01\n\x19MonitoredResource\
-    Metadata\x12<\n\rsystem_labels\x18\x01\x20\x01(\x0b2\x17.google.protobuf\
-    .StructR\x0csystemLabels\x12V\n\x0buser_labels\x18\x02\x20\x03(\x0b25.go\
-    ogle.api.MonitoredResourceMetadata.UserLabelsEntryR\nuserLabels\x1a=\n\
-    \x0fUserLabelsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
-    \n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01By\n\x0ecom.google.api\
-    B\x16MonitoredResourceProtoP\x01ZCgoogle.golang.org/genproto/googleapis/\
-    api/monitoredres;monitoredres\xf8\x01\x01\xa2\x02\x04GAPIJ\xb5)\n\x06\
-    \x12\x04\x0f\0s\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Co\
-    pyright\x202018\x20Google\x20LLC.\n\n\x20Licensed\x20under\x20the\x20Apa\
-    che\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20m\
-    ay\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\
-    \x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\
-    \x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/\
-    LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\
-    \x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\
-    \x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20B\
-    ASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIN\
-    D,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20\
-    for\x20the\x20specific\x20language\x20governing\x20permissions\x20and\n\
-    \x20limitations\x20under\x20the\x20License.\n\n\n\x08\n\x01\x02\x12\x03\
-    \x11\0\x13\n\t\n\x02\x03\0\x12\x03\x13\0\x20\n\t\n\x02\x03\x01\x12\x03\
-    \x14\0&\n\x08\n\x01\x08\x12\x03\x16\0\x1f\n\t\n\x02\x08\x1f\x12\x03\x16\
-    \0\x1f\n\x08\n\x01\x08\x12\x03\x17\0Z\n\t\n\x02\x08\x0b\x12\x03\x17\0Z\n\
-    \x08\n\x01\x08\x12\x03\x18\0\"\n\t\n\x02\x08\n\x12\x03\x18\0\"\n\x08\n\
-    \x01\x08\x12\x03\x19\07\n\t\n\x02\x08\x08\x12\x03\x19\07\n\x08\n\x01\x08\
-    \x12\x03\x1a\0'\n\t\n\x02\x08\x01\x12\x03\x1a\0'\n\x08\n\x01\x08\x12\x03\
-    \x1b\0\"\n\t\n\x02\x08$\x12\x03\x1b\0\"\n\xa2\x04\n\x02\x04\0\x12\x04'\0\
-    C\x01\x1a\x95\x04\x20An\x20object\x20that\x20describes\x20the\x20schema\
-    \x20of\x20a\x20[MonitoredResource][google.api.MonitoredResource]\x20obje\
-    ct\x20using\x20a\n\x20type\x20name\x20and\x20a\x20set\x20of\x20labels.\
-    \x20\x20For\x20example,\x20the\x20monitored\x20resource\n\x20descriptor\
-    \x20for\x20Google\x20Compute\x20Engine\x20VM\x20instances\x20has\x20a\
-    \x20type\x20of\n\x20`\"gce_instance\"`\x20and\x20specifies\x20the\x20use\
-    \x20of\x20the\x20labels\x20`\"instance_id\"`\x20and\n\x20`\"zone\"`\x20t\
-    o\x20identify\x20particular\x20VM\x20instances.\n\n\x20Different\x20APIs\
-    \x20can\x20support\x20different\x20monitored\x20resource\x20types.\x20AP\
-    Is\x20generally\n\x20provide\x20a\x20`list`\x20method\x20that\x20returns\
-    \x20the\x20monitored\x20resource\x20descriptors\x20used\n\x20by\x20the\
-    \x20API.\n\n\n\n\x03\x04\0\x01\x12\x03'\x08#\n\xa1\x03\n\x04\x04\0\x02\0\
-    \x12\x03.\x02\x12\x1a\x93\x03\x20Optional.\x20The\x20resource\x20name\
-    \x20of\x20the\x20monitored\x20resource\x20descriptor:\n\x20`\"projects/{\
-    project_id}/monitoredResourceDescriptors/{type}\"`\x20where\n\x20{type}\
-    \x20is\x20the\x20value\x20of\x20the\x20`type`\x20field\x20in\x20this\x20\
-    object\x20and\n\x20{project_id}\x20is\x20a\x20project\x20ID\x20that\x20p\
-    rovides\x20API-specific\x20context\x20for\n\x20accessing\x20the\x20type.\
-    \x20\x20APIs\x20that\x20do\x20not\x20use\x20project\x20information\x20ca\
-    n\x20use\x20the\n\x20resource\x20name\x20format\x20`\"monitoredResourceD\
-    escriptors/{type}\"`.\n\n\r\n\x05\x04\0\x02\0\x04\x12\x04.\x02'%\n\x0c\n\
-    \x05\x04\0\x02\0\x05\x12\x03.\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\
-    \x03.\t\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03.\x10\x11\n\xc2\x01\n\x04\
-    \x04\0\x02\x01\x12\x033\x02\x12\x1a\xb4\x01\x20Required.\x20The\x20monit\
-    ored\x20resource\x20type.\x20For\x20example,\x20the\x20type\n\x20`\"clou\
-    dsql_database\"`\x20represents\x20databases\x20in\x20Google\x20Cloud\x20\
-    SQL.\n\x20The\x20maximum\x20length\x20of\x20this\x20value\x20is\x20256\
-    \x20characters.\n\n\r\n\x05\x04\0\x02\x01\x04\x12\x043\x02.\x12\n\x0c\n\
-    \x05\x04\0\x02\x01\x05\x12\x033\x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\
-    \x12\x033\t\r\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x033\x10\x11\n\xf5\x01\n\
-    \x04\x04\0\x02\x02\x12\x039\x02\x1a\x1a\xe7\x01\x20Optional.\x20A\x20con\
+    /label.proto\x1a\x1dgoogle/api/launch_stage.proto\x1a\x1cgoogle/protobuf\
+    /struct.proto\"\xfb\x01\n\x1bMonitoredResourceDescriptor\x12\x12\n\x04na\
+    me\x18\x05\x20\x01(\tR\x04name\x12\x12\n\x04type\x18\x01\x20\x01(\tR\x04\
+    type\x12!\n\x0cdisplay_name\x18\x02\x20\x01(\tR\x0bdisplayName\x12\x20\n\
+    \x0bdescription\x18\x03\x20\x01(\tR\x0bdescription\x123\n\x06labels\x18\
+    \x04\x20\x03(\x0b2\x1b.google.api.LabelDescriptorR\x06labels\x12:\n\x0cl\
+    aunch_stage\x18\x07\x20\x01(\x0e2\x17.google.api.LaunchStageR\x0blaunchS\
+    tage\"\xa5\x01\n\x11MonitoredResource\x12\x12\n\x04type\x18\x01\x20\x01(\
+    \tR\x04type\x12A\n\x06labels\x18\x02\x20\x03(\x0b2).google.api.Monitored\
+    Resource.LabelsEntryR\x06labels\x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\
+    \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
+    lue:\x028\x01\"\xf0\x01\n\x19MonitoredResourceMetadata\x12<\n\rsystem_la\
+    bels\x18\x01\x20\x01(\x0b2\x17.google.protobuf.StructR\x0csystemLabels\
+    \x12V\n\x0buser_labels\x18\x02\x20\x03(\x0b25.google.api.MonitoredResour\
+    ceMetadata.UserLabelsEntryR\nuserLabels\x1a=\n\x0fUserLabelsEntry\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\
+    \x01(\tR\x05value:\x028\x01By\n\x0ecom.google.apiB\x16MonitoredResourceP\
+    rotoP\x01ZCgoogle.golang.org/genproto/googleapis/api/monitoredres;monito\
+    redres\xf8\x01\x01\xa2\x02\x04GAPIJ\x93*\n\x06\x12\x04\x0e\0u\x01\n\xbc\
+    \x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202020\x20Google\
+    \x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\
+    \x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\
+    \x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20Y\
+    ou\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\
+    \x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\
+    \x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20w\
+    riting,\x20software\n\x20distributed\x20under\x20the\x20License\x20is\
+    \x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WA\
+    RRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\
+    \x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
+    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
+    r\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x13\n\t\n\x02\x03\0\
+    \x12\x03\x12\0\x20\n\t\n\x02\x03\x01\x12\x03\x13\0'\n\t\n\x02\x03\x02\
+    \x12\x03\x14\0&\n\x08\n\x01\x08\x12\x03\x16\0\x1f\n\t\n\x02\x08\x1f\x12\
+    \x03\x16\0\x1f\n\x08\n\x01\x08\x12\x03\x17\0Z\n\t\n\x02\x08\x0b\x12\x03\
+    \x17\0Z\n\x08\n\x01\x08\x12\x03\x18\0\"\n\t\n\x02\x08\n\x12\x03\x18\0\"\
+    \n\x08\n\x01\x08\x12\x03\x19\07\n\t\n\x02\x08\x08\x12\x03\x19\07\n\x08\n\
+    \x01\x08\x12\x03\x1a\0'\n\t\n\x02\x08\x01\x12\x03\x1a\0'\n\x08\n\x01\x08\
+    \x12\x03\x1b\0\"\n\t\n\x02\x08$\x12\x03\x1b\0\"\n\xa3\x04\n\x02\x04\0\
+    \x12\x04'\0E\x01\x1a\x96\x04\x20An\x20object\x20that\x20describes\x20the\
+    \x20schema\x20of\x20a\x20[MonitoredResource][google.api.MonitoredResourc\
+    e]\x20object\x20using\x20a\n\x20type\x20name\x20and\x20a\x20set\x20of\
+    \x20labels.\x20\x20For\x20example,\x20the\x20monitored\x20resource\n\x20\
+    descriptor\x20for\x20Google\x20Compute\x20Engine\x20VM\x20instances\x20h\
+    as\x20a\x20type\x20of\n\x20`\"gce_instance\"`\x20and\x20specifies\x20the\
+    \x20use\x20of\x20the\x20labels\x20`\"instance_id\"`\x20and\n\x20`\"zone\
+    \"`\x20to\x20identify\x20particular\x20VM\x20instances.\n\n\x20Different\
+    \x20APIs\x20can\x20support\x20different\x20monitored\x20resource\x20type\
+    s.\x20APIs\x20generally\n\x20provide\x20a\x20`list`\x20method\x20that\
+    \x20returns\x20the\x20monitored\x20resource\x20descriptors\x20used\n\x20\
+    by\x20the\x20API.\n\n\n\n\n\x03\x04\0\x01\x12\x03'\x08#\n\xa1\x03\n\x04\
+    \x04\0\x02\0\x12\x03.\x02\x12\x1a\x93\x03\x20Optional.\x20The\x20resourc\
+    e\x20name\x20of\x20the\x20monitored\x20resource\x20descriptor:\n\x20`\"p\
+    rojects/{project_id}/monitoredResourceDescriptors/{type}\"`\x20where\n\
+    \x20{type}\x20is\x20the\x20value\x20of\x20the\x20`type`\x20field\x20in\
+    \x20this\x20object\x20and\n\x20{project_id}\x20is\x20a\x20project\x20ID\
+    \x20that\x20provides\x20API-specific\x20context\x20for\n\x20accessing\
+    \x20the\x20type.\x20\x20APIs\x20that\x20do\x20not\x20use\x20project\x20i\
+    nformation\x20can\x20use\x20the\n\x20resource\x20name\x20format\x20`\"mo\
+    nitoredResourceDescriptors/{type}\"`.\n\n\r\n\x05\x04\0\x02\0\x04\x12\
+    \x04.\x02'%\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03.\x02\x08\n\x0c\n\x05\x04\
+    \0\x02\0\x01\x12\x03.\t\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03.\x10\x11\n\
+    \x8c\x01\n\x04\x04\0\x02\x01\x12\x032\x02\x12\x1a\x7f\x20Required.\x20Th\
+    e\x20monitored\x20resource\x20type.\x20For\x20example,\x20the\x20type\n\
+    \x20`\"cloudsql_database\"`\x20represents\x20databases\x20in\x20Google\
+    \x20Cloud\x20SQL.\n\n\r\n\x05\x04\0\x02\x01\x04\x12\x042\x02.\x12\n\x0c\
+    \n\x05\x04\0\x02\x01\x05\x12\x032\x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\
+    \x12\x032\t\r\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x032\x10\x11\n\xf5\x01\n\
+    \x04\x04\0\x02\x02\x12\x038\x02\x1a\x1a\xe7\x01\x20Optional.\x20A\x20con\
     cise\x20name\x20for\x20the\x20monitored\x20resource\x20type\x20that\x20m\
     ight\x20be\n\x20displayed\x20in\x20user\x20interfaces.\x20It\x20should\
     \x20be\x20a\x20Title\x20Cased\x20Noun\x20Phrase,\n\x20without\x20any\x20\
     article\x20or\x20other\x20determiners.\x20For\x20example,\n\x20`\"Google\
-    \x20Cloud\x20SQL\x20Database\"`.\n\n\r\n\x05\x04\0\x02\x02\x04\x12\x049\
-    \x023\x12\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x039\x02\x08\n\x0c\n\x05\x04\
-    \0\x02\x02\x01\x12\x039\t\x15\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x039\x18\
-    \x19\nt\n\x04\x04\0\x02\x03\x12\x03=\x02\x19\x1ag\x20Optional.\x20A\x20d\
+    \x20Cloud\x20SQL\x20Database\"`.\n\n\r\n\x05\x04\0\x02\x02\x04\x12\x048\
+    \x022\x12\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x038\x02\x08\n\x0c\n\x05\x04\
+    \0\x02\x02\x01\x12\x038\t\x15\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x038\x18\
+    \x19\nt\n\x04\x04\0\x02\x03\x12\x03<\x02\x19\x1ag\x20Optional.\x20A\x20d\
     etailed\x20description\x20of\x20the\x20monitored\x20resource\x20type\x20\
     that\x20might\n\x20be\x20used\x20in\x20documentation.\n\n\r\n\x05\x04\0\
-    \x02\x03\x04\x12\x04=\x029\x1a\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03=\
-    \x02\x08\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03=\t\x14\n\x0c\n\x05\x04\0\
-    \x02\x03\x03\x12\x03=\x17\x18\n\xe1\x01\n\x04\x04\0\x02\x04\x12\x03B\x02\
+    \x02\x03\x04\x12\x04<\x028\x1a\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03<\
+    \x02\x08\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03<\t\x14\n\x0c\n\x05\x04\0\
+    \x02\x03\x03\x12\x03<\x17\x18\n\xe1\x01\n\x04\x04\0\x02\x04\x12\x03A\x02\
     &\x1a\xd3\x01\x20Required.\x20A\x20set\x20of\x20labels\x20used\x20to\x20\
     describe\x20instances\x20of\x20this\x20monitored\n\x20resource\x20type.\
     \x20For\x20example,\x20an\x20individual\x20Google\x20Cloud\x20SQL\x20dat\
     abase\x20is\n\x20identified\x20by\x20values\x20for\x20the\x20labels\x20`\
     \"database_id\"`\x20and\x20`\"zone\"`.\n\n\x0c\n\x05\x04\0\x02\x04\x04\
-    \x12\x03B\x02\n\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03B\x0b\x1a\n\x0c\n\
-    \x05\x04\0\x02\x04\x01\x12\x03B\x1b!\n\x0c\n\x05\x04\0\x02\x04\x03\x12\
-    \x03B$%\n\xcb\x06\n\x02\x04\x01\x12\x04R\0\\\x01\x1a\xbe\x06\x20An\x20ob\
-    ject\x20representing\x20a\x20resource\x20that\x20can\x20be\x20used\x20fo\
-    r\x20monitoring,\x20logging,\n\x20billing,\x20or\x20other\x20purposes.\
-    \x20Examples\x20include\x20virtual\x20machine\x20instances,\n\x20databas\
-    es,\x20and\x20storage\x20devices\x20such\x20as\x20disks.\x20The\x20`type\
-    `\x20field\x20identifies\x20a\n\x20[MonitoredResourceDescriptor][google.\
-    api.MonitoredResourceDescriptor]\x20object\x20that\x20describes\x20the\
-    \x20resource's\n\x20schema.\x20Information\x20in\x20the\x20`labels`\x20f\
-    ield\x20identifies\x20the\x20actual\x20resource\x20and\n\x20its\x20attri\
-    butes\x20according\x20to\x20the\x20schema.\x20For\x20example,\x20a\x20pa\
-    rticular\x20Compute\n\x20Engine\x20VM\x20instance\x20could\x20be\x20repr\
-    esented\x20by\x20the\x20following\x20object,\x20because\x20the\n\x20[Mon\
-    itoredResourceDescriptor][google.api.MonitoredResourceDescriptor]\x20for\
-    \x20`\"gce_instance\"`\x20has\x20labels\n\x20`\"instance_id\"`\x20and\
-    \x20`\"zone\"`:\n\n\x20\x20\x20\x20\x20{\x20\"type\":\x20\"gce_instance\
-    \",\n\x20\x20\x20\x20\x20\x20\x20\"labels\":\x20{\x20\"instance_id\":\
-    \x20\"12345678901234\",\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\"zone\":\x20\"us-central1-a\"\x20}}\n\n\
-    \n\n\x03\x04\x01\x01\x12\x03R\x08\x19\n\xfb\x01\n\x04\x04\x01\x02\0\x12\
-    \x03V\x02\x12\x1a\xed\x01\x20Required.\x20The\x20monitored\x20resource\
-    \x20type.\x20This\x20field\x20must\x20match\n\x20the\x20`type`\x20field\
-    \x20of\x20a\x20[MonitoredResourceDescriptor][google.api.MonitoredResourc\
-    eDescriptor]\x20object.\x20For\n\x20example,\x20the\x20type\x20of\x20a\
-    \x20Compute\x20Engine\x20VM\x20instance\x20is\x20`gce_instance`.\n\n\r\n\
-    \x05\x04\x01\x02\0\x04\x12\x04V\x02R\x1b\n\x0c\n\x05\x04\x01\x02\0\x05\
-    \x12\x03V\x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03V\t\r\n\x0c\n\x05\
-    \x04\x01\x02\0\x03\x12\x03V\x10\x11\n\xd7\x01\n\x04\x04\x01\x02\x01\x12\
-    \x03[\x02!\x1a\xc9\x01\x20Required.\x20Values\x20for\x20all\x20of\x20the\
-    \x20labels\x20listed\x20in\x20the\x20associated\x20monitored\n\x20resour\
-    ce\x20descriptor.\x20For\x20example,\x20Compute\x20Engine\x20VM\x20insta\
-    nces\x20use\x20the\n\x20labels\x20`\"project_id\"`,\x20`\"instance_id\"`\
-    ,\x20and\x20`\"zone\"`.\n\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04[\x02V\
-    \x12\n\x0c\n\x05\x04\x01\x02\x01\x06\x12\x03[\x02\x15\n\x0c\n\x05\x04\
-    \x01\x02\x01\x01\x12\x03[\x16\x1c\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\
-    \x03[\x1f\x20\n\xb9\x03\n\x02\x04\x02\x12\x04d\0s\x01\x1a\xac\x03\x20Aux\
-    iliary\x20metadata\x20for\x20a\x20[MonitoredResource][google.api.Monitor\
-    edResource]\x20object.\n\x20[MonitoredResource][google.api.MonitoredReso\
-    urce]\x20objects\x20contain\x20the\x20minimum\x20set\x20of\x20informatio\
-    n\x20to\n\x20uniquely\x20identify\x20a\x20monitored\x20resource\x20insta\
-    nce.\x20There\x20is\x20some\x20other\x20useful\n\x20auxiliary\x20metadat\
-    a.\x20Monitoring\x20and\x20Logging\x20use\x20an\x20ingestion\n\x20pipeli\
-    ne\x20to\x20extract\x20metadata\x20for\x20cloud\x20resources\x20of\x20al\
-    l\x20types,\x20and\x20store\n\x20the\x20metadata\x20in\x20this\x20messag\
-    e.\n\n\n\n\x03\x04\x02\x01\x12\x03d\x08!\n\xa1\x03\n\x04\x04\x02\x02\0\
-    \x12\x03o\x02+\x1a\x93\x03\x20Output\x20only.\x20Values\x20for\x20predef\
-    ined\x20system\x20metadata\x20labels.\n\x20System\x20labels\x20are\x20a\
-    \x20kind\x20of\x20metadata\x20extracted\x20by\x20Google,\x20including\n\
-    \x20\"machine_image\",\x20\"vpc\",\x20\"subnet_id\",\n\x20\"security_gro\
-    up\",\x20\"name\",\x20etc.\n\x20System\x20label\x20values\x20can\x20be\
-    \x20only\x20strings,\x20Boolean\x20values,\x20or\x20a\x20list\x20of\n\
-    \x20strings.\x20For\x20example:\n\n\x20\x20\x20\x20\x20{\x20\"name\":\
-    \x20\"my-test-instance\",\n\x20\x20\x20\x20\x20\x20\x20\"security_group\
-    \":\x20[\"a\",\x20\"b\",\x20\"c\"],\n\x20\x20\x20\x20\x20\x20\x20\"spot_\
-    instance\":\x20false\x20}\n\n\r\n\x05\x04\x02\x02\0\x04\x12\x04o\x02d#\n\
-    \x0c\n\x05\x04\x02\x02\0\x06\x12\x03o\x02\x18\n\x0c\n\x05\x04\x02\x02\0\
-    \x01\x12\x03o\x19&\n\x0c\n\x05\x04\x02\x02\0\x03\x12\x03o)*\nB\n\x04\x04\
-    \x02\x02\x01\x12\x03r\x02&\x1a5\x20Output\x20only.\x20A\x20map\x20of\x20\
-    user-defined\x20metadata\x20labels.\n\n\r\n\x05\x04\x02\x02\x01\x04\x12\
-    \x04r\x02o+\n\x0c\n\x05\x04\x02\x02\x01\x06\x12\x03r\x02\x15\n\x0c\n\x05\
-    \x04\x02\x02\x01\x01\x12\x03r\x16!\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\
-    \x03r$%b\x06proto3\
+    \x12\x03A\x02\n\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03A\x0b\x1a\n\x0c\n\
+    \x05\x04\0\x02\x04\x01\x12\x03A\x1b!\n\x0c\n\x05\x04\0\x02\x04\x03\x12\
+    \x03A$%\nO\n\x04\x04\0\x02\x05\x12\x03D\x02\x1f\x1aB\x20Optional.\x20The\
+    \x20launch\x20stage\x20of\x20the\x20monitored\x20resource\x20definition.\
+    \n\n\r\n\x05\x04\0\x02\x05\x04\x12\x04D\x02A&\n\x0c\n\x05\x04\0\x02\x05\
+    \x06\x12\x03D\x02\r\n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03D\x0e\x1a\n\x0c\
+    \n\x05\x04\0\x02\x05\x03\x12\x03D\x1d\x1e\n\xcb\x06\n\x02\x04\x01\x12\
+    \x04T\0^\x01\x1a\xbe\x06\x20An\x20object\x20representing\x20a\x20resourc\
+    e\x20that\x20can\x20be\x20used\x20for\x20monitoring,\x20logging,\n\x20bi\
+    lling,\x20or\x20other\x20purposes.\x20Examples\x20include\x20virtual\x20\
+    machine\x20instances,\n\x20databases,\x20and\x20storage\x20devices\x20su\
+    ch\x20as\x20disks.\x20The\x20`type`\x20field\x20identifies\x20a\n\x20[Mo\
+    nitoredResourceDescriptor][google.api.MonitoredResourceDescriptor]\x20ob\
+    ject\x20that\x20describes\x20the\x20resource's\n\x20schema.\x20Informati\
+    on\x20in\x20the\x20`labels`\x20field\x20identifies\x20the\x20actual\x20r\
+    esource\x20and\n\x20its\x20attributes\x20according\x20to\x20the\x20schem\
+    a.\x20For\x20example,\x20a\x20particular\x20Compute\n\x20Engine\x20VM\
+    \x20instance\x20could\x20be\x20represented\x20by\x20the\x20following\x20\
+    object,\x20because\x20the\n\x20[MonitoredResourceDescriptor][google.api.\
+    MonitoredResourceDescriptor]\x20for\x20`\"gce_instance\"`\x20has\x20labe\
+    ls\n\x20`\"instance_id\"`\x20and\x20`\"zone\"`:\n\n\x20\x20\x20\x20\x20{\
+    \x20\"type\":\x20\"gce_instance\",\n\x20\x20\x20\x20\x20\x20\x20\"labels\
+    \":\x20{\x20\"instance_id\":\x20\"12345678901234\",\n\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\"zone\":\
+    \x20\"us-central1-a\"\x20}}\n\n\n\n\x03\x04\x01\x01\x12\x03T\x08\x19\n\
+    \xfb\x01\n\x04\x04\x01\x02\0\x12\x03X\x02\x12\x1a\xed\x01\x20Required.\
+    \x20The\x20monitored\x20resource\x20type.\x20This\x20field\x20must\x20ma\
+    tch\n\x20the\x20`type`\x20field\x20of\x20a\x20[MonitoredResourceDescript\
+    or][google.api.MonitoredResourceDescriptor]\x20object.\x20For\n\x20examp\
+    le,\x20the\x20type\x20of\x20a\x20Compute\x20Engine\x20VM\x20instance\x20\
+    is\x20`gce_instance`.\n\n\r\n\x05\x04\x01\x02\0\x04\x12\x04X\x02T\x1b\n\
+    \x0c\n\x05\x04\x01\x02\0\x05\x12\x03X\x02\x08\n\x0c\n\x05\x04\x01\x02\0\
+    \x01\x12\x03X\t\r\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03X\x10\x11\n\xd7\
+    \x01\n\x04\x04\x01\x02\x01\x12\x03]\x02!\x1a\xc9\x01\x20Required.\x20Val\
+    ues\x20for\x20all\x20of\x20the\x20labels\x20listed\x20in\x20the\x20assoc\
+    iated\x20monitored\n\x20resource\x20descriptor.\x20For\x20example,\x20Co\
+    mpute\x20Engine\x20VM\x20instances\x20use\x20the\n\x20labels\x20`\"proje\
+    ct_id\"`,\x20`\"instance_id\"`,\x20and\x20`\"zone\"`.\n\n\r\n\x05\x04\
+    \x01\x02\x01\x04\x12\x04]\x02X\x12\n\x0c\n\x05\x04\x01\x02\x01\x06\x12\
+    \x03]\x02\x15\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03]\x16\x1c\n\x0c\n\
+    \x05\x04\x01\x02\x01\x03\x12\x03]\x1f\x20\n\xb9\x03\n\x02\x04\x02\x12\
+    \x04f\0u\x01\x1a\xac\x03\x20Auxiliary\x20metadata\x20for\x20a\x20[Monito\
+    redResource][google.api.MonitoredResource]\x20object.\n\x20[MonitoredRes\
+    ource][google.api.MonitoredResource]\x20objects\x20contain\x20the\x20min\
+    imum\x20set\x20of\x20information\x20to\n\x20uniquely\x20identify\x20a\
+    \x20monitored\x20resource\x20instance.\x20There\x20is\x20some\x20other\
+    \x20useful\n\x20auxiliary\x20metadata.\x20Monitoring\x20and\x20Logging\
+    \x20use\x20an\x20ingestion\n\x20pipeline\x20to\x20extract\x20metadata\
+    \x20for\x20cloud\x20resources\x20of\x20all\x20types,\x20and\x20store\n\
+    \x20the\x20metadata\x20in\x20this\x20message.\n\n\n\n\x03\x04\x02\x01\
+    \x12\x03f\x08!\n\xa1\x03\n\x04\x04\x02\x02\0\x12\x03q\x02+\x1a\x93\x03\
+    \x20Output\x20only.\x20Values\x20for\x20predefined\x20system\x20metadata\
+    \x20labels.\n\x20System\x20labels\x20are\x20a\x20kind\x20of\x20metadata\
+    \x20extracted\x20by\x20Google,\x20including\n\x20\"machine_image\",\x20\
+    \"vpc\",\x20\"subnet_id\",\n\x20\"security_group\",\x20\"name\",\x20etc.\
+    \n\x20System\x20label\x20values\x20can\x20be\x20only\x20strings,\x20Bool\
+    ean\x20values,\x20or\x20a\x20list\x20of\n\x20strings.\x20For\x20example:\
+    \n\n\x20\x20\x20\x20\x20{\x20\"name\":\x20\"my-test-instance\",\n\x20\
+    \x20\x20\x20\x20\x20\x20\"security_group\":\x20[\"a\",\x20\"b\",\x20\"c\
+    \"],\n\x20\x20\x20\x20\x20\x20\x20\"spot_instance\":\x20false\x20}\n\n\r\
+    \n\x05\x04\x02\x02\0\x04\x12\x04q\x02f#\n\x0c\n\x05\x04\x02\x02\0\x06\
+    \x12\x03q\x02\x18\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03q\x19&\n\x0c\n\
+    \x05\x04\x02\x02\0\x03\x12\x03q)*\nB\n\x04\x04\x02\x02\x01\x12\x03t\x02&\
+    \x1a5\x20Output\x20only.\x20A\x20map\x20of\x20user-defined\x20metadata\
+    \x20labels.\n\n\r\n\x05\x04\x02\x02\x01\x04\x12\x04t\x02q+\n\x0c\n\x05\
+    \x04\x02\x02\x01\x06\x12\x03t\x02\x15\n\x0c\n\x05\x04\x02\x02\x01\x01\
+    \x12\x03t\x16!\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03t$%b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -23,6 +23,7 @@ pub mod empty;
 pub(crate) mod iam;
 pub mod longrunning;
 pub(crate) mod rpc;
+pub(crate) mod r#type;
 
 pub mod bigtable;
 pub mod pubsub;

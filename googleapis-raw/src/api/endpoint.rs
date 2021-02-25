@@ -28,7 +28,6 @@ pub struct Endpoint {
     // message fields
     pub name: ::std::string::String,
     pub aliases: ::protobuf::RepeatedField<::std::string::String>,
-    pub features: ::protobuf::RepeatedField<::std::string::String>,
     pub target: ::std::string::String,
     pub allow_cors: bool,
     // special fields
@@ -98,31 +97,6 @@ impl Endpoint {
         ::std::mem::replace(&mut self.aliases, ::protobuf::RepeatedField::new())
     }
 
-    // repeated string features = 4;
-
-
-    pub fn get_features(&self) -> &[::std::string::String] {
-        &self.features
-    }
-    pub fn clear_features(&mut self) {
-        self.features.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_features(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.features = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_features(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.features
-    }
-
-    // Take field
-    pub fn take_features(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.features, ::protobuf::RepeatedField::new())
-    }
-
     // string target = 101;
 
 
@@ -180,9 +154,6 @@ impl ::protobuf::Message for Endpoint {
                 2 => {
                     ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.aliases)?;
                 },
-                4 => {
-                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.features)?;
-                },
                 101 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.target)?;
                 },
@@ -211,9 +182,6 @@ impl ::protobuf::Message for Endpoint {
         for value in &self.aliases {
             my_size += ::protobuf::rt::string_size(2, &value);
         };
-        for value in &self.features {
-            my_size += ::protobuf::rt::string_size(4, &value);
-        };
         if !self.target.is_empty() {
             my_size += ::protobuf::rt::string_size(101, &self.target);
         }
@@ -231,9 +199,6 @@ impl ::protobuf::Message for Endpoint {
         }
         for v in &self.aliases {
             os.write_string(2, &v)?;
-        };
-        for v in &self.features {
-            os.write_string(4, &v)?;
         };
         if !self.target.is_empty() {
             os.write_string(101, &self.target)?;
@@ -289,11 +254,6 @@ impl ::protobuf::Message for Endpoint {
                 |m: &Endpoint| { &m.aliases },
                 |m: &mut Endpoint| { &mut m.aliases },
             ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "features",
-                |m: &Endpoint| { &m.features },
-                |m: &mut Endpoint| { &mut m.features },
-            ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "target",
                 |m: &Endpoint| { &m.target },
@@ -322,7 +282,6 @@ impl ::protobuf::Clear for Endpoint {
     fn clear(&mut self) {
         self.name.clear();
         self.aliases.clear();
-        self.features.clear();
         self.target.clear();
         self.allow_cors = false;
         self.unknown_fields.clear();
@@ -342,85 +301,81 @@ impl ::protobuf::reflect::ProtobufValue for Endpoint {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x19google/api/endpoint.proto\x12\ngoogle.api\x1a\x1cgoogle/api/annota\
-    tions.proto\"\x8f\x01\n\x08Endpoint\x12\x12\n\x04name\x18\x01\x20\x01(\t\
-    R\x04name\x12\x1c\n\x07aliases\x18\x02\x20\x03(\tR\x07aliasesB\x02\x18\
-    \x01\x12\x1a\n\x08features\x18\x04\x20\x03(\tR\x08features\x12\x16\n\x06\
-    target\x18e\x20\x01(\tR\x06target\x12\x1d\n\nallow_cors\x18\x05\x20\x01(\
-    \x08R\tallowCorsBo\n\x0ecom.google.apiB\rEndpointProtoP\x01ZEgoogle.gola\
-    ng.org/genproto/googleapis/api/serviceconfig;serviceconfig\xa2\x02\x04GA\
-    PIJ\xdd\x15\n\x06\x12\x04\x0f\0G\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\
-    \x122\xb3\x04\x20Copyright\x202018\x20Google\x20LLC.\n\n\x20Licensed\x20\
-    under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"Licens\
-    e\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20c\
-    ompliance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20c\
-    opy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apac\
-    he.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicabl\
-    e\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distri\
-    buted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"A\
-    S\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
-    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
-    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
-    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\n\x08\n\
-    \x01\x02\x12\x03\x11\0\x13\n\t\n\x02\x03\0\x12\x03\x13\0&\n\x08\n\x01\
-    \x08\x12\x03\x15\0\\\n\t\n\x02\x08\x0b\x12\x03\x15\0\\\n\x08\n\x01\x08\
-    \x12\x03\x16\0\"\n\t\n\x02\x08\n\x12\x03\x16\0\"\n\x08\n\x01\x08\x12\x03\
-    \x17\0.\n\t\n\x02\x08\x08\x12\x03\x17\0.\n\x08\n\x01\x08\x12\x03\x18\0'\
-    \n\t\n\x02\x08\x01\x12\x03\x18\0'\n\x08\n\x01\x08\x12\x03\x19\0\"\n\t\n\
-    \x02\x08$\x12\x03\x19\0\"\n\xce\x05\n\x02\x04\0\x12\x04,\0G\x01\x1a\xc1\
-    \x05\x20`Endpoint`\x20describes\x20a\x20network\x20endpoint\x20that\x20s\
-    erves\x20a\x20set\x20of\x20APIs.\n\x20A\x20service\x20may\x20expose\x20a\
-    ny\x20number\x20of\x20endpoints,\x20and\x20all\x20endpoints\x20share\x20\
-    the\n\x20same\x20service\x20configuration,\x20such\x20as\x20quota\x20con\
-    figuration\x20and\x20monitoring\n\x20configuration.\n\n\x20Example\x20se\
-    rvice\x20configuration:\n\n\x20\x20\x20\x20\x20name:\x20library-example.\
-    googleapis.com\n\x20\x20\x20\x20\x20endpoints:\n\x20\x20\x20\x20\x20\x20\
-    \x20#\x20Below\x20entry\x20makes\x20'google.example.library.v1.Library'\
-    \n\x20\x20\x20\x20\x20\x20\x20#\x20API\x20be\x20served\x20from\x20endpoi\
-    nt\x20address\x20library-example.googleapis.com.\n\x20\x20\x20\x20\x20\
-    \x20\x20#\x20It\x20also\x20allows\x20HTTP\x20OPTIONS\x20calls\x20to\x20b\
-    e\x20passed\x20to\x20the\x20backend,\x20for\n\x20\x20\x20\x20\x20\x20\
-    \x20#\x20it\x20to\x20decide\x20whether\x20the\x20subsequent\x20cross-ori\
-    gin\x20request\x20is\n\x20\x20\x20\x20\x20\x20\x20#\x20allowed\x20to\x20\
-    proceed.\n\x20\x20\x20\x20\x20-\x20name:\x20library-example.googleapis.c\
-    om\n\x20\x20\x20\x20\x20\x20\x20allow_cors:\x20true\n\n\n\n\x03\x04\0\
-    \x01\x12\x03,\x08\x10\n3\n\x04\x04\0\x02\0\x12\x03.\x02\x12\x1a&\x20The\
-    \x20canonical\x20name\x20of\x20this\x20endpoint.\n\n\r\n\x05\x04\0\x02\0\
-    \x04\x12\x04.\x02,\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03.\x02\x08\n\
-    \x0c\n\x05\x04\0\x02\0\x01\x12\x03.\t\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\
-    \x03.\x10\x11\n\xf8\x01\n\x04\x04\0\x02\x01\x12\x035\x022\x1a\xea\x01\
-    \x20DEPRECATED:\x20This\x20field\x20is\x20no\x20longer\x20supported.\x20\
-    Instead\x20of\x20using\x20aliases,\n\x20please\x20specify\x20multiple\
-    \x20[google.api.Endpoint][google.api.Endpoint]\x20for\x20each\x20of\x20t\
-    he\x20intended\n\x20aliases.\n\n\x20Additional\x20names\x20that\x20this\
-    \x20endpoint\x20will\x20be\x20hosted\x20on.\n\n\x0c\n\x05\x04\0\x02\x01\
-    \x04\x12\x035\x02\n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x035\x0b\x11\n\x0c\
-    \n\x05\x04\0\x02\x01\x01\x12\x035\x12\x19\n\x0c\n\x05\x04\0\x02\x01\x03\
-    \x12\x035\x1c\x1d\n\x0c\n\x05\x04\0\x02\x01\x08\x12\x035\x1e1\n\r\n\x06\
-    \x04\0\x02\x01\x08\x03\x12\x035\x1f0\n=\n\x04\x04\0\x02\x02\x12\x038\x02\
-    \x1f\x1a0\x20The\x20list\x20of\x20features\x20enabled\x20on\x20this\x20e\
-    ndpoint.\n\n\x0c\n\x05\x04\0\x02\x02\x04\x12\x038\x02\n\n\x0c\n\x05\x04\
-    \0\x02\x02\x05\x12\x038\x0b\x11\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x038\
-    \x12\x1a\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x038\x1d\x1e\n\xb3\x02\n\x04\
-    \x04\0\x02\x03\x12\x03>\x02\x16\x1a\xa5\x02\x20The\x20specification\x20o\
-    f\x20an\x20Internet\x20routable\x20address\x20of\x20API\x20frontend\x20t\
-    hat\x20will\n\x20handle\x20requests\x20to\x20this\x20[API\x20Endpoint](h\
-    ttps://cloud.google.com/apis/design/glossary).\n\x20It\x20should\x20be\
-    \x20either\x20a\x20valid\x20IPv4\x20address\x20or\x20a\x20fully-qualifie\
-    d\x20domain\x20name.\n\x20For\x20example,\x20\"8.8.8.8\"\x20or\x20\"myse\
-    rvice.appspot.com\".\n\n\r\n\x05\x04\0\x02\x03\x04\x12\x04>\x028\x1f\n\
-    \x0c\n\x05\x04\0\x02\x03\x05\x12\x03>\x02\x08\n\x0c\n\x05\x04\0\x02\x03\
-    \x01\x12\x03>\t\x0f\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03>\x12\x15\n\xd9\
-    \x02\n\x04\x04\0\x02\x04\x12\x03F\x02\x16\x1a\xcb\x02\x20Allowing\n\x20[\
-    CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing),\x20a\
-    ka\n\x20cross-domain\x20traffic,\x20would\x20allow\x20the\x20backends\
-    \x20served\x20from\x20this\x20endpoint\x20to\n\x20receive\x20and\x20resp\
-    ond\x20to\x20HTTP\x20OPTIONS\x20requests.\x20The\x20response\x20will\x20\
-    be\x20used\x20by\n\x20the\x20browser\x20to\x20determine\x20whether\x20th\
-    e\x20subsequent\x20cross-origin\x20request\x20is\n\x20allowed\x20to\x20p\
-    roceed.\n\n\r\n\x05\x04\0\x02\x04\x04\x12\x04F\x02>\x16\n\x0c\n\x05\x04\
-    \0\x02\x04\x05\x12\x03F\x02\x06\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03F\
-    \x07\x11\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03F\x14\x15b\x06proto3\
+    \n\x19google/api/endpoint.proto\x12\ngoogle.api\"s\n\x08Endpoint\x12\x12\
+    \n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1c\n\x07aliases\x18\x02\x20\
+    \x03(\tR\x07aliasesB\x02\x18\x01\x12\x16\n\x06target\x18e\x20\x01(\tR\
+    \x06target\x12\x1d\n\nallow_cors\x18\x05\x20\x01(\x08R\tallowCorsBo\n\
+    \x0ecom.google.apiB\rEndpointProtoP\x01ZEgoogle.golang.org/genproto/goog\
+    leapis/api/serviceconfig;serviceconfig\xa2\x02\x04GAPIJ\x93\x15\n\x06\
+    \x12\x04\x0e\0A\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Co\
+    pyright\x202020\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apac\
+    he\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20ma\
+    y\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\
+    \x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\
+    \x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/\
+    LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\
+    \x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\
+    \x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20B\
+    ASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIN\
+    D,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20\
+    for\x20the\x20specific\x20language\x20governing\x20permissions\x20and\n\
+    \x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\
+    \x10\0\x13\n\x08\n\x01\x08\x12\x03\x12\0\\\n\t\n\x02\x08\x0b\x12\x03\x12\
+    \0\\\n\x08\n\x01\x08\x12\x03\x13\0\"\n\t\n\x02\x08\n\x12\x03\x13\0\"\n\
+    \x08\n\x01\x08\x12\x03\x14\0.\n\t\n\x02\x08\x08\x12\x03\x14\0.\n\x08\n\
+    \x01\x08\x12\x03\x15\0'\n\t\n\x02\x08\x01\x12\x03\x15\0'\n\x08\n\x01\x08\
+    \x12\x03\x16\0\"\n\t\n\x02\x08$\x12\x03\x16\0\"\n\x87\x06\n\x02\x04\0\
+    \x12\x04(\0A\x01\x1a\xfa\x05\x20`Endpoint`\x20describes\x20a\x20network\
+    \x20endpoint\x20of\x20a\x20service\x20that\x20serves\x20a\x20set\x20of\n\
+    \x20APIs.\x20It\x20is\x20commonly\x20known\x20as\x20a\x20service\x20endp\
+    oint.\x20A\x20service\x20may\x20expose\n\x20any\x20number\x20of\x20servi\
+    ce\x20endpoints,\x20and\x20all\x20service\x20endpoints\x20share\x20the\
+    \x20same\n\x20service\x20definition,\x20such\x20as\x20quota\x20limits\
+    \x20and\x20monitoring\x20metrics.\n\n\x20Example\x20service\x20configura\
+    tion:\n\n\x20\x20\x20\x20\x20name:\x20library-example.googleapis.com\n\
+    \x20\x20\x20\x20\x20endpoints:\n\x20\x20\x20\x20\x20\x20\x20#\x20Below\
+    \x20entry\x20makes\x20'google.example.library.v1.Library'\n\x20\x20\x20\
+    \x20\x20\x20\x20#\x20API\x20be\x20served\x20from\x20endpoint\x20address\
+    \x20library-example.googleapis.com.\n\x20\x20\x20\x20\x20\x20\x20#\x20It\
+    \x20also\x20allows\x20HTTP\x20OPTIONS\x20calls\x20to\x20be\x20passed\x20\
+    to\x20the\x20backend,\x20for\n\x20\x20\x20\x20\x20\x20\x20#\x20it\x20to\
+    \x20decide\x20whether\x20the\x20subsequent\x20cross-origin\x20request\
+    \x20is\n\x20\x20\x20\x20\x20\x20\x20#\x20allowed\x20to\x20proceed.\n\x20\
+    \x20\x20\x20\x20-\x20name:\x20library-example.googleapis.com\n\x20\x20\
+    \x20\x20\x20\x20\x20allow_cors:\x20true\n\n\n\n\x03\x04\0\x01\x12\x03(\
+    \x08\x10\n3\n\x04\x04\0\x02\0\x12\x03*\x02\x12\x1a&\x20The\x20canonical\
+    \x20name\x20of\x20this\x20endpoint.\n\n\r\n\x05\x04\0\x02\0\x04\x12\x04*\
+    \x02(\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03*\x02\x08\n\x0c\n\x05\x04\0\
+    \x02\0\x01\x12\x03*\t\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03*\x10\x11\n\
+    \xf8\x01\n\x04\x04\0\x02\x01\x12\x031\x022\x1a\xea\x01\x20DEPRECATED:\
+    \x20This\x20field\x20is\x20no\x20longer\x20supported.\x20Instead\x20of\
+    \x20using\x20aliases,\n\x20please\x20specify\x20multiple\x20[google.api.\
+    Endpoint][google.api.Endpoint]\x20for\x20each\x20of\x20the\x20intended\n\
+    \x20aliases.\n\n\x20Additional\x20names\x20that\x20this\x20endpoint\x20w\
+    ill\x20be\x20hosted\x20on.\n\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x031\x02\
+    \n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x031\x0b\x11\n\x0c\n\x05\x04\0\x02\
+    \x01\x01\x12\x031\x12\x19\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x031\x1c\x1d\
+    \n\x0c\n\x05\x04\0\x02\x01\x08\x12\x031\x1e1\n\r\n\x06\x04\0\x02\x01\x08\
+    \x03\x12\x031\x1f0\n\xb4\x02\n\x04\x04\0\x02\x02\x12\x038\x02\x16\x1a\
+    \xa6\x02\x20The\x20specification\x20of\x20an\x20Internet\x20routable\x20\
+    address\x20of\x20API\x20frontend\x20that\x20will\n\x20handle\x20requests\
+    \x20to\x20this\x20[API\n\x20Endpoint](https://cloud.google.com/apis/desi\
+    gn/glossary).\x20It\x20should\x20be\n\x20either\x20a\x20valid\x20IPv4\
+    \x20address\x20or\x20a\x20fully-qualified\x20domain\x20name.\x20For\x20e\
+    xample,\n\x20\"8.8.8.8\"\x20or\x20\"myservice.appspot.com\".\n\n\r\n\x05\
+    \x04\0\x02\x02\x04\x12\x048\x0212\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x038\
+    \x02\x08\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x038\t\x0f\n\x0c\n\x05\x04\0\
+    \x02\x02\x03\x12\x038\x12\x15\n\xd9\x02\n\x04\x04\0\x02\x03\x12\x03@\x02\
+    \x16\x1a\xcb\x02\x20Allowing\n\x20[CORS](https://en.wikipedia.org/wiki/C\
+    ross-origin_resource_sharing),\x20aka\n\x20cross-domain\x20traffic,\x20w\
+    ould\x20allow\x20the\x20backends\x20served\x20from\x20this\x20endpoint\
+    \x20to\n\x20receive\x20and\x20respond\x20to\x20HTTP\x20OPTIONS\x20reques\
+    ts.\x20The\x20response\x20will\x20be\x20used\x20by\n\x20the\x20browser\
+    \x20to\x20determine\x20whether\x20the\x20subsequent\x20cross-origin\x20r\
+    equest\x20is\n\x20allowed\x20to\x20proceed.\n\n\r\n\x05\x04\0\x02\x03\
+    \x04\x12\x04@\x028\x16\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03@\x02\x06\n\
+    \x0c\n\x05\x04\0\x02\x03\x01\x12\x03@\x07\x11\n\x0c\n\x05\x04\0\x02\x03\
+    \x03\x12\x03@\x14\x15b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

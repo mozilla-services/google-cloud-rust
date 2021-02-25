@@ -21,4 +21,7 @@ pub mod spanner_grpc;
 pub mod transaction;
 pub mod type_pb;
 
-pub(crate) use crate::empty;
+pub(crate) use crate::{
+    empty,
+    rpc::status,
+};
