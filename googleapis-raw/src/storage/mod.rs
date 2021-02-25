@@ -12,6 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod storage_grpc;
-pub mod storage_resources;
-pub mod storage;
+pub mod v1;

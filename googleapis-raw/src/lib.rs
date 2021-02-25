@@ -28,3 +28,4 @@ pub(crate) mod r#type;
 pub mod bigtable;
 pub mod pubsub;
 pub mod spanner;
+pub mod storage;
