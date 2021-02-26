@@ -15,3 +15,8 @@
 pub mod iam_policy;
 pub mod iam_policy_grpc;
 pub mod policy;
+pub mod options;
+
+pub(crate) use crate::{
+    r#type::expr,
+};

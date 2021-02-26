@@ -41,7 +41,8 @@ if ! [[ -x "$(command -v grpc_rust_plugin)" ]]; then
 fi
 
 echo "Pulling git submodules"
-git submodule update --init --recursive
+# comment out to work on master...
+#git submodule update --init --recursive
 
 apis=grpc/third_party/googleapis
 
@@ -59,12 +60,24 @@ for proto in $proto_files; do
         $proto
 done
 
-proto_dirs="
+storage_dirs="
+storage/v1
+"
+
+# Big table has dependencies on "ruby_package"
+big_table_dirs="
 bigtable/admin/cluster/v1
 bigtable/admin/table/v1
 bigtable/admin/v2
 bigtable/v1
 bigtable/v2
+"
+
+proto_dirs="
+api
+api/servicecontrol/v1
+api/servicemanagement/v1
+type
 iam/v1
 longrunning
 pubsub/v1
@@ -73,6 +86,8 @@ rpc
 spanner/admin/database/v1
 spanner/admin/instance/v1
 spanner/v1
+$big_table_dirs
+$storage_dirs
 "
 
 # The following are required to support Spanner only
