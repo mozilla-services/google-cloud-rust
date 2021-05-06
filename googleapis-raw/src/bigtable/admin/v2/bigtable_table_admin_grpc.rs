@@ -5,8 +5,6 @@
 #![allow(unknown_lints)]
 #![allow(clippy::all)]
 
-#![cfg_attr(rustfmt, rustfmt_skip)]
-
 #![allow(box_pointers)]
 #![allow(dead_code)]
 #![allow(missing_docs)]
@@ -105,6 +103,69 @@ const METHOD_BIGTABLE_TABLE_ADMIN_LIST_SNAPSHOTS: ::grpcio::Method<super::bigtab
 const METHOD_BIGTABLE_TABLE_ADMIN_DELETE_SNAPSHOT: ::grpcio::Method<super::bigtable_table_admin::DeleteSnapshotRequest, super::empty::Empty> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.bigtable.admin.v2.BigtableTableAdmin/DeleteSnapshot",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_CREATE_BACKUP: ::grpcio::Method<super::bigtable_table_admin::CreateBackupRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/CreateBackup",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_GET_BACKUP: ::grpcio::Method<super::bigtable_table_admin::GetBackupRequest, super::table::Backup> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/GetBackup",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_BACKUP: ::grpcio::Method<super::bigtable_table_admin::UpdateBackupRequest, super::table::Backup> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/UpdateBackup",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_DELETE_BACKUP: ::grpcio::Method<super::bigtable_table_admin::DeleteBackupRequest, super::empty::Empty> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/DeleteBackup",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_LIST_BACKUPS: ::grpcio::Method<super::bigtable_table_admin::ListBackupsRequest, super::bigtable_table_admin::ListBackupsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/ListBackups",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_RESTORE_TABLE: ::grpcio::Method<super::bigtable_table_admin::RestoreTableRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/RestoreTable",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_GET_IAM_POLICY: ::grpcio::Method<super::iam_policy::GetIamPolicyRequest, super::policy::Policy> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/GetIamPolicy",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_SET_IAM_POLICY: ::grpcio::Method<super::iam_policy::SetIamPolicyRequest, super::policy::Policy> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/SetIamPolicy",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_TEST_IAM_PERMISSIONS: ::grpcio::Method<super::iam_policy::TestIamPermissionsRequest, super::iam_policy::TestIamPermissionsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/TestIamPermissions",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -328,6 +389,150 @@ impl BigtableTableAdminClient {
     pub fn delete_snapshot_async(&self, req: &super::bigtable_table_admin::DeleteSnapshotRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_snapshot_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn create_backup_opt(&self, req: &super::bigtable_table_admin::CreateBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_CREATE_BACKUP, req, opt)
+    }
+
+    pub fn create_backup(&self, req: &super::bigtable_table_admin::CreateBackupRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.create_backup_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_backup_async_opt(&self, req: &super::bigtable_table_admin::CreateBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_CREATE_BACKUP, req, opt)
+    }
+
+    pub fn create_backup_async(&self, req: &super::bigtable_table_admin::CreateBackupRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.create_backup_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_backup_opt(&self, req: &super::bigtable_table_admin::GetBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::table::Backup> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_GET_BACKUP, req, opt)
+    }
+
+    pub fn get_backup(&self, req: &super::bigtable_table_admin::GetBackupRequest) -> ::grpcio::Result<super::table::Backup> {
+        self.get_backup_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_backup_async_opt(&self, req: &super::bigtable_table_admin::GetBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::table::Backup>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_GET_BACKUP, req, opt)
+    }
+
+    pub fn get_backup_async(&self, req: &super::bigtable_table_admin::GetBackupRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::table::Backup>> {
+        self.get_backup_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_backup_opt(&self, req: &super::bigtable_table_admin::UpdateBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::table::Backup> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_BACKUP, req, opt)
+    }
+
+    pub fn update_backup(&self, req: &super::bigtable_table_admin::UpdateBackupRequest) -> ::grpcio::Result<super::table::Backup> {
+        self.update_backup_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_backup_async_opt(&self, req: &super::bigtable_table_admin::UpdateBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::table::Backup>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_BACKUP, req, opt)
+    }
+
+    pub fn update_backup_async(&self, req: &super::bigtable_table_admin::UpdateBackupRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::table::Backup>> {
+        self.update_backup_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_backup_opt(&self, req: &super::bigtable_table_admin::DeleteBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_BACKUP, req, opt)
+    }
+
+    pub fn delete_backup(&self, req: &super::bigtable_table_admin::DeleteBackupRequest) -> ::grpcio::Result<super::empty::Empty> {
+        self.delete_backup_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_backup_async_opt(&self, req: &super::bigtable_table_admin::DeleteBackupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_BACKUP, req, opt)
+    }
+
+    pub fn delete_backup_async(&self, req: &super::bigtable_table_admin::DeleteBackupRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.delete_backup_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_backups_opt(&self, req: &super::bigtable_table_admin::ListBackupsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::bigtable_table_admin::ListBackupsResponse> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_BACKUPS, req, opt)
+    }
+
+    pub fn list_backups(&self, req: &super::bigtable_table_admin::ListBackupsRequest) -> ::grpcio::Result<super::bigtable_table_admin::ListBackupsResponse> {
+        self.list_backups_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_backups_async_opt(&self, req: &super::bigtable_table_admin::ListBackupsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable_table_admin::ListBackupsResponse>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_BACKUPS, req, opt)
+    }
+
+    pub fn list_backups_async(&self, req: &super::bigtable_table_admin::ListBackupsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable_table_admin::ListBackupsResponse>> {
+        self.list_backups_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn restore_table_opt(&self, req: &super::bigtable_table_admin::RestoreTableRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_RESTORE_TABLE, req, opt)
+    }
+
+    pub fn restore_table(&self, req: &super::bigtable_table_admin::RestoreTableRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.restore_table_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn restore_table_async_opt(&self, req: &super::bigtable_table_admin::RestoreTableRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_RESTORE_TABLE, req, opt)
+    }
+
+    pub fn restore_table_async(&self, req: &super::bigtable_table_admin::RestoreTableRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.restore_table_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_iam_policy_opt(&self, req: &super::iam_policy::GetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::policy::Policy> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_GET_IAM_POLICY, req, opt)
+    }
+
+    pub fn get_iam_policy(&self, req: &super::iam_policy::GetIamPolicyRequest) -> ::grpcio::Result<super::policy::Policy> {
+        self.get_iam_policy_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_iam_policy_async_opt(&self, req: &super::iam_policy::GetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_GET_IAM_POLICY, req, opt)
+    }
+
+    pub fn get_iam_policy_async(&self, req: &super::iam_policy::GetIamPolicyRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+        self.get_iam_policy_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn set_iam_policy_opt(&self, req: &super::iam_policy::SetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::policy::Policy> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_SET_IAM_POLICY, req, opt)
+    }
+
+    pub fn set_iam_policy(&self, req: &super::iam_policy::SetIamPolicyRequest) -> ::grpcio::Result<super::policy::Policy> {
+        self.set_iam_policy_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn set_iam_policy_async_opt(&self, req: &super::iam_policy::SetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_SET_IAM_POLICY, req, opt)
+    }
+
+    pub fn set_iam_policy_async(&self, req: &super::iam_policy::SetIamPolicyRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+        self.set_iam_policy_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn test_iam_permissions_opt(&self, req: &super::iam_policy::TestIamPermissionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::iam_policy::TestIamPermissionsResponse> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_TEST_IAM_PERMISSIONS, req, opt)
+    }
+
+    pub fn test_iam_permissions(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<super::iam_policy::TestIamPermissionsResponse> {
+        self.test_iam_permissions_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn test_iam_permissions_async_opt(&self, req: &super::iam_policy::TestIamPermissionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_TEST_IAM_PERMISSIONS, req, opt)
+    }
+
+    pub fn test_iam_permissions_async(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
+        self.test_iam_permissions_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -347,6 +552,15 @@ pub trait BigtableTableAdmin {
     fn get_snapshot(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::GetSnapshotRequest, sink: ::grpcio::UnarySink<super::table::Snapshot>);
     fn list_snapshots(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::ListSnapshotsRequest, sink: ::grpcio::UnarySink<super::bigtable_table_admin::ListSnapshotsResponse>);
     fn delete_snapshot(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::DeleteSnapshotRequest, sink: ::grpcio::UnarySink<super::empty::Empty>);
+    fn create_backup(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::CreateBackupRequest, sink: ::grpcio::UnarySink<super::operations::Operation>);
+    fn get_backup(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::GetBackupRequest, sink: ::grpcio::UnarySink<super::table::Backup>);
+    fn update_backup(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::UpdateBackupRequest, sink: ::grpcio::UnarySink<super::table::Backup>);
+    fn delete_backup(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::DeleteBackupRequest, sink: ::grpcio::UnarySink<super::empty::Empty>);
+    fn list_backups(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::ListBackupsRequest, sink: ::grpcio::UnarySink<super::bigtable_table_admin::ListBackupsResponse>);
+    fn restore_table(&mut self, ctx: ::grpcio::RpcContext, req: super::bigtable_table_admin::RestoreTableRequest, sink: ::grpcio::UnarySink<super::operations::Operation>);
+    fn get_iam_policy(&mut self, ctx: ::grpcio::RpcContext, req: super::iam_policy::GetIamPolicyRequest, sink: ::grpcio::UnarySink<super::policy::Policy>);
+    fn set_iam_policy(&mut self, ctx: ::grpcio::RpcContext, req: super::iam_policy::SetIamPolicyRequest, sink: ::grpcio::UnarySink<super::policy::Policy>);
+    fn test_iam_permissions(&mut self, ctx: ::grpcio::RpcContext, req: super::iam_policy::TestIamPermissionsRequest, sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>);
 }
 
 pub fn create_bigtable_table_admin<S: BigtableTableAdmin + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -399,9 +613,45 @@ pub fn create_bigtable_table_admin<S: BigtableTableAdmin + Send + Clone + 'stati
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_SNAPSHOTS, move |ctx, req, resp| {
         instance.list_snapshots(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_SNAPSHOT, move |ctx, req, resp| {
         instance.delete_snapshot(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_CREATE_BACKUP, move |ctx, req, resp| {
+        instance.create_backup(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_GET_BACKUP, move |ctx, req, resp| {
+        instance.get_backup(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_BACKUP, move |ctx, req, resp| {
+        instance.update_backup(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_BACKUP, move |ctx, req, resp| {
+        instance.delete_backup(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_BACKUPS, move |ctx, req, resp| {
+        instance.list_backups(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_RESTORE_TABLE, move |ctx, req, resp| {
+        instance.restore_table(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_GET_IAM_POLICY, move |ctx, req, resp| {
+        instance.get_iam_policy(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_SET_IAM_POLICY, move |ctx, req, resp| {
+        instance.set_iam_policy(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_TEST_IAM_PERMISSIONS, move |ctx, req, resp| {
+        instance.test_iam_permissions(ctx, req, resp)
     });
     builder.build()
 }

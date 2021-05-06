@@ -14,14 +14,14 @@
 
 [package]
 name = "googleapis"
-version = "0.0.3"
+version = "0.1.0"
 authors = ["Ferrous Systems"]
 edition = "2018"
 
 [dependencies]
 futures = "0.3.5"
-grpcio = "0.6.0"
+grpcio = "0.8.0"
 
 [dependencies.googleapis-raw]
-version = "0.0.3"
+version = "0.1.0"
 path = "../googleapis-raw"
