@@ -86,6 +86,16 @@ These may need to be specified in the directory mods (see `.src/storage/v1/mod.r
 Remember, you can use the `r#` prefix in rust to except a reserved name for use, e.g.
 `use mod crate::r#type`)
 
+### When Updating
+
+Remember to update the dependent submodules by calling
+
+`git submodule update --init --recursive`
+
+**NOTE**: this may alter the pre-generated mod files requiring old
+modules to be dropped or new modules to be added. Ensure that the
+various `mod.rs` files capture these changes.
+
 ## Google Cloud Console
 
 Links to Google Cloud Console for our testing environment:
