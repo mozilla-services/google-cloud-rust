@@ -60,9 +60,9 @@ for proto in $proto_files; do
         $proto
 done
 
-storage_dirs="
-storage/v1
-"
+#storage_dirs="
+#storage/v1
+#"
 
 # Big table has dependencies on "ruby_package"
 big_table_dirs="

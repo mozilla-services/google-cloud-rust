@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+pub(crate) use crate::{empty, rpc::status};
 pub mod keys;
 pub mod mutation;
 pub mod query_plan;
@@ -20,8 +21,3 @@ pub mod spanner;
 pub mod spanner_grpc;
 pub mod transaction;
 pub mod type_pb;
-
-pub(crate) use crate::{
-    empty,
-    rpc::status,
-};

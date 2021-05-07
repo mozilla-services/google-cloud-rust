@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+pub(crate) use crate::r#type::expr;
 pub mod iam_policy;
 pub mod iam_policy_grpc;
-pub mod policy;
 pub mod options;
-
-pub(crate) use crate::{
-    r#type::expr,
-};
+pub mod policy;
