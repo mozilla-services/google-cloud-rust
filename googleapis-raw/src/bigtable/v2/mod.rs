@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+pub(crate) use crate::rpc::status;
 pub mod bigtable;
 pub mod bigtable_grpc;
 pub mod data;
-
-pub(crate) use crate::rpc::status;
