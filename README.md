@@ -2,18 +2,19 @@
 
 This repository contains client libraries to interact with Google APIs.
 
-Currently in production:
+### Currently in production:
 
-Cloud Spanner (Horizontally scalable relational database)
+[`Cloud Spanner`](https://cloud.google.com/spanner) (Horizontally scalable relational database)
 
 
-Auto-generated:
+### Auto-generated:
 
-Cloud BigTable (Petabyte-scale, low-latency, NoSQL non-relational database)
+[`Cloud BigTable`](https://cloud.google.com/bigtable) (Petabyte-scale, low-latency, NoSQL non-relational database)
 
-Cloud Pub/Sub (Messaging and ingestion for event-driven systems and streaming analytics)
+[`Cloud Pub/Sub`](https://cloud.google.com/pubsub) (Messaging and ingestion for event-driven systems and streaming analytics)
 
-Cloud Storage (Multi-class, multi-region, RESTful object storeage)
+[`Cloud Storage`](https://cloud.google.com/storage) (Multi-class, multi-region, RESTful object storeage)
+
 
 **NOTE: These generated clients are under development and should be considered
 experimental!**
