@@ -392,45 +392,59 @@ pub trait BigtableClusterService {
     fn list_zones(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_service_messages::ListZonesRequest,
+        _req: super::bigtable_cluster_service_messages::ListZonesRequest,
         sink: ::grpcio::UnarySink<super::bigtable_cluster_service_messages::ListZonesResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_service_messages::GetClusterRequest,
+        _req: super::bigtable_cluster_service_messages::GetClusterRequest,
         sink: ::grpcio::UnarySink<super::bigtable_cluster_data::Cluster>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_clusters(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_service_messages::ListClustersRequest,
+        _req: super::bigtable_cluster_service_messages::ListClustersRequest,
         sink: ::grpcio::UnarySink<super::bigtable_cluster_service_messages::ListClustersResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_service_messages::CreateClusterRequest,
+        _req: super::bigtable_cluster_service_messages::CreateClusterRequest,
         sink: ::grpcio::UnarySink<super::bigtable_cluster_data::Cluster>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_data::Cluster,
+        _req: super::bigtable_cluster_data::Cluster,
         sink: ::grpcio::UnarySink<super::bigtable_cluster_data::Cluster>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_service_messages::DeleteClusterRequest,
+        _req: super::bigtable_cluster_service_messages::DeleteClusterRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn undelete_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_cluster_service_messages::UndeleteClusterRequest,
+        _req: super::bigtable_cluster_service_messages::UndeleteClusterRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_bigtable_cluster_service<S: BigtableClusterService + Send + Clone + 'static>(

@@ -496,57 +496,75 @@ pub trait BigtableTableService {
     fn create_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::CreateTableRequest,
+        _req: super::bigtable_table_service_messages::CreateTableRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_data::Table>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_tables(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::ListTablesRequest,
+        _req: super::bigtable_table_service_messages::ListTablesRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_service_messages::ListTablesResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::GetTableRequest,
+        _req: super::bigtable_table_service_messages::GetTableRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_data::Table>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::DeleteTableRequest,
+        _req: super::bigtable_table_service_messages::DeleteTableRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn rename_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::RenameTableRequest,
+        _req: super::bigtable_table_service_messages::RenameTableRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_column_family(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::CreateColumnFamilyRequest,
+        _req: super::bigtable_table_service_messages::CreateColumnFamilyRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_data::ColumnFamily>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_column_family(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_data::ColumnFamily,
+        _req: super::bigtable_table_data::ColumnFamily,
         sink: ::grpcio::UnarySink<super::bigtable_table_data::ColumnFamily>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_column_family(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::DeleteColumnFamilyRequest,
+        _req: super::bigtable_table_service_messages::DeleteColumnFamilyRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn bulk_delete_rows(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_service_messages::BulkDeleteRowsRequest,
+        _req: super::bigtable_table_service_messages::BulkDeleteRowsRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_bigtable_table_service<S: BigtableTableService + Send + Clone + 'static>(

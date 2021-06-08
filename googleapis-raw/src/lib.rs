@@ -19,11 +19,11 @@
 
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_23_0;
 
-pub(crate) mod iam;
-pub(crate) mod rpc;
-pub(crate) mod r#type;
-pub mod empty;
 pub mod bigtable;
+pub mod empty;
+pub(crate) mod iam;
 pub mod longrunning;
 pub mod pubsub;
+pub(crate) mod rpc;
 pub mod spanner;
+pub(crate) mod r#type;

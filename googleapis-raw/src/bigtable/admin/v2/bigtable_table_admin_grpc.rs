@@ -848,99 +848,131 @@ pub trait BigtableTableAdmin {
     fn create_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::CreateTableRequest,
+        _req: super::bigtable_table_admin::CreateTableRequest,
         sink: ::grpcio::UnarySink<super::table::Table>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_table_from_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::CreateTableFromSnapshotRequest,
+        _req: super::bigtable_table_admin::CreateTableFromSnapshotRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_tables(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::ListTablesRequest,
+        _req: super::bigtable_table_admin::ListTablesRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_admin::ListTablesResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::GetTableRequest,
+        _req: super::bigtable_table_admin::GetTableRequest,
         sink: ::grpcio::UnarySink<super::table::Table>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::DeleteTableRequest,
+        _req: super::bigtable_table_admin::DeleteTableRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn modify_column_families(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::ModifyColumnFamiliesRequest,
+        _req: super::bigtable_table_admin::ModifyColumnFamiliesRequest,
         sink: ::grpcio::UnarySink<super::table::Table>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn drop_row_range(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::DropRowRangeRequest,
+        _req: super::bigtable_table_admin::DropRowRangeRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn generate_consistency_token(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::GenerateConsistencyTokenRequest,
+        _req: super::bigtable_table_admin::GenerateConsistencyTokenRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_admin::GenerateConsistencyTokenResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn check_consistency(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::CheckConsistencyRequest,
+        _req: super::bigtable_table_admin::CheckConsistencyRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_admin::CheckConsistencyResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn snapshot_table(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::SnapshotTableRequest,
+        _req: super::bigtable_table_admin::SnapshotTableRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::GetSnapshotRequest,
+        _req: super::bigtable_table_admin::GetSnapshotRequest,
         sink: ::grpcio::UnarySink<super::table::Snapshot>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_snapshots(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::ListSnapshotsRequest,
+        _req: super::bigtable_table_admin::ListSnapshotsRequest,
         sink: ::grpcio::UnarySink<super::bigtable_table_admin::ListSnapshotsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_table_admin::DeleteSnapshotRequest,
+        _req: super::bigtable_table_admin::DeleteSnapshotRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_iam_policy(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::GetIamPolicyRequest,
+        _req: super::iam_policy::GetIamPolicyRequest,
         sink: ::grpcio::UnarySink<super::policy::Policy>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn set_iam_policy(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::SetIamPolicyRequest,
+        _req: super::iam_policy::SetIamPolicyRequest,
         sink: ::grpcio::UnarySink<super::policy::Policy>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn test_iam_permissions(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::TestIamPermissionsRequest,
+        _req: super::iam_policy::TestIamPermissionsRequest,
         sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_bigtable_table_admin<S: BigtableTableAdmin + Send + Clone + 'static>(

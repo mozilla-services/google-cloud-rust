@@ -280,33 +280,43 @@ pub trait Operations {
     fn list_operations(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::operations::ListOperationsRequest,
+        _req: super::operations::ListOperationsRequest,
         sink: ::grpcio::UnarySink<super::operations::ListOperationsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_operation(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::operations::GetOperationRequest,
+        _req: super::operations::GetOperationRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_operation(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::operations::DeleteOperationRequest,
+        _req: super::operations::DeleteOperationRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn cancel_operation(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::operations::CancelOperationRequest,
+        _req: super::operations::CancelOperationRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn wait_operation(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::operations::WaitOperationRequest,
+        _req: super::operations::WaitOperationRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_operations<S: Operations + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

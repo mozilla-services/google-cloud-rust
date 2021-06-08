@@ -484,57 +484,75 @@ pub trait DatabaseAdmin {
     fn list_databases(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::spanner_database_admin::ListDatabasesRequest,
+        _req: super::spanner_database_admin::ListDatabasesRequest,
         sink: ::grpcio::UnarySink<super::spanner_database_admin::ListDatabasesResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_database(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::spanner_database_admin::CreateDatabaseRequest,
+        _req: super::spanner_database_admin::CreateDatabaseRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_database(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::spanner_database_admin::GetDatabaseRequest,
+        _req: super::spanner_database_admin::GetDatabaseRequest,
         sink: ::grpcio::UnarySink<super::spanner_database_admin::Database>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_database_ddl(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::spanner_database_admin::UpdateDatabaseDdlRequest,
+        _req: super::spanner_database_admin::UpdateDatabaseDdlRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn drop_database(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::spanner_database_admin::DropDatabaseRequest,
+        _req: super::spanner_database_admin::DropDatabaseRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_database_ddl(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::spanner_database_admin::GetDatabaseDdlRequest,
+        _req: super::spanner_database_admin::GetDatabaseDdlRequest,
         sink: ::grpcio::UnarySink<super::spanner_database_admin::GetDatabaseDdlResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn set_iam_policy(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::SetIamPolicyRequest,
+        _req: super::iam_policy::SetIamPolicyRequest,
         sink: ::grpcio::UnarySink<super::policy::Policy>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_iam_policy(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::GetIamPolicyRequest,
+        _req: super::iam_policy::GetIamPolicyRequest,
         sink: ::grpcio::UnarySink<super::policy::Policy>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn test_iam_permissions(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::TestIamPermissionsRequest,
+        _req: super::iam_policy::TestIamPermissionsRequest,
         sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_database_admin<S: DatabaseAdmin + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
