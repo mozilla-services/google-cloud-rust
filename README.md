@@ -1,6 +1,6 @@
-# GoogleApis
+# Google Cloud Rust Client
 
-This repository contains client libraries to interact with Google APIs.
+This repository contains [`Rust`](https://www.rust-lang.org/) client libraries to interact with various [`Google Cloud Platform`](https://cloud.google.com/) services.
 
 ### Currently in production:
 
@@ -35,10 +35,14 @@ Contributions to this library are always welcome and highly encouraged.
 
 See [CONTRIBUTING](CONTRIBUTING.md) for more information on how to get started.
 
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
+
 ## License
 
-Apache 2.0 - See [LICENSE](LICENSE) for more information.
+Apache 2.0 - See [LICENSE](LICENSE.md) for more information.
 
 ## Disclaimer
 
-This is not an officially supported Google product.
+This is not an officially supported Google product, but was initially created via an agreement between [`Mozilla`](https://www.mozilla.org/), [`Google Cloud`](https://cloud.google.com/), [`Ferrous Systems`](https://ferrous-systems.com/), and [`IGNW`](https://www.ignw.io/).  
+
+Thank you
