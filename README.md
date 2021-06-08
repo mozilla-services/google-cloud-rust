@@ -1,6 +1,6 @@
 # GoogleApis
 
-This repository contains client libraries to interact with Google APIs.
+This repository contains [`Rust`](https://www.rust-lang.org/) client libraries to interact with various [`Google Cloud`](https://cloud.google.com/) product APIs.
 
 ### Currently in production:
 
@@ -41,4 +41,6 @@ Apache 2.0 - See [LICENSE](LICENSE.md) for more information.
 
 ## Disclaimer
 
-This is not an officially supported Google product.
+This is not an officially supported Google product, but was initially created via an agreement between [`Mozilla`](https://www.mozilla.org/), [`Google Cloud`](https://cloud.google.com/), [`Ferrous Systems`](https://ferrous-systems.com/), and [`IGNW`](https://www.ignw.io/).  
+
+Thank you
