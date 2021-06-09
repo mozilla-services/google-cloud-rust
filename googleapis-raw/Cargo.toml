@@ -19,7 +19,7 @@ authors = [
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
     ]
-License-file = "LICENSE.md"
+license-file = "LICENSE.md"
 description = "A set of client libraries to interact with various Google Cloud Platform services"
 readme = "README.md"
 repository = "https://github.com/mozilla-services/mozilla-rust-sdk/"
