@@ -18,6 +18,7 @@ version = "0.9.0"
 authors = [
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
+    "Rust on GCP Team <rust-on-gcp@google.com>"
     ]
 license-file = "LICENSE.md"
 description = "A set of client libraries to interact with various Google Cloud Platform services"
