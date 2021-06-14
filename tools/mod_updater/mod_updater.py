@@ -24,7 +24,7 @@ def walk(path, args):
                 blank = False
                 for line in file.readlines():
                     # skip extra blank lines:
-                    if line is "":
+                    if line == "":
                         if blank:
                             continue
                         else:
@@ -68,7 +68,7 @@ def get_args():
     for arg in os.environ.keys():
         PREFIX="MOD_UP_"
         if arg.startswith(PREFIX):
-            print("Found.. {}".arg(arg))
+            print("Found.. {}".format(arg))
             args[arg[len(PREFIX):].upper()] = os.environ.get(arg)
     return args
 

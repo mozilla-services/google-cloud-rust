@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 pub(crate) use crate::empty;
 pub(crate) use crate::longrunning::operations;
 pub mod bigtable_table_data;

@@ -286,39 +286,51 @@ pub trait Bigtable {
     fn read_rows(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable::ReadRowsRequest,
+        _req: super::bigtable::ReadRowsRequest,
         sink: ::grpcio::ServerStreamingSink<super::bigtable::ReadRowsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn sample_row_keys(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable::SampleRowKeysRequest,
+        _req: super::bigtable::SampleRowKeysRequest,
         sink: ::grpcio::ServerStreamingSink<super::bigtable::SampleRowKeysResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn mutate_row(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable::MutateRowRequest,
+        _req: super::bigtable::MutateRowRequest,
         sink: ::grpcio::UnarySink<super::bigtable::MutateRowResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn mutate_rows(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable::MutateRowsRequest,
+        _req: super::bigtable::MutateRowsRequest,
         sink: ::grpcio::ServerStreamingSink<super::bigtable::MutateRowsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn check_and_mutate_row(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable::CheckAndMutateRowRequest,
+        _req: super::bigtable::CheckAndMutateRowRequest,
         sink: ::grpcio::UnarySink<super::bigtable::CheckAndMutateRowResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn read_modify_write_row(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable::ReadModifyWriteRowRequest,
+        _req: super::bigtable::ReadModifyWriteRowRequest,
         sink: ::grpcio::UnarySink<super::bigtable::ReadModifyWriteRowResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_bigtable<S: Bigtable + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

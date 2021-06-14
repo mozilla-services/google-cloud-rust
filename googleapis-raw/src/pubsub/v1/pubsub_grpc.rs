@@ -425,51 +425,67 @@ pub trait Publisher {
     fn create_topic(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::Topic,
+        _req: super::pubsub::Topic,
         sink: ::grpcio::UnarySink<super::pubsub::Topic>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_topic(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::UpdateTopicRequest,
+        _req: super::pubsub::UpdateTopicRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Topic>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn publish(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::PublishRequest,
+        _req: super::pubsub::PublishRequest,
         sink: ::grpcio::UnarySink<super::pubsub::PublishResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_topic(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::GetTopicRequest,
+        _req: super::pubsub::GetTopicRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Topic>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_topics(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ListTopicsRequest,
+        _req: super::pubsub::ListTopicsRequest,
         sink: ::grpcio::UnarySink<super::pubsub::ListTopicsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_topic_subscriptions(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ListTopicSubscriptionsRequest,
+        _req: super::pubsub::ListTopicSubscriptionsRequest,
         sink: ::grpcio::UnarySink<super::pubsub::ListTopicSubscriptionsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_topic_snapshots(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ListTopicSnapshotsRequest,
+        _req: super::pubsub::ListTopicSnapshotsRequest,
         sink: ::grpcio::UnarySink<super::pubsub::ListTopicSnapshotsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_topic(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::DeleteTopicRequest,
+        _req: super::pubsub::DeleteTopicRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_publisher<S: Publisher + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -1290,99 +1306,131 @@ pub trait Subscriber {
     fn create_subscription(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::Subscription,
+        _req: super::pubsub::Subscription,
         sink: ::grpcio::UnarySink<super::pubsub::Subscription>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_subscription(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::GetSubscriptionRequest,
+        _req: super::pubsub::GetSubscriptionRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Subscription>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_subscription(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::UpdateSubscriptionRequest,
+        _req: super::pubsub::UpdateSubscriptionRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Subscription>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_subscriptions(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ListSubscriptionsRequest,
+        _req: super::pubsub::ListSubscriptionsRequest,
         sink: ::grpcio::UnarySink<super::pubsub::ListSubscriptionsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_subscription(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::DeleteSubscriptionRequest,
+        _req: super::pubsub::DeleteSubscriptionRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn modify_ack_deadline(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ModifyAckDeadlineRequest,
+        _req: super::pubsub::ModifyAckDeadlineRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn acknowledge(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::AcknowledgeRequest,
+        _req: super::pubsub::AcknowledgeRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn pull(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::PullRequest,
+        _req: super::pubsub::PullRequest,
         sink: ::grpcio::UnarySink<super::pubsub::PullResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn streaming_pull(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        stream: ::grpcio::RequestStream<super::pubsub::StreamingPullRequest>,
+        _stream: ::grpcio::RequestStream<super::pubsub::StreamingPullRequest>,
         sink: ::grpcio::DuplexSink<super::pubsub::StreamingPullResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn modify_push_config(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ModifyPushConfigRequest,
+        _req: super::pubsub::ModifyPushConfigRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::GetSnapshotRequest,
+        _req: super::pubsub::GetSnapshotRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Snapshot>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_snapshots(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::ListSnapshotsRequest,
+        _req: super::pubsub::ListSnapshotsRequest,
         sink: ::grpcio::UnarySink<super::pubsub::ListSnapshotsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::CreateSnapshotRequest,
+        _req: super::pubsub::CreateSnapshotRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Snapshot>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::UpdateSnapshotRequest,
+        _req: super::pubsub::UpdateSnapshotRequest,
         sink: ::grpcio::UnarySink<super::pubsub::Snapshot>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_snapshot(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::DeleteSnapshotRequest,
+        _req: super::pubsub::DeleteSnapshotRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn seek(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::pubsub::SeekRequest,
+        _req: super::pubsub::SeekRequest,
         sink: ::grpcio::UnarySink<super::pubsub::SeekResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_subscriber<S: Subscriber + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

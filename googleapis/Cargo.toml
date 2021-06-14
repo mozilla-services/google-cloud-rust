@@ -13,15 +13,20 @@
 # limitations under the License.
 
 [package]
-name = "googleapis"
-version = "0.1.0"
-authors = ["Ferrous Systems"]
+name = "google-cloud-rust"
+version = "0.9.0"
+authors = [
+    "Ferrous Systems",
+    "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
+    "Rust on GCP Team <rust-on-gcp@google.com>"
+    ]
+license-file = "LICENSE.md"
+description = "A set of client libraries to interact with various Google Cloud Platform services"
+readme = "README.md"
+repository = "https://github.com/mozilla-services/mozilla-rust-sdk/"
 edition = "2018"
 
 [dependencies]
 futures = "0.3.5"
-grpcio = "0.8.2"
-
-[dependencies.googleapis-raw]
-version = "0.1.0"
-path = "../googleapis-raw"
+grpcio = "0.9.0"
+google-cloud-rust-raw = {version = "0.9.0", path="../googleapis-raw"}

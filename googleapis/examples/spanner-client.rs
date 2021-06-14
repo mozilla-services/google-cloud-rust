@@ -14,7 +14,7 @@
 
 use std::error::Error;
 
-use googleapis::spanner;
+use google_cloud_rust::spanner;
 
 fn main() -> Result<(), Box<dyn Error>> {
     // An example database inside Mozilla's Spanner instance.

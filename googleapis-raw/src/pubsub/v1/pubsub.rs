@@ -9349,9 +9349,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     cSnapshotsResponse\"1\x82\xd3\xe4\x93\x02+\x12)/v1/{topic=projects/*/top\
     ics/*}/snapshots\x12t\n\x0bDeleteTopic\x12$.google.pubsub.v1.DeleteTopic\
     Request\x1a\x16.google.protobuf.Empty\"'\x82\xd3\xe4\x93\x02!*\x1f/v1/{t\
-    opic=projects/*/topics/*}\x1ap\xcaA\x15pubsub.googleapis.com\xd2AUhttps:\
-    //www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth\
-    /pubsub2\xeb\x12\n\nSubscriber\x12\x86\x01\n\x12CreateSubscription\x12\
+    opic=projects/*/topics/*}\x1ap\xd2AUhttps://www.googleapis.com/auth/clou\
+    d-platform,https://www.googleapis.com/auth/pubsub\xcaA\x15pubsub.googlea\
+    pis.com2\xeb\x12\n\nSubscriber\x12\x86\x01\n\x12CreateSubscription\x12\
     \x1e.google.pubsub.v1.Subscription\x1a\x1e.google.pubsub.v1.Subscription\
     \"0\x82\xd3\xe4\x93\x02*\x1a%/v1/{name=projects/*/subscriptions/*}:\x01*\
     \x12\x92\x01\n\x0fGetSubscription\x12(.google.pubsub.v1.GetSubscriptionR\

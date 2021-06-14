@@ -16,7 +16,7 @@
 
 use std::sync::Arc;
 
-use googleapis_raw::spanner::v1::{
+use google_cloud_rust_raw::spanner::v1::{
     spanner::{CreateSessionRequest, Session},
     spanner_grpc::SpannerClient,
 };

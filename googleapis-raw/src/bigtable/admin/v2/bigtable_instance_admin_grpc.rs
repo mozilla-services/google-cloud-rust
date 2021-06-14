@@ -978,117 +978,155 @@ pub trait BigtableInstanceAdmin {
     fn create_instance(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::CreateInstanceRequest,
+        _req: super::bigtable_instance_admin::CreateInstanceRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_instance(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::GetInstanceRequest,
+        _req: super::bigtable_instance_admin::GetInstanceRequest,
         sink: ::grpcio::UnarySink<super::instance::Instance>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_instances(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::ListInstancesRequest,
+        _req: super::bigtable_instance_admin::ListInstancesRequest,
         sink: ::grpcio::UnarySink<super::bigtable_instance_admin::ListInstancesResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_instance(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::instance::Instance,
+        _req: super::instance::Instance,
         sink: ::grpcio::UnarySink<super::instance::Instance>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn partial_update_instance(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::PartialUpdateInstanceRequest,
+        _req: super::bigtable_instance_admin::PartialUpdateInstanceRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_instance(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::DeleteInstanceRequest,
+        _req: super::bigtable_instance_admin::DeleteInstanceRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::CreateClusterRequest,
+        _req: super::bigtable_instance_admin::CreateClusterRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::GetClusterRequest,
+        _req: super::bigtable_instance_admin::GetClusterRequest,
         sink: ::grpcio::UnarySink<super::instance::Cluster>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_clusters(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::ListClustersRequest,
+        _req: super::bigtable_instance_admin::ListClustersRequest,
         sink: ::grpcio::UnarySink<super::bigtable_instance_admin::ListClustersResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::instance::Cluster,
+        _req: super::instance::Cluster,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_cluster(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::DeleteClusterRequest,
+        _req: super::bigtable_instance_admin::DeleteClusterRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn create_app_profile(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::CreateAppProfileRequest,
+        _req: super::bigtable_instance_admin::CreateAppProfileRequest,
         sink: ::grpcio::UnarySink<super::instance::AppProfile>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_app_profile(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::GetAppProfileRequest,
+        _req: super::bigtable_instance_admin::GetAppProfileRequest,
         sink: ::grpcio::UnarySink<super::instance::AppProfile>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn list_app_profiles(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::ListAppProfilesRequest,
+        _req: super::bigtable_instance_admin::ListAppProfilesRequest,
         sink: ::grpcio::UnarySink<super::bigtable_instance_admin::ListAppProfilesResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn update_app_profile(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::UpdateAppProfileRequest,
+        _req: super::bigtable_instance_admin::UpdateAppProfileRequest,
         sink: ::grpcio::UnarySink<super::operations::Operation>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_app_profile(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_instance_admin::DeleteAppProfileRequest,
+        _req: super::bigtable_instance_admin::DeleteAppProfileRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_iam_policy(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::GetIamPolicyRequest,
+        _req: super::iam_policy::GetIamPolicyRequest,
         sink: ::grpcio::UnarySink<super::policy::Policy>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn set_iam_policy(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::SetIamPolicyRequest,
+        _req: super::iam_policy::SetIamPolicyRequest,
         sink: ::grpcio::UnarySink<super::policy::Policy>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn test_iam_permissions(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::iam_policy::TestIamPermissionsRequest,
+        _req: super::iam_policy::TestIamPermissionsRequest,
         sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_bigtable_instance_admin<S: BigtableInstanceAdmin + Send + Clone + 'static>(

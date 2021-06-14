@@ -310,41 +310,53 @@ pub trait BigtableService {
     fn read_rows(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_service_messages::ReadRowsRequest,
+        _req: super::bigtable_service_messages::ReadRowsRequest,
         sink: ::grpcio::ServerStreamingSink<super::bigtable_service_messages::ReadRowsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn sample_row_keys(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_service_messages::SampleRowKeysRequest,
+        _req: super::bigtable_service_messages::SampleRowKeysRequest,
         sink: ::grpcio::ServerStreamingSink<
             super::bigtable_service_messages::SampleRowKeysResponse,
         >,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn mutate_row(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_service_messages::MutateRowRequest,
+        _req: super::bigtable_service_messages::MutateRowRequest,
         sink: ::grpcio::UnarySink<super::empty::Empty>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn mutate_rows(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_service_messages::MutateRowsRequest,
+        _req: super::bigtable_service_messages::MutateRowsRequest,
         sink: ::grpcio::UnarySink<super::bigtable_service_messages::MutateRowsResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn check_and_mutate_row(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_service_messages::CheckAndMutateRowRequest,
+        _req: super::bigtable_service_messages::CheckAndMutateRowRequest,
         sink: ::grpcio::UnarySink<super::bigtable_service_messages::CheckAndMutateRowResponse>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn read_modify_write_row(
         &mut self,
         ctx: ::grpcio::RpcContext,
-        req: super::bigtable_service_messages::ReadModifyWriteRowRequest,
+        _req: super::bigtable_service_messages::ReadModifyWriteRowRequest,
         sink: ::grpcio::UnarySink<super::bigtable_data::Row>,
-    );
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_bigtable_service<S: BigtableService + Send + Clone + 'static>(
