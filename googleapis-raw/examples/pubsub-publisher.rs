@@ -17,7 +17,7 @@ use std::sync::Arc;
 use std::time::SystemTime;
 
 use futures::executor::block_on;
-use googleapis_raw::pubsub::v1::{
+use google_cloud_rust_raw::pubsub::v1::{
     pubsub::AcknowledgeRequest, pubsub::ExpirationPolicy, pubsub::GetSubscriptionRequest,
     pubsub::GetTopicRequest, pubsub::PublishRequest, pubsub::PublishResponse,
     pubsub::PubsubMessage, pubsub::PullRequest, pubsub::PushConfig, pubsub::Subscription,

@@ -16,7 +16,7 @@ use std::sync::Arc;
 
 use futures::executor::block_on;
 use futures::prelude::*;
-use googleapis_raw::bigtable::v2::{bigtable::ReadRowsRequest, bigtable_grpc::BigtableClient};
+use google_cloud_rust_raw::bigtable::v2::{bigtable::ReadRowsRequest, bigtable_grpc::BigtableClient};
 use grpcio::{ChannelBuilder, ChannelCredentials, EnvBuilder};
 
 async fn async_main() {

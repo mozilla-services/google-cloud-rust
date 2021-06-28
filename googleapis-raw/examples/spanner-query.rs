@@ -15,7 +15,7 @@
 use std::sync::Arc;
 
 use futures::executor::block_on;
-use googleapis_raw::spanner::v1::{
+use google_cloud_rust_raw::spanner::v1::{
     spanner::{CreateSessionRequest, ExecuteSqlRequest},
     spanner_grpc::SpannerClient,
 };
