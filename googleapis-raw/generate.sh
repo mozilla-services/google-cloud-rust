@@ -77,6 +77,8 @@ proto_dirs="
 api
 api/servicecontrol/v1
 api/servicemanagement/v1
+logging
+logging/type
 type
 iam/v1
 longrunning

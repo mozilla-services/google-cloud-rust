@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub(crate) use crate::empty;
-pub(crate) use crate::iam::v1::{iam_policy, policy};
-pub(crate) use crate::longrunning::operations;
-pub mod bigtable_instance_admin;
+pub(crate) use crate::{
+    iam::v1::policy,
+    iam::v1::iam_policy,
+    longrunning::operations,
+    rpc::status,
+    empty,
+};
+
 pub mod bigtable_instance_admin_grpc;
-pub mod bigtable_table_admin;
+pub mod bigtable_instance_admin;
 pub mod bigtable_table_admin_grpc;
+pub mod bigtable_table_admin;
 pub mod common;
 pub mod instance;
 pub mod table;

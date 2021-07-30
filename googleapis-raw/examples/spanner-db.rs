@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use googleapis_raw::empty::Empty;
-use googleapis_raw::longrunning::operations::GetOperationRequest;
-use googleapis_raw::longrunning::operations_grpc::OperationsClient;
-use googleapis_raw::spanner::admin::database::v1::{
+use google_cloud_rust_raw::empty::Empty;
+use google_cloud_rust_raw::longrunning::operations::GetOperationRequest;
+use google_cloud_rust_raw::longrunning::operations_grpc::OperationsClient;
+use google_cloud_rust_raw::spanner::admin::database::v1::{
     spanner_database_admin::CreateDatabaseRequest, spanner_database_admin::DropDatabaseRequest,
     spanner_database_admin::GetDatabaseRequest, spanner_database_admin_grpc::DatabaseAdminClient,
 };
-use googleapis_raw::spanner::v1::{
+use google_cloud_rust_raw::spanner::v1::{
     mutation::Mutation, mutation::Mutation_Write, spanner::BeginTransactionRequest,
     spanner::CommitRequest, spanner::CreateSessionRequest, spanner::Session,
     spanner_grpc::SpannerClient, transaction::TransactionOptions,
