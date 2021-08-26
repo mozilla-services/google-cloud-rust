@@ -18,7 +18,7 @@ pub(crate) use crate::{
     longrunning::operations,
     rpc::status,
 };
-pub mod spanner_database_admin;
-pub mod spanner_database_admin_grpc;
 pub mod backup;
 pub mod common;
+pub mod spanner_database_admin;
+pub mod spanner_database_admin_grpc;

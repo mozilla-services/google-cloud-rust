@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod servicecontrol;
-pub mod servicemanagement;
 
 pub mod annotations;
 pub mod auth;
@@ -29,12 +27,12 @@ pub mod documentation;
 pub mod endpoint;
 pub mod error_reason;
 pub mod field_behavior;
-pub mod httpbody;
 pub mod http;
+pub mod httpbody;
 pub mod label;
 pub mod launch_stage;
-pub mod logging;
 pub mod log;
+pub mod logging;
 pub mod metric;
 pub mod monitored_resource;
 pub mod monitoring;
@@ -45,3 +43,5 @@ pub mod source_info;
 pub mod system_parameter;
 pub mod usage;
 pub mod visibility;
+pub mod servicecontrol;
+pub mod servicemanagement;
