@@ -14,7 +14,7 @@
 
 [package]
 name = "google-cloud-rust"
-version = "0.9.1"
+version = "0.10.0"
 authors = [
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
@@ -23,10 +23,10 @@ authors = [
 license-file = "../LICENSE.md"
 description = "A set of client libraries to interact with various Google Cloud Platform services"
 readme = "README.md"
-repository = "https://github.com/mozilla-services/mozilla-rust-sdk/"
+repository = "https://github.com/mozilla-services/google-cloud-rust/"
 edition = "2018"
 
 [dependencies]
 futures = "0.3.5"
 grpcio = "0.9.0"
-google-cloud-rust-raw = {version = "0.9.0", path="../googleapis-raw"}
+google-cloud-rust-raw = {version = "0.10.0", path="../googleapis-raw"}

@@ -35,7 +35,7 @@ impl Client {
     /// # Examples
     ///
     /// ```no_run
-    /// use googleapis::spanner;
+    /// use google_cloud_rust::spanner;
     ///
     /// let db = "projects/my_project/instances/my_instance/databases/my_database";
     /// let client = spanner::Client::new(db);

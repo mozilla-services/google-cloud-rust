@@ -18,5 +18,5 @@ pub(crate) use crate::{
 };
 
 pub mod resources;
-pub mod servicemanager_grpc;
 pub mod servicemanager;
+pub mod servicemanager_grpc;

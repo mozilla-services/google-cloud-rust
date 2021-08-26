@@ -66,10 +66,7 @@ done
 
 # Big table has dependencies on "ruby_package"
 big_table_dirs="
-bigtable/admin/cluster/v1
-bigtable/admin/table/v1
 bigtable/admin/v2
-bigtable/v1
 bigtable/v2
 "
 

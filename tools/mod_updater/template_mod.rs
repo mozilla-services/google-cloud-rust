@@ -12,20 +12,3 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#![allow(bare_trait_objects)]
-
-// This appears as a comment in each generated file. Add it once here
-// to save a bit of time and effort.
-
-const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_25_1;
-pub(crate) mod iam;
-pub(crate) mod rpc;
-pub(crate) mod r#type;
-
-pub mod empty;
-pub mod api;
-pub mod bigtable;
-pub mod logging;
-pub mod longrunning;
-pub mod pubsub;
-pub mod spanner;
