@@ -24,10 +24,10 @@ experimental!**
 
 ## Rust bindings for Google APIs
 
-See [`googleapis-raw`](google-cloud-rust-raw) for raw bindings based on
+See [`googleapis-raw`](googleapis-raw/examples) for raw bindings based on
 [`grpcio`](https://github.com/pingcap/grpc-rs).
 
-See [`googleapis`](google-cloud-rust) for high-level bindings (not ready for use yet).
+See [`googleapis`](googleapis/examples) for high-level bindings (not ready for use yet).
 
 ## Contributing
 
