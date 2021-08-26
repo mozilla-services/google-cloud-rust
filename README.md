@@ -27,7 +27,7 @@ experimental!**
 See [`googleapis-raw`](https://github.com/mozilla-services/google-cloud-rust/tree/master/googleapis-raw) for raw bindings based on
 [`grpcio`](https://github.com/pingcap/grpc-rs).
 
-See [`googleapis`](google-cloud-rust) for high-level bindings (not ready for use yet).
+See [`googleapis`](https://github.com/mozilla-services/google-cloud-rust/tree/master/googleapis) for high-level bindings (not ready for use yet).
 
 ## Contributing
 
