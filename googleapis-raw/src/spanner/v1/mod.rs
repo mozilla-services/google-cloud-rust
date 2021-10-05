@@ -13,7 +13,6 @@
 // limitations under the License.
 
 pub(crate) use crate::{empty, rpc::status};
-pub mod commit_response;
 pub mod keys;
 pub mod mutation;
 pub mod query_plan;
