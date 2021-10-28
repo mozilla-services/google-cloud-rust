@@ -14,7 +14,7 @@
 
 [package]
 name = "google-cloud-rust-raw"
-version = "0.10.0"
+version = "0.11.0"
 authors = [
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
