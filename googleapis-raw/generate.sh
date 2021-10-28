@@ -42,7 +42,7 @@ fi
 
 echo "Pulling git submodules"
 # comment out to work on master...
-#git submodule update --init --recursive
+# git submodule update --init --recursive
 
 apis=grpc/third_party/googleapis
 
@@ -74,10 +74,15 @@ proto_dirs="
 api
 api/servicecontrol/v1
 api/servicemanagement/v1
+cloud/asset/v1
+cloud/orgpolicy/v1
+cloud/osconfig/v1
 logging
 logging/type
 type
 iam/v1
+identity/accesscontextmanager/v1
+identity/accesscontextmanager/type
 longrunning
 pubsub/v1
 pubsub/v1beta2
