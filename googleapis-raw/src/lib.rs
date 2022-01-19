@@ -26,6 +26,7 @@ pub mod empty;
 pub mod api;
 pub mod bigtable;
 pub mod cloud;
+pub mod identity;
 pub mod logging;
 pub mod longrunning;
 pub mod pubsub;
