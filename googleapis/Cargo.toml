@@ -14,7 +14,7 @@
 
 [package]
 name = "google-cloud-rust"
-version = "0.12.0"
+version = "0.13.0"
 authors = [
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
@@ -29,4 +29,4 @@ edition = "2021"
 [dependencies]
 futures = "0.3.5"
 grpcio = "0.10.0"
-google-cloud-rust-raw = {version = "0.12.0", path="../googleapis-raw"}
+google-cloud-rust-raw = {version = "0.13.0", path="../googleapis-raw"}
