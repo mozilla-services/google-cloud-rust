@@ -141,7 +141,7 @@ impl BigtableClient {
     pub fn read_modify_write_row_async(&self, req: &super::bigtable::ReadModifyWriteRowRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable::ReadModifyWriteRowResponse>> {
         self.read_modify_write_row_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
