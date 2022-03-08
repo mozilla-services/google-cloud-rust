@@ -34,12 +34,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         Ok(response) => {
             // NOTE: the API for this recently changd. Please refer to
             // GCP documentation for details about these changes.
-            /*
-            response
-                .get_assets()
-                .iter()
-                .for_each(|asset| println!("  Asset: {:?}", asset));
-                */
             print!("{:?}", response);
         },
         Err(error) => println!("Failed to list assets: {}", error),
