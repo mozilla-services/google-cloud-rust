@@ -75,14 +75,9 @@ api
 api/servicecontrol/v1
 api/servicemanagement/v1
 cloud/asset/v1
-cloud/orgpolicy/v1
-cloud/osconfig/v1
-logging
 logging/type
 type
 iam/v1
-identity/accesscontextmanager/v1
-identity/accesscontextmanager/type
 longrunning
 pubsub/v1
 pubsub/v1beta2
@@ -93,6 +88,14 @@ spanner/v1
 $big_table_dirs
 $storage_dirs
 "
+
+# obsolete proto:
+# cloud/orgpolicy/v1
+# cloud/osconfig/v1
+# logging
+# identity/accesscontextmanager/v1
+# identity/accesscontextmanager/type
+
 
 # The following are required to support Spanner only
 reduced_proto_dirs="

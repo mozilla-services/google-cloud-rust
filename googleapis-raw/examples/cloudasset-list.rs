@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use google_cloud_rust_raw::cloud::asset::v1::{
     asset_service_grpc::AssetServiceClient,
-    asset_service::ListAssetsRequest,
+    asset_service::ExportAssetsRequest,
 };
 use grpcio::{Channel, ChannelBuilder, ChannelCredentials, EnvBuilder};
 use std::error::Error;
@@ -27,15 +27,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     let channel = connect(endpoint);
     let client = AssetServiceClient::new(channel);
 
-    let mut req = ListAssetsRequest::new();
+    let mut req = ExportAssetsRequest::new();
     req.set_parent(format!("projects/{}", "mozilla-rust-sdk-dev"));
 
-    match client.list_assets(&req) {
+    match client.export_assets(&req) {
         Ok(response) => {
-            response
-                .get_assets()
-                .iter()
-                .for_each(|asset| println!("  Asset: {:?}", asset));
+            // NOTE: the API for this recently changd. Please refer to
+            // GCP documentation for details about these changes.
+            print!("{:?}", response);
         },
         Err(error) => println!("Failed to list assets: {}", error),
     }

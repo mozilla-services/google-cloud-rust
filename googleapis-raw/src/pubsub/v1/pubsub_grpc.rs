@@ -211,7 +211,7 @@ impl PublisherClient {
     pub fn delete_topic_async(&self, req: &super::pubsub::DeleteTopicRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_topic_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
@@ -651,7 +651,7 @@ impl SubscriberClient {
     pub fn seek_async(&self, req: &super::pubsub::SeekRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pubsub::SeekResponse>> {
         self.seek_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
