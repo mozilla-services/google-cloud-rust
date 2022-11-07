@@ -17,11 +17,12 @@
 // This appears as a comment in each generated file. Add it once here
 // to save a bit of time and effort.
 
-const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_27_1;
+const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_28_0;
 pub(crate) mod iam;
 pub(crate) mod rpc;
 pub(crate) mod r#type;
 
+// pub mod empty;
 pub mod empty;
 pub mod api;
 pub mod bigtable;
