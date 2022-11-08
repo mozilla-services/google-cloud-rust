@@ -28,5 +28,5 @@ edition = "2021"
 
 [dependencies]
 futures = "0.3.5"
-grpcio = "0.12.0"
+grpcio = {version  = "0.12.0", features=["_secure"]}
 google-cloud-rust-raw = {version = "0.14.0", path="../googleapis-raw"}

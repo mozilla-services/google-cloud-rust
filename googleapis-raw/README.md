@@ -2,11 +2,17 @@
 
 These are raw bindings for Google APIs based on [`grpcio`](https://github.com/pingcap/grpc-rs).
 
+## Version notes
+
+This library is currently locked to grpcio 0.12.0 and protobuf 2.28.0. This is due to
+an [internal dependency of grpcio](https://github.com/tikv/grpc-rs/issues/584). Be sure that you match
+these library versions in your library or application.
+
 ## Documentation
 
 To generate and open documentation, run:
 
-```
+```sh
 cargo doc --open
 ```
 
@@ -14,7 +20,7 @@ cargo doc --open
 
 To run hand-written examples, try:
 
-```
+```sh
 cargo run --example spanner-query
 cargo run --example bigtable-query
 ```
@@ -37,7 +43,6 @@ As a final check:
 There is Docker setup available that installs all necessary tools, libraries, see the [README](../docker/README.md)
 inside the `./docker` folder.
 
-
 Useful links for setting up specific Google services:
 
 * [Setting up Spanner](https://cloud.google.com/spanner/docs/getting-started/set-up)
@@ -54,9 +59,10 @@ and [protoc-gen-rust](https://github.com/stepancheg/rust-protobuf/tree/master/pr
 for protobuf. The installed protobuf version and the protobuf crate should have the same version, e.g. `2.7.0`.
 Installation of the protoc-gen-rust plugin is done via `cargo`:
 
-```
+```sh
 cargo install protobuf-codegen
 ```
+
 Make sure the `protoc-gen-rust` binary is available in your `$PATH` env variable.
 
 Then:
@@ -70,13 +76,14 @@ ensure that a proper build works by running `cargo build`.
 
 _[1] The `generate.sh` script will NOT generate the required `mod.rs` files for the directories. In addition, the generated rust modules will look for several modules that are `super` to their package. `protoc` may not overwrite an existing, generated rust file which could lead to complications. It's easiest if you simily leave the `mod.rs` files in place and remove the other rust files, or copy the `mod.rs` files from a backup. Running a `cargo build` will definitely identify the modules that may be missing and that you'll have to add via a line like:_
 
-```
+```rust
 pub(crate) use crate::{
     empty,
     iam::v1::{iam_policy, policy},
     longrunning::operations,
 };
 ```
+
 _(which was taken from `src/rpc/spanner/admin/instance/v1/mod.rs`)_
 
 Please note that the source grpc repo may contiain one or more older submodule references that may

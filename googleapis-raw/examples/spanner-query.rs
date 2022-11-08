@@ -36,7 +36,8 @@ async fn async_main() {
     let chan = ChannelBuilder::new(env.clone())
         .max_send_message_len(100 << 20)
         .max_receive_message_len(100 << 20)
-        .secure_connect(&endpoint, creds);
+        .set_credentials(creds)
+        .connect(&endpoint);
     let client = SpannerClient::new(chan);
 
     // Connect to the instance and create a Spanner session.

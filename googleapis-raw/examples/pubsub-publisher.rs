@@ -143,7 +143,8 @@ fn connect(endpoint: &str) -> Channel {
         // Set the max size to correspond to server-side limits.
         .max_send_message_len(1 << 28)
         .max_receive_message_len(1 << 28)
-        .secure_connect(&endpoint, creds)
+        .set_credentials(creds)
+        .connect(&endpoint)
 }
 
 async fn async_main() {

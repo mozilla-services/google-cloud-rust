@@ -1,5 +1,10 @@
+.vscode
+keys
+cargo.tree
+
 /target
 **/*.rs.bk
 Cargo.lock
 .env
 **/.DS_Store
+**/venv
