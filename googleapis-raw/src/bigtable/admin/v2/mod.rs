@@ -2,7 +2,6 @@
 
 use crate::{
     empty,
-    api::annotations,
     iam::v1::{iam_policy, policy},
     longrunning::operations,
 };

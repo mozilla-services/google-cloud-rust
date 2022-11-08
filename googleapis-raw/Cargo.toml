@@ -31,7 +31,7 @@ exclude = ["grpc"]
 [dependencies]
 futures = "0.3.5"
 grpcio = "0.12.0"
-protobuf = "3.2.0"
+protobuf = "2.28.0"
 
 [dev-dependencies]
 slog = "2.5"
