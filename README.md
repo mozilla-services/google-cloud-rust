@@ -2,10 +2,11 @@
 
 This repository contains [`Rust`](https://www.rust-lang.org/) client libraries to interact with various [`Google Cloud Platform`](https://cloud.google.com/) services.
 
+## Disclaimers
+
 ### Currently in production:
 
 [`Cloud Spanner`](https://cloud.google.com/spanner) (Horizontally scalable relational database)
-
 
 ### Auto-generated:
 
@@ -15,10 +16,12 @@ This repository contains [`Rust`](https://www.rust-lang.org/) client libraries t
 
 [`Cloud Storage`](https://cloud.google.com/storage) (Multi-class, multi-region, RESTful object storeage)
 
-
 **NOTE: These generated clients are under development and should be considered
 experimental!**
 
+This library is currently locked to grpcio 0.12.0 and protobuf 2.28.0. This is due to
+an [internal dependency of grpcio](https://github.com/tikv/grpc-rs/issues/584). Be sure that you match
+these library versions in your library or application.
 
 ## Usage
 

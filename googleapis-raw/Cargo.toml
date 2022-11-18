@@ -14,7 +14,7 @@
 
 [package]
 name = "google-cloud-rust-raw"
-version = "0.13.0"
+version = "0.14.0"
 authors = [
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
@@ -30,8 +30,9 @@ exclude = ["grpc"]
 
 [dependencies]
 futures = "0.3.5"
-grpcio = "0.10.0"
-protobuf = "2.27.1"
+grpcio = "0.12.0"
+# grpcio currently does NOT support protobuf 3+
+protobuf = "2.28.0"
 
 [dev-dependencies]
 slog = "2.5"

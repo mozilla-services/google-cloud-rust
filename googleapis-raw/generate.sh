@@ -31,7 +31,8 @@ find src -name "*.rs" -and -not \( -name "mod.rs" -or -name "lib.rs" \) -print -
 echo "Updating cargo..."
 cargo update
 echo "Updating plugin..."
-cargo install protobuf-codegen
+# Lock on 2.28.0 until grpcio supports 3+
+cargo install protobuf-codegen --version 2.28.0
 
 if ! [[ -x "$(command -v grpc_rust_plugin)" ]]; then
     echo "Error: grpc_rust_plugin was not found"
