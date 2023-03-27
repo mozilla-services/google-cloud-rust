@@ -13,20 +13,17 @@
 # limitations under the License.
 
 [package]
+version.workspace = true
+authors.workspace = true
+license-file.workspace = true
+readme.workspace = true
+repository.workspace = true
+edition.workspace = true
+
 name = "google-cloud-rust"
-version = "0.14.0"
-authors = [
-    "Ferrous Systems",
-    "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
-    "Rust on GCP Team <rust-on-gcp@google.com>"
-    ]
-license-file = "../LICENSE.md"
 description = "A set of client libraries to interact with various Google Cloud Platform services"
-readme = "README.md"
-repository = "https://github.com/mozilla-services/google-cloud-rust"
-edition = "2021"
 
 [dependencies]
-futures = "0.3.5"
-grpcio = {version  = "0.12.0", features=["_secure"]}
-google-cloud-rust-raw = {version = "0.14.0", path="../googleapis-raw"}
+futures.workspace=true
+grpcio = {workspace=true, features=["_secure"]}
+google-cloud-rust-raw = {version = "0.15.0", path="../googleapis-raw"}
