@@ -25,9 +25,12 @@ pub(crate) mod r#type;
 // pub mod empty;
 pub mod empty;
 pub mod api;
+#[cfg(feature="bigtable")]
 pub mod bigtable;
 pub mod cloud;
 pub mod logging;
 pub mod longrunning;
+#[cfg(feature="pubsub")]
 pub mod pubsub;
+#[cfg(feature="spanner")]
 pub mod spanner;
