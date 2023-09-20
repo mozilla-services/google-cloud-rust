@@ -32,7 +32,7 @@ const METHOD_SERVICE_CONTROLLER_REPORT: ::grpcio::Method<super::service_controll
 
 #[derive(Clone)]
 pub struct ServiceControllerClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl ServiceControllerClient {

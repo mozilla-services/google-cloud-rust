@@ -51,6 +51,13 @@ const METHOD_BIGTABLE_CHECK_AND_MUTATE_ROW: ::grpcio::Method<super::bigtable::Ch
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_BIGTABLE_PING_AND_WARM: ::grpcio::Method<super::bigtable::PingAndWarmRequest, super::bigtable::PingAndWarmResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.v2.Bigtable/PingAndWarm",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_BIGTABLE_READ_MODIFY_WRITE_ROW: ::grpcio::Method<super::bigtable::ReadModifyWriteRowRequest, super::bigtable::ReadModifyWriteRowResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.bigtable.v2.Bigtable/ReadModifyWriteRow",
@@ -58,9 +65,23 @@ const METHOD_BIGTABLE_READ_MODIFY_WRITE_ROW: ::grpcio::Method<super::bigtable::R
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_BIGTABLE_GENERATE_INITIAL_CHANGE_STREAM_PARTITIONS: ::grpcio::Method<super::bigtable::GenerateInitialChangeStreamPartitionsRequest, super::bigtable::GenerateInitialChangeStreamPartitionsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::ServerStreaming,
+    name: "/google.bigtable.v2.Bigtable/GenerateInitialChangeStreamPartitions",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_READ_CHANGE_STREAM: ::grpcio::Method<super::bigtable::ReadChangeStreamRequest, super::bigtable::ReadChangeStreamResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::ServerStreaming,
+    name: "/google.bigtable.v2.Bigtable/ReadChangeStream",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct BigtableClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl BigtableClient {
@@ -126,6 +147,22 @@ impl BigtableClient {
         self.check_and_mutate_row_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn ping_and_warm_opt(&self, req: &super::bigtable::PingAndWarmRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::bigtable::PingAndWarmResponse> {
+        self.client.unary_call(&METHOD_BIGTABLE_PING_AND_WARM, req, opt)
+    }
+
+    pub fn ping_and_warm(&self, req: &super::bigtable::PingAndWarmRequest) -> ::grpcio::Result<super::bigtable::PingAndWarmResponse> {
+        self.ping_and_warm_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn ping_and_warm_async_opt(&self, req: &super::bigtable::PingAndWarmRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable::PingAndWarmResponse>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_PING_AND_WARM, req, opt)
+    }
+
+    pub fn ping_and_warm_async(&self, req: &super::bigtable::PingAndWarmRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable::PingAndWarmResponse>> {
+        self.ping_and_warm_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn read_modify_write_row_opt(&self, req: &super::bigtable::ReadModifyWriteRowRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::bigtable::ReadModifyWriteRowResponse> {
         self.client.unary_call(&METHOD_BIGTABLE_READ_MODIFY_WRITE_ROW, req, opt)
     }
@@ -140,6 +177,22 @@ impl BigtableClient {
 
     pub fn read_modify_write_row_async(&self, req: &super::bigtable::ReadModifyWriteRowRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable::ReadModifyWriteRowResponse>> {
         self.read_modify_write_row_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn generate_initial_change_stream_partitions_opt(&self, req: &super::bigtable::GenerateInitialChangeStreamPartitionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::GenerateInitialChangeStreamPartitionsResponse>> {
+        self.client.server_streaming(&METHOD_BIGTABLE_GENERATE_INITIAL_CHANGE_STREAM_PARTITIONS, req, opt)
+    }
+
+    pub fn generate_initial_change_stream_partitions(&self, req: &super::bigtable::GenerateInitialChangeStreamPartitionsRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::GenerateInitialChangeStreamPartitionsResponse>> {
+        self.generate_initial_change_stream_partitions_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn read_change_stream_opt(&self, req: &super::bigtable::ReadChangeStreamRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::ReadChangeStreamResponse>> {
+        self.client.server_streaming(&METHOD_BIGTABLE_READ_CHANGE_STREAM, req, opt)
+    }
+
+    pub fn read_change_stream(&self, req: &super::bigtable::ReadChangeStreamRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::ReadChangeStreamResponse>> {
+        self.read_change_stream_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
@@ -162,7 +215,16 @@ pub trait Bigtable {
     fn check_and_mutate_row(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::CheckAndMutateRowRequest, sink: ::grpcio::UnarySink<super::bigtable::CheckAndMutateRowResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
+    fn ping_and_warm(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::PingAndWarmRequest, sink: ::grpcio::UnarySink<super::bigtable::PingAndWarmResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn read_modify_write_row(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::ReadModifyWriteRowRequest, sink: ::grpcio::UnarySink<super::bigtable::ReadModifyWriteRowResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn generate_initial_change_stream_partitions(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::GenerateInitialChangeStreamPartitionsRequest, sink: ::grpcio::ServerStreamingSink<super::bigtable::GenerateInitialChangeStreamPartitionsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn read_change_stream(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::ReadChangeStreamRequest, sink: ::grpcio::ServerStreamingSink<super::bigtable::ReadChangeStreamResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -189,9 +251,21 @@ pub fn create_bigtable<S: Bigtable + Send + Clone + 'static>(s: S) -> ::grpcio::
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_CHECK_AND_MUTATE_ROW, move |ctx, req, resp| {
         instance.check_and_mutate_row(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_PING_AND_WARM, move |ctx, req, resp| {
+        instance.ping_and_warm(ctx, req, resp)
+    });
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_READ_MODIFY_WRITE_ROW, move |ctx, req, resp| {
         instance.read_modify_write_row(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_server_streaming_handler(&METHOD_BIGTABLE_GENERATE_INITIAL_CHANGE_STREAM_PARTITIONS, move |ctx, req, resp| {
+        instance.generate_initial_change_stream_partitions(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_server_streaming_handler(&METHOD_BIGTABLE_READ_CHANGE_STREAM, move |ctx, req, resp| {
+        instance.read_change_stream(ctx, req, resp)
     });
     builder.build()
 }

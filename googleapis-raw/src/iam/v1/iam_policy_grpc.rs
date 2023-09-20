@@ -39,7 +39,7 @@ const METHOD_IAM_POLICY_TEST_IAM_PERMISSIONS: ::grpcio::Method<super::iam_policy
 
 #[derive(Clone)]
 pub struct IamPolicyClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl IamPolicyClient {

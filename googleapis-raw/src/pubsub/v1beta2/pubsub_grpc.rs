@@ -74,7 +74,7 @@ const METHOD_SUBSCRIBER_MODIFY_PUSH_CONFIG: ::grpcio::Method<super::pubsub::Modi
 
 #[derive(Clone)]
 pub struct SubscriberClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl SubscriberClient {
@@ -324,7 +324,7 @@ const METHOD_PUBLISHER_DELETE_TOPIC: ::grpcio::Method<super::pubsub::DeleteTopic
 
 #[derive(Clone)]
 pub struct PublisherClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl PublisherClient {

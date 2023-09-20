@@ -53,11 +53,15 @@ def walk(path, args):
                 if mod_name in ["mod", "lib"] or mod_name in skip:
                     continue
                 # print ("adding mod {}".format(mod_name))
+                if mod_name == "type":
+                    mod_name = "r#type"
                 output += "pub mod {};\n".format(mod_name)
         for name in dirnames:
             if name.startswith('.') or name in skip:
                 continue
             # print ("adding mod {}".format(name))
+            if name == "type":
+                name = "r#type"
             output += "pub mod {};\n".format(name)
         with open(mod_file, "w") as file:
             file.write(output)

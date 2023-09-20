@@ -23,6 +23,3754 @@
 /// of protobuf runtime.
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_28_0;
 
+#[derive(PartialEq,Clone,Default)]
+pub struct CommonLanguageSettings {
+    // message fields
+    pub reference_docs_uri: ::std::string::String,
+    pub destinations: ::std::vec::Vec<ClientLibraryDestination>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CommonLanguageSettings {
+    fn default() -> &'a CommonLanguageSettings {
+        <CommonLanguageSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CommonLanguageSettings {
+    pub fn new() -> CommonLanguageSettings {
+        ::std::default::Default::default()
+    }
+
+    // string reference_docs_uri = 1;
+
+
+    pub fn get_reference_docs_uri(&self) -> &str {
+        &self.reference_docs_uri
+    }
+    pub fn clear_reference_docs_uri(&mut self) {
+        self.reference_docs_uri.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_reference_docs_uri(&mut self, v: ::std::string::String) {
+        self.reference_docs_uri = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_reference_docs_uri(&mut self) -> &mut ::std::string::String {
+        &mut self.reference_docs_uri
+    }
+
+    // Take field
+    pub fn take_reference_docs_uri(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.reference_docs_uri, ::std::string::String::new())
+    }
+
+    // repeated .google.api.ClientLibraryDestination destinations = 2;
+
+
+    pub fn get_destinations(&self) -> &[ClientLibraryDestination] {
+        &self.destinations
+    }
+    pub fn clear_destinations(&mut self) {
+        self.destinations.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_destinations(&mut self, v: ::std::vec::Vec<ClientLibraryDestination>) {
+        self.destinations = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_destinations(&mut self) -> &mut ::std::vec::Vec<ClientLibraryDestination> {
+        &mut self.destinations
+    }
+
+    // Take field
+    pub fn take_destinations(&mut self) -> ::std::vec::Vec<ClientLibraryDestination> {
+        ::std::mem::replace(&mut self.destinations, ::std::vec::Vec::new())
+    }
+}
+
+impl ::protobuf::Message for CommonLanguageSettings {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.reference_docs_uri)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_enum_with_unknown_fields_into(wire_type, is, &mut self.destinations, 2, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.reference_docs_uri.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.reference_docs_uri);
+        }
+        for value in &self.destinations {
+            my_size += ::protobuf::rt::enum_size(2, *value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.reference_docs_uri.is_empty() {
+            os.write_string(1, &self.reference_docs_uri)?;
+        }
+        for v in &self.destinations {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(v))?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CommonLanguageSettings {
+        CommonLanguageSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "reference_docs_uri",
+                |m: &CommonLanguageSettings| { &m.reference_docs_uri },
+                |m: &mut CommonLanguageSettings| { &mut m.reference_docs_uri },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeEnum<ClientLibraryDestination>>(
+                "destinations",
+                |m: &CommonLanguageSettings| { &m.destinations },
+                |m: &mut CommonLanguageSettings| { &mut m.destinations },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CommonLanguageSettings>(
+                "CommonLanguageSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CommonLanguageSettings {
+        static instance: ::protobuf::rt::LazyV2<CommonLanguageSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CommonLanguageSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for CommonLanguageSettings {
+    fn clear(&mut self) {
+        self.reference_docs_uri.clear();
+        self.destinations.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CommonLanguageSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CommonLanguageSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ClientLibrarySettings {
+    // message fields
+    pub version: ::std::string::String,
+    pub launch_stage: super::launch_stage::LaunchStage,
+    pub rest_numeric_enums: bool,
+    pub java_settings: ::protobuf::SingularPtrField<JavaSettings>,
+    pub cpp_settings: ::protobuf::SingularPtrField<CppSettings>,
+    pub php_settings: ::protobuf::SingularPtrField<PhpSettings>,
+    pub python_settings: ::protobuf::SingularPtrField<PythonSettings>,
+    pub node_settings: ::protobuf::SingularPtrField<NodeSettings>,
+    pub dotnet_settings: ::protobuf::SingularPtrField<DotnetSettings>,
+    pub ruby_settings: ::protobuf::SingularPtrField<RubySettings>,
+    pub go_settings: ::protobuf::SingularPtrField<GoSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ClientLibrarySettings {
+    fn default() -> &'a ClientLibrarySettings {
+        <ClientLibrarySettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ClientLibrarySettings {
+    pub fn new() -> ClientLibrarySettings {
+        ::std::default::Default::default()
+    }
+
+    // string version = 1;
+
+
+    pub fn get_version(&self) -> &str {
+        &self.version
+    }
+    pub fn clear_version(&mut self) {
+        self.version.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_version(&mut self, v: ::std::string::String) {
+        self.version = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_version(&mut self) -> &mut ::std::string::String {
+        &mut self.version
+    }
+
+    // Take field
+    pub fn take_version(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.version, ::std::string::String::new())
+    }
+
+    // .google.api.LaunchStage launch_stage = 2;
+
+
+    pub fn get_launch_stage(&self) -> super::launch_stage::LaunchStage {
+        self.launch_stage
+    }
+    pub fn clear_launch_stage(&mut self) {
+        self.launch_stage = super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_launch_stage(&mut self, v: super::launch_stage::LaunchStage) {
+        self.launch_stage = v;
+    }
+
+    // bool rest_numeric_enums = 3;
+
+
+    pub fn get_rest_numeric_enums(&self) -> bool {
+        self.rest_numeric_enums
+    }
+    pub fn clear_rest_numeric_enums(&mut self) {
+        self.rest_numeric_enums = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rest_numeric_enums(&mut self, v: bool) {
+        self.rest_numeric_enums = v;
+    }
+
+    // .google.api.JavaSettings java_settings = 21;
+
+
+    pub fn get_java_settings(&self) -> &JavaSettings {
+        self.java_settings.as_ref().unwrap_or_else(|| <JavaSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_java_settings(&mut self) {
+        self.java_settings.clear();
+    }
+
+    pub fn has_java_settings(&self) -> bool {
+        self.java_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_java_settings(&mut self, v: JavaSettings) {
+        self.java_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_java_settings(&mut self) -> &mut JavaSettings {
+        if self.java_settings.is_none() {
+            self.java_settings.set_default();
+        }
+        self.java_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_java_settings(&mut self) -> JavaSettings {
+        self.java_settings.take().unwrap_or_else(|| JavaSettings::new())
+    }
+
+    // .google.api.CppSettings cpp_settings = 22;
+
+
+    pub fn get_cpp_settings(&self) -> &CppSettings {
+        self.cpp_settings.as_ref().unwrap_or_else(|| <CppSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_cpp_settings(&mut self) {
+        self.cpp_settings.clear();
+    }
+
+    pub fn has_cpp_settings(&self) -> bool {
+        self.cpp_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cpp_settings(&mut self, v: CppSettings) {
+        self.cpp_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cpp_settings(&mut self) -> &mut CppSettings {
+        if self.cpp_settings.is_none() {
+            self.cpp_settings.set_default();
+        }
+        self.cpp_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_cpp_settings(&mut self) -> CppSettings {
+        self.cpp_settings.take().unwrap_or_else(|| CppSettings::new())
+    }
+
+    // .google.api.PhpSettings php_settings = 23;
+
+
+    pub fn get_php_settings(&self) -> &PhpSettings {
+        self.php_settings.as_ref().unwrap_or_else(|| <PhpSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_php_settings(&mut self) {
+        self.php_settings.clear();
+    }
+
+    pub fn has_php_settings(&self) -> bool {
+        self.php_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_php_settings(&mut self, v: PhpSettings) {
+        self.php_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_php_settings(&mut self) -> &mut PhpSettings {
+        if self.php_settings.is_none() {
+            self.php_settings.set_default();
+        }
+        self.php_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_php_settings(&mut self) -> PhpSettings {
+        self.php_settings.take().unwrap_or_else(|| PhpSettings::new())
+    }
+
+    // .google.api.PythonSettings python_settings = 24;
+
+
+    pub fn get_python_settings(&self) -> &PythonSettings {
+        self.python_settings.as_ref().unwrap_or_else(|| <PythonSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_python_settings(&mut self) {
+        self.python_settings.clear();
+    }
+
+    pub fn has_python_settings(&self) -> bool {
+        self.python_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_python_settings(&mut self, v: PythonSettings) {
+        self.python_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_python_settings(&mut self) -> &mut PythonSettings {
+        if self.python_settings.is_none() {
+            self.python_settings.set_default();
+        }
+        self.python_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_python_settings(&mut self) -> PythonSettings {
+        self.python_settings.take().unwrap_or_else(|| PythonSettings::new())
+    }
+
+    // .google.api.NodeSettings node_settings = 25;
+
+
+    pub fn get_node_settings(&self) -> &NodeSettings {
+        self.node_settings.as_ref().unwrap_or_else(|| <NodeSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_node_settings(&mut self) {
+        self.node_settings.clear();
+    }
+
+    pub fn has_node_settings(&self) -> bool {
+        self.node_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node_settings(&mut self, v: NodeSettings) {
+        self.node_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_node_settings(&mut self) -> &mut NodeSettings {
+        if self.node_settings.is_none() {
+            self.node_settings.set_default();
+        }
+        self.node_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_node_settings(&mut self) -> NodeSettings {
+        self.node_settings.take().unwrap_or_else(|| NodeSettings::new())
+    }
+
+    // .google.api.DotnetSettings dotnet_settings = 26;
+
+
+    pub fn get_dotnet_settings(&self) -> &DotnetSettings {
+        self.dotnet_settings.as_ref().unwrap_or_else(|| <DotnetSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_dotnet_settings(&mut self) {
+        self.dotnet_settings.clear();
+    }
+
+    pub fn has_dotnet_settings(&self) -> bool {
+        self.dotnet_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_dotnet_settings(&mut self, v: DotnetSettings) {
+        self.dotnet_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_dotnet_settings(&mut self) -> &mut DotnetSettings {
+        if self.dotnet_settings.is_none() {
+            self.dotnet_settings.set_default();
+        }
+        self.dotnet_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_dotnet_settings(&mut self) -> DotnetSettings {
+        self.dotnet_settings.take().unwrap_or_else(|| DotnetSettings::new())
+    }
+
+    // .google.api.RubySettings ruby_settings = 27;
+
+
+    pub fn get_ruby_settings(&self) -> &RubySettings {
+        self.ruby_settings.as_ref().unwrap_or_else(|| <RubySettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_ruby_settings(&mut self) {
+        self.ruby_settings.clear();
+    }
+
+    pub fn has_ruby_settings(&self) -> bool {
+        self.ruby_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ruby_settings(&mut self, v: RubySettings) {
+        self.ruby_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_ruby_settings(&mut self) -> &mut RubySettings {
+        if self.ruby_settings.is_none() {
+            self.ruby_settings.set_default();
+        }
+        self.ruby_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_ruby_settings(&mut self) -> RubySettings {
+        self.ruby_settings.take().unwrap_or_else(|| RubySettings::new())
+    }
+
+    // .google.api.GoSettings go_settings = 28;
+
+
+    pub fn get_go_settings(&self) -> &GoSettings {
+        self.go_settings.as_ref().unwrap_or_else(|| <GoSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_go_settings(&mut self) {
+        self.go_settings.clear();
+    }
+
+    pub fn has_go_settings(&self) -> bool {
+        self.go_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_go_settings(&mut self, v: GoSettings) {
+        self.go_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_go_settings(&mut self) -> &mut GoSettings {
+        if self.go_settings.is_none() {
+            self.go_settings.set_default();
+        }
+        self.go_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_go_settings(&mut self) -> GoSettings {
+        self.go_settings.take().unwrap_or_else(|| GoSettings::new())
+    }
+}
+
+impl ::protobuf::Message for ClientLibrarySettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.java_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.cpp_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.php_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.python_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.node_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.dotnet_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.ruby_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.go_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.version)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.launch_stage, 2, &mut self.unknown_fields)?
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.rest_numeric_enums = tmp;
+                },
+                21 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.java_settings)?;
+                },
+                22 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cpp_settings)?;
+                },
+                23 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.php_settings)?;
+                },
+                24 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.python_settings)?;
+                },
+                25 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.node_settings)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.dotnet_settings)?;
+                },
+                27 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.ruby_settings)?;
+                },
+                28 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.go_settings)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.version.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.version);
+        }
+        if self.launch_stage != super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(2, self.launch_stage);
+        }
+        if self.rest_numeric_enums != false {
+            my_size += 2;
+        }
+        if let Some(ref v) = self.java_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.cpp_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.php_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.python_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.node_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.dotnet_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.ruby_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.go_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.version.is_empty() {
+            os.write_string(1, &self.version)?;
+        }
+        if self.launch_stage != super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.launch_stage))?;
+        }
+        if self.rest_numeric_enums != false {
+            os.write_bool(3, self.rest_numeric_enums)?;
+        }
+        if let Some(ref v) = self.java_settings.as_ref() {
+            os.write_tag(21, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.cpp_settings.as_ref() {
+            os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.php_settings.as_ref() {
+            os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.python_settings.as_ref() {
+            os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.node_settings.as_ref() {
+            os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.dotnet_settings.as_ref() {
+            os.write_tag(26, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.ruby_settings.as_ref() {
+            os.write_tag(27, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.go_settings.as_ref() {
+            os.write_tag(28, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ClientLibrarySettings {
+        ClientLibrarySettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "version",
+                |m: &ClientLibrarySettings| { &m.version },
+                |m: &mut ClientLibrarySettings| { &mut m.version },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::launch_stage::LaunchStage>>(
+                "launch_stage",
+                |m: &ClientLibrarySettings| { &m.launch_stage },
+                |m: &mut ClientLibrarySettings| { &mut m.launch_stage },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "rest_numeric_enums",
+                |m: &ClientLibrarySettings| { &m.rest_numeric_enums },
+                |m: &mut ClientLibrarySettings| { &mut m.rest_numeric_enums },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<JavaSettings>>(
+                "java_settings",
+                |m: &ClientLibrarySettings| { &m.java_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.java_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CppSettings>>(
+                "cpp_settings",
+                |m: &ClientLibrarySettings| { &m.cpp_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.cpp_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<PhpSettings>>(
+                "php_settings",
+                |m: &ClientLibrarySettings| { &m.php_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.php_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<PythonSettings>>(
+                "python_settings",
+                |m: &ClientLibrarySettings| { &m.python_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.python_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NodeSettings>>(
+                "node_settings",
+                |m: &ClientLibrarySettings| { &m.node_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.node_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<DotnetSettings>>(
+                "dotnet_settings",
+                |m: &ClientLibrarySettings| { &m.dotnet_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.dotnet_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RubySettings>>(
+                "ruby_settings",
+                |m: &ClientLibrarySettings| { &m.ruby_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.ruby_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<GoSettings>>(
+                "go_settings",
+                |m: &ClientLibrarySettings| { &m.go_settings },
+                |m: &mut ClientLibrarySettings| { &mut m.go_settings },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ClientLibrarySettings>(
+                "ClientLibrarySettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ClientLibrarySettings {
+        static instance: ::protobuf::rt::LazyV2<ClientLibrarySettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ClientLibrarySettings::new)
+    }
+}
+
+impl ::protobuf::Clear for ClientLibrarySettings {
+    fn clear(&mut self) {
+        self.version.clear();
+        self.launch_stage = super::launch_stage::LaunchStage::LAUNCH_STAGE_UNSPECIFIED;
+        self.rest_numeric_enums = false;
+        self.java_settings.clear();
+        self.cpp_settings.clear();
+        self.php_settings.clear();
+        self.python_settings.clear();
+        self.node_settings.clear();
+        self.dotnet_settings.clear();
+        self.ruby_settings.clear();
+        self.go_settings.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ClientLibrarySettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ClientLibrarySettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct Publishing {
+    // message fields
+    pub method_settings: ::protobuf::RepeatedField<MethodSettings>,
+    pub new_issue_uri: ::std::string::String,
+    pub documentation_uri: ::std::string::String,
+    pub api_short_name: ::std::string::String,
+    pub github_label: ::std::string::String,
+    pub codeowner_github_teams: ::protobuf::RepeatedField<::std::string::String>,
+    pub doc_tag_prefix: ::std::string::String,
+    pub organization: ClientLibraryOrganization,
+    pub library_settings: ::protobuf::RepeatedField<ClientLibrarySettings>,
+    pub proto_reference_documentation_uri: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Publishing {
+    fn default() -> &'a Publishing {
+        <Publishing as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Publishing {
+    pub fn new() -> Publishing {
+        ::std::default::Default::default()
+    }
+
+    // repeated .google.api.MethodSettings method_settings = 2;
+
+
+    pub fn get_method_settings(&self) -> &[MethodSettings] {
+        &self.method_settings
+    }
+    pub fn clear_method_settings(&mut self) {
+        self.method_settings.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_method_settings(&mut self, v: ::protobuf::RepeatedField<MethodSettings>) {
+        self.method_settings = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_method_settings(&mut self) -> &mut ::protobuf::RepeatedField<MethodSettings> {
+        &mut self.method_settings
+    }
+
+    // Take field
+    pub fn take_method_settings(&mut self) -> ::protobuf::RepeatedField<MethodSettings> {
+        ::std::mem::replace(&mut self.method_settings, ::protobuf::RepeatedField::new())
+    }
+
+    // string new_issue_uri = 101;
+
+
+    pub fn get_new_issue_uri(&self) -> &str {
+        &self.new_issue_uri
+    }
+    pub fn clear_new_issue_uri(&mut self) {
+        self.new_issue_uri.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_new_issue_uri(&mut self, v: ::std::string::String) {
+        self.new_issue_uri = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_new_issue_uri(&mut self) -> &mut ::std::string::String {
+        &mut self.new_issue_uri
+    }
+
+    // Take field
+    pub fn take_new_issue_uri(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.new_issue_uri, ::std::string::String::new())
+    }
+
+    // string documentation_uri = 102;
+
+
+    pub fn get_documentation_uri(&self) -> &str {
+        &self.documentation_uri
+    }
+    pub fn clear_documentation_uri(&mut self) {
+        self.documentation_uri.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_documentation_uri(&mut self, v: ::std::string::String) {
+        self.documentation_uri = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_documentation_uri(&mut self) -> &mut ::std::string::String {
+        &mut self.documentation_uri
+    }
+
+    // Take field
+    pub fn take_documentation_uri(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.documentation_uri, ::std::string::String::new())
+    }
+
+    // string api_short_name = 103;
+
+
+    pub fn get_api_short_name(&self) -> &str {
+        &self.api_short_name
+    }
+    pub fn clear_api_short_name(&mut self) {
+        self.api_short_name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_api_short_name(&mut self, v: ::std::string::String) {
+        self.api_short_name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_api_short_name(&mut self) -> &mut ::std::string::String {
+        &mut self.api_short_name
+    }
+
+    // Take field
+    pub fn take_api_short_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.api_short_name, ::std::string::String::new())
+    }
+
+    // string github_label = 104;
+
+
+    pub fn get_github_label(&self) -> &str {
+        &self.github_label
+    }
+    pub fn clear_github_label(&mut self) {
+        self.github_label.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_github_label(&mut self, v: ::std::string::String) {
+        self.github_label = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_github_label(&mut self) -> &mut ::std::string::String {
+        &mut self.github_label
+    }
+
+    // Take field
+    pub fn take_github_label(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.github_label, ::std::string::String::new())
+    }
+
+    // repeated string codeowner_github_teams = 105;
+
+
+    pub fn get_codeowner_github_teams(&self) -> &[::std::string::String] {
+        &self.codeowner_github_teams
+    }
+    pub fn clear_codeowner_github_teams(&mut self) {
+        self.codeowner_github_teams.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_codeowner_github_teams(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.codeowner_github_teams = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_codeowner_github_teams(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.codeowner_github_teams
+    }
+
+    // Take field
+    pub fn take_codeowner_github_teams(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.codeowner_github_teams, ::protobuf::RepeatedField::new())
+    }
+
+    // string doc_tag_prefix = 106;
+
+
+    pub fn get_doc_tag_prefix(&self) -> &str {
+        &self.doc_tag_prefix
+    }
+    pub fn clear_doc_tag_prefix(&mut self) {
+        self.doc_tag_prefix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_doc_tag_prefix(&mut self, v: ::std::string::String) {
+        self.doc_tag_prefix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_doc_tag_prefix(&mut self) -> &mut ::std::string::String {
+        &mut self.doc_tag_prefix
+    }
+
+    // Take field
+    pub fn take_doc_tag_prefix(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.doc_tag_prefix, ::std::string::String::new())
+    }
+
+    // .google.api.ClientLibraryOrganization organization = 107;
+
+
+    pub fn get_organization(&self) -> ClientLibraryOrganization {
+        self.organization
+    }
+    pub fn clear_organization(&mut self) {
+        self.organization = ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_organization(&mut self, v: ClientLibraryOrganization) {
+        self.organization = v;
+    }
+
+    // repeated .google.api.ClientLibrarySettings library_settings = 109;
+
+
+    pub fn get_library_settings(&self) -> &[ClientLibrarySettings] {
+        &self.library_settings
+    }
+    pub fn clear_library_settings(&mut self) {
+        self.library_settings.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_library_settings(&mut self, v: ::protobuf::RepeatedField<ClientLibrarySettings>) {
+        self.library_settings = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_library_settings(&mut self) -> &mut ::protobuf::RepeatedField<ClientLibrarySettings> {
+        &mut self.library_settings
+    }
+
+    // Take field
+    pub fn take_library_settings(&mut self) -> ::protobuf::RepeatedField<ClientLibrarySettings> {
+        ::std::mem::replace(&mut self.library_settings, ::protobuf::RepeatedField::new())
+    }
+
+    // string proto_reference_documentation_uri = 110;
+
+
+    pub fn get_proto_reference_documentation_uri(&self) -> &str {
+        &self.proto_reference_documentation_uri
+    }
+    pub fn clear_proto_reference_documentation_uri(&mut self) {
+        self.proto_reference_documentation_uri.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_proto_reference_documentation_uri(&mut self, v: ::std::string::String) {
+        self.proto_reference_documentation_uri = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_proto_reference_documentation_uri(&mut self) -> &mut ::std::string::String {
+        &mut self.proto_reference_documentation_uri
+    }
+
+    // Take field
+    pub fn take_proto_reference_documentation_uri(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.proto_reference_documentation_uri, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for Publishing {
+    fn is_initialized(&self) -> bool {
+        for v in &self.method_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.library_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.method_settings)?;
+                },
+                101 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.new_issue_uri)?;
+                },
+                102 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.documentation_uri)?;
+                },
+                103 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.api_short_name)?;
+                },
+                104 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.github_label)?;
+                },
+                105 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.codeowner_github_teams)?;
+                },
+                106 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.doc_tag_prefix)?;
+                },
+                107 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.organization, 107, &mut self.unknown_fields)?
+                },
+                109 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.library_settings)?;
+                },
+                110 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.proto_reference_documentation_uri)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.method_settings {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if !self.new_issue_uri.is_empty() {
+            my_size += ::protobuf::rt::string_size(101, &self.new_issue_uri);
+        }
+        if !self.documentation_uri.is_empty() {
+            my_size += ::protobuf::rt::string_size(102, &self.documentation_uri);
+        }
+        if !self.api_short_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(103, &self.api_short_name);
+        }
+        if !self.github_label.is_empty() {
+            my_size += ::protobuf::rt::string_size(104, &self.github_label);
+        }
+        for value in &self.codeowner_github_teams {
+            my_size += ::protobuf::rt::string_size(105, &value);
+        };
+        if !self.doc_tag_prefix.is_empty() {
+            my_size += ::protobuf::rt::string_size(106, &self.doc_tag_prefix);
+        }
+        if self.organization != ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(107, self.organization);
+        }
+        for value in &self.library_settings {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if !self.proto_reference_documentation_uri.is_empty() {
+            my_size += ::protobuf::rt::string_size(110, &self.proto_reference_documentation_uri);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.method_settings {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if !self.new_issue_uri.is_empty() {
+            os.write_string(101, &self.new_issue_uri)?;
+        }
+        if !self.documentation_uri.is_empty() {
+            os.write_string(102, &self.documentation_uri)?;
+        }
+        if !self.api_short_name.is_empty() {
+            os.write_string(103, &self.api_short_name)?;
+        }
+        if !self.github_label.is_empty() {
+            os.write_string(104, &self.github_label)?;
+        }
+        for v in &self.codeowner_github_teams {
+            os.write_string(105, &v)?;
+        };
+        if !self.doc_tag_prefix.is_empty() {
+            os.write_string(106, &self.doc_tag_prefix)?;
+        }
+        if self.organization != ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED {
+            os.write_enum(107, ::protobuf::ProtobufEnum::value(&self.organization))?;
+        }
+        for v in &self.library_settings {
+            os.write_tag(109, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if !self.proto_reference_documentation_uri.is_empty() {
+            os.write_string(110, &self.proto_reference_documentation_uri)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Publishing {
+        Publishing::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MethodSettings>>(
+                "method_settings",
+                |m: &Publishing| { &m.method_settings },
+                |m: &mut Publishing| { &mut m.method_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "new_issue_uri",
+                |m: &Publishing| { &m.new_issue_uri },
+                |m: &mut Publishing| { &mut m.new_issue_uri },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "documentation_uri",
+                |m: &Publishing| { &m.documentation_uri },
+                |m: &mut Publishing| { &mut m.documentation_uri },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "api_short_name",
+                |m: &Publishing| { &m.api_short_name },
+                |m: &mut Publishing| { &mut m.api_short_name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "github_label",
+                |m: &Publishing| { &m.github_label },
+                |m: &mut Publishing| { &mut m.github_label },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "codeowner_github_teams",
+                |m: &Publishing| { &m.codeowner_github_teams },
+                |m: &mut Publishing| { &mut m.codeowner_github_teams },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "doc_tag_prefix",
+                |m: &Publishing| { &m.doc_tag_prefix },
+                |m: &mut Publishing| { &mut m.doc_tag_prefix },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<ClientLibraryOrganization>>(
+                "organization",
+                |m: &Publishing| { &m.organization },
+                |m: &mut Publishing| { &mut m.organization },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ClientLibrarySettings>>(
+                "library_settings",
+                |m: &Publishing| { &m.library_settings },
+                |m: &mut Publishing| { &mut m.library_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "proto_reference_documentation_uri",
+                |m: &Publishing| { &m.proto_reference_documentation_uri },
+                |m: &mut Publishing| { &mut m.proto_reference_documentation_uri },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Publishing>(
+                "Publishing",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Publishing {
+        static instance: ::protobuf::rt::LazyV2<Publishing> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Publishing::new)
+    }
+}
+
+impl ::protobuf::Clear for Publishing {
+    fn clear(&mut self) {
+        self.method_settings.clear();
+        self.new_issue_uri.clear();
+        self.documentation_uri.clear();
+        self.api_short_name.clear();
+        self.github_label.clear();
+        self.codeowner_github_teams.clear();
+        self.doc_tag_prefix.clear();
+        self.organization = ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED;
+        self.library_settings.clear();
+        self.proto_reference_documentation_uri.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Publishing {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Publishing {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct JavaSettings {
+    // message fields
+    pub library_package: ::std::string::String,
+    pub service_class_names: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a JavaSettings {
+    fn default() -> &'a JavaSettings {
+        <JavaSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl JavaSettings {
+    pub fn new() -> JavaSettings {
+        ::std::default::Default::default()
+    }
+
+    // string library_package = 1;
+
+
+    pub fn get_library_package(&self) -> &str {
+        &self.library_package
+    }
+    pub fn clear_library_package(&mut self) {
+        self.library_package.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_library_package(&mut self, v: ::std::string::String) {
+        self.library_package = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_library_package(&mut self) -> &mut ::std::string::String {
+        &mut self.library_package
+    }
+
+    // Take field
+    pub fn take_library_package(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.library_package, ::std::string::String::new())
+    }
+
+    // repeated .google.api.JavaSettings.ServiceClassNamesEntry service_class_names = 2;
+
+
+    pub fn get_service_class_names(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.service_class_names
+    }
+    pub fn clear_service_class_names(&mut self) {
+        self.service_class_names.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_service_class_names(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.service_class_names = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_service_class_names(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.service_class_names
+    }
+
+    // Take field
+    pub fn take_service_class_names(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.service_class_names, ::std::collections::HashMap::new())
+    }
+
+    // .google.api.CommonLanguageSettings common = 3;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for JavaSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.library_package)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.service_class_names)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.library_package.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.library_package);
+        }
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(2, &self.service_class_names);
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.library_package.is_empty() {
+            os.write_string(1, &self.library_package)?;
+        }
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(2, &self.service_class_names, os)?;
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> JavaSettings {
+        JavaSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "library_package",
+                |m: &JavaSettings| { &m.library_package },
+                |m: &mut JavaSettings| { &mut m.library_package },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
+                "service_class_names",
+                |m: &JavaSettings| { &m.service_class_names },
+                |m: &mut JavaSettings| { &mut m.service_class_names },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &JavaSettings| { &m.common },
+                |m: &mut JavaSettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<JavaSettings>(
+                "JavaSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static JavaSettings {
+        static instance: ::protobuf::rt::LazyV2<JavaSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(JavaSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for JavaSettings {
+    fn clear(&mut self) {
+        self.library_package.clear();
+        self.service_class_names.clear();
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for JavaSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for JavaSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CppSettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CppSettings {
+    fn default() -> &'a CppSettings {
+        <CppSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CppSettings {
+    pub fn new() -> CppSettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for CppSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CppSettings {
+        CppSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &CppSettings| { &m.common },
+                |m: &mut CppSettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CppSettings>(
+                "CppSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CppSettings {
+        static instance: ::protobuf::rt::LazyV2<CppSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CppSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for CppSettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CppSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CppSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct PhpSettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PhpSettings {
+    fn default() -> &'a PhpSettings {
+        <PhpSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PhpSettings {
+    pub fn new() -> PhpSettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for PhpSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PhpSettings {
+        PhpSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &PhpSettings| { &m.common },
+                |m: &mut PhpSettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PhpSettings>(
+                "PhpSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PhpSettings {
+        static instance: ::protobuf::rt::LazyV2<PhpSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PhpSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for PhpSettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PhpSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PhpSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct PythonSettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PythonSettings {
+    fn default() -> &'a PythonSettings {
+        <PythonSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PythonSettings {
+    pub fn new() -> PythonSettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for PythonSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PythonSettings {
+        PythonSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &PythonSettings| { &m.common },
+                |m: &mut PythonSettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PythonSettings>(
+                "PythonSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PythonSettings {
+        static instance: ::protobuf::rt::LazyV2<PythonSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PythonSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for PythonSettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PythonSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PythonSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct NodeSettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a NodeSettings {
+    fn default() -> &'a NodeSettings {
+        <NodeSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl NodeSettings {
+    pub fn new() -> NodeSettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for NodeSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> NodeSettings {
+        NodeSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &NodeSettings| { &m.common },
+                |m: &mut NodeSettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<NodeSettings>(
+                "NodeSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static NodeSettings {
+        static instance: ::protobuf::rt::LazyV2<NodeSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(NodeSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for NodeSettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for NodeSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for NodeSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DotnetSettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    pub renamed_services: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub renamed_resources: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub ignored_resources: ::protobuf::RepeatedField<::std::string::String>,
+    pub forced_namespace_aliases: ::protobuf::RepeatedField<::std::string::String>,
+    pub handwritten_signatures: ::protobuf::RepeatedField<::std::string::String>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DotnetSettings {
+    fn default() -> &'a DotnetSettings {
+        <DotnetSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DotnetSettings {
+    pub fn new() -> DotnetSettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+
+    // repeated .google.api.DotnetSettings.RenamedServicesEntry renamed_services = 2;
+
+
+    pub fn get_renamed_services(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.renamed_services
+    }
+    pub fn clear_renamed_services(&mut self) {
+        self.renamed_services.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_renamed_services(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.renamed_services = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_renamed_services(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.renamed_services
+    }
+
+    // Take field
+    pub fn take_renamed_services(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.renamed_services, ::std::collections::HashMap::new())
+    }
+
+    // repeated .google.api.DotnetSettings.RenamedResourcesEntry renamed_resources = 3;
+
+
+    pub fn get_renamed_resources(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.renamed_resources
+    }
+    pub fn clear_renamed_resources(&mut self) {
+        self.renamed_resources.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_renamed_resources(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.renamed_resources = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_renamed_resources(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.renamed_resources
+    }
+
+    // Take field
+    pub fn take_renamed_resources(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.renamed_resources, ::std::collections::HashMap::new())
+    }
+
+    // repeated string ignored_resources = 4;
+
+
+    pub fn get_ignored_resources(&self) -> &[::std::string::String] {
+        &self.ignored_resources
+    }
+    pub fn clear_ignored_resources(&mut self) {
+        self.ignored_resources.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ignored_resources(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.ignored_resources = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_ignored_resources(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.ignored_resources
+    }
+
+    // Take field
+    pub fn take_ignored_resources(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.ignored_resources, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string forced_namespace_aliases = 5;
+
+
+    pub fn get_forced_namespace_aliases(&self) -> &[::std::string::String] {
+        &self.forced_namespace_aliases
+    }
+    pub fn clear_forced_namespace_aliases(&mut self) {
+        self.forced_namespace_aliases.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_forced_namespace_aliases(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.forced_namespace_aliases = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_forced_namespace_aliases(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.forced_namespace_aliases
+    }
+
+    // Take field
+    pub fn take_forced_namespace_aliases(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.forced_namespace_aliases, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string handwritten_signatures = 6;
+
+
+    pub fn get_handwritten_signatures(&self) -> &[::std::string::String] {
+        &self.handwritten_signatures
+    }
+    pub fn clear_handwritten_signatures(&mut self) {
+        self.handwritten_signatures.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_handwritten_signatures(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.handwritten_signatures = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_handwritten_signatures(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.handwritten_signatures
+    }
+
+    // Take field
+    pub fn take_handwritten_signatures(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.handwritten_signatures, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for DotnetSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.renamed_services)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.renamed_resources)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.ignored_resources)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.forced_namespace_aliases)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.handwritten_signatures)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(2, &self.renamed_services);
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.renamed_resources);
+        for value in &self.ignored_resources {
+            my_size += ::protobuf::rt::string_size(4, &value);
+        };
+        for value in &self.forced_namespace_aliases {
+            my_size += ::protobuf::rt::string_size(5, &value);
+        };
+        for value in &self.handwritten_signatures {
+            my_size += ::protobuf::rt::string_size(6, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(2, &self.renamed_services, os)?;
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.renamed_resources, os)?;
+        for v in &self.ignored_resources {
+            os.write_string(4, &v)?;
+        };
+        for v in &self.forced_namespace_aliases {
+            os.write_string(5, &v)?;
+        };
+        for v in &self.handwritten_signatures {
+            os.write_string(6, &v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DotnetSettings {
+        DotnetSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &DotnetSettings| { &m.common },
+                |m: &mut DotnetSettings| { &mut m.common },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
+                "renamed_services",
+                |m: &DotnetSettings| { &m.renamed_services },
+                |m: &mut DotnetSettings| { &mut m.renamed_services },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
+                "renamed_resources",
+                |m: &DotnetSettings| { &m.renamed_resources },
+                |m: &mut DotnetSettings| { &mut m.renamed_resources },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "ignored_resources",
+                |m: &DotnetSettings| { &m.ignored_resources },
+                |m: &mut DotnetSettings| { &mut m.ignored_resources },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "forced_namespace_aliases",
+                |m: &DotnetSettings| { &m.forced_namespace_aliases },
+                |m: &mut DotnetSettings| { &mut m.forced_namespace_aliases },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "handwritten_signatures",
+                |m: &DotnetSettings| { &m.handwritten_signatures },
+                |m: &mut DotnetSettings| { &mut m.handwritten_signatures },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DotnetSettings>(
+                "DotnetSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DotnetSettings {
+        static instance: ::protobuf::rt::LazyV2<DotnetSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DotnetSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for DotnetSettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.renamed_services.clear();
+        self.renamed_resources.clear();
+        self.ignored_resources.clear();
+        self.forced_namespace_aliases.clear();
+        self.handwritten_signatures.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DotnetSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DotnetSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct RubySettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a RubySettings {
+    fn default() -> &'a RubySettings {
+        <RubySettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RubySettings {
+    pub fn new() -> RubySettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for RubySettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RubySettings {
+        RubySettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &RubySettings| { &m.common },
+                |m: &mut RubySettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<RubySettings>(
+                "RubySettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static RubySettings {
+        static instance: ::protobuf::rt::LazyV2<RubySettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(RubySettings::new)
+    }
+}
+
+impl ::protobuf::Clear for RubySettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RubySettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RubySettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct GoSettings {
+    // message fields
+    pub common: ::protobuf::SingularPtrField<CommonLanguageSettings>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GoSettings {
+    fn default() -> &'a GoSettings {
+        <GoSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GoSettings {
+    pub fn new() -> GoSettings {
+        ::std::default::Default::default()
+    }
+
+    // .google.api.CommonLanguageSettings common = 1;
+
+
+    pub fn get_common(&self) -> &CommonLanguageSettings {
+        self.common.as_ref().unwrap_or_else(|| <CommonLanguageSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_common(&mut self) {
+        self.common.clear();
+    }
+
+    pub fn has_common(&self) -> bool {
+        self.common.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_common(&mut self, v: CommonLanguageSettings) {
+        self.common = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_common(&mut self) -> &mut CommonLanguageSettings {
+        if self.common.is_none() {
+            self.common.set_default();
+        }
+        self.common.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_common(&mut self) -> CommonLanguageSettings {
+        self.common.take().unwrap_or_else(|| CommonLanguageSettings::new())
+    }
+}
+
+impl ::protobuf::Message for GoSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.common {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.common)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.common.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.common.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GoSettings {
+        GoSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CommonLanguageSettings>>(
+                "common",
+                |m: &GoSettings| { &m.common },
+                |m: &mut GoSettings| { &mut m.common },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GoSettings>(
+                "GoSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GoSettings {
+        static instance: ::protobuf::rt::LazyV2<GoSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GoSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for GoSettings {
+    fn clear(&mut self) {
+        self.common.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GoSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GoSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct MethodSettings {
+    // message fields
+    pub selector: ::std::string::String,
+    pub long_running: ::protobuf::SingularPtrField<MethodSettings_LongRunning>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MethodSettings {
+    fn default() -> &'a MethodSettings {
+        <MethodSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MethodSettings {
+    pub fn new() -> MethodSettings {
+        ::std::default::Default::default()
+    }
+
+    // string selector = 1;
+
+
+    pub fn get_selector(&self) -> &str {
+        &self.selector
+    }
+    pub fn clear_selector(&mut self) {
+        self.selector.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_selector(&mut self, v: ::std::string::String) {
+        self.selector = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_selector(&mut self) -> &mut ::std::string::String {
+        &mut self.selector
+    }
+
+    // Take field
+    pub fn take_selector(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.selector, ::std::string::String::new())
+    }
+
+    // .google.api.MethodSettings.LongRunning long_running = 2;
+
+
+    pub fn get_long_running(&self) -> &MethodSettings_LongRunning {
+        self.long_running.as_ref().unwrap_or_else(|| <MethodSettings_LongRunning as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_long_running(&mut self) {
+        self.long_running.clear();
+    }
+
+    pub fn has_long_running(&self) -> bool {
+        self.long_running.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_long_running(&mut self, v: MethodSettings_LongRunning) {
+        self.long_running = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_long_running(&mut self) -> &mut MethodSettings_LongRunning {
+        if self.long_running.is_none() {
+            self.long_running.set_default();
+        }
+        self.long_running.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_long_running(&mut self) -> MethodSettings_LongRunning {
+        self.long_running.take().unwrap_or_else(|| MethodSettings_LongRunning::new())
+    }
+}
+
+impl ::protobuf::Message for MethodSettings {
+    fn is_initialized(&self) -> bool {
+        for v in &self.long_running {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.selector)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.long_running)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.selector.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.selector);
+        }
+        if let Some(ref v) = self.long_running.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.selector.is_empty() {
+            os.write_string(1, &self.selector)?;
+        }
+        if let Some(ref v) = self.long_running.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MethodSettings {
+        MethodSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "selector",
+                |m: &MethodSettings| { &m.selector },
+                |m: &mut MethodSettings| { &mut m.selector },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MethodSettings_LongRunning>>(
+                "long_running",
+                |m: &MethodSettings| { &m.long_running },
+                |m: &mut MethodSettings| { &mut m.long_running },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MethodSettings>(
+                "MethodSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MethodSettings {
+        static instance: ::protobuf::rt::LazyV2<MethodSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MethodSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for MethodSettings {
+    fn clear(&mut self) {
+        self.selector.clear();
+        self.long_running.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MethodSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MethodSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct MethodSettings_LongRunning {
+    // message fields
+    pub initial_poll_delay: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    pub poll_delay_multiplier: f32,
+    pub max_poll_delay: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    pub total_poll_timeout: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MethodSettings_LongRunning {
+    fn default() -> &'a MethodSettings_LongRunning {
+        <MethodSettings_LongRunning as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MethodSettings_LongRunning {
+    pub fn new() -> MethodSettings_LongRunning {
+        ::std::default::Default::default()
+    }
+
+    // .google.protobuf.Duration initial_poll_delay = 1;
+
+
+    pub fn get_initial_poll_delay(&self) -> &::protobuf::well_known_types::Duration {
+        self.initial_poll_delay.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_initial_poll_delay(&mut self) {
+        self.initial_poll_delay.clear();
+    }
+
+    pub fn has_initial_poll_delay(&self) -> bool {
+        self.initial_poll_delay.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_initial_poll_delay(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.initial_poll_delay = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_initial_poll_delay(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.initial_poll_delay.is_none() {
+            self.initial_poll_delay.set_default();
+        }
+        self.initial_poll_delay.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_initial_poll_delay(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.initial_poll_delay.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+
+    // float poll_delay_multiplier = 2;
+
+
+    pub fn get_poll_delay_multiplier(&self) -> f32 {
+        self.poll_delay_multiplier
+    }
+    pub fn clear_poll_delay_multiplier(&mut self) {
+        self.poll_delay_multiplier = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_poll_delay_multiplier(&mut self, v: f32) {
+        self.poll_delay_multiplier = v;
+    }
+
+    // .google.protobuf.Duration max_poll_delay = 3;
+
+
+    pub fn get_max_poll_delay(&self) -> &::protobuf::well_known_types::Duration {
+        self.max_poll_delay.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_max_poll_delay(&mut self) {
+        self.max_poll_delay.clear();
+    }
+
+    pub fn has_max_poll_delay(&self) -> bool {
+        self.max_poll_delay.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_poll_delay(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.max_poll_delay = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_max_poll_delay(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.max_poll_delay.is_none() {
+            self.max_poll_delay.set_default();
+        }
+        self.max_poll_delay.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_max_poll_delay(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.max_poll_delay.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+
+    // .google.protobuf.Duration total_poll_timeout = 4;
+
+
+    pub fn get_total_poll_timeout(&self) -> &::protobuf::well_known_types::Duration {
+        self.total_poll_timeout.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_total_poll_timeout(&mut self) {
+        self.total_poll_timeout.clear();
+    }
+
+    pub fn has_total_poll_timeout(&self) -> bool {
+        self.total_poll_timeout.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_total_poll_timeout(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.total_poll_timeout = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_total_poll_timeout(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.total_poll_timeout.is_none() {
+            self.total_poll_timeout.set_default();
+        }
+        self.total_poll_timeout.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_total_poll_timeout(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.total_poll_timeout.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+}
+
+impl ::protobuf::Message for MethodSettings_LongRunning {
+    fn is_initialized(&self) -> bool {
+        for v in &self.initial_poll_delay {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.max_poll_delay {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.total_poll_timeout {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.initial_poll_delay)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed32 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_float()?;
+                    self.poll_delay_multiplier = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.max_poll_delay)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.total_poll_timeout)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.initial_poll_delay.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.poll_delay_multiplier != 0. {
+            my_size += 5;
+        }
+        if let Some(ref v) = self.max_poll_delay.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.total_poll_timeout.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.initial_poll_delay.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.poll_delay_multiplier != 0. {
+            os.write_float(2, self.poll_delay_multiplier)?;
+        }
+        if let Some(ref v) = self.max_poll_delay.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.total_poll_timeout.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MethodSettings_LongRunning {
+        MethodSettings_LongRunning::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "initial_poll_delay",
+                |m: &MethodSettings_LongRunning| { &m.initial_poll_delay },
+                |m: &mut MethodSettings_LongRunning| { &mut m.initial_poll_delay },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeFloat>(
+                "poll_delay_multiplier",
+                |m: &MethodSettings_LongRunning| { &m.poll_delay_multiplier },
+                |m: &mut MethodSettings_LongRunning| { &mut m.poll_delay_multiplier },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "max_poll_delay",
+                |m: &MethodSettings_LongRunning| { &m.max_poll_delay },
+                |m: &mut MethodSettings_LongRunning| { &mut m.max_poll_delay },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "total_poll_timeout",
+                |m: &MethodSettings_LongRunning| { &m.total_poll_timeout },
+                |m: &mut MethodSettings_LongRunning| { &mut m.total_poll_timeout },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MethodSettings_LongRunning>(
+                "MethodSettings.LongRunning",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MethodSettings_LongRunning {
+        static instance: ::protobuf::rt::LazyV2<MethodSettings_LongRunning> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MethodSettings_LongRunning::new)
+    }
+}
+
+impl ::protobuf::Clear for MethodSettings_LongRunning {
+    fn clear(&mut self) {
+        self.initial_poll_delay.clear();
+        self.poll_delay_multiplier = 0.;
+        self.max_poll_delay.clear();
+        self.total_poll_timeout.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MethodSettings_LongRunning {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MethodSettings_LongRunning {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum ClientLibraryOrganization {
+    CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED = 0,
+    CLOUD = 1,
+    ADS = 2,
+    PHOTOS = 3,
+    STREET_VIEW = 4,
+    SHOPPING = 5,
+    GEO = 6,
+    GENERATIVE_AI = 7,
+}
+
+impl ::protobuf::ProtobufEnum for ClientLibraryOrganization {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<ClientLibraryOrganization> {
+        match value {
+            0 => ::std::option::Option::Some(ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED),
+            1 => ::std::option::Option::Some(ClientLibraryOrganization::CLOUD),
+            2 => ::std::option::Option::Some(ClientLibraryOrganization::ADS),
+            3 => ::std::option::Option::Some(ClientLibraryOrganization::PHOTOS),
+            4 => ::std::option::Option::Some(ClientLibraryOrganization::STREET_VIEW),
+            5 => ::std::option::Option::Some(ClientLibraryOrganization::SHOPPING),
+            6 => ::std::option::Option::Some(ClientLibraryOrganization::GEO),
+            7 => ::std::option::Option::Some(ClientLibraryOrganization::GENERATIVE_AI),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [ClientLibraryOrganization] = &[
+            ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED,
+            ClientLibraryOrganization::CLOUD,
+            ClientLibraryOrganization::ADS,
+            ClientLibraryOrganization::PHOTOS,
+            ClientLibraryOrganization::STREET_VIEW,
+            ClientLibraryOrganization::SHOPPING,
+            ClientLibraryOrganization::GEO,
+            ClientLibraryOrganization::GENERATIVE_AI,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<ClientLibraryOrganization>("ClientLibraryOrganization", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for ClientLibraryOrganization {
+}
+
+impl ::std::default::Default for ClientLibraryOrganization {
+    fn default() -> Self {
+        ClientLibraryOrganization::CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ClientLibraryOrganization {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum ClientLibraryDestination {
+    CLIENT_LIBRARY_DESTINATION_UNSPECIFIED = 0,
+    GITHUB = 10,
+    PACKAGE_MANAGER = 20,
+}
+
+impl ::protobuf::ProtobufEnum for ClientLibraryDestination {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<ClientLibraryDestination> {
+        match value {
+            0 => ::std::option::Option::Some(ClientLibraryDestination::CLIENT_LIBRARY_DESTINATION_UNSPECIFIED),
+            10 => ::std::option::Option::Some(ClientLibraryDestination::GITHUB),
+            20 => ::std::option::Option::Some(ClientLibraryDestination::PACKAGE_MANAGER),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [ClientLibraryDestination] = &[
+            ClientLibraryDestination::CLIENT_LIBRARY_DESTINATION_UNSPECIFIED,
+            ClientLibraryDestination::GITHUB,
+            ClientLibraryDestination::PACKAGE_MANAGER,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<ClientLibraryDestination>("ClientLibraryDestination", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for ClientLibraryDestination {
+}
+
+impl ::std::default::Default for ClientLibraryDestination {
+    fn default() -> Self {
+        ClientLibraryDestination::CLIENT_LIBRARY_DESTINATION_UNSPECIFIED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ClientLibraryDestination {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
 /// Extension fields
 pub mod exts {
 
@@ -34,86 +3782,478 @@ pub mod exts {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x17google/api/client.proto\x12\ngoogle.api\x1a\x20google/protobuf/des\
-    criptor.proto:J\n\x10method_signature\x18\x9b\x08\x20\x03(\t\x12\x1e.goo\
-    gle.protobuf.MethodOptionsR\x0fmethodSignature:C\n\x0cdefault_host\x18\
-    \x99\x08\x20\x01(\t\x12\x1f.google.protobuf.ServiceOptionsR\x0bdefaultHo\
-    st:C\n\x0coauth_scopes\x18\x9a\x08\x20\x01(\t\x12\x1f.google.protobuf.Se\
-    rviceOptionsR\x0boauthScopesBi\n\x0ecom.google.apiB\x0bClientProtoP\x01Z\
-    Agoogle.golang.org/genproto/googleapis/api/annotations;annotations\xa2\
-    \x02\x04GAPIJ\x94\x17\n\x06\x12\x04\x0f\0c\x01\n\xbe\x04\n\x01\x0c\x12\
-    \x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Li\
-    censed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\
-    \x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20excep\
-    t\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20obta\
-    in\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20htt\
-    p://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\
-    \x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20softwar\
-    e\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\
-    \x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CON\
-    DITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\
-    \x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20gover\
-    ning\x20permissions\x20and\n\x20limitations\x20under\x20the\x20License.\
-    \n\n\n\x08\n\x01\x02\x12\x03\x11\0\x13\n\t\n\x02\x03\0\x12\x03\x13\0*\n\
-    \x08\n\x01\x08\x12\x03\x15\0X\n\t\n\x02\x08\x0b\x12\x03\x15\0X\n\x08\n\
-    \x01\x08\x12\x03\x16\0\"\n\t\n\x02\x08\n\x12\x03\x16\0\"\n\x08\n\x01\x08\
-    \x12\x03\x17\0,\n\t\n\x02\x08\x08\x12\x03\x17\0,\n\x08\n\x01\x08\x12\x03\
-    \x18\0'\n\t\n\x02\x08\x01\x12\x03\x18\0'\n\x08\n\x01\x08\x12\x03\x19\0\"\
-    \n\t\n\x02\x08$\x12\x03\x19\0\"\n\t\n\x01\x07\x12\x04\x1b\0@\x01\n\x85\
-    \x0b\n\x02\x07\0\x12\x03?\x02*\x1a\xf9\n\x20A\x20definition\x20of\x20a\
-    \x20client\x20library\x20method\x20signature.\n\n\x20In\x20client\x20lib\
-    raries,\x20each\x20proto\x20RPC\x20corresponds\x20to\x20one\x20or\x20mor\
-    e\x20methods\n\x20which\x20the\x20end\x20user\x20is\x20able\x20to\x20cal\
-    l,\x20and\x20calls\x20the\x20underlying\x20RPC.\n\x20Normally,\x20this\
-    \x20method\x20receives\x20a\x20single\x20argument\x20(a\x20struct\x20or\
-    \x20instance\n\x20corresponding\x20to\x20the\x20RPC\x20request\x20object\
-    ).\x20Defining\x20this\x20field\x20will\n\x20add\x20one\x20or\x20more\
-    \x20overloads\x20providing\x20flattened\x20or\x20simpler\x20method\x20si\
-    gnatures\n\x20in\x20some\x20languages.\n\n\x20The\x20fields\x20on\x20the\
-    \x20method\x20signature\x20are\x20provided\x20as\x20a\x20comma-separated\
-    \n\x20string.\n\n\x20For\x20example,\x20the\x20proto\x20RPC\x20and\x20an\
-    notation:\n\n\x20\x20\x20rpc\x20CreateSubscription(CreateSubscriptionReq\
-    uest)\n\x20\x20\x20\x20\x20\x20\x20returns\x20(Subscription)\x20{\n\x20\
-    \x20\x20\x20\x20option\x20(google.api.method_signature)\x20=\x20\"name,t\
-    opic\";\n\x20\x20\x20}\n\n\x20Would\x20add\x20the\x20following\x20Java\
-    \x20overload\x20(in\x20addition\x20to\x20the\x20method\x20accepting\n\
-    \x20the\x20request\x20object):\n\n\x20\x20\x20public\x20final\x20Subscri\
-    ption\x20createSubscription(String\x20name,\x20String\x20topic)\n\n\x20T\
-    he\x20following\x20backwards-compatibility\x20guidelines\x20apply:\n\n\
-    \x20\x20\x20*\x20Adding\x20this\x20annotation\x20to\x20an\x20unannotated\
-    \x20method\x20is\x20backwards\n\x20\x20\x20\x20\x20compatible.\n\x20\x20\
-    \x20*\x20Adding\x20this\x20annotation\x20to\x20a\x20method\x20which\x20a\
-    lready\x20has\x20existing\n\x20\x20\x20\x20\x20method\x20signature\x20an\
-    notations\x20is\x20backwards\x20compatible\x20if\x20and\x20only\x20if\n\
-    \x20\x20\x20\x20\x20the\x20new\x20method\x20signature\x20annotation\x20i\
-    s\x20last\x20in\x20the\x20sequence.\n\x20\x20\x20*\x20Modifying\x20or\
-    \x20removing\x20an\x20existing\x20method\x20signature\x20annotation\x20i\
-    s\n\x20\x20\x20\x20\x20a\x20breaking\x20change.\n\x20\x20\x20*\x20Re-ord\
-    ering\x20existing\x20method\x20signature\x20annotations\x20is\x20a\x20br\
-    eaking\n\x20\x20\x20\x20\x20change.\n\n\n\n\x03\x07\0\x02\x12\x03\x1b\
-    \x07$\n\n\n\x03\x07\0\x04\x12\x03?\x02\n\n\n\n\x03\x07\0\x05\x12\x03?\
-    \x0b\x11\n\n\n\x03\x07\0\x01\x12\x03?\x12\"\n\n\n\x03\x07\0\x03\x12\x03?\
-    %)\n\t\n\x01\x07\x12\x04B\0c\x01\n\xca\x01\n\x02\x07\x01\x12\x03L\x02\
-    \x1d\x1a\xbe\x01\x20The\x20hostname\x20for\x20this\x20service.\n\x20This\
-    \x20should\x20be\x20specified\x20with\x20no\x20prefix\x20or\x20protocol.\
-    \n\n\x20Example:\n\n\x20\x20\x20service\x20Foo\x20{\n\x20\x20\x20\x20\
-    \x20option\x20(google.api.default_host)\x20=\x20\"foo.googleapi.com\";\n\
-    \x20\x20\x20\x20\x20...\n\x20\x20\x20}\n\n\n\n\x03\x07\x01\x02\x12\x03B\
-    \x07%\n\n\n\x03\x07\x01\x05\x12\x03L\x02\x08\n\n\n\x03\x07\x01\x01\x12\
-    \x03L\t\x15\n\n\n\x03\x07\x01\x03\x12\x03L\x18\x1c\n\xc3\x03\n\x02\x07\
-    \x02\x12\x03b\x02\x1d\x1a\xb7\x03\x20OAuth\x20scopes\x20needed\x20for\
-    \x20the\x20client.\n\n\x20Example:\n\n\x20\x20\x20service\x20Foo\x20{\n\
-    \x20\x20\x20\x20\x20option\x20(google.api.oauth_scopes)\x20=\x20\\\n\x20\
-    \x20\x20\x20\x20\x20\x20\"https://www.googleapis.com/auth/cloud-platform\
-    \";\n\x20\x20\x20\x20\x20...\n\x20\x20\x20}\n\n\x20If\x20there\x20is\x20\
-    more\x20than\x20one\x20scope,\x20use\x20a\x20comma-separated\x20string:\
-    \n\n\x20Example:\n\n\x20\x20\x20service\x20Foo\x20{\n\x20\x20\x20\x20\
-    \x20option\x20(google.api.oauth_scopes)\x20=\x20\\\n\x20\x20\x20\x20\x20\
-    \x20\x20\"https://www.googleapis.com/auth/cloud-platform,\"\n\x20\x20\
-    \x20\x20\x20\x20\x20\"https://www.googleapis.com/auth/monitoring\";\n\
-    \x20\x20\x20\x20\x20...\n\x20\x20\x20}\n\n\n\n\x03\x07\x02\x02\x12\x03B\
-    \x07%\n\n\n\x03\x07\x02\x05\x12\x03b\x02\x08\n\n\n\x03\x07\x02\x01\x12\
-    \x03b\t\x15\n\n\n\x03\x07\x02\x03\x12\x03b\x18\x1cb\x06proto3\
+    \n\x17google/api/client.proto\x12\ngoogle.api\x1a\x1dgoogle/api/launch_s\
+    tage.proto\x1a\x20google/protobuf/descriptor.proto\x1a\x1egoogle/protobu\
+    f/duration.proto\"\x94\x01\n\x16CommonLanguageSettings\x120\n\x12referen\
+    ce_docs_uri\x18\x01\x20\x01(\tR\x10referenceDocsUriB\x02\x18\x01\x12H\n\
+    \x0cdestinations\x18\x02\x20\x03(\x0e2$.google.api.ClientLibraryDestinat\
+    ionR\x0cdestinations\"\x93\x05\n\x15ClientLibrarySettings\x12\x18\n\x07v\
+    ersion\x18\x01\x20\x01(\tR\x07version\x12:\n\x0claunch_stage\x18\x02\x20\
+    \x01(\x0e2\x17.google.api.LaunchStageR\x0blaunchStage\x12,\n\x12rest_num\
+    eric_enums\x18\x03\x20\x01(\x08R\x10restNumericEnums\x12=\n\rjava_settin\
+    gs\x18\x15\x20\x01(\x0b2\x18.google.api.JavaSettingsR\x0cjavaSettings\
+    \x12:\n\x0ccpp_settings\x18\x16\x20\x01(\x0b2\x17.google.api.CppSettings\
+    R\x0bcppSettings\x12:\n\x0cphp_settings\x18\x17\x20\x01(\x0b2\x17.google\
+    .api.PhpSettingsR\x0bphpSettings\x12C\n\x0fpython_settings\x18\x18\x20\
+    \x01(\x0b2\x1a.google.api.PythonSettingsR\x0epythonSettings\x12=\n\rnode\
+    _settings\x18\x19\x20\x01(\x0b2\x18.google.api.NodeSettingsR\x0cnodeSett\
+    ings\x12C\n\x0fdotnet_settings\x18\x1a\x20\x01(\x0b2\x1a.google.api.Dotn\
+    etSettingsR\x0edotnetSettings\x12=\n\rruby_settings\x18\x1b\x20\x01(\x0b\
+    2\x18.google.api.RubySettingsR\x0crubySettings\x127\n\x0bgo_settings\x18\
+    \x1c\x20\x01(\x0b2\x16.google.api.GoSettingsR\ngoSettings\"\xab\x04\n\nP\
+    ublishing\x12C\n\x0fmethod_settings\x18\x02\x20\x03(\x0b2\x1a.google.api\
+    .MethodSettingsR\x0emethodSettings\x12\"\n\rnew_issue_uri\x18e\x20\x01(\
+    \tR\x0bnewIssueUri\x12+\n\x11documentation_uri\x18f\x20\x01(\tR\x10docum\
+    entationUri\x12$\n\x0eapi_short_name\x18g\x20\x01(\tR\x0capiShortName\
+    \x12!\n\x0cgithub_label\x18h\x20\x01(\tR\x0bgithubLabel\x124\n\x16codeow\
+    ner_github_teams\x18i\x20\x03(\tR\x14codeownerGithubTeams\x12$\n\x0edoc_\
+    tag_prefix\x18j\x20\x01(\tR\x0cdocTagPrefix\x12I\n\x0corganization\x18k\
+    \x20\x01(\x0e2%.google.api.ClientLibraryOrganizationR\x0corganization\
+    \x12L\n\x10library_settings\x18m\x20\x03(\x0b2!.google.api.ClientLibrary\
+    SettingsR\x0flibrarySettings\x12I\n!proto_reference_documentation_uri\
+    \x18n\x20\x01(\tR\x1eprotoReferenceDocumentationUri\"\x9a\x02\n\x0cJavaS\
+    ettings\x12'\n\x0flibrary_package\x18\x01\x20\x01(\tR\x0elibraryPackage\
+    \x12_\n\x13service_class_names\x18\x02\x20\x03(\x0b2/.google.api.JavaSet\
+    tings.ServiceClassNamesEntryR\x11serviceClassNames\x12:\n\x06common\x18\
+    \x03\x20\x01(\x0b2\".google.api.CommonLanguageSettingsR\x06common\x1aD\n\
+    \x16ServiceClassNamesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"I\n\x0bCppSe\
+    ttings\x12:\n\x06common\x18\x01\x20\x01(\x0b2\".google.api.CommonLanguag\
+    eSettingsR\x06common\"I\n\x0bPhpSettings\x12:\n\x06common\x18\x01\x20\
+    \x01(\x0b2\".google.api.CommonLanguageSettingsR\x06common\"L\n\x0ePython\
+    Settings\x12:\n\x06common\x18\x01\x20\x01(\x0b2\".google.api.CommonLangu\
+    ageSettingsR\x06common\"J\n\x0cNodeSettings\x12:\n\x06common\x18\x01\x20\
+    \x01(\x0b2\".google.api.CommonLanguageSettingsR\x06common\"\xae\x04\n\
+    \x0eDotnetSettings\x12:\n\x06common\x18\x01\x20\x01(\x0b2\".google.api.C\
+    ommonLanguageSettingsR\x06common\x12Z\n\x10renamed_services\x18\x02\x20\
+    \x03(\x0b2/.google.api.DotnetSettings.RenamedServicesEntryR\x0frenamedSe\
+    rvices\x12]\n\x11renamed_resources\x18\x03\x20\x03(\x0b20.google.api.Dot\
+    netSettings.RenamedResourcesEntryR\x10renamedResources\x12+\n\x11ignored\
+    _resources\x18\x04\x20\x03(\tR\x10ignoredResources\x128\n\x18forced_name\
+    space_aliases\x18\x05\x20\x03(\tR\x16forcedNamespaceAliases\x125\n\x16ha\
+    ndwritten_signatures\x18\x06\x20\x03(\tR\x15handwrittenSignatures\x1aB\n\
+    \x14RenamedServicesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
+    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1aC\n\x15Renamed\
+    ResourcesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05\
+    value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"J\n\x0cRubySettings\x12:\n\
+    \x06common\x18\x01\x20\x01(\x0b2\".google.api.CommonLanguageSettingsR\
+    \x06common\"H\n\nGoSettings\x12:\n\x06common\x18\x01\x20\x01(\x0b2\".goo\
+    gle.api.CommonLanguageSettingsR\x06common\"\x8e\x03\n\x0eMethodSettings\
+    \x12\x1a\n\x08selector\x18\x01\x20\x01(\tR\x08selector\x12I\n\x0clong_ru\
+    nning\x18\x02\x20\x01(\x0b2&.google.api.MethodSettings.LongRunningR\x0bl\
+    ongRunning\x1a\x94\x02\n\x0bLongRunning\x12G\n\x12initial_poll_delay\x18\
+    \x01\x20\x01(\x0b2\x19.google.protobuf.DurationR\x10initialPollDelay\x12\
+    2\n\x15poll_delay_multiplier\x18\x02\x20\x01(\x02R\x13pollDelayMultiplie\
+    r\x12?\n\x0emax_poll_delay\x18\x03\x20\x01(\x0b2\x19.google.protobuf.Dur\
+    ationR\x0cmaxPollDelay\x12G\n\x12total_poll_timeout\x18\x04\x20\x01(\x0b\
+    2\x19.google.protobuf.DurationR\x10totalPollTimeout*\xa3\x01\n\x19Client\
+    LibraryOrganization\x12+\n'CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED\x10\0\
+    \x12\t\n\x05CLOUD\x10\x01\x12\x07\n\x03ADS\x10\x02\x12\n\n\x06PHOTOS\x10\
+    \x03\x12\x0f\n\x0bSTREET_VIEW\x10\x04\x12\x0c\n\x08SHOPPING\x10\x05\x12\
+    \x07\n\x03GEO\x10\x06\x12\x11\n\rGENERATIVE_AI\x10\x07*g\n\x18ClientLibr\
+    aryDestination\x12*\n&CLIENT_LIBRARY_DESTINATION_UNSPECIFIED\x10\0\x12\n\
+    \n\x06GITHUB\x10\n\x12\x13\n\x0fPACKAGE_MANAGER\x10\x14:J\n\x10method_si\
+    gnature\x18\x9b\x08\x20\x03(\t\x12\x1e.google.protobuf.MethodOptionsR\
+    \x0fmethodSignature:C\n\x0cdefault_host\x18\x99\x08\x20\x01(\t\x12\x1f.g\
+    oogle.protobuf.ServiceOptionsR\x0bdefaultHost:C\n\x0coauth_scopes\x18\
+    \x9a\x08\x20\x01(\t\x12\x1f.google.protobuf.ServiceOptionsR\x0boauthScop\
+    esBi\n\x0ecom.google.apiB\x0bClientProtoP\x01ZAgoogle.golang.org/genprot\
+    o/googleapis/api/annotations;annotations\xa2\x02\x04GAPIJ\xa4j\n\x07\x12\
+    \x05\x0e\0\x89\x03\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\
+    \x20Copyright\x202023\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\
+    \x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20y\
+    ou\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\
+    \x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\
+    \x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/li\
+    censes/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\
+    \x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
+    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
+    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
+    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
+    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
+    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\
+    \x12\x03\x10\0\x13\n\t\n\x02\x03\0\x12\x03\x12\0'\n\t\n\x02\x03\x01\x12\
+    \x03\x13\0*\n\t\n\x02\x03\x02\x12\x03\x14\0(\n\x08\n\x01\x08\x12\x03\x16\
+    \0X\n\t\n\x02\x08\x0b\x12\x03\x16\0X\n\x08\n\x01\x08\x12\x03\x17\0\"\n\t\
+    \n\x02\x08\n\x12\x03\x17\0\"\n\x08\n\x01\x08\x12\x03\x18\0,\n\t\n\x02\
+    \x08\x08\x12\x03\x18\0,\n\x08\n\x01\x08\x12\x03\x19\0'\n\t\n\x02\x08\x01\
+    \x12\x03\x19\0'\n\x08\n\x01\x08\x12\x03\x1a\0\"\n\t\n\x02\x08$\x12\x03\
+    \x1a\0\"\n\t\n\x01\x07\x12\x04\x1c\0A\x01\n\x85\x0b\n\x02\x07\0\x12\x03@\
+    \x02*\x1a\xf9\n\x20A\x20definition\x20of\x20a\x20client\x20library\x20me\
+    thod\x20signature.\n\n\x20In\x20client\x20libraries,\x20each\x20proto\
+    \x20RPC\x20corresponds\x20to\x20one\x20or\x20more\x20methods\n\x20which\
+    \x20the\x20end\x20user\x20is\x20able\x20to\x20call,\x20and\x20calls\x20t\
+    he\x20underlying\x20RPC.\n\x20Normally,\x20this\x20method\x20receives\
+    \x20a\x20single\x20argument\x20(a\x20struct\x20or\x20instance\n\x20corre\
+    sponding\x20to\x20the\x20RPC\x20request\x20object).\x20Defining\x20this\
+    \x20field\x20will\n\x20add\x20one\x20or\x20more\x20overloads\x20providin\
+    g\x20flattened\x20or\x20simpler\x20method\x20signatures\n\x20in\x20some\
+    \x20languages.\n\n\x20The\x20fields\x20on\x20the\x20method\x20signature\
+    \x20are\x20provided\x20as\x20a\x20comma-separated\n\x20string.\n\n\x20Fo\
+    r\x20example,\x20the\x20proto\x20RPC\x20and\x20annotation:\n\n\x20\x20\
+    \x20rpc\x20CreateSubscription(CreateSubscriptionRequest)\n\x20\x20\x20\
+    \x20\x20\x20\x20returns\x20(Subscription)\x20{\n\x20\x20\x20\x20\x20opti\
+    on\x20(google.api.method_signature)\x20=\x20\"name,topic\";\n\x20\x20\
+    \x20}\n\n\x20Would\x20add\x20the\x20following\x20Java\x20overload\x20(in\
+    \x20addition\x20to\x20the\x20method\x20accepting\n\x20the\x20request\x20\
+    object):\n\n\x20\x20\x20public\x20final\x20Subscription\x20createSubscri\
+    ption(String\x20name,\x20String\x20topic)\n\n\x20The\x20following\x20bac\
+    kwards-compatibility\x20guidelines\x20apply:\n\n\x20\x20\x20*\x20Adding\
+    \x20this\x20annotation\x20to\x20an\x20unannotated\x20method\x20is\x20bac\
+    kwards\n\x20\x20\x20\x20\x20compatible.\n\x20\x20\x20*\x20Adding\x20this\
+    \x20annotation\x20to\x20a\x20method\x20which\x20already\x20has\x20existi\
+    ng\n\x20\x20\x20\x20\x20method\x20signature\x20annotations\x20is\x20back\
+    wards\x20compatible\x20if\x20and\x20only\x20if\n\x20\x20\x20\x20\x20the\
+    \x20new\x20method\x20signature\x20annotation\x20is\x20last\x20in\x20the\
+    \x20sequence.\n\x20\x20\x20*\x20Modifying\x20or\x20removing\x20an\x20exi\
+    sting\x20method\x20signature\x20annotation\x20is\n\x20\x20\x20\x20\x20a\
+    \x20breaking\x20change.\n\x20\x20\x20*\x20Re-ordering\x20existing\x20met\
+    hod\x20signature\x20annotations\x20is\x20a\x20breaking\n\x20\x20\x20\x20\
+    \x20change.\n\n\n\n\x03\x07\0\x02\x12\x03\x1c\x07$\n\n\n\x03\x07\0\x04\
+    \x12\x03@\x02\n\n\n\n\x03\x07\0\x05\x12\x03@\x0b\x11\n\n\n\x03\x07\0\x01\
+    \x12\x03@\x12\"\n\n\n\x03\x07\0\x03\x12\x03@%)\n\t\n\x01\x07\x12\x04C\0d\
+    \x01\n\xca\x01\n\x02\x07\x01\x12\x03M\x02\x1d\x1a\xbe\x01\x20The\x20host\
+    name\x20for\x20this\x20service.\n\x20This\x20should\x20be\x20specified\
+    \x20with\x20no\x20prefix\x20or\x20protocol.\n\n\x20Example:\n\n\x20\x20\
+    \x20service\x20Foo\x20{\n\x20\x20\x20\x20\x20option\x20(google.api.defau\
+    lt_host)\x20=\x20\"foo.googleapi.com\";\n\x20\x20\x20\x20\x20...\n\x20\
+    \x20\x20}\n\n\n\n\x03\x07\x01\x02\x12\x03C\x07%\n\n\n\x03\x07\x01\x05\
+    \x12\x03M\x02\x08\n\n\n\x03\x07\x01\x01\x12\x03M\t\x15\n\n\n\x03\x07\x01\
+    \x03\x12\x03M\x18\x1c\n\xc3\x03\n\x02\x07\x02\x12\x03c\x02\x1d\x1a\xb7\
+    \x03\x20OAuth\x20scopes\x20needed\x20for\x20the\x20client.\n\n\x20Exampl\
+    e:\n\n\x20\x20\x20service\x20Foo\x20{\n\x20\x20\x20\x20\x20option\x20(go\
+    ogle.api.oauth_scopes)\x20=\x20\\\n\x20\x20\x20\x20\x20\x20\x20\"https:/\
+    /www.googleapis.com/auth/cloud-platform\";\n\x20\x20\x20\x20\x20...\n\
+    \x20\x20\x20}\n\n\x20If\x20there\x20is\x20more\x20than\x20one\x20scope,\
+    \x20use\x20a\x20comma-separated\x20string:\n\n\x20Example:\n\n\x20\x20\
+    \x20service\x20Foo\x20{\n\x20\x20\x20\x20\x20option\x20(google.api.oauth\
+    _scopes)\x20=\x20\\\n\x20\x20\x20\x20\x20\x20\x20\"https://www.googleapi\
+    s.com/auth/cloud-platform,\"\n\x20\x20\x20\x20\x20\x20\x20\"https://www.\
+    googleapis.com/auth/monitoring\";\n\x20\x20\x20\x20\x20...\n\x20\x20\x20\
+    }\n\n\n\n\x03\x07\x02\x02\x12\x03C\x07%\n\n\n\x03\x07\x02\x05\x12\x03c\
+    \x02\x08\n\n\n\x03\x07\x02\x01\x12\x03c\t\x15\n\n\n\x03\x07\x02\x03\x12\
+    \x03c\x18\x1c\n6\n\x02\x04\0\x12\x04g\0n\x01\x1a*\x20Required\x20informa\
+    tion\x20for\x20every\x20language.\n\n\n\n\x03\x04\0\x01\x12\x03g\x08\x1e\
+    \n\x8f\x01\n\x04\x04\0\x02\0\x12\x03j\x024\x1a\x81\x01\x20Link\x20to\x20\
+    automatically\x20generated\x20reference\x20documentation.\x20\x20Example\
+    :\n\x20https://cloud.google.com/nodejs/docs/reference/asset/latest\n\n\
+    \x0c\n\x05\x04\0\x02\0\x05\x12\x03j\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\
+    \x12\x03j\t\x1b\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03j\x1e\x1f\n\x0c\n\x05\
+    \x04\0\x02\0\x08\x12\x03j\x203\n\r\n\x06\x04\0\x02\0\x08\x03\x12\x03j!2\
+    \nX\n\x04\x04\0\x02\x01\x12\x03m\x025\x1aK\x20The\x20destination\x20wher\
+    e\x20API\x20teams\x20want\x20this\x20client\x20library\x20to\x20be\x20pu\
+    blished.\n\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03m\x02\n\n\x0c\n\x05\x04\
+    \0\x02\x01\x06\x12\x03m\x0b#\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03m$0\n\
+    \x0c\n\x05\x04\0\x02\x01\x03\x12\x03m34\nG\n\x02\x04\x01\x12\x05q\0\x95\
+    \x01\x01\x1a:\x20Details\x20about\x20how\x20and\x20where\x20to\x20publis\
+    h\x20client\x20libraries.\n\n\n\n\x03\x04\x01\x01\x12\x03q\x08\x1d\n\xd9\
+    \x01\n\x04\x04\x01\x02\0\x12\x03u\x02\x15\x1a\xcb\x01\x20Version\x20of\
+    \x20the\x20API\x20to\x20apply\x20these\x20settings\x20to.\x20This\x20is\
+    \x20the\x20full\x20protobuf\n\x20package\x20for\x20the\x20API,\x20ending\
+    \x20in\x20the\x20version\x20element.\n\x20Examples:\x20\"google.cloud.sp\
+    eech.v1\"\x20and\x20\"google.spanner.admin.database.v1\".\n\n\x0c\n\x05\
+    \x04\x01\x02\0\x05\x12\x03u\x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\
+    \x03u\t\x10\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03u\x13\x14\n7\n\x04\x04\
+    \x01\x02\x01\x12\x03x\x02\x1f\x1a*\x20Launch\x20stage\x20of\x20this\x20v\
+    ersion\x20of\x20the\x20API.\n\n\x0c\n\x05\x04\x01\x02\x01\x06\x12\x03x\
+    \x02\r\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03x\x0e\x1a\n\x0c\n\x05\x04\
+    \x01\x02\x01\x03\x12\x03x\x1d\x1e\no\n\x04\x04\x01\x02\x02\x12\x03|\x02\
+    \x1e\x1ab\x20When\x20using\x20transport=rest,\x20the\x20client\x20reques\
+    t\x20will\x20encode\x20enums\x20as\n\x20numbers\x20rather\x20than\x20str\
+    ings.\n\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03|\x02\x06\n\x0c\n\x05\x04\
+    \x01\x02\x02\x01\x12\x03|\x07\x19\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\
+    \x03|\x1c\x1d\nP\n\x04\x04\x01\x02\x03\x12\x03\x7f\x02\"\x1aC\x20Setting\
+    s\x20for\x20legacy\x20Java\x20features,\x20supported\x20in\x20the\x20Ser\
+    vice\x20YAML.\n\n\x0c\n\x05\x04\x01\x02\x03\x06\x12\x03\x7f\x02\x0e\n\
+    \x0c\n\x05\x04\x01\x02\x03\x01\x12\x03\x7f\x0f\x1c\n\x0c\n\x05\x04\x01\
+    \x02\x03\x03\x12\x03\x7f\x1f!\n2\n\x04\x04\x01\x02\x04\x12\x04\x82\x01\
+    \x02\x20\x1a$\x20Settings\x20for\x20C++\x20client\x20libraries.\n\n\r\n\
+    \x05\x04\x01\x02\x04\x06\x12\x04\x82\x01\x02\r\n\r\n\x05\x04\x01\x02\x04\
+    \x01\x12\x04\x82\x01\x0e\x1a\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\x82\
+    \x01\x1d\x1f\n2\n\x04\x04\x01\x02\x05\x12\x04\x85\x01\x02\x20\x1a$\x20Se\
+    ttings\x20for\x20PHP\x20client\x20libraries.\n\n\r\n\x05\x04\x01\x02\x05\
+    \x06\x12\x04\x85\x01\x02\r\n\r\n\x05\x04\x01\x02\x05\x01\x12\x04\x85\x01\
+    \x0e\x1a\n\r\n\x05\x04\x01\x02\x05\x03\x12\x04\x85\x01\x1d\x1f\n5\n\x04\
+    \x04\x01\x02\x06\x12\x04\x88\x01\x02&\x1a'\x20Settings\x20for\x20Python\
+    \x20client\x20libraries.\n\n\r\n\x05\x04\x01\x02\x06\x06\x12\x04\x88\x01\
+    \x02\x10\n\r\n\x05\x04\x01\x02\x06\x01\x12\x04\x88\x01\x11\x20\n\r\n\x05\
+    \x04\x01\x02\x06\x03\x12\x04\x88\x01#%\n3\n\x04\x04\x01\x02\x07\x12\x04\
+    \x8b\x01\x02\"\x1a%\x20Settings\x20for\x20Node\x20client\x20libraries.\n\
+    \n\r\n\x05\x04\x01\x02\x07\x06\x12\x04\x8b\x01\x02\x0e\n\r\n\x05\x04\x01\
+    \x02\x07\x01\x12\x04\x8b\x01\x0f\x1c\n\r\n\x05\x04\x01\x02\x07\x03\x12\
+    \x04\x8b\x01\x1f!\n3\n\x04\x04\x01\x02\x08\x12\x04\x8e\x01\x02&\x1a%\x20\
+    Settings\x20for\x20.NET\x20client\x20libraries.\n\n\r\n\x05\x04\x01\x02\
+    \x08\x06\x12\x04\x8e\x01\x02\x10\n\r\n\x05\x04\x01\x02\x08\x01\x12\x04\
+    \x8e\x01\x11\x20\n\r\n\x05\x04\x01\x02\x08\x03\x12\x04\x8e\x01#%\n3\n\
+    \x04\x04\x01\x02\t\x12\x04\x91\x01\x02\"\x1a%\x20Settings\x20for\x20Ruby\
+    \x20client\x20libraries.\n\n\r\n\x05\x04\x01\x02\t\x06\x12\x04\x91\x01\
+    \x02\x0e\n\r\n\x05\x04\x01\x02\t\x01\x12\x04\x91\x01\x0f\x1c\n\r\n\x05\
+    \x04\x01\x02\t\x03\x12\x04\x91\x01\x1f!\n1\n\x04\x04\x01\x02\n\x12\x04\
+    \x94\x01\x02\x1e\x1a#\x20Settings\x20for\x20Go\x20client\x20libraries.\n\
+    \n\r\n\x05\x04\x01\x02\n\x06\x12\x04\x94\x01\x02\x0c\n\r\n\x05\x04\x01\
+    \x02\n\x01\x12\x04\x94\x01\r\x18\n\r\n\x05\x04\x01\x02\n\x03\x12\x04\x94\
+    \x01\x1b\x1d\n\xc4\x01\n\x02\x04\x02\x12\x06\x9a\x01\0\xc2\x01\x01\x1a\
+    \xb5\x01\x20This\x20message\x20configures\x20the\x20settings\x20for\x20p\
+    ublishing\x20[Google\x20Cloud\x20Client\n\x20libraries](https://cloud.go\
+    ogle.com/apis/docs/cloud-client-libraries)\n\x20generated\x20from\x20the\
+    \x20service\x20config.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\x9a\x01\x08\x12\
+    \nz\n\x04\x04\x02\x02\0\x12\x04\x9d\x01\x02.\x1al\x20A\x20list\x20of\x20\
+    API\x20method\x20settings,\x20e.g.\x20the\x20behavior\x20for\x20methods\
+    \x20that\x20use\x20the\n\x20long-running\x20operation\x20pattern.\n\n\r\
+    \n\x05\x04\x02\x02\0\x04\x12\x04\x9d\x01\x02\n\n\r\n\x05\x04\x02\x02\0\
+    \x06\x12\x04\x9d\x01\x0b\x19\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\x9d\x01\
+    \x1a)\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\x9d\x01,-\n\x9e\x01\n\x04\x04\
+    \x02\x02\x01\x12\x04\xa1\x01\x02\x1d\x1a\x8f\x01\x20Link\x20to\x20a\x20*\
+    public*\x20URI\x20where\x20users\x20can\x20report\x20issues.\x20\x20Exam\
+    ple:\n\x20https://issuetracker.google.com/issues/new?component=190865&te\
+    mplate=1161103\n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\xa1\x01\x02\x08\n\
+    \r\n\x05\x04\x02\x02\x01\x01\x12\x04\xa1\x01\t\x16\n\r\n\x05\x04\x02\x02\
+    \x01\x03\x12\x04\xa1\x01\x19\x1c\nl\n\x04\x04\x02\x02\x02\x12\x04\xa5\
+    \x01\x02!\x1a^\x20Link\x20to\x20product\x20home\x20page.\x20\x20Example:\
+    \n\x20https://cloud.google.com/asset-inventory/docs/overview\n\n\r\n\x05\
+    \x04\x02\x02\x02\x05\x12\x04\xa5\x01\x02\x08\n\r\n\x05\x04\x02\x02\x02\
+    \x01\x12\x04\xa5\x01\t\x1a\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xa5\x01\
+    \x1d\x20\n\xb7\x01\n\x04\x04\x02\x02\x03\x12\x04\xaa\x01\x02\x1e\x1a\xa8\
+    \x01\x20Used\x20as\x20a\x20tracking\x20tag\x20when\x20collecting\x20data\
+    \x20about\x20the\x20APIs\x20developer\n\x20relations\x20artifacts\x20lik\
+    e\x20docs,\x20packages\x20delivered\x20to\x20package\x20managers,\n\x20e\
+    tc.\x20\x20Example:\x20\"speech\".\n\n\r\n\x05\x04\x02\x02\x03\x05\x12\
+    \x04\xaa\x01\x02\x08\n\r\n\x05\x04\x02\x02\x03\x01\x12\x04\xaa\x01\t\x17\
+    \n\r\n\x05\x04\x02\x02\x03\x03\x12\x04\xaa\x01\x1a\x1d\nV\n\x04\x04\x02\
+    \x02\x04\x12\x04\xad\x01\x02\x1c\x1aH\x20GitHub\x20label\x20to\x20apply\
+    \x20to\x20issues\x20and\x20pull\x20requests\x20opened\x20for\x20this\x20\
+    API.\n\n\r\n\x05\x04\x02\x02\x04\x05\x12\x04\xad\x01\x02\x08\n\r\n\x05\
+    \x04\x02\x02\x04\x01\x12\x04\xad\x01\t\x15\n\r\n\x05\x04\x02\x02\x04\x03\
+    \x12\x04\xad\x01\x18\x1b\n\x91\x01\n\x04\x04\x02\x02\x05\x12\x04\xb1\x01\
+    \x02/\x1a\x82\x01\x20GitHub\x20teams\x20to\x20be\x20added\x20to\x20CODEO\
+    WNERS\x20in\x20the\x20directory\x20in\x20GitHub\n\x20containing\x20sourc\
+    e\x20code\x20for\x20the\x20client\x20libraries\x20for\x20this\x20API.\n\
+    \n\r\n\x05\x04\x02\x02\x05\x04\x12\x04\xb1\x01\x02\n\n\r\n\x05\x04\x02\
+    \x02\x05\x05\x12\x04\xb1\x01\x0b\x11\n\r\n\x05\x04\x02\x02\x05\x01\x12\
+    \x04\xb1\x01\x12(\n\r\n\x05\x04\x02\x02\x05\x03\x12\x04\xb1\x01+.\ne\n\
+    \x04\x04\x02\x02\x06\x12\x04\xb5\x01\x02\x1e\x1aW\x20A\x20prefix\x20used\
+    \x20in\x20sample\x20code\x20when\x20demarking\x20regions\x20to\x20be\x20\
+    included\x20in\n\x20documentation.\n\n\r\n\x05\x04\x02\x02\x06\x05\x12\
+    \x04\xb5\x01\x02\x08\n\r\n\x05\x04\x02\x02\x06\x01\x12\x04\xb5\x01\t\x17\
+    \n\r\n\x05\x04\x02\x02\x06\x03\x12\x04\xb5\x01\x1a\x1d\n?\n\x04\x04\x02\
+    \x02\x07\x12\x04\xb8\x01\x02/\x1a1\x20For\x20whom\x20the\x20client\x20li\
+    brary\x20is\x20being\x20published.\n\n\r\n\x05\x04\x02\x02\x07\x06\x12\
+    \x04\xb8\x01\x02\x1b\n\r\n\x05\x04\x02\x02\x07\x01\x12\x04\xb8\x01\x1c(\
+    \n\r\n\x05\x04\x02\x02\x07\x03\x12\x04\xb8\x01+.\n\xd0\x01\n\x04\x04\x02\
+    \x02\x08\x12\x04\xbd\x01\x028\x1a\xc1\x01\x20Client\x20library\x20settin\
+    gs.\x20\x20If\x20the\x20same\x20version\x20string\x20appears\x20multiple\
+    \n\x20times\x20in\x20this\x20list,\x20then\x20the\x20last\x20one\x20wins\
+    .\x20\x20Settings\x20from\x20earlier\n\x20settings\x20with\x20the\x20sam\
+    e\x20version\x20string\x20are\x20discarded.\n\n\r\n\x05\x04\x02\x02\x08\
+    \x04\x12\x04\xbd\x01\x02\n\n\r\n\x05\x04\x02\x02\x08\x06\x12\x04\xbd\x01\
+    \x0b\x20\n\r\n\x05\x04\x02\x02\x08\x01\x12\x04\xbd\x01!1\n\r\n\x05\x04\
+    \x02\x02\x08\x03\x12\x04\xbd\x0147\n\x82\x01\n\x04\x04\x02\x02\t\x12\x04\
+    \xc1\x01\x021\x1at\x20Optional\x20link\x20to\x20proto\x20reference\x20do\
+    cumentation.\x20\x20Example:\n\x20https://cloud.google.com/pubsub/lite/d\
+    ocs/reference/rpc\n\n\r\n\x05\x04\x02\x02\t\x05\x12\x04\xc1\x01\x02\x08\
+    \n\r\n\x05\x04\x02\x02\t\x01\x12\x04\xc1\x01\t*\n\r\n\x05\x04\x02\x02\t\
+    \x03\x12\x04\xc1\x01-0\n3\n\x02\x04\x03\x12\x06\xc5\x01\0\xe5\x01\x01\
+    \x1a%\x20Settings\x20for\x20Java\x20client\x20libraries.\n\n\x0b\n\x03\
+    \x04\x03\x01\x12\x04\xc5\x01\x08\x14\n\xa1\x03\n\x04\x04\x03\x02\0\x12\
+    \x04\xd1\x01\x02\x1d\x1a\x92\x03\x20The\x20package\x20name\x20to\x20use\
+    \x20in\x20Java.\x20Clobbers\x20the\x20java_package\x20option\n\x20set\
+    \x20in\x20the\x20protobuf.\x20This\x20should\x20be\x20used\x20**only**\
+    \x20by\x20APIs\n\x20who\x20have\x20already\x20set\x20the\x20language_set\
+    tings.java.package_name\"\x20field\n\x20in\x20gapic.yaml.\x20API\x20team\
+    s\x20should\x20use\x20the\x20protobuf\x20java_package\x20option\n\x20whe\
+    re\x20possible.\n\n\x20Example\x20of\x20a\x20YAML\x20configuration::\n\n\
+    \x20\x20publishing:\n\x20\x20\x20\x20java_settings:\n\x20\x20\x20\x20\
+    \x20\x20library_package:\x20com.google.cloud.pubsub.v1\n\n\r\n\x05\x04\
+    \x03\x02\0\x05\x12\x04\xd1\x01\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\
+    \x04\xd1\x01\t\x18\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xd1\x01\x1b\x1c\n\
+    \xb6\x04\n\x04\x04\x03\x02\x01\x12\x04\xe1\x01\x02.\x1a\xa7\x04\x20Confi\
+    gure\x20the\x20Java\x20class\x20name\x20to\x20use\x20instead\x20of\x20th\
+    e\x20service's\x20for\x20its\n\x20corresponding\x20generated\x20GAPIC\
+    \x20client.\x20Keys\x20are\x20fully-qualified\n\x20service\x20names\x20a\
+    s\x20they\x20appear\x20in\x20the\x20protobuf\x20(including\x20the\x20ful\
+    l\n\x20the\x20language_settings.java.interface_names\"\x20field\x20in\
+    \x20gapic.yaml.\x20API\n\x20teams\x20should\x20otherwise\x20use\x20the\
+    \x20service\x20name\x20as\x20it\x20appears\x20in\x20the\n\x20protobuf.\n\
+    \n\x20Example\x20of\x20a\x20YAML\x20configuration::\n\n\x20\x20publishin\
+    g:\n\x20\x20\x20\x20java_settings:\n\x20\x20\x20\x20\x20\x20service_clas\
+    s_names:\n\x20\x20\x20\x20\x20\x20\x20\x20-\x20google.pubsub.v1.Publishe\
+    r:\x20TopicAdmin\n\x20\x20\x20\x20\x20\x20\x20\x20-\x20google.pubsub.v1.\
+    Subscriber:\x20SubscriptionAdmin\n\n\r\n\x05\x04\x03\x02\x01\x06\x12\x04\
+    \xe1\x01\x02\x15\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\xe1\x01\x16)\n\r\
+    \n\x05\x04\x03\x02\x01\x03\x12\x04\xe1\x01,-\n\x1e\n\x04\x04\x03\x02\x02\
+    \x12\x04\xe4\x01\x02$\x1a\x10\x20Some\x20settings.\n\n\r\n\x05\x04\x03\
+    \x02\x02\x06\x12\x04\xe4\x01\x02\x18\n\r\n\x05\x04\x03\x02\x02\x01\x12\
+    \x04\xe4\x01\x19\x1f\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\xe4\x01\"#\n2\
+    \n\x02\x04\x04\x12\x06\xe8\x01\0\xeb\x01\x01\x1a$\x20Settings\x20for\x20\
+    C++\x20client\x20libraries.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xe8\x01\
+    \x08\x13\n\x1e\n\x04\x04\x04\x02\0\x12\x04\xea\x01\x02$\x1a\x10\x20Some\
+    \x20settings.\n\n\r\n\x05\x04\x04\x02\0\x06\x12\x04\xea\x01\x02\x18\n\r\
+    \n\x05\x04\x04\x02\0\x01\x12\x04\xea\x01\x19\x1f\n\r\n\x05\x04\x04\x02\0\
+    \x03\x12\x04\xea\x01\"#\n2\n\x02\x04\x05\x12\x06\xee\x01\0\xf1\x01\x01\
+    \x1a$\x20Settings\x20for\x20Php\x20client\x20libraries.\n\n\x0b\n\x03\
+    \x04\x05\x01\x12\x04\xee\x01\x08\x13\n\x1e\n\x04\x04\x05\x02\0\x12\x04\
+    \xf0\x01\x02$\x1a\x10\x20Some\x20settings.\n\n\r\n\x05\x04\x05\x02\0\x06\
+    \x12\x04\xf0\x01\x02\x18\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xf0\x01\x19\
+    \x1f\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\xf0\x01\"#\n5\n\x02\x04\x06\x12\
+    \x06\xf4\x01\0\xf7\x01\x01\x1a'\x20Settings\x20for\x20Python\x20client\
+    \x20libraries.\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xf4\x01\x08\x16\n\x1e\n\
+    \x04\x04\x06\x02\0\x12\x04\xf6\x01\x02$\x1a\x10\x20Some\x20settings.\n\n\
+    \r\n\x05\x04\x06\x02\0\x06\x12\x04\xf6\x01\x02\x18\n\r\n\x05\x04\x06\x02\
+    \0\x01\x12\x04\xf6\x01\x19\x1f\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xf6\
+    \x01\"#\n3\n\x02\x04\x07\x12\x06\xfa\x01\0\xfd\x01\x01\x1a%\x20Settings\
+    \x20for\x20Node\x20client\x20libraries.\n\n\x0b\n\x03\x04\x07\x01\x12\
+    \x04\xfa\x01\x08\x14\n\x1e\n\x04\x04\x07\x02\0\x12\x04\xfc\x01\x02$\x1a\
+    \x10\x20Some\x20settings.\n\n\r\n\x05\x04\x07\x02\0\x06\x12\x04\xfc\x01\
+    \x02\x18\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\xfc\x01\x19\x1f\n\r\n\x05\
+    \x04\x07\x02\0\x03\x12\x04\xfc\x01\"#\n5\n\x02\x04\x08\x12\x06\x80\x02\0\
+    \xa1\x02\x01\x1a'\x20Settings\x20for\x20Dotnet\x20client\x20libraries.\n\
+    \n\x0b\n\x03\x04\x08\x01\x12\x04\x80\x02\x08\x16\n\x1e\n\x04\x04\x08\x02\
+    \0\x12\x04\x82\x02\x02$\x1a\x10\x20Some\x20settings.\n\n\r\n\x05\x04\x08\
+    \x02\0\x06\x12\x04\x82\x02\x02\x18\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\
+    \x82\x02\x19\x1f\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\x82\x02\"#\n\xe6\
+    \x01\n\x04\x04\x08\x02\x01\x12\x04\x89\x02\x02+\x1a\xd7\x01\x20Map\x20fr\
+    om\x20original\x20service\x20names\x20to\x20renamed\x20versions.\n\x20Th\
+    is\x20is\x20used\x20when\x20the\x20default\x20generated\x20types\n\x20wo\
+    uld\x20cause\x20a\x20naming\x20conflict.\x20(Neither\x20name\x20is\n\x20\
+    fully-qualified.)\n\x20Example:\x20Subscriber\x20to\x20SubscriberService\
+    Api.\n\n\r\n\x05\x04\x08\x02\x01\x06\x12\x04\x89\x02\x02\x15\n\r\n\x05\
+    \x04\x08\x02\x01\x01\x12\x04\x89\x02\x16&\n\r\n\x05\x04\x08\x02\x01\x03\
+    \x12\x04\x89\x02)*\n\x8d\x02\n\x04\x04\x08\x02\x02\x12\x04\x90\x02\x02,\
+    \x1a\xfe\x01\x20Map\x20from\x20full\x20resource\x20types\x20to\x20the\
+    \x20effective\x20short\x20name\n\x20for\x20the\x20resource.\x20This\x20i\
+    s\x20used\x20when\x20otherwise\x20resource\n\x20named\x20from\x20differe\
+    nt\x20services\x20would\x20cause\x20naming\x20collisions.\n\x20Example\
+    \x20entry:\n\x20\"datalabeling.googleapis.com/Dataset\":\x20\"DataLabeli\
+    ngDataset\"\n\n\r\n\x05\x04\x08\x02\x02\x06\x12\x04\x90\x02\x02\x15\n\r\
+    \n\x05\x04\x08\x02\x02\x01\x12\x04\x90\x02\x16'\n\r\n\x05\x04\x08\x02\
+    \x02\x03\x12\x04\x90\x02*+\n\x9e\x02\n\x04\x04\x08\x02\x03\x12\x04\x97\
+    \x02\x02(\x1a\x8f\x02\x20List\x20of\x20full\x20resource\x20types\x20to\
+    \x20ignore\x20during\x20generation.\n\x20This\x20is\x20typically\x20used\
+    \x20for\x20API-specific\x20Location\x20resources,\n\x20which\x20should\
+    \x20be\x20handled\x20by\x20the\x20generator\x20as\x20if\x20they\x20were\
+    \x20actually\n\x20the\x20common\x20Location\x20resources.\n\x20Example\
+    \x20entry:\x20\"documentai.googleapis.com/Location\"\n\n\r\n\x05\x04\x08\
+    \x02\x03\x04\x12\x04\x97\x02\x02\n\n\r\n\x05\x04\x08\x02\x03\x05\x12\x04\
+    \x97\x02\x0b\x11\n\r\n\x05\x04\x08\x02\x03\x01\x12\x04\x97\x02\x12#\n\r\
+    \n\x05\x04\x08\x02\x03\x03\x12\x04\x97\x02&'\n}\n\x04\x04\x08\x02\x04\
+    \x12\x04\x9b\x02\x02/\x1ao\x20Namespaces\x20which\x20must\x20be\x20alias\
+    ed\x20in\x20snippets\x20due\x20to\n\x20a\x20known\x20(but\x20non-generat\
+    or-predictable)\x20naming\x20collision\n\n\r\n\x05\x04\x08\x02\x04\x04\
+    \x12\x04\x9b\x02\x02\n\n\r\n\x05\x04\x08\x02\x04\x05\x12\x04\x9b\x02\x0b\
+    \x11\n\r\n\x05\x04\x08\x02\x04\x01\x12\x04\x9b\x02\x12*\n\r\n\x05\x04\
+    \x08\x02\x04\x03\x12\x04\x9b\x02-.\n\xc7\x01\n\x04\x04\x08\x02\x05\x12\
+    \x04\xa0\x02\x02-\x1a\xb8\x01\x20Method\x20signatures\x20(in\x20the\x20f\
+    orm\x20\"service.method(signature)\")\n\x20which\x20are\x20provided\x20s\
+    eparately,\x20so\x20shouldn't\x20be\x20generated.\n\x20Snippets\x20*call\
+    ing*\x20these\x20methods\x20are\x20still\x20generated,\x20however.\n\n\r\
+    \n\x05\x04\x08\x02\x05\x04\x12\x04\xa0\x02\x02\n\n\r\n\x05\x04\x08\x02\
+    \x05\x05\x12\x04\xa0\x02\x0b\x11\n\r\n\x05\x04\x08\x02\x05\x01\x12\x04\
+    \xa0\x02\x12(\n\r\n\x05\x04\x08\x02\x05\x03\x12\x04\xa0\x02+,\n3\n\x02\
+    \x04\t\x12\x06\xa4\x02\0\xa7\x02\x01\x1a%\x20Settings\x20for\x20Ruby\x20\
+    client\x20libraries.\n\n\x0b\n\x03\x04\t\x01\x12\x04\xa4\x02\x08\x14\n\
+    \x1e\n\x04\x04\t\x02\0\x12\x04\xa6\x02\x02$\x1a\x10\x20Some\x20settings.\
+    \n\n\r\n\x05\x04\t\x02\0\x06\x12\x04\xa6\x02\x02\x18\n\r\n\x05\x04\t\x02\
+    \0\x01\x12\x04\xa6\x02\x19\x1f\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xa6\x02\
+    \"#\n1\n\x02\x04\n\x12\x06\xaa\x02\0\xad\x02\x01\x1a#\x20Settings\x20for\
+    \x20Go\x20client\x20libraries.\n\n\x0b\n\x03\x04\n\x01\x12\x04\xaa\x02\
+    \x08\x12\n\x1e\n\x04\x04\n\x02\0\x12\x04\xac\x02\x02$\x1a\x10\x20Some\
+    \x20settings.\n\n\r\n\x05\x04\n\x02\0\x06\x12\x04\xac\x02\x02\x18\n\r\n\
+    \x05\x04\n\x02\0\x01\x12\x04\xac\x02\x19\x1f\n\r\n\x05\x04\n\x02\0\x03\
+    \x12\x04\xac\x02\"#\nC\n\x02\x04\x0b\x12\x06\xb0\x02\0\xdf\x02\x01\x1a5\
+    \x20Describes\x20the\x20generator\x20configuration\x20for\x20a\x20method\
+    .\n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xb0\x02\x08\x16\n\x90\x03\n\x04\x04\
+    \x0b\x03\0\x12\x06\xb6\x02\x02\xc7\x02\x03\x1a\xff\x02\x20Describes\x20s\
+    ettings\x20to\x20use\x20when\x20generating\x20API\x20methods\x20that\x20\
+    use\x20the\n\x20long-running\x20operation\x20pattern.\n\x20All\x20defaul\
+    t\x20values\x20below\x20are\x20from\x20those\x20used\x20in\x20the\x20cli\
+    ent\x20library\n\x20generators\x20(e.g.\n\x20[Java](https://github.com/g\
+    oogleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c440\
+    4803/src/main/java/com/google/api/generator/gapic/composer/common/RetryS\
+    ettingsComposer.java)).\n\n\r\n\x05\x04\x0b\x03\0\x01\x12\x04\xb6\x02\n\
+    \x15\nk\n\x06\x04\x0b\x03\0\x02\0\x12\x04\xb9\x02\x044\x1a[\x20Initial\
+    \x20delay\x20after\x20which\x20the\x20first\x20poll\x20request\x20will\
+    \x20be\x20made.\n\x20Default\x20value:\x205\x20seconds.\n\n\x0f\n\x07\
+    \x04\x0b\x03\0\x02\0\x06\x12\x04\xb9\x02\x04\x1c\n\x0f\n\x07\x04\x0b\x03\
+    \0\x02\0\x01\x12\x04\xb9\x02\x1d/\n\x0f\n\x07\x04\x0b\x03\0\x02\0\x03\
+    \x12\x04\xb9\x0223\n\x88\x01\n\x06\x04\x0b\x03\0\x02\x01\x12\x04\xbe\x02\
+    \x04$\x1ax\x20Multiplier\x20to\x20gradually\x20increase\x20delay\x20betw\
+    een\x20subsequent\x20polls\x20until\x20it\n\x20reaches\x20max_poll_delay\
+    .\n\x20Default\x20value:\x201.5.\n\n\x0f\n\x07\x04\x0b\x03\0\x02\x01\x05\
+    \x12\x04\xbe\x02\x04\t\n\x0f\n\x07\x04\x0b\x03\0\x02\x01\x01\x12\x04\xbe\
+    \x02\n\x1f\n\x0f\n\x07\x04\x0b\x03\0\x02\x01\x03\x12\x04\xbe\x02\"#\n`\n\
+    \x06\x04\x0b\x03\0\x02\x02\x12\x04\xc2\x02\x040\x1aP\x20Maximum\x20time\
+    \x20between\x20two\x20subsequent\x20poll\x20requests.\n\x20Default\x20va\
+    lue:\x2045\x20seconds.\n\n\x0f\n\x07\x04\x0b\x03\0\x02\x02\x06\x12\x04\
+    \xc2\x02\x04\x1c\n\x0f\n\x07\x04\x0b\x03\0\x02\x02\x01\x12\x04\xc2\x02\
+    \x1d+\n\x0f\n\x07\x04\x0b\x03\0\x02\x02\x03\x12\x04\xc2\x02./\nC\n\x06\
+    \x04\x0b\x03\0\x02\x03\x12\x04\xc6\x02\x044\x1a3\x20Total\x20polling\x20\
+    timeout.\n\x20Default\x20value:\x205\x20minutes.\n\n\x0f\n\x07\x04\x0b\
+    \x03\0\x02\x03\x06\x12\x04\xc6\x02\x04\x1c\n\x0f\n\x07\x04\x0b\x03\0\x02\
+    \x03\x01\x12\x04\xc6\x02\x1d/\n\x0f\n\x07\x04\x0b\x03\0\x02\x03\x03\x12\
+    \x04\xc6\x0223\n\x92\x01\n\x04\x04\x0b\x02\0\x12\x04\xcb\x02\x02\x16\x1a\
+    \x83\x01\x20The\x20fully\x20qualified\x20name\x20of\x20the\x20method,\
+    \x20for\x20which\x20the\x20options\x20below\x20apply.\n\x20This\x20is\
+    \x20used\x20to\x20find\x20the\x20method\x20to\x20apply\x20the\x20options\
+    .\n\n\r\n\x05\x04\x0b\x02\0\x05\x12\x04\xcb\x02\x02\x08\n\r\n\x05\x04\
+    \x0b\x02\0\x01\x12\x04\xcb\x02\t\x11\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\
+    \xcb\x02\x14\x15\n\xc9\x04\n\x04\x04\x0b\x02\x01\x12\x04\xde\x02\x02\x1f\
+    \x1a\xba\x04\x20Describes\x20settings\x20to\x20use\x20for\x20long-runnin\
+    g\x20operations\x20when\x20generating\n\x20API\x20methods\x20for\x20RPCs\
+    .\x20Complements\x20RPCs\x20that\x20use\x20the\x20annotations\x20in\n\
+    \x20google/longrunning/operations.proto.\n\n\x20Example\x20of\x20a\x20YA\
+    ML\x20configuration::\n\n\x20\x20publishing:\n\x20\x20\x20\x20method_set\
+    tings:\n\x20\x20\x20\x20\x20\x20-\x20selector:\x20google.cloud.speech.v2\
+    .Speech.BatchRecognize\n\x20\x20\x20\x20\x20\x20\x20\x20long_running:\n\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20initial_poll_delay:\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20seconds:\x2060\x20#\x201\x20minu\
+    te\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20poll_delay_multiplier:\x201.\
+    5\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max_poll_delay:\n\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20seconds:\x20360\x20#\x206\x20minutes\
+    \n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20total_poll_timeout:\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20seconds:\x2054000\x20#\x2090\
+    \x20minutes\n\n\r\n\x05\x04\x0b\x02\x01\x06\x12\x04\xde\x02\x02\r\n\r\n\
+    \x05\x04\x0b\x02\x01\x01\x12\x04\xde\x02\x0e\x1a\n\r\n\x05\x04\x0b\x02\
+    \x01\x03\x12\x04\xde\x02\x1d\x1e\n\x8f\x01\n\x02\x05\0\x12\x06\xe3\x02\0\
+    \xfb\x02\x01\x1a\x80\x01\x20The\x20organization\x20for\x20which\x20the\
+    \x20client\x20libraries\x20are\x20being\x20published.\n\x20Affects\x20th\
+    e\x20url\x20where\x20generated\x20docs\x20are\x20published,\x20etc.\n\n\
+    \x0b\n\x03\x05\0\x01\x12\x04\xe3\x02\x05\x1e\n\x1b\n\x04\x05\0\x02\0\x12\
+    \x04\xe5\x02\x02.\x1a\r\x20Not\x20useful.\n\n\r\n\x05\x05\0\x02\0\x01\
+    \x12\x04\xe5\x02\x02)\n\r\n\x05\x05\0\x02\0\x02\x12\x04\xe5\x02,-\n*\n\
+    \x04\x05\0\x02\x01\x12\x04\xe8\x02\x02\x0c\x1a\x1c\x20Google\x20Cloud\
+    \x20Platform\x20Org.\n\n\r\n\x05\x05\0\x02\x01\x01\x12\x04\xe8\x02\x02\
+    \x07\n\r\n\x05\x05\0\x02\x01\x02\x12\x04\xe8\x02\n\x0b\n&\n\x04\x05\0\
+    \x02\x02\x12\x04\xeb\x02\x02\n\x1a\x18\x20Ads\x20(Advertising)\x20Org.\n\
+    \n\r\n\x05\x05\0\x02\x02\x01\x12\x04\xeb\x02\x02\x05\n\r\n\x05\x05\0\x02\
+    \x02\x02\x12\x04\xeb\x02\x08\t\n\x1b\n\x04\x05\0\x02\x03\x12\x04\xee\x02\
+    \x02\r\x1a\r\x20Photos\x20Org.\n\n\r\n\x05\x05\0\x02\x03\x01\x12\x04\xee\
+    \x02\x02\x08\n\r\n\x05\x05\0\x02\x03\x02\x12\x04\xee\x02\x0b\x0c\n\x20\n\
+    \x04\x05\0\x02\x04\x12\x04\xf1\x02\x02\x12\x1a\x12\x20Street\x20View\x20\
+    Org.\n\n\r\n\x05\x05\0\x02\x04\x01\x12\x04\xf1\x02\x02\r\n\r\n\x05\x05\0\
+    \x02\x04\x02\x12\x04\xf1\x02\x10\x11\n\x1d\n\x04\x05\0\x02\x05\x12\x04\
+    \xf4\x02\x02\x0f\x1a\x0f\x20Shopping\x20Org.\n\n\r\n\x05\x05\0\x02\x05\
+    \x01\x12\x04\xf4\x02\x02\n\n\r\n\x05\x05\0\x02\x05\x02\x12\x04\xf4\x02\r\
+    \x0e\n\x18\n\x04\x05\0\x02\x06\x12\x04\xf7\x02\x02\n\x1a\n\x20Geo\x20Org\
+    .\n\n\r\n\x05\x05\0\x02\x06\x01\x12\x04\xf7\x02\x02\x05\n\r\n\x05\x05\0\
+    \x02\x06\x02\x12\x04\xf7\x02\x08\t\nF\n\x04\x05\0\x02\x07\x12\x04\xfa\
+    \x02\x02\x14\x1a8\x20Generative\x20AI\x20-\x20https://developers.generat\
+    iveai.google\n\n\r\n\x05\x05\0\x02\x07\x01\x12\x04\xfa\x02\x02\x0f\n\r\n\
+    \x05\x05\0\x02\x07\x02\x12\x04\xfa\x02\x12\x13\n>\n\x02\x05\x01\x12\x06\
+    \xfe\x02\0\x89\x03\x01\x1a0\x20To\x20where\x20should\x20client\x20librar\
+    ies\x20be\x20published?\n\n\x0b\n\x03\x05\x01\x01\x12\x04\xfe\x02\x05\
+    \x1d\n^\n\x04\x05\x01\x02\0\x12\x04\x81\x03\x02-\x1aP\x20Client\x20libra\
+    ries\x20will\x20neither\x20be\x20generated\x20nor\x20published\x20to\x20\
+    package\n\x20managers.\n\n\r\n\x05\x05\x01\x02\0\x01\x12\x04\x81\x03\x02\
+    (\n\r\n\x05\x05\x01\x02\0\x02\x12\x04\x81\x03+,\n}\n\x04\x05\x01\x02\x01\
+    \x12\x04\x85\x03\x02\x0e\x1ao\x20Generate\x20the\x20client\x20library\
+    \x20in\x20a\x20repo\x20under\x20github.com/googleapis,\n\x20but\x20don't\
+    \x20publish\x20it\x20to\x20package\x20managers.\n\n\r\n\x05\x05\x01\x02\
+    \x01\x01\x12\x04\x85\x03\x02\x08\n\r\n\x05\x05\x01\x02\x01\x02\x12\x04\
+    \x85\x03\x0b\r\nU\n\x04\x05\x01\x02\x02\x12\x04\x88\x03\x02\x17\x1aG\x20\
+    Publish\x20the\x20library\x20to\x20package\x20managers\x20like\x20nuget.\
+    org\x20and\x20npmjs.com.\n\n\r\n\x05\x05\x01\x02\x02\x01\x12\x04\x88\x03\
+    \x02\x11\n\r\n\x05\x05\x01\x02\x02\x02\x12\x04\x88\x03\x14\x16b\x06proto\
+    3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

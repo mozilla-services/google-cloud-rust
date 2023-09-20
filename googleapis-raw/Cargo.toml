@@ -39,7 +39,7 @@ slog-async = "2.5"
 log = "0.4"
 
 [features]
-default=["spanner"]
-bigtable=[]
-pubsub=[]
-spanner=[]
+default = ["spanner"]
+bigtable = []
+pubsub = []
+spanner = []

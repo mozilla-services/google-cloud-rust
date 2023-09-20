@@ -25,7 +25,7 @@ const METHOD_QUOTA_CONTROLLER_ALLOCATE_QUOTA: ::grpcio::Method<super::quota_cont
 
 #[derive(Clone)]
 pub struct QuotaControllerClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl QuotaControllerClient {
