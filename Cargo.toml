@@ -17,9 +17,10 @@ members = [
   "googleapis",
   "googleapis-raw",
 ]
+resolver = "2"
 
 [workspace.package]
-version="0.15.0"
+version="0.16.0"
 authors=[
     "Ferrous Systems",
     "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
@@ -32,9 +33,9 @@ edition = "2021"
 
 [workspace.dependencies]
 futures = "0.3.5"
-# Absolutely lock to these versions of grpcio and protobuf with a `^` prefix
+# Absolutely lock to these versions of grpcio and protobuf with a `=` prefix
 # Not providing that lock means that cargo will "helpfully" update beyond those
 # versions because versions are a suggestion, not a rule.
-grpcio  = "=0.12.1"
+grpcio  = "=0.13.0"
 # grpcio currently does NOT support protobuf 3+
 protobuf = "=2.28.0"

@@ -539,6 +539,383 @@ impl ::protobuf::reflect::ProtobufValue for AuthenticationRule {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct JwtLocation {
+    // message fields
+    pub value_prefix: ::std::string::String,
+    // message oneof groups
+    pub field_in: ::std::option::Option<JwtLocation_oneof_in>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a JwtLocation {
+    fn default() -> &'a JwtLocation {
+        <JwtLocation as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+pub enum JwtLocation_oneof_in {
+    header(::std::string::String),
+    query(::std::string::String),
+    cookie(::std::string::String),
+}
+
+impl JwtLocation {
+    pub fn new() -> JwtLocation {
+        ::std::default::Default::default()
+    }
+
+    // string header = 1;
+
+
+    pub fn get_header(&self) -> &str {
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::header(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_header(&mut self) {
+        self.field_in = ::std::option::Option::None;
+    }
+
+    pub fn has_header(&self) -> bool {
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::header(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: ::std::string::String) {
+        self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::header(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_header(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(JwtLocation_oneof_in::header(_)) = self.field_in {
+        } else {
+            self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::header(::std::string::String::new()));
+        }
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::header(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> ::std::string::String {
+        if self.has_header() {
+            match self.field_in.take() {
+                ::std::option::Option::Some(JwtLocation_oneof_in::header(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // string query = 2;
+
+
+    pub fn get_query(&self) -> &str {
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::query(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_query(&mut self) {
+        self.field_in = ::std::option::Option::None;
+    }
+
+    pub fn has_query(&self) -> bool {
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::query(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_query(&mut self, v: ::std::string::String) {
+        self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::query(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_query(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(JwtLocation_oneof_in::query(_)) = self.field_in {
+        } else {
+            self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::query(::std::string::String::new()));
+        }
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::query(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_query(&mut self) -> ::std::string::String {
+        if self.has_query() {
+            match self.field_in.take() {
+                ::std::option::Option::Some(JwtLocation_oneof_in::query(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // string cookie = 4;
+
+
+    pub fn get_cookie(&self) -> &str {
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::cookie(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_cookie(&mut self) {
+        self.field_in = ::std::option::Option::None;
+    }
+
+    pub fn has_cookie(&self) -> bool {
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::cookie(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cookie(&mut self, v: ::std::string::String) {
+        self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::cookie(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cookie(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(JwtLocation_oneof_in::cookie(_)) = self.field_in {
+        } else {
+            self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::cookie(::std::string::String::new()));
+        }
+        match self.field_in {
+            ::std::option::Option::Some(JwtLocation_oneof_in::cookie(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_cookie(&mut self) -> ::std::string::String {
+        if self.has_cookie() {
+            match self.field_in.take() {
+                ::std::option::Option::Some(JwtLocation_oneof_in::cookie(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // string value_prefix = 3;
+
+
+    pub fn get_value_prefix(&self) -> &str {
+        &self.value_prefix
+    }
+    pub fn clear_value_prefix(&mut self) {
+        self.value_prefix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value_prefix(&mut self, v: ::std::string::String) {
+        self.value_prefix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_value_prefix(&mut self) -> &mut ::std::string::String {
+        &mut self.value_prefix
+    }
+
+    // Take field
+    pub fn take_value_prefix(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.value_prefix, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for JwtLocation {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::header(is.read_string()?));
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::query(is.read_string()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_in = ::std::option::Option::Some(JwtLocation_oneof_in::cookie(is.read_string()?));
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.value_prefix)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.value_prefix.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.value_prefix);
+        }
+        if let ::std::option::Option::Some(ref v) = self.field_in {
+            match v {
+                &JwtLocation_oneof_in::header(ref v) => {
+                    my_size += ::protobuf::rt::string_size(1, &v);
+                },
+                &JwtLocation_oneof_in::query(ref v) => {
+                    my_size += ::protobuf::rt::string_size(2, &v);
+                },
+                &JwtLocation_oneof_in::cookie(ref v) => {
+                    my_size += ::protobuf::rt::string_size(4, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.value_prefix.is_empty() {
+            os.write_string(3, &self.value_prefix)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.field_in {
+            match v {
+                &JwtLocation_oneof_in::header(ref v) => {
+                    os.write_string(1, v)?;
+                },
+                &JwtLocation_oneof_in::query(ref v) => {
+                    os.write_string(2, v)?;
+                },
+                &JwtLocation_oneof_in::cookie(ref v) => {
+                    os.write_string(4, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> JwtLocation {
+        JwtLocation::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "header",
+                JwtLocation::has_header,
+                JwtLocation::get_header,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "query",
+                JwtLocation::has_query,
+                JwtLocation::get_query,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "cookie",
+                JwtLocation::has_cookie,
+                JwtLocation::get_cookie,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "value_prefix",
+                |m: &JwtLocation| { &m.value_prefix },
+                |m: &mut JwtLocation| { &mut m.value_prefix },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<JwtLocation>(
+                "JwtLocation",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static JwtLocation {
+        static instance: ::protobuf::rt::LazyV2<JwtLocation> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(JwtLocation::new)
+    }
+}
+
+impl ::protobuf::Clear for JwtLocation {
+    fn clear(&mut self) {
+        self.field_in = ::std::option::Option::None;
+        self.field_in = ::std::option::Option::None;
+        self.field_in = ::std::option::Option::None;
+        self.value_prefix.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for JwtLocation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for JwtLocation {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct AuthProvider {
     // message fields
     pub id: ::std::string::String,
@@ -546,6 +923,7 @@ pub struct AuthProvider {
     pub jwks_uri: ::std::string::String,
     pub audiences: ::std::string::String,
     pub authorization_url: ::std::string::String,
+    pub jwt_locations: ::protobuf::RepeatedField<JwtLocation>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -691,10 +1069,40 @@ impl AuthProvider {
     pub fn take_authorization_url(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.authorization_url, ::std::string::String::new())
     }
+
+    // repeated .google.api.JwtLocation jwt_locations = 6;
+
+
+    pub fn get_jwt_locations(&self) -> &[JwtLocation] {
+        &self.jwt_locations
+    }
+    pub fn clear_jwt_locations(&mut self) {
+        self.jwt_locations.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_jwt_locations(&mut self, v: ::protobuf::RepeatedField<JwtLocation>) {
+        self.jwt_locations = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_jwt_locations(&mut self) -> &mut ::protobuf::RepeatedField<JwtLocation> {
+        &mut self.jwt_locations
+    }
+
+    // Take field
+    pub fn take_jwt_locations(&mut self) -> ::protobuf::RepeatedField<JwtLocation> {
+        ::std::mem::replace(&mut self.jwt_locations, ::protobuf::RepeatedField::new())
+    }
 }
 
 impl ::protobuf::Message for AuthProvider {
     fn is_initialized(&self) -> bool {
+        for v in &self.jwt_locations {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -716,6 +1124,9 @@ impl ::protobuf::Message for AuthProvider {
                 },
                 5 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.authorization_url)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.jwt_locations)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -744,6 +1155,10 @@ impl ::protobuf::Message for AuthProvider {
         if !self.authorization_url.is_empty() {
             my_size += ::protobuf::rt::string_size(5, &self.authorization_url);
         }
+        for value in &self.jwt_locations {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -765,6 +1180,11 @@ impl ::protobuf::Message for AuthProvider {
         if !self.authorization_url.is_empty() {
             os.write_string(5, &self.authorization_url)?;
         }
+        for v in &self.jwt_locations {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -828,6 +1248,11 @@ impl ::protobuf::Message for AuthProvider {
                 |m: &AuthProvider| { &m.authorization_url },
                 |m: &mut AuthProvider| { &mut m.authorization_url },
             ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<JwtLocation>>(
+                "jwt_locations",
+                |m: &AuthProvider| { &m.jwt_locations },
+                |m: &mut AuthProvider| { &mut m.jwt_locations },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<AuthProvider>(
                 "AuthProvider",
                 fields,
@@ -849,6 +1274,7 @@ impl ::protobuf::Clear for AuthProvider {
         self.jwks_uri.clear();
         self.audiences.clear();
         self.authorization_url.clear();
+        self.jwt_locations.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1234,175 +1660,232 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x1d.google.api.OAuthRequirementsR\x05oauth\x128\n\x18allow_without_cred\
     ential\x18\x05\x20\x01(\x08R\x16allowWithoutCredential\x12?\n\x0crequire\
     ments\x18\x07\x20\x03(\x0b2\x1b.google.api.AuthRequirementR\x0crequireme\
-    nts\"\x9c\x01\n\x0cAuthProvider\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02i\
-    d\x12\x16\n\x06issuer\x18\x02\x20\x01(\tR\x06issuer\x12\x19\n\x08jwks_ur\
-    i\x18\x03\x20\x01(\tR\x07jwksUri\x12\x1c\n\taudiences\x18\x04\x20\x01(\t\
-    R\taudiences\x12+\n\x11authorization_url\x18\x05\x20\x01(\tR\x10authoriz\
-    ationUrl\">\n\x11OAuthRequirements\x12)\n\x10canonical_scopes\x18\x01\
-    \x20\x01(\tR\x0fcanonicalScopes\"P\n\x0fAuthRequirement\x12\x1f\n\x0bpro\
-    vider_id\x18\x01\x20\x01(\tR\nproviderId\x12\x1c\n\taudiences\x18\x02\
-    \x20\x01(\tR\taudiencesBk\n\x0ecom.google.apiB\tAuthProtoP\x01ZEgoogle.g\
-    olang.org/genproto/googleapis/api/serviceconfig;serviceconfig\xa2\x02\
-    \x04GAPIJ\xc58\n\x07\x12\x05\x0f\0\xb7\x01\x01\n\xbe\x04\n\x01\x0c\x12\
-    \x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Li\
-    censed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\
-    \x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20excep\
-    t\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20obta\
-    in\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20htt\
-    p://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\
-    \x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20softwar\
-    e\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\
-    \x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CON\
-    DITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\
-    \x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20gover\
-    ning\x20permissions\x20and\n\x20limitations\x20under\x20the\x20License.\
-    \n\n\n\x08\n\x01\x02\x12\x03\x11\0\x13\n\x08\n\x01\x08\x12\x03\x13\0\\\n\
-    \t\n\x02\x08\x0b\x12\x03\x13\0\\\n\x08\n\x01\x08\x12\x03\x14\0\"\n\t\n\
-    \x02\x08\n\x12\x03\x14\0\"\n\x08\n\x01\x08\x12\x03\x15\0*\n\t\n\x02\x08\
-    \x08\x12\x03\x15\0*\n\x08\n\x01\x08\x12\x03\x16\0'\n\t\n\x02\x08\x01\x12\
-    \x03\x16\0'\n\x08\n\x01\x08\x12\x03\x17\0\"\n\t\n\x02\x08$\x12\x03\x17\0\
-    \"\n\xc8\x03\n\x02\x04\0\x12\x04'\0/\x01\x1a\xbb\x03\x20`Authentication`\
-    \x20defines\x20the\x20authentication\x20configuration\x20for\x20an\x20AP\
-    I.\n\n\x20Example\x20for\x20an\x20API\x20targeted\x20for\x20external\x20\
-    use:\n\n\x20\x20\x20\x20\x20name:\x20calendar.googleapis.com\n\x20\x20\
-    \x20\x20\x20authentication:\n\x20\x20\x20\x20\x20\x20\x20providers:\n\
-    \x20\x20\x20\x20\x20\x20\x20-\x20id:\x20google_calendar_auth\n\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20jwks_uri:\x20https://www.googleapis.com/oaut\
-    h2/v1/certs\n\x20\x20\x20\x20\x20\x20\x20\x20\x20issuer:\x20https://secu\
-    retoken.google.com\n\x20\x20\x20\x20\x20\x20\x20rules:\n\x20\x20\x20\x20\
-    \x20\x20\x20-\x20selector:\x20\"*\"\n\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20requirements:\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20provider_\
-    id:\x20google_calendar_auth\n\n\n\n\x03\x04\0\x01\x12\x03'\x08\x16\n\x9e\
-    \x01\n\x04\x04\0\x02\0\x12\x03+\x02(\x1a\x90\x01\x20A\x20list\x20of\x20a\
-    uthentication\x20rules\x20that\x20apply\x20to\x20individual\x20API\x20me\
-    thods.\n\n\x20**NOTE:**\x20All\x20service\x20configuration\x20rules\x20f\
-    ollow\x20\"last\x20one\x20wins\"\x20order.\n\n\x0c\n\x05\x04\0\x02\0\x04\
-    \x12\x03+\x02\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\x03+\x0b\x1d\n\x0c\n\x05\
-    \x04\0\x02\0\x01\x12\x03+\x1e#\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03+&'\nQ\
-    \n\x04\x04\0\x02\x01\x12\x03.\x02&\x1aD\x20Defines\x20a\x20set\x20of\x20\
-    authentication\x20providers\x20that\x20a\x20service\x20supports.\n\n\x0c\
-    \n\x05\x04\0\x02\x01\x04\x12\x03.\x02\n\n\x0c\n\x05\x04\0\x02\x01\x06\
-    \x12\x03.\x0b\x17\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03.\x18!\n\x0c\n\
-    \x05\x04\0\x02\x01\x03\x12\x03.$%\n\xed\x02\n\x02\x04\x01\x12\x04:\0H\
-    \x01\x1a\xe0\x02\x20Authentication\x20rules\x20for\x20the\x20service.\n\
-    \n\x20By\x20default,\x20if\x20a\x20method\x20has\x20any\x20authenticatio\
-    n\x20requirements,\x20every\x20request\n\x20must\x20include\x20a\x20vali\
-    d\x20credential\x20matching\x20one\x20of\x20the\x20requirements.\n\x20It\
-    's\x20an\x20error\x20to\x20include\x20more\x20than\x20one\x20kind\x20of\
-    \x20credential\x20in\x20a\x20single\n\x20request.\n\n\x20If\x20a\x20meth\
-    od\x20doesn't\x20have\x20any\x20auth\x20requirements,\x20request\x20cred\
-    entials\x20will\x20be\n\x20ignored.\n\n\n\n\x03\x04\x01\x01\x12\x03:\x08\
-    \x1a\n\x90\x01\n\x04\x04\x01\x02\0\x12\x03>\x02\x16\x1a\x82\x01\x20Selec\
-    ts\x20the\x20methods\x20to\x20which\x20this\x20rule\x20applies.\n\n\x20R\
-    efer\x20to\x20[selector][google.api.DocumentationRule.selector]\x20for\
-    \x20syntax\x20details.\n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03>\x02\x08\
-    \n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03>\t\x11\n\x0c\n\x05\x04\x01\x02\0\
-    \x03\x12\x03>\x14\x15\n6\n\x04\x04\x01\x02\x01\x12\x03A\x02\x1e\x1a)\x20\
-    The\x20requirements\x20for\x20OAuth\x20credentials.\n\n\x0c\n\x05\x04\
-    \x01\x02\x01\x06\x12\x03A\x02\x13\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\
-    \x03A\x14\x19\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03A\x1c\x1d\nR\n\x04\
-    \x04\x01\x02\x02\x12\x03D\x02$\x1aE\x20If\x20true,\x20the\x20service\x20\
-    accepts\x20API\x20keys\x20without\x20any\x20other\x20credential.\n\n\x0c\
-    \n\x05\x04\x01\x02\x02\x05\x12\x03D\x02\x06\n\x0c\n\x05\x04\x01\x02\x02\
-    \x01\x12\x03D\x07\x1f\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03D\"#\nD\n\
-    \x04\x04\x01\x02\x03\x12\x03G\x02,\x1a7\x20Requirements\x20for\x20additi\
-    onal\x20authentication\x20providers.\n\n\x0c\n\x05\x04\x01\x02\x03\x04\
-    \x12\x03G\x02\n\n\x0c\n\x05\x04\x01\x02\x03\x06\x12\x03G\x0b\x1a\n\x0c\n\
-    \x05\x04\x01\x02\x03\x01\x12\x03G\x1b'\n\x0c\n\x05\x04\x01\x02\x03\x03\
-    \x12\x03G*+\n\xac\x01\n\x02\x04\x02\x12\x04M\0|\x01\x1a\x9f\x01\x20Confi\
-    guration\x20for\x20an\x20authentication\x20provider,\x20including\x20sup\
-    port\x20for\n\x20[JSON\x20Web\x20Token\n\x20(JWT)](https://tools.ietf.or\
-    g/html/draft-ietf-oauth-json-web-token-32).\n\n\n\n\x03\x04\x02\x01\x12\
-    \x03M\x08\x14\n\x92\x01\n\x04\x04\x02\x02\0\x12\x03R\x02\x10\x1a\x84\x01\
-    \x20The\x20unique\x20identifier\x20of\x20the\x20auth\x20provider.\x20It\
-    \x20will\x20be\x20referred\x20to\x20by\n\x20`AuthRequirement.provider_id\
-    `.\n\n\x20Example:\x20\"bookstore_auth\".\n\n\x0c\n\x05\x04\x02\x02\0\
-    \x05\x12\x03R\x02\x08\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03R\t\x0b\n\x0c\
-    \n\x05\x04\x02\x02\0\x03\x12\x03R\x0e\x0f\n\x95\x02\n\x04\x04\x02\x02\
-    \x01\x12\x03Z\x02\x14\x1a\x87\x02\x20Identifies\x20the\x20principal\x20t\
-    hat\x20issued\x20the\x20JWT.\x20See\n\x20https://tools.ietf.org/html/dra\
-    ft-ietf-oauth-json-web-token-32#section-4.1.1\n\x20Usually\x20a\x20URL\
-    \x20or\x20an\x20email\x20address.\n\n\x20Example:\x20https://securetoken\
-    .google.com\n\x20Example:\x201234567-compute@developer.gserviceaccount.c\
-    om\n\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x03Z\x02\x08\n\x0c\n\x05\x04\
-    \x02\x02\x01\x01\x12\x03Z\t\x0f\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03Z\
-    \x12\x13\n\xf4\x03\n\x04\x04\x02\x02\x02\x12\x03h\x02\x16\x1a\xe6\x03\
-    \x20URL\x20of\x20the\x20provider's\x20public\x20key\x20set\x20to\x20vali\
-    date\x20signature\x20of\x20the\x20JWT.\x20See\n\x20[OpenID\n\x20Discover\
-    y](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMe\
-    tadata).\n\x20Optional\x20if\x20the\x20key\x20set\x20document:\n\x20\x20\
-    -\x20can\x20be\x20retrieved\x20from\n\x20\x20\x20\x20[OpenID\n\x20\x20\
+    nts\"\x82\x01\n\x0bJwtLocation\x12\x18\n\x06header\x18\x01\x20\x01(\tH\0\
+    R\x06header\x12\x16\n\x05query\x18\x02\x20\x01(\tH\0R\x05query\x12\x18\n\
+    \x06cookie\x18\x04\x20\x01(\tH\0R\x06cookie\x12!\n\x0cvalue_prefix\x18\
+    \x03\x20\x01(\tR\x0bvaluePrefixB\x04\n\x02in\"\xda\x01\n\x0cAuthProvider\
+    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x16\n\x06issuer\x18\x02\
+    \x20\x01(\tR\x06issuer\x12\x19\n\x08jwks_uri\x18\x03\x20\x01(\tR\x07jwks\
+    Uri\x12\x1c\n\taudiences\x18\x04\x20\x01(\tR\taudiences\x12+\n\x11author\
+    ization_url\x18\x05\x20\x01(\tR\x10authorizationUrl\x12<\n\rjwt_location\
+    s\x18\x06\x20\x03(\x0b2\x17.google.api.JwtLocationR\x0cjwtLocations\">\n\
+    \x11OAuthRequirements\x12)\n\x10canonical_scopes\x18\x01\x20\x01(\tR\x0f\
+    canonicalScopes\"P\n\x0fAuthRequirement\x12\x1f\n\x0bprovider_id\x18\x01\
+    \x20\x01(\tR\nproviderId\x12\x1c\n\taudiences\x18\x02\x20\x01(\tR\taudie\
+    ncesBk\n\x0ecom.google.apiB\tAuthProtoP\x01ZEgoogle.golang.org/genproto/\
+    googleapis/api/serviceconfig;serviceconfig\xa2\x02\x04GAPIJ\xd3G\n\x07\
+    \x12\x05\x0e\0\xec\x01\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\
+    \x04\x20Copyright\x202023\x20Google\x20LLC\n\n\x20Licensed\x20under\x20t\
+    he\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\
+    \x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20complian\
+    ce\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20\
+    of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/\
+    licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20la\
+    w\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
+    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
+    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
+    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
+    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
+    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\
+    \x12\x03\x10\0\x13\n\x08\n\x01\x08\x12\x03\x12\0\\\n\t\n\x02\x08\x0b\x12\
+    \x03\x12\0\\\n\x08\n\x01\x08\x12\x03\x13\0\"\n\t\n\x02\x08\n\x12\x03\x13\
+    \0\"\n\x08\n\x01\x08\x12\x03\x14\0*\n\t\n\x02\x08\x08\x12\x03\x14\0*\n\
+    \x08\n\x01\x08\x12\x03\x15\0'\n\t\n\x02\x08\x01\x12\x03\x15\0'\n\x08\n\
+    \x01\x08\x12\x03\x16\0\"\n\t\n\x02\x08$\x12\x03\x16\0\"\n\xcb\x04\n\x02\
+    \x04\0\x12\x04*\02\x01\x1a\xbe\x04\x20`Authentication`\x20defines\x20the\
+    \x20authentication\x20configuration\x20for\x20API\x20methods\n\x20provid\
+    ed\x20by\x20an\x20API\x20service.\n\n\x20Example:\n\n\x20\x20\x20\x20\
+    \x20name:\x20calendar.googleapis.com\n\x20\x20\x20\x20\x20authentication\
+    :\n\x20\x20\x20\x20\x20\x20\x20providers:\n\x20\x20\x20\x20\x20\x20\x20-\
+    \x20id:\x20google_calendar_auth\n\x20\x20\x20\x20\x20\x20\x20\x20\x20jwk\
+    s_uri:\x20https://www.googleapis.com/oauth2/v1/certs\n\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20issuer:\x20https://securetoken.google.com\n\x20\x20\
+    \x20\x20\x20\x20\x20rules:\n\x20\x20\x20\x20\x20\x20\x20-\x20selector:\
+    \x20\"*\"\n\x20\x20\x20\x20\x20\x20\x20\x20\x20requirements:\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20provider_id:\x20google_calendar_auth\
+    \n\x20\x20\x20\x20\x20\x20\x20-\x20selector:\x20google.calendar.Delegate\
+    \n\x20\x20\x20\x20\x20\x20\x20\x20\x20oauth:\n\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20canonical_scopes:\x20https://www.googleapis.com/auth\
+    /calendar.read\n\n\n\n\x03\x04\0\x01\x12\x03*\x08\x16\n\x9e\x01\n\x04\
+    \x04\0\x02\0\x12\x03.\x02(\x1a\x90\x01\x20A\x20list\x20of\x20authenticat\
+    ion\x20rules\x20that\x20apply\x20to\x20individual\x20API\x20methods.\n\n\
+    \x20**NOTE:**\x20All\x20service\x20configuration\x20rules\x20follow\x20\
+    \"last\x20one\x20wins\"\x20order.\n\n\x0c\n\x05\x04\0\x02\0\x04\x12\x03.\
+    \x02\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\x03.\x0b\x1d\n\x0c\n\x05\x04\0\
+    \x02\0\x01\x12\x03.\x1e#\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03.&'\nQ\n\x04\
+    \x04\0\x02\x01\x12\x031\x02&\x1aD\x20Defines\x20a\x20set\x20of\x20authen\
+    tication\x20providers\x20that\x20a\x20service\x20supports.\n\n\x0c\n\x05\
+    \x04\0\x02\x01\x04\x12\x031\x02\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x031\
+    \x0b\x17\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x031\x18!\n\x0c\n\x05\x04\0\
+    \x02\x01\x03\x12\x031$%\n\xed\x02\n\x02\x04\x01\x12\x04=\0M\x01\x1a\xe0\
+    \x02\x20Authentication\x20rules\x20for\x20the\x20service.\n\n\x20By\x20d\
+    efault,\x20if\x20a\x20method\x20has\x20any\x20authentication\x20requirem\
+    ents,\x20every\x20request\n\x20must\x20include\x20a\x20valid\x20credenti\
+    al\x20matching\x20one\x20of\x20the\x20requirements.\n\x20It's\x20an\x20e\
+    rror\x20to\x20include\x20more\x20than\x20one\x20kind\x20of\x20credential\
+    \x20in\x20a\x20single\n\x20request.\n\n\x20If\x20a\x20method\x20doesn't\
+    \x20have\x20any\x20auth\x20requirements,\x20request\x20credentials\x20wi\
+    ll\x20be\n\x20ignored.\n\n\n\n\x03\x04\x01\x01\x12\x03=\x08\x1a\n\x91\
+    \x01\n\x04\x04\x01\x02\0\x12\x03B\x02\x16\x1a\x83\x01\x20Selects\x20the\
+    \x20methods\x20to\x20which\x20this\x20rule\x20applies.\n\n\x20Refer\x20t\
+    o\x20[selector][google.api.DocumentationRule.selector]\x20for\x20syntax\
+    \n\x20details.\n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03B\x02\x08\n\x0c\n\
+    \x05\x04\x01\x02\0\x01\x12\x03B\t\x11\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
+    \x03B\x14\x15\n6\n\x04\x04\x01\x02\x01\x12\x03E\x02\x1e\x1a)\x20The\x20r\
+    equirements\x20for\x20OAuth\x20credentials.\n\n\x0c\n\x05\x04\x01\x02\
+    \x01\x06\x12\x03E\x02\x13\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03E\x14\
+    \x19\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03E\x1c\x1d\n\x85\x01\n\x04\
+    \x04\x01\x02\x02\x12\x03I\x02$\x1ax\x20If\x20true,\x20the\x20service\x20\
+    accepts\x20API\x20keys\x20without\x20any\x20other\x20credential.\n\x20Th\
+    is\x20flag\x20only\x20applies\x20to\x20HTTP\x20and\x20gRPC\x20requests.\
+    \n\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03I\x02\x06\n\x0c\n\x05\x04\x01\
+    \x02\x02\x01\x12\x03I\x07\x1f\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03I\"\
+    #\nD\n\x04\x04\x01\x02\x03\x12\x03L\x02,\x1a7\x20Requirements\x20for\x20\
+    additional\x20authentication\x20providers.\n\n\x0c\n\x05\x04\x01\x02\x03\
+    \x04\x12\x03L\x02\n\n\x0c\n\x05\x04\x01\x02\x03\x06\x12\x03L\x0b\x1a\n\
+    \x0c\n\x05\x04\x01\x02\x03\x01\x12\x03L\x1b'\n\x0c\n\x05\x04\x01\x02\x03\
+    \x03\x12\x03L*+\nF\n\x02\x04\x02\x12\x04P\0e\x01\x1a:\x20Specifies\x20a\
+    \x20location\x20to\x20extract\x20JWT\x20from\x20an\x20API\x20request.\n\
+    \n\n\n\x03\x04\x02\x01\x12\x03P\x08\x13\n\x0c\n\x04\x04\x02\x08\0\x12\
+    \x04Q\x02Z\x03\n\x0c\n\x05\x04\x02\x08\0\x01\x12\x03Q\x08\n\n?\n\x04\x04\
+    \x02\x02\0\x12\x03S\x04\x16\x1a2\x20Specifies\x20HTTP\x20header\x20name\
+    \x20to\x20extract\x20JWT\x20token.\n\n\x0c\n\x05\x04\x02\x02\0\x05\x12\
+    \x03S\x04\n\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03S\x0b\x11\n\x0c\n\x05\
+    \x04\x02\x02\0\x03\x12\x03S\x14\x15\nG\n\x04\x04\x02\x02\x01\x12\x03V\
+    \x04\x15\x1a:\x20Specifies\x20URL\x20query\x20parameter\x20name\x20to\
+    \x20extract\x20JWT\x20token.\n\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x03V\
+    \x04\n\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03V\x0b\x10\n\x0c\n\x05\x04\
+    \x02\x02\x01\x03\x12\x03V\x13\x14\n:\n\x04\x04\x02\x02\x02\x12\x03Y\x04\
+    \x16\x1a-\x20Specifies\x20cookie\x20name\x20to\x20extract\x20JWT\x20toke\
+    n.\n\n\x0c\n\x05\x04\x02\x02\x02\x05\x12\x03Y\x04\n\n\x0c\n\x05\x04\x02\
+    \x02\x02\x01\x12\x03Y\x0b\x11\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03Y\
+    \x14\x15\n\xab\x03\n\x04\x04\x02\x02\x03\x12\x03d\x02\x1a\x1a\x9d\x03\
+    \x20The\x20value\x20prefix.\x20The\x20value\x20format\x20is\x20\"value_p\
+    refix{token}\"\n\x20Only\x20applies\x20to\x20\"in\"\x20header\x20type.\
+    \x20Must\x20be\x20empty\x20for\x20\"in\"\x20query\x20type.\n\x20If\x20no\
+    t\x20empty,\x20the\x20header\x20value\x20has\x20to\x20match\x20(case\x20\
+    sensitive)\x20this\x20prefix.\n\x20If\x20not\x20matched,\x20JWT\x20will\
+    \x20not\x20be\x20extracted.\x20If\x20matched,\x20JWT\x20will\x20be\n\x20\
+    extracted\x20after\x20the\x20prefix\x20is\x20removed.\n\n\x20For\x20exam\
+    ple,\x20for\x20\"Authorization:\x20Bearer\x20{JWT}\",\n\x20value_prefix=\
+    \"Bearer\x20\"\x20with\x20a\x20space\x20at\x20the\x20end.\n\n\x0c\n\x05\
+    \x04\x02\x02\x03\x05\x12\x03d\x02\x08\n\x0c\n\x05\x04\x02\x02\x03\x01\
+    \x12\x03d\t\x15\n\x0c\n\x05\x04\x02\x02\x03\x03\x12\x03d\x18\x19\n\xad\
+    \x01\n\x02\x04\x03\x12\x05j\0\xb1\x01\x01\x1a\x9f\x01\x20Configuration\
+    \x20for\x20an\x20authentication\x20provider,\x20including\x20support\x20\
+    for\n\x20[JSON\x20Web\x20Token\n\x20(JWT)](https://tools.ietf.org/html/d\
+    raft-ietf-oauth-json-web-token-32).\n\n\n\n\x03\x04\x03\x01\x12\x03j\x08\
+    \x14\n\x92\x01\n\x04\x04\x03\x02\0\x12\x03o\x02\x10\x1a\x84\x01\x20The\
+    \x20unique\x20identifier\x20of\x20the\x20auth\x20provider.\x20It\x20will\
+    \x20be\x20referred\x20to\x20by\n\x20`AuthRequirement.provider_id`.\n\n\
+    \x20Example:\x20\"bookstore_auth\".\n\n\x0c\n\x05\x04\x03\x02\0\x05\x12\
+    \x03o\x02\x08\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x03o\t\x0b\n\x0c\n\x05\
+    \x04\x03\x02\0\x03\x12\x03o\x0e\x0f\n\x95\x02\n\x04\x04\x03\x02\x01\x12\
+    \x03w\x02\x14\x1a\x87\x02\x20Identifies\x20the\x20principal\x20that\x20i\
+    ssued\x20the\x20JWT.\x20See\n\x20https://tools.ietf.org/html/draft-ietf-\
+    oauth-json-web-token-32#section-4.1.1\n\x20Usually\x20a\x20URL\x20or\x20\
+    an\x20email\x20address.\n\n\x20Example:\x20https://securetoken.google.co\
+    m\n\x20Example:\x201234567-compute@developer.gserviceaccount.com\n\n\x0c\
+    \n\x05\x04\x03\x02\x01\x05\x12\x03w\x02\x08\n\x0c\n\x05\x04\x03\x02\x01\
+    \x01\x12\x03w\t\x0f\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03w\x12\x13\n\
+    \xf6\x03\n\x04\x04\x03\x02\x02\x12\x04\x85\x01\x02\x16\x1a\xe7\x03\x20UR\
+    L\x20of\x20the\x20provider's\x20public\x20key\x20set\x20to\x20validate\
+    \x20signature\x20of\x20the\x20JWT.\x20See\n\x20[OpenID\n\x20Discovery](h\
+    ttps://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetada\
+    ta).\n\x20Optional\x20if\x20the\x20key\x20set\x20document:\n\x20\x20-\
+    \x20can\x20be\x20retrieved\x20from\n\x20\x20\x20\x20[OpenID\n\x20\x20\
     \x20\x20Discovery](https://openid.net/specs/openid-connect-discovery-1_0\
-    .html\x20of\n\x20\x20\x20\x20the\x20issuer.\n\x20\x20-\x20can\x20be\x20i\
-    nferred\x20from\x20the\x20email\x20domain\x20of\x20the\x20issuer\x20(e.g\
-    .\x20a\x20Google\n\x20\x20service\x20account).\n\n\x20Example:\x20https:\
-    //www.googleapis.com/oauth2/v1/certs\n\n\x0c\n\x05\x04\x02\x02\x02\x05\
-    \x12\x03h\x02\x08\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03h\t\x11\n\x0c\n\
-    \x05\x04\x02\x02\x02\x03\x12\x03h\x14\x15\n\xc1\x05\n\x04\x04\x02\x02\
-    \x03\x12\x03w\x02\x17\x1a\xb3\x05\x20The\x20list\x20of\x20JWT\n\x20[audi\
-    ences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#se\
-    ction-4.1.3).\n\x20that\x20are\x20allowed\x20to\x20access.\x20A\x20JWT\
-    \x20containing\x20any\x20of\x20these\x20audiences\x20will\n\x20be\x20acc\
-    epted.\x20When\x20this\x20setting\x20is\x20absent,\x20only\x20JWTs\x20wi\
-    th\x20audience\n\x20\"https://[Service_name][google.api.Service.name]/[A\
-    PI_name][google.protobuf.Api.name]\"\n\x20will\x20be\x20accepted.\x20For\
-    \x20example,\x20if\x20no\x20audiences\x20are\x20in\x20the\x20setting,\n\
-    \x20LibraryService\x20API\x20will\x20only\x20accept\x20JWTs\x20with\x20t\
-    he\x20following\x20audience\n\x20\"https://library-example.googleapis.co\
-    m/google.example.library.v1.LibraryService\".\n\n\x20Example:\n\n\x20\
-    \x20\x20\x20\x20audiences:\x20bookstore_android.apps.googleusercontent.c\
-    om,\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20boo\
-    kstore_web.apps.googleusercontent.com\n\n\x0c\n\x05\x04\x02\x02\x03\x05\
-    \x12\x03w\x02\x08\n\x0c\n\x05\x04\x02\x02\x03\x01\x12\x03w\t\x12\n\x0c\n\
-    \x05\x04\x02\x02\x03\x03\x12\x03w\x15\x16\n\x98\x01\n\x04\x04\x02\x02\
-    \x04\x12\x03{\x02\x1f\x1a\x8a\x01\x20Redirect\x20URL\x20if\x20JWT\x20tok\
-    en\x20is\x20required\x20but\x20not\x20present\x20or\x20is\x20expired.\n\
-    \x20Implement\x20authorizationUrl\x20of\x20securityDefinitions\x20in\x20\
-    OpenAPI\x20spec.\n\n\x0c\n\x05\x04\x02\x02\x04\x05\x12\x03{\x02\x08\n\
-    \x0c\n\x05\x04\x02\x02\x04\x01\x12\x03{\t\x1a\n\x0c\n\x05\x04\x02\x02\
-    \x04\x03\x12\x03{\x1d\x1e\n\xe7\x07\n\x02\x04\x03\x12\x06\x90\x01\0\x99\
-    \x01\x01\x1a\xd8\x07\x20OAuth\x20scopes\x20are\x20a\x20way\x20to\x20defi\
-    ne\x20data\x20and\x20permissions\x20on\x20data.\x20For\x20example,\n\x20\
-    there\x20are\x20scopes\x20defined\x20for\x20\"Read-only\x20access\x20to\
-    \x20Google\x20Calendar\"\x20and\n\x20\"Access\x20to\x20Cloud\x20Platform\
-    \".\x20Users\x20can\x20consent\x20to\x20a\x20scope\x20for\x20an\x20appli\
-    cation,\n\x20giving\x20it\x20permission\x20to\x20access\x20that\x20data\
-    \x20on\x20their\x20behalf.\n\n\x20OAuth\x20scope\x20specifications\x20sh\
-    ould\x20be\x20fairly\x20coarse\x20grained;\x20a\x20user\x20will\x20need\
-    \n\x20to\x20see\x20and\x20understand\x20the\x20text\x20description\x20of\
-    \x20what\x20your\x20scope\x20means.\n\n\x20In\x20most\x20cases:\x20use\
-    \x20one\x20or\x20at\x20most\x20two\x20OAuth\x20scopes\x20for\x20an\x20en\
-    tire\x20family\x20of\n\x20products.\x20If\x20your\x20product\x20has\x20m\
-    ultiple\x20APIs,\x20you\x20should\x20probably\x20be\x20sharing\n\x20the\
-    \x20OAuth\x20scope\x20across\x20all\x20of\x20those\x20APIs.\n\n\x20When\
-    \x20you\x20need\x20finer\x20grained\x20OAuth\x20consent\x20screens:\x20t\
-    alk\x20with\x20your\x20product\n\x20management\x20about\x20how\x20develo\
-    pers\x20will\x20use\x20them\x20in\x20practice.\n\n\x20Please\x20note\x20\
-    that\x20even\x20though\x20each\x20of\x20the\x20canonical\x20scopes\x20is\
-    \x20enough\x20for\x20a\n\x20request\x20to\x20be\x20accepted\x20and\x20pa\
-    ssed\x20to\x20the\x20backend,\x20a\x20request\x20can\x20still\x20fail\n\
-    \x20due\x20to\x20the\x20backend\x20requiring\x20additional\x20scopes\x20\
-    or\x20permissions.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\x90\x01\x08\x19\n\
-    \xab\x02\n\x04\x04\x03\x02\0\x12\x04\x98\x01\x02\x1e\x1a\x9c\x02\x20The\
-    \x20list\x20of\x20publicly\x20documented\x20OAuth\x20scopes\x20that\x20a\
-    re\x20allowed\x20access.\x20An\n\x20OAuth\x20token\x20containing\x20any\
-    \x20of\x20these\x20scopes\x20will\x20be\x20accepted.\n\n\x20Example:\n\n\
-    \x20\x20\x20\x20\x20\x20canonical_scopes:\x20https://www.googleapis.com/\
-    auth/calendar,\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20https://www.googleapis.com/auth/\
-    calendar.read\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\x98\x01\x02\x08\n\r\
-    \n\x05\x04\x03\x02\0\x01\x12\x04\x98\x01\t\x19\n\r\n\x05\x04\x03\x02\0\
-    \x03\x12\x04\x98\x01\x1c\x1d\n\xaa\x01\n\x02\x04\x04\x12\x06\x9e\x01\0\
-    \xb7\x01\x01\x1a\x9b\x01\x20User-defined\x20authentication\x20requiremen\
-    ts,\x20including\x20support\x20for\n\x20[JSON\x20Web\x20Token\n\x20(JWT)\
-    ](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).\n\n\
-    \x0b\n\x03\x04\x04\x01\x12\x04\x9e\x01\x08\x17\n{\n\x04\x04\x04\x02\0\
-    \x12\x04\xa4\x01\x02\x19\x1am\x20[id][google.api.AuthProvider.id]\x20fro\
-    m\x20authentication\x20provider.\n\n\x20Example:\n\n\x20\x20\x20\x20\x20\
-    provider_id:\x20bookstore_auth\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\xa4\
-    \x01\x02\x08\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\xa4\x01\t\x14\n\r\n\x05\
-    \x04\x04\x02\0\x03\x12\x04\xa4\x01\x17\x18\n\xc0\x06\n\x04\x04\x04\x02\
-    \x01\x12\x04\xb6\x01\x02\x17\x1a\xb1\x06\x20NOTE:\x20This\x20will\x20be\
+    .html)\n\x20\x20\x20\x20of\x20the\x20issuer.\n\x20\x20-\x20can\x20be\x20\
+    inferred\x20from\x20the\x20email\x20domain\x20of\x20the\x20issuer\x20(e.\
+    g.\x20a\x20Google\n\x20\x20service\x20account).\n\n\x20Example:\x20https\
+    ://www.googleapis.com/oauth2/v1/certs\n\n\r\n\x05\x04\x03\x02\x02\x05\
+    \x12\x04\x85\x01\x02\x08\n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\x85\x01\t\
+    \x11\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\x85\x01\x14\x15\n\xee\x05\n\
+    \x04\x04\x03\x02\x03\x12\x04\x98\x01\x02\x17\x1a\xdf\x05\x20The\x20list\
+    \x20of\x20JWT\n\x20[audiences](https://tools.ietf.org/html/draft-ietf-oa\
+    uth-json-web-token-32#section-4.1.3).\n\x20that\x20are\x20allowed\x20to\
+    \x20access.\x20A\x20JWT\x20containing\x20any\x20of\x20these\x20audiences\
+    \x20will\n\x20be\x20accepted.\x20When\x20this\x20setting\x20is\x20absent\
+    ,\x20JWTs\x20with\x20audiences:\n\x20\x20\x20-\x20\"https://[service.nam\
+    e]/[google.protobuf.Api.name]\"\n\x20\x20\x20-\x20\"https://[service.nam\
+    e]/\"\n\x20will\x20be\x20accepted.\n\x20For\x20example,\x20if\x20no\x20a\
+    udiences\x20are\x20in\x20the\x20setting,\x20LibraryService\x20API\x20wil\
+    l\n\x20accept\x20JWTs\x20with\x20the\x20following\x20audiences:\n\x20\
+    \x20\x20-\n\x20\x20\x20https://library-example.googleapis.com/google.exa\
+    mple.library.v1.LibraryService\n\x20\x20\x20-\x20https://library-example\
+    .googleapis.com/\n\n\x20Example:\n\n\x20\x20\x20\x20\x20audiences:\x20bo\
+    okstore_android.apps.googleusercontent.com,\n\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20bookstore_web.apps.googleusercon\
+    tent.com\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\x04\x98\x01\x02\x08\n\r\n\
+    \x05\x04\x03\x02\x03\x01\x12\x04\x98\x01\t\x12\n\r\n\x05\x04\x03\x02\x03\
+    \x03\x12\x04\x98\x01\x15\x16\n\x99\x01\n\x04\x04\x03\x02\x04\x12\x04\x9c\
+    \x01\x02\x1f\x1a\x8a\x01\x20Redirect\x20URL\x20if\x20JWT\x20token\x20is\
+    \x20required\x20but\x20not\x20present\x20or\x20is\x20expired.\n\x20Imple\
+    ment\x20authorizationUrl\x20of\x20securityDefinitions\x20in\x20OpenAPI\
+    \x20spec.\n\n\r\n\x05\x04\x03\x02\x04\x05\x12\x04\x9c\x01\x02\x08\n\r\n\
+    \x05\x04\x03\x02\x04\x01\x12\x04\x9c\x01\t\x1a\n\r\n\x05\x04\x03\x02\x04\
+    \x03\x12\x04\x9c\x01\x1d\x1e\n\xd3\x05\n\x04\x04\x03\x02\x05\x12\x04\xb0\
+    \x01\x02)\x1a\xc4\x05\x20Defines\x20the\x20locations\x20to\x20extract\
+    \x20the\x20JWT.\x20\x20For\x20now\x20it\x20is\x20only\x20used\x20by\x20t\
+    he\n\x20Cloud\x20Endpoints\x20to\x20store\x20the\x20OpenAPI\x20extension\
+    \x20[x-google-jwt-locations]\n\x20(https://cloud.google.com/endpoints/do\
+    cs/openapi/openapi-extensions#x-google-jwt-locations)\n\n\x20JWT\x20loca\
+    tions\x20can\x20be\x20one\x20of\x20HTTP\x20headers,\x20URL\x20query\x20p\
+    arameters\x20or\n\x20cookies.\x20The\x20rule\x20is\x20that\x20the\x20fir\
+    st\x20match\x20wins.\n\n\x20If\x20not\x20specified,\x20\x20default\x20to\
+    \x20use\x20following\x203\x20locations:\n\x20\x20\x20\x201)\x20Authoriza\
+    tion:\x20Bearer\n\x20\x20\x20\x202)\x20x-goog-iap-jwt-assertion\n\x20\
+    \x20\x20\x203)\x20access_token\x20query\x20parameter\n\n\x20Default\x20l\
+    ocations\x20can\x20be\x20specified\x20as\x20followings:\n\x20\x20\x20\
+    \x20jwt_locations:\n\x20\x20\x20\x20-\x20header:\x20Authorization\n\x20\
+    \x20\x20\x20\x20\x20value_prefix:\x20\"Bearer\x20\"\n\x20\x20\x20\x20-\
+    \x20header:\x20x-goog-iap-jwt-assertion\n\x20\x20\x20\x20-\x20query:\x20\
+    access_token\n\n\r\n\x05\x04\x03\x02\x05\x04\x12\x04\xb0\x01\x02\n\n\r\n\
+    \x05\x04\x03\x02\x05\x06\x12\x04\xb0\x01\x0b\x16\n\r\n\x05\x04\x03\x02\
+    \x05\x01\x12\x04\xb0\x01\x17$\n\r\n\x05\x04\x03\x02\x05\x03\x12\x04\xb0\
+    \x01'(\n\xe7\x07\n\x02\x04\x04\x12\x06\xc5\x01\0\xce\x01\x01\x1a\xd8\x07\
+    \x20OAuth\x20scopes\x20are\x20a\x20way\x20to\x20define\x20data\x20and\
+    \x20permissions\x20on\x20data.\x20For\x20example,\n\x20there\x20are\x20s\
+    copes\x20defined\x20for\x20\"Read-only\x20access\x20to\x20Google\x20Cale\
+    ndar\"\x20and\n\x20\"Access\x20to\x20Cloud\x20Platform\".\x20Users\x20ca\
+    n\x20consent\x20to\x20a\x20scope\x20for\x20an\x20application,\n\x20givin\
+    g\x20it\x20permission\x20to\x20access\x20that\x20data\x20on\x20their\x20\
+    behalf.\n\n\x20OAuth\x20scope\x20specifications\x20should\x20be\x20fairl\
+    y\x20coarse\x20grained;\x20a\x20user\x20will\x20need\n\x20to\x20see\x20a\
+    nd\x20understand\x20the\x20text\x20description\x20of\x20what\x20your\x20\
+    scope\x20means.\n\n\x20In\x20most\x20cases:\x20use\x20one\x20or\x20at\
+    \x20most\x20two\x20OAuth\x20scopes\x20for\x20an\x20entire\x20family\x20o\
+    f\n\x20products.\x20If\x20your\x20product\x20has\x20multiple\x20APIs,\
+    \x20you\x20should\x20probably\x20be\x20sharing\n\x20the\x20OAuth\x20scop\
+    e\x20across\x20all\x20of\x20those\x20APIs.\n\n\x20When\x20you\x20need\
+    \x20finer\x20grained\x20OAuth\x20consent\x20screens:\x20talk\x20with\x20\
+    your\x20product\n\x20management\x20about\x20how\x20developers\x20will\
+    \x20use\x20them\x20in\x20practice.\n\n\x20Please\x20note\x20that\x20even\
+    \x20though\x20each\x20of\x20the\x20canonical\x20scopes\x20is\x20enough\
+    \x20for\x20a\n\x20request\x20to\x20be\x20accepted\x20and\x20passed\x20to\
+    \x20the\x20backend,\x20a\x20request\x20can\x20still\x20fail\n\x20due\x20\
+    to\x20the\x20backend\x20requiring\x20additional\x20scopes\x20or\x20permi\
+    ssions.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xc5\x01\x08\x19\n\xab\x02\n\
+    \x04\x04\x04\x02\0\x12\x04\xcd\x01\x02\x1e\x1a\x9c\x02\x20The\x20list\
+    \x20of\x20publicly\x20documented\x20OAuth\x20scopes\x20that\x20are\x20al\
+    lowed\x20access.\x20An\n\x20OAuth\x20token\x20containing\x20any\x20of\
+    \x20these\x20scopes\x20will\x20be\x20accepted.\n\n\x20Example:\n\n\x20\
+    \x20\x20\x20\x20\x20canonical_scopes:\x20https://www.googleapis.com/auth\
+    /calendar,\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20https://www.googleapis.com/auth/cale\
+    ndar.read\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\xcd\x01\x02\x08\n\r\n\
+    \x05\x04\x04\x02\0\x01\x12\x04\xcd\x01\t\x19\n\r\n\x05\x04\x04\x02\0\x03\
+    \x12\x04\xcd\x01\x1c\x1d\n\xaa\x01\n\x02\x04\x05\x12\x06\xd3\x01\0\xec\
+    \x01\x01\x1a\x9b\x01\x20User-defined\x20authentication\x20requirements,\
+    \x20including\x20support\x20for\n\x20[JSON\x20Web\x20Token\n\x20(JWT)](h\
+    ttps://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).\n\n\x0b\
+    \n\x03\x04\x05\x01\x12\x04\xd3\x01\x08\x17\n{\n\x04\x04\x05\x02\0\x12\
+    \x04\xd9\x01\x02\x19\x1am\x20[id][google.api.AuthProvider.id]\x20from\
+    \x20authentication\x20provider.\n\n\x20Example:\n\n\x20\x20\x20\x20\x20p\
+    rovider_id:\x20bookstore_auth\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\xd9\
+    \x01\x02\x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xd9\x01\t\x14\n\r\n\x05\
+    \x04\x05\x02\0\x03\x12\x04\xd9\x01\x17\x18\n\xc0\x06\n\x04\x04\x05\x02\
+    \x01\x12\x04\xeb\x01\x02\x17\x1a\xb1\x06\x20NOTE:\x20This\x20will\x20be\
     \x20deprecated\x20soon,\x20once\x20AuthProvider.audiences\x20is\n\x20imp\
     lemented\x20and\x20accepted\x20in\x20all\x20the\x20runtime\x20components\
     .\n\n\x20The\x20list\x20of\x20JWT\n\x20[audiences](https://tools.ietf.or\
@@ -1418,9 +1901,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     v1.LibraryService\".\n\n\x20Example:\n\n\x20\x20\x20\x20\x20audiences:\
     \x20bookstore_android.apps.googleusercontent.com,\n\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20bookstore_web.apps.googleuse\
-    rcontent.com\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\xb6\x01\x02\x08\n\r\
-    \n\x05\x04\x04\x02\x01\x01\x12\x04\xb6\x01\t\x12\n\r\n\x05\x04\x04\x02\
-    \x01\x03\x12\x04\xb6\x01\x15\x16b\x06proto3\
+    rcontent.com\n\n\r\n\x05\x04\x05\x02\x01\x05\x12\x04\xeb\x01\x02\x08\n\r\
+    \n\x05\x04\x05\x02\x01\x01\x12\x04\xeb\x01\t\x12\n\r\n\x05\x04\x05\x02\
+    \x01\x03\x12\x04\xeb\x01\x15\x16b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

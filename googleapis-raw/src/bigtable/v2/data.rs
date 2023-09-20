@@ -6034,6 +6034,562 @@ impl ::protobuf::reflect::ProtobufValue for ReadModifyWriteRule {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct StreamPartition {
+    // message fields
+    pub row_range: ::protobuf::SingularPtrField<RowRange>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StreamPartition {
+    fn default() -> &'a StreamPartition {
+        <StreamPartition as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamPartition {
+    pub fn new() -> StreamPartition {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.RowRange row_range = 1;
+
+
+    pub fn get_row_range(&self) -> &RowRange {
+        self.row_range.as_ref().unwrap_or_else(|| <RowRange as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_row_range(&mut self) {
+        self.row_range.clear();
+    }
+
+    pub fn has_row_range(&self) -> bool {
+        self.row_range.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_row_range(&mut self, v: RowRange) {
+        self.row_range = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_row_range(&mut self) -> &mut RowRange {
+        if self.row_range.is_none() {
+            self.row_range.set_default();
+        }
+        self.row_range.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_row_range(&mut self) -> RowRange {
+        self.row_range.take().unwrap_or_else(|| RowRange::new())
+    }
+}
+
+impl ::protobuf::Message for StreamPartition {
+    fn is_initialized(&self) -> bool {
+        for v in &self.row_range {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.row_range)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.row_range.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.row_range.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StreamPartition {
+        StreamPartition::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RowRange>>(
+                "row_range",
+                |m: &StreamPartition| { &m.row_range },
+                |m: &mut StreamPartition| { &mut m.row_range },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamPartition>(
+                "StreamPartition",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StreamPartition {
+        static instance: ::protobuf::rt::LazyV2<StreamPartition> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StreamPartition::new)
+    }
+}
+
+impl ::protobuf::Clear for StreamPartition {
+    fn clear(&mut self) {
+        self.row_range.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StreamPartition {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamPartition {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct StreamContinuationTokens {
+    // message fields
+    pub tokens: ::protobuf::RepeatedField<StreamContinuationToken>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StreamContinuationTokens {
+    fn default() -> &'a StreamContinuationTokens {
+        <StreamContinuationTokens as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamContinuationTokens {
+    pub fn new() -> StreamContinuationTokens {
+        ::std::default::Default::default()
+    }
+
+    // repeated .google.bigtable.v2.StreamContinuationToken tokens = 1;
+
+
+    pub fn get_tokens(&self) -> &[StreamContinuationToken] {
+        &self.tokens
+    }
+    pub fn clear_tokens(&mut self) {
+        self.tokens.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_tokens(&mut self, v: ::protobuf::RepeatedField<StreamContinuationToken>) {
+        self.tokens = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_tokens(&mut self) -> &mut ::protobuf::RepeatedField<StreamContinuationToken> {
+        &mut self.tokens
+    }
+
+    // Take field
+    pub fn take_tokens(&mut self) -> ::protobuf::RepeatedField<StreamContinuationToken> {
+        ::std::mem::replace(&mut self.tokens, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for StreamContinuationTokens {
+    fn is_initialized(&self) -> bool {
+        for v in &self.tokens {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.tokens)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.tokens {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.tokens {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StreamContinuationTokens {
+        StreamContinuationTokens::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamContinuationToken>>(
+                "tokens",
+                |m: &StreamContinuationTokens| { &m.tokens },
+                |m: &mut StreamContinuationTokens| { &mut m.tokens },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamContinuationTokens>(
+                "StreamContinuationTokens",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StreamContinuationTokens {
+        static instance: ::protobuf::rt::LazyV2<StreamContinuationTokens> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StreamContinuationTokens::new)
+    }
+}
+
+impl ::protobuf::Clear for StreamContinuationTokens {
+    fn clear(&mut self) {
+        self.tokens.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StreamContinuationTokens {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamContinuationTokens {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct StreamContinuationToken {
+    // message fields
+    pub partition: ::protobuf::SingularPtrField<StreamPartition>,
+    pub token: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StreamContinuationToken {
+    fn default() -> &'a StreamContinuationToken {
+        <StreamContinuationToken as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamContinuationToken {
+    pub fn new() -> StreamContinuationToken {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.StreamPartition partition = 1;
+
+
+    pub fn get_partition(&self) -> &StreamPartition {
+        self.partition.as_ref().unwrap_or_else(|| <StreamPartition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_partition(&mut self) {
+        self.partition.clear();
+    }
+
+    pub fn has_partition(&self) -> bool {
+        self.partition.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_partition(&mut self, v: StreamPartition) {
+        self.partition = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_partition(&mut self) -> &mut StreamPartition {
+        if self.partition.is_none() {
+            self.partition.set_default();
+        }
+        self.partition.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_partition(&mut self) -> StreamPartition {
+        self.partition.take().unwrap_or_else(|| StreamPartition::new())
+    }
+
+    // string token = 2;
+
+
+    pub fn get_token(&self) -> &str {
+        &self.token
+    }
+    pub fn clear_token(&mut self) {
+        self.token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_token(&mut self, v: ::std::string::String) {
+        self.token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_token(&mut self) -> &mut ::std::string::String {
+        &mut self.token
+    }
+
+    // Take field
+    pub fn take_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.token, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for StreamContinuationToken {
+    fn is_initialized(&self) -> bool {
+        for v in &self.partition {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.partition)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.token)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.partition.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.token.is_empty() {
+            os.write_string(2, &self.token)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StreamContinuationToken {
+        StreamContinuationToken::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamPartition>>(
+                "partition",
+                |m: &StreamContinuationToken| { &m.partition },
+                |m: &mut StreamContinuationToken| { &mut m.partition },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "token",
+                |m: &StreamContinuationToken| { &m.token },
+                |m: &mut StreamContinuationToken| { &mut m.token },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamContinuationToken>(
+                "StreamContinuationToken",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StreamContinuationToken {
+        static instance: ::protobuf::rt::LazyV2<StreamContinuationToken> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StreamContinuationToken::new)
+    }
+}
+
+impl ::protobuf::Clear for StreamContinuationToken {
+    fn clear(&mut self) {
+        self.partition.clear();
+        self.token.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StreamContinuationToken {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamContinuationToken {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x1dgoogle/bigtable/v2/data.proto\x12\x12google.bigtable.v2\"O\n\x03Ro\
     w\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x126\n\x08families\x18\
@@ -6115,28 +6671,35 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\tR\nfamilyName\x12)\n\x10column_qualifier\x18\x02\x20\x01(\x0c\
     R\x0fcolumnQualifier\x12#\n\x0cappend_value\x18\x03\x20\x01(\x0cH\0R\x0b\
     appendValue\x12+\n\x10increment_amount\x18\x04\x20\x01(\x03H\0R\x0fincre\
-    mentAmountB\x06\n\x04ruleB\x97\x01\n\x16com.google.bigtable.v2B\tDataPro\
-    toP\x01Z:google.golang.org/genproto/googleapis/bigtable/v2;bigtable\xaa\
-    \x02\x18Google.Cloud.Bigtable.V2\xca\x02\x18Google\\Cloud\\Bigtable\\V2J\
-    \xb1\xb5\x01\n\x07\x12\x05\x0f\0\x96\x04\x01\n\xbe\x04\n\x01\x0c\x12\x03\
-    \x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Licens\
-    ed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"\
-    License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20i\
-    n\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20\
-    a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://ww\
-    w.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20app\
-    licable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20\
-    distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\
-    \x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITION\
-    S\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\
-    \x20the\x20License\x20for\x20the\x20specific\x20language\x20governing\
-    \x20permissions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\
-    \n\x08\n\x01\x02\x12\x03\x11\0\x1b\n\x08\n\x01\x08\x12\x03\x13\05\n\t\n\
-    \x02\x08%\x12\x03\x13\05\n\x08\n\x01\x08\x12\x03\x14\0Q\n\t\n\x02\x08\
-    \x0b\x12\x03\x14\0Q\n\x08\n\x01\x08\x12\x03\x15\0\"\n\t\n\x02\x08\n\x12\
-    \x03\x15\0\"\n\x08\n\x01\x08\x12\x03\x16\0*\n\t\n\x02\x08\x08\x12\x03\
-    \x16\0*\n\x08\n\x01\x08\x12\x03\x17\0/\n\t\n\x02\x08\x01\x12\x03\x17\0/\
-    \n\x08\n\x01\x08\x12\x03\x18\05\n\t\n\x02\x08)\x12\x03\x18\05\n\x90\x01\
+    mentAmountB\x06\n\x04rule\"L\n\x0fStreamPartition\x129\n\trow_range\x18\
+    \x01\x20\x01(\x0b2\x1c.google.bigtable.v2.RowRangeR\x08rowRange\"_\n\x18\
+    StreamContinuationTokens\x12C\n\x06tokens\x18\x01\x20\x03(\x0b2+.google.\
+    bigtable.v2.StreamContinuationTokenR\x06tokens\"r\n\x17StreamContinuatio\
+    nToken\x12A\n\tpartition\x18\x01\x20\x01(\x0b2#.google.bigtable.v2.Strea\
+    mPartitionR\tpartition\x12\x14\n\x05token\x18\x02\x20\x01(\tR\x05tokenB\
+    \xb5\x01\n\x16com.google.bigtable.v2B\tDataProtoP\x01Z:google.golang.org\
+    /genproto/googleapis/bigtable/v2;bigtable\xaa\x02\x18Google.Cloud.Bigtab\
+    le.V2\xca\x02\x18Google\\Cloud\\Bigtable\\V2\xea\x02\x1bGoogle::Cloud::B\
+    igtable::V2J\xe5\xbd\x01\n\x07\x12\x05\x0e\0\xaf\x04\x01\n\xbc\x04\n\x01\
+    \x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202022\x20Google\x20LLC\n\
+    \n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\
+    \x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\
+    \x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20ma\
+    y\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\
+    \x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20requ\
+    ired\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\
+    \x20software\n\x20distributed\x20under\x20the\x20License\x20is\x20distri\
+    buted\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\
+    \x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\
+    \x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20lan\
+    guage\x20governing\x20permissions\x20and\n\x20limitations\x20under\x20th\
+    e\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x1b\n\x08\n\x01\x08\x12\
+    \x03\x12\05\n\t\n\x02\x08%\x12\x03\x12\05\n\x08\n\x01\x08\x12\x03\x13\0Q\
+    \n\t\n\x02\x08\x0b\x12\x03\x13\0Q\n\x08\n\x01\x08\x12\x03\x14\0\"\n\t\n\
+    \x02\x08\n\x12\x03\x14\0\"\n\x08\n\x01\x08\x12\x03\x15\0*\n\t\n\x02\x08\
+    \x08\x12\x03\x15\0*\n\x08\n\x01\x08\x12\x03\x16\0/\n\t\n\x02\x08\x01\x12\
+    \x03\x16\0/\n\x08\n\x01\x08\x12\x03\x17\05\n\t\n\x02\x08)\x12\x03\x17\05\
+    \n\x08\n\x01\x08\x12\x03\x18\04\n\t\n\x02\x08-\x12\x03\x18\04\n\x90\x01\
     \n\x02\x04\0\x12\x04\x1c\0%\x01\x1a\x83\x01\x20Specifies\x20the\x20compl\
     ete\x20(requested)\x20contents\x20of\x20a\x20single\x20row\x20of\x20a\
     \x20table.\n\x20Rows\x20which\x20exceed\x20256MiB\x20in\x20size\x20canno\
@@ -6321,7 +6884,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ing\x20an\x20exclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\
     \x05\x04\x08\x02\x03\x05\x12\x04\xb0\x01\x04\t\n\r\n\x05\x04\x08\x02\x03\
     \x01\x12\x04\xb0\x01\n\x18\n\r\n\x05\x04\x08\x02\x03\x03\x12\x04\xb0\x01\
-    \x1b\x1c\n\xa9\x0f\n\x02\x04\t\x12\x06\xd5\x01\0\xb8\x03\x01\x1a\x9a\x0f\
+    \x1b\x1c\n\xaa\x0f\n\x02\x04\t\x12\x06\xd5\x01\0\xb8\x03\x01\x1a\x9b\x0f\
     \x20Takes\x20a\x20row\x20as\x20input\x20and\x20produces\x20an\x20alterna\
     te\x20view\x20of\x20the\x20row\x20based\x20on\n\x20specified\x20rules.\
     \x20For\x20example,\x20a\x20RowFilter\x20might\x20trim\x20down\x20a\x20r\
@@ -6360,7 +6923,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     are\x20described\x20in\x20more\x20detail\x20in\x20the\n\x20RowFilter.Cha\
     in\x20and\x20RowFilter.Interleave\x20documentation.\n\n\x20The\x20total\
     \x20serialized\x20size\x20of\x20a\x20RowFilter\x20message\x20must\x20not\
-    \n\x20exceed\x204096\x20bytes,\x20and\x20RowFilters\x20may\x20not\x20be\
+    \n\x20exceed\x2020480\x20bytes,\x20and\x20RowFilters\x20may\x20not\x20be\
     \x20nested\x20within\x20each\x20other\n\x20(in\x20Chains\x20or\x20Interl\
     eaves)\x20to\x20a\x20depth\x20of\x20more\x20than\x2020.\n\n\x0b\n\x03\
     \x04\t\x01\x12\x04\xd5\x01\x08\x11\nV\n\x04\x04\t\x03\0\x12\x06\xd7\x01\
@@ -6692,7 +7255,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     s\x20of\x20the\x20input.\x20This\x20may\x20be\x20relaxed\x20in\n\x20the\
     \x20future.\n\n\r\n\x05\x04\t\x02\x12\x05\x12\x04\xb6\x03\x04\n\n\r\n\
     \x05\x04\t\x02\x12\x01\x12\x04\xb6\x03\x0b\"\n\r\n\x05\x04\t\x02\x12\x03\
-    \x12\x04\xb6\x03%'\nR\n\x02\x04\n\x12\x06\xbb\x03\0\xfa\x03\x01\x1aD\x20\
+    \x12\x04\xb6\x03%'\nR\n\x02\x04\n\x12\x06\xbb\x03\0\xf8\x03\x01\x1aD\x20\
     Specifies\x20a\x20particular\x20change\x20to\x20be\x20made\x20to\x20the\
     \x20contents\x20of\x20a\x20row.\n\n\x0b\n\x03\x04\n\x01\x12\x04\xbb\x03\
     \x08\x10\nH\n\x04\x04\n\x03\0\x12\x06\xbd\x03\x02\xcf\x03\x03\x1a8\x20A\
@@ -6752,60 +7315,91 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     st\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\n\x03\x02\x02\0\x05\
     \x12\x04\xe4\x03\x04\n\n\x0f\n\x07\x04\n\x03\x02\x02\0\x01\x12\x04\xe4\
     \x03\x0b\x16\n\x0f\n\x07\x04\n\x03\x02\x02\0\x03\x12\x04\xe4\x03\x19\x1a\
-    \nM\n\x04\x04\n\x03\x03\x12\x06\xe8\x03\x02\xea\x03\x03\x1a=\x20A\x20Mut\
-    ation\x20which\x20deletes\x20all\x20cells\x20from\x20the\x20containing\
-    \x20row.\n\n\r\n\x05\x04\n\x03\x03\x01\x12\x04\xe8\x03\n\x17\n@\n\x04\
-    \x04\n\x08\0\x12\x06\xed\x03\x02\xf9\x03\x03\x1a0\x20Which\x20of\x20the\
-    \x20possible\x20Mutation\x20types\x20to\x20apply.\n\n\r\n\x05\x04\n\x08\
-    \0\x01\x12\x04\xed\x03\x08\x10\n#\n\x04\x04\n\x02\0\x12\x04\xef\x03\x04\
-    \x19\x1a\x15\x20Set\x20a\x20cell's\x20value.\n\n\r\n\x05\x04\n\x02\0\x06\
-    \x12\x04\xef\x03\x04\x0b\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xef\x03\x0c\
-    \x14\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xef\x03\x17\x18\n,\n\x04\x04\n\
-    \x02\x01\x12\x04\xf2\x03\x04,\x1a\x1e\x20Deletes\x20cells\x20from\x20a\
-    \x20column.\n\n\r\n\x05\x04\n\x02\x01\x06\x12\x04\xf2\x03\x04\x14\n\r\n\
-    \x05\x04\n\x02\x01\x01\x12\x04\xf2\x03\x15'\n\r\n\x05\x04\n\x02\x01\x03\
-    \x12\x04\xf2\x03*+\n3\n\x04\x04\n\x02\x02\x12\x04\xf5\x03\x04,\x1a%\x20D\
-    eletes\x20cells\x20from\x20a\x20column\x20family.\n\n\r\n\x05\x04\n\x02\
-    \x02\x06\x12\x04\xf5\x03\x04\x14\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xf5\
-    \x03\x15'\n\r\n\x05\x04\n\x02\x02\x03\x12\x04\xf5\x03*+\n2\n\x04\x04\n\
-    \x02\x03\x12\x04\xf8\x03\x04&\x1a$\x20Deletes\x20cells\x20from\x20the\
-    \x20entire\x20row.\n\n\r\n\x05\x04\n\x02\x03\x06\x12\x04\xf8\x03\x04\x11\
-    \n\r\n\x05\x04\n\x02\x03\x01\x12\x04\xf8\x03\x12!\n\r\n\x05\x04\n\x02\
-    \x03\x03\x12\x04\xf8\x03$%\nm\n\x02\x04\x0b\x12\x06\xfe\x03\0\x96\x04\
-    \x01\x1a_\x20Specifies\x20an\x20atomic\x20read/modify/write\x20operation\
-    \x20on\x20the\x20latest\x20value\x20of\x20the\n\x20specified\x20column.\
-    \n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xfe\x03\x08\x1b\nv\n\x04\x04\x0b\x02\
-    \0\x12\x04\x81\x04\x02\x19\x1ah\x20The\x20name\x20of\x20the\x20family\
-    \x20to\x20which\x20the\x20read/modify/write\x20should\x20be\x20applied.\
-    \n\x20Must\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\r\n\x05\x04\x0b\x02\0\x05\
-    \x12\x04\x81\x04\x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\x81\x04\t\
-    \x14\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\x81\x04\x17\x18\n\x94\x01\n\x04\
-    \x04\x0b\x02\x01\x12\x04\x86\x04\x02\x1d\x1a\x85\x01\x20The\x20qualifier\
-    \x20of\x20the\x20column\x20to\x20which\x20the\x20read/modify/write\x20sh\
-    ould\x20be\n\x20applied.\n\x20Can\x20be\x20any\x20byte\x20string,\x20inc\
-    luding\x20the\x20empty\x20string.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\
-    \x04\x86\x04\x02\x07\n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\x86\x04\x08\
-    \x18\n\r\n\x05\x04\x0b\x02\x01\x03\x12\x04\x86\x04\x1b\x1c\nj\n\x04\x04\
-    \x0b\x08\0\x12\x06\x8a\x04\x02\x95\x04\x03\x1aZ\x20The\x20rule\x20used\
-    \x20to\x20determine\x20the\x20column's\x20new\x20latest\x20value\x20from\
-    \x20its\x20current\n\x20latest\x20value.\n\n\r\n\x05\x04\x0b\x08\0\x01\
-    \x12\x04\x8a\x04\x08\x0c\n\xab\x01\n\x04\x04\x0b\x02\x02\x12\x04\x8e\x04\
-    \x04\x1b\x1a\x9c\x01\x20Rule\x20specifying\x20that\x20`append_value`\x20\
-    be\x20appended\x20to\x20the\x20existing\x20value.\n\x20If\x20the\x20targ\
-    eted\x20cell\x20is\x20unset,\x20it\x20will\x20be\x20treated\x20as\x20con\
-    taining\x20the\n\x20empty\x20string.\n\n\r\n\x05\x04\x0b\x02\x02\x05\x12\
-    \x04\x8e\x04\x04\t\n\r\n\x05\x04\x0b\x02\x02\x01\x12\x04\x8e\x04\n\x16\n\
-    \r\n\x05\x04\x0b\x02\x02\x03\x12\x04\x8e\x04\x19\x1a\n\xb3\x02\n\x04\x04\
-    \x0b\x02\x03\x12\x04\x94\x04\x04\x1f\x1a\xa4\x02\x20Rule\x20specifying\
-    \x20that\x20`increment_amount`\x20be\x20added\x20to\x20the\x20existing\
-    \x20value.\n\x20If\x20the\x20targeted\x20cell\x20is\x20unset,\x20it\x20w\
-    ill\x20be\x20treated\x20as\x20containing\x20a\x20zero.\n\x20Otherwise,\
-    \x20the\x20targeted\x20cell\x20must\x20contain\x20an\x208-byte\x20value\
-    \x20(interpreted\n\x20as\x20a\x2064-bit\x20big-endian\x20signed\x20integ\
-    er),\x20or\x20the\x20entire\x20request\x20will\x20fail.\n\n\r\n\x05\x04\
-    \x0b\x02\x03\x05\x12\x04\x94\x04\x04\t\n\r\n\x05\x04\x0b\x02\x03\x01\x12\
-    \x04\x94\x04\n\x1a\n\r\n\x05\x04\x0b\x02\x03\x03\x12\x04\x94\x04\x1d\x1e\
-    b\x06proto3\
+    \nK\n\x04\x04\n\x03\x03\x12\x04\xe8\x03\x02\x1a\x1a=\x20A\x20Mutation\
+    \x20which\x20deletes\x20all\x20cells\x20from\x20the\x20containing\x20row\
+    .\n\n\r\n\x05\x04\n\x03\x03\x01\x12\x04\xe8\x03\n\x17\n@\n\x04\x04\n\x08\
+    \0\x12\x06\xeb\x03\x02\xf7\x03\x03\x1a0\x20Which\x20of\x20the\x20possibl\
+    e\x20Mutation\x20types\x20to\x20apply.\n\n\r\n\x05\x04\n\x08\0\x01\x12\
+    \x04\xeb\x03\x08\x10\n#\n\x04\x04\n\x02\0\x12\x04\xed\x03\x04\x19\x1a\
+    \x15\x20Set\x20a\x20cell's\x20value.\n\n\r\n\x05\x04\n\x02\0\x06\x12\x04\
+    \xed\x03\x04\x0b\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xed\x03\x0c\x14\n\r\n\
+    \x05\x04\n\x02\0\x03\x12\x04\xed\x03\x17\x18\n,\n\x04\x04\n\x02\x01\x12\
+    \x04\xf0\x03\x04,\x1a\x1e\x20Deletes\x20cells\x20from\x20a\x20column.\n\
+    \n\r\n\x05\x04\n\x02\x01\x06\x12\x04\xf0\x03\x04\x14\n\r\n\x05\x04\n\x02\
+    \x01\x01\x12\x04\xf0\x03\x15'\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xf0\
+    \x03*+\n3\n\x04\x04\n\x02\x02\x12\x04\xf3\x03\x04,\x1a%\x20Deletes\x20ce\
+    lls\x20from\x20a\x20column\x20family.\n\n\r\n\x05\x04\n\x02\x02\x06\x12\
+    \x04\xf3\x03\x04\x14\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xf3\x03\x15'\n\
+    \r\n\x05\x04\n\x02\x02\x03\x12\x04\xf3\x03*+\n2\n\x04\x04\n\x02\x03\x12\
+    \x04\xf6\x03\x04&\x1a$\x20Deletes\x20cells\x20from\x20the\x20entire\x20r\
+    ow.\n\n\r\n\x05\x04\n\x02\x03\x06\x12\x04\xf6\x03\x04\x11\n\r\n\x05\x04\
+    \n\x02\x03\x01\x12\x04\xf6\x03\x12!\n\r\n\x05\x04\n\x02\x03\x03\x12\x04\
+    \xf6\x03$%\nm\n\x02\x04\x0b\x12\x06\xfc\x03\0\x94\x04\x01\x1a_\x20Specif\
+    ies\x20an\x20atomic\x20read/modify/write\x20operation\x20on\x20the\x20la\
+    test\x20value\x20of\x20the\n\x20specified\x20column.\n\n\x0b\n\x03\x04\
+    \x0b\x01\x12\x04\xfc\x03\x08\x1b\nv\n\x04\x04\x0b\x02\0\x12\x04\xff\x03\
+    \x02\x19\x1ah\x20The\x20name\x20of\x20the\x20family\x20to\x20which\x20th\
+    e\x20read/modify/write\x20should\x20be\x20applied.\n\x20Must\x20match\
+    \x20`[-_.a-zA-Z0-9]+`\n\n\r\n\x05\x04\x0b\x02\0\x05\x12\x04\xff\x03\x02\
+    \x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\xff\x03\t\x14\n\r\n\x05\x04\x0b\
+    \x02\0\x03\x12\x04\xff\x03\x17\x18\n\x94\x01\n\x04\x04\x0b\x02\x01\x12\
+    \x04\x84\x04\x02\x1d\x1a\x85\x01\x20The\x20qualifier\x20of\x20the\x20col\
+    umn\x20to\x20which\x20the\x20read/modify/write\x20should\x20be\n\x20appl\
+    ied.\n\x20Can\x20be\x20any\x20byte\x20string,\x20including\x20the\x20emp\
+    ty\x20string.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\x04\x84\x04\x02\x07\n\
+    \r\n\x05\x04\x0b\x02\x01\x01\x12\x04\x84\x04\x08\x18\n\r\n\x05\x04\x0b\
+    \x02\x01\x03\x12\x04\x84\x04\x1b\x1c\nj\n\x04\x04\x0b\x08\0\x12\x06\x88\
+    \x04\x02\x93\x04\x03\x1aZ\x20The\x20rule\x20used\x20to\x20determine\x20t\
+    he\x20column's\x20new\x20latest\x20value\x20from\x20its\x20current\n\x20\
+    latest\x20value.\n\n\r\n\x05\x04\x0b\x08\0\x01\x12\x04\x88\x04\x08\x0c\n\
+    \xab\x01\n\x04\x04\x0b\x02\x02\x12\x04\x8c\x04\x04\x1b\x1a\x9c\x01\x20Ru\
+    le\x20specifying\x20that\x20`append_value`\x20be\x20appended\x20to\x20th\
+    e\x20existing\x20value.\n\x20If\x20the\x20targeted\x20cell\x20is\x20unse\
+    t,\x20it\x20will\x20be\x20treated\x20as\x20containing\x20the\n\x20empty\
+    \x20string.\n\n\r\n\x05\x04\x0b\x02\x02\x05\x12\x04\x8c\x04\x04\t\n\r\n\
+    \x05\x04\x0b\x02\x02\x01\x12\x04\x8c\x04\n\x16\n\r\n\x05\x04\x0b\x02\x02\
+    \x03\x12\x04\x8c\x04\x19\x1a\n\xb3\x02\n\x04\x04\x0b\x02\x03\x12\x04\x92\
+    \x04\x04\x1f\x1a\xa4\x02\x20Rule\x20specifying\x20that\x20`increment_amo\
+    unt`\x20be\x20added\x20to\x20the\x20existing\x20value.\n\x20If\x20the\
+    \x20targeted\x20cell\x20is\x20unset,\x20it\x20will\x20be\x20treated\x20a\
+    s\x20containing\x20a\x20zero.\n\x20Otherwise,\x20the\x20targeted\x20cell\
+    \x20must\x20contain\x20an\x208-byte\x20value\x20(interpreted\n\x20as\x20\
+    a\x2064-bit\x20big-endian\x20signed\x20integer),\x20or\x20the\x20entire\
+    \x20request\x20will\x20fail.\n\n\r\n\x05\x04\x0b\x02\x03\x05\x12\x04\x92\
+    \x04\x04\t\n\r\n\x05\x04\x0b\x02\x03\x01\x12\x04\x92\x04\n\x1a\n\r\n\x05\
+    \x04\x0b\x02\x03\x03\x12\x04\x92\x04\x1d\x1e\nq\n\x02\x04\x0c\x12\x06\
+    \x98\x04\0\x9c\x04\x01\x1ac\x20NOTE:\x20This\x20API\x20is\x20intended\
+    \x20to\x20be\x20used\x20by\x20Apache\x20Beam\x20BigtableIO.\n\x20A\x20pa\
+    rtition\x20of\x20a\x20change\x20stream.\n\n\x0b\n\x03\x04\x0c\x01\x12\
+    \x04\x98\x04\x08\x17\nr\n\x04\x04\x0c\x02\0\x12\x04\x9b\x04\x02\x19\x1ad\
+    \x20The\x20row\x20range\x20covered\x20by\x20this\x20partition\x20and\x20\
+    is\x20specified\x20by\n\x20[`start_key_closed`,\x20`end_key_open`).\n\n\
+    \r\n\x05\x04\x0c\x02\0\x06\x12\x04\x9b\x04\x02\n\n\r\n\x05\x04\x0c\x02\0\
+    \x01\x12\x04\x9b\x04\x0b\x14\n\r\n\x05\x04\x0c\x02\0\x03\x12\x04\x9b\x04\
+    \x17\x18\n\xcf\x01\n\x02\x04\r\x12\x06\xa1\x04\0\xa4\x04\x01\x1a\xc0\x01\
+    \x20NOTE:\x20This\x20API\x20is\x20intended\x20to\x20be\x20used\x20by\x20\
+    Apache\x20Beam\x20BigtableIO.\n\x20The\x20information\x20required\x20to\
+    \x20continue\x20reading\x20the\x20data\x20from\x20multiple\n\x20`StreamP\
+    artitions`\x20from\x20where\x20a\x20previous\x20read\x20left\x20off.\n\n\
+    \x0b\n\x03\x04\r\x01\x12\x04\xa1\x04\x08\x20\n,\n\x04\x04\r\x02\0\x12\
+    \x04\xa3\x04\x02.\x1a\x1e\x20List\x20of\x20continuation\x20tokens.\n\n\r\
+    \n\x05\x04\r\x02\0\x04\x12\x04\xa3\x04\x02\n\n\r\n\x05\x04\r\x02\0\x06\
+    \x12\x04\xa3\x04\x0b\"\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xa3\x04#)\n\r\n\
+    \x05\x04\r\x02\0\x03\x12\x04\xa3\x04,-\n\xc7\x01\n\x02\x04\x0e\x12\x06\
+    \xa9\x04\0\xaf\x04\x01\x1a\xb8\x01\x20NOTE:\x20This\x20API\x20is\x20inte\
+    nded\x20to\x20be\x20used\x20by\x20Apache\x20Beam\x20BigtableIO.\n\x20The\
+    \x20information\x20required\x20to\x20continue\x20reading\x20the\x20data\
+    \x20from\x20a\n\x20`StreamPartition`\x20from\x20where\x20a\x20previous\
+    \x20read\x20left\x20off.\n\n\x0b\n\x03\x04\x0e\x01\x12\x04\xa9\x04\x08\
+    \x1f\n9\n\x04\x04\x0e\x02\0\x12\x04\xab\x04\x02\x20\x1a+\x20The\x20parti\
+    tion\x20that\x20this\x20token\x20applies\x20to.\n\n\r\n\x05\x04\x0e\x02\
+    \0\x06\x12\x04\xab\x04\x02\x11\n\r\n\x05\x04\x0e\x02\0\x01\x12\x04\xab\
+    \x04\x12\x1b\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\xab\x04\x1e\x1f\nJ\n\
+    \x04\x04\x0e\x02\x01\x12\x04\xae\x04\x02\x13\x1a<\x20An\x20encoded\x20po\
+    sition\x20in\x20the\x20stream\x20to\x20restart\x20reading\x20from.\n\n\r\
+    \n\x05\x04\x0e\x02\x01\x05\x12\x04\xae\x04\x02\x08\n\r\n\x05\x04\x0e\x02\
+    \x01\x01\x12\x04\xae\x04\t\x0e\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\xae\
+    \x04\x11\x12b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

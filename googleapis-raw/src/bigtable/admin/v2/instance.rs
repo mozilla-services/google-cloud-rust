@@ -31,6 +31,9 @@ pub struct Instance {
     pub state: Instance_State,
     pub field_type: Instance_Type,
     pub labels: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub create_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // message oneof groups
+    pub _satisfies_pzs: ::std::option::Option<Instance_oneof__satisfies_pzs>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -40,6 +43,11 @@ impl<'a> ::std::default::Default for &'a Instance {
     fn default() -> &'a Instance {
         <Instance as ::protobuf::Message>::default_instance()
     }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+pub enum Instance_oneof__satisfies_pzs {
+    satisfies_pzs(bool),
 }
 
 impl Instance {
@@ -153,10 +161,73 @@ impl Instance {
     pub fn take_labels(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
         ::std::mem::replace(&mut self.labels, ::std::collections::HashMap::new())
     }
+
+    // .google.protobuf.Timestamp create_time = 7;
+
+
+    pub fn get_create_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.create_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_create_time(&mut self) {
+        self.create_time.clear();
+    }
+
+    pub fn has_create_time(&self) -> bool {
+        self.create_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_create_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.create_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_create_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.create_time.is_none() {
+            self.create_time.set_default();
+        }
+        self.create_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_create_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.create_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // bool satisfies_pzs = 8;
+
+
+    pub fn get_satisfies_pzs(&self) -> bool {
+        match self._satisfies_pzs {
+            ::std::option::Option::Some(Instance_oneof__satisfies_pzs::satisfies_pzs(v)) => v,
+            _ => false,
+        }
+    }
+    pub fn clear_satisfies_pzs(&mut self) {
+        self._satisfies_pzs = ::std::option::Option::None;
+    }
+
+    pub fn has_satisfies_pzs(&self) -> bool {
+        match self._satisfies_pzs {
+            ::std::option::Option::Some(Instance_oneof__satisfies_pzs::satisfies_pzs(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_satisfies_pzs(&mut self, v: bool) {
+        self._satisfies_pzs = ::std::option::Option::Some(Instance_oneof__satisfies_pzs::satisfies_pzs(v))
+    }
 }
 
 impl ::protobuf::Message for Instance {
     fn is_initialized(&self) -> bool {
+        for v in &self.create_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -178,6 +249,15 @@ impl ::protobuf::Message for Instance {
                 },
                 5 => {
                     ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.labels)?;
+                },
+                7 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.create_time)?;
+                },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._satisfies_pzs = ::std::option::Option::Some(Instance_oneof__satisfies_pzs::satisfies_pzs(is.read_bool()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -204,6 +284,17 @@ impl ::protobuf::Message for Instance {
             my_size += ::protobuf::rt::enum_size(4, self.field_type);
         }
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.labels);
+        if let Some(ref v) = self.create_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self._satisfies_pzs {
+            match v {
+                &Instance_oneof__satisfies_pzs::satisfies_pzs(v) => {
+                    my_size += 2;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -223,6 +314,18 @@ impl ::protobuf::Message for Instance {
             os.write_enum(4, ::protobuf::ProtobufEnum::value(&self.field_type))?;
         }
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.labels, os)?;
+        if let Some(ref v) = self.create_time.as_ref() {
+            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._satisfies_pzs {
+            match v {
+                &Instance_oneof__satisfies_pzs::satisfies_pzs(v) => {
+                    os.write_bool(8, v)?;
+                },
+            };
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -286,6 +389,16 @@ impl ::protobuf::Message for Instance {
                 |m: &Instance| { &m.labels },
                 |m: &mut Instance| { &mut m.labels },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "create_time",
+                |m: &Instance| { &m.create_time },
+                |m: &mut Instance| { &mut m.create_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_bool_accessor::<_>(
+                "satisfies_pzs",
+                Instance::has_satisfies_pzs,
+                Instance::get_satisfies_pzs,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Instance>(
                 "Instance",
                 fields,
@@ -307,6 +420,8 @@ impl ::protobuf::Clear for Instance {
         self.state = Instance_State::STATE_NOT_KNOWN;
         self.field_type = Instance_Type::TYPE_UNSPECIFIED;
         self.labels.clear();
+        self.create_time.clear();
+        self._satisfies_pzs = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -430,6 +545,380 @@ impl ::protobuf::reflect::ProtobufValue for Instance_Type {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct AutoscalingTargets {
+    // message fields
+    pub cpu_utilization_percent: i32,
+    pub storage_utilization_gib_per_node: i32,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AutoscalingTargets {
+    fn default() -> &'a AutoscalingTargets {
+        <AutoscalingTargets as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AutoscalingTargets {
+    pub fn new() -> AutoscalingTargets {
+        ::std::default::Default::default()
+    }
+
+    // int32 cpu_utilization_percent = 2;
+
+
+    pub fn get_cpu_utilization_percent(&self) -> i32 {
+        self.cpu_utilization_percent
+    }
+    pub fn clear_cpu_utilization_percent(&mut self) {
+        self.cpu_utilization_percent = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cpu_utilization_percent(&mut self, v: i32) {
+        self.cpu_utilization_percent = v;
+    }
+
+    // int32 storage_utilization_gib_per_node = 3;
+
+
+    pub fn get_storage_utilization_gib_per_node(&self) -> i32 {
+        self.storage_utilization_gib_per_node
+    }
+    pub fn clear_storage_utilization_gib_per_node(&mut self) {
+        self.storage_utilization_gib_per_node = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_storage_utilization_gib_per_node(&mut self, v: i32) {
+        self.storage_utilization_gib_per_node = v;
+    }
+}
+
+impl ::protobuf::Message for AutoscalingTargets {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.cpu_utilization_percent = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.storage_utilization_gib_per_node = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.cpu_utilization_percent != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.cpu_utilization_percent, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.storage_utilization_gib_per_node != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.storage_utilization_gib_per_node, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.cpu_utilization_percent != 0 {
+            os.write_int32(2, self.cpu_utilization_percent)?;
+        }
+        if self.storage_utilization_gib_per_node != 0 {
+            os.write_int32(3, self.storage_utilization_gib_per_node)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AutoscalingTargets {
+        AutoscalingTargets::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "cpu_utilization_percent",
+                |m: &AutoscalingTargets| { &m.cpu_utilization_percent },
+                |m: &mut AutoscalingTargets| { &mut m.cpu_utilization_percent },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "storage_utilization_gib_per_node",
+                |m: &AutoscalingTargets| { &m.storage_utilization_gib_per_node },
+                |m: &mut AutoscalingTargets| { &mut m.storage_utilization_gib_per_node },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AutoscalingTargets>(
+                "AutoscalingTargets",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AutoscalingTargets {
+        static instance: ::protobuf::rt::LazyV2<AutoscalingTargets> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AutoscalingTargets::new)
+    }
+}
+
+impl ::protobuf::Clear for AutoscalingTargets {
+    fn clear(&mut self) {
+        self.cpu_utilization_percent = 0;
+        self.storage_utilization_gib_per_node = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AutoscalingTargets {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AutoscalingTargets {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct AutoscalingLimits {
+    // message fields
+    pub min_serve_nodes: i32,
+    pub max_serve_nodes: i32,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AutoscalingLimits {
+    fn default() -> &'a AutoscalingLimits {
+        <AutoscalingLimits as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AutoscalingLimits {
+    pub fn new() -> AutoscalingLimits {
+        ::std::default::Default::default()
+    }
+
+    // int32 min_serve_nodes = 1;
+
+
+    pub fn get_min_serve_nodes(&self) -> i32 {
+        self.min_serve_nodes
+    }
+    pub fn clear_min_serve_nodes(&mut self) {
+        self.min_serve_nodes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_min_serve_nodes(&mut self, v: i32) {
+        self.min_serve_nodes = v;
+    }
+
+    // int32 max_serve_nodes = 2;
+
+
+    pub fn get_max_serve_nodes(&self) -> i32 {
+        self.max_serve_nodes
+    }
+    pub fn clear_max_serve_nodes(&mut self) {
+        self.max_serve_nodes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_serve_nodes(&mut self, v: i32) {
+        self.max_serve_nodes = v;
+    }
+}
+
+impl ::protobuf::Message for AutoscalingLimits {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.min_serve_nodes = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.max_serve_nodes = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.min_serve_nodes != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.min_serve_nodes, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.max_serve_nodes != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.max_serve_nodes, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.min_serve_nodes != 0 {
+            os.write_int32(1, self.min_serve_nodes)?;
+        }
+        if self.max_serve_nodes != 0 {
+            os.write_int32(2, self.max_serve_nodes)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AutoscalingLimits {
+        AutoscalingLimits::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "min_serve_nodes",
+                |m: &AutoscalingLimits| { &m.min_serve_nodes },
+                |m: &mut AutoscalingLimits| { &mut m.min_serve_nodes },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "max_serve_nodes",
+                |m: &AutoscalingLimits| { &m.max_serve_nodes },
+                |m: &mut AutoscalingLimits| { &mut m.max_serve_nodes },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AutoscalingLimits>(
+                "AutoscalingLimits",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AutoscalingLimits {
+        static instance: ::protobuf::rt::LazyV2<AutoscalingLimits> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AutoscalingLimits::new)
+    }
+}
+
+impl ::protobuf::Clear for AutoscalingLimits {
+    fn clear(&mut self) {
+        self.min_serve_nodes = 0;
+        self.max_serve_nodes = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AutoscalingLimits {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AutoscalingLimits {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct Cluster {
     // message fields
     pub name: ::std::string::String,
@@ -437,6 +926,9 @@ pub struct Cluster {
     pub state: Cluster_State,
     pub serve_nodes: i32,
     pub default_storage_type: super::common::StorageType,
+    pub encryption_config: ::protobuf::SingularPtrField<Cluster_EncryptionConfig>,
+    // message oneof groups
+    pub config: ::std::option::Option<Cluster_oneof_config>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -446,6 +938,11 @@ impl<'a> ::std::default::Default for &'a Cluster {
     fn default() -> &'a Cluster {
         <Cluster as ::protobuf::Message>::default_instance()
     }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+pub enum Cluster_oneof_config {
+    cluster_config(Cluster_ClusterConfig),
 }
 
 impl Cluster {
@@ -535,6 +1032,55 @@ impl Cluster {
         self.serve_nodes = v;
     }
 
+    // .google.bigtable.admin.v2.Cluster.ClusterConfig cluster_config = 7;
+
+
+    pub fn get_cluster_config(&self) -> &Cluster_ClusterConfig {
+        match self.config {
+            ::std::option::Option::Some(Cluster_oneof_config::cluster_config(ref v)) => v,
+            _ => <Cluster_ClusterConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_cluster_config(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_cluster_config(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(Cluster_oneof_config::cluster_config(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cluster_config(&mut self, v: Cluster_ClusterConfig) {
+        self.config = ::std::option::Option::Some(Cluster_oneof_config::cluster_config(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cluster_config(&mut self) -> &mut Cluster_ClusterConfig {
+        if let ::std::option::Option::Some(Cluster_oneof_config::cluster_config(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(Cluster_oneof_config::cluster_config(Cluster_ClusterConfig::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(Cluster_oneof_config::cluster_config(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_cluster_config(&mut self) -> Cluster_ClusterConfig {
+        if self.has_cluster_config() {
+            match self.config.take() {
+                ::std::option::Option::Some(Cluster_oneof_config::cluster_config(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            Cluster_ClusterConfig::new()
+        }
+    }
+
     // .google.bigtable.admin.v2.StorageType default_storage_type = 5;
 
 
@@ -549,10 +1095,53 @@ impl Cluster {
     pub fn set_default_storage_type(&mut self, v: super::common::StorageType) {
         self.default_storage_type = v;
     }
+
+    // .google.bigtable.admin.v2.Cluster.EncryptionConfig encryption_config = 6;
+
+
+    pub fn get_encryption_config(&self) -> &Cluster_EncryptionConfig {
+        self.encryption_config.as_ref().unwrap_or_else(|| <Cluster_EncryptionConfig as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_encryption_config(&mut self) {
+        self.encryption_config.clear();
+    }
+
+    pub fn has_encryption_config(&self) -> bool {
+        self.encryption_config.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_encryption_config(&mut self, v: Cluster_EncryptionConfig) {
+        self.encryption_config = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_encryption_config(&mut self) -> &mut Cluster_EncryptionConfig {
+        if self.encryption_config.is_none() {
+            self.encryption_config.set_default();
+        }
+        self.encryption_config.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_encryption_config(&mut self) -> Cluster_EncryptionConfig {
+        self.encryption_config.take().unwrap_or_else(|| Cluster_EncryptionConfig::new())
+    }
 }
 
 impl ::protobuf::Message for Cluster {
     fn is_initialized(&self) -> bool {
+        if let Some(Cluster_oneof_config::cluster_config(ref v)) = self.config {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        for v in &self.encryption_config {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -576,8 +1165,17 @@ impl ::protobuf::Message for Cluster {
                     let tmp = is.read_int32()?;
                     self.serve_nodes = tmp;
                 },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.config = ::std::option::Option::Some(Cluster_oneof_config::cluster_config(is.read_message()?));
+                },
                 5 => {
                     ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.default_storage_type, 5, &mut self.unknown_fields)?
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.encryption_config)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -606,6 +1204,18 @@ impl ::protobuf::Message for Cluster {
         if self.default_storage_type != super::common::StorageType::STORAGE_TYPE_UNSPECIFIED {
             my_size += ::protobuf::rt::enum_size(5, self.default_storage_type);
         }
+        if let Some(ref v) = self.encryption_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &Cluster_oneof_config::cluster_config(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -626,6 +1236,20 @@ impl ::protobuf::Message for Cluster {
         }
         if self.default_storage_type != super::common::StorageType::STORAGE_TYPE_UNSPECIFIED {
             os.write_enum(5, ::protobuf::ProtobufEnum::value(&self.default_storage_type))?;
+        }
+        if let Some(ref v) = self.encryption_config.as_ref() {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &Cluster_oneof_config::cluster_config(ref v) => {
+                    os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -685,10 +1309,20 @@ impl ::protobuf::Message for Cluster {
                 |m: &Cluster| { &m.serve_nodes },
                 |m: &mut Cluster| { &mut m.serve_nodes },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, Cluster_ClusterConfig>(
+                "cluster_config",
+                Cluster::has_cluster_config,
+                Cluster::get_cluster_config,
+            ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::common::StorageType>>(
                 "default_storage_type",
                 |m: &Cluster| { &m.default_storage_type },
                 |m: &mut Cluster| { &mut m.default_storage_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Cluster_EncryptionConfig>>(
+                "encryption_config",
+                |m: &Cluster| { &m.encryption_config },
+                |m: &mut Cluster| { &mut m.encryption_config },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Cluster>(
                 "Cluster",
@@ -710,7 +1344,9 @@ impl ::protobuf::Clear for Cluster {
         self.location.clear();
         self.state = Cluster_State::STATE_NOT_KNOWN;
         self.serve_nodes = 0;
+        self.config = ::std::option::Option::None;
         self.default_storage_type = super::common::StorageType::STORAGE_TYPE_UNSPECIFIED;
+        self.encryption_config.clear();
         self.unknown_fields.clear();
     }
 }
@@ -722,6 +1358,570 @@ impl ::std::fmt::Debug for Cluster {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Cluster {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct Cluster_ClusterAutoscalingConfig {
+    // message fields
+    pub autoscaling_limits: ::protobuf::SingularPtrField<AutoscalingLimits>,
+    pub autoscaling_targets: ::protobuf::SingularPtrField<AutoscalingTargets>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Cluster_ClusterAutoscalingConfig {
+    fn default() -> &'a Cluster_ClusterAutoscalingConfig {
+        <Cluster_ClusterAutoscalingConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Cluster_ClusterAutoscalingConfig {
+    pub fn new() -> Cluster_ClusterAutoscalingConfig {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.AutoscalingLimits autoscaling_limits = 1;
+
+
+    pub fn get_autoscaling_limits(&self) -> &AutoscalingLimits {
+        self.autoscaling_limits.as_ref().unwrap_or_else(|| <AutoscalingLimits as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_autoscaling_limits(&mut self) {
+        self.autoscaling_limits.clear();
+    }
+
+    pub fn has_autoscaling_limits(&self) -> bool {
+        self.autoscaling_limits.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_autoscaling_limits(&mut self, v: AutoscalingLimits) {
+        self.autoscaling_limits = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_autoscaling_limits(&mut self) -> &mut AutoscalingLimits {
+        if self.autoscaling_limits.is_none() {
+            self.autoscaling_limits.set_default();
+        }
+        self.autoscaling_limits.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_autoscaling_limits(&mut self) -> AutoscalingLimits {
+        self.autoscaling_limits.take().unwrap_or_else(|| AutoscalingLimits::new())
+    }
+
+    // .google.bigtable.admin.v2.AutoscalingTargets autoscaling_targets = 2;
+
+
+    pub fn get_autoscaling_targets(&self) -> &AutoscalingTargets {
+        self.autoscaling_targets.as_ref().unwrap_or_else(|| <AutoscalingTargets as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_autoscaling_targets(&mut self) {
+        self.autoscaling_targets.clear();
+    }
+
+    pub fn has_autoscaling_targets(&self) -> bool {
+        self.autoscaling_targets.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_autoscaling_targets(&mut self, v: AutoscalingTargets) {
+        self.autoscaling_targets = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_autoscaling_targets(&mut self) -> &mut AutoscalingTargets {
+        if self.autoscaling_targets.is_none() {
+            self.autoscaling_targets.set_default();
+        }
+        self.autoscaling_targets.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_autoscaling_targets(&mut self) -> AutoscalingTargets {
+        self.autoscaling_targets.take().unwrap_or_else(|| AutoscalingTargets::new())
+    }
+}
+
+impl ::protobuf::Message for Cluster_ClusterAutoscalingConfig {
+    fn is_initialized(&self) -> bool {
+        for v in &self.autoscaling_limits {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.autoscaling_targets {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.autoscaling_limits)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.autoscaling_targets)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.autoscaling_limits.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.autoscaling_targets.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.autoscaling_limits.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.autoscaling_targets.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Cluster_ClusterAutoscalingConfig {
+        Cluster_ClusterAutoscalingConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<AutoscalingLimits>>(
+                "autoscaling_limits",
+                |m: &Cluster_ClusterAutoscalingConfig| { &m.autoscaling_limits },
+                |m: &mut Cluster_ClusterAutoscalingConfig| { &mut m.autoscaling_limits },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<AutoscalingTargets>>(
+                "autoscaling_targets",
+                |m: &Cluster_ClusterAutoscalingConfig| { &m.autoscaling_targets },
+                |m: &mut Cluster_ClusterAutoscalingConfig| { &mut m.autoscaling_targets },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Cluster_ClusterAutoscalingConfig>(
+                "Cluster.ClusterAutoscalingConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Cluster_ClusterAutoscalingConfig {
+        static instance: ::protobuf::rt::LazyV2<Cluster_ClusterAutoscalingConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Cluster_ClusterAutoscalingConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for Cluster_ClusterAutoscalingConfig {
+    fn clear(&mut self) {
+        self.autoscaling_limits.clear();
+        self.autoscaling_targets.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Cluster_ClusterAutoscalingConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Cluster_ClusterAutoscalingConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct Cluster_ClusterConfig {
+    // message fields
+    pub cluster_autoscaling_config: ::protobuf::SingularPtrField<Cluster_ClusterAutoscalingConfig>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Cluster_ClusterConfig {
+    fn default() -> &'a Cluster_ClusterConfig {
+        <Cluster_ClusterConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Cluster_ClusterConfig {
+    pub fn new() -> Cluster_ClusterConfig {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.Cluster.ClusterAutoscalingConfig cluster_autoscaling_config = 1;
+
+
+    pub fn get_cluster_autoscaling_config(&self) -> &Cluster_ClusterAutoscalingConfig {
+        self.cluster_autoscaling_config.as_ref().unwrap_or_else(|| <Cluster_ClusterAutoscalingConfig as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_cluster_autoscaling_config(&mut self) {
+        self.cluster_autoscaling_config.clear();
+    }
+
+    pub fn has_cluster_autoscaling_config(&self) -> bool {
+        self.cluster_autoscaling_config.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cluster_autoscaling_config(&mut self, v: Cluster_ClusterAutoscalingConfig) {
+        self.cluster_autoscaling_config = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cluster_autoscaling_config(&mut self) -> &mut Cluster_ClusterAutoscalingConfig {
+        if self.cluster_autoscaling_config.is_none() {
+            self.cluster_autoscaling_config.set_default();
+        }
+        self.cluster_autoscaling_config.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_cluster_autoscaling_config(&mut self) -> Cluster_ClusterAutoscalingConfig {
+        self.cluster_autoscaling_config.take().unwrap_or_else(|| Cluster_ClusterAutoscalingConfig::new())
+    }
+}
+
+impl ::protobuf::Message for Cluster_ClusterConfig {
+    fn is_initialized(&self) -> bool {
+        for v in &self.cluster_autoscaling_config {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cluster_autoscaling_config)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.cluster_autoscaling_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.cluster_autoscaling_config.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Cluster_ClusterConfig {
+        Cluster_ClusterConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Cluster_ClusterAutoscalingConfig>>(
+                "cluster_autoscaling_config",
+                |m: &Cluster_ClusterConfig| { &m.cluster_autoscaling_config },
+                |m: &mut Cluster_ClusterConfig| { &mut m.cluster_autoscaling_config },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Cluster_ClusterConfig>(
+                "Cluster.ClusterConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Cluster_ClusterConfig {
+        static instance: ::protobuf::rt::LazyV2<Cluster_ClusterConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Cluster_ClusterConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for Cluster_ClusterConfig {
+    fn clear(&mut self) {
+        self.cluster_autoscaling_config.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Cluster_ClusterConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Cluster_ClusterConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct Cluster_EncryptionConfig {
+    // message fields
+    pub kms_key_name: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Cluster_EncryptionConfig {
+    fn default() -> &'a Cluster_EncryptionConfig {
+        <Cluster_EncryptionConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Cluster_EncryptionConfig {
+    pub fn new() -> Cluster_EncryptionConfig {
+        ::std::default::Default::default()
+    }
+
+    // string kms_key_name = 1;
+
+
+    pub fn get_kms_key_name(&self) -> &str {
+        &self.kms_key_name
+    }
+    pub fn clear_kms_key_name(&mut self) {
+        self.kms_key_name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_kms_key_name(&mut self, v: ::std::string::String) {
+        self.kms_key_name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_kms_key_name(&mut self) -> &mut ::std::string::String {
+        &mut self.kms_key_name
+    }
+
+    // Take field
+    pub fn take_kms_key_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.kms_key_name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for Cluster_EncryptionConfig {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.kms_key_name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.kms_key_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.kms_key_name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.kms_key_name.is_empty() {
+            os.write_string(1, &self.kms_key_name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Cluster_EncryptionConfig {
+        Cluster_EncryptionConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "kms_key_name",
+                |m: &Cluster_EncryptionConfig| { &m.kms_key_name },
+                |m: &mut Cluster_EncryptionConfig| { &mut m.kms_key_name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Cluster_EncryptionConfig>(
+                "Cluster.EncryptionConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Cluster_EncryptionConfig {
+        static instance: ::protobuf::rt::LazyV2<Cluster_EncryptionConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Cluster_EncryptionConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for Cluster_EncryptionConfig {
+    fn clear(&mut self) {
+        self.kms_key_name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Cluster_EncryptionConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Cluster_EncryptionConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -1197,6 +2397,8 @@ impl ::protobuf::reflect::ProtobufValue for AppProfile {
 
 #[derive(PartialEq,Clone,Default)]
 pub struct AppProfile_MultiClusterRoutingUseAny {
+    // message fields
+    pub cluster_ids: ::protobuf::RepeatedField<::std::string::String>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -1212,6 +2414,31 @@ impl AppProfile_MultiClusterRoutingUseAny {
     pub fn new() -> AppProfile_MultiClusterRoutingUseAny {
         ::std::default::Default::default()
     }
+
+    // repeated string cluster_ids = 1;
+
+
+    pub fn get_cluster_ids(&self) -> &[::std::string::String] {
+        &self.cluster_ids
+    }
+    pub fn clear_cluster_ids(&mut self) {
+        self.cluster_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cluster_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.cluster_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cluster_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.cluster_ids
+    }
+
+    // Take field
+    pub fn take_cluster_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.cluster_ids, ::protobuf::RepeatedField::new())
+    }
 }
 
 impl ::protobuf::Message for AppProfile_MultiClusterRoutingUseAny {
@@ -1223,6 +2450,9 @@ impl ::protobuf::Message for AppProfile_MultiClusterRoutingUseAny {
         while !is.eof()? {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.cluster_ids)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1235,12 +2465,18 @@ impl ::protobuf::Message for AppProfile_MultiClusterRoutingUseAny {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
+        for value in &self.cluster_ids {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.cluster_ids {
+            os.write_string(1, &v)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1278,7 +2514,12 @@ impl ::protobuf::Message for AppProfile_MultiClusterRoutingUseAny {
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
-            let fields = ::std::vec::Vec::new();
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "cluster_ids",
+                |m: &AppProfile_MultiClusterRoutingUseAny| { &m.cluster_ids },
+                |m: &mut AppProfile_MultiClusterRoutingUseAny| { &mut m.cluster_ids },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<AppProfile_MultiClusterRoutingUseAny>(
                 "AppProfile.MultiClusterRoutingUseAny",
                 fields,
@@ -1295,6 +2536,7 @@ impl ::protobuf::Message for AppProfile_MultiClusterRoutingUseAny {
 
 impl ::protobuf::Clear for AppProfile_MultiClusterRoutingUseAny {
     fn clear(&mut self) {
+        self.cluster_ids.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1505,262 +2747,909 @@ impl ::protobuf::reflect::ProtobufValue for AppProfile_SingleClusterRouting {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct HotTablet {
+    // message fields
+    pub name: ::std::string::String,
+    pub table_name: ::std::string::String,
+    pub start_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub end_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub start_key: ::std::string::String,
+    pub end_key: ::std::string::String,
+    pub node_cpu_usage_percent: f32,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a HotTablet {
+    fn default() -> &'a HotTablet {
+        <HotTablet as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl HotTablet {
+    pub fn new() -> HotTablet {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // string table_name = 2;
+
+
+    pub fn get_table_name(&self) -> &str {
+        &self.table_name
+    }
+    pub fn clear_table_name(&mut self) {
+        self.table_name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_table_name(&mut self, v: ::std::string::String) {
+        self.table_name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_table_name(&mut self) -> &mut ::std::string::String {
+        &mut self.table_name
+    }
+
+    // Take field
+    pub fn take_table_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.table_name, ::std::string::String::new())
+    }
+
+    // .google.protobuf.Timestamp start_time = 3;
+
+
+    pub fn get_start_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.start_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_start_time(&mut self) {
+        self.start_time.clear();
+    }
+
+    pub fn has_start_time(&self) -> bool {
+        self.start_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.start_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.start_time.is_none() {
+            self.start_time.set_default();
+        }
+        self.start_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_start_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.start_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp end_time = 4;
+
+
+    pub fn get_end_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.end_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_end_time(&mut self) {
+        self.end_time.clear();
+    }
+
+    pub fn has_end_time(&self) -> bool {
+        self.end_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.end_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.end_time.is_none() {
+            self.end_time.set_default();
+        }
+        self.end_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_end_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.end_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // string start_key = 5;
+
+
+    pub fn get_start_key(&self) -> &str {
+        &self.start_key
+    }
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::string::String) {
+        self.start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::string::String {
+        &mut self.start_key
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.start_key, ::std::string::String::new())
+    }
+
+    // string end_key = 6;
+
+
+    pub fn get_end_key(&self) -> &str {
+        &self.end_key
+    }
+    pub fn clear_end_key(&mut self) {
+        self.end_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_key(&mut self, v: ::std::string::String) {
+        self.end_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_key(&mut self) -> &mut ::std::string::String {
+        &mut self.end_key
+    }
+
+    // Take field
+    pub fn take_end_key(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.end_key, ::std::string::String::new())
+    }
+
+    // float node_cpu_usage_percent = 7;
+
+
+    pub fn get_node_cpu_usage_percent(&self) -> f32 {
+        self.node_cpu_usage_percent
+    }
+    pub fn clear_node_cpu_usage_percent(&mut self) {
+        self.node_cpu_usage_percent = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node_cpu_usage_percent(&mut self, v: f32) {
+        self.node_cpu_usage_percent = v;
+    }
+}
+
+impl ::protobuf::Message for HotTablet {
+    fn is_initialized(&self) -> bool {
+        for v in &self.start_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.end_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.table_name)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.start_time)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.end_time)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.start_key)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.end_key)?;
+                },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed32 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_float()?;
+                    self.node_cpu_usage_percent = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.table_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.table_name);
+        }
+        if let Some(ref v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.start_key);
+        }
+        if !self.end_key.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.end_key);
+        }
+        if self.node_cpu_usage_percent != 0. {
+            my_size += 5;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.table_name.is_empty() {
+            os.write_string(2, &self.table_name)?;
+        }
+        if let Some(ref v) = self.start_time.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.end_time.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.start_key.is_empty() {
+            os.write_string(5, &self.start_key)?;
+        }
+        if !self.end_key.is_empty() {
+            os.write_string(6, &self.end_key)?;
+        }
+        if self.node_cpu_usage_percent != 0. {
+            os.write_float(7, self.node_cpu_usage_percent)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> HotTablet {
+        HotTablet::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &HotTablet| { &m.name },
+                |m: &mut HotTablet| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "table_name",
+                |m: &HotTablet| { &m.table_name },
+                |m: &mut HotTablet| { &mut m.table_name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "start_time",
+                |m: &HotTablet| { &m.start_time },
+                |m: &mut HotTablet| { &mut m.start_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "end_time",
+                |m: &HotTablet| { &m.end_time },
+                |m: &mut HotTablet| { &mut m.end_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "start_key",
+                |m: &HotTablet| { &m.start_key },
+                |m: &mut HotTablet| { &mut m.start_key },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "end_key",
+                |m: &HotTablet| { &m.end_key },
+                |m: &mut HotTablet| { &mut m.end_key },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeFloat>(
+                "node_cpu_usage_percent",
+                |m: &HotTablet| { &m.node_cpu_usage_percent },
+                |m: &mut HotTablet| { &mut m.node_cpu_usage_percent },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<HotTablet>(
+                "HotTablet",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static HotTablet {
+        static instance: ::protobuf::rt::LazyV2<HotTablet> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(HotTablet::new)
+    }
+}
+
+impl ::protobuf::Clear for HotTablet {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.table_name.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.start_key.clear();
+        self.end_key.clear();
+        self.node_cpu_usage_percent = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for HotTablet {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for HotTablet {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n'google/bigtable/admin/v2/instance.proto\x12\x18google.bigtable.admin.\
-    v2\x1a\x1cgoogle/api/annotations.proto\x1a%google/bigtable/admin/v2/comm\
-    on.proto\"\xb7\x03\n\x08Instance\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12!\n\x0cdisplay_name\x18\x02\x20\x01(\tR\x0bdisplayName\x12>\
-    \n\x05state\x18\x03\x20\x01(\x0e2(.google.bigtable.admin.v2.Instance.Sta\
-    teR\x05state\x12;\n\x04type\x18\x04\x20\x01(\x0e2'.google.bigtable.admin\
-    .v2.Instance.TypeR\x04type\x12F\n\x06labels\x18\x05\x20\x03(\x0b2..googl\
-    e.bigtable.admin.v2.Instance.LabelsEntryR\x06labels\x1a9\n\x0bLabelsEntr\
-    y\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\tR\x05value:\x028\x01\"5\n\x05State\x12\x13\n\x0fSTATE_NOT_KNO\
-    WN\x10\0\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08CREATING\x10\x02\"=\n\x04\
-    Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\0\x12\x0e\n\nPRODUCTION\x10\x01\
-    \x12\x0f\n\x0bDEVELOPMENT\x10\x02\"\xc5\x02\n\x07Cluster\x12\x12\n\x04na\
-    me\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08location\x18\x02\x20\x01(\tR\
-    \x08location\x12=\n\x05state\x18\x03\x20\x01(\x0e2'.google.bigtable.admi\
-    n.v2.Cluster.StateR\x05state\x12\x1f\n\x0bserve_nodes\x18\x04\x20\x01(\
-    \x05R\nserveNodes\x12W\n\x14default_storage_type\x18\x05\x20\x01(\x0e2%.\
-    google.bigtable.admin.v2.StorageTypeR\x12defaultStorageType\"Q\n\x05Stat\
-    e\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\t\n\x05READY\x10\x01\x12\x0c\n\
-    \x08CREATING\x10\x02\x12\x0c\n\x08RESIZING\x10\x03\x12\x0c\n\x08DISABLED\
-    \x10\x04\"\xf2\x03\n\nAppProfile\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x12\n\x04etag\x18\x02\x20\x01(\tR\x04etag\x12\x20\n\x0bdesc\
-    ription\x18\x03\x20\x01(\tR\x0bdescription\x12\x82\x01\n\x1dmulti_cluste\
-    r_routing_use_any\x18\x05\x20\x01(\x0b2>.google.bigtable.admin.v2.AppPro\
-    file.MultiClusterRoutingUseAnyH\0R\x19multiClusterRoutingUseAny\x12q\n\
-    \x16single_cluster_routing\x18\x06\x20\x01(\x0b29.google.bigtable.admin.\
-    v2.AppProfile.SingleClusterRoutingH\0R\x14singleClusterRouting\x1a\x1b\n\
-    \x19MultiClusterRoutingUseAny\x1as\n\x14SingleClusterRouting\x12\x1d\n\n\
-    cluster_id\x18\x01\x20\x01(\tR\tclusterId\x12<\n\x1aallow_transactional_\
-    writes\x18\x02\x20\x01(\x08R\x18allowTransactionalWritesB\x10\n\x0erouti\
-    ng_policyB\xb0\x01\n\x1ccom.google.bigtable.admin.v2B\rInstanceProtoP\
-    \x01Z=google.golang.org/genproto/googleapis/bigtable/admin/v2;admin\xaa\
-    \x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\Cloud\\Bigtabl\
-    e\\Admin\\V2J\xc5?\n\x07\x12\x05\x0f\0\xcc\x01\x01\n\xbe\x04\n\x01\x0c\
-    \x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202018\x20Google\x20LLC.\n\n\
-    \x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20\
-    (the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20e\
-    xcept\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20\
-    obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\
-    \x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\
-    \x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20s\
-    oftware\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\
-    \x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\
-    \x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20impli\
-    ed.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20\
-    governing\x20permissions\x20and\n\x20limitations\x20under\x20the\x20Lice\
-    nse.\n\n\n\x08\n\x01\x02\x12\x03\x11\0!\n\t\n\x02\x03\0\x12\x03\x13\0&\n\
-    \t\n\x02\x03\x01\x12\x03\x14\0/\n\x08\n\x01\x08\x12\x03\x16\0;\n\t\n\x02\
-    \x08%\x12\x03\x16\0;\n\x08\n\x01\x08\x12\x03\x17\0T\n\t\n\x02\x08\x0b\
-    \x12\x03\x17\0T\n\x08\n\x01\x08\x12\x03\x18\0\"\n\t\n\x02\x08\n\x12\x03\
-    \x18\0\"\n\x08\n\x01\x08\x12\x03\x19\0.\n\t\n\x02\x08\x08\x12\x03\x19\0.\
-    \n\x08\n\x01\x08\x12\x03\x1a\05\n\t\n\x02\x08\x01\x12\x03\x1a\05\n\x08\n\
-    \x01\x08\x12\x03\x1b\0<\n\t\n\x02\x08)\x12\x03\x1b\0<\n\xd6\x01\n\x02\
-    \x04\0\x12\x04!\0b\x01\x1a\xc9\x01\x20A\x20collection\x20of\x20Bigtable\
-    \x20[Tables][google.bigtable.admin.v2.Table]\x20and\n\x20the\x20resource\
-    s\x20that\x20serve\x20them.\n\x20All\x20tables\x20in\x20an\x20instance\
-    \x20are\x20served\x20from\x20a\x20single\n\x20[Cluster][google.bigtable.\
-    admin.v2.Cluster].\n\n\n\n\x03\x04\0\x01\x12\x03!\x08\x10\n/\n\x04\x04\0\
-    \x04\0\x12\x04#\x02.\x03\x1a!\x20Possible\x20states\x20of\x20an\x20insta\
-    nce.\n\n\x0c\n\x05\x04\0\x04\0\x01\x12\x03#\x07\x0c\nC\n\x06\x04\0\x04\0\
-    \x02\0\x12\x03%\x04\x18\x1a4\x20The\x20state\x20of\x20the\x20instance\
-    \x20could\x20not\x20be\x20determined.\n\n\x0e\n\x07\x04\0\x04\0\x02\0\
-    \x01\x12\x03%\x04\x13\n\x0e\n\x07\x04\0\x04\0\x02\0\x02\x12\x03%\x16\x17\
-    \nb\n\x06\x04\0\x04\0\x02\x01\x12\x03)\x04\x0e\x1aS\x20The\x20instance\
-    \x20has\x20been\x20successfully\x20created\x20and\x20can\x20serve\x20req\
-    uests\n\x20to\x20its\x20tables.\n\n\x0e\n\x07\x04\0\x04\0\x02\x01\x01\
-    \x12\x03)\x04\t\n\x0e\n\x07\x04\0\x04\0\x02\x01\x02\x12\x03)\x0c\r\n|\n\
-    \x06\x04\0\x04\0\x02\x02\x12\x03-\x04\x11\x1am\x20The\x20instance\x20is\
-    \x20currently\x20being\x20created,\x20and\x20may\x20be\x20destroyed\n\
-    \x20if\x20the\x20creation\x20process\x20encounters\x20an\x20error.\n\n\
-    \x0e\n\x07\x04\0\x04\0\x02\x02\x01\x12\x03-\x04\x0c\n\x0e\n\x07\x04\0\
-    \x04\0\x02\x02\x02\x12\x03-\x0f\x10\n)\n\x04\x04\0\x04\x01\x12\x041\x02C\
-    \x03\x1a\x1b\x20The\x20type\x20of\x20the\x20instance.\n\n\x0c\n\x05\x04\
-    \0\x04\x01\x01\x12\x031\x07\x0b\n\xca\x01\n\x06\x04\0\x04\x01\x02\0\x12\
-    \x035\x04\x19\x1a\xba\x01\x20The\x20type\x20of\x20the\x20instance\x20is\
-    \x20unspecified.\x20If\x20set\x20when\x20creating\x20an\n\x20instance,\
-    \x20a\x20`PRODUCTION`\x20instance\x20will\x20be\x20created.\x20If\x20set\
-    \x20when\x20updating\n\x20an\x20instance,\x20the\x20type\x20will\x20be\
-    \x20left\x20unchanged.\n\n\x0e\n\x07\x04\0\x04\x01\x02\0\x01\x12\x035\
-    \x04\x14\n\x0e\n\x07\x04\0\x04\x01\x02\0\x02\x12\x035\x17\x18\na\n\x06\
-    \x04\0\x04\x01\x02\x01\x12\x039\x04\x13\x1aR\x20An\x20instance\x20meant\
-    \x20for\x20production\x20use.\x20`serve_nodes`\x20must\x20be\x20set\n\
-    \x20on\x20the\x20cluster.\n\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x01\x12\
-    \x039\x04\x0e\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x02\x12\x039\x11\x12\n\
-    \xb7\x03\n\x06\x04\0\x04\x01\x02\x02\x12\x03B\x04\x14\x1a\xa7\x03\x20The\
-    \x20instance\x20is\x20meant\x20for\x20development\x20and\x20testing\x20p\
-    urposes\x20only;\x20it\x20has\n\x20no\x20performance\x20or\x20uptime\x20\
-    guarantees\x20and\x20is\x20not\x20covered\x20by\x20SLA.\n\x20After\x20a\
-    \x20development\x20instance\x20is\x20created,\x20it\x20can\x20be\x20upgr\
-    aded\x20by\n\x20updating\x20the\x20instance\x20to\x20type\x20`PRODUCTION\
-    `.\x20An\x20instance\x20created\n\x20as\x20a\x20production\x20instance\
-    \x20cannot\x20be\x20changed\x20to\x20a\x20development\x20instance.\n\x20\
-    When\x20creating\x20a\x20development\x20instance,\x20`serve_nodes`\x20on\
-    \x20the\x20cluster\x20must\n\x20not\x20be\x20set.\n\n\x0e\n\x07\x04\0\
-    \x04\x01\x02\x02\x01\x12\x03B\x04\x0f\n\x0e\n\x07\x04\0\x04\x01\x02\x02\
-    \x02\x12\x03B\x12\x13\n\x92\x01\n\x04\x04\0\x02\0\x12\x03H\x02\x12\x1a\
-    \x84\x01\x20(`OutputOnly`)\n\x20The\x20unique\x20name\x20of\x20the\x20in\
-    stance.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/i\
-    nstances/[a-z][a-z0-9\\\\-]+[a-z0-9]`.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\
-    \x03H\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03H\t\r\n\x0c\n\x05\x04\0\
-    \x02\0\x03\x12\x03H\x10\x11\n\xa1\x01\n\x04\x04\0\x02\x01\x12\x03M\x02\
-    \x1a\x1a\x93\x01\x20The\x20descriptive\x20name\x20for\x20this\x20instanc\
-    e\x20as\x20it\x20appears\x20in\x20UIs.\n\x20Can\x20be\x20changed\x20at\
-    \x20any\x20time,\x20but\x20should\x20be\x20kept\x20globally\x20unique\n\
-    \x20to\x20avoid\x20confusion.\n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03M\
-    \x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03M\t\x15\n\x0c\n\x05\x04\0\
-    \x02\x01\x03\x12\x03M\x18\x19\nA\n\x04\x04\0\x02\x02\x12\x03Q\x02\x12\
-    \x1a4\x20(`OutputOnly`)\n\x20The\x20current\x20state\x20of\x20the\x20ins\
-    tance.\n\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03Q\x02\x07\n\x0c\n\x05\x04\
-    \0\x02\x02\x01\x12\x03Q\x08\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03Q\x10\
-    \x11\nB\n\x04\x04\0\x02\x03\x12\x03T\x02\x10\x1a5\x20The\x20type\x20of\
-    \x20the\x20instance.\x20Defaults\x20to\x20`PRODUCTION`.\n\n\x0c\n\x05\
-    \x04\0\x02\x03\x06\x12\x03T\x02\x06\n\x0c\n\x05\x04\0\x02\x03\x01\x12\
-    \x03T\x07\x0b\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03T\x0e\x0f\n\x82\x05\n\
-    \x04\x04\0\x02\x04\x12\x03a\x02!\x1a\xf4\x04\x20Labels\x20are\x20a\x20fl\
-    exible\x20and\x20lightweight\x20mechanism\x20for\x20organizing\x20cloud\
-    \n\x20resources\x20into\x20groups\x20that\x20reflect\x20a\x20customer's\
-    \x20organizational\x20needs\x20and\n\x20deployment\x20strategies.\x20The\
-    y\x20can\x20be\x20used\x20to\x20filter\x20resources\x20and\x20aggregate\
-    \n\x20metrics.\n\n\x20*\x20Label\x20keys\x20must\x20be\x20between\x201\
-    \x20and\x2063\x20characters\x20long\x20and\x20must\x20conform\x20to\n\
-    \x20\x20\x20the\x20regular\x20expression:\x20`[\\p{Ll}\\p{Lo}][\\p{Ll}\\\
-    p{Lo}\\p{N}_-]{0,62}`.\n\x20*\x20Label\x20values\x20must\x20be\x20betwee\
-    n\x200\x20and\x2063\x20characters\x20long\x20and\x20must\x20conform\x20t\
-    o\n\x20\x20\x20the\x20regular\x20expression:\x20`[\\p{Ll}\\p{Lo}\\p{N}_-\
-    ]{0,63}`.\n\x20*\x20No\x20more\x20than\x2064\x20labels\x20can\x20be\x20a\
-    ssociated\x20with\x20a\x20given\x20resource.\n\x20*\x20Keys\x20and\x20va\
-    lues\x20must\x20both\x20be\x20under\x20128\x20bytes.\n\n\x0c\n\x05\x04\0\
-    \x02\x04\x06\x12\x03a\x02\x15\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03a\x16\
-    \x1c\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03a\x1f\x20\n\xc9\x01\n\x02\x04\
-    \x01\x12\x05g\0\x99\x01\x01\x1a\xbb\x01\x20A\x20resizable\x20group\x20of\
-    \x20nodes\x20in\x20a\x20particular\x20cloud\x20location,\x20capable\n\
-    \x20of\x20serving\x20all\x20[Tables][google.bigtable.admin.v2.Table]\x20\
-    in\x20the\x20parent\n\x20[Instance][google.bigtable.admin.v2.Instance].\
-    \n\n\n\n\x03\x04\x01\x01\x12\x03g\x08\x0f\n-\n\x04\x04\x01\x04\0\x12\x04\
-    i\x02\x7f\x03\x1a\x1f\x20Possible\x20states\x20of\x20a\x20cluster.\n\n\
-    \x0c\n\x05\x04\x01\x04\0\x01\x12\x03i\x07\x0c\nB\n\x06\x04\x01\x04\0\x02\
-    \0\x12\x03k\x04\x18\x1a3\x20The\x20state\x20of\x20the\x20cluster\x20coul\
-    d\x20not\x20be\x20determined.\n\n\x0e\n\x07\x04\x01\x04\0\x02\0\x01\x12\
-    \x03k\x04\x13\n\x0e\n\x07\x04\x01\x04\0\x02\0\x02\x12\x03k\x16\x17\nZ\n\
-    \x06\x04\x01\x04\0\x02\x01\x12\x03n\x04\x0e\x1aK\x20The\x20cluster\x20ha\
-    s\x20been\x20successfully\x20created\x20and\x20is\x20ready\x20to\x20serv\
-    e\x20requests.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x01\x01\x12\x03n\x04\t\n\
-    \x0e\n\x07\x04\x01\x04\0\x02\x01\x02\x12\x03n\x0c\r\n\xbe\x01\n\x06\x04\
-    \x01\x04\0\x02\x02\x12\x03s\x04\x11\x1a\xae\x01\x20The\x20cluster\x20is\
-    \x20currently\x20being\x20created,\x20and\x20may\x20be\x20destroyed\n\
-    \x20if\x20the\x20creation\x20process\x20encounters\x20an\x20error.\n\x20\
-    A\x20cluster\x20may\x20not\x20be\x20able\x20to\x20serve\x20requests\x20w\
-    hile\x20being\x20created.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x01\x12\
-    \x03s\x04\x0c\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x02\x12\x03s\x0f\x10\n\
-    \xbd\x02\n\x06\x04\x01\x04\0\x02\x03\x12\x03z\x04\x11\x1a\xad\x02\x20The\
-    \x20cluster\x20is\x20currently\x20being\x20resized,\x20and\x20may\x20rev\
-    ert\x20to\x20its\x20previous\n\x20node\x20count\x20if\x20the\x20process\
-    \x20encounters\x20an\x20error.\n\x20A\x20cluster\x20is\x20still\x20capab\
-    le\x20of\x20serving\x20requests\x20while\x20being\x20resized,\n\x20but\
-    \x20may\x20exhibit\x20performance\x20as\x20if\x20its\x20number\x20of\x20\
-    allocated\x20nodes\x20is\n\x20between\x20the\x20starting\x20and\x20reque\
-    sted\x20states.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x03\x01\x12\x03z\x04\x0c\
-    \n\x0e\n\x07\x04\x01\x04\0\x02\x03\x02\x12\x03z\x0f\x10\n\x85\x01\n\x06\
-    \x04\x01\x04\0\x02\x04\x12\x03~\x04\x11\x1av\x20The\x20cluster\x20has\
-    \x20no\x20backing\x20nodes.\x20The\x20data\x20(tables)\x20still\n\x20exi\
-    st,\x20but\x20no\x20operations\x20can\x20be\x20performed\x20on\x20the\
-    \x20cluster.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x04\x01\x12\x03~\x04\x0c\n\
-    \x0e\n\x07\x04\x01\x04\0\x02\x04\x02\x12\x03~\x0f\x10\n\x9c\x01\n\x04\
-    \x04\x01\x02\0\x12\x04\x84\x01\x02\x12\x1a\x8d\x01\x20(`OutputOnly`)\n\
-    \x20The\x20unique\x20name\x20of\x20the\x20cluster.\x20Values\x20are\x20o\
-    f\x20the\x20form\n\x20`projects/<project>/instances/<instance>/clusters/\
-    [a-z][-a-z0-9]*`.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\x84\x01\x02\x08\
-    \n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x84\x01\t\r\n\r\n\x05\x04\x01\x02\0\
-    \x03\x12\x04\x84\x01\x10\x11\n\xa2\x02\n\x04\x04\x01\x02\x01\x12\x04\x8b\
-    \x01\x02\x16\x1a\x93\x02\x20(`CreationOnly`)\n\x20The\x20location\x20whe\
-    re\x20this\x20cluster's\x20nodes\x20and\x20storage\x20reside.\x20For\x20\
-    best\n\x20performance,\x20clients\x20should\x20be\x20located\x20as\x20cl\
-    ose\x20as\x20possible\x20to\x20this\n\x20cluster.\x20Currently\x20only\
-    \x20zones\x20are\x20supported,\x20so\x20values\x20should\x20be\x20of\x20\
-    the\n\x20form\x20`projects/<project>/locations/<zone>`.\n\n\r\n\x05\x04\
-    \x01\x02\x01\x05\x12\x04\x8b\x01\x02\x08\n\r\n\x05\x04\x01\x02\x01\x01\
-    \x12\x04\x8b\x01\t\x11\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x8b\x01\x14\
-    \x15\nA\n\x04\x04\x01\x02\x02\x12\x04\x8f\x01\x02\x12\x1a3\x20(`OutputOn\
-    ly`)\n\x20The\x20current\x20state\x20of\x20the\x20cluster.\n\n\r\n\x05\
-    \x04\x01\x02\x02\x06\x12\x04\x8f\x01\x02\x07\n\r\n\x05\x04\x01\x02\x02\
-    \x01\x12\x04\x8f\x01\x08\r\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\x8f\x01\
-    \x10\x11\n\x84\x01\n\x04\x04\x01\x02\x03\x12\x04\x93\x01\x02\x18\x1av\
-    \x20The\x20number\x20of\x20nodes\x20allocated\x20to\x20this\x20cluster.\
-    \x20More\x20nodes\x20enable\x20higher\n\x20throughput\x20and\x20more\x20\
-    consistent\x20performance.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\x93\
-    \x01\x02\x07\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\x93\x01\x08\x13\n\r\n\
-    \x05\x04\x01\x02\x03\x03\x12\x04\x93\x01\x16\x17\n\x91\x01\n\x04\x04\x01\
-    \x02\x04\x12\x04\x98\x01\x02'\x1a\x82\x01\x20(`CreationOnly`)\n\x20The\
-    \x20type\x20of\x20storage\x20used\x20by\x20this\x20cluster\x20to\x20serv\
-    e\x20its\n\x20parent\x20instance's\x20tables,\x20unless\x20explicitly\
-    \x20overridden.\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\x04\x98\x01\x02\r\n\
-    \r\n\x05\x04\x01\x02\x04\x01\x12\x04\x98\x01\x0e\"\n\r\n\x05\x04\x01\x02\
-    \x04\x03\x12\x04\x98\x01%&\n\x82\x01\n\x02\x04\x02\x12\x06\x9d\x01\0\xcc\
-    \x01\x01\x1at\x20A\x20configuration\x20object\x20describing\x20how\x20Cl\
-    oud\x20Bigtable\x20should\x20treat\x20traffic\n\x20from\x20a\x20particul\
-    ar\x20end\x20user\x20application.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\x9d\
-    \x01\x08\x12\n\xfd\x01\n\x04\x04\x02\x03\0\x12\x04\xa2\x01\x02&\x1a\xee\
-    \x01\x20Read/write\x20requests\x20may\x20be\x20routed\x20to\x20any\x20cl\
-    uster\x20in\x20the\x20instance,\x20and\x20will\n\x20fail\x20over\x20to\
-    \x20another\x20cluster\x20in\x20the\x20event\x20of\x20transient\x20error\
-    s\x20or\x20delays.\n\x20Choosing\x20this\x20option\x20sacrifices\x20read\
-    -your-writes\x20consistency\x20to\x20improve\n\x20availability.\n\n\r\n\
-    \x05\x04\x02\x03\0\x01\x12\x04\xa2\x01\n#\n\xb1\x01\n\x04\x04\x02\x03\
-    \x01\x12\x06\xa7\x01\x02\xaf\x01\x03\x1a\xa0\x01\x20Unconditionally\x20r\
+    v2\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.pro\
+    to\x1a%google/bigtable/admin/v2/common.proto\x1a\x1fgoogle/protobuf/time\
+    stamp.proto\"\x94\x05\n\x08Instance\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12&\n\x0cdisplay_name\x18\x02\x20\x01(\tR\x0bdisplayNameB\x03\
+    \xe0A\x02\x12>\n\x05state\x18\x03\x20\x01(\x0e2(.google.bigtable.admin.v\
+    2.Instance.StateR\x05state\x12;\n\x04type\x18\x04\x20\x01(\x0e2'.google.\
+    bigtable.admin.v2.Instance.TypeR\x04type\x12F\n\x06labels\x18\x05\x20\
+    \x03(\x0b2..google.bigtable.admin.v2.Instance.LabelsEntryR\x06labels\x12\
+    @\n\x0bcreate_time\x18\x07\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
+    \ncreateTimeB\x03\xe0A\x03\x12-\n\rsatisfies_pzs\x18\x08\x20\x01(\x08H\0\
+    R\x0csatisfiesPzsB\x03\xe0A\x03\x88\x01\x01\x1a9\n\x0bLabelsEntry\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\
+    \x01(\tR\x05value:\x028\x01\"5\n\x05State\x12\x13\n\x0fSTATE_NOT_KNOWN\
+    \x10\0\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08CREATING\x10\x02\"=\n\x04Ty\
+    pe\x12\x14\n\x10TYPE_UNSPECIFIED\x10\0\x12\x0e\n\nPRODUCTION\x10\x01\x12\
+    \x0f\n\x0bDEVELOPMENT\x10\x02B\x10\n\x0e_satisfies_pzs:S\xeaAP\n%bigtabl\
+    eadmin.googleapis.com/Instance\x12'projects/{project}/instances/{instanc\
+    e}\"\x94\x01\n\x12AutoscalingTargets\x126\n\x17cpu_utilization_percent\
+    \x18\x02\x20\x01(\x05R\x15cpuUtilizationPercent\x12F\n\x20storage_utiliz\
+    ation_gib_per_node\x18\x03\x20\x01(\x05R\x1cstorageUtilizationGibPerNode\
+    \"m\n\x11AutoscalingLimits\x12+\n\x0fmin_serve_nodes\x18\x01\x20\x01(\
+    \x05R\rminServeNodesB\x03\xe0A\x02\x12+\n\x0fmax_serve_nodes\x18\x02\x20\
+    \x01(\x05R\rmaxServeNodesB\x03\xe0A\x02\"\xf7\x08\n\x07Cluster\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12E\n\x08location\x18\x02\x20\x01(\
+    \tR\x08locationB)\xfaA#\n!locations.googleapis.com/Location\xe0A\x05\x12\
+    B\n\x05state\x18\x03\x20\x01(\x0e2'.google.bigtable.admin.v2.Cluster.Sta\
+    teR\x05stateB\x03\xe0A\x03\x12\x1f\n\x0bserve_nodes\x18\x04\x20\x01(\x05\
+    R\nserveNodes\x12X\n\x0ecluster_config\x18\x07\x20\x01(\x0b2/.google.big\
+    table.admin.v2.Cluster.ClusterConfigH\0R\rclusterConfig\x12\\\n\x14defau\
+    lt_storage_type\x18\x05\x20\x01(\x0e2%.google.bigtable.admin.v2.StorageT\
+    ypeR\x12defaultStorageTypeB\x03\xe0A\x05\x12d\n\x11encryption_config\x18\
+    \x06\x20\x01(\x0b22.google.bigtable.admin.v2.Cluster.EncryptionConfigR\
+    \x10encryptionConfigB\x03\xe0A\x05\x1a\xdf\x01\n\x18ClusterAutoscalingCo\
+    nfig\x12_\n\x12autoscaling_limits\x18\x01\x20\x01(\x0b2+.google.bigtable\
+    .admin.v2.AutoscalingLimitsR\x11autoscalingLimitsB\x03\xe0A\x02\x12b\n\
+    \x13autoscaling_targets\x18\x02\x20\x01(\x0b2,.google.bigtable.admin.v2.\
+    AutoscalingTargetsR\x12autoscalingTargetsB\x03\xe0A\x02\x1a\x89\x01\n\rC\
+    lusterConfig\x12x\n\x1acluster_autoscaling_config\x18\x01\x20\x01(\x0b2:\
+    .google.bigtable.admin.v2.Cluster.ClusterAutoscalingConfigR\x18clusterAu\
+    toscalingConfig\x1a\\\n\x10EncryptionConfig\x12H\n\x0ckms_key_name\x18\
+    \x01\x20\x01(\tR\nkmsKeyNameB&\xfaA#\n!cloudkms.googleapis.com/CryptoKey\
+    \"Q\n\x05State\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\t\n\x05READY\x10\
+    \x01\x12\x0c\n\x08CREATING\x10\x02\x12\x0c\n\x08RESIZING\x10\x03\x12\x0c\
+    \n\x08DISABLED\x10\x04B\x08\n\x06config:e\xeaAb\n$bigtableadmin.googleap\
+    is.com/Cluster\x12:projects/{project}/instances/{instance}/clusters/{clu\
+    ster}\"\x84\x05\n\nAppProfile\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04n\
+    ame\x12\x12\n\x04etag\x18\x02\x20\x01(\tR\x04etag\x12\x20\n\x0bdescripti\
+    on\x18\x03\x20\x01(\tR\x0bdescription\x12\x82\x01\n\x1dmulti_cluster_rou\
+    ting_use_any\x18\x05\x20\x01(\x0b2>.google.bigtable.admin.v2.AppProfile.\
+    MultiClusterRoutingUseAnyH\0R\x19multiClusterRoutingUseAny\x12q\n\x16sin\
+    gle_cluster_routing\x18\x06\x20\x01(\x0b29.google.bigtable.admin.v2.AppP\
+    rofile.SingleClusterRoutingH\0R\x14singleClusterRouting\x1a<\n\x19MultiC\
+    lusterRoutingUseAny\x12\x1f\n\x0bcluster_ids\x18\x01\x20\x03(\tR\ncluste\
+    rIds\x1as\n\x14SingleClusterRouting\x12\x1d\n\ncluster_id\x18\x01\x20\
+    \x01(\tR\tclusterId\x12<\n\x1aallow_transactional_writes\x18\x02\x20\x01\
+    (\x08R\x18allowTransactionalWritesB\x10\n\x0erouting_policy:o\xeaAl\n'bi\
+    gtableadmin.googleapis.com/AppProfile\x12Aprojects/{project}/instances/{\
+    instance}/appProfiles/{app_profile}\"\xd4\x03\n\tHotTablet\x12\x12\n\x04\
+    name\x18\x01\x20\x01(\tR\x04name\x12F\n\ntable_name\x18\x02\x20\x01(\tR\
+    \ttableNameB'\xfaA$\n\"bigtableadmin.googleapis.com/Table\x12>\n\nstart_\
+    time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTimeB\
+    \x03\xe0A\x03\x12:\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.google.protob\
+    uf.TimestampR\x07endTimeB\x03\xe0A\x03\x12\x1b\n\tstart_key\x18\x05\x20\
+    \x01(\tR\x08startKey\x12\x17\n\x07end_key\x18\x06\x20\x01(\tR\x06endKey\
+    \x128\n\x16node_cpu_usage_percent\x18\x07\x20\x01(\x02R\x13nodeCpuUsageP\
+    ercentB\x03\xe0A\x03:\x7f\xeaA|\n&bigtableadmin.googleapis.com/HotTablet\
+    \x12Rprojects/{project}/instances/{instance}/clusters/{cluster}/hotTable\
+    ts/{hot_tablet}B\xd0\x02\n\x1ccom.google.bigtable.admin.v2B\rInstancePro\
+    toP\x01Z=google.golang.org/genproto/googleapis/bigtable/admin/v2;admin\
+    \xaa\x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\Cloud\\Big\
+    table\\Admin\\V2\xea\x02\"Google::Cloud::Bigtable::Admin::V2\xeaAx\n!clo\
+    udkms.googleapis.com/CryptoKey\x12Sprojects/{project}/locations/{locatio\
+    n}/keyRings/{key_ring}/cryptoKeys/{crypto_key}J\xd3h\n\x07\x12\x05\x0e\0\
+    \xd3\x02\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\
+    \x202022\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20L\
+    icense,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20no\
+    t\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\
+    \x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20Lice\
+    nse\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-\
+    2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\
+    \x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
+    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
+    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
+    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
+    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
+    tations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0!\n\t\
+    \n\x02\x03\0\x12\x03\x12\0)\n\t\n\x02\x03\x01\x12\x03\x13\0#\n\t\n\x02\
+    \x03\x02\x12\x03\x14\0/\n\t\n\x02\x03\x03\x12\x03\x15\0)\n\x08\n\x01\x08\
+    \x12\x03\x17\0;\n\t\n\x02\x08%\x12\x03\x17\0;\n\x08\n\x01\x08\x12\x03\
+    \x18\0T\n\t\n\x02\x08\x0b\x12\x03\x18\0T\n\x08\n\x01\x08\x12\x03\x19\0\"\
+    \n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\x01\x08\x12\x03\x1a\0.\n\t\n\
+    \x02\x08\x08\x12\x03\x1a\0.\n\x08\n\x01\x08\x12\x03\x1b\05\n\t\n\x02\x08\
+    \x01\x12\x03\x1b\05\n\x08\n\x01\x08\x12\x03\x1c\0<\n\t\n\x02\x08)\x12\
+    \x03\x1c\0<\n\x08\n\x01\x08\x12\x03\x1d\0;\n\t\n\x02\x08-\x12\x03\x1d\0;\
+    \n\t\n\x01\x08\x12\x04\x1e\0!\x02\n\x0c\n\x04\x08\x9d\x08\0\x12\x04\x1e\
+    \0!\x02\n\xe2\x01\n\x02\x04\0\x12\x04'\0o\x01\x1a\xd5\x01\x20A\x20collec\
+    tion\x20of\x20Bigtable\x20[Tables][google.bigtable.admin.v2.Table]\x20an\
+    d\n\x20the\x20resources\x20that\x20serve\x20them.\n\x20All\x20tables\x20\
+    in\x20an\x20instance\x20are\x20served\x20from\x20all\n\x20[Clusters][goo\
+    gle.bigtable.admin.v2.Cluster]\x20in\x20the\x20instance.\n\n\n\n\x03\x04\
+    \0\x01\x12\x03'\x08\x10\n\x0b\n\x03\x04\0\x07\x12\x04(\x02+\x04\n\r\n\
+    \x05\x04\0\x07\x9d\x08\x12\x04(\x02+\x04\n/\n\x04\x04\0\x04\0\x12\x04.\
+    \x029\x03\x1a!\x20Possible\x20states\x20of\x20an\x20instance.\n\n\x0c\n\
+    \x05\x04\0\x04\0\x01\x12\x03.\x07\x0c\nC\n\x06\x04\0\x04\0\x02\0\x12\x03\
+    0\x04\x18\x1a4\x20The\x20state\x20of\x20the\x20instance\x20could\x20not\
+    \x20be\x20determined.\n\n\x0e\n\x07\x04\0\x04\0\x02\0\x01\x12\x030\x04\
+    \x13\n\x0e\n\x07\x04\0\x04\0\x02\0\x02\x12\x030\x16\x17\nb\n\x06\x04\0\
+    \x04\0\x02\x01\x12\x034\x04\x0e\x1aS\x20The\x20instance\x20has\x20been\
+    \x20successfully\x20created\x20and\x20can\x20serve\x20requests\n\x20to\
+    \x20its\x20tables.\n\n\x0e\n\x07\x04\0\x04\0\x02\x01\x01\x12\x034\x04\t\
+    \n\x0e\n\x07\x04\0\x04\0\x02\x01\x02\x12\x034\x0c\r\n|\n\x06\x04\0\x04\0\
+    \x02\x02\x12\x038\x04\x11\x1am\x20The\x20instance\x20is\x20currently\x20\
+    being\x20created,\x20and\x20may\x20be\x20destroyed\n\x20if\x20the\x20cre\
+    ation\x20process\x20encounters\x20an\x20error.\n\n\x0e\n\x07\x04\0\x04\0\
+    \x02\x02\x01\x12\x038\x04\x0c\n\x0e\n\x07\x04\0\x04\0\x02\x02\x02\x12\
+    \x038\x0f\x10\n)\n\x04\x04\0\x04\x01\x12\x04<\x02I\x03\x1a\x1b\x20The\
+    \x20type\x20of\x20the\x20instance.\n\n\x0c\n\x05\x04\0\x04\x01\x01\x12\
+    \x03<\x07\x0b\n\xca\x01\n\x06\x04\0\x04\x01\x02\0\x12\x03@\x04\x19\x1a\
+    \xba\x01\x20The\x20type\x20of\x20the\x20instance\x20is\x20unspecified.\
+    \x20If\x20set\x20when\x20creating\x20an\n\x20instance,\x20a\x20`PRODUCTI\
+    ON`\x20instance\x20will\x20be\x20created.\x20If\x20set\x20when\x20updati\
+    ng\n\x20an\x20instance,\x20the\x20type\x20will\x20be\x20left\x20unchange\
+    d.\n\n\x0e\n\x07\x04\0\x04\x01\x02\0\x01\x12\x03@\x04\x14\n\x0e\n\x07\
+    \x04\0\x04\x01\x02\0\x02\x12\x03@\x17\x18\na\n\x06\x04\0\x04\x01\x02\x01\
+    \x12\x03D\x04\x13\x1aR\x20An\x20instance\x20meant\x20for\x20production\
+    \x20use.\x20`serve_nodes`\x20must\x20be\x20set\n\x20on\x20the\x20cluster\
+    .\n\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x01\x12\x03D\x04\x0e\n\x0e\n\x07\
+    \x04\0\x04\x01\x02\x01\x02\x12\x03D\x11\x12\n\x89\x01\n\x06\x04\0\x04\
+    \x01\x02\x02\x12\x03H\x04\x14\x1az\x20DEPRECATED:\x20Prefer\x20PRODUCTIO\
+    N\x20for\x20all\x20use\x20cases,\x20as\x20it\x20no\x20longer\x20enforces\
+    \n\x20a\x20higher\x20minimum\x20node\x20count\x20than\x20DEVELOPMENT.\n\
+    \n\x0e\n\x07\x04\0\x04\x01\x02\x02\x01\x12\x03H\x04\x0f\n\x0e\n\x07\x04\
+    \0\x04\x01\x02\x02\x02\x12\x03H\x12\x13\n\x81\x01\n\x04\x04\0\x02\0\x12\
+    \x03M\x02\x12\x1at\x20The\x20unique\x20name\x20of\x20the\x20instance.\
+    \x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instance\
+    s/[a-z][a-z0-9\\\\-]+[a-z0-9]`.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03M\
+    \x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03M\t\r\n\x0c\n\x05\x04\0\x02\
+    \0\x03\x12\x03M\x10\x11\n\xab\x01\n\x04\x04\0\x02\x01\x12\x03R\x02C\x1a\
+    \x9d\x01\x20Required.\x20The\x20descriptive\x20name\x20for\x20this\x20in\
+    stance\x20as\x20it\x20appears\x20in\x20UIs.\n\x20Can\x20be\x20changed\
+    \x20at\x20any\x20time,\x20but\x20should\x20be\x20kept\x20globally\x20uni\
+    que\n\x20to\x20avoid\x20confusion.\n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\
+    \x03R\x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03R\t\x15\n\x0c\n\x05\
+    \x04\0\x02\x01\x03\x12\x03R\x18\x19\n\x0c\n\x05\x04\0\x02\x01\x08\x12\
+    \x03R\x1aB\n\x0f\n\x08\x04\0\x02\x01\x08\x9c\x08\0\x12\x03R\x1bA\nA\n\
+    \x04\x04\0\x02\x02\x12\x03V\x02\x12\x1a4\x20(`OutputOnly`)\n\x20The\x20c\
+    urrent\x20state\x20of\x20the\x20instance.\n\n\x0c\n\x05\x04\0\x02\x02\
+    \x06\x12\x03V\x02\x07\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03V\x08\r\n\x0c\
+    \n\x05\x04\0\x02\x02\x03\x12\x03V\x10\x11\nB\n\x04\x04\0\x02\x03\x12\x03\
+    Y\x02\x10\x1a5\x20The\x20type\x20of\x20the\x20instance.\x20Defaults\x20t\
+    o\x20`PRODUCTION`.\n\n\x0c\n\x05\x04\0\x02\x03\x06\x12\x03Y\x02\x06\n\
+    \x0c\n\x05\x04\0\x02\x03\x01\x12\x03Y\x07\x0b\n\x0c\n\x05\x04\0\x02\x03\
+    \x03\x12\x03Y\x0e\x0f\n\x82\x05\n\x04\x04\0\x02\x04\x12\x03f\x02!\x1a\
+    \xf4\x04\x20Labels\x20are\x20a\x20flexible\x20and\x20lightweight\x20mech\
+    anism\x20for\x20organizing\x20cloud\n\x20resources\x20into\x20groups\x20\
+    that\x20reflect\x20a\x20customer's\x20organizational\x20needs\x20and\n\
+    \x20deployment\x20strategies.\x20They\x20can\x20be\x20used\x20to\x20filt\
+    er\x20resources\x20and\x20aggregate\n\x20metrics.\n\n\x20*\x20Label\x20k\
+    eys\x20must\x20be\x20between\x201\x20and\x2063\x20characters\x20long\x20\
+    and\x20must\x20conform\x20to\n\x20\x20\x20the\x20regular\x20expression:\
+    \x20`[\\p{Ll}\\p{Lo}][\\p{Ll}\\p{Lo}\\p{N}_-]{0,62}`.\n\x20*\x20Label\
+    \x20values\x20must\x20be\x20between\x200\x20and\x2063\x20characters\x20l\
+    ong\x20and\x20must\x20conform\x20to\n\x20\x20\x20the\x20regular\x20expre\
+    ssion:\x20`[\\p{Ll}\\p{Lo}\\p{N}_-]{0,63}`.\n\x20*\x20No\x20more\x20than\
+    \x2064\x20labels\x20can\x20be\x20associated\x20with\x20a\x20given\x20res\
+    ource.\n\x20*\x20Keys\x20and\x20values\x20must\x20both\x20be\x20under\
+    \x20128\x20bytes.\n\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03f\x02\x15\n\x0c\
+    \n\x05\x04\0\x02\x04\x01\x12\x03f\x16\x1c\n\x0c\n\x05\x04\0\x02\x04\x03\
+    \x12\x03f\x1f\x20\n\xce\x01\n\x04\x04\0\x02\x05\x12\x03k\x02X\x1a\xc0\
+    \x01\x20Output\x20only.\x20A\x20server-assigned\x20timestamp\x20represen\
+    ting\x20when\x20this\x20Instance\x20was\x20created.\n\x20For\x20instance\
+    s\x20created\x20before\x20this\x20field\x20was\x20added\x20(August\x2020\
+    21),\x20this\x20value\n\x20is\x20`seconds:\x200,\x20nanos:\x201`.\n\n\
+    \x0c\n\x05\x04\0\x02\x05\x06\x12\x03k\x02\x1b\n\x0c\n\x05\x04\0\x02\x05\
+    \x01\x12\x03k\x1c'\n\x0c\n\x05\x04\0\x02\x05\x03\x12\x03k*+\n\x0c\n\x05\
+    \x04\0\x02\x05\x08\x12\x03k,W\n\x0f\n\x08\x04\0\x02\x05\x08\x9c\x08\0\
+    \x12\x03k-V\n4\n\x04\x04\0\x02\x06\x12\x03n\x02N\x1a'\x20Output\x20only.\
+    \x20Reserved\x20for\x20future\x20use.\n\n\x0c\n\x05\x04\0\x02\x06\x04\
+    \x12\x03n\x02\n\n\x0c\n\x05\x04\0\x02\x06\x05\x12\x03n\x0b\x0f\n\x0c\n\
+    \x05\x04\0\x02\x06\x01\x12\x03n\x10\x1d\n\x0c\n\x05\x04\0\x02\x06\x03\
+    \x12\x03n\x20!\n\x0c\n\x05\x04\0\x02\x06\x08\x12\x03n\"M\n\x0f\n\x08\x04\
+    \0\x02\x06\x08\x9c\x08\0\x12\x03n#L\n\\\n\x02\x04\x01\x12\x05r\0\x80\x01\
+    \x01\x1aO\x20The\x20Autoscaling\x20targets\x20for\x20a\x20Cluster.\x20Th\
+    ese\x20determine\x20the\x20recommended\x20nodes.\n\n\n\n\x03\x04\x01\x01\
+    \x12\x03r\x08\x1a\n\xf8\x01\n\x04\x04\x01\x02\0\x12\x03w\x02$\x1a\xea\
+    \x01\x20The\x20cpu\x20utilization\x20that\x20the\x20Autoscaler\x20should\
+    \x20be\x20trying\x20to\x20achieve.\n\x20This\x20number\x20is\x20on\x20a\
+    \x20scale\x20from\x200\x20(no\x20utilization)\x20to\n\x20100\x20(total\
+    \x20utilization),\x20and\x20is\x20limited\x20between\x2010\x20and\x2080,\
+    \x20otherwise\x20it\n\x20will\x20return\x20INVALID_ARGUMENT\x20error.\n\
+    \n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03w\x02\x07\n\x0c\n\x05\x04\x01\x02\
+    \0\x01\x12\x03w\x08\x1f\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03w\"#\n\x8d\
+    \x03\n\x04\x04\x01\x02\x01\x12\x03\x7f\x02-\x1a\xff\x02\x20The\x20storag\
+    e\x20utilization\x20that\x20the\x20Autoscaler\x20should\x20be\x20trying\
+    \x20to\x20achieve.\n\x20This\x20number\x20is\x20limited\x20between\x2025\
+    60\x20(2.5TiB)\x20and\x205120\x20(5TiB)\x20for\x20a\x20SSD\n\x20cluster\
+    \x20and\x20between\x208192\x20(8TiB)\x20and\x2016384\x20(16TiB)\x20for\
+    \x20an\x20HDD\x20cluster;\n\x20otherwise\x20it\x20will\x20return\x20INVA\
+    LID_ARGUMENT\x20error.\x20If\x20this\x20value\x20is\x20set\x20to\x200,\n\
+    \x20it\x20will\x20be\x20treated\x20as\x20if\x20it\x20were\x20set\x20to\
+    \x20the\x20default\x20value:\x202560\x20for\x20SSD,\n\x208192\x20for\x20\
+    HDD.\n\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03\x7f\x02\x07\n\x0c\n\x05\
+    \x04\x01\x02\x01\x01\x12\x03\x7f\x08(\n\x0c\n\x05\x04\x01\x02\x01\x03\
+    \x12\x03\x7f+,\nR\n\x02\x04\x02\x12\x06\x83\x01\0\x89\x01\x01\x1aD\x20Li\
+    mits\x20for\x20the\x20number\x20of\x20nodes\x20a\x20Cluster\x20can\x20au\
+    toscale\x20up/down\x20to.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\x83\x01\x08\
+    \x19\nC\n\x04\x04\x02\x02\0\x12\x04\x85\x01\x02E\x1a5\x20Required.\x20Mi\
+    nimum\x20number\x20of\x20nodes\x20to\x20scale\x20down\x20to.\n\n\r\n\x05\
+    \x04\x02\x02\0\x05\x12\x04\x85\x01\x02\x07\n\r\n\x05\x04\x02\x02\0\x01\
+    \x12\x04\x85\x01\x08\x17\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\x85\x01\x1a\
+    \x1b\n\r\n\x05\x04\x02\x02\0\x08\x12\x04\x85\x01\x1cD\n\x10\n\x08\x04\
+    \x02\x02\0\x08\x9c\x08\0\x12\x04\x85\x01\x1dC\nA\n\x04\x04\x02\x02\x01\
+    \x12\x04\x88\x01\x02E\x1a3\x20Required.\x20Maximum\x20number\x20of\x20no\
+    des\x20to\x20scale\x20up\x20to.\n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\
+    \x88\x01\x02\x07\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\x88\x01\x08\x17\n\
+    \r\n\x05\x04\x02\x02\x01\x03\x12\x04\x88\x01\x1a\x1b\n\r\n\x05\x04\x02\
+    \x02\x01\x08\x12\x04\x88\x01\x1cD\n\x10\n\x08\x04\x02\x02\x01\x08\x9c\
+    \x08\0\x12\x04\x88\x01\x1dC\n\xca\x01\n\x02\x04\x03\x12\x06\x8e\x01\0\
+    \xef\x01\x01\x1a\xbb\x01\x20A\x20resizable\x20group\x20of\x20nodes\x20in\
+    \x20a\x20particular\x20cloud\x20location,\x20capable\n\x20of\x20serving\
+    \x20all\x20[Tables][google.bigtable.admin.v2.Table]\x20in\x20the\x20pare\
+    nt\n\x20[Instance][google.bigtable.admin.v2.Instance].\n\n\x0b\n\x03\x04\
+    \x03\x01\x12\x04\x8e\x01\x08\x0f\n\r\n\x03\x04\x03\x07\x12\x06\x8f\x01\
+    \x02\x92\x01\x04\n\x0f\n\x05\x04\x03\x07\x9d\x08\x12\x06\x8f\x01\x02\x92\
+    \x01\x04\n/\n\x04\x04\x03\x04\0\x12\x06\x95\x01\x02\xab\x01\x03\x1a\x1f\
+    \x20Possible\x20states\x20of\x20a\x20cluster.\n\n\r\n\x05\x04\x03\x04\0\
+    \x01\x12\x04\x95\x01\x07\x0c\nC\n\x06\x04\x03\x04\0\x02\0\x12\x04\x97\
+    \x01\x04\x18\x1a3\x20The\x20state\x20of\x20the\x20cluster\x20could\x20no\
+    t\x20be\x20determined.\n\n\x0f\n\x07\x04\x03\x04\0\x02\0\x01\x12\x04\x97\
+    \x01\x04\x13\n\x0f\n\x07\x04\x03\x04\0\x02\0\x02\x12\x04\x97\x01\x16\x17\
+    \n[\n\x06\x04\x03\x04\0\x02\x01\x12\x04\x9a\x01\x04\x0e\x1aK\x20The\x20c\
+    luster\x20has\x20been\x20successfully\x20created\x20and\x20is\x20ready\
+    \x20to\x20serve\x20requests.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x01\x12\
+    \x04\x9a\x01\x04\t\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x02\x12\x04\x9a\x01\
+    \x0c\r\n\xbf\x01\n\x06\x04\x03\x04\0\x02\x02\x12\x04\x9f\x01\x04\x11\x1a\
+    \xae\x01\x20The\x20cluster\x20is\x20currently\x20being\x20created,\x20an\
+    d\x20may\x20be\x20destroyed\n\x20if\x20the\x20creation\x20process\x20enc\
+    ounters\x20an\x20error.\n\x20A\x20cluster\x20may\x20not\x20be\x20able\
+    \x20to\x20serve\x20requests\x20while\x20being\x20created.\n\n\x0f\n\x07\
+    \x04\x03\x04\0\x02\x02\x01\x12\x04\x9f\x01\x04\x0c\n\x0f\n\x07\x04\x03\
+    \x04\0\x02\x02\x02\x12\x04\x9f\x01\x0f\x10\n\xbe\x02\n\x06\x04\x03\x04\0\
+    \x02\x03\x12\x04\xa6\x01\x04\x11\x1a\xad\x02\x20The\x20cluster\x20is\x20\
+    currently\x20being\x20resized,\x20and\x20may\x20revert\x20to\x20its\x20p\
+    revious\n\x20node\x20count\x20if\x20the\x20process\x20encounters\x20an\
+    \x20error.\n\x20A\x20cluster\x20is\x20still\x20capable\x20of\x20serving\
+    \x20requests\x20while\x20being\x20resized,\n\x20but\x20may\x20exhibit\
+    \x20performance\x20as\x20if\x20its\x20number\x20of\x20allocated\x20nodes\
+    \x20is\n\x20between\x20the\x20starting\x20and\x20requested\x20states.\n\
+    \n\x0f\n\x07\x04\x03\x04\0\x02\x03\x01\x12\x04\xa6\x01\x04\x0c\n\x0f\n\
+    \x07\x04\x03\x04\0\x02\x03\x02\x12\x04\xa6\x01\x0f\x10\n\x86\x01\n\x06\
+    \x04\x03\x04\0\x02\x04\x12\x04\xaa\x01\x04\x11\x1av\x20The\x20cluster\
+    \x20has\x20no\x20backing\x20nodes.\x20The\x20data\x20(tables)\x20still\n\
+    \x20exist,\x20but\x20no\x20operations\x20can\x20be\x20performed\x20on\
+    \x20the\x20cluster.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x04\x01\x12\x04\xaa\
+    \x01\x04\x0c\n\x0f\n\x07\x04\x03\x04\0\x02\x04\x02\x12\x04\xaa\x01\x0f\
+    \x10\n3\n\x04\x04\x03\x03\0\x12\x06\xae\x01\x02\xb4\x01\x03\x1a#\x20Auto\
+    scaling\x20config\x20for\x20a\x20cluster.\n\n\r\n\x05\x04\x03\x03\0\x01\
+    \x12\x04\xae\x01\n\"\n@\n\x06\x04\x03\x03\0\x02\0\x12\x04\xb0\x01\x04V\
+    \x1a0\x20Required.\x20Autoscaling\x20limits\x20for\x20this\x20cluster.\n\
+    \n\x0f\n\x07\x04\x03\x03\0\x02\0\x06\x12\x04\xb0\x01\x04\x15\n\x0f\n\x07\
+    \x04\x03\x03\0\x02\0\x01\x12\x04\xb0\x01\x16(\n\x0f\n\x07\x04\x03\x03\0\
+    \x02\0\x03\x12\x04\xb0\x01+,\n\x0f\n\x07\x04\x03\x03\0\x02\0\x08\x12\x04\
+    \xb0\x01-U\n\x12\n\n\x04\x03\x03\0\x02\0\x08\x9c\x08\0\x12\x04\xb0\x01.T\
+    \nA\n\x06\x04\x03\x03\0\x02\x01\x12\x04\xb3\x01\x04X\x1a1\x20Required.\
+    \x20Autoscaling\x20targets\x20for\x20this\x20cluster.\n\n\x0f\n\x07\x04\
+    \x03\x03\0\x02\x01\x06\x12\x04\xb3\x01\x04\x16\n\x0f\n\x07\x04\x03\x03\0\
+    \x02\x01\x01\x12\x04\xb3\x01\x17*\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x03\
+    \x12\x04\xb3\x01-.\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x08\x12\x04\xb3\x01\
+    /W\n\x12\n\n\x04\x03\x03\0\x02\x01\x08\x9c\x08\0\x12\x04\xb3\x010V\n.\n\
+    \x04\x04\x03\x03\x01\x12\x06\xb7\x01\x02\xba\x01\x03\x1a\x1e\x20Configur\
+    ation\x20for\x20a\x20cluster.\n\n\r\n\x05\x04\x03\x03\x01\x01\x12\x04\
+    \xb7\x01\n\x17\n=\n\x06\x04\x03\x03\x01\x02\0\x12\x04\xb9\x01\x04<\x1a-\
+    \x20Autoscaling\x20configuration\x20for\x20this\x20cluster.\n\n\x0f\n\
+    \x07\x04\x03\x03\x01\x02\0\x06\x12\x04\xb9\x01\x04\x1c\n\x0f\n\x07\x04\
+    \x03\x03\x01\x02\0\x01\x12\x04\xb9\x01\x1d7\n\x0f\n\x07\x04\x03\x03\x01\
+    \x02\0\x03\x12\x04\xb9\x01:;\nb\n\x04\x04\x03\x03\x02\x12\x06\xbe\x01\
+    \x02\xcc\x01\x03\x1aR\x20Cloud\x20Key\x20Management\x20Service\x20(Cloud\
+    \x20KMS)\x20settings\x20for\x20a\x20CMEK-protected\n\x20cluster.\n\n\r\n\
+    \x05\x04\x03\x03\x02\x01\x12\x04\xbe\x01\n\x1a\n\xe5\x04\n\x06\x04\x03\
+    \x03\x02\x02\0\x12\x06\xc9\x01\x04\xcb\x01\x20\x1a\xd2\x04\x20Describes\
+    \x20the\x20Cloud\x20KMS\x20encryption\x20key\x20that\x20will\x20be\x20us\
+    ed\x20to\x20protect\x20the\n\x20destination\x20Bigtable\x20cluster.\x20T\
+    he\x20requirements\x20for\x20this\x20key\x20are:\n\x20\x201)\x20The\x20C\
+    loud\x20Bigtable\x20service\x20account\x20associated\x20with\x20the\x20p\
+    roject\x20that\n\x20\x20contains\x20this\x20cluster\x20must\x20be\x20gra\
+    nted\x20the\n\x20\x20`cloudkms.cryptoKeyEncrypterDecrypter`\x20role\x20o\
+    n\x20the\x20CMEK\x20key.\n\x20\x202)\x20Only\x20regional\x20keys\x20can\
+    \x20be\x20used\x20and\x20the\x20region\x20of\x20the\x20CMEK\x20key\x20mu\
+    st\n\x20\x20match\x20the\x20region\x20of\x20the\x20cluster.\n\x20\x203)\
+    \x20All\x20clusters\x20within\x20an\x20instance\x20must\x20use\x20the\
+    \x20same\x20CMEK\x20key.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`p\
+    rojects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{ke\
+    y}`\n\n\x0f\n\x07\x04\x03\x03\x02\x02\0\x05\x12\x04\xc9\x01\x04\n\n\x0f\
+    \n\x07\x04\x03\x03\x02\x02\0\x01\x12\x04\xc9\x01\x0b\x17\n\x0f\n\x07\x04\
+    \x03\x03\x02\x02\0\x03\x12\x04\xc9\x01\x1a\x1b\n\x11\n\x07\x04\x03\x03\
+    \x02\x02\0\x08\x12\x06\xc9\x01\x1c\xcb\x01\x1f\n\x13\n\t\x04\x03\x03\x02\
+    \x02\0\x08\x9f\x08\x12\x06\xc9\x01\x1d\xcb\x01\x1e\n\x8b\x01\n\x04\x04\
+    \x03\x02\0\x12\x04\xd0\x01\x02\x12\x1a}\x20The\x20unique\x20name\x20of\
+    \x20the\x20cluster.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects\
+    /{project}/instances/{instance}/clusters/[a-z][-a-z0-9]*`.\n\n\r\n\x05\
+    \x04\x03\x02\0\x05\x12\x04\xd0\x01\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\
+    \x12\x04\xd0\x01\t\r\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xd0\x01\x10\x11\
+    \n\x9d\x02\n\x04\x04\x03\x02\x01\x12\x06\xd6\x01\x02\xdb\x01\x04\x1a\x8c\
+    \x02\x20Immutable.\x20The\x20location\x20where\x20this\x20cluster's\x20n\
+    odes\x20and\x20storage\x20reside.\x20For\x20best\n\x20performance,\x20cl\
+    ients\x20should\x20be\x20located\x20as\x20close\x20as\x20possible\x20to\
+    \x20this\n\x20cluster.\x20Currently\x20only\x20zones\x20are\x20supported\
+    ,\x20so\x20values\x20should\x20be\x20of\x20the\n\x20form\x20`projects/{p\
+    roject}/locations/{zone}`.\n\n\r\n\x05\x04\x03\x02\x01\x05\x12\x04\xd6\
+    \x01\x02\x08\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\xd6\x01\t\x11\n\r\n\
+    \x05\x04\x03\x02\x01\x03\x12\x04\xd6\x01\x14\x15\n\x0f\n\x05\x04\x03\x02\
+    \x01\x08\x12\x06\xd6\x01\x16\xdb\x01\x03\n\x10\n\x08\x04\x03\x02\x01\x08\
+    \x9c\x08\0\x12\x04\xd7\x01\x04+\n\x11\n\x07\x04\x03\x02\x01\x08\x9f\x08\
+    \x12\x06\xd8\x01\x04\xda\x01\x05\n>\n\x04\x04\x03\x02\x02\x12\x04\xde\
+    \x01\x02>\x1a0\x20Output\x20only.\x20The\x20current\x20state\x20of\x20th\
+    e\x20cluster.\n\n\r\n\x05\x04\x03\x02\x02\x06\x12\x04\xde\x01\x02\x07\n\
+    \r\n\x05\x04\x03\x02\x02\x01\x12\x04\xde\x01\x08\r\n\r\n\x05\x04\x03\x02\
+    \x02\x03\x12\x04\xde\x01\x10\x11\n\r\n\x05\x04\x03\x02\x02\x08\x12\x04\
+    \xde\x01\x12=\n\x10\n\x08\x04\x03\x02\x02\x08\x9c\x08\0\x12\x04\xde\x01\
+    \x13<\n\x84\x01\n\x04\x04\x03\x02\x03\x12\x04\xe2\x01\x02\x18\x1av\x20Th\
+    e\x20number\x20of\x20nodes\x20allocated\x20to\x20this\x20cluster.\x20Mor\
+    e\x20nodes\x20enable\x20higher\n\x20throughput\x20and\x20more\x20consist\
+    ent\x20performance.\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\x04\xe2\x01\x02\
+    \x07\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xe2\x01\x08\x13\n\r\n\x05\x04\
+    \x03\x02\x03\x03\x12\x04\xe2\x01\x16\x17\n\x0e\n\x04\x04\x03\x08\0\x12\
+    \x06\xe4\x01\x02\xe7\x01\x03\n\r\n\x05\x04\x03\x08\0\x01\x12\x04\xe4\x01\
+    \x08\x0e\n/\n\x04\x04\x03\x02\x04\x12\x04\xe6\x01\x04%\x1a!\x20Configura\
+    tion\x20for\x20this\x20cluster.\n\n\r\n\x05\x04\x03\x02\x04\x06\x12\x04\
+    \xe6\x01\x04\x11\n\r\n\x05\x04\x03\x02\x04\x01\x12\x04\xe6\x01\x12\x20\n\
+    \r\n\x05\x04\x03\x02\x04\x03\x12\x04\xe6\x01#$\n\x89\x01\n\x04\x04\x03\
+    \x02\x05\x12\x04\xeb\x01\x02Q\x1a{\x20Immutable.\x20The\x20type\x20of\
+    \x20storage\x20used\x20by\x20this\x20cluster\x20to\x20serve\x20its\n\x20\
+    parent\x20instance's\x20tables,\x20unless\x20explicitly\x20overridden.\n\
+    \n\r\n\x05\x04\x03\x02\x05\x06\x12\x04\xeb\x01\x02\r\n\r\n\x05\x04\x03\
+    \x02\x05\x01\x12\x04\xeb\x01\x0e\"\n\r\n\x05\x04\x03\x02\x05\x03\x12\x04\
+    \xeb\x01%&\n\r\n\x05\x04\x03\x02\x05\x08\x12\x04\xeb\x01'P\n\x10\n\x08\
+    \x04\x03\x02\x05\x08\x9c\x08\0\x12\x04\xeb\x01(O\nT\n\x04\x04\x03\x02\
+    \x06\x12\x04\xee\x01\x02S\x1aF\x20Immutable.\x20The\x20encryption\x20con\
+    figuration\x20for\x20CMEK-protected\x20clusters.\n\n\r\n\x05\x04\x03\x02\
+    \x06\x06\x12\x04\xee\x01\x02\x12\n\r\n\x05\x04\x03\x02\x06\x01\x12\x04\
+    \xee\x01\x13$\n\r\n\x05\x04\x03\x02\x06\x03\x12\x04\xee\x01'(\n\r\n\x05\
+    \x04\x03\x02\x06\x08\x12\x04\xee\x01)R\n\x10\n\x08\x04\x03\x02\x06\x08\
+    \x9c\x08\0\x12\x04\xee\x01*Q\n\x82\x01\n\x02\x04\x04\x12\x06\xf3\x01\0\
+    \xab\x02\x01\x1at\x20A\x20configuration\x20object\x20describing\x20how\
+    \x20Cloud\x20Bigtable\x20should\x20treat\x20traffic\n\x20from\x20a\x20pa\
+    rticular\x20end\x20user\x20application.\n\n\x0b\n\x03\x04\x04\x01\x12\
+    \x04\xf3\x01\x08\x12\n\r\n\x03\x04\x04\x07\x12\x06\xf4\x01\x02\xf7\x01\
+    \x04\n\x0f\n\x05\x04\x04\x07\x9d\x08\x12\x06\xf4\x01\x02\xf7\x01\x04\n\
+    \xcc\x02\n\x04\x04\x04\x03\0\x12\x06\xfe\x01\x02\x82\x02\x03\x1a\xbb\x02\
+    \x20Read/write\x20requests\x20are\x20routed\x20to\x20the\x20nearest\x20c\
+    luster\x20in\x20the\x20instance,\x20and\n\x20will\x20fail\x20over\x20to\
+    \x20the\x20nearest\x20cluster\x20that\x20is\x20available\x20in\x20the\
+    \x20event\x20of\n\x20transient\x20errors\x20or\x20delays.\x20Clusters\
+    \x20in\x20a\x20region\x20are\x20considered\n\x20equidistant.\x20Choosing\
+    \x20this\x20option\x20sacrifices\x20read-your-writes\x20consistency\n\
+    \x20to\x20improve\x20availability.\n\n\r\n\x05\x04\x04\x03\0\x01\x12\x04\
+    \xfe\x01\n#\n\xa1\x01\n\x06\x04\x04\x03\0\x02\0\x12\x04\x81\x02\x04$\x1a\
+    \x90\x01\x20The\x20set\x20of\x20clusters\x20to\x20route\x20to.\x20The\
+    \x20order\x20is\x20ignored;\x20clusters\x20will\x20be\n\x20tried\x20in\
+    \x20order\x20of\x20distance.\x20If\x20left\x20empty,\x20all\x20clusters\
+    \x20are\x20eligible.\n\n\x0f\n\x07\x04\x04\x03\0\x02\0\x04\x12\x04\x81\
+    \x02\x04\x0c\n\x0f\n\x07\x04\x04\x03\0\x02\0\x05\x12\x04\x81\x02\r\x13\n\
+    \x0f\n\x07\x04\x04\x03\0\x02\0\x01\x12\x04\x81\x02\x14\x1f\n\x0f\n\x07\
+    \x04\x04\x03\0\x02\0\x03\x12\x04\x81\x02\"#\n\xb0\x01\n\x04\x04\x04\x03\
+    \x01\x12\x06\x87\x02\x02\x8f\x02\x03\x1a\x9f\x01\x20Unconditionally\x20r\
     outes\x20all\x20read/write\x20requests\x20to\x20a\x20specific\x20cluster\
-    .\n\x20This\x20option\x20preserves\x20read-your-writes\x20consistency,\
-    \x20but\x20does\x20not\x20improve\n\x20availability.\n\n\r\n\x05\x04\x02\
-    \x03\x01\x01\x12\x04\xa7\x01\n\x1e\nL\n\x06\x04\x02\x03\x01\x02\0\x12\
-    \x04\xa9\x01\x04\x1a\x1a<\x20The\x20cluster\x20to\x20which\x20read/write\
-    \x20requests\x20should\x20be\x20routed.\n\n\x0f\n\x07\x04\x02\x03\x01\
-    \x02\0\x05\x12\x04\xa9\x01\x04\n\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x01\
-    \x12\x04\xa9\x01\x0b\x15\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x03\x12\x04\
-    \xa9\x01\x18\x19\n\xd1\x01\n\x06\x04\x02\x03\x01\x02\x01\x12\x04\xae\x01\
+    .\n\x20This\x20option\x20preserves\x20read-your-writes\x20consistency\
+    \x20but\x20does\x20not\x20improve\n\x20availability.\n\n\r\n\x05\x04\x04\
+    \x03\x01\x01\x12\x04\x87\x02\n\x1e\nL\n\x06\x04\x04\x03\x01\x02\0\x12\
+    \x04\x89\x02\x04\x1a\x1a<\x20The\x20cluster\x20to\x20which\x20read/write\
+    \x20requests\x20should\x20be\x20routed.\n\n\x0f\n\x07\x04\x04\x03\x01\
+    \x02\0\x05\x12\x04\x89\x02\x04\n\n\x0f\n\x07\x04\x04\x03\x01\x02\0\x01\
+    \x12\x04\x89\x02\x0b\x15\n\x0f\n\x07\x04\x04\x03\x01\x02\0\x03\x12\x04\
+    \x89\x02\x18\x19\n\xd1\x01\n\x06\x04\x04\x03\x01\x02\x01\x12\x04\x8e\x02\
     \x04(\x1a\xc0\x01\x20Whether\x20or\x20not\x20`CheckAndMutateRow`\x20and\
     \x20`ReadModifyWriteRow`\x20requests\x20are\n\x20allowed\x20by\x20this\
     \x20app\x20profile.\x20It\x20is\x20unsafe\x20to\x20send\x20these\x20requ\
     ests\x20to\n\x20the\x20same\x20table/row/column\x20in\x20multiple\x20clu\
-    sters.\n\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x05\x12\x04\xae\x01\x04\x08\
-    \n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x01\x12\x04\xae\x01\t#\n\x0f\n\x07\
-    \x04\x02\x03\x01\x02\x01\x03\x12\x04\xae\x01&'\n\xaf\x01\n\x04\x04\x02\
-    \x02\0\x12\x04\xb4\x01\x02\x12\x1a\xa0\x01\x20(`OutputOnly`)\n\x20The\
-    \x20unique\x20name\x20of\x20the\x20app\x20profile.\x20Values\x20are\x20o\
-    f\x20the\x20form\n\x20`projects/<project>/instances/<instance>/appProfil\
-    es/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\
-    \xb4\x01\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xb4\x01\t\r\n\r\n\
-    \x05\x04\x02\x02\0\x03\x12\x04\xb4\x01\x10\x11\n\xcd\x03\n\x04\x04\x02\
-    \x02\x01\x12\x04\xbe\x01\x02\x12\x1a\xbe\x03\x20Strongly\x20validated\
-    \x20etag\x20for\x20optimistic\x20concurrency\x20control.\x20Preserve\x20\
-    the\n\x20value\x20returned\x20from\x20`GetAppProfile`\x20when\x20calling\
-    \x20`UpdateAppProfile`\x20to\n\x20fail\x20the\x20request\x20if\x20there\
-    \x20has\x20been\x20a\x20modification\x20in\x20the\x20mean\x20time.\x20Th\
-    e\n\x20`update_mask`\x20of\x20the\x20request\x20need\x20not\x20include\
-    \x20`etag`\x20for\x20this\x20protection\n\x20to\x20apply.\n\x20See\x20[W\
-    ikipedia](https://en.wikipedia.org/wiki/HTTP_ETag)\x20and\n\x20[RFC\x207\
-    232](https://tools.ietf.org/html/rfc7232#section-2.3)\x20for\x20more\n\
-    \x20details.\n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\xbe\x01\x02\x08\n\r\
-    \n\x05\x04\x02\x02\x01\x01\x12\x04\xbe\x01\t\r\n\r\n\x05\x04\x02\x02\x01\
-    \x03\x12\x04\xbe\x01\x10\x11\nS\n\x04\x04\x02\x02\x02\x12\x04\xc1\x01\
-    \x02\x19\x1aE\x20Optional\x20long\x20form\x20description\x20of\x20the\
-    \x20use\x20case\x20for\x20this\x20AppProfile.\n\n\r\n\x05\x04\x02\x02\
-    \x02\x05\x12\x04\xc1\x01\x02\x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\
-    \xc1\x01\t\x14\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xc1\x01\x17\x18\n}\
-    \n\x04\x04\x02\x08\0\x12\x06\xc5\x01\x02\xcb\x01\x03\x1am\x20The\x20rout\
-    ing\x20policy\x20for\x20all\x20read/write\x20requests\x20which\x20use\
-    \x20this\x20app\x20profile.\n\x20A\x20value\x20must\x20be\x20explicitly\
-    \x20set.\n\n\r\n\x05\x04\x02\x08\0\x01\x12\x04\xc5\x01\x08\x16\nM\n\x04\
-    \x04\x02\x02\x03\x12\x04\xc7\x01\x04@\x1a?\x20Use\x20a\x20multi-cluster\
-    \x20routing\x20policy\x20that\x20may\x20pick\x20any\x20cluster.\n\n\r\n\
-    \x05\x04\x02\x02\x03\x06\x12\x04\xc7\x01\x04\x1d\n\r\n\x05\x04\x02\x02\
-    \x03\x01\x12\x04\xc7\x01\x1e;\n\r\n\x05\x04\x02\x02\x03\x03\x12\x04\xc7\
-    \x01>?\n4\n\x04\x04\x02\x02\x04\x12\x04\xca\x01\x044\x1a&\x20Use\x20a\
-    \x20single-cluster\x20routing\x20policy.\n\n\r\n\x05\x04\x02\x02\x04\x06\
-    \x12\x04\xca\x01\x04\x18\n\r\n\x05\x04\x02\x02\x04\x01\x12\x04\xca\x01\
-    \x19/\n\r\n\x05\x04\x02\x02\x04\x03\x12\x04\xca\x0123b\x06proto3\
+    sters.\n\n\x0f\n\x07\x04\x04\x03\x01\x02\x01\x05\x12\x04\x8e\x02\x04\x08\
+    \n\x0f\n\x07\x04\x04\x03\x01\x02\x01\x01\x12\x04\x8e\x02\t#\n\x0f\n\x07\
+    \x04\x04\x03\x01\x02\x01\x03\x12\x04\x8e\x02&'\n\x9f\x01\n\x04\x04\x04\
+    \x02\0\x12\x04\x93\x02\x02\x12\x1a\x90\x01\x20The\x20unique\x20name\x20o\
+    f\x20the\x20app\x20profile.\x20Values\x20are\x20of\x20the\x20form\n\x20`\
+    projects/{project}/instances/{instance}/appProfiles/[_a-zA-Z0-9][-_.a-zA\
+    -Z0-9]*`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\x93\x02\x02\x08\n\r\n\
+    \x05\x04\x04\x02\0\x01\x12\x04\x93\x02\t\r\n\r\n\x05\x04\x04\x02\0\x03\
+    \x12\x04\x93\x02\x10\x11\n\xcd\x03\n\x04\x04\x04\x02\x01\x12\x04\x9d\x02\
+    \x02\x12\x1a\xbe\x03\x20Strongly\x20validated\x20etag\x20for\x20optimist\
+    ic\x20concurrency\x20control.\x20Preserve\x20the\n\x20value\x20returned\
+    \x20from\x20`GetAppProfile`\x20when\x20calling\x20`UpdateAppProfile`\x20\
+    to\n\x20fail\x20the\x20request\x20if\x20there\x20has\x20been\x20a\x20mod\
+    ification\x20in\x20the\x20mean\x20time.\x20The\n\x20`update_mask`\x20of\
+    \x20the\x20request\x20need\x20not\x20include\x20`etag`\x20for\x20this\
+    \x20protection\n\x20to\x20apply.\n\x20See\x20[Wikipedia](https://en.wiki\
+    pedia.org/wiki/HTTP_ETag)\x20and\n\x20[RFC\x207232](https://tools.ietf.o\
+    rg/html/rfc7232#section-2.3)\x20for\x20more\n\x20details.\n\n\r\n\x05\
+    \x04\x04\x02\x01\x05\x12\x04\x9d\x02\x02\x08\n\r\n\x05\x04\x04\x02\x01\
+    \x01\x12\x04\x9d\x02\t\r\n\r\n\x05\x04\x04\x02\x01\x03\x12\x04\x9d\x02\
+    \x10\x11\nJ\n\x04\x04\x04\x02\x02\x12\x04\xa0\x02\x02\x19\x1a<\x20Long\
+    \x20form\x20description\x20of\x20the\x20use\x20case\x20for\x20this\x20Ap\
+    pProfile.\n\n\r\n\x05\x04\x04\x02\x02\x05\x12\x04\xa0\x02\x02\x08\n\r\n\
+    \x05\x04\x04\x02\x02\x01\x12\x04\xa0\x02\t\x14\n\r\n\x05\x04\x04\x02\x02\
+    \x03\x12\x04\xa0\x02\x17\x18\n|\n\x04\x04\x04\x08\0\x12\x06\xa4\x02\x02\
+    \xaa\x02\x03\x1al\x20The\x20routing\x20policy\x20for\x20all\x20read/writ\
+    e\x20requests\x20that\x20use\x20this\x20app\x20profile.\n\x20A\x20value\
+    \x20must\x20be\x20explicitly\x20set.\n\n\r\n\x05\x04\x04\x08\0\x01\x12\
+    \x04\xa4\x02\x08\x16\n3\n\x04\x04\x04\x02\x03\x12\x04\xa6\x02\x04@\x1a%\
+    \x20Use\x20a\x20multi-cluster\x20routing\x20policy.\n\n\r\n\x05\x04\x04\
+    \x02\x03\x06\x12\x04\xa6\x02\x04\x1d\n\r\n\x05\x04\x04\x02\x03\x01\x12\
+    \x04\xa6\x02\x1e;\n\r\n\x05\x04\x04\x02\x03\x03\x12\x04\xa6\x02>?\n4\n\
+    \x04\x04\x04\x02\x04\x12\x04\xa9\x02\x044\x1a&\x20Use\x20a\x20single-clu\
+    ster\x20routing\x20policy.\n\n\r\n\x05\x04\x04\x02\x04\x06\x12\x04\xa9\
+    \x02\x04\x18\n\r\n\x05\x04\x04\x02\x04\x01\x12\x04\xa9\x02\x19/\n\r\n\
+    \x05\x04\x04\x02\x04\x03\x12\x04\xa9\x0223\n\xcb\x02\n\x02\x04\x05\x12\
+    \x06\xb2\x02\0\xd3\x02\x01\x1a\xbc\x02\x20A\x20tablet\x20is\x20a\x20defi\
+    ned\x20by\x20a\x20start\x20and\x20end\x20key\x20and\x20is\x20explained\
+    \x20in\n\x20https://cloud.google.com/bigtable/docs/overview#architecture\
+    \x20and\n\x20https://cloud.google.com/bigtable/docs/performance#optimiza\
+    tion.\n\x20A\x20Hot\x20tablet\x20is\x20a\x20tablet\x20that\x20exhibits\
+    \x20high\x20average\x20cpu\x20usage\x20during\x20the\x20time\n\x20interv\
+    al\x20from\x20start\x20time\x20to\x20end\x20time.\n\n\x0b\n\x03\x04\x05\
+    \x01\x12\x04\xb2\x02\x08\x11\n\r\n\x03\x04\x05\x07\x12\x06\xb3\x02\x02\
+    \xb6\x02\x04\n\x0f\n\x05\x04\x05\x07\x9d\x08\x12\x06\xb3\x02\x02\xb6\x02\
+    \x04\n\xa3\x01\n\x04\x04\x05\x02\0\x12\x04\xba\x02\x02\x12\x1a\x94\x01\
+    \x20The\x20unique\x20name\x20of\x20the\x20hot\x20tablet.\x20Values\x20ar\
+    e\x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/clu\
+    sters/{cluster}/hotTablets/[a-zA-Z0-9_-]*`.\n\n\r\n\x05\x04\x05\x02\0\
+    \x05\x12\x04\xba\x02\x02\x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xba\x02\
+    \t\r\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\xba\x02\x10\x11\n\xa4\x01\n\x04\
+    \x04\x05\x02\x01\x12\x06\xbe\x02\x02\xc0\x02\x1c\x1a\x93\x01\x20Name\x20\
+    of\x20the\x20table\x20that\x20contains\x20the\x20tablet.\x20Values\x20ar\
+    e\x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/tab\
+    les/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.\n\n\r\n\x05\x04\x05\x02\x01\x05\x12\
+    \x04\xbe\x02\x02\x08\n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\xbe\x02\t\x13\
+    \n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\xbe\x02\x16\x17\n\x0f\n\x05\x04\
+    \x05\x02\x01\x08\x12\x06\xbe\x02\x18\xc0\x02\x1b\n\x11\n\x07\x04\x05\x02\
+    \x01\x08\x9f\x08\x12\x06\xbe\x02\x19\xc0\x02\x1a\n>\n\x04\x04\x05\x02\
+    \x02\x12\x04\xc3\x02\x02W\x1a0\x20Output\x20only.\x20The\x20start\x20tim\
+    e\x20of\x20the\x20hot\x20tablet.\n\n\r\n\x05\x04\x05\x02\x02\x06\x12\x04\
+    \xc3\x02\x02\x1b\n\r\n\x05\x04\x05\x02\x02\x01\x12\x04\xc3\x02\x1c&\n\r\
+    \n\x05\x04\x05\x02\x02\x03\x12\x04\xc3\x02)*\n\r\n\x05\x04\x05\x02\x02\
+    \x08\x12\x04\xc3\x02+V\n\x10\n\x08\x04\x05\x02\x02\x08\x9c\x08\0\x12\x04\
+    \xc3\x02,U\n<\n\x04\x04\x05\x02\x03\x12\x04\xc6\x02\x02U\x1a.\x20Output\
+    \x20only.\x20The\x20end\x20time\x20of\x20the\x20hot\x20tablet.\n\n\r\n\
+    \x05\x04\x05\x02\x03\x06\x12\x04\xc6\x02\x02\x1b\n\r\n\x05\x04\x05\x02\
+    \x03\x01\x12\x04\xc6\x02\x1c$\n\r\n\x05\x04\x05\x02\x03\x03\x12\x04\xc6\
+    \x02'(\n\r\n\x05\x04\x05\x02\x03\x08\x12\x04\xc6\x02)T\n\x10\n\x08\x04\
+    \x05\x02\x03\x08\x9c\x08\0\x12\x04\xc6\x02*S\n-\n\x04\x04\x05\x02\x04\
+    \x12\x04\xc9\x02\x02\x17\x1a\x1f\x20Tablet\x20Start\x20Key\x20(inclusive\
+    ).\n\n\r\n\x05\x04\x05\x02\x04\x05\x12\x04\xc9\x02\x02\x08\n\r\n\x05\x04\
+    \x05\x02\x04\x01\x12\x04\xc9\x02\t\x12\n\r\n\x05\x04\x05\x02\x04\x03\x12\
+    \x04\xc9\x02\x15\x16\n+\n\x04\x04\x05\x02\x05\x12\x04\xcc\x02\x02\x15\
+    \x1a\x1d\x20Tablet\x20End\x20Key\x20(inclusive).\n\n\r\n\x05\x04\x05\x02\
+    \x05\x05\x12\x04\xcc\x02\x02\x08\n\r\n\x05\x04\x05\x02\x05\x01\x12\x04\
+    \xcc\x02\t\x10\n\r\n\x05\x04\x05\x02\x05\x03\x12\x04\xcc\x02\x13\x14\n\
+    \xb0\x02\n\x04\x04\x05\x02\x06\x12\x04\xd2\x02\x02O\x1a\xa1\x02\x20Outpu\
+    t\x20only.\x20The\x20average\x20CPU\x20usage\x20spent\x20by\x20a\x20node\
+    \x20on\x20this\x20tablet\x20over\x20the\x20start_time\x20to\n\x20end_tim\
+    e\x20time\x20range.\x20The\x20percentage\x20is\x20the\x20amount\x20of\
+    \x20CPU\x20used\x20by\x20the\x20node\n\x20to\x20serve\x20the\x20tablet,\
+    \x20from\x200%\x20(tablet\x20was\x20not\x20interacted\x20with)\x20to\x20\
+    100%\x20(the\n\x20node\x20spent\x20all\x20cycles\x20serving\x20the\x20ho\
+    t\x20tablet).\n\n\r\n\x05\x04\x05\x02\x06\x05\x12\x04\xd2\x02\x02\x07\n\
+    \r\n\x05\x04\x05\x02\x06\x01\x12\x04\xd2\x02\x08\x1e\n\r\n\x05\x04\x05\
+    \x02\x06\x03\x12\x04\xd2\x02!\"\n\r\n\x05\x04\x05\x02\x06\x08\x12\x04\
+    \xd2\x02#N\n\x10\n\x08\x04\x05\x02\x06\x08\x9c\x08\0\x12\x04\xd2\x02$Mb\
+    \x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

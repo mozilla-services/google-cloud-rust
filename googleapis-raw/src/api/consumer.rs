@@ -489,9 +489,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     tion\"L\n\x0cPropertyType\x12\x0f\n\x0bUNSPECIFIED\x10\0\x12\t\n\x05INT6\
     4\x10\x01\x12\x08\n\x04BOOL\x10\x02\x12\n\n\x06STRING\x10\x03\x12\n\n\
     \x06DOUBLE\x10\x04Bh\n\x0ecom.google.apiB\rConsumerProtoP\x01ZEgoogle.go\
-    lang.org/genproto/googleapis/api/serviceconfig;serviceconfigJ\xbc\x15\n\
-    \x06\x12\x04\x0e\0Q\x01\n\xbd\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb2\x04\
-    \x20Copyright\x202016\x20Google\x20Inc.\n\n\x20Licensed\x20under\x20the\
+    lang.org/genproto/googleapis/api/serviceconfig;serviceconfigJ\xbb\x15\n\
+    \x06\x12\x04\x0e\0Q\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\
+    \x20Copyright\x202016\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\
     \x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20y\
     ou\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\
     \x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\

@@ -76,9 +76,16 @@ api
 api/servicecontrol/v1
 api/servicemanagement/v1
 cloud/asset/v1
+cloud/orgpolicy/v1
+cloud/orgpolicy/v2
+cloud/osconfig/v1
+cloud/osconfig/v1alpha
+cloud/osconfig/agentendpoint/v1
 logging/type
 type
 iam/v1
+identity/accesscontextmanager/v1
+identity/accesscontextmanager/type
 longrunning
 pubsub/v1
 pubsub/v1beta2

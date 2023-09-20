@@ -23,14 +23,14 @@ pub(crate) mod rpc;
 pub(crate) mod r#type;
 
 // pub mod empty;
+#[cfg(any(feature="bigtable", feature="pubsub", feature="spanner"))]
 pub mod empty;
 pub mod api;
-#[cfg(feature="bigtable")]
 pub mod bigtable;
 pub mod cloud;
+pub mod identity;
 pub mod logging;
 pub mod longrunning;
-#[cfg(feature="pubsub")]
+pub mod orgpolicy;
 pub mod pubsub;
-#[cfg(feature="spanner")]
 pub mod spanner;

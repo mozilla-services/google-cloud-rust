@@ -86,6 +86,13 @@ const METHOD_BIGTABLE_INSTANCE_ADMIN_UPDATE_CLUSTER: ::grpcio::Method<super::ins
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_BIGTABLE_INSTANCE_ADMIN_PARTIAL_UPDATE_CLUSTER: ::grpcio::Method<super::bigtable_instance_admin::PartialUpdateClusterRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableInstanceAdmin/PartialUpdateCluster",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_BIGTABLE_INSTANCE_ADMIN_DELETE_CLUSTER: ::grpcio::Method<super::bigtable_instance_admin::DeleteClusterRequest, super::empty::Empty> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.bigtable.admin.v2.BigtableInstanceAdmin/DeleteCluster",
@@ -145,6 +152,13 @@ const METHOD_BIGTABLE_INSTANCE_ADMIN_SET_IAM_POLICY: ::grpcio::Method<super::iam
 const METHOD_BIGTABLE_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS: ::grpcio::Method<super::iam_policy::TestIamPermissionsRequest, super::iam_policy::TestIamPermissionsResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.bigtable.admin.v2.BigtableInstanceAdmin/TestIamPermissions",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_INSTANCE_ADMIN_LIST_HOT_TABLETS: ::grpcio::Method<super::bigtable_instance_admin::ListHotTabletsRequest, super::bigtable_instance_admin::ListHotTabletsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableInstanceAdmin/ListHotTablets",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -321,6 +335,22 @@ impl BigtableInstanceAdminClient {
         self.update_cluster_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn partial_update_cluster_opt(&self, req: &super::bigtable_instance_admin::PartialUpdateClusterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_BIGTABLE_INSTANCE_ADMIN_PARTIAL_UPDATE_CLUSTER, req, opt)
+    }
+
+    pub fn partial_update_cluster(&self, req: &super::bigtable_instance_admin::PartialUpdateClusterRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.partial_update_cluster_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn partial_update_cluster_async_opt(&self, req: &super::bigtable_instance_admin::PartialUpdateClusterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_INSTANCE_ADMIN_PARTIAL_UPDATE_CLUSTER, req, opt)
+    }
+
+    pub fn partial_update_cluster_async(&self, req: &super::bigtable_instance_admin::PartialUpdateClusterRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.partial_update_cluster_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn delete_cluster_opt(&self, req: &super::bigtable_instance_admin::DeleteClusterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
         self.client.unary_call(&METHOD_BIGTABLE_INSTANCE_ADMIN_DELETE_CLUSTER, req, opt)
     }
@@ -464,6 +494,22 @@ impl BigtableInstanceAdminClient {
     pub fn test_iam_permissions_async(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
         self.test_iam_permissions_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn list_hot_tablets_opt(&self, req: &super::bigtable_instance_admin::ListHotTabletsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::bigtable_instance_admin::ListHotTabletsResponse> {
+        self.client.unary_call(&METHOD_BIGTABLE_INSTANCE_ADMIN_LIST_HOT_TABLETS, req, opt)
+    }
+
+    pub fn list_hot_tablets(&self, req: &super::bigtable_instance_admin::ListHotTabletsRequest) -> ::grpcio::Result<super::bigtable_instance_admin::ListHotTabletsResponse> {
+        self.list_hot_tablets_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_hot_tablets_async_opt(&self, req: &super::bigtable_instance_admin::ListHotTabletsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable_instance_admin::ListHotTabletsResponse>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_INSTANCE_ADMIN_LIST_HOT_TABLETS, req, opt)
+    }
+
+    pub fn list_hot_tablets_async(&self, req: &super::bigtable_instance_admin::ListHotTabletsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable_instance_admin::ListHotTabletsResponse>> {
+        self.list_hot_tablets_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -500,6 +546,9 @@ pub trait BigtableInstanceAdmin {
     fn update_cluster(&mut self, ctx: ::grpcio::RpcContext, _req: super::instance::Cluster, sink: ::grpcio::UnarySink<super::operations::Operation>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
+    fn partial_update_cluster(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_instance_admin::PartialUpdateClusterRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn delete_cluster(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_instance_admin::DeleteClusterRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
@@ -525,6 +574,9 @@ pub trait BigtableInstanceAdmin {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn test_iam_permissions(&mut self, ctx: ::grpcio::RpcContext, _req: super::iam_policy::TestIamPermissionsRequest, sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn list_hot_tablets(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_instance_admin::ListHotTabletsRequest, sink: ::grpcio::UnarySink<super::bigtable_instance_admin::ListHotTabletsResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -572,6 +624,10 @@ pub fn create_bigtable_instance_admin<S: BigtableInstanceAdmin + Send + Clone + 
         instance.update_cluster(ctx, req, resp)
     });
     let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_PARTIAL_UPDATE_CLUSTER, move |ctx, req, resp| {
+        instance.partial_update_cluster(ctx, req, resp)
+    });
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_DELETE_CLUSTER, move |ctx, req, resp| {
         instance.delete_cluster(ctx, req, resp)
     });
@@ -603,9 +659,13 @@ pub fn create_bigtable_instance_admin<S: BigtableInstanceAdmin + Send + Clone + 
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_SET_IAM_POLICY, move |ctx, req, resp| {
         instance.set_iam_policy(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, move |ctx, req, resp| {
         instance.test_iam_permissions(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_INSTANCE_ADMIN_LIST_HOT_TABLETS, move |ctx, req, resp| {
+        instance.list_hot_tablets(ctx, req, resp)
     });
     builder.build()
 }

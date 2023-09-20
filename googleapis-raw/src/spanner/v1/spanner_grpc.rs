@@ -93,7 +93,7 @@ const METHOD_SPANNER_BEGIN_TRANSACTION: ::grpcio::Method<super::spanner::BeginTr
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_SPANNER_COMMIT: ::grpcio::Method<super::spanner::CommitRequest, super::spanner::CommitResponse> = ::grpcio::Method {
+const METHOD_SPANNER_COMMIT: ::grpcio::Method<super::spanner::CommitRequest, super::commit_response::CommitResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.v1.Spanner/Commit",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
@@ -293,19 +293,19 @@ impl SpannerClient {
         self.begin_transaction_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn commit_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner::CommitResponse> {
+    pub fn commit_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::commit_response::CommitResponse> {
         self.client.unary_call(&METHOD_SPANNER_COMMIT, req, opt)
     }
 
-    pub fn commit(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<super::spanner::CommitResponse> {
+    pub fn commit(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<super::commit_response::CommitResponse> {
         self.commit_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn commit_async_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner::CommitResponse>> {
+    pub fn commit_async_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::commit_response::CommitResponse>> {
         self.client.unary_call_async(&METHOD_SPANNER_COMMIT, req, opt)
     }
 
-    pub fn commit_async(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner::CommitResponse>> {
+    pub fn commit_async(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::commit_response::CommitResponse>> {
         self.commit_async_opt(req, ::grpcio::CallOption::default())
     }
 
@@ -395,7 +395,7 @@ pub trait Spanner {
     fn begin_transaction(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::BeginTransactionRequest, sink: ::grpcio::UnarySink<super::transaction::Transaction>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn commit(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::CommitRequest, sink: ::grpcio::UnarySink<super::spanner::CommitResponse>) {
+    fn commit(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::CommitRequest, sink: ::grpcio::UnarySink<super::commit_response::CommitResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn rollback(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::RollbackRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
