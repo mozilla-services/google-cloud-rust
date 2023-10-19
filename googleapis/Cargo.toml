@@ -21,6 +21,16 @@ repository.workspace = true
 edition.workspace = true
 
 name = "google-cloud-rust"
+<<<<<<< HEAD
+=======
+version = "0.14.0"
+authors = [
+    "Ferrous Systems",
+    "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
+    "Rust on GCP Team <rust-on-gcp@google.com>"
+    ]
+license-file = "../LICENSE.md"
+>>>>>>> cb27f73 (bump version to 0.14)
 description = "A set of client libraries to interact with various Google Cloud Platform services"
 
 [dependencies]
