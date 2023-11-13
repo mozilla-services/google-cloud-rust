@@ -4,7 +4,7 @@ These are raw bindings for Google APIs based on [`grpcio`](https://github.com/pi
 
 ## Version notes
 
-This library is currently locked to grpcio 0.12.0 and protobuf 2.28.0. This is due to
+This library is currently locked to grpcio 0.13.0 and protobuf 2.28.0.  This is due to
 an [internal dependency of grpcio](https://github.com/tikv/grpc-rs/issues/584). Be sure that you match
 these library versions in your library or application.
 
@@ -113,7 +113,7 @@ git submodule update --remote googleapis
 popd
 ```
 
-to pull a version of the libraries you require. Unfortunately, I have found that `git submodule update` does **NOT** always properly update dependencies to the latest master/main version.  
+to pull a version of the libraries you require. Unfortunately, I have found that `git submodule update` does **NOT** always properly update dependencies to the latest master/main version.
 Be sure that the `grpc/third_party/googleapis` submodule is updated at least once per quarter. This directory contains the Protobuf declarations and can often contain undisclosed changes that need to be reflected into the generated code.
 
 **NOTE**: this may alter the pre-generated mod files requiring old

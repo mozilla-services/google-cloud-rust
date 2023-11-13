@@ -12,33 +12,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[package]
-version.workspace = true
-authors.workspace = true
-license-file = "LICENSE.md"
-repository.workspace = true
-edition.workspace = true
-
-name = "google-cloud-rust-raw"
-description = "A set of client libraries to interact with various Google Cloud Platform services"
-
-exclude = ["grpc"]
-
-[dependencies]
-futures.workspace = true
-grpcio.workspace = true
-protobuf.workspace = true
-
-[dev-dependencies]
-slog = "2.5"
-slog-scope = "4.3"
-slog-term = "2.6"
-slog-stdlog = "4.0"
-slog-async = "2.5"
-log = "0.4"
-
-[features]
-default = ["spanner"]
-bigtable = []
-pubsub = []
-spanner = []
