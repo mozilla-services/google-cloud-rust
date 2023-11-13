@@ -16,7 +16,6 @@
 version.workspace = true
 authors.workspace = true
 license-file.workspace = true
-readme.workspace = true
 repository.workspace = true
 edition.workspace = true
 
