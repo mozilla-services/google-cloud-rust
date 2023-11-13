@@ -2,6 +2,11 @@
 
 This repository contains [`Rust`](https://www.rust-lang.org/) client libraries to interact with various [`Google Cloud Platform`](https://cloud.google.com/) services.
 
+*Note:* This library currently uses the following dependencies. ***THESE DEPENDENCIES MUST MATCH WITH THE CALLING CODE*** As always, be sure to consult the `Cargo.toml` to verify the versions being used by this iteration of the library.
+
+* `protobuf={version="=2.28.0"}`
+* `grpcio={version="0.13.0"}`
+
 ## Disclaimers
 
 ### Currently in production:

@@ -198,6 +198,8 @@ pub struct BackendRule {
     pub min_deadline: f64,
     pub operation_deadline: f64,
     pub path_translation: BackendRule_PathTranslation,
+    pub protocol: ::std::string::String,
+    pub overrides_by_request_protocol: ::std::collections::HashMap<::std::string::String, BackendRule>,
     // message oneof groups
     pub authentication: ::std::option::Option<BackendRule_oneof_authentication>,
     // special fields
@@ -214,6 +216,7 @@ impl<'a> ::std::default::Default for &'a BackendRule {
 #[derive(Clone,PartialEq,Debug)]
 pub enum BackendRule_oneof_authentication {
     jwt_audience(::std::string::String),
+    disable_auth(bool),
 }
 
 impl BackendRule {
@@ -381,6 +384,82 @@ impl BackendRule {
             ::std::string::String::new()
         }
     }
+
+    // bool disable_auth = 8;
+
+
+    pub fn get_disable_auth(&self) -> bool {
+        match self.authentication {
+            ::std::option::Option::Some(BackendRule_oneof_authentication::disable_auth(v)) => v,
+            _ => false,
+        }
+    }
+    pub fn clear_disable_auth(&mut self) {
+        self.authentication = ::std::option::Option::None;
+    }
+
+    pub fn has_disable_auth(&self) -> bool {
+        match self.authentication {
+            ::std::option::Option::Some(BackendRule_oneof_authentication::disable_auth(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_disable_auth(&mut self, v: bool) {
+        self.authentication = ::std::option::Option::Some(BackendRule_oneof_authentication::disable_auth(v))
+    }
+
+    // string protocol = 9;
+
+
+    pub fn get_protocol(&self) -> &str {
+        &self.protocol
+    }
+    pub fn clear_protocol(&mut self) {
+        self.protocol.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_protocol(&mut self, v: ::std::string::String) {
+        self.protocol = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_protocol(&mut self) -> &mut ::std::string::String {
+        &mut self.protocol
+    }
+
+    // Take field
+    pub fn take_protocol(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.protocol, ::std::string::String::new())
+    }
+
+    // repeated .google.api.BackendRule.OverridesByRequestProtocolEntry overrides_by_request_protocol = 10;
+
+
+    pub fn get_overrides_by_request_protocol(&self) -> &::std::collections::HashMap<::std::string::String, BackendRule> {
+        &self.overrides_by_request_protocol
+    }
+    pub fn clear_overrides_by_request_protocol(&mut self) {
+        self.overrides_by_request_protocol.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_overrides_by_request_protocol(&mut self, v: ::std::collections::HashMap<::std::string::String, BackendRule>) {
+        self.overrides_by_request_protocol = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_overrides_by_request_protocol(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, BackendRule> {
+        &mut self.overrides_by_request_protocol
+    }
+
+    // Take field
+    pub fn take_overrides_by_request_protocol(&mut self) -> ::std::collections::HashMap<::std::string::String, BackendRule> {
+        ::std::mem::replace(&mut self.overrides_by_request_protocol, ::std::collections::HashMap::new())
+    }
 }
 
 impl ::protobuf::Message for BackendRule {
@@ -428,6 +507,18 @@ impl ::protobuf::Message for BackendRule {
                     }
                     self.authentication = ::std::option::Option::Some(BackendRule_oneof_authentication::jwt_audience(is.read_string()?));
                 },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.authentication = ::std::option::Option::Some(BackendRule_oneof_authentication::disable_auth(is.read_bool()?));
+                },
+                9 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.protocol)?;
+                },
+                10 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeMessage<BackendRule>>(wire_type, is, &mut self.overrides_by_request_protocol)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -458,10 +549,17 @@ impl ::protobuf::Message for BackendRule {
         if self.path_translation != BackendRule_PathTranslation::PATH_TRANSLATION_UNSPECIFIED {
             my_size += ::protobuf::rt::enum_size(6, self.path_translation);
         }
+        if !self.protocol.is_empty() {
+            my_size += ::protobuf::rt::string_size(9, &self.protocol);
+        }
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeMessage<BackendRule>>(10, &self.overrides_by_request_protocol);
         if let ::std::option::Option::Some(ref v) = self.authentication {
             match v {
                 &BackendRule_oneof_authentication::jwt_audience(ref v) => {
                     my_size += ::protobuf::rt::string_size(7, &v);
+                },
+                &BackendRule_oneof_authentication::disable_auth(v) => {
+                    my_size += 2;
                 },
             };
         }
@@ -489,10 +587,17 @@ impl ::protobuf::Message for BackendRule {
         if self.path_translation != BackendRule_PathTranslation::PATH_TRANSLATION_UNSPECIFIED {
             os.write_enum(6, ::protobuf::ProtobufEnum::value(&self.path_translation))?;
         }
+        if !self.protocol.is_empty() {
+            os.write_string(9, &self.protocol)?;
+        }
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeMessage<BackendRule>>(10, &self.overrides_by_request_protocol, os)?;
         if let ::std::option::Option::Some(ref v) = self.authentication {
             match v {
                 &BackendRule_oneof_authentication::jwt_audience(ref v) => {
                     os.write_string(7, v)?;
+                },
+                &BackendRule_oneof_authentication::disable_auth(v) => {
+                    os.write_bool(8, v)?;
                 },
             };
         }
@@ -569,6 +674,21 @@ impl ::protobuf::Message for BackendRule {
                 BackendRule::has_jwt_audience,
                 BackendRule::get_jwt_audience,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_bool_accessor::<_>(
+                "disable_auth",
+                BackendRule::has_disable_auth,
+                BackendRule::get_disable_auth,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "protocol",
+                |m: &BackendRule| { &m.protocol },
+                |m: &mut BackendRule| { &mut m.protocol },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeMessage<BackendRule>>(
+                "overrides_by_request_protocol",
+                |m: &BackendRule| { &m.overrides_by_request_protocol },
+                |m: &mut BackendRule| { &mut m.overrides_by_request_protocol },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<BackendRule>(
                 "BackendRule",
                 fields,
@@ -592,6 +712,9 @@ impl ::protobuf::Clear for BackendRule {
         self.operation_deadline = 0.;
         self.path_translation = BackendRule_PathTranslation::PATH_TRANSLATION_UNSPECIFIED;
         self.authentication = ::std::option::Option::None;
+        self.authentication = ::std::option::Option::None;
+        self.protocol.clear();
+        self.overrides_by_request_protocol.clear();
         self.unknown_fields.clear();
     }
 }
@@ -664,134 +787,195 @@ impl ::protobuf::reflect::ProtobufValue for BackendRule_PathTranslation {
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x18google/api/backend.proto\x12\ngoogle.api\"8\n\x07Backend\x12-\n\
     \x05rules\x18\x01\x20\x03(\x0b2\x17.google.api.BackendRuleR\x05rules\"\
-    \xa3\x03\n\x0bBackendRule\x12\x1a\n\x08selector\x18\x01\x20\x01(\tR\x08s\
+    \xcc\x05\n\x0bBackendRule\x12\x1a\n\x08selector\x18\x01\x20\x01(\tR\x08s\
     elector\x12\x18\n\x07address\x18\x02\x20\x01(\tR\x07address\x12\x1a\n\
-    \x08deadline\x18\x03\x20\x01(\x01R\x08deadline\x12!\n\x0cmin_deadline\
-    \x18\x04\x20\x01(\x01R\x0bminDeadline\x12-\n\x12operation_deadline\x18\
-    \x05\x20\x01(\x01R\x11operationDeadline\x12R\n\x10path_translation\x18\
-    \x06\x20\x01(\x0e2'.google.api.BackendRule.PathTranslationR\x0fpathTrans\
-    lation\x12#\n\x0cjwt_audience\x18\x07\x20\x01(\tH\0R\x0bjwtAudience\"e\n\
-    \x0fPathTranslation\x12\x20\n\x1cPATH_TRANSLATION_UNSPECIFIED\x10\0\x12\
-    \x14\n\x10CONSTANT_ADDRESS\x10\x01\x12\x1a\n\x16APPEND_PATH_TO_ADDRESS\
-    \x10\x02B\x10\n\x0eauthenticationBn\n\x0ecom.google.apiB\x0cBackendProto\
-    P\x01ZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceco\
-    nfig\xa2\x02\x04GAPIJ\xb0#\n\x06\x12\x04\x0f\0~\x01\n\xbe\x04\n\x01\x0c\
-    \x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\
-    \x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20\
-    (the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20e\
-    xcept\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20\
-    obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\
-    \x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\
-    \x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20s\
-    oftware\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\
-    \x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\
-    \x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20impli\
-    ed.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20\
-    governing\x20permissions\x20and\n\x20limitations\x20under\x20the\x20Lice\
-    nse.\n\n\n\x08\n\x01\x02\x12\x03\x11\0\x13\n\x08\n\x01\x08\x12\x03\x13\0\
-    \\\n\t\n\x02\x08\x0b\x12\x03\x13\0\\\n\x08\n\x01\x08\x12\x03\x14\0\"\n\t\
-    \n\x02\x08\n\x12\x03\x14\0\"\n\x08\n\x01\x08\x12\x03\x15\0-\n\t\n\x02\
-    \x08\x08\x12\x03\x15\0-\n\x08\n\x01\x08\x12\x03\x16\0'\n\t\n\x02\x08\x01\
-    \x12\x03\x16\0'\n\x08\n\x01\x08\x12\x03\x17\0\"\n\t\n\x02\x08$\x12\x03\
-    \x17\0\"\nH\n\x02\x04\0\x12\x04\x1a\0\x1f\x01\x1a<\x20`Backend`\x20defin\
-    es\x20the\x20backend\x20configuration\x20for\x20a\x20service.\n\n\n\n\
-    \x03\x04\0\x01\x12\x03\x1a\x08\x0f\n\x9b\x01\n\x04\x04\0\x02\0\x12\x03\
-    \x1e\x02!\x1a\x8d\x01\x20A\x20list\x20of\x20API\x20backend\x20rules\x20t\
-    hat\x20apply\x20to\x20individual\x20API\x20methods.\n\n\x20**NOTE:**\x20\
-    All\x20service\x20configuration\x20rules\x20follow\x20\"last\x20one\x20w\
-    ins\"\x20order.\n\n\x0c\n\x05\x04\0\x02\0\x04\x12\x03\x1e\x02\n\n\x0c\n\
-    \x05\x04\0\x02\0\x06\x12\x03\x1e\x0b\x16\n\x0c\n\x05\x04\0\x02\0\x01\x12\
-    \x03\x1e\x17\x1c\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x1e\x1f\x20\nR\n\
-    \x02\x04\x01\x12\x04\"\0~\x01\x1aF\x20A\x20backend\x20rule\x20provides\
-    \x20configuration\x20for\x20an\x20individual\x20API\x20element.\n\n\n\n\
-    \x03\x04\x01\x01\x12\x03\"\x08\x13\n\xcd\x02\n\x04\x04\x01\x04\0\x12\x04\
-    *\x02Z\x03\x1a\xbe\x02\x20Path\x20Translation\x20specifies\x20how\x20to\
-    \x20combine\x20the\x20backend\x20address\x20with\x20the\n\x20request\x20\
-    path\x20in\x20order\x20to\x20produce\x20the\x20appropriate\x20forwarding\
-    \x20URL\x20for\x20the\n\x20request.\n\n\x20Path\x20Translation\x20is\x20\
-    applicable\x20only\x20to\x20HTTP-based\x20backends.\x20Backends\x20which\
-    \n\x20do\x20not\x20accept\x20requests\x20over\x20HTTP/HTTPS\x20should\
-    \x20leave\x20`path_translation`\n\x20unspecified.\n\n\x0c\n\x05\x04\x01\
-    \x04\0\x01\x12\x03*\x07\x16\n\r\n\x06\x04\x01\x04\0\x02\0\x12\x03+\x04%\
-    \n\x0e\n\x07\x04\x01\x04\0\x02\0\x01\x12\x03+\x04\x20\n\x0e\n\x07\x04\
-    \x01\x04\0\x02\0\x02\x12\x03+#$\n\x95\x07\n\x06\x04\x01\x04\0\x02\x01\
-    \x12\x03D\x04\x19\x1a\x85\x07\x20Use\x20the\x20backend\x20address\x20as-\
-    is,\x20with\x20no\x20modification\x20to\x20the\x20path.\x20If\x20the\n\
-    \x20URL\x20pattern\x20contains\x20variables,\x20the\x20variable\x20names\
-    \x20and\x20values\x20will\x20be\n\x20appended\x20to\x20the\x20query\x20s\
-    tring.\x20If\x20a\x20query\x20string\x20parameter\x20and\x20a\x20URL\n\
-    \x20pattern\x20variable\x20have\x20the\x20same\x20name,\x20this\x20may\
-    \x20result\x20in\x20duplicate\x20keys\x20in\n\x20the\x20query\x20string.\
-    \n\n\x20#\x20Examples\n\n\x20Given\x20the\x20following\x20operation\x20c\
-    onfig:\n\n\x20\x20\x20\x20\x20Method\x20path:\x20\x20\x20\x20\x20\x20\
-    \x20\x20/api/company/{cid}/user/{uid}\n\x20\x20\x20\x20\x20Backend\x20ad\
-    dress:\x20\x20\x20\x20https://example.cloudfunctions.net/getUser\n\n\x20\
-    Requests\x20to\x20the\x20following\x20request\x20paths\x20will\x20call\
-    \x20the\x20backend\x20at\x20the\n\x20translated\x20path:\n\n\x20\x20\x20\
-    \x20\x20Request\x20path:\x20/api/company/widgetworks/user/johndoe\n\x20\
-    \x20\x20\x20\x20Translated:\n\x20\x20\x20\x20\x20https://example.cloudfu\
-    nctions.net/getUser?cid=widgetworks&uid=johndoe\n\n\x20\x20\x20\x20\x20R\
-    equest\x20path:\x20/api/company/widgetworks/user/johndoe?timezone=EST\n\
-    \x20\x20\x20\x20\x20Translated:\n\x20\x20\x20\x20\x20https://example.clo\
-    udfunctions.net/getUser?timezone=EST&cid=widgetworks&uid=johndoe\n\n\x0e\
-    \n\x07\x04\x01\x04\0\x02\x01\x01\x12\x03D\x04\x14\n\x0e\n\x07\x04\x01\
-    \x04\0\x02\x01\x02\x12\x03D\x17\x18\n\x82\x05\n\x06\x04\x01\x04\0\x02\
-    \x02\x12\x03Y\x04\x1f\x1a\xf2\x04\x20The\x20request\x20path\x20will\x20b\
-    e\x20appended\x20to\x20the\x20backend\x20address.\n\n\x20#\x20Examples\n\
-    \n\x20Given\x20the\x20following\x20operation\x20config:\n\n\x20\x20\x20\
-    \x20\x20Method\x20path:\x20\x20\x20\x20\x20\x20\x20\x20/api/company/{cid\
-    }/user/{uid}\n\x20\x20\x20\x20\x20Backend\x20address:\x20\x20\x20\x20htt\
-    ps://example.appspot.com\n\n\x20Requests\x20to\x20the\x20following\x20re\
-    quest\x20paths\x20will\x20call\x20the\x20backend\x20at\x20the\n\x20trans\
-    lated\x20path:\n\n\x20\x20\x20\x20\x20Request\x20path:\x20/api/company/w\
-    idgetworks/user/johndoe\n\x20\x20\x20\x20\x20Translated:\n\x20\x20\x20\
-    \x20\x20https://example.appspot.com/api/company/widgetworks/user/johndoe\
+    \x08deadline\x18\x03\x20\x01(\x01R\x08deadline\x12%\n\x0cmin_deadline\
+    \x18\x04\x20\x01(\x01R\x0bminDeadlineB\x02\x18\x01\x12-\n\x12operation_d\
+    eadline\x18\x05\x20\x01(\x01R\x11operationDeadline\x12R\n\x10path_transl\
+    ation\x18\x06\x20\x01(\x0e2'.google.api.BackendRule.PathTranslationR\x0f\
+    pathTranslation\x12#\n\x0cjwt_audience\x18\x07\x20\x01(\tH\0R\x0bjwtAudi\
+    ence\x12#\n\x0cdisable_auth\x18\x08\x20\x01(\x08H\0R\x0bdisableAuth\x12\
+    \x1a\n\x08protocol\x18\t\x20\x01(\tR\x08protocol\x12z\n\x1doverrides_by_\
+    request_protocol\x18\n\x20\x03(\x0b27.google.api.BackendRule.OverridesBy\
+    RequestProtocolEntryR\x1aoverridesByRequestProtocol\x1af\n\x1fOverridesB\
+    yRequestProtocolEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12-\n\
+    \x05value\x18\x02\x20\x01(\x0b2\x17.google.api.BackendRuleR\x05value:\
+    \x028\x01\"e\n\x0fPathTranslation\x12\x20\n\x1cPATH_TRANSLATION_UNSPECIF\
+    IED\x10\0\x12\x14\n\x10CONSTANT_ADDRESS\x10\x01\x12\x1a\n\x16APPEND_PATH\
+    _TO_ADDRESS\x10\x02B\x10\n\x0eauthenticationBn\n\x0ecom.google.apiB\x0cB\
+    ackendProtoP\x01ZEgoogle.golang.org/genproto/googleapis/api/serviceconfi\
+    g;serviceconfig\xa2\x02\x04GAPIJ\xec3\n\x07\x12\x05\x0e\0\xb8\x01\x01\n\
+    \xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202023\x20Go\
+    ogle\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Ver\
+    sion\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20th\
+    is\x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\
+    \x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\
+    \x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Un\
+    less\x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\
+    \x20writing,\x20software\n\x20distributed\x20under\x20the\x20License\x20\
+    is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20\
+    WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20expres\
+    s\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
+    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
+    r\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x13\n\x08\n\x01\x08\
+    \x12\x03\x12\0\\\n\t\n\x02\x08\x0b\x12\x03\x12\0\\\n\x08\n\x01\x08\x12\
+    \x03\x13\0\"\n\t\n\x02\x08\n\x12\x03\x13\0\"\n\x08\n\x01\x08\x12\x03\x14\
+    \0-\n\t\n\x02\x08\x08\x12\x03\x14\0-\n\x08\n\x01\x08\x12\x03\x15\0'\n\t\
+    \n\x02\x08\x01\x12\x03\x15\0'\n\x08\n\x01\x08\x12\x03\x16\0\"\n\t\n\x02\
+    \x08$\x12\x03\x16\0\"\nH\n\x02\x04\0\x12\x04\x19\0\x1e\x01\x1a<\x20`Back\
+    end`\x20defines\x20the\x20backend\x20configuration\x20for\x20a\x20servic\
+    e.\n\n\n\n\x03\x04\0\x01\x12\x03\x19\x08\x0f\n\x9b\x01\n\x04\x04\0\x02\0\
+    \x12\x03\x1d\x02!\x1a\x8d\x01\x20A\x20list\x20of\x20API\x20backend\x20ru\
+    les\x20that\x20apply\x20to\x20individual\x20API\x20methods.\n\n\x20**NOT\
+    E:**\x20All\x20service\x20configuration\x20rules\x20follow\x20\"last\x20\
+    one\x20wins\"\x20order.\n\n\x0c\n\x05\x04\0\x02\0\x04\x12\x03\x1d\x02\n\
+    \n\x0c\n\x05\x04\0\x02\0\x06\x12\x03\x1d\x0b\x16\n\x0c\n\x05\x04\0\x02\0\
+    \x01\x12\x03\x1d\x17\x1c\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x1d\x1f\x20\
+    \nS\n\x02\x04\x01\x12\x05!\0\xb8\x01\x01\x1aF\x20A\x20backend\x20rule\
+    \x20provides\x20configuration\x20for\x20an\x20individual\x20API\x20eleme\
+    nt.\n\n\n\n\x03\x04\x01\x01\x12\x03!\x08\x13\n\xcd\x02\n\x04\x04\x01\x04\
+    \0\x12\x04)\x02Y\x03\x1a\xbe\x02\x20Path\x20Translation\x20specifies\x20\
+    how\x20to\x20combine\x20the\x20backend\x20address\x20with\x20the\n\x20re\
+    quest\x20path\x20in\x20order\x20to\x20produce\x20the\x20appropriate\x20f\
+    orwarding\x20URL\x20for\x20the\n\x20request.\n\n\x20Path\x20Translation\
+    \x20is\x20applicable\x20only\x20to\x20HTTP-based\x20backends.\x20Backend\
+    s\x20which\n\x20do\x20not\x20accept\x20requests\x20over\x20HTTP/HTTPS\
+    \x20should\x20leave\x20`path_translation`\n\x20unspecified.\n\n\x0c\n\
+    \x05\x04\x01\x04\0\x01\x12\x03)\x07\x16\n\r\n\x06\x04\x01\x04\0\x02\0\
+    \x12\x03*\x04%\n\x0e\n\x07\x04\x01\x04\0\x02\0\x01\x12\x03*\x04\x20\n\
+    \x0e\n\x07\x04\x01\x04\0\x02\0\x02\x12\x03*#$\n\x95\x07\n\x06\x04\x01\
+    \x04\0\x02\x01\x12\x03C\x04\x19\x1a\x85\x07\x20Use\x20the\x20backend\x20\
+    address\x20as-is,\x20with\x20no\x20modification\x20to\x20the\x20path.\
+    \x20If\x20the\n\x20URL\x20pattern\x20contains\x20variables,\x20the\x20va\
+    riable\x20names\x20and\x20values\x20will\x20be\n\x20appended\x20to\x20th\
+    e\x20query\x20string.\x20If\x20a\x20query\x20string\x20parameter\x20and\
+    \x20a\x20URL\n\x20pattern\x20variable\x20have\x20the\x20same\x20name,\
+    \x20this\x20may\x20result\x20in\x20duplicate\x20keys\x20in\n\x20the\x20q\
+    uery\x20string.\n\n\x20#\x20Examples\n\n\x20Given\x20the\x20following\
+    \x20operation\x20config:\n\n\x20\x20\x20\x20\x20Method\x20path:\x20\x20\
+    \x20\x20\x20\x20\x20\x20/api/company/{cid}/user/{uid}\n\x20\x20\x20\x20\
+    \x20Backend\x20address:\x20\x20\x20\x20https://example.cloudfunctions.ne\
+    t/getUser\n\n\x20Requests\x20to\x20the\x20following\x20request\x20paths\
+    \x20will\x20call\x20the\x20backend\x20at\x20the\n\x20translated\x20path:\
     \n\n\x20\x20\x20\x20\x20Request\x20path:\x20/api/company/widgetworks/use\
-    r/johndoe?timezone=EST\n\x20\x20\x20\x20\x20Translated:\n\x20\x20\x20\
-    \x20\x20https://example.appspot.com/api/company/widgetworks/user/johndoe\
-    ?timezone=EST\n\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x01\x12\x03Y\x04\x1a\n\
-    \x0e\n\x07\x04\x01\x04\0\x02\x02\x02\x12\x03Y\x1d\x1e\n\x90\x01\n\x04\
-    \x04\x01\x02\0\x12\x03_\x02\x16\x1a\x82\x01\x20Selects\x20the\x20methods\
-    \x20to\x20which\x20this\x20rule\x20applies.\n\n\x20Refer\x20to\x20[selec\
-    tor][google.api.DocumentationRule.selector]\x20for\x20syntax\x20details.\
-    \n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03_\x02\x08\n\x0c\n\x05\x04\x01\
-    \x02\0\x01\x12\x03_\t\x11\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03_\x14\x15\
-    \n.\n\x04\x04\x01\x02\x01\x12\x03b\x02\x15\x1a!\x20The\x20address\x20of\
-    \x20the\x20API\x20backend.\n\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03b\
-    \x02\x08\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03b\t\x10\n\x0c\n\x05\x04\
-    \x01\x02\x01\x03\x12\x03b\x13\x14\n\xa6\x01\n\x04\x04\x01\x02\x02\x12\
-    \x03f\x02\x16\x1a\x98\x01\x20The\x20number\x20of\x20seconds\x20to\x20wai\
-    t\x20for\x20a\x20response\x20from\x20a\x20request.\x20\x20The\x20default\
-    \n\x20deadline\x20for\x20gRPC\x20is\x20infinite\x20(no\x20deadline)\x20a\
-    nd\x20HTTP\x20requests\x20is\x205\x20seconds.\n\n\x0c\n\x05\x04\x01\x02\
-    \x02\x05\x12\x03f\x02\x08\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03f\t\x11\
-    \n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03f\x14\x15\n\x81\x01\n\x04\x04\
-    \x01\x02\x03\x12\x03j\x02\x1a\x1at\x20Minimum\x20deadline\x20in\x20secon\
-    ds\x20needed\x20for\x20this\x20method.\x20Calls\x20having\x20deadline\n\
-    \x20value\x20lower\x20than\x20this\x20will\x20be\x20rejected.\n\n\x0c\n\
-    \x05\x04\x01\x02\x03\x05\x12\x03j\x02\x08\n\x0c\n\x05\x04\x01\x02\x03\
-    \x01\x12\x03j\t\x15\n\x0c\n\x05\x04\x01\x02\x03\x03\x12\x03j\x18\x19\ny\
-    \n\x04\x04\x01\x02\x04\x12\x03n\x02\x20\x1al\x20The\x20number\x20of\x20s\
-    econds\x20to\x20wait\x20for\x20the\x20completion\x20of\x20a\x20long\x20r\
-    unning\n\x20operation.\x20The\x20default\x20is\x20no\x20deadline.\n\n\
-    \x0c\n\x05\x04\x01\x02\x04\x05\x12\x03n\x02\x08\n\x0c\n\x05\x04\x01\x02\
-    \x04\x01\x12\x03n\t\x1b\n\x0c\n\x05\x04\x01\x02\x04\x03\x12\x03n\x1e\x1f\
-    \n\x0b\n\x04\x04\x01\x02\x05\x12\x03p\x02'\n\x0c\n\x05\x04\x01\x02\x05\
-    \x06\x12\x03p\x02\x11\n\x0c\n\x05\x04\x01\x02\x05\x01\x12\x03p\x12\"\n\
-    \x0c\n\x05\x04\x01\x02\x05\x03\x12\x03p%&\n\xf6\x02\n\x04\x04\x01\x08\0\
-    \x12\x04z\x02}\x03\x1a\xe7\x02\x20Authentication\x20settings\x20used\x20\
-    by\x20the\x20backend.\n\n\x20These\x20are\x20typically\x20used\x20to\x20\
-    provide\x20service\x20management\x20functionality\x20to\n\x20a\x20backen\
-    d\x20served\x20on\x20a\x20publicly-routable\x20URL.\x20The\x20`authentic\
-    ation`\n\x20details\x20should\x20match\x20the\x20authentication\x20behav\
-    ior\x20used\x20by\x20the\x20backend.\n\n\x20For\x20example,\x20specifyin\
-    g\x20`jwt_audience`\x20implies\x20that\x20the\x20backend\x20expects\n\
-    \x20authentication\x20via\x20a\x20JWT.\n\n\x0c\n\x05\x04\x01\x08\0\x01\
-    \x12\x03z\x08\x16\nW\n\x04\x04\x01\x02\x06\x12\x03|\x04\x1c\x1aJ\x20The\
-    \x20JWT\x20audience\x20is\x20used\x20when\x20generating\x20a\x20JWT\x20i\
-    d\x20token\x20for\x20the\x20backend.\n\n\x0c\n\x05\x04\x01\x02\x06\x05\
-    \x12\x03|\x04\n\n\x0c\n\x05\x04\x01\x02\x06\x01\x12\x03|\x0b\x17\n\x0c\n\
-    \x05\x04\x01\x02\x06\x03\x12\x03|\x1a\x1bb\x06proto3\
+    r/johndoe\n\x20\x20\x20\x20\x20Translated:\n\x20\x20\x20\x20\x20https://\
+    example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe\n\n\x20\
+    \x20\x20\x20\x20Request\x20path:\x20/api/company/widgetworks/user/johndo\
+    e?timezone=EST\n\x20\x20\x20\x20\x20Translated:\n\x20\x20\x20\x20\x20htt\
+    ps://example.cloudfunctions.net/getUser?timezone=EST&cid=widgetworks&uid\
+    =johndoe\n\n\x0e\n\x07\x04\x01\x04\0\x02\x01\x01\x12\x03C\x04\x14\n\x0e\
+    \n\x07\x04\x01\x04\0\x02\x01\x02\x12\x03C\x17\x18\n\x82\x05\n\x06\x04\
+    \x01\x04\0\x02\x02\x12\x03X\x04\x1f\x1a\xf2\x04\x20The\x20request\x20pat\
+    h\x20will\x20be\x20appended\x20to\x20the\x20backend\x20address.\n\n\x20#\
+    \x20Examples\n\n\x20Given\x20the\x20following\x20operation\x20config:\n\
+    \n\x20\x20\x20\x20\x20Method\x20path:\x20\x20\x20\x20\x20\x20\x20\x20/ap\
+    i/company/{cid}/user/{uid}\n\x20\x20\x20\x20\x20Backend\x20address:\x20\
+    \x20\x20\x20https://example.appspot.com\n\n\x20Requests\x20to\x20the\x20\
+    following\x20request\x20paths\x20will\x20call\x20the\x20backend\x20at\
+    \x20the\n\x20translated\x20path:\n\n\x20\x20\x20\x20\x20Request\x20path:\
+    \x20/api/company/widgetworks/user/johndoe\n\x20\x20\x20\x20\x20Translate\
+    d:\n\x20\x20\x20\x20\x20https://example.appspot.com/api/company/widgetwo\
+    rks/user/johndoe\n\n\x20\x20\x20\x20\x20Request\x20path:\x20/api/company\
+    /widgetworks/user/johndoe?timezone=EST\n\x20\x20\x20\x20\x20Translated:\
+    \n\x20\x20\x20\x20\x20https://example.appspot.com/api/company/widgetwork\
+    s/user/johndoe?timezone=EST\n\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x01\x12\
+    \x03X\x04\x1a\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x02\x12\x03X\x1d\x1e\n\
+    \x91\x01\n\x04\x04\x01\x02\0\x12\x03_\x02\x16\x1a\x83\x01\x20Selects\x20\
+    the\x20methods\x20to\x20which\x20this\x20rule\x20applies.\n\n\x20Refer\
+    \x20to\x20[selector][google.api.DocumentationRule.selector]\x20for\x20sy\
+    ntax\n\x20details.\n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03_\x02\x08\n\
+    \x0c\n\x05\x04\x01\x02\0\x01\x12\x03_\t\x11\n\x0c\n\x05\x04\x01\x02\0\
+    \x03\x12\x03_\x14\x15\n\x99\x05\n\x04\x04\x01\x02\x01\x12\x03u\x02\x15\
+    \x1a\x8b\x05\x20The\x20address\x20of\x20the\x20API\x20backend.\n\n\x20Th\
+    e\x20scheme\x20is\x20used\x20to\x20determine\x20the\x20backend\x20protoc\
+    ol\x20and\x20security.\n\x20The\x20following\x20schemes\x20are\x20accept\
+    ed:\n\n\x20\x20\x20\x20SCHEME\x20\x20\x20\x20\x20\x20\x20\x20PROTOCOL\
+    \x20\x20\x20\x20SECURITY\n\x20\x20\x20\x20http://\x20\x20\x20\x20\x20\
+    \x20\x20HTTP\x20\x20\x20\x20\x20\x20\x20\x20None\n\x20\x20\x20\x20https:\
+    //\x20\x20\x20\x20\x20\x20HTTP\x20\x20\x20\x20\x20\x20\x20\x20TLS\n\x20\
+    \x20\x20\x20grpc://\x20\x20\x20\x20\x20\x20\x20gRPC\x20\x20\x20\x20\x20\
+    \x20\x20\x20None\n\x20\x20\x20\x20grpcs://\x20\x20\x20\x20\x20\x20gRPC\
+    \x20\x20\x20\x20\x20\x20\x20\x20TLS\n\n\x20It\x20is\x20recommended\x20to\
+    \x20explicitly\x20include\x20a\x20scheme.\x20Leaving\x20out\x20the\x20sc\
+    heme\n\x20may\x20cause\x20constrasting\x20behaviors\x20across\x20platfor\
+    ms.\n\n\x20If\x20the\x20port\x20is\x20unspecified,\x20the\x20default\x20\
+    is:\n\x20-\x2080\x20for\x20schemes\x20without\x20TLS\n\x20-\x20443\x20fo\
+    r\x20schemes\x20with\x20TLS\n\n\x20For\x20HTTP\x20backends,\x20use\x20[p\
+    rotocol][google.api.BackendRule.protocol]\n\x20to\x20specify\x20the\x20p\
+    rotocol\x20version.\n\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03u\x02\x08\n\
+    \x0c\n\x05\x04\x01\x02\x01\x01\x12\x03u\t\x10\n\x0c\n\x05\x04\x01\x02\
+    \x01\x03\x12\x03u\x13\x14\n\x9a\x01\n\x04\x04\x01\x02\x02\x12\x03y\x02\
+    \x16\x1a\x8c\x01\x20The\x20number\x20of\x20seconds\x20to\x20wait\x20for\
+    \x20a\x20response\x20from\x20a\x20request.\x20The\x20default\n\x20varies\
+    \x20based\x20on\x20the\x20request\x20protocol\x20and\x20deployment\x20en\
+    vironment.\n\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03y\x02\x08\n\x0c\n\
+    \x05\x04\x01\x02\x02\x01\x12\x03y\t\x11\n\x0c\n\x05\x04\x01\x02\x02\x03\
+    \x12\x03y\x14\x15\n&\n\x04\x04\x01\x02\x03\x12\x03|\x02.\x1a\x19\x20Depr\
+    ecated,\x20do\x20not\x20use.\n\n\x0c\n\x05\x04\x01\x02\x03\x05\x12\x03|\
+    \x02\x08\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03|\t\x15\n\x0c\n\x05\x04\
+    \x01\x02\x03\x03\x12\x03|\x18\x19\n\x0c\n\x05\x04\x01\x02\x03\x08\x12\
+    \x03|\x1a-\n\r\n\x06\x04\x01\x02\x03\x08\x03\x12\x03|\x1b,\nz\n\x04\x04\
+    \x01\x02\x04\x12\x04\x80\x01\x02\x20\x1al\x20The\x20number\x20of\x20seco\
+    nds\x20to\x20wait\x20for\x20the\x20completion\x20of\x20a\x20long\x20runn\
+    ing\n\x20operation.\x20The\x20default\x20is\x20no\x20deadline.\n\n\r\n\
+    \x05\x04\x01\x02\x04\x05\x12\x04\x80\x01\x02\x08\n\r\n\x05\x04\x01\x02\
+    \x04\x01\x12\x04\x80\x01\t\x1b\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\x80\
+    \x01\x1e\x1f\n\x0c\n\x04\x04\x01\x02\x05\x12\x04\x82\x01\x02'\n\r\n\x05\
+    \x04\x01\x02\x05\x06\x12\x04\x82\x01\x02\x11\n\r\n\x05\x04\x01\x02\x05\
+    \x01\x12\x04\x82\x01\x12\"\n\r\n\x05\x04\x01\x02\x05\x03\x12\x04\x82\x01\
+    %&\n\xc0\x04\n\x04\x04\x01\x08\0\x12\x06\x92\x01\x02\x9d\x01\x03\x1a\xaf\
+    \x04\x20Authentication\x20settings\x20used\x20by\x20the\x20backend.\n\n\
+    \x20These\x20are\x20typically\x20used\x20to\x20provide\x20service\x20man\
+    agement\x20functionality\x20to\n\x20a\x20backend\x20served\x20on\x20a\
+    \x20publicly-routable\x20URL.\x20The\x20`authentication`\n\x20details\
+    \x20should\x20match\x20the\x20authentication\x20behavior\x20used\x20by\
+    \x20the\x20backend.\n\n\x20For\x20example,\x20specifying\x20`jwt_audienc\
+    e`\x20implies\x20that\x20the\x20backend\x20expects\n\x20authentication\
+    \x20via\x20a\x20JWT.\n\n\x20When\x20authentication\x20is\x20unspecified,\
+    \x20the\x20resulting\x20behavior\x20is\x20the\x20same\n\x20as\x20`disabl\
+    e_auth`\x20set\x20to\x20`true`.\n\n\x20Refer\x20to\x20https://developers\
+    .google.com/identity/protocols/OpenIDConnect\x20for\n\x20JWT\x20ID\x20to\
+    ken.\n\n\r\n\x05\x04\x01\x08\0\x01\x12\x04\x92\x01\x08\x16\n\xb4\x01\n\
+    \x04\x04\x01\x02\x06\x12\x04\x96\x01\x04\x1c\x1a\xa5\x01\x20The\x20JWT\
+    \x20audience\x20is\x20used\x20when\x20generating\x20a\x20JWT\x20ID\x20to\
+    ken\x20for\x20the\x20backend.\n\x20This\x20ID\x20token\x20will\x20be\x20\
+    added\x20in\x20the\x20HTTP\x20\"authorization\"\x20header,\x20and\x20sen\
+    t\n\x20to\x20the\x20backend.\n\n\r\n\x05\x04\x01\x02\x06\x05\x12\x04\x96\
+    \x01\x04\n\n\r\n\x05\x04\x01\x02\x06\x01\x12\x04\x96\x01\x0b\x17\n\r\n\
+    \x05\x04\x01\x02\x06\x03\x12\x04\x96\x01\x1a\x1b\n\x99\x02\n\x04\x04\x01\
+    \x02\x07\x12\x04\x9c\x01\x04\x1a\x1a\x8a\x02\x20When\x20disable_auth\x20\
+    is\x20true,\x20a\x20JWT\x20ID\x20token\x20won't\x20be\x20generated\x20an\
+    d\x20the\n\x20original\x20\"Authorization\"\x20HTTP\x20header\x20will\
+    \x20be\x20preserved.\x20If\x20the\x20header\x20is\n\x20used\x20to\x20car\
+    ry\x20the\x20original\x20token\x20and\x20is\x20expected\x20by\x20the\x20\
+    backend,\x20this\n\x20field\x20must\x20be\x20set\x20to\x20true\x20to\x20\
+    preserve\x20the\x20header.\n\n\r\n\x05\x04\x01\x02\x07\x05\x12\x04\x9c\
+    \x01\x04\x08\n\r\n\x05\x04\x01\x02\x07\x01\x12\x04\x9c\x01\t\x15\n\r\n\
+    \x05\x04\x01\x02\x07\x03\x12\x04\x9c\x01\x18\x19\n\xf5\x05\n\x04\x04\x01\
+    \x02\x08\x12\x04\xb4\x01\x02\x16\x1a\xe6\x05\x20The\x20protocol\x20used\
+    \x20for\x20sending\x20a\x20request\x20to\x20the\x20backend.\n\x20The\x20\
+    supported\x20values\x20are\x20\"http/1.1\"\x20and\x20\"h2\".\n\n\x20The\
+    \x20default\x20value\x20is\x20inferred\x20from\x20the\x20scheme\x20in\
+    \x20the\n\x20[address][google.api.BackendRule.address]\x20field:\n\n\x20\
+    \x20\x20\x20SCHEME\x20\x20\x20\x20\x20\x20\x20\x20PROTOCOL\n\x20\x20\x20\
+    \x20http://\x20\x20\x20\x20\x20\x20\x20http/1.1\n\x20\x20\x20\x20https:/\
+    /\x20\x20\x20\x20\x20\x20http/1.1\n\x20\x20\x20\x20grpc://\x20\x20\x20\
+    \x20\x20\x20\x20h2\n\x20\x20\x20\x20grpcs://\x20\x20\x20\x20\x20\x20h2\n\
+    \n\x20For\x20secure\x20HTTP\x20backends\x20(https://)\x20that\x20support\
+    \x20HTTP/2,\x20set\x20this\x20field\n\x20to\x20\"h2\"\x20for\x20improved\
+    \x20performance.\n\n\x20Configuring\x20this\x20field\x20to\x20non-defaul\
+    t\x20values\x20is\x20only\x20supported\x20for\x20secure\n\x20HTTP\x20bac\
+    kends.\x20This\x20field\x20will\x20be\x20ignored\x20for\x20all\x20other\
+    \x20backends.\n\n\x20See\n\x20https://www.iana.org/assignments/tls-exten\
+    siontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids\n\x20fo\
+    r\x20more\x20details\x20on\x20the\x20supported\x20values.\n\n\r\n\x05\
+    \x04\x01\x02\x08\x05\x12\x04\xb4\x01\x02\x08\n\r\n\x05\x04\x01\x02\x08\
+    \x01\x12\x04\xb4\x01\t\x11\n\r\n\x05\x04\x01\x02\x08\x03\x12\x04\xb4\x01\
+    \x14\x15\nI\n\x04\x04\x01\x02\t\x12\x04\xb7\x01\x02>\x1a;\x20The\x20map\
+    \x20between\x20request\x20protocol\x20and\x20the\x20backend\x20address.\
+    \n\n\r\n\x05\x04\x01\x02\t\x06\x12\x04\xb7\x01\x02\x1a\n\r\n\x05\x04\x01\
+    \x02\t\x01\x12\x04\xb7\x01\x1b8\n\r\n\x05\x04\x01\x02\t\x03\x12\x04\xb7\
+    \x01;=b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

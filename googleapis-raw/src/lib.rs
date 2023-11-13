@@ -18,19 +18,25 @@
 // to save a bit of time and effort.
 
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_28_0;
+
+pub const API_CLIENT_ID: &str = "gcp-grpc-rs";
+
 pub(crate) mod iam;
 pub(crate) mod rpc;
 pub(crate) mod r#type;
 
 // pub mod empty;
-pub mod empty;
 pub mod api;
-#[cfg(feature="bigtable")]
+#[cfg(feature = "bigtable")]
 pub mod bigtable;
 pub mod cloud;
+#[cfg(any(feature = "bigtable", feature = "pubsub", feature = "spanner"))]
+pub mod empty;
+pub mod identity;
 pub mod logging;
 pub mod longrunning;
-#[cfg(feature="pubsub")]
+pub mod orgpolicy;
+#[cfg(feature = "pubsub")]
 pub mod pubsub;
-#[cfg(feature="spanner")]
+#[cfg(feature = "spanner")]
 pub mod spanner;

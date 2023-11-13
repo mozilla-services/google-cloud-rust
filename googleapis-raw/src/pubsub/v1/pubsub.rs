@@ -182,12 +182,289 @@ impl ::protobuf::reflect::ProtobufValue for MessageStoragePolicy {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct SchemaSettings {
+    // message fields
+    pub schema: ::std::string::String,
+    pub encoding: super::schema::Encoding,
+    pub first_revision_id: ::std::string::String,
+    pub last_revision_id: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SchemaSettings {
+    fn default() -> &'a SchemaSettings {
+        <SchemaSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SchemaSettings {
+    pub fn new() -> SchemaSettings {
+        ::std::default::Default::default()
+    }
+
+    // string schema = 1;
+
+
+    pub fn get_schema(&self) -> &str {
+        &self.schema
+    }
+    pub fn clear_schema(&mut self) {
+        self.schema.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_schema(&mut self, v: ::std::string::String) {
+        self.schema = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_schema(&mut self) -> &mut ::std::string::String {
+        &mut self.schema
+    }
+
+    // Take field
+    pub fn take_schema(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.schema, ::std::string::String::new())
+    }
+
+    // .google.pubsub.v1.Encoding encoding = 2;
+
+
+    pub fn get_encoding(&self) -> super::schema::Encoding {
+        self.encoding
+    }
+    pub fn clear_encoding(&mut self) {
+        self.encoding = super::schema::Encoding::ENCODING_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_encoding(&mut self, v: super::schema::Encoding) {
+        self.encoding = v;
+    }
+
+    // string first_revision_id = 3;
+
+
+    pub fn get_first_revision_id(&self) -> &str {
+        &self.first_revision_id
+    }
+    pub fn clear_first_revision_id(&mut self) {
+        self.first_revision_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_first_revision_id(&mut self, v: ::std::string::String) {
+        self.first_revision_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_first_revision_id(&mut self) -> &mut ::std::string::String {
+        &mut self.first_revision_id
+    }
+
+    // Take field
+    pub fn take_first_revision_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.first_revision_id, ::std::string::String::new())
+    }
+
+    // string last_revision_id = 4;
+
+
+    pub fn get_last_revision_id(&self) -> &str {
+        &self.last_revision_id
+    }
+    pub fn clear_last_revision_id(&mut self) {
+        self.last_revision_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_last_revision_id(&mut self, v: ::std::string::String) {
+        self.last_revision_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_last_revision_id(&mut self) -> &mut ::std::string::String {
+        &mut self.last_revision_id
+    }
+
+    // Take field
+    pub fn take_last_revision_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.last_revision_id, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for SchemaSettings {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.schema)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.encoding, 2, &mut self.unknown_fields)?
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.first_revision_id)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.last_revision_id)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.schema.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.schema);
+        }
+        if self.encoding != super::schema::Encoding::ENCODING_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(2, self.encoding);
+        }
+        if !self.first_revision_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.first_revision_id);
+        }
+        if !self.last_revision_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.last_revision_id);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.schema.is_empty() {
+            os.write_string(1, &self.schema)?;
+        }
+        if self.encoding != super::schema::Encoding::ENCODING_UNSPECIFIED {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.encoding))?;
+        }
+        if !self.first_revision_id.is_empty() {
+            os.write_string(3, &self.first_revision_id)?;
+        }
+        if !self.last_revision_id.is_empty() {
+            os.write_string(4, &self.last_revision_id)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SchemaSettings {
+        SchemaSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "schema",
+                |m: &SchemaSettings| { &m.schema },
+                |m: &mut SchemaSettings| { &mut m.schema },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::schema::Encoding>>(
+                "encoding",
+                |m: &SchemaSettings| { &m.encoding },
+                |m: &mut SchemaSettings| { &mut m.encoding },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "first_revision_id",
+                |m: &SchemaSettings| { &m.first_revision_id },
+                |m: &mut SchemaSettings| { &mut m.first_revision_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "last_revision_id",
+                |m: &SchemaSettings| { &m.last_revision_id },
+                |m: &mut SchemaSettings| { &mut m.last_revision_id },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SchemaSettings>(
+                "SchemaSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SchemaSettings {
+        static instance: ::protobuf::rt::LazyV2<SchemaSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SchemaSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for SchemaSettings {
+    fn clear(&mut self) {
+        self.schema.clear();
+        self.encoding = super::schema::Encoding::ENCODING_UNSPECIFIED;
+        self.first_revision_id.clear();
+        self.last_revision_id.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SchemaSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SchemaSettings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct Topic {
     // message fields
     pub name: ::std::string::String,
     pub labels: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub message_storage_policy: ::protobuf::SingularPtrField<MessageStoragePolicy>,
     pub kms_key_name: ::std::string::String,
+    pub schema_settings: ::protobuf::SingularPtrField<SchemaSettings>,
+    pub satisfies_pzs: bool,
+    pub message_retention_duration: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -313,11 +590,102 @@ impl Topic {
     pub fn take_kms_key_name(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.kms_key_name, ::std::string::String::new())
     }
+
+    // .google.pubsub.v1.SchemaSettings schema_settings = 6;
+
+
+    pub fn get_schema_settings(&self) -> &SchemaSettings {
+        self.schema_settings.as_ref().unwrap_or_else(|| <SchemaSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_schema_settings(&mut self) {
+        self.schema_settings.clear();
+    }
+
+    pub fn has_schema_settings(&self) -> bool {
+        self.schema_settings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_schema_settings(&mut self, v: SchemaSettings) {
+        self.schema_settings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_schema_settings(&mut self) -> &mut SchemaSettings {
+        if self.schema_settings.is_none() {
+            self.schema_settings.set_default();
+        }
+        self.schema_settings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_schema_settings(&mut self) -> SchemaSettings {
+        self.schema_settings.take().unwrap_or_else(|| SchemaSettings::new())
+    }
+
+    // bool satisfies_pzs = 7;
+
+
+    pub fn get_satisfies_pzs(&self) -> bool {
+        self.satisfies_pzs
+    }
+    pub fn clear_satisfies_pzs(&mut self) {
+        self.satisfies_pzs = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_satisfies_pzs(&mut self, v: bool) {
+        self.satisfies_pzs = v;
+    }
+
+    // .google.protobuf.Duration message_retention_duration = 8;
+
+
+    pub fn get_message_retention_duration(&self) -> &::protobuf::well_known_types::Duration {
+        self.message_retention_duration.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_message_retention_duration(&mut self) {
+        self.message_retention_duration.clear();
+    }
+
+    pub fn has_message_retention_duration(&self) -> bool {
+        self.message_retention_duration.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_message_retention_duration(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.message_retention_duration = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_message_retention_duration(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.message_retention_duration.is_none() {
+            self.message_retention_duration.set_default();
+        }
+        self.message_retention_duration.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_message_retention_duration(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.message_retention_duration.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
 }
 
 impl ::protobuf::Message for Topic {
     fn is_initialized(&self) -> bool {
         for v in &self.message_storage_policy {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.schema_settings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.message_retention_duration {
             if !v.is_initialized() {
                 return false;
             }
@@ -340,6 +708,19 @@ impl ::protobuf::Message for Topic {
                 },
                 5 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.kms_key_name)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.schema_settings)?;
+                },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.satisfies_pzs = tmp;
+                },
+                8 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.message_retention_duration)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -364,6 +745,17 @@ impl ::protobuf::Message for Topic {
         if !self.kms_key_name.is_empty() {
             my_size += ::protobuf::rt::string_size(5, &self.kms_key_name);
         }
+        if let Some(ref v) = self.schema_settings.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.satisfies_pzs != false {
+            my_size += 2;
+        }
+        if let Some(ref v) = self.message_retention_duration.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -381,6 +773,19 @@ impl ::protobuf::Message for Topic {
         }
         if !self.kms_key_name.is_empty() {
             os.write_string(5, &self.kms_key_name)?;
+        }
+        if let Some(ref v) = self.schema_settings.as_ref() {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.satisfies_pzs != false {
+            os.write_bool(7, self.satisfies_pzs)?;
+        }
+        if let Some(ref v) = self.message_retention_duration.as_ref() {
+            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -440,6 +845,21 @@ impl ::protobuf::Message for Topic {
                 |m: &Topic| { &m.kms_key_name },
                 |m: &mut Topic| { &mut m.kms_key_name },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<SchemaSettings>>(
+                "schema_settings",
+                |m: &Topic| { &m.schema_settings },
+                |m: &mut Topic| { &mut m.schema_settings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "satisfies_pzs",
+                |m: &Topic| { &m.satisfies_pzs },
+                |m: &mut Topic| { &mut m.satisfies_pzs },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "message_retention_duration",
+                |m: &Topic| { &m.message_retention_duration },
+                |m: &mut Topic| { &mut m.message_retention_duration },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Topic>(
                 "Topic",
                 fields,
@@ -460,6 +880,9 @@ impl ::protobuf::Clear for Topic {
         self.labels.clear();
         self.message_storage_policy.clear();
         self.kms_key_name.clear();
+        self.schema_settings.clear();
+        self.satisfies_pzs = false;
+        self.message_retention_duration.clear();
         self.unknown_fields.clear();
     }
 }
@@ -3045,18 +3468,301 @@ impl ::protobuf::reflect::ProtobufValue for DeleteTopicRequest {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct DetachSubscriptionRequest {
+    // message fields
+    pub subscription: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DetachSubscriptionRequest {
+    fn default() -> &'a DetachSubscriptionRequest {
+        <DetachSubscriptionRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DetachSubscriptionRequest {
+    pub fn new() -> DetachSubscriptionRequest {
+        ::std::default::Default::default()
+    }
+
+    // string subscription = 1;
+
+
+    pub fn get_subscription(&self) -> &str {
+        &self.subscription
+    }
+    pub fn clear_subscription(&mut self) {
+        self.subscription.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_subscription(&mut self, v: ::std::string::String) {
+        self.subscription = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_subscription(&mut self) -> &mut ::std::string::String {
+        &mut self.subscription
+    }
+
+    // Take field
+    pub fn take_subscription(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.subscription, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for DetachSubscriptionRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.subscription)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.subscription.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.subscription);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.subscription.is_empty() {
+            os.write_string(1, &self.subscription)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DetachSubscriptionRequest {
+        DetachSubscriptionRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "subscription",
+                |m: &DetachSubscriptionRequest| { &m.subscription },
+                |m: &mut DetachSubscriptionRequest| { &mut m.subscription },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DetachSubscriptionRequest>(
+                "DetachSubscriptionRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DetachSubscriptionRequest {
+        static instance: ::protobuf::rt::LazyV2<DetachSubscriptionRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DetachSubscriptionRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for DetachSubscriptionRequest {
+    fn clear(&mut self) {
+        self.subscription.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DetachSubscriptionRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DetachSubscriptionRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DetachSubscriptionResponse {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DetachSubscriptionResponse {
+    fn default() -> &'a DetachSubscriptionResponse {
+        <DetachSubscriptionResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DetachSubscriptionResponse {
+    pub fn new() -> DetachSubscriptionResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for DetachSubscriptionResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DetachSubscriptionResponse {
+        DetachSubscriptionResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DetachSubscriptionResponse>(
+                "DetachSubscriptionResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DetachSubscriptionResponse {
+        static instance: ::protobuf::rt::LazyV2<DetachSubscriptionResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DetachSubscriptionResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for DetachSubscriptionResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DetachSubscriptionResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DetachSubscriptionResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct Subscription {
     // message fields
     pub name: ::std::string::String,
     pub topic: ::std::string::String,
     pub push_config: ::protobuf::SingularPtrField<PushConfig>,
+    pub bigquery_config: ::protobuf::SingularPtrField<BigQueryConfig>,
+    pub cloud_storage_config: ::protobuf::SingularPtrField<CloudStorageConfig>,
     pub ack_deadline_seconds: i32,
     pub retain_acked_messages: bool,
     pub message_retention_duration: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
     pub labels: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub enable_message_ordering: bool,
     pub expiration_policy: ::protobuf::SingularPtrField<ExpirationPolicy>,
+    pub filter: ::std::string::String,
     pub dead_letter_policy: ::protobuf::SingularPtrField<DeadLetterPolicy>,
+    pub retry_policy: ::protobuf::SingularPtrField<RetryPolicy>,
+    pub detached: bool,
+    pub enable_exactly_once_delivery: bool,
+    pub topic_message_retention_duration: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    pub state: Subscription_State,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -3156,6 +3862,72 @@ impl Subscription {
     // Take field
     pub fn take_push_config(&mut self) -> PushConfig {
         self.push_config.take().unwrap_or_else(|| PushConfig::new())
+    }
+
+    // .google.pubsub.v1.BigQueryConfig bigquery_config = 18;
+
+
+    pub fn get_bigquery_config(&self) -> &BigQueryConfig {
+        self.bigquery_config.as_ref().unwrap_or_else(|| <BigQueryConfig as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_bigquery_config(&mut self) {
+        self.bigquery_config.clear();
+    }
+
+    pub fn has_bigquery_config(&self) -> bool {
+        self.bigquery_config.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bigquery_config(&mut self, v: BigQueryConfig) {
+        self.bigquery_config = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_bigquery_config(&mut self) -> &mut BigQueryConfig {
+        if self.bigquery_config.is_none() {
+            self.bigquery_config.set_default();
+        }
+        self.bigquery_config.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_bigquery_config(&mut self) -> BigQueryConfig {
+        self.bigquery_config.take().unwrap_or_else(|| BigQueryConfig::new())
+    }
+
+    // .google.pubsub.v1.CloudStorageConfig cloud_storage_config = 22;
+
+
+    pub fn get_cloud_storage_config(&self) -> &CloudStorageConfig {
+        self.cloud_storage_config.as_ref().unwrap_or_else(|| <CloudStorageConfig as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_cloud_storage_config(&mut self) {
+        self.cloud_storage_config.clear();
+    }
+
+    pub fn has_cloud_storage_config(&self) -> bool {
+        self.cloud_storage_config.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cloud_storage_config(&mut self, v: CloudStorageConfig) {
+        self.cloud_storage_config = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cloud_storage_config(&mut self) -> &mut CloudStorageConfig {
+        if self.cloud_storage_config.is_none() {
+            self.cloud_storage_config.set_default();
+        }
+        self.cloud_storage_config.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_cloud_storage_config(&mut self) -> CloudStorageConfig {
+        self.cloud_storage_config.take().unwrap_or_else(|| CloudStorageConfig::new())
     }
 
     // int32 ack_deadline_seconds = 5;
@@ -3294,6 +4066,32 @@ impl Subscription {
         self.expiration_policy.take().unwrap_or_else(|| ExpirationPolicy::new())
     }
 
+    // string filter = 12;
+
+
+    pub fn get_filter(&self) -> &str {
+        &self.filter
+    }
+    pub fn clear_filter(&mut self) {
+        self.filter.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_filter(&mut self, v: ::std::string::String) {
+        self.filter = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_filter(&mut self) -> &mut ::std::string::String {
+        &mut self.filter
+    }
+
+    // Take field
+    pub fn take_filter(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.filter, ::std::string::String::new())
+    }
+
     // .google.pubsub.v1.DeadLetterPolicy dead_letter_policy = 13;
 
 
@@ -3326,11 +4124,132 @@ impl Subscription {
     pub fn take_dead_letter_policy(&mut self) -> DeadLetterPolicy {
         self.dead_letter_policy.take().unwrap_or_else(|| DeadLetterPolicy::new())
     }
+
+    // .google.pubsub.v1.RetryPolicy retry_policy = 14;
+
+
+    pub fn get_retry_policy(&self) -> &RetryPolicy {
+        self.retry_policy.as_ref().unwrap_or_else(|| <RetryPolicy as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_retry_policy(&mut self) {
+        self.retry_policy.clear();
+    }
+
+    pub fn has_retry_policy(&self) -> bool {
+        self.retry_policy.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_retry_policy(&mut self, v: RetryPolicy) {
+        self.retry_policy = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_retry_policy(&mut self) -> &mut RetryPolicy {
+        if self.retry_policy.is_none() {
+            self.retry_policy.set_default();
+        }
+        self.retry_policy.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_retry_policy(&mut self) -> RetryPolicy {
+        self.retry_policy.take().unwrap_or_else(|| RetryPolicy::new())
+    }
+
+    // bool detached = 15;
+
+
+    pub fn get_detached(&self) -> bool {
+        self.detached
+    }
+    pub fn clear_detached(&mut self) {
+        self.detached = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_detached(&mut self, v: bool) {
+        self.detached = v;
+    }
+
+    // bool enable_exactly_once_delivery = 16;
+
+
+    pub fn get_enable_exactly_once_delivery(&self) -> bool {
+        self.enable_exactly_once_delivery
+    }
+    pub fn clear_enable_exactly_once_delivery(&mut self) {
+        self.enable_exactly_once_delivery = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_enable_exactly_once_delivery(&mut self, v: bool) {
+        self.enable_exactly_once_delivery = v;
+    }
+
+    // .google.protobuf.Duration topic_message_retention_duration = 17;
+
+
+    pub fn get_topic_message_retention_duration(&self) -> &::protobuf::well_known_types::Duration {
+        self.topic_message_retention_duration.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_topic_message_retention_duration(&mut self) {
+        self.topic_message_retention_duration.clear();
+    }
+
+    pub fn has_topic_message_retention_duration(&self) -> bool {
+        self.topic_message_retention_duration.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_topic_message_retention_duration(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.topic_message_retention_duration = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_topic_message_retention_duration(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.topic_message_retention_duration.is_none() {
+            self.topic_message_retention_duration.set_default();
+        }
+        self.topic_message_retention_duration.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_topic_message_retention_duration(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.topic_message_retention_duration.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+
+    // .google.pubsub.v1.Subscription.State state = 19;
+
+
+    pub fn get_state(&self) -> Subscription_State {
+        self.state
+    }
+    pub fn clear_state(&mut self) {
+        self.state = Subscription_State::STATE_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_state(&mut self, v: Subscription_State) {
+        self.state = v;
+    }
 }
 
 impl ::protobuf::Message for Subscription {
     fn is_initialized(&self) -> bool {
         for v in &self.push_config {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.bigquery_config {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.cloud_storage_config {
             if !v.is_initialized() {
                 return false;
             }
@@ -3350,6 +4269,16 @@ impl ::protobuf::Message for Subscription {
                 return false;
             }
         };
+        for v in &self.retry_policy {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.topic_message_retention_duration {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -3365,6 +4294,12 @@ impl ::protobuf::Message for Subscription {
                 },
                 4 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.push_config)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.bigquery_config)?;
+                },
+                22 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cloud_storage_config)?;
                 },
                 5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
@@ -3396,8 +4331,34 @@ impl ::protobuf::Message for Subscription {
                 11 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.expiration_policy)?;
                 },
+                12 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.filter)?;
+                },
                 13 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.dead_letter_policy)?;
+                },
+                14 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.retry_policy)?;
+                },
+                15 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.detached = tmp;
+                },
+                16 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.enable_exactly_once_delivery = tmp;
+                },
+                17 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.topic_message_retention_duration)?;
+                },
+                19 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.state, 19, &mut self.unknown_fields)?
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3421,6 +4382,14 @@ impl ::protobuf::Message for Subscription {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.bigquery_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.cloud_storage_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         if self.ack_deadline_seconds != 0 {
             my_size += ::protobuf::rt::value_size(5, self.ack_deadline_seconds, ::protobuf::wire_format::WireTypeVarint);
         }
@@ -3439,9 +4408,29 @@ impl ::protobuf::Message for Subscription {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if !self.filter.is_empty() {
+            my_size += ::protobuf::rt::string_size(12, &self.filter);
+        }
         if let Some(ref v) = self.dead_letter_policy.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.retry_policy.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.detached != false {
+            my_size += 2;
+        }
+        if self.enable_exactly_once_delivery != false {
+            my_size += 3;
+        }
+        if let Some(ref v) = self.topic_message_retention_duration.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.state != Subscription_State::STATE_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(19, self.state);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -3457,6 +4446,16 @@ impl ::protobuf::Message for Subscription {
         }
         if let Some(ref v) = self.push_config.as_ref() {
             os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.bigquery_config.as_ref() {
+            os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.cloud_storage_config.as_ref() {
+            os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -3480,10 +4479,32 @@ impl ::protobuf::Message for Subscription {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        if !self.filter.is_empty() {
+            os.write_string(12, &self.filter)?;
+        }
         if let Some(ref v) = self.dead_letter_policy.as_ref() {
             os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.retry_policy.as_ref() {
+            os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.detached != false {
+            os.write_bool(15, self.detached)?;
+        }
+        if self.enable_exactly_once_delivery != false {
+            os.write_bool(16, self.enable_exactly_once_delivery)?;
+        }
+        if let Some(ref v) = self.topic_message_retention_duration.as_ref() {
+            os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.state != Subscription_State::STATE_UNSPECIFIED {
+            os.write_enum(19, ::protobuf::ProtobufEnum::value(&self.state))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3538,6 +4559,16 @@ impl ::protobuf::Message for Subscription {
                 |m: &Subscription| { &m.push_config },
                 |m: &mut Subscription| { &mut m.push_config },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<BigQueryConfig>>(
+                "bigquery_config",
+                |m: &Subscription| { &m.bigquery_config },
+                |m: &mut Subscription| { &mut m.bigquery_config },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CloudStorageConfig>>(
+                "cloud_storage_config",
+                |m: &Subscription| { &m.cloud_storage_config },
+                |m: &mut Subscription| { &mut m.cloud_storage_config },
+            ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
                 "ack_deadline_seconds",
                 |m: &Subscription| { &m.ack_deadline_seconds },
@@ -3568,10 +4599,40 @@ impl ::protobuf::Message for Subscription {
                 |m: &Subscription| { &m.expiration_policy },
                 |m: &mut Subscription| { &mut m.expiration_policy },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "filter",
+                |m: &Subscription| { &m.filter },
+                |m: &mut Subscription| { &mut m.filter },
+            ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<DeadLetterPolicy>>(
                 "dead_letter_policy",
                 |m: &Subscription| { &m.dead_letter_policy },
                 |m: &mut Subscription| { &mut m.dead_letter_policy },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RetryPolicy>>(
+                "retry_policy",
+                |m: &Subscription| { &m.retry_policy },
+                |m: &mut Subscription| { &mut m.retry_policy },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "detached",
+                |m: &Subscription| { &m.detached },
+                |m: &mut Subscription| { &mut m.detached },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "enable_exactly_once_delivery",
+                |m: &Subscription| { &m.enable_exactly_once_delivery },
+                |m: &mut Subscription| { &mut m.enable_exactly_once_delivery },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "topic_message_retention_duration",
+                |m: &Subscription| { &m.topic_message_retention_duration },
+                |m: &mut Subscription| { &mut m.topic_message_retention_duration },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Subscription_State>>(
+                "state",
+                |m: &Subscription| { &m.state },
+                |m: &mut Subscription| { &mut m.state },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Subscription>(
                 "Subscription",
@@ -3592,13 +4653,21 @@ impl ::protobuf::Clear for Subscription {
         self.name.clear();
         self.topic.clear();
         self.push_config.clear();
+        self.bigquery_config.clear();
+        self.cloud_storage_config.clear();
         self.ack_deadline_seconds = 0;
         self.retain_acked_messages = false;
         self.message_retention_duration.clear();
         self.labels.clear();
         self.enable_message_ordering = false;
         self.expiration_policy.clear();
+        self.filter.clear();
         self.dead_letter_policy.clear();
+        self.retry_policy.clear();
+        self.detached = false;
+        self.enable_exactly_once_delivery = false;
+        self.topic_message_retention_duration.clear();
+        self.state = Subscription_State::STATE_UNSPECIFIED;
         self.unknown_fields.clear();
     }
 }
@@ -3610,6 +4679,290 @@ impl ::std::fmt::Debug for Subscription {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Subscription {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum Subscription_State {
+    STATE_UNSPECIFIED = 0,
+    ACTIVE = 1,
+    RESOURCE_ERROR = 2,
+}
+
+impl ::protobuf::ProtobufEnum for Subscription_State {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<Subscription_State> {
+        match value {
+            0 => ::std::option::Option::Some(Subscription_State::STATE_UNSPECIFIED),
+            1 => ::std::option::Option::Some(Subscription_State::ACTIVE),
+            2 => ::std::option::Option::Some(Subscription_State::RESOURCE_ERROR),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [Subscription_State] = &[
+            Subscription_State::STATE_UNSPECIFIED,
+            Subscription_State::ACTIVE,
+            Subscription_State::RESOURCE_ERROR,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<Subscription_State>("Subscription.State", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for Subscription_State {
+}
+
+impl ::std::default::Default for Subscription_State {
+    fn default() -> Self {
+        Subscription_State::STATE_UNSPECIFIED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Subscription_State {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct RetryPolicy {
+    // message fields
+    pub minimum_backoff: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    pub maximum_backoff: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a RetryPolicy {
+    fn default() -> &'a RetryPolicy {
+        <RetryPolicy as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RetryPolicy {
+    pub fn new() -> RetryPolicy {
+        ::std::default::Default::default()
+    }
+
+    // .google.protobuf.Duration minimum_backoff = 1;
+
+
+    pub fn get_minimum_backoff(&self) -> &::protobuf::well_known_types::Duration {
+        self.minimum_backoff.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_minimum_backoff(&mut self) {
+        self.minimum_backoff.clear();
+    }
+
+    pub fn has_minimum_backoff(&self) -> bool {
+        self.minimum_backoff.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_minimum_backoff(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.minimum_backoff = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_minimum_backoff(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.minimum_backoff.is_none() {
+            self.minimum_backoff.set_default();
+        }
+        self.minimum_backoff.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_minimum_backoff(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.minimum_backoff.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+
+    // .google.protobuf.Duration maximum_backoff = 2;
+
+
+    pub fn get_maximum_backoff(&self) -> &::protobuf::well_known_types::Duration {
+        self.maximum_backoff.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_maximum_backoff(&mut self) {
+        self.maximum_backoff.clear();
+    }
+
+    pub fn has_maximum_backoff(&self) -> bool {
+        self.maximum_backoff.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_maximum_backoff(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.maximum_backoff = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_maximum_backoff(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.maximum_backoff.is_none() {
+            self.maximum_backoff.set_default();
+        }
+        self.maximum_backoff.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_maximum_backoff(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.maximum_backoff.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+}
+
+impl ::protobuf::Message for RetryPolicy {
+    fn is_initialized(&self) -> bool {
+        for v in &self.minimum_backoff {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.maximum_backoff {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.minimum_backoff)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.maximum_backoff)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.minimum_backoff.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.maximum_backoff.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.minimum_backoff.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.maximum_backoff.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RetryPolicy {
+        RetryPolicy::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "minimum_backoff",
+                |m: &RetryPolicy| { &m.minimum_backoff },
+                |m: &mut RetryPolicy| { &mut m.minimum_backoff },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "maximum_backoff",
+                |m: &RetryPolicy| { &m.maximum_backoff },
+                |m: &mut RetryPolicy| { &mut m.maximum_backoff },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<RetryPolicy>(
+                "RetryPolicy",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static RetryPolicy {
+        static instance: ::protobuf::rt::LazyV2<RetryPolicy> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(RetryPolicy::new)
+    }
+}
+
+impl ::protobuf::Clear for RetryPolicy {
+    fn clear(&mut self) {
+        self.minimum_backoff.clear();
+        self.maximum_backoff.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RetryPolicy {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RetryPolicy {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -3990,6 +5343,7 @@ pub struct PushConfig {
     pub attributes: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     // message oneof groups
     pub authentication_method: ::std::option::Option<PushConfig_oneof_authentication_method>,
+    pub wrapper: ::std::option::Option<PushConfig_oneof_wrapper>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -4004,6 +5358,12 @@ impl<'a> ::std::default::Default for &'a PushConfig {
 #[derive(Clone,PartialEq,Debug)]
 pub enum PushConfig_oneof_authentication_method {
     oidc_token(PushConfig_OidcToken),
+}
+
+#[derive(Clone,PartialEq,Debug)]
+pub enum PushConfig_oneof_wrapper {
+    pubsub_wrapper(PushConfig_PubsubWrapper),
+    no_wrapper(PushConfig_NoWrapper),
 }
 
 impl PushConfig {
@@ -4110,11 +5470,119 @@ impl PushConfig {
             PushConfig_OidcToken::new()
         }
     }
+
+    // .google.pubsub.v1.PushConfig.PubsubWrapper pubsub_wrapper = 4;
+
+
+    pub fn get_pubsub_wrapper(&self) -> &PushConfig_PubsubWrapper {
+        match self.wrapper {
+            ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(ref v)) => v,
+            _ => <PushConfig_PubsubWrapper as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_pubsub_wrapper(&mut self) {
+        self.wrapper = ::std::option::Option::None;
+    }
+
+    pub fn has_pubsub_wrapper(&self) -> bool {
+        match self.wrapper {
+            ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pubsub_wrapper(&mut self, v: PushConfig_PubsubWrapper) {
+        self.wrapper = ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_pubsub_wrapper(&mut self) -> &mut PushConfig_PubsubWrapper {
+        if let ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(_)) = self.wrapper {
+        } else {
+            self.wrapper = ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(PushConfig_PubsubWrapper::new()));
+        }
+        match self.wrapper {
+            ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_pubsub_wrapper(&mut self) -> PushConfig_PubsubWrapper {
+        if self.has_pubsub_wrapper() {
+            match self.wrapper.take() {
+                ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            PushConfig_PubsubWrapper::new()
+        }
+    }
+
+    // .google.pubsub.v1.PushConfig.NoWrapper no_wrapper = 5;
+
+
+    pub fn get_no_wrapper(&self) -> &PushConfig_NoWrapper {
+        match self.wrapper {
+            ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(ref v)) => v,
+            _ => <PushConfig_NoWrapper as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_no_wrapper(&mut self) {
+        self.wrapper = ::std::option::Option::None;
+    }
+
+    pub fn has_no_wrapper(&self) -> bool {
+        match self.wrapper {
+            ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_no_wrapper(&mut self, v: PushConfig_NoWrapper) {
+        self.wrapper = ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_no_wrapper(&mut self) -> &mut PushConfig_NoWrapper {
+        if let ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(_)) = self.wrapper {
+        } else {
+            self.wrapper = ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(PushConfig_NoWrapper::new()));
+        }
+        match self.wrapper {
+            ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_no_wrapper(&mut self) -> PushConfig_NoWrapper {
+        if self.has_no_wrapper() {
+            match self.wrapper.take() {
+                ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            PushConfig_NoWrapper::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for PushConfig {
     fn is_initialized(&self) -> bool {
         if let Some(PushConfig_oneof_authentication_method::oidc_token(ref v)) = self.authentication_method {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(PushConfig_oneof_wrapper::pubsub_wrapper(ref v)) = self.wrapper {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(PushConfig_oneof_wrapper::no_wrapper(ref v)) = self.wrapper {
             if !v.is_initialized() {
                 return false;
             }
@@ -4137,6 +5605,18 @@ impl ::protobuf::Message for PushConfig {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     self.authentication_method = ::std::option::Option::Some(PushConfig_oneof_authentication_method::oidc_token(is.read_message()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.wrapper = ::std::option::Option::Some(PushConfig_oneof_wrapper::pubsub_wrapper(is.read_message()?));
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.wrapper = ::std::option::Option::Some(PushConfig_oneof_wrapper::no_wrapper(is.read_message()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -4162,6 +5642,18 @@ impl ::protobuf::Message for PushConfig {
                 },
             };
         }
+        if let ::std::option::Option::Some(ref v) = self.wrapper {
+            match v {
+                &PushConfig_oneof_wrapper::pubsub_wrapper(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &PushConfig_oneof_wrapper::no_wrapper(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4176,6 +5668,20 @@ impl ::protobuf::Message for PushConfig {
             match v {
                 &PushConfig_oneof_authentication_method::oidc_token(ref v) => {
                     os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self.wrapper {
+            match v {
+                &PushConfig_oneof_wrapper::pubsub_wrapper(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &PushConfig_oneof_wrapper::no_wrapper(ref v) => {
+                    os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -4234,6 +5740,16 @@ impl ::protobuf::Message for PushConfig {
                 PushConfig::has_oidc_token,
                 PushConfig::get_oidc_token,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, PushConfig_PubsubWrapper>(
+                "pubsub_wrapper",
+                PushConfig::has_pubsub_wrapper,
+                PushConfig::get_pubsub_wrapper,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, PushConfig_NoWrapper>(
+                "no_wrapper",
+                PushConfig::has_no_wrapper,
+                PushConfig::get_no_wrapper,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<PushConfig>(
                 "PushConfig",
                 fields,
@@ -4253,6 +5769,8 @@ impl ::protobuf::Clear for PushConfig {
         self.push_endpoint.clear();
         self.attributes.clear();
         self.authentication_method = ::std::option::Option::None;
+        self.wrapper = ::std::option::Option::None;
+        self.wrapper = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -4467,6 +5985,1484 @@ impl ::std::fmt::Debug for PushConfig_OidcToken {
 impl ::protobuf::reflect::ProtobufValue for PushConfig_OidcToken {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct PushConfig_PubsubWrapper {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PushConfig_PubsubWrapper {
+    fn default() -> &'a PushConfig_PubsubWrapper {
+        <PushConfig_PubsubWrapper as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PushConfig_PubsubWrapper {
+    pub fn new() -> PushConfig_PubsubWrapper {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for PushConfig_PubsubWrapper {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PushConfig_PubsubWrapper {
+        PushConfig_PubsubWrapper::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PushConfig_PubsubWrapper>(
+                "PushConfig.PubsubWrapper",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PushConfig_PubsubWrapper {
+        static instance: ::protobuf::rt::LazyV2<PushConfig_PubsubWrapper> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PushConfig_PubsubWrapper::new)
+    }
+}
+
+impl ::protobuf::Clear for PushConfig_PubsubWrapper {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PushConfig_PubsubWrapper {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PushConfig_PubsubWrapper {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct PushConfig_NoWrapper {
+    // message fields
+    pub write_metadata: bool,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PushConfig_NoWrapper {
+    fn default() -> &'a PushConfig_NoWrapper {
+        <PushConfig_NoWrapper as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PushConfig_NoWrapper {
+    pub fn new() -> PushConfig_NoWrapper {
+        ::std::default::Default::default()
+    }
+
+    // bool write_metadata = 1;
+
+
+    pub fn get_write_metadata(&self) -> bool {
+        self.write_metadata
+    }
+    pub fn clear_write_metadata(&mut self) {
+        self.write_metadata = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_write_metadata(&mut self, v: bool) {
+        self.write_metadata = v;
+    }
+}
+
+impl ::protobuf::Message for PushConfig_NoWrapper {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.write_metadata = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.write_metadata != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.write_metadata != false {
+            os.write_bool(1, self.write_metadata)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PushConfig_NoWrapper {
+        PushConfig_NoWrapper::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "write_metadata",
+                |m: &PushConfig_NoWrapper| { &m.write_metadata },
+                |m: &mut PushConfig_NoWrapper| { &mut m.write_metadata },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PushConfig_NoWrapper>(
+                "PushConfig.NoWrapper",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PushConfig_NoWrapper {
+        static instance: ::protobuf::rt::LazyV2<PushConfig_NoWrapper> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PushConfig_NoWrapper::new)
+    }
+}
+
+impl ::protobuf::Clear for PushConfig_NoWrapper {
+    fn clear(&mut self) {
+        self.write_metadata = false;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PushConfig_NoWrapper {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PushConfig_NoWrapper {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct BigQueryConfig {
+    // message fields
+    pub table: ::std::string::String,
+    pub use_topic_schema: bool,
+    pub write_metadata: bool,
+    pub drop_unknown_fields: bool,
+    pub state: BigQueryConfig_State,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a BigQueryConfig {
+    fn default() -> &'a BigQueryConfig {
+        <BigQueryConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl BigQueryConfig {
+    pub fn new() -> BigQueryConfig {
+        ::std::default::Default::default()
+    }
+
+    // string table = 1;
+
+
+    pub fn get_table(&self) -> &str {
+        &self.table
+    }
+    pub fn clear_table(&mut self) {
+        self.table.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_table(&mut self, v: ::std::string::String) {
+        self.table = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_table(&mut self) -> &mut ::std::string::String {
+        &mut self.table
+    }
+
+    // Take field
+    pub fn take_table(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.table, ::std::string::String::new())
+    }
+
+    // bool use_topic_schema = 2;
+
+
+    pub fn get_use_topic_schema(&self) -> bool {
+        self.use_topic_schema
+    }
+    pub fn clear_use_topic_schema(&mut self) {
+        self.use_topic_schema = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_use_topic_schema(&mut self, v: bool) {
+        self.use_topic_schema = v;
+    }
+
+    // bool write_metadata = 3;
+
+
+    pub fn get_write_metadata(&self) -> bool {
+        self.write_metadata
+    }
+    pub fn clear_write_metadata(&mut self) {
+        self.write_metadata = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_write_metadata(&mut self, v: bool) {
+        self.write_metadata = v;
+    }
+
+    // bool drop_unknown_fields = 4;
+
+
+    pub fn get_drop_unknown_fields(&self) -> bool {
+        self.drop_unknown_fields
+    }
+    pub fn clear_drop_unknown_fields(&mut self) {
+        self.drop_unknown_fields = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_drop_unknown_fields(&mut self, v: bool) {
+        self.drop_unknown_fields = v;
+    }
+
+    // .google.pubsub.v1.BigQueryConfig.State state = 5;
+
+
+    pub fn get_state(&self) -> BigQueryConfig_State {
+        self.state
+    }
+    pub fn clear_state(&mut self) {
+        self.state = BigQueryConfig_State::STATE_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_state(&mut self, v: BigQueryConfig_State) {
+        self.state = v;
+    }
+}
+
+impl ::protobuf::Message for BigQueryConfig {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.table)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.use_topic_schema = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.write_metadata = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.drop_unknown_fields = tmp;
+                },
+                5 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.state, 5, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.table.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.table);
+        }
+        if self.use_topic_schema != false {
+            my_size += 2;
+        }
+        if self.write_metadata != false {
+            my_size += 2;
+        }
+        if self.drop_unknown_fields != false {
+            my_size += 2;
+        }
+        if self.state != BigQueryConfig_State::STATE_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(5, self.state);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.table.is_empty() {
+            os.write_string(1, &self.table)?;
+        }
+        if self.use_topic_schema != false {
+            os.write_bool(2, self.use_topic_schema)?;
+        }
+        if self.write_metadata != false {
+            os.write_bool(3, self.write_metadata)?;
+        }
+        if self.drop_unknown_fields != false {
+            os.write_bool(4, self.drop_unknown_fields)?;
+        }
+        if self.state != BigQueryConfig_State::STATE_UNSPECIFIED {
+            os.write_enum(5, ::protobuf::ProtobufEnum::value(&self.state))?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BigQueryConfig {
+        BigQueryConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "table",
+                |m: &BigQueryConfig| { &m.table },
+                |m: &mut BigQueryConfig| { &mut m.table },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "use_topic_schema",
+                |m: &BigQueryConfig| { &m.use_topic_schema },
+                |m: &mut BigQueryConfig| { &mut m.use_topic_schema },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "write_metadata",
+                |m: &BigQueryConfig| { &m.write_metadata },
+                |m: &mut BigQueryConfig| { &mut m.write_metadata },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "drop_unknown_fields",
+                |m: &BigQueryConfig| { &m.drop_unknown_fields },
+                |m: &mut BigQueryConfig| { &mut m.drop_unknown_fields },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<BigQueryConfig_State>>(
+                "state",
+                |m: &BigQueryConfig| { &m.state },
+                |m: &mut BigQueryConfig| { &mut m.state },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<BigQueryConfig>(
+                "BigQueryConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static BigQueryConfig {
+        static instance: ::protobuf::rt::LazyV2<BigQueryConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(BigQueryConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for BigQueryConfig {
+    fn clear(&mut self) {
+        self.table.clear();
+        self.use_topic_schema = false;
+        self.write_metadata = false;
+        self.drop_unknown_fields = false;
+        self.state = BigQueryConfig_State::STATE_UNSPECIFIED;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for BigQueryConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BigQueryConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum BigQueryConfig_State {
+    STATE_UNSPECIFIED = 0,
+    ACTIVE = 1,
+    PERMISSION_DENIED = 2,
+    NOT_FOUND = 3,
+    SCHEMA_MISMATCH = 4,
+}
+
+impl ::protobuf::ProtobufEnum for BigQueryConfig_State {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<BigQueryConfig_State> {
+        match value {
+            0 => ::std::option::Option::Some(BigQueryConfig_State::STATE_UNSPECIFIED),
+            1 => ::std::option::Option::Some(BigQueryConfig_State::ACTIVE),
+            2 => ::std::option::Option::Some(BigQueryConfig_State::PERMISSION_DENIED),
+            3 => ::std::option::Option::Some(BigQueryConfig_State::NOT_FOUND),
+            4 => ::std::option::Option::Some(BigQueryConfig_State::SCHEMA_MISMATCH),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [BigQueryConfig_State] = &[
+            BigQueryConfig_State::STATE_UNSPECIFIED,
+            BigQueryConfig_State::ACTIVE,
+            BigQueryConfig_State::PERMISSION_DENIED,
+            BigQueryConfig_State::NOT_FOUND,
+            BigQueryConfig_State::SCHEMA_MISMATCH,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<BigQueryConfig_State>("BigQueryConfig.State", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for BigQueryConfig_State {
+}
+
+impl ::std::default::Default for BigQueryConfig_State {
+    fn default() -> Self {
+        BigQueryConfig_State::STATE_UNSPECIFIED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BigQueryConfig_State {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CloudStorageConfig {
+    // message fields
+    pub bucket: ::std::string::String,
+    pub filename_prefix: ::std::string::String,
+    pub filename_suffix: ::std::string::String,
+    pub max_duration: ::protobuf::SingularPtrField<::protobuf::well_known_types::Duration>,
+    pub max_bytes: i64,
+    pub state: CloudStorageConfig_State,
+    // message oneof groups
+    pub output_format: ::std::option::Option<CloudStorageConfig_oneof_output_format>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CloudStorageConfig {
+    fn default() -> &'a CloudStorageConfig {
+        <CloudStorageConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+pub enum CloudStorageConfig_oneof_output_format {
+    text_config(CloudStorageConfig_TextConfig),
+    avro_config(CloudStorageConfig_AvroConfig),
+}
+
+impl CloudStorageConfig {
+    pub fn new() -> CloudStorageConfig {
+        ::std::default::Default::default()
+    }
+
+    // string bucket = 1;
+
+
+    pub fn get_bucket(&self) -> &str {
+        &self.bucket
+    }
+    pub fn clear_bucket(&mut self) {
+        self.bucket.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bucket(&mut self, v: ::std::string::String) {
+        self.bucket = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_bucket(&mut self) -> &mut ::std::string::String {
+        &mut self.bucket
+    }
+
+    // Take field
+    pub fn take_bucket(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.bucket, ::std::string::String::new())
+    }
+
+    // string filename_prefix = 2;
+
+
+    pub fn get_filename_prefix(&self) -> &str {
+        &self.filename_prefix
+    }
+    pub fn clear_filename_prefix(&mut self) {
+        self.filename_prefix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_filename_prefix(&mut self, v: ::std::string::String) {
+        self.filename_prefix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_filename_prefix(&mut self) -> &mut ::std::string::String {
+        &mut self.filename_prefix
+    }
+
+    // Take field
+    pub fn take_filename_prefix(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.filename_prefix, ::std::string::String::new())
+    }
+
+    // string filename_suffix = 3;
+
+
+    pub fn get_filename_suffix(&self) -> &str {
+        &self.filename_suffix
+    }
+    pub fn clear_filename_suffix(&mut self) {
+        self.filename_suffix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_filename_suffix(&mut self, v: ::std::string::String) {
+        self.filename_suffix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_filename_suffix(&mut self) -> &mut ::std::string::String {
+        &mut self.filename_suffix
+    }
+
+    // Take field
+    pub fn take_filename_suffix(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.filename_suffix, ::std::string::String::new())
+    }
+
+    // .google.pubsub.v1.CloudStorageConfig.TextConfig text_config = 4;
+
+
+    pub fn get_text_config(&self) -> &CloudStorageConfig_TextConfig {
+        match self.output_format {
+            ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(ref v)) => v,
+            _ => <CloudStorageConfig_TextConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_text_config(&mut self) {
+        self.output_format = ::std::option::Option::None;
+    }
+
+    pub fn has_text_config(&self) -> bool {
+        match self.output_format {
+            ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_text_config(&mut self, v: CloudStorageConfig_TextConfig) {
+        self.output_format = ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_text_config(&mut self) -> &mut CloudStorageConfig_TextConfig {
+        if let ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(_)) = self.output_format {
+        } else {
+            self.output_format = ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(CloudStorageConfig_TextConfig::new()));
+        }
+        match self.output_format {
+            ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_text_config(&mut self) -> CloudStorageConfig_TextConfig {
+        if self.has_text_config() {
+            match self.output_format.take() {
+                ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CloudStorageConfig_TextConfig::new()
+        }
+    }
+
+    // .google.pubsub.v1.CloudStorageConfig.AvroConfig avro_config = 5;
+
+
+    pub fn get_avro_config(&self) -> &CloudStorageConfig_AvroConfig {
+        match self.output_format {
+            ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(ref v)) => v,
+            _ => <CloudStorageConfig_AvroConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_avro_config(&mut self) {
+        self.output_format = ::std::option::Option::None;
+    }
+
+    pub fn has_avro_config(&self) -> bool {
+        match self.output_format {
+            ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_avro_config(&mut self, v: CloudStorageConfig_AvroConfig) {
+        self.output_format = ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_avro_config(&mut self) -> &mut CloudStorageConfig_AvroConfig {
+        if let ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(_)) = self.output_format {
+        } else {
+            self.output_format = ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(CloudStorageConfig_AvroConfig::new()));
+        }
+        match self.output_format {
+            ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_avro_config(&mut self) -> CloudStorageConfig_AvroConfig {
+        if self.has_avro_config() {
+            match self.output_format.take() {
+                ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CloudStorageConfig_AvroConfig::new()
+        }
+    }
+
+    // .google.protobuf.Duration max_duration = 6;
+
+
+    pub fn get_max_duration(&self) -> &::protobuf::well_known_types::Duration {
+        self.max_duration.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Duration as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_max_duration(&mut self) {
+        self.max_duration.clear();
+    }
+
+    pub fn has_max_duration(&self) -> bool {
+        self.max_duration.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_duration(&mut self, v: ::protobuf::well_known_types::Duration) {
+        self.max_duration = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_max_duration(&mut self) -> &mut ::protobuf::well_known_types::Duration {
+        if self.max_duration.is_none() {
+            self.max_duration.set_default();
+        }
+        self.max_duration.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_max_duration(&mut self) -> ::protobuf::well_known_types::Duration {
+        self.max_duration.take().unwrap_or_else(|| ::protobuf::well_known_types::Duration::new())
+    }
+
+    // int64 max_bytes = 7;
+
+
+    pub fn get_max_bytes(&self) -> i64 {
+        self.max_bytes
+    }
+    pub fn clear_max_bytes(&mut self) {
+        self.max_bytes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_bytes(&mut self, v: i64) {
+        self.max_bytes = v;
+    }
+
+    // .google.pubsub.v1.CloudStorageConfig.State state = 9;
+
+
+    pub fn get_state(&self) -> CloudStorageConfig_State {
+        self.state
+    }
+    pub fn clear_state(&mut self) {
+        self.state = CloudStorageConfig_State::STATE_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_state(&mut self, v: CloudStorageConfig_State) {
+        self.state = v;
+    }
+}
+
+impl ::protobuf::Message for CloudStorageConfig {
+    fn is_initialized(&self) -> bool {
+        if let Some(CloudStorageConfig_oneof_output_format::text_config(ref v)) = self.output_format {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(CloudStorageConfig_oneof_output_format::avro_config(ref v)) = self.output_format {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        for v in &self.max_duration {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.bucket)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.filename_prefix)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.filename_suffix)?;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.output_format = ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::text_config(is.read_message()?));
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.output_format = ::std::option::Option::Some(CloudStorageConfig_oneof_output_format::avro_config(is.read_message()?));
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.max_duration)?;
+                },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.max_bytes = tmp;
+                },
+                9 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.state, 9, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.bucket.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.bucket);
+        }
+        if !self.filename_prefix.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.filename_prefix);
+        }
+        if !self.filename_suffix.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.filename_suffix);
+        }
+        if let Some(ref v) = self.max_duration.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.max_bytes != 0 {
+            my_size += ::protobuf::rt::value_size(7, self.max_bytes, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.state != CloudStorageConfig_State::STATE_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(9, self.state);
+        }
+        if let ::std::option::Option::Some(ref v) = self.output_format {
+            match v {
+                &CloudStorageConfig_oneof_output_format::text_config(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &CloudStorageConfig_oneof_output_format::avro_config(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.bucket.is_empty() {
+            os.write_string(1, &self.bucket)?;
+        }
+        if !self.filename_prefix.is_empty() {
+            os.write_string(2, &self.filename_prefix)?;
+        }
+        if !self.filename_suffix.is_empty() {
+            os.write_string(3, &self.filename_suffix)?;
+        }
+        if let Some(ref v) = self.max_duration.as_ref() {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.max_bytes != 0 {
+            os.write_int64(7, self.max_bytes)?;
+        }
+        if self.state != CloudStorageConfig_State::STATE_UNSPECIFIED {
+            os.write_enum(9, ::protobuf::ProtobufEnum::value(&self.state))?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.output_format {
+            match v {
+                &CloudStorageConfig_oneof_output_format::text_config(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &CloudStorageConfig_oneof_output_format::avro_config(ref v) => {
+                    os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CloudStorageConfig {
+        CloudStorageConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "bucket",
+                |m: &CloudStorageConfig| { &m.bucket },
+                |m: &mut CloudStorageConfig| { &mut m.bucket },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "filename_prefix",
+                |m: &CloudStorageConfig| { &m.filename_prefix },
+                |m: &mut CloudStorageConfig| { &mut m.filename_prefix },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "filename_suffix",
+                |m: &CloudStorageConfig| { &m.filename_suffix },
+                |m: &mut CloudStorageConfig| { &mut m.filename_suffix },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, CloudStorageConfig_TextConfig>(
+                "text_config",
+                CloudStorageConfig::has_text_config,
+                CloudStorageConfig::get_text_config,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, CloudStorageConfig_AvroConfig>(
+                "avro_config",
+                CloudStorageConfig::has_avro_config,
+                CloudStorageConfig::get_avro_config,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Duration>>(
+                "max_duration",
+                |m: &CloudStorageConfig| { &m.max_duration },
+                |m: &mut CloudStorageConfig| { &mut m.max_duration },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
+                "max_bytes",
+                |m: &CloudStorageConfig| { &m.max_bytes },
+                |m: &mut CloudStorageConfig| { &mut m.max_bytes },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CloudStorageConfig_State>>(
+                "state",
+                |m: &CloudStorageConfig| { &m.state },
+                |m: &mut CloudStorageConfig| { &mut m.state },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CloudStorageConfig>(
+                "CloudStorageConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CloudStorageConfig {
+        static instance: ::protobuf::rt::LazyV2<CloudStorageConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CloudStorageConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for CloudStorageConfig {
+    fn clear(&mut self) {
+        self.bucket.clear();
+        self.filename_prefix.clear();
+        self.filename_suffix.clear();
+        self.output_format = ::std::option::Option::None;
+        self.output_format = ::std::option::Option::None;
+        self.max_duration.clear();
+        self.max_bytes = 0;
+        self.state = CloudStorageConfig_State::STATE_UNSPECIFIED;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CloudStorageConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CloudStorageConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CloudStorageConfig_TextConfig {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CloudStorageConfig_TextConfig {
+    fn default() -> &'a CloudStorageConfig_TextConfig {
+        <CloudStorageConfig_TextConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CloudStorageConfig_TextConfig {
+    pub fn new() -> CloudStorageConfig_TextConfig {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for CloudStorageConfig_TextConfig {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CloudStorageConfig_TextConfig {
+        CloudStorageConfig_TextConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CloudStorageConfig_TextConfig>(
+                "CloudStorageConfig.TextConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CloudStorageConfig_TextConfig {
+        static instance: ::protobuf::rt::LazyV2<CloudStorageConfig_TextConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CloudStorageConfig_TextConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for CloudStorageConfig_TextConfig {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CloudStorageConfig_TextConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CloudStorageConfig_TextConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CloudStorageConfig_AvroConfig {
+    // message fields
+    pub write_metadata: bool,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CloudStorageConfig_AvroConfig {
+    fn default() -> &'a CloudStorageConfig_AvroConfig {
+        <CloudStorageConfig_AvroConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CloudStorageConfig_AvroConfig {
+    pub fn new() -> CloudStorageConfig_AvroConfig {
+        ::std::default::Default::default()
+    }
+
+    // bool write_metadata = 1;
+
+
+    pub fn get_write_metadata(&self) -> bool {
+        self.write_metadata
+    }
+    pub fn clear_write_metadata(&mut self) {
+        self.write_metadata = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_write_metadata(&mut self, v: bool) {
+        self.write_metadata = v;
+    }
+}
+
+impl ::protobuf::Message for CloudStorageConfig_AvroConfig {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.write_metadata = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.write_metadata != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.write_metadata != false {
+            os.write_bool(1, self.write_metadata)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CloudStorageConfig_AvroConfig {
+        CloudStorageConfig_AvroConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "write_metadata",
+                |m: &CloudStorageConfig_AvroConfig| { &m.write_metadata },
+                |m: &mut CloudStorageConfig_AvroConfig| { &mut m.write_metadata },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CloudStorageConfig_AvroConfig>(
+                "CloudStorageConfig.AvroConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CloudStorageConfig_AvroConfig {
+        static instance: ::protobuf::rt::LazyV2<CloudStorageConfig_AvroConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CloudStorageConfig_AvroConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for CloudStorageConfig_AvroConfig {
+    fn clear(&mut self) {
+        self.write_metadata = false;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CloudStorageConfig_AvroConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CloudStorageConfig_AvroConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum CloudStorageConfig_State {
+    STATE_UNSPECIFIED = 0,
+    ACTIVE = 1,
+    PERMISSION_DENIED = 2,
+    NOT_FOUND = 3,
+}
+
+impl ::protobuf::ProtobufEnum for CloudStorageConfig_State {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<CloudStorageConfig_State> {
+        match value {
+            0 => ::std::option::Option::Some(CloudStorageConfig_State::STATE_UNSPECIFIED),
+            1 => ::std::option::Option::Some(CloudStorageConfig_State::ACTIVE),
+            2 => ::std::option::Option::Some(CloudStorageConfig_State::PERMISSION_DENIED),
+            3 => ::std::option::Option::Some(CloudStorageConfig_State::NOT_FOUND),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [CloudStorageConfig_State] = &[
+            CloudStorageConfig_State::STATE_UNSPECIFIED,
+            CloudStorageConfig_State::ACTIVE,
+            CloudStorageConfig_State::PERMISSION_DENIED,
+            CloudStorageConfig_State::NOT_FOUND,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<CloudStorageConfig_State>("CloudStorageConfig.State", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for CloudStorageConfig_State {
+}
+
+impl ::std::default::Default for CloudStorageConfig_State {
+    fn default() -> Self {
+        CloudStorageConfig_State::STATE_UNSPECIFIED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CloudStorageConfig_State {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
 }
 
@@ -6768,6 +9764,9 @@ pub struct StreamingPullRequest {
     pub modify_deadline_seconds: ::std::vec::Vec<i32>,
     pub modify_deadline_ack_ids: ::protobuf::RepeatedField<::std::string::String>,
     pub stream_ack_deadline_seconds: i32,
+    pub client_id: ::std::string::String,
+    pub max_outstanding_messages: i64,
+    pub max_outstanding_bytes: i64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -6899,6 +9898,62 @@ impl StreamingPullRequest {
     pub fn set_stream_ack_deadline_seconds(&mut self, v: i32) {
         self.stream_ack_deadline_seconds = v;
     }
+
+    // string client_id = 6;
+
+
+    pub fn get_client_id(&self) -> &str {
+        &self.client_id
+    }
+    pub fn clear_client_id(&mut self) {
+        self.client_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_client_id(&mut self, v: ::std::string::String) {
+        self.client_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_client_id(&mut self) -> &mut ::std::string::String {
+        &mut self.client_id
+    }
+
+    // Take field
+    pub fn take_client_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.client_id, ::std::string::String::new())
+    }
+
+    // int64 max_outstanding_messages = 7;
+
+
+    pub fn get_max_outstanding_messages(&self) -> i64 {
+        self.max_outstanding_messages
+    }
+    pub fn clear_max_outstanding_messages(&mut self) {
+        self.max_outstanding_messages = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_outstanding_messages(&mut self, v: i64) {
+        self.max_outstanding_messages = v;
+    }
+
+    // int64 max_outstanding_bytes = 8;
+
+
+    pub fn get_max_outstanding_bytes(&self) -> i64 {
+        self.max_outstanding_bytes
+    }
+    pub fn clear_max_outstanding_bytes(&mut self) {
+        self.max_outstanding_bytes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_outstanding_bytes(&mut self, v: i64) {
+        self.max_outstanding_bytes = v;
+    }
 }
 
 impl ::protobuf::Message for StreamingPullRequest {
@@ -6929,6 +9984,23 @@ impl ::protobuf::Message for StreamingPullRequest {
                     let tmp = is.read_int32()?;
                     self.stream_ack_deadline_seconds = tmp;
                 },
+                6 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.client_id)?;
+                },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.max_outstanding_messages = tmp;
+                },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.max_outstanding_bytes = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -6956,6 +10028,15 @@ impl ::protobuf::Message for StreamingPullRequest {
         if self.stream_ack_deadline_seconds != 0 {
             my_size += ::protobuf::rt::value_size(5, self.stream_ack_deadline_seconds, ::protobuf::wire_format::WireTypeVarint);
         }
+        if !self.client_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.client_id);
+        }
+        if self.max_outstanding_messages != 0 {
+            my_size += ::protobuf::rt::value_size(7, self.max_outstanding_messages, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.max_outstanding_bytes != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.max_outstanding_bytes, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -6976,6 +10057,15 @@ impl ::protobuf::Message for StreamingPullRequest {
         };
         if self.stream_ack_deadline_seconds != 0 {
             os.write_int32(5, self.stream_ack_deadline_seconds)?;
+        }
+        if !self.client_id.is_empty() {
+            os.write_string(6, &self.client_id)?;
+        }
+        if self.max_outstanding_messages != 0 {
+            os.write_int64(7, self.max_outstanding_messages)?;
+        }
+        if self.max_outstanding_bytes != 0 {
+            os.write_int64(8, self.max_outstanding_bytes)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -7040,6 +10130,21 @@ impl ::protobuf::Message for StreamingPullRequest {
                 |m: &StreamingPullRequest| { &m.stream_ack_deadline_seconds },
                 |m: &mut StreamingPullRequest| { &mut m.stream_ack_deadline_seconds },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "client_id",
+                |m: &StreamingPullRequest| { &m.client_id },
+                |m: &mut StreamingPullRequest| { &mut m.client_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
+                "max_outstanding_messages",
+                |m: &StreamingPullRequest| { &m.max_outstanding_messages },
+                |m: &mut StreamingPullRequest| { &mut m.max_outstanding_messages },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
+                "max_outstanding_bytes",
+                |m: &StreamingPullRequest| { &m.max_outstanding_bytes },
+                |m: &mut StreamingPullRequest| { &mut m.max_outstanding_bytes },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamingPullRequest>(
                 "StreamingPullRequest",
                 fields,
@@ -7061,6 +10166,9 @@ impl ::protobuf::Clear for StreamingPullRequest {
         self.modify_deadline_seconds.clear();
         self.modify_deadline_ack_ids.clear();
         self.stream_ack_deadline_seconds = 0;
+        self.client_id.clear();
+        self.max_outstanding_messages = 0;
+        self.max_outstanding_bytes = 0;
         self.unknown_fields.clear();
     }
 }
@@ -7081,6 +10189,9 @@ impl ::protobuf::reflect::ProtobufValue for StreamingPullRequest {
 pub struct StreamingPullResponse {
     // message fields
     pub received_messages: ::protobuf::RepeatedField<ReceivedMessage>,
+    pub acknowledge_confirmation: ::protobuf::SingularPtrField<StreamingPullResponse_AcknowledgeConfirmation>,
+    pub modify_ack_deadline_confirmation: ::protobuf::SingularPtrField<StreamingPullResponse_ModifyAckDeadlineConfirmation>,
+    pub subscription_properties: ::protobuf::SingularPtrField<StreamingPullResponse_SubscriptionProperties>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -7121,11 +10232,125 @@ impl StreamingPullResponse {
     pub fn take_received_messages(&mut self) -> ::protobuf::RepeatedField<ReceivedMessage> {
         ::std::mem::replace(&mut self.received_messages, ::protobuf::RepeatedField::new())
     }
+
+    // .google.pubsub.v1.StreamingPullResponse.AcknowledgeConfirmation acknowledge_confirmation = 5;
+
+
+    pub fn get_acknowledge_confirmation(&self) -> &StreamingPullResponse_AcknowledgeConfirmation {
+        self.acknowledge_confirmation.as_ref().unwrap_or_else(|| <StreamingPullResponse_AcknowledgeConfirmation as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_acknowledge_confirmation(&mut self) {
+        self.acknowledge_confirmation.clear();
+    }
+
+    pub fn has_acknowledge_confirmation(&self) -> bool {
+        self.acknowledge_confirmation.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_acknowledge_confirmation(&mut self, v: StreamingPullResponse_AcknowledgeConfirmation) {
+        self.acknowledge_confirmation = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_acknowledge_confirmation(&mut self) -> &mut StreamingPullResponse_AcknowledgeConfirmation {
+        if self.acknowledge_confirmation.is_none() {
+            self.acknowledge_confirmation.set_default();
+        }
+        self.acknowledge_confirmation.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_acknowledge_confirmation(&mut self) -> StreamingPullResponse_AcknowledgeConfirmation {
+        self.acknowledge_confirmation.take().unwrap_or_else(|| StreamingPullResponse_AcknowledgeConfirmation::new())
+    }
+
+    // .google.pubsub.v1.StreamingPullResponse.ModifyAckDeadlineConfirmation modify_ack_deadline_confirmation = 3;
+
+
+    pub fn get_modify_ack_deadline_confirmation(&self) -> &StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        self.modify_ack_deadline_confirmation.as_ref().unwrap_or_else(|| <StreamingPullResponse_ModifyAckDeadlineConfirmation as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_modify_ack_deadline_confirmation(&mut self) {
+        self.modify_ack_deadline_confirmation.clear();
+    }
+
+    pub fn has_modify_ack_deadline_confirmation(&self) -> bool {
+        self.modify_ack_deadline_confirmation.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_modify_ack_deadline_confirmation(&mut self, v: StreamingPullResponse_ModifyAckDeadlineConfirmation) {
+        self.modify_ack_deadline_confirmation = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_modify_ack_deadline_confirmation(&mut self) -> &mut StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        if self.modify_ack_deadline_confirmation.is_none() {
+            self.modify_ack_deadline_confirmation.set_default();
+        }
+        self.modify_ack_deadline_confirmation.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_modify_ack_deadline_confirmation(&mut self) -> StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        self.modify_ack_deadline_confirmation.take().unwrap_or_else(|| StreamingPullResponse_ModifyAckDeadlineConfirmation::new())
+    }
+
+    // .google.pubsub.v1.StreamingPullResponse.SubscriptionProperties subscription_properties = 4;
+
+
+    pub fn get_subscription_properties(&self) -> &StreamingPullResponse_SubscriptionProperties {
+        self.subscription_properties.as_ref().unwrap_or_else(|| <StreamingPullResponse_SubscriptionProperties as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_subscription_properties(&mut self) {
+        self.subscription_properties.clear();
+    }
+
+    pub fn has_subscription_properties(&self) -> bool {
+        self.subscription_properties.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_subscription_properties(&mut self, v: StreamingPullResponse_SubscriptionProperties) {
+        self.subscription_properties = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_subscription_properties(&mut self) -> &mut StreamingPullResponse_SubscriptionProperties {
+        if self.subscription_properties.is_none() {
+            self.subscription_properties.set_default();
+        }
+        self.subscription_properties.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_subscription_properties(&mut self) -> StreamingPullResponse_SubscriptionProperties {
+        self.subscription_properties.take().unwrap_or_else(|| StreamingPullResponse_SubscriptionProperties::new())
+    }
 }
 
 impl ::protobuf::Message for StreamingPullResponse {
     fn is_initialized(&self) -> bool {
         for v in &self.received_messages {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.acknowledge_confirmation {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.modify_ack_deadline_confirmation {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.subscription_properties {
             if !v.is_initialized() {
                 return false;
             }
@@ -7139,6 +10364,15 @@ impl ::protobuf::Message for StreamingPullResponse {
             match field_number {
                 1 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.received_messages)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.acknowledge_confirmation)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.modify_ack_deadline_confirmation)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.subscription_properties)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -7156,6 +10390,18 @@ impl ::protobuf::Message for StreamingPullResponse {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if let Some(ref v) = self.acknowledge_confirmation.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.modify_ack_deadline_confirmation.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.subscription_properties.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -7167,6 +10413,21 @@ impl ::protobuf::Message for StreamingPullResponse {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if let Some(ref v) = self.acknowledge_confirmation.as_ref() {
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.modify_ack_deadline_confirmation.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.subscription_properties.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -7210,6 +10471,21 @@ impl ::protobuf::Message for StreamingPullResponse {
                 |m: &StreamingPullResponse| { &m.received_messages },
                 |m: &mut StreamingPullResponse| { &mut m.received_messages },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamingPullResponse_AcknowledgeConfirmation>>(
+                "acknowledge_confirmation",
+                |m: &StreamingPullResponse| { &m.acknowledge_confirmation },
+                |m: &mut StreamingPullResponse| { &mut m.acknowledge_confirmation },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamingPullResponse_ModifyAckDeadlineConfirmation>>(
+                "modify_ack_deadline_confirmation",
+                |m: &StreamingPullResponse| { &m.modify_ack_deadline_confirmation },
+                |m: &mut StreamingPullResponse| { &mut m.modify_ack_deadline_confirmation },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StreamingPullResponse_SubscriptionProperties>>(
+                "subscription_properties",
+                |m: &StreamingPullResponse| { &m.subscription_properties },
+                |m: &mut StreamingPullResponse| { &mut m.subscription_properties },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamingPullResponse>(
                 "StreamingPullResponse",
                 fields,
@@ -7227,6 +10503,9 @@ impl ::protobuf::Message for StreamingPullResponse {
 impl ::protobuf::Clear for StreamingPullResponse {
     fn clear(&mut self) {
         self.received_messages.clear();
+        self.acknowledge_confirmation.clear();
+        self.modify_ack_deadline_confirmation.clear();
+        self.subscription_properties.clear();
         self.unknown_fields.clear();
     }
 }
@@ -7238,6 +10517,714 @@ impl ::std::fmt::Debug for StreamingPullResponse {
 }
 
 impl ::protobuf::reflect::ProtobufValue for StreamingPullResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct StreamingPullResponse_AcknowledgeConfirmation {
+    // message fields
+    pub ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    pub invalid_ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    pub unordered_ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    pub temporary_failed_ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StreamingPullResponse_AcknowledgeConfirmation {
+    fn default() -> &'a StreamingPullResponse_AcknowledgeConfirmation {
+        <StreamingPullResponse_AcknowledgeConfirmation as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamingPullResponse_AcknowledgeConfirmation {
+    pub fn new() -> StreamingPullResponse_AcknowledgeConfirmation {
+        ::std::default::Default::default()
+    }
+
+    // repeated string ack_ids = 1;
+
+
+    pub fn get_ack_ids(&self) -> &[::std::string::String] {
+        &self.ack_ids
+    }
+    pub fn clear_ack_ids(&mut self) {
+        self.ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.ack_ids
+    }
+
+    // Take field
+    pub fn take_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.ack_ids, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string invalid_ack_ids = 2;
+
+
+    pub fn get_invalid_ack_ids(&self) -> &[::std::string::String] {
+        &self.invalid_ack_ids
+    }
+    pub fn clear_invalid_ack_ids(&mut self) {
+        self.invalid_ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_invalid_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.invalid_ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_invalid_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.invalid_ack_ids
+    }
+
+    // Take field
+    pub fn take_invalid_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.invalid_ack_ids, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string unordered_ack_ids = 3;
+
+
+    pub fn get_unordered_ack_ids(&self) -> &[::std::string::String] {
+        &self.unordered_ack_ids
+    }
+    pub fn clear_unordered_ack_ids(&mut self) {
+        self.unordered_ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_unordered_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.unordered_ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_unordered_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.unordered_ack_ids
+    }
+
+    // Take field
+    pub fn take_unordered_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.unordered_ack_ids, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string temporary_failed_ack_ids = 4;
+
+
+    pub fn get_temporary_failed_ack_ids(&self) -> &[::std::string::String] {
+        &self.temporary_failed_ack_ids
+    }
+    pub fn clear_temporary_failed_ack_ids(&mut self) {
+        self.temporary_failed_ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_temporary_failed_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.temporary_failed_ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_temporary_failed_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.temporary_failed_ack_ids
+    }
+
+    // Take field
+    pub fn take_temporary_failed_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.temporary_failed_ack_ids, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for StreamingPullResponse_AcknowledgeConfirmation {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.ack_ids)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.invalid_ack_ids)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.unordered_ack_ids)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.temporary_failed_ack_ids)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.ack_ids {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
+        for value in &self.invalid_ack_ids {
+            my_size += ::protobuf::rt::string_size(2, &value);
+        };
+        for value in &self.unordered_ack_ids {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        for value in &self.temporary_failed_ack_ids {
+            my_size += ::protobuf::rt::string_size(4, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.ack_ids {
+            os.write_string(1, &v)?;
+        };
+        for v in &self.invalid_ack_ids {
+            os.write_string(2, &v)?;
+        };
+        for v in &self.unordered_ack_ids {
+            os.write_string(3, &v)?;
+        };
+        for v in &self.temporary_failed_ack_ids {
+            os.write_string(4, &v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StreamingPullResponse_AcknowledgeConfirmation {
+        StreamingPullResponse_AcknowledgeConfirmation::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "ack_ids",
+                |m: &StreamingPullResponse_AcknowledgeConfirmation| { &m.ack_ids },
+                |m: &mut StreamingPullResponse_AcknowledgeConfirmation| { &mut m.ack_ids },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "invalid_ack_ids",
+                |m: &StreamingPullResponse_AcknowledgeConfirmation| { &m.invalid_ack_ids },
+                |m: &mut StreamingPullResponse_AcknowledgeConfirmation| { &mut m.invalid_ack_ids },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "unordered_ack_ids",
+                |m: &StreamingPullResponse_AcknowledgeConfirmation| { &m.unordered_ack_ids },
+                |m: &mut StreamingPullResponse_AcknowledgeConfirmation| { &mut m.unordered_ack_ids },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "temporary_failed_ack_ids",
+                |m: &StreamingPullResponse_AcknowledgeConfirmation| { &m.temporary_failed_ack_ids },
+                |m: &mut StreamingPullResponse_AcknowledgeConfirmation| { &mut m.temporary_failed_ack_ids },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamingPullResponse_AcknowledgeConfirmation>(
+                "StreamingPullResponse.AcknowledgeConfirmation",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StreamingPullResponse_AcknowledgeConfirmation {
+        static instance: ::protobuf::rt::LazyV2<StreamingPullResponse_AcknowledgeConfirmation> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StreamingPullResponse_AcknowledgeConfirmation::new)
+    }
+}
+
+impl ::protobuf::Clear for StreamingPullResponse_AcknowledgeConfirmation {
+    fn clear(&mut self) {
+        self.ack_ids.clear();
+        self.invalid_ack_ids.clear();
+        self.unordered_ack_ids.clear();
+        self.temporary_failed_ack_ids.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StreamingPullResponse_AcknowledgeConfirmation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamingPullResponse_AcknowledgeConfirmation {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    // message fields
+    pub ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    pub invalid_ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    pub temporary_failed_ack_ids: ::protobuf::RepeatedField<::std::string::String>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    fn default() -> &'a StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        <StreamingPullResponse_ModifyAckDeadlineConfirmation as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    pub fn new() -> StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        ::std::default::Default::default()
+    }
+
+    // repeated string ack_ids = 1;
+
+
+    pub fn get_ack_ids(&self) -> &[::std::string::String] {
+        &self.ack_ids
+    }
+    pub fn clear_ack_ids(&mut self) {
+        self.ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.ack_ids
+    }
+
+    // Take field
+    pub fn take_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.ack_ids, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string invalid_ack_ids = 2;
+
+
+    pub fn get_invalid_ack_ids(&self) -> &[::std::string::String] {
+        &self.invalid_ack_ids
+    }
+    pub fn clear_invalid_ack_ids(&mut self) {
+        self.invalid_ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_invalid_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.invalid_ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_invalid_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.invalid_ack_ids
+    }
+
+    // Take field
+    pub fn take_invalid_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.invalid_ack_ids, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string temporary_failed_ack_ids = 3;
+
+
+    pub fn get_temporary_failed_ack_ids(&self) -> &[::std::string::String] {
+        &self.temporary_failed_ack_ids
+    }
+    pub fn clear_temporary_failed_ack_ids(&mut self) {
+        self.temporary_failed_ack_ids.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_temporary_failed_ack_ids(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.temporary_failed_ack_ids = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_temporary_failed_ack_ids(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.temporary_failed_ack_ids
+    }
+
+    // Take field
+    pub fn take_temporary_failed_ack_ids(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.temporary_failed_ack_ids, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.ack_ids)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.invalid_ack_ids)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.temporary_failed_ack_ids)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.ack_ids {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
+        for value in &self.invalid_ack_ids {
+            my_size += ::protobuf::rt::string_size(2, &value);
+        };
+        for value in &self.temporary_failed_ack_ids {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.ack_ids {
+            os.write_string(1, &v)?;
+        };
+        for v in &self.invalid_ack_ids {
+            os.write_string(2, &v)?;
+        };
+        for v in &self.temporary_failed_ack_ids {
+            os.write_string(3, &v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        StreamingPullResponse_ModifyAckDeadlineConfirmation::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "ack_ids",
+                |m: &StreamingPullResponse_ModifyAckDeadlineConfirmation| { &m.ack_ids },
+                |m: &mut StreamingPullResponse_ModifyAckDeadlineConfirmation| { &mut m.ack_ids },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "invalid_ack_ids",
+                |m: &StreamingPullResponse_ModifyAckDeadlineConfirmation| { &m.invalid_ack_ids },
+                |m: &mut StreamingPullResponse_ModifyAckDeadlineConfirmation| { &mut m.invalid_ack_ids },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "temporary_failed_ack_ids",
+                |m: &StreamingPullResponse_ModifyAckDeadlineConfirmation| { &m.temporary_failed_ack_ids },
+                |m: &mut StreamingPullResponse_ModifyAckDeadlineConfirmation| { &mut m.temporary_failed_ack_ids },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamingPullResponse_ModifyAckDeadlineConfirmation>(
+                "StreamingPullResponse.ModifyAckDeadlineConfirmation",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StreamingPullResponse_ModifyAckDeadlineConfirmation {
+        static instance: ::protobuf::rt::LazyV2<StreamingPullResponse_ModifyAckDeadlineConfirmation> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StreamingPullResponse_ModifyAckDeadlineConfirmation::new)
+    }
+}
+
+impl ::protobuf::Clear for StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    fn clear(&mut self) {
+        self.ack_ids.clear();
+        self.invalid_ack_ids.clear();
+        self.temporary_failed_ack_ids.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamingPullResponse_ModifyAckDeadlineConfirmation {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct StreamingPullResponse_SubscriptionProperties {
+    // message fields
+    pub exactly_once_delivery_enabled: bool,
+    pub message_ordering_enabled: bool,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StreamingPullResponse_SubscriptionProperties {
+    fn default() -> &'a StreamingPullResponse_SubscriptionProperties {
+        <StreamingPullResponse_SubscriptionProperties as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamingPullResponse_SubscriptionProperties {
+    pub fn new() -> StreamingPullResponse_SubscriptionProperties {
+        ::std::default::Default::default()
+    }
+
+    // bool exactly_once_delivery_enabled = 1;
+
+
+    pub fn get_exactly_once_delivery_enabled(&self) -> bool {
+        self.exactly_once_delivery_enabled
+    }
+    pub fn clear_exactly_once_delivery_enabled(&mut self) {
+        self.exactly_once_delivery_enabled = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_exactly_once_delivery_enabled(&mut self, v: bool) {
+        self.exactly_once_delivery_enabled = v;
+    }
+
+    // bool message_ordering_enabled = 2;
+
+
+    pub fn get_message_ordering_enabled(&self) -> bool {
+        self.message_ordering_enabled
+    }
+    pub fn clear_message_ordering_enabled(&mut self) {
+        self.message_ordering_enabled = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_message_ordering_enabled(&mut self, v: bool) {
+        self.message_ordering_enabled = v;
+    }
+}
+
+impl ::protobuf::Message for StreamingPullResponse_SubscriptionProperties {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.exactly_once_delivery_enabled = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.message_ordering_enabled = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.exactly_once_delivery_enabled != false {
+            my_size += 2;
+        }
+        if self.message_ordering_enabled != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.exactly_once_delivery_enabled != false {
+            os.write_bool(1, self.exactly_once_delivery_enabled)?;
+        }
+        if self.message_ordering_enabled != false {
+            os.write_bool(2, self.message_ordering_enabled)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StreamingPullResponse_SubscriptionProperties {
+        StreamingPullResponse_SubscriptionProperties::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "exactly_once_delivery_enabled",
+                |m: &StreamingPullResponse_SubscriptionProperties| { &m.exactly_once_delivery_enabled },
+                |m: &mut StreamingPullResponse_SubscriptionProperties| { &mut m.exactly_once_delivery_enabled },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "message_ordering_enabled",
+                |m: &StreamingPullResponse_SubscriptionProperties| { &m.message_ordering_enabled },
+                |m: &mut StreamingPullResponse_SubscriptionProperties| { &mut m.message_ordering_enabled },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StreamingPullResponse_SubscriptionProperties>(
+                "StreamingPullResponse.SubscriptionProperties",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StreamingPullResponse_SubscriptionProperties {
+        static instance: ::protobuf::rt::LazyV2<StreamingPullResponse_SubscriptionProperties> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StreamingPullResponse_SubscriptionProperties::new)
+    }
+}
+
+impl ::protobuf::Clear for StreamingPullResponse_SubscriptionProperties {
+    fn clear(&mut self) {
+        self.exactly_once_delivery_enabled = false;
+        self.message_ordering_enabled = false;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StreamingPullResponse_SubscriptionProperties {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamingPullResponse_SubscriptionProperties {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -9204,628 +13191,874 @@ impl ::protobuf::reflect::ProtobufValue for SeekResponse {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x1dgoogle/pubsub/v1/pubsub.proto\x12\x10google.pubsub.v1\x1a\x1cgoogl\
-    e/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1egoogle/pro\
+    e/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api\
+    /field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1egoogle/pro\
     tobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x20google/pr\
-    otobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"V\n\x14M\
-    essageStoragePolicy\x12>\n\x1ballowed_persistence_regions\x18\x01\x20\
-    \x03(\tR\x19allowedPersistenceRegions\"\x93\x02\n\x05Topic\x12\x12\n\x04\
-    name\x18\x01\x20\x01(\tR\x04name\x12;\n\x06labels\x18\x02\x20\x03(\x0b2#\
-    .google.pubsub.v1.Topic.LabelsEntryR\x06labels\x12\\\n\x16message_storag\
-    e_policy\x18\x03\x20\x01(\x0b2&.google.pubsub.v1.MessageStoragePolicyR\
-    \x14messageStoragePolicy\x12\x20\n\x0ckms_key_name\x18\x05\x20\x01(\tR\n\
-    kmsKeyName\x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
-    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"\xb4\
-    \x02\n\rPubsubMessage\x12\x12\n\x04data\x18\x01\x20\x01(\x0cR\x04data\
-    \x12O\n\nattributes\x18\x02\x20\x03(\x0b2/.google.pubsub.v1.PubsubMessag\
-    e.AttributesEntryR\nattributes\x12\x1d\n\nmessage_id\x18\x03\x20\x01(\tR\
-    \tmessageId\x12=\n\x0cpublish_time\x18\x04\x20\x01(\x0b2\x1a.google.prot\
-    obuf.TimestampR\x0bpublishTime\x12!\n\x0cordering_key\x18\x05\x20\x01(\t\
-    R\x0borderingKey\x1a=\n\x0fAttributesEntry\x12\x10\n\x03key\x18\x01\x20\
-    \x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\
-    \x01\"'\n\x0fGetTopicRequest\x12\x14\n\x05topic\x18\x01\x20\x01(\tR\x05t\
-    opic\"\x80\x01\n\x12UpdateTopicRequest\x12-\n\x05topic\x18\x01\x20\x01(\
-    \x0b2\x17.google.pubsub.v1.TopicR\x05topic\x12;\n\x0bupdate_mask\x18\x02\
-    \x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdateMask\"c\n\x0ePublis\
-    hRequest\x12\x14\n\x05topic\x18\x01\x20\x01(\tR\x05topic\x12;\n\x08messa\
-    ges\x18\x02\x20\x03(\x0b2\x1f.google.pubsub.v1.PubsubMessageR\x08message\
-    s\"2\n\x0fPublishResponse\x12\x1f\n\x0bmessage_ids\x18\x01\x20\x03(\tR\n\
-    messageIds\"i\n\x11ListTopicsRequest\x12\x18\n\x07project\x18\x01\x20\
-    \x01(\tR\x07project\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSi\
-    ze\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"m\n\x12ListTopi\
-    csResponse\x12/\n\x06topics\x18\x01\x20\x03(\x0b2\x17.google.pubsub.v1.T\
-    opicR\x06topics\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageT\
-    oken\"q\n\x1dListTopicSubscriptionsRequest\x12\x14\n\x05topic\x18\x01\
-    \x20\x01(\tR\x05topic\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08page\
-    Size\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"n\n\x1eListTo\
-    picSubscriptionsResponse\x12$\n\rsubscriptions\x18\x01\x20\x03(\tR\rsubs\
-    criptions\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"\
-    m\n\x19ListTopicSnapshotsRequest\x12\x14\n\x05topic\x18\x01\x20\x01(\tR\
-    \x05topic\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\
-    \n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"b\n\x1aListTopicSnapshots\
-    Response\x12\x1c\n\tsnapshots\x18\x01\x20\x03(\tR\tsnapshots\x12&\n\x0fn\
-    ext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"*\n\x12DeleteTopicReq\
-    uest\x12\x14\n\x05topic\x18\x01\x20\x01(\tR\x05topic\"\x90\x05\n\x0cSubs\
-    cription\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05topi\
-    c\x18\x02\x20\x01(\tR\x05topic\x12=\n\x0bpush_config\x18\x04\x20\x01(\
-    \x0b2\x1c.google.pubsub.v1.PushConfigR\npushConfig\x120\n\x14ack_deadlin\
-    e_seconds\x18\x05\x20\x01(\x05R\x12ackDeadlineSeconds\x122\n\x15retain_a\
-    cked_messages\x18\x07\x20\x01(\x08R\x13retainAckedMessages\x12W\n\x1ames\
-    sage_retention_duration\x18\x08\x20\x01(\x0b2\x19.google.protobuf.Durati\
-    onR\x18messageRetentionDuration\x12B\n\x06labels\x18\t\x20\x03(\x0b2*.go\
-    ogle.pubsub.v1.Subscription.LabelsEntryR\x06labels\x126\n\x17enable_mess\
-    age_ordering\x18\n\x20\x01(\x08R\x15enableMessageOrdering\x12O\n\x11expi\
-    ration_policy\x18\x0b\x20\x01(\x0b2\".google.pubsub.v1.ExpirationPolicyR\
-    \x10expirationPolicy\x12P\n\x12dead_letter_policy\x18\r\x20\x01(\x0b2\".\
-    google.pubsub.v1.DeadLetterPolicyR\x10deadLetterPolicy\x1a9\n\x0bLabelsE\
-    ntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\tR\x05value:\x028\x01\"r\n\x10DeadLetterPolicy\x12*\n\x11d\
-    ead_letter_topic\x18\x01\x20\x01(\tR\x0fdeadLetterTopic\x122\n\x15max_de\
-    livery_attempts\x18\x02\x20\x01(\x05R\x13maxDeliveryAttempts\"?\n\x10Exp\
-    irationPolicy\x12+\n\x03ttl\x18\x01\x20\x01(\x0b2\x19.google.protobuf.Du\
-    rationR\x03ttl\"\xfd\x02\n\nPushConfig\x12#\n\rpush_endpoint\x18\x01\x20\
-    \x01(\tR\x0cpushEndpoint\x12L\n\nattributes\x18\x02\x20\x03(\x0b2,.googl\
-    e.pubsub.v1.PushConfig.AttributesEntryR\nattributes\x12G\n\noidc_token\
-    \x18\x03\x20\x01(\x0b2&.google.pubsub.v1.PushConfig.OidcTokenH\0R\toidcT\
-    oken\x1a[\n\tOidcToken\x122\n\x15service_account_email\x18\x01\x20\x01(\
-    \tR\x13serviceAccountEmail\x12\x1a\n\x08audience\x18\x02\x20\x01(\tR\x08\
-    audience\x1a=\n\x0fAttributesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
-    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01B\x17\n\
-    \x15authentication_method\"\x8e\x01\n\x0fReceivedMessage\x12\x15\n\x06ac\
-    k_id\x18\x01\x20\x01(\tR\x05ackId\x129\n\x07message\x18\x02\x20\x01(\x0b\
-    2\x1f.google.pubsub.v1.PubsubMessageR\x07message\x12)\n\x10delivery_atte\
-    mpt\x18\x03\x20\x01(\x05R\x0fdeliveryAttempt\"<\n\x16GetSubscriptionRequ\
-    est\x12\"\n\x0csubscription\x18\x01\x20\x01(\tR\x0csubscription\"\x9c\
-    \x01\n\x19UpdateSubscriptionRequest\x12B\n\x0csubscription\x18\x01\x20\
-    \x01(\x0b2\x1e.google.pubsub.v1.SubscriptionR\x0csubscription\x12;\n\x0b\
-    update_mask\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdate\
-    Mask\"p\n\x18ListSubscriptionsRequest\x12\x18\n\x07project\x18\x01\x20\
-    \x01(\tR\x07project\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSi\
-    ze\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"\x89\x01\n\x19L\
-    istSubscriptionsResponse\x12D\n\rsubscriptions\x18\x01\x20\x03(\x0b2\x1e\
-    .google.pubsub.v1.SubscriptionR\rsubscriptions\x12&\n\x0fnext_page_token\
-    \x18\x02\x20\x01(\tR\rnextPageToken\"?\n\x19DeleteSubscriptionRequest\
-    \x12\"\n\x0csubscription\x18\x01\x20\x01(\tR\x0csubscription\"|\n\x17Mod\
-    ifyPushConfigRequest\x12\"\n\x0csubscription\x18\x01\x20\x01(\tR\x0csubs\
-    cription\x12=\n\x0bpush_config\x18\x02\x20\x01(\x0b2\x1c.google.pubsub.v\
-    1.PushConfigR\npushConfig\"\x83\x01\n\x0bPullRequest\x12\"\n\x0csubscrip\
-    tion\x18\x01\x20\x01(\tR\x0csubscription\x12-\n\x12return_immediately\
-    \x18\x02\x20\x01(\x08R\x11returnImmediately\x12!\n\x0cmax_messages\x18\
-    \x03\x20\x01(\x05R\x0bmaxMessages\"^\n\x0cPullResponse\x12N\n\x11receive\
-    d_messages\x18\x01\x20\x03(\x0b2!.google.pubsub.v1.ReceivedMessageR\x10r\
-    eceivedMessages\"\x89\x01\n\x18ModifyAckDeadlineRequest\x12\"\n\x0csubsc\
-    ription\x18\x01\x20\x01(\tR\x0csubscription\x12\x17\n\x07ack_ids\x18\x04\
-    \x20\x03(\tR\x06ackIds\x120\n\x14ack_deadline_seconds\x18\x03\x20\x01(\
-    \x05R\x12ackDeadlineSeconds\"Q\n\x12AcknowledgeRequest\x12\"\n\x0csubscr\
-    iption\x18\x01\x20\x01(\tR\x0csubscription\x12\x17\n\x07ack_ids\x18\x02\
-    \x20\x03(\tR\x06ackIds\"\x81\x02\n\x14StreamingPullRequest\x12\"\n\x0csu\
-    bscription\x18\x01\x20\x01(\tR\x0csubscription\x12\x17\n\x07ack_ids\x18\
-    \x02\x20\x03(\tR\x06ackIds\x126\n\x17modify_deadline_seconds\x18\x03\x20\
-    \x03(\x05R\x15modifyDeadlineSeconds\x125\n\x17modify_deadline_ack_ids\
-    \x18\x04\x20\x03(\tR\x14modifyDeadlineAckIds\x12=\n\x1bstream_ack_deadli\
-    ne_seconds\x18\x05\x20\x01(\x05R\x18streamAckDeadlineSeconds\"g\n\x15Str\
-    eamingPullResponse\x12N\n\x11received_messages\x18\x01\x20\x03(\x0b2!.go\
-    ogle.pubsub.v1.ReceivedMessageR\x10receivedMessages\"\xd7\x01\n\x15Creat\
-    eSnapshotRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\"\n\
-    \x0csubscription\x18\x02\x20\x01(\tR\x0csubscription\x12K\n\x06labels\
-    \x18\x03\x20\x03(\x0b23.google.pubsub.v1.CreateSnapshotRequest.LabelsEnt\
-    ryR\x06labels\x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
-    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"\x8c\
-    \x01\n\x15UpdateSnapshotRequest\x126\n\x08snapshot\x18\x01\x20\x01(\x0b2\
-    \x1a.google.pubsub.v1.SnapshotR\x08snapshot\x12;\n\x0bupdate_mask\x18\
-    \x02\x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdateMask\"\xec\x01\
-    \n\x08Snapshot\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\
-    \x05topic\x18\x02\x20\x01(\tR\x05topic\x12;\n\x0bexpire_time\x18\x03\x20\
-    \x01(\x0b2\x1a.google.protobuf.TimestampR\nexpireTime\x12>\n\x06labels\
-    \x18\x04\x20\x03(\x0b2&.google.pubsub.v1.Snapshot.LabelsEntryR\x06labels\
-    \x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
-    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"0\n\x12GetSnapsh\
-    otRequest\x12\x1a\n\x08snapshot\x18\x01\x20\x01(\tR\x08snapshot\"l\n\x14\
-    ListSnapshotsRequest\x12\x18\n\x07project\x18\x01\x20\x01(\tR\x07project\
-    \x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_\
-    token\x18\x03\x20\x01(\tR\tpageToken\"y\n\x15ListSnapshotsResponse\x128\
-    \n\tsnapshots\x18\x01\x20\x03(\x0b2\x1a.google.pubsub.v1.SnapshotR\tsnap\
-    shots\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"3\n\
-    \x15DeleteSnapshotRequest\x12\x1a\n\x08snapshot\x18\x01\x20\x01(\tR\x08s\
-    napshot\"\x8b\x01\n\x0bSeekRequest\x12\"\n\x0csubscription\x18\x01\x20\
-    \x01(\tR\x0csubscription\x120\n\x04time\x18\x02\x20\x01(\x0b2\x1a.google\
-    .protobuf.TimestampH\0R\x04time\x12\x1c\n\x08snapshot\x18\x03\x20\x01(\t\
-    H\0R\x08snapshotB\x08\n\x06target\"\x0e\n\x0cSeekResponse2\xb1\t\n\tPubl\
-    isher\x12j\n\x0bCreateTopic\x12\x17.google.pubsub.v1.Topic\x1a\x17.googl\
-    e.pubsub.v1.Topic\")\x82\xd3\xe4\x93\x02#\x1a\x1e/v1/{name=projects/*/to\
-    pics/*}:\x01*\x12}\n\x0bUpdateTopic\x12$.google.pubsub.v1.UpdateTopicReq\
-    uest\x1a\x17.google.pubsub.v1.Topic\"/\x82\xd3\xe4\x93\x02)2$/v1/{topic.\
-    name=projects/*/topics/*}:\x01*\x12\x82\x01\n\x07Publish\x12\x20.google.\
-    pubsub.v1.PublishRequest\x1a!.google.pubsub.v1.PublishResponse\"2\x82\
-    \xd3\xe4\x93\x02,\"'/v1/{topic=projects/*/topics/*}:publish:\x01*\x12o\n\
-    \x08GetTopic\x12!.google.pubsub.v1.GetTopicRequest\x1a\x17.google.pubsub\
-    .v1.Topic\"'\x82\xd3\xe4\x93\x02!\x12\x1f/v1/{topic=projects/*/topics/*}\
-    \x12\x80\x01\n\nListTopics\x12#.google.pubsub.v1.ListTopicsRequest\x1a$.\
-    google.pubsub.v1.ListTopicsResponse\"'\x82\xd3\xe4\x93\x02!\x12\x1f/v1/{\
-    project=projects/*}/topics\x12\xb2\x01\n\x16ListTopicSubscriptions\x12/.\
-    google.pubsub.v1.ListTopicSubscriptionsRequest\x1a0.google.pubsub.v1.Lis\
-    tTopicSubscriptionsResponse\"5\x82\xd3\xe4\x93\x02/\x12-/v1/{topic=proje\
-    cts/*/topics/*}/subscriptions\x12\xa2\x01\n\x12ListTopicSnapshots\x12+.g\
-    oogle.pubsub.v1.ListTopicSnapshotsRequest\x1a,.google.pubsub.v1.ListTopi\
-    cSnapshotsResponse\"1\x82\xd3\xe4\x93\x02+\x12)/v1/{topic=projects/*/top\
-    ics/*}/snapshots\x12t\n\x0bDeleteTopic\x12$.google.pubsub.v1.DeleteTopic\
-    Request\x1a\x16.google.protobuf.Empty\"'\x82\xd3\xe4\x93\x02!*\x1f/v1/{t\
-    opic=projects/*/topics/*}\x1ap\xd2AUhttps://www.googleapis.com/auth/clou\
-    d-platform,https://www.googleapis.com/auth/pubsub\xcaA\x15pubsub.googlea\
-    pis.com2\xeb\x12\n\nSubscriber\x12\x86\x01\n\x12CreateSubscription\x12\
-    \x1e.google.pubsub.v1.Subscription\x1a\x1e.google.pubsub.v1.Subscription\
-    \"0\x82\xd3\xe4\x93\x02*\x1a%/v1/{name=projects/*/subscriptions/*}:\x01*\
-    \x12\x92\x01\n\x0fGetSubscription\x12(.google.pubsub.v1.GetSubscriptionR\
-    equest\x1a\x1e.google.pubsub.v1.Subscription\"5\x82\xd3\xe4\x93\x02/\x12\
-    -/v1/{subscription=projects/*/subscriptions/*}\x12\xa0\x01\n\x12UpdateSu\
-    bscription\x12+.google.pubsub.v1.UpdateSubscriptionRequest\x1a\x1e.googl\
-    e.pubsub.v1.Subscription\"=\x82\xd3\xe4\x93\x02722/v1/{subscription.name\
-    =projects/*/subscriptions/*}:\x01*\x12\x9c\x01\n\x11ListSubscriptions\
-    \x12*.google.pubsub.v1.ListSubscriptionsRequest\x1a+.google.pubsub.v1.Li\
-    stSubscriptionsResponse\".\x82\xd3\xe4\x93\x02(\x12&/v1/{project=project\
-    s/*}/subscriptions\x12\x90\x01\n\x12DeleteSubscription\x12+.google.pubsu\
-    b.v1.DeleteSubscriptionRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\
-    \xe4\x93\x02/*-/v1/{subscription=projects/*/subscriptions/*}\x12\xa3\x01\
-    \n\x11ModifyAckDeadline\x12*.google.pubsub.v1.ModifyAckDeadlineRequest\
-    \x1a\x16.google.protobuf.Empty\"J\x82\xd3\xe4\x93\x02D\"?/v1/{subscripti\
-    on=projects/*/subscriptions/*}:modifyAckDeadline:\x01*\x12\x91\x01\n\x0b\
-    Acknowledge\x12$.google.pubsub.v1.AcknowledgeRequest\x1a\x16.google.prot\
-    obuf.Empty\"D\x82\xd3\xe4\x93\x02>\"9/v1/{subscription=projects/*/subscr\
-    iptions/*}:acknowledge:\x01*\x12\x84\x01\n\x04Pull\x12\x1d.google.pubsub\
-    .v1.PullRequest\x1a\x1e.google.pubsub.v1.PullResponse\"=\x82\xd3\xe4\x93\
-    \x027\"2/v1/{subscription=projects/*/subscriptions/*}:pull:\x01*\x12f\n\
-    \rStreamingPull\x12&.google.pubsub.v1.StreamingPullRequest\x1a'.google.p\
-    ubsub.v1.StreamingPullResponse\"\0(\x010\x01\x12\xa0\x01\n\x10ModifyPush\
-    Config\x12).google.pubsub.v1.ModifyPushConfigRequest\x1a\x16.google.prot\
-    obuf.Empty\"I\x82\xd3\xe4\x93\x02C\">/v1/{subscription=projects/*/subscr\
-    iptions/*}:modifyPushConfig:\x01*\x12~\n\x0bGetSnapshot\x12$.google.pubs\
-    ub.v1.GetSnapshotRequest\x1a\x1a.google.pubsub.v1.Snapshot\"-\x82\xd3\
-    \xe4\x93\x02'\x12%/v1/{snapshot=projects/*/snapshots/*}\x12\x8c\x01\n\rL\
-    istSnapshots\x12&.google.pubsub.v1.ListSnapshotsRequest\x1a'.google.pubs\
-    ub.v1.ListSnapshotsResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/v1/{project=pr\
-    ojects/*}/snapshots\x12\x83\x01\n\x0eCreateSnapshot\x12'.google.pubsub.v\
-    1.CreateSnapshotRequest\x1a\x1a.google.pubsub.v1.Snapshot\",\x82\xd3\xe4\
-    \x93\x02&\x1a!/v1/{name=projects/*/snapshots/*}:\x01*\x12\x8c\x01\n\x0eU\
-    pdateSnapshot\x12'.google.pubsub.v1.UpdateSnapshotRequest\x1a\x1a.google\
-    .pubsub.v1.Snapshot\"5\x82\xd3\xe4\x93\x02/2*/v1/{snapshot.name=projects\
-    /*/snapshots/*}:\x01*\x12\x80\x01\n\x0eDeleteSnapshot\x12'.google.pubsub\
-    .v1.DeleteSnapshotRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\
-    \x93\x02'*%/v1/{snapshot=projects/*/snapshots/*}\x12\x84\x01\n\x04Seek\
-    \x12\x1d.google.pubsub.v1.SeekRequest\x1a\x1e.google.pubsub.v1.SeekRespo\
-    nse\"=\x82\xd3\xe4\x93\x027\"2/v1/{subscription=projects/*/subscriptions\
-    /*}:seek:\x01*\x1ap\xd2AUhttps://www.googleapis.com/auth/cloud-platform,\
-    https://www.googleapis.com/auth/pubsub\xcaA\x15pubsub.googleapis.comB\
-    \xae\x01\n\x14com.google.pubsub.v1B\x0bPubsubProtoP\x01Z6google.golang.o\
-    rg/genproto/googleapis/pubsub/v1;pubsub\xf8\x01\x01\xaa\x02\x16Google.Cl\
-    oud.PubSub.V1\xca\x02\x16Google\\Cloud\\PubSub\\V1\xea\x02\x19Google::Cl\
-    oud::PubSub::V1J\xf6\xd3\x02\n\x07\x12\x05\x0f\0\xaa\x08\x17\n\xbe\x04\n\
-    \x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Google\x20LL\
-    C.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202\
-    .0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20fil\
-    e\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20m\
-    ay\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\
-    \x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20requ\
-    ired\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\
-    \x20software\n\x20distributed\x20under\x20the\x20License\x20is\x20distri\
-    buted\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\
-    \x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\
-    \x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20lan\
-    guage\x20governing\x20permissions\x20and\n\x20limitations\x20under\x20th\
-    e\x20License.\n\n\n\x08\n\x01\x02\x12\x03\x11\0\x19\n\t\n\x02\x03\0\x12\
-    \x03\x13\0&\n\t\n\x02\x03\x01\x12\x03\x14\0!\n\t\n\x02\x03\x02\x12\x03\
-    \x15\0(\n\t\n\x02\x03\x03\x12\x03\x16\0%\n\t\n\x02\x03\x04\x12\x03\x17\0\
-    *\n\t\n\x02\x03\x05\x12\x03\x18\0)\n\x08\n\x01\x08\x12\x03\x1a\0\x1f\n\t\
-    \n\x02\x08\x1f\x12\x03\x1a\0\x1f\n\x08\n\x01\x08\x12\x03\x1b\03\n\t\n\
-    \x02\x08%\x12\x03\x1b\03\n\x08\n\x01\x08\x12\x03\x1c\0M\n\t\n\x02\x08\
-    \x0b\x12\x03\x1c\0M\n\x08\n\x01\x08\x12\x03\x1d\0\"\n\t\n\x02\x08\n\x12\
-    \x03\x1d\0\"\n\x08\n\x01\x08\x12\x03\x1e\0,\n\t\n\x02\x08\x08\x12\x03\
-    \x1e\0,\n\x08\n\x01\x08\x12\x03\x1f\0-\n\t\n\x02\x08\x01\x12\x03\x1f\0-\
-    \n\x08\n\x01\x08\x12\x03\x20\03\n\t\n\x02\x08)\x12\x03\x20\03\n\x08\n\
-    \x01\x08\x12\x03!\02\n\t\n\x02\x08-\x12\x03!\02\nj\n\x02\x06\0\x12\x04%\
-    \0t\x01\x1a^\x20The\x20service\x20that\x20an\x20application\x20uses\x20t\
-    o\x20manipulate\x20topics,\x20and\x20to\x20send\n\x20messages\x20to\x20a\
-    \x20topic.\n\n\n\n\x03\x06\0\x01\x12\x03%\x08\x11\n\n\n\x03\x06\0\x03\
-    \x12\x03&\x02=\n\x0c\n\x05\x06\0\x03\x99\x08\x12\x03&\x02=\n\x0b\n\x03\
-    \x06\0\x03\x12\x04'\x02)/\n\r\n\x05\x06\0\x03\x9a\x08\x12\x04'\x02)/\n\
-    \xa5\x01\n\x04\x06\0\x02\0\x12\x04.\x023\x03\x1a\x96\x01\x20Creates\x20t\
-    he\x20given\x20topic\x20with\x20the\x20given\x20name.\x20See\x20the\n\
-    \x20<a\x20href=\"https://cloud.google.com/pubsub/docs/admin#resource_nam\
-    es\">\n\x20resource\x20name\x20rules</a>.\n\n\x0c\n\x05\x06\0\x02\0\x01\
-    \x12\x03.\x06\x11\n\x0c\n\x05\x06\0\x02\0\x02\x12\x03.\x12\x17\n\x0c\n\
-    \x05\x06\0\x02\0\x03\x12\x03.\"'\n\r\n\x05\x06\0\x02\0\x04\x12\x04/\x042\
-    \x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\xbc\"\x12\x04/\x042\x06\ng\n\x04\
-    \x06\0\x02\x01\x12\x047\x02<\x03\x1aY\x20Updates\x20an\x20existing\x20to\
-    pic.\x20Note\x20that\x20certain\x20properties\x20of\x20a\n\x20topic\x20a\
-    re\x20not\x20modifiable.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x037\x06\
-    \x11\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x037\x12$\n\x0c\n\x05\x06\0\x02\
-    \x01\x03\x12\x037/4\n\r\n\x05\x06\0\x02\x01\x04\x12\x048\x04;\x06\n\x11\
-    \n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x048\x04;\x06\ni\n\x04\x06\0\
-    \x02\x02\x12\x04@\x02E\x03\x1a[\x20Adds\x20one\x20or\x20more\x20messages\
-    \x20to\x20the\x20topic.\x20Returns\x20`NOT_FOUND`\x20if\x20the\x20topic\
-    \n\x20does\x20not\x20exist.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03@\x06\
-    \r\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03@\x0e\x1c\n\x0c\n\x05\x06\0\x02\
-    \x02\x03\x12\x03@'6\n\r\n\x05\x06\0\x02\x02\x04\x12\x04A\x04D\x06\n\x11\
-    \n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x04A\x04D\x06\n2\n\x04\x06\0\
-    \x02\x03\x12\x04H\x02L\x03\x1a$\x20Gets\x20the\x20configuration\x20of\
-    \x20a\x20topic.\n\n\x0c\n\x05\x06\0\x02\x03\x01\x12\x03H\x06\x0e\n\x0c\n\
-    \x05\x06\0\x02\x03\x02\x12\x03H\x0f\x1e\n\x0c\n\x05\x06\0\x02\x03\x03\
-    \x12\x03H).\n\r\n\x05\x06\0\x02\x03\x04\x12\x04I\x04K\x06\n\x11\n\t\x06\
-    \0\x02\x03\x04\xb0\xca\xbc\"\x12\x04I\x04K\x06\n&\n\x04\x06\0\x02\x04\
-    \x12\x04O\x02S\x03\x1a\x18\x20Lists\x20matching\x20topics.\n\n\x0c\n\x05\
-    \x06\0\x02\x04\x01\x12\x03O\x06\x10\n\x0c\n\x05\x06\0\x02\x04\x02\x12\
-    \x03O\x11\"\n\x0c\n\x05\x06\0\x02\x04\x03\x12\x03O-?\n\r\n\x05\x06\0\x02\
-    \x04\x04\x12\x04P\x04R\x06\n\x11\n\t\x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\
-    \x04P\x04R\x06\nC\n\x04\x06\0\x02\x05\x12\x04V\x02[\x03\x1a5\x20Lists\
-    \x20the\x20names\x20of\x20the\x20subscriptions\x20on\x20this\x20topic.\n\
-    \n\x0c\n\x05\x06\0\x02\x05\x01\x12\x03V\x06\x1c\n\x0c\n\x05\x06\0\x02\
-    \x05\x02\x12\x03V\x1d:\n\x0c\n\x05\x06\0\x02\x05\x03\x12\x03W\x0f-\n\r\n\
-    \x05\x06\0\x02\x05\x04\x12\x04X\x04Z\x06\n\x11\n\t\x06\0\x02\x05\x04\xb0\
-    \xca\xbc\"\x12\x04X\x04Z\x06\n\xe5\x02\n\x04\x06\0\x02\x06\x12\x04c\x02h\
-    \x03\x1a\xd6\x02\x20Lists\x20the\x20names\x20of\x20the\x20snapshots\x20o\
-    n\x20this\x20topic.\x20Snapshots\x20are\x20used\x20in\n\x20<a\x20href=\"\
-    https://cloud.google.com/pubsub/docs/replay-overview\">Seek</a>\n\x20ope\
-    rations,\x20which\x20allow\n\x20you\x20to\x20manage\x20message\x20acknow\
-    ledgments\x20in\x20bulk.\x20That\x20is,\x20you\x20can\x20set\x20the\n\
-    \x20acknowledgment\x20state\x20of\x20messages\x20in\x20an\x20existing\
-    \x20subscription\x20to\x20the\x20state\n\x20captured\x20by\x20a\x20snaps\
-    hot.\n\n\x0c\n\x05\x06\0\x02\x06\x01\x12\x03c\x06\x18\n\x0c\n\x05\x06\0\
-    \x02\x06\x02\x12\x03c\x192\n\x0c\n\x05\x06\0\x02\x06\x03\x12\x03d\x0f)\n\
-    \r\n\x05\x06\0\x02\x06\x04\x12\x04e\x04g\x06\n\x11\n\t\x06\0\x02\x06\x04\
-    \xb0\xca\xbc\"\x12\x04e\x04g\x06\n\xf3\x02\n\x04\x06\0\x02\x07\x12\x04o\
-    \x02s\x03\x1a\xe4\x02\x20Deletes\x20the\x20topic\x20with\x20the\x20given\
-    \x20name.\x20Returns\x20`NOT_FOUND`\x20if\x20the\x20topic\n\x20does\x20n\
-    ot\x20exist.\x20After\x20a\x20topic\x20is\x20deleted,\x20a\x20new\x20top\
-    ic\x20may\x20be\x20created\x20with\n\x20the\x20same\x20name;\x20this\x20\
-    is\x20an\x20entirely\x20new\x20topic\x20with\x20none\x20of\x20the\x20old\
-    \n\x20configuration\x20or\x20subscriptions.\x20Existing\x20subscriptions\
-    \x20to\x20this\x20topic\x20are\n\x20not\x20deleted,\x20but\x20their\x20`\
-    topic`\x20field\x20is\x20set\x20to\x20`_deleted-topic_`.\n\n\x0c\n\x05\
-    \x06\0\x02\x07\x01\x12\x03o\x06\x11\n\x0c\n\x05\x06\0\x02\x07\x02\x12\
-    \x03o\x12$\n\x0c\n\x05\x06\0\x02\x07\x03\x12\x03o/D\n\r\n\x05\x06\0\x02\
-    \x07\x04\x12\x04p\x04r\x06\n\x11\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\
-    \x04p\x04r\x06\n\n\n\x02\x04\0\x12\x04v\0}\x01\n\n\n\x03\x04\0\x01\x12\
-    \x03v\x08\x1c\n\xf4\x02\n\x04\x04\0\x02\0\x12\x03|\x022\x1a\xe6\x02\x20A\
-    \x20list\x20of\x20IDs\x20of\x20GCP\x20regions\x20where\x20messages\x20th\
-    at\x20are\x20published\x20to\x20the\x20topic\n\x20may\x20be\x20persisted\
-    \x20in\x20storage.\x20Messages\x20published\x20by\x20publishers\x20runni\
-    ng\x20in\n\x20non-allowed\x20GCP\x20regions\x20(or\x20running\x20outside\
-    \x20of\x20GCP\x20altogether)\x20will\x20be\n\x20routed\x20for\x20storage\
-    \x20in\x20one\x20of\x20the\x20allowed\x20regions.\x20An\x20empty\x20list\
-    \x20means\x20that\n\x20no\x20regions\x20are\x20allowed,\x20and\x20is\x20\
-    not\x20a\x20valid\x20configuration.\n\n\x0c\n\x05\x04\0\x02\0\x04\x12\
-    \x03|\x02\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03|\x0b\x11\n\x0c\n\x05\x04\
-    \0\x02\0\x01\x12\x03|\x12-\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03|01\n!\n\
-    \x02\x04\x01\x12\x06\x80\x01\0\x97\x01\x01\x1a\x13\x20A\x20topic\x20reso\
-    urce.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\x80\x01\x08\r\n\x82\x03\n\x04\
-    \x04\x01\x02\0\x12\x04\x87\x01\x02\x12\x1a\xf3\x02\x20The\x20name\x20of\
-    \x20the\x20topic.\x20It\x20must\x20have\x20the\x20format\n\x20`\"project\
-    s/{project}/topics/{topic}\"`.\x20`{topic}`\x20must\x20start\x20with\x20\
-    a\x20letter,\n\x20and\x20contain\x20only\x20letters\x20(`[A-Za-z]`),\x20\
-    numbers\x20(`[0-9]`),\x20dashes\x20(`-`),\n\x20underscores\x20(`_`),\x20\
-    periods\x20(`.`),\x20tildes\x20(`~`),\x20plus\x20(`+`)\x20or\x20percent\
-    \n\x20signs\x20(`%`).\x20It\x20must\x20be\x20between\x203\x20and\x20255\
-    \x20characters\x20in\x20length,\x20and\x20it\n\x20must\x20not\x20start\
-    \x20with\x20`\"goog\"`.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\x87\x01\
-    \x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x87\x01\t\r\n\r\n\x05\x04\
-    \x01\x02\0\x03\x12\x04\x87\x01\x10\x11\nm\n\x04\x04\x01\x02\x01\x12\x04\
-    \x8b\x01\x02!\x1a_\x20See\x20<a\x20href=\"https://cloud.google.com/pubsu\
-    b/docs/labels\">\x20Creating\x20and\n\x20managing\x20labels</a>.\n\n\r\n\
-    \x05\x04\x01\x02\x01\x06\x12\x04\x8b\x01\x02\x15\n\r\n\x05\x04\x01\x02\
-    \x01\x01\x12\x04\x8b\x01\x16\x1c\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\
-    \x8b\x01\x1f\x20\n\xb7\x01\n\x04\x04\x01\x02\x02\x12\x04\x90\x01\x022\
-    \x1a\xa8\x01\x20Policy\x20constraining\x20the\x20set\x20of\x20Google\x20\
-    Cloud\x20Platform\x20regions\x20where\x20messages\n\x20published\x20to\
-    \x20the\x20topic\x20may\x20be\x20stored.\x20If\x20not\x20present,\x20the\
-    n\x20no\x20constraints\n\x20are\x20in\x20effect.\n\n\r\n\x05\x04\x01\x02\
-    \x02\x06\x12\x04\x90\x01\x02\x16\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\
-    \x90\x01\x17-\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\x90\x0101\n\xcb\x01\
-    \n\x04\x04\x01\x02\x03\x12\x04\x96\x01\x02\x1a\x1a\xbc\x01\x20The\x20res\
-    ource\x20name\x20of\x20the\x20Cloud\x20KMS\x20CryptoKey\x20to\x20be\x20u\
-    sed\x20to\x20protect\x20access\n\x20to\x20messages\x20published\x20on\
-    \x20this\x20topic.\n\n\x20The\x20expected\x20format\x20is\x20`projects/*\
-    /locations/*/keyRings/*/cryptoKeys/*`.\n\n\r\n\x05\x04\x01\x02\x03\x05\
-    \x12\x04\x96\x01\x02\x08\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\x96\x01\t\
-    \x15\n\r\n\x05\x04\x01\x02\x03\x03\x12\x04\x96\x01\x18\x19\n\x8e\x04\n\
-    \x02\x04\x02\x12\x06\xa1\x01\0\xbc\x01\x01\x1a\xff\x03\x20A\x20message\
-    \x20that\x20is\x20published\x20by\x20publishers\x20and\x20consumed\x20by\
-    \x20subscribers.\x20The\n\x20message\x20must\x20contain\x20either\x20a\
-    \x20non-empty\x20data\x20field\x20or\x20at\x20least\x20one\x20attribute.\
-    \n\x20Note\x20that\x20client\x20libraries\x20represent\x20this\x20object\
-    \x20differently\n\x20depending\x20on\x20the\x20language.\x20See\x20the\
-    \x20corresponding\n\x20<a\x20href=\"https://cloud.google.com/pubsub/docs\
-    /reference/libraries\">client\n\x20library\x20documentation</a>\x20for\
-    \x20more\x20information.\x20See\n\x20<a\x20href=\"https://cloud.google.c\
-    om/pubsub/quotas\">Quotas\x20and\x20limits</a>\n\x20for\x20more\x20infor\
-    mation\x20about\x20message\x20limits.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\
-    \xa1\x01\x08\x15\nq\n\x04\x04\x02\x02\0\x12\x04\xa4\x01\x02\x11\x1ac\x20\
-    The\x20message\x20data\x20field.\x20If\x20this\x20field\x20is\x20empty,\
-    \x20the\x20message\x20must\x20contain\n\x20at\x20least\x20one\x20attribu\
-    te.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\xa4\x01\x02\x07\n\r\n\x05\x04\
-    \x02\x02\0\x01\x12\x04\xa4\x01\x08\x0c\n\r\n\x05\x04\x02\x02\0\x03\x12\
-    \x04\xa4\x01\x0f\x10\n5\n\x04\x04\x02\x02\x01\x12\x04\xa7\x01\x02%\x1a'\
-    \x20Optional\x20attributes\x20for\x20this\x20message.\n\n\r\n\x05\x04\
-    \x02\x02\x01\x06\x12\x04\xa7\x01\x02\x15\n\r\n\x05\x04\x02\x02\x01\x01\
-    \x12\x04\xa7\x01\x16\x20\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xa7\x01#$\
-    \n\xb3\x02\n\x04\x04\x02\x02\x02\x12\x04\xad\x01\x02\x18\x1a\xa4\x02\x20\
-    ID\x20of\x20this\x20message,\x20assigned\x20by\x20the\x20server\x20when\
-    \x20the\x20message\x20is\x20published.\n\x20Guaranteed\x20to\x20be\x20un\
-    ique\x20within\x20the\x20topic.\x20This\x20value\x20may\x20be\x20read\
-    \x20by\x20a\n\x20subscriber\x20that\x20receives\x20a\x20`PubsubMessage`\
-    \x20via\x20a\x20`Pull`\x20call\x20or\x20a\x20push\n\x20delivery.\x20It\
-    \x20must\x20not\x20be\x20populated\x20by\x20the\x20publisher\x20in\x20a\
-    \x20`Publish`\x20call.\n\n\r\n\x05\x04\x02\x02\x02\x05\x12\x04\xad\x01\
-    \x02\x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\xad\x01\t\x13\n\r\n\x05\
-    \x04\x02\x02\x02\x03\x12\x04\xad\x01\x16\x17\n\xbb\x01\n\x04\x04\x02\x02\
-    \x03\x12\x04\xb2\x01\x02-\x1a\xac\x01\x20The\x20time\x20at\x20which\x20t\
-    he\x20message\x20was\x20published,\x20populated\x20by\x20the\x20server\
-    \x20when\n\x20it\x20receives\x20the\x20`Publish`\x20call.\x20It\x20must\
-    \x20not\x20be\x20populated\x20by\x20the\n\x20publisher\x20in\x20a\x20`Pu\
-    blish`\x20call.\n\n\r\n\x05\x04\x02\x02\x03\x06\x12\x04\xb2\x01\x02\x1b\
-    \n\r\n\x05\x04\x02\x02\x03\x01\x12\x04\xb2\x01\x1c(\n\r\n\x05\x04\x02\
-    \x02\x03\x03\x12\x04\xb2\x01+,\n\x92\x04\n\x04\x04\x02\x02\x04\x12\x04\
-    \xbb\x01\x02\x1a\x1a\x83\x04\x20Identifies\x20related\x20messages\x20for\
-    \x20which\x20publish\x20order\x20should\x20be\x20respected.\n\x20If\x20a\
-    \x20`Subscription`\x20has\x20`enable_message_ordering`\x20set\x20to\x20`\
-    true`,\x20messages\n\x20published\x20with\x20the\x20same\x20`ordering_ke\
-    y`\x20value\x20will\x20be\x20delivered\x20to\n\x20subscribers\x20in\x20t\
-    he\x20order\x20in\x20which\x20they\x20are\x20received\x20by\x20the\x20Pu\
-    b/Sub\x20system.\n\x20<b>EXPERIMENTAL:</b>\x20This\x20feature\x20is\x20p\
-    art\x20of\x20a\x20closed\x20alpha\x20release.\x20This\n\x20API\x20might\
-    \x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\
-    \x20not\x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\
-    \x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\r\n\
-    \x05\x04\x02\x02\x04\x05\x12\x04\xbb\x01\x02\x08\n\r\n\x05\x04\x02\x02\
-    \x04\x01\x12\x04\xbb\x01\t\x15\n\r\n\x05\x04\x02\x02\x04\x03\x12\x04\xbb\
-    \x01\x18\x19\n0\n\x02\x04\x03\x12\x06\xbf\x01\0\xc3\x01\x01\x1a\"\x20Req\
-    uest\x20for\x20the\x20GetTopic\x20method.\n\n\x0b\n\x03\x04\x03\x01\x12\
-    \x04\xbf\x01\x08\x17\n]\n\x04\x04\x03\x02\0\x12\x04\xc2\x01\x02\x13\x1aO\
-    \x20The\x20name\x20of\x20the\x20topic\x20to\x20get.\n\x20Format\x20is\
-    \x20`projects/{project}/topics/{topic}`.\n\n\r\n\x05\x04\x03\x02\0\x05\
-    \x12\x04\xc2\x01\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xc2\x01\t\
-    \x0e\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xc2\x01\x11\x12\n3\n\x02\x04\
-    \x04\x12\x06\xc6\x01\0\xd0\x01\x01\x1a%\x20Request\x20for\x20the\x20Upda\
-    teTopic\x20method.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xc6\x01\x08\x1a\n)\
-    \n\x04\x04\x04\x02\0\x12\x04\xc8\x01\x02\x12\x1a\x1b\x20The\x20updated\
-    \x20topic\x20object.\n\n\r\n\x05\x04\x04\x02\0\x06\x12\x04\xc8\x01\x02\
-    \x07\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\xc8\x01\x08\r\n\r\n\x05\x04\x04\
-    \x02\0\x03\x12\x04\xc8\x01\x10\x11\n\xe1\x02\n\x04\x04\x04\x02\x01\x12\
-    \x04\xcf\x01\x02,\x1a\xd2\x02\x20Indicates\x20which\x20fields\x20in\x20t\
-    he\x20provided\x20topic\x20to\x20update.\x20Must\x20be\x20specified\n\
-    \x20and\x20non-empty.\x20Note\x20that\x20if\x20`update_mask`\x20contains\
-    \n\x20\"message_storage_policy\"\x20then\x20the\x20new\x20value\x20will\
-    \x20be\x20determined\x20based\x20on\x20the\n\x20policy\x20configured\x20\
-    at\x20the\x20project\x20or\x20organization\x20level.\x20The\n\x20`messag\
-    e_storage_policy`\x20must\x20not\x20be\x20set\x20in\x20the\x20`topic`\
-    \x20provided\x20above.\n\n\r\n\x05\x04\x04\x02\x01\x06\x12\x04\xcf\x01\
-    \x02\x1b\n\r\n\x05\x04\x04\x02\x01\x01\x12\x04\xcf\x01\x1c'\n\r\n\x05\
-    \x04\x04\x02\x01\x03\x12\x04\xcf\x01*+\n/\n\x02\x04\x05\x12\x06\xd3\x01\
-    \0\xda\x01\x01\x1a!\x20Request\x20for\x20the\x20Publish\x20method.\n\n\
-    \x0b\n\x03\x04\x05\x01\x12\x04\xd3\x01\x08\x16\n|\n\x04\x04\x05\x02\0\
-    \x12\x04\xd6\x01\x02\x13\x1an\x20The\x20messages\x20in\x20the\x20request\
-    \x20will\x20be\x20published\x20on\x20this\x20topic.\n\x20Format\x20is\
-    \x20`projects/{project}/topics/{topic}`.\n\n\r\n\x05\x04\x05\x02\0\x05\
-    \x12\x04\xd6\x01\x02\x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xd6\x01\t\
-    \x0e\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\xd6\x01\x11\x12\n(\n\x04\x04\
-    \x05\x02\x01\x12\x04\xd9\x01\x02&\x1a\x1a\x20The\x20messages\x20to\x20pu\
-    blish.\n\n\r\n\x05\x04\x05\x02\x01\x04\x12\x04\xd9\x01\x02\n\n\r\n\x05\
-    \x04\x05\x02\x01\x06\x12\x04\xd9\x01\x0b\x18\n\r\n\x05\x04\x05\x02\x01\
-    \x01\x12\x04\xd9\x01\x19!\n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\xd9\x01$\
-    %\n2\n\x02\x04\x06\x12\x06\xdd\x01\0\xe2\x01\x01\x1a$\x20Response\x20for\
-    \x20the\x20`Publish`\x20method.\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xdd\
-    \x01\x08\x17\n\xa8\x01\n\x04\x04\x06\x02\0\x12\x04\xe1\x01\x02\"\x1a\x99\
-    \x01\x20The\x20server-assigned\x20ID\x20of\x20each\x20published\x20messa\
-    ge,\x20in\x20the\x20same\x20order\x20as\n\x20the\x20messages\x20in\x20th\
-    e\x20request.\x20IDs\x20are\x20guaranteed\x20to\x20be\x20unique\x20withi\
-    n\n\x20the\x20topic.\n\n\r\n\x05\x04\x06\x02\0\x04\x12\x04\xe1\x01\x02\n\
-    \n\r\n\x05\x04\x06\x02\0\x05\x12\x04\xe1\x01\x0b\x11\n\r\n\x05\x04\x06\
-    \x02\0\x01\x12\x04\xe1\x01\x12\x1d\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\
-    \xe1\x01\x20!\n4\n\x02\x04\x07\x12\x06\xe5\x01\0\xf1\x01\x01\x1a&\x20Req\
-    uest\x20for\x20the\x20`ListTopics`\x20method.\n\n\x0b\n\x03\x04\x07\x01\
-    \x12\x04\xe5\x01\x08\x19\nd\n\x04\x04\x07\x02\0\x12\x04\xe8\x01\x02\x15\
-    \x1aV\x20The\x20name\x20of\x20the\x20project\x20in\x20which\x20to\x20lis\
-    t\x20topics.\n\x20Format\x20is\x20`projects/{project-id}`.\n\n\r\n\x05\
-    \x04\x07\x02\0\x05\x12\x04\xe8\x01\x02\x08\n\r\n\x05\x04\x07\x02\0\x01\
-    \x12\x04\xe8\x01\t\x10\n\r\n\x05\x04\x07\x02\0\x03\x12\x04\xe8\x01\x13\
-    \x14\n3\n\x04\x04\x07\x02\x01\x12\x04\xeb\x01\x02\x16\x1a%\x20Maximum\
-    \x20number\x20of\x20topics\x20to\x20return.\n\n\r\n\x05\x04\x07\x02\x01\
-    \x05\x12\x04\xeb\x01\x02\x07\n\r\n\x05\x04\x07\x02\x01\x01\x12\x04\xeb\
-    \x01\x08\x11\n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\xeb\x01\x14\x15\n\xc4\
-    \x01\n\x04\x04\x07\x02\x02\x12\x04\xf0\x01\x02\x18\x1a\xb5\x01\x20The\
-    \x20value\x20returned\x20by\x20the\x20last\x20`ListTopicsResponse`;\x20i\
-    ndicates\x20that\x20this\x20is\n\x20a\x20continuation\x20of\x20a\x20prio\
-    r\x20`ListTopics`\x20call,\x20and\x20that\x20the\x20system\x20should\n\
-    \x20return\x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\x07\x02\
-    \x02\x05\x12\x04\xf0\x01\x02\x08\n\r\n\x05\x04\x07\x02\x02\x01\x12\x04\
-    \xf0\x01\t\x13\n\r\n\x05\x04\x07\x02\x02\x03\x12\x04\xf0\x01\x16\x17\n5\
-    \n\x02\x04\x08\x12\x06\xf4\x01\0\xfb\x01\x01\x1a'\x20Response\x20for\x20\
-    the\x20`ListTopics`\x20method.\n\n\x0b\n\x03\x04\x08\x01\x12\x04\xf4\x01\
-    \x08\x1a\n%\n\x04\x04\x08\x02\0\x12\x04\xf6\x01\x02\x1c\x1a\x17\x20The\
-    \x20resulting\x20topics.\n\n\r\n\x05\x04\x08\x02\0\x04\x12\x04\xf6\x01\
-    \x02\n\n\r\n\x05\x04\x08\x02\0\x06\x12\x04\xf6\x01\x0b\x10\n\r\n\x05\x04\
-    \x08\x02\0\x01\x12\x04\xf6\x01\x11\x17\n\r\n\x05\x04\x08\x02\0\x03\x12\
-    \x04\xf6\x01\x1a\x1b\n\x99\x01\n\x04\x04\x08\x02\x01\x12\x04\xfa\x01\x02\
-    \x1d\x1a\x8a\x01\x20If\x20not\x20empty,\x20indicates\x20that\x20there\
-    \x20may\x20be\x20more\x20topics\x20that\x20match\x20the\n\x20request;\
-    \x20this\x20value\x20should\x20be\x20passed\x20in\x20a\x20new\x20`ListTo\
-    picsRequest`.\n\n\r\n\x05\x04\x08\x02\x01\x05\x12\x04\xfa\x01\x02\x08\n\
-    \r\n\x05\x04\x08\x02\x01\x01\x12\x04\xfa\x01\t\x18\n\r\n\x05\x04\x08\x02\
-    \x01\x03\x12\x04\xfa\x01\x1b\x1c\n@\n\x02\x04\t\x12\x06\xfe\x01\0\x8a\
-    \x02\x01\x1a2\x20Request\x20for\x20the\x20`ListTopicSubscriptions`\x20me\
-    thod.\n\n\x0b\n\x03\x04\t\x01\x12\x04\xfe\x01\x08%\ny\n\x04\x04\t\x02\0\
-    \x12\x04\x81\x02\x02\x13\x1ak\x20The\x20name\x20of\x20the\x20topic\x20th\
-    at\x20subscriptions\x20are\x20attached\x20to.\n\x20Format\x20is\x20`proj\
-    ects/{project}/topics/{topic}`.\n\n\r\n\x05\x04\t\x02\0\x05\x12\x04\x81\
-    \x02\x02\x08\n\r\n\x05\x04\t\x02\0\x01\x12\x04\x81\x02\t\x0e\n\r\n\x05\
-    \x04\t\x02\0\x03\x12\x04\x81\x02\x11\x12\n?\n\x04\x04\t\x02\x01\x12\x04\
-    \x84\x02\x02\x16\x1a1\x20Maximum\x20number\x20of\x20subscription\x20name\
-    s\x20to\x20return.\n\n\r\n\x05\x04\t\x02\x01\x05\x12\x04\x84\x02\x02\x07\
-    \n\r\n\x05\x04\t\x02\x01\x01\x12\x04\x84\x02\x08\x11\n\r\n\x05\x04\t\x02\
-    \x01\x03\x12\x04\x84\x02\x14\x15\n\xdc\x01\n\x04\x04\t\x02\x02\x12\x04\
-    \x89\x02\x02\x18\x1a\xcd\x01\x20The\x20value\x20returned\x20by\x20the\
-    \x20last\x20`ListTopicSubscriptionsResponse`;\x20indicates\n\x20that\x20\
-    this\x20is\x20a\x20continuation\x20of\x20a\x20prior\x20`ListTopicSubscri\
-    ptions`\x20call,\x20and\n\x20that\x20the\x20system\x20should\x20return\
-    \x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\t\x02\x02\x05\x12\
-    \x04\x89\x02\x02\x08\n\r\n\x05\x04\t\x02\x02\x01\x12\x04\x89\x02\t\x13\n\
-    \r\n\x05\x04\t\x02\x02\x03\x12\x04\x89\x02\x16\x17\nA\n\x02\x04\n\x12\
-    \x06\x8d\x02\0\x95\x02\x01\x1a3\x20Response\x20for\x20the\x20`ListTopicS\
-    ubscriptions`\x20method.\n\n\x0b\n\x03\x04\n\x01\x12\x04\x8d\x02\x08&\nF\
-    \n\x04\x04\n\x02\0\x12\x04\x8f\x02\x02$\x1a8\x20The\x20names\x20of\x20th\
-    e\x20subscriptions\x20that\x20match\x20the\x20request.\n\n\r\n\x05\x04\n\
-    \x02\0\x04\x12\x04\x8f\x02\x02\n\n\r\n\x05\x04\n\x02\0\x05\x12\x04\x8f\
-    \x02\x0b\x11\n\r\n\x05\x04\n\x02\0\x01\x12\x04\x8f\x02\x12\x1f\n\r\n\x05\
-    \x04\n\x02\0\x03\x12\x04\x8f\x02\"#\n\xc7\x01\n\x04\x04\n\x02\x01\x12\
-    \x04\x94\x02\x02\x1d\x1a\xb8\x01\x20If\x20not\x20empty,\x20indicates\x20\
-    that\x20there\x20may\x20be\x20more\x20subscriptions\x20that\x20match\n\
-    \x20the\x20request;\x20this\x20value\x20should\x20be\x20passed\x20in\x20\
-    a\x20new\n\x20`ListTopicSubscriptionsRequest`\x20to\x20get\x20more\x20su\
-    bscriptions.\n\n\r\n\x05\x04\n\x02\x01\x05\x12\x04\x94\x02\x02\x08\n\r\n\
-    \x05\x04\n\x02\x01\x01\x12\x04\x94\x02\t\x18\n\r\n\x05\x04\n\x02\x01\x03\
-    \x12\x04\x94\x02\x1b\x1c\n<\n\x02\x04\x0b\x12\x06\x98\x02\0\xa4\x02\x01\
-    \x1a.\x20Request\x20for\x20the\x20`ListTopicSnapshots`\x20method.\n\n\
-    \x0b\n\x03\x04\x0b\x01\x12\x04\x98\x02\x08!\nu\n\x04\x04\x0b\x02\0\x12\
-    \x04\x9b\x02\x02\x13\x1ag\x20The\x20name\x20of\x20the\x20topic\x20that\
-    \x20snapshots\x20are\x20attached\x20to.\n\x20Format\x20is\x20`projects/{\
-    project}/topics/{topic}`.\n\n\r\n\x05\x04\x0b\x02\0\x05\x12\x04\x9b\x02\
-    \x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\x9b\x02\t\x0e\n\r\n\x05\x04\
-    \x0b\x02\0\x03\x12\x04\x9b\x02\x11\x12\n;\n\x04\x04\x0b\x02\x01\x12\x04\
-    \x9e\x02\x02\x16\x1a-\x20Maximum\x20number\x20of\x20snapshot\x20names\
-    \x20to\x20return.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\x04\x9e\x02\x02\
-    \x07\n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\x9e\x02\x08\x11\n\r\n\x05\x04\
-    \x0b\x02\x01\x03\x12\x04\x9e\x02\x14\x15\n\xd4\x01\n\x04\x04\x0b\x02\x02\
-    \x12\x04\xa3\x02\x02\x18\x1a\xc5\x01\x20The\x20value\x20returned\x20by\
-    \x20the\x20last\x20`ListTopicSnapshotsResponse`;\x20indicates\n\x20that\
-    \x20this\x20is\x20a\x20continuation\x20of\x20a\x20prior\x20`ListTopicSna\
-    pshots`\x20call,\x20and\n\x20that\x20the\x20system\x20should\x20return\
-    \x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\x0b\x02\x02\x05\
-    \x12\x04\xa3\x02\x02\x08\n\r\n\x05\x04\x0b\x02\x02\x01\x12\x04\xa3\x02\t\
-    \x13\n\r\n\x05\x04\x0b\x02\x02\x03\x12\x04\xa3\x02\x16\x17\n=\n\x02\x04\
-    \x0c\x12\x06\xa7\x02\0\xaf\x02\x01\x1a/\x20Response\x20for\x20the\x20`Li\
-    stTopicSnapshots`\x20method.\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\xa7\x02\
-    \x08\"\nB\n\x04\x04\x0c\x02\0\x12\x04\xa9\x02\x02\x20\x1a4\x20The\x20nam\
-    es\x20of\x20the\x20snapshots\x20that\x20match\x20the\x20request.\n\n\r\n\
-    \x05\x04\x0c\x02\0\x04\x12\x04\xa9\x02\x02\n\n\r\n\x05\x04\x0c\x02\0\x05\
-    \x12\x04\xa9\x02\x0b\x11\n\r\n\x05\x04\x0c\x02\0\x01\x12\x04\xa9\x02\x12\
-    \x1b\n\r\n\x05\x04\x0c\x02\0\x03\x12\x04\xa9\x02\x1e\x1f\n\xbb\x01\n\x04\
-    \x04\x0c\x02\x01\x12\x04\xae\x02\x02\x1d\x1a\xac\x01\x20If\x20not\x20emp\
-    ty,\x20indicates\x20that\x20there\x20may\x20be\x20more\x20snapshots\x20t\
-    hat\x20match\n\x20the\x20request;\x20this\x20value\x20should\x20be\x20pa\
-    ssed\x20in\x20a\x20new\n\x20`ListTopicSnapshotsRequest`\x20to\x20get\x20\
-    more\x20snapshots.\n\n\r\n\x05\x04\x0c\x02\x01\x05\x12\x04\xae\x02\x02\
-    \x08\n\r\n\x05\x04\x0c\x02\x01\x01\x12\x04\xae\x02\t\x18\n\r\n\x05\x04\
-    \x0c\x02\x01\x03\x12\x04\xae\x02\x1b\x1c\n5\n\x02\x04\r\x12\x06\xb2\x02\
-    \0\xb6\x02\x01\x1a'\x20Request\x20for\x20the\x20`DeleteTopic`\x20method.\
-    \n\n\x0b\n\x03\x04\r\x01\x12\x04\xb2\x02\x08\x1a\n\\\n\x04\x04\r\x02\0\
-    \x12\x04\xb5\x02\x02\x13\x1aN\x20Name\x20of\x20the\x20topic\x20to\x20del\
-    ete.\n\x20Format\x20is\x20`projects/{project}/topics/{topic}`.\n\n\r\n\
-    \x05\x04\r\x02\0\x05\x12\x04\xb5\x02\x02\x08\n\r\n\x05\x04\r\x02\0\x01\
-    \x12\x04\xb5\x02\t\x0e\n\r\n\x05\x04\r\x02\0\x03\x12\x04\xb5\x02\x11\x12\
-    \n\xe2\x01\n\x02\x06\x01\x12\x06\xbb\x02\0\x91\x04\x01\x1a\xd3\x01\x20Th\
-    e\x20service\x20that\x20an\x20application\x20uses\x20to\x20manipulate\
-    \x20subscriptions\x20and\x20to\n\x20consume\x20messages\x20from\x20a\x20\
-    subscription\x20via\x20the\x20`Pull`\x20method\x20or\x20by\n\x20establis\
-    hing\x20a\x20bi-directional\x20stream\x20using\x20the\x20`StreamingPull`\
-    \x20method.\n\n\x0b\n\x03\x06\x01\x01\x12\x04\xbb\x02\x08\x12\n\x0b\n\
-    \x03\x06\x01\x03\x12\x04\xbc\x02\x02=\n\r\n\x05\x06\x01\x03\x99\x08\x12\
-    \x04\xbc\x02\x02=\n\r\n\x03\x06\x01\x03\x12\x06\xbd\x02\x02\xbf\x02/\n\
-    \x0f\n\x05\x06\x01\x03\x9a\x08\x12\x06\xbd\x02\x02\xbf\x02/\n\xa6\x05\n\
-    \x04\x06\x01\x02\0\x12\x06\xce\x02\x02\xd3\x02\x03\x1a\x95\x05\x20Create\
-    s\x20a\x20subscription\x20to\x20a\x20given\x20topic.\x20See\x20the\n\x20\
-    <a\x20href=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\
-    >\n\x20resource\x20name\x20rules</a>.\n\x20If\x20the\x20subscription\x20\
-    already\x20exists,\x20returns\x20`ALREADY_EXISTS`.\n\x20If\x20the\x20cor\
-    responding\x20topic\x20doesn't\x20exist,\x20returns\x20`NOT_FOUND`.\n\n\
-    \x20If\x20the\x20name\x20is\x20not\x20provided\x20in\x20the\x20request,\
-    \x20the\x20server\x20will\x20assign\x20a\x20random\n\x20name\x20for\x20t\
-    his\x20subscription\x20on\x20the\x20same\x20project\x20as\x20the\x20topi\
-    c,\x20conforming\n\x20to\x20the\n\x20[resource\x20name\n\x20format](http\
-    s://cloud.google.com/pubsub/docs/admin#resource_names).\x20The\n\x20gene\
-    rated\x20name\x20is\x20populated\x20in\x20the\x20returned\x20Subscriptio\
-    n\x20object.\x20Note\x20that\n\x20for\x20REST\x20API\x20requests,\x20you\
-    \x20must\x20specify\x20a\x20name\x20in\x20the\x20request.\n\n\r\n\x05\
-    \x06\x01\x02\0\x01\x12\x04\xce\x02\x06\x18\n\r\n\x05\x06\x01\x02\0\x02\
-    \x12\x04\xce\x02\x19%\n\r\n\x05\x06\x01\x02\0\x03\x12\x04\xce\x020<\n\
-    \x0f\n\x05\x06\x01\x02\0\x04\x12\x06\xcf\x02\x04\xd2\x02\x06\n\x13\n\t\
-    \x06\x01\x02\0\x04\xb0\xca\xbc\"\x12\x06\xcf\x02\x04\xd2\x02\x06\nC\n\
-    \x04\x06\x01\x02\x01\x12\x06\xd6\x02\x02\xda\x02\x03\x1a3\x20Gets\x20the\
+    otobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dgo\
+    ogle/pubsub/v1/schema.proto\"V\n\x14MessageStoragePolicy\x12>\n\x1ballow\
+    ed_persistence_regions\x18\x01\x20\x03(\tR\x19allowedPersistenceRegions\
+    \"\xdc\x01\n\x0eSchemaSettings\x12<\n\x06schema\x18\x01\x20\x01(\tR\x06s\
+    chemaB$\xfaA\x1e\n\x1cpubsub.googleapis.com/Schema\xe0A\x02\x126\n\x08en\
+    coding\x18\x02\x20\x01(\x0e2\x1a.google.pubsub.v1.EncodingR\x08encoding\
+    \x12*\n\x11first_revision_id\x18\x03\x20\x01(\tR\x0ffirstRevisionId\x12(\
+    \n\x10last_revision_id\x18\x04\x20\x01(\tR\x0elastRevisionId\"\xb7\x04\n\
+    \x05Topic\x12\x17\n\x04name\x18\x01\x20\x01(\tR\x04nameB\x03\xe0A\x02\
+    \x12;\n\x06labels\x18\x02\x20\x03(\x0b2#.google.pubsub.v1.Topic.LabelsEn\
+    tryR\x06labels\x12\\\n\x16message_storage_policy\x18\x03\x20\x01(\x0b2&.\
+    google.pubsub.v1.MessageStoragePolicyR\x14messageStoragePolicy\x12\x20\n\
+    \x0ckms_key_name\x18\x05\x20\x01(\tR\nkmsKeyName\x12I\n\x0fschema_settin\
+    gs\x18\x06\x20\x01(\x0b2\x20.google.pubsub.v1.SchemaSettingsR\x0eschemaS\
+    ettings\x12#\n\rsatisfies_pzs\x18\x07\x20\x01(\x08R\x0csatisfiesPzs\x12W\
+    \n\x1amessage_retention_duration\x18\x08\x20\x01(\x0b2\x19.google.protob\
+    uf.DurationR\x18messageRetentionDuration\x1a9\n\x0bLabelsEntry\x12\x10\n\
+    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
+    R\x05value:\x028\x01:T\xeaAQ\n\x1bpubsub.googleapis.com/Topic\x12!projec\
+    ts/{project}/topics/{topic}\x12\x0f_deleted-topic_\"\xb4\x02\n\rPubsubMe\
+    ssage\x12\x12\n\x04data\x18\x01\x20\x01(\x0cR\x04data\x12O\n\nattributes\
+    \x18\x02\x20\x03(\x0b2/.google.pubsub.v1.PubsubMessage.AttributesEntryR\
+    \nattributes\x12\x1d\n\nmessage_id\x18\x03\x20\x01(\tR\tmessageId\x12=\n\
+    \x0cpublish_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
+    \x0bpublishTime\x12!\n\x0cordering_key\x18\x05\x20\x01(\tR\x0borderingKe\
+    y\x1a=\n\x0fAttributesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"L\n\x0fGetTo\
+    picRequest\x129\n\x05topic\x18\x01\x20\x01(\tR\x05topicB#\xfaA\x1d\n\x1b\
+    pubsub.googleapis.com/Topic\xe0A\x02\"\x8a\x01\n\x12UpdateTopicRequest\
+    \x122\n\x05topic\x18\x01\x20\x01(\x0b2\x17.google.pubsub.v1.TopicR\x05to\
+    picB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\x1a.google\
+    .protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x02\"\x8d\x01\n\x0ePublishReq\
+    uest\x129\n\x05topic\x18\x01\x20\x01(\tR\x05topicB#\xfaA\x1d\n\x1bpubsub\
+    .googleapis.com/Topic\xe0A\x02\x12@\n\x08messages\x18\x02\x20\x03(\x0b2\
+    \x1f.google.pubsub.v1.PubsubMessageR\x08messagesB\x03\xe0A\x02\"2\n\x0fP\
+    ublishResponse\x12\x1f\n\x0bmessage_ids\x18\x01\x20\x03(\tR\nmessageIds\
+    \"\x9e\x01\n\x11ListTopicsRequest\x12M\n\x07project\x18\x01\x20\x01(\tR\
+    \x07projectB3\xfaA-\n+cloudresourcemanager.googleapis.com/Project\xe0A\
+    \x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\n\np\
+    age_token\x18\x03\x20\x01(\tR\tpageToken\"m\n\x12ListTopicsResponse\x12/\
+    \n\x06topics\x18\x01\x20\x03(\x0b2\x17.google.pubsub.v1.TopicR\x06topics\
+    \x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"\x96\x01\
+    \n\x1dListTopicSubscriptionsRequest\x129\n\x05topic\x18\x01\x20\x01(\tR\
+    \x05topicB#\xfaA\x1d\n\x1bpubsub.googleapis.com/Topic\xe0A\x02\x12\x1b\n\
+    \tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_token\x18\
+    \x03\x20\x01(\tR\tpageToken\"\x97\x01\n\x1eListTopicSubscriptionsRespons\
+    e\x12M\n\rsubscriptions\x18\x01\x20\x03(\tR\rsubscriptionsB'\xfaA$\n\"pu\
+    bsub.googleapis.com/Subscription\x12&\n\x0fnext_page_token\x18\x02\x20\
+    \x01(\tR\rnextPageToken\"\x92\x01\n\x19ListTopicSnapshotsRequest\x129\n\
+    \x05topic\x18\x01\x20\x01(\tR\x05topicB#\xfaA\x1d\n\x1bpubsub.googleapis\
+    .com/Topic\xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSi\
+    ze\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"b\n\x1aListTopi\
+    cSnapshotsResponse\x12\x1c\n\tsnapshots\x18\x01\x20\x03(\tR\tsnapshots\
+    \x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"O\n\x12De\
+    leteTopicRequest\x129\n\x05topic\x18\x01\x20\x01(\tR\x05topicB#\xfaA\x1d\
+    \n\x1bpubsub.googleapis.com/Topic\xe0A\x02\"k\n\x19DetachSubscriptionReq\
+    uest\x12N\n\x0csubscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\
+    \n\"pubsub.googleapis.com/Subscription\xe0A\x02\"\x1c\n\x1aDetachSubscri\
+    ptionResponse\"\xd8\n\n\x0cSubscription\x12\x17\n\x04name\x18\x01\x20\
+    \x01(\tR\x04nameB\x03\xe0A\x02\x129\n\x05topic\x18\x02\x20\x01(\tR\x05to\
+    picB#\xfaA\x1d\n\x1bpubsub.googleapis.com/Topic\xe0A\x02\x12=\n\x0bpush_\
+    config\x18\x04\x20\x01(\x0b2\x1c.google.pubsub.v1.PushConfigR\npushConfi\
+    g\x12I\n\x0fbigquery_config\x18\x12\x20\x01(\x0b2\x20.google.pubsub.v1.B\
+    igQueryConfigR\x0ebigqueryConfig\x12V\n\x14cloud_storage_config\x18\x16\
+    \x20\x01(\x0b2$.google.pubsub.v1.CloudStorageConfigR\x12cloudStorageConf\
+    ig\x120\n\x14ack_deadline_seconds\x18\x05\x20\x01(\x05R\x12ackDeadlineSe\
+    conds\x122\n\x15retain_acked_messages\x18\x07\x20\x01(\x08R\x13retainAck\
+    edMessages\x12W\n\x1amessage_retention_duration\x18\x08\x20\x01(\x0b2\
+    \x19.google.protobuf.DurationR\x18messageRetentionDuration\x12B\n\x06lab\
+    els\x18\t\x20\x03(\x0b2*.google.pubsub.v1.Subscription.LabelsEntryR\x06l\
+    abels\x126\n\x17enable_message_ordering\x18\n\x20\x01(\x08R\x15enableMes\
+    sageOrdering\x12O\n\x11expiration_policy\x18\x0b\x20\x01(\x0b2\".google.\
+    pubsub.v1.ExpirationPolicyR\x10expirationPolicy\x12\x16\n\x06filter\x18\
+    \x0c\x20\x01(\tR\x06filter\x12P\n\x12dead_letter_policy\x18\r\x20\x01(\
+    \x0b2\".google.pubsub.v1.DeadLetterPolicyR\x10deadLetterPolicy\x12@\n\
+    \x0cretry_policy\x18\x0e\x20\x01(\x0b2\x1d.google.pubsub.v1.RetryPolicyR\
+    \x0bretryPolicy\x12\x1a\n\x08detached\x18\x0f\x20\x01(\x08R\x08detached\
+    \x12?\n\x1cenable_exactly_once_delivery\x18\x10\x20\x01(\x08R\x19enableE\
+    xactlyOnceDelivery\x12g\n\x20topic_message_retention_duration\x18\x11\
+    \x20\x01(\x0b2\x19.google.protobuf.DurationR\x1dtopicMessageRetentionDur\
+    ationB\x03\xe0A\x03\x12?\n\x05state\x18\x13\x20\x01(\x0e2$.google.pubsub\
+    .v1.Subscription.StateR\x05stateB\x03\xe0A\x03\x1a9\n\x0bLabelsEntry\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\
+    \x01(\tR\x05value:\x028\x01\">\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\
+    \x10\0\x12\n\n\x06ACTIVE\x10\x01\x12\x12\n\x0eRESOURCE_ERROR\x10\x02:X\
+    \xeaAU\n\"pubsub.googleapis.com/Subscription\x12/projects/{project}/subs\
+    criptions/{subscription}\"\x95\x01\n\x0bRetryPolicy\x12B\n\x0fminimum_ba\
+    ckoff\x18\x01\x20\x01(\x0b2\x19.google.protobuf.DurationR\x0eminimumBack\
+    off\x12B\n\x0fmaximum_backoff\x18\x02\x20\x01(\x0b2\x19.google.protobuf.\
+    DurationR\x0emaximumBackoff\"r\n\x10DeadLetterPolicy\x12*\n\x11dead_lett\
+    er_topic\x18\x01\x20\x01(\tR\x0fdeadLetterTopic\x122\n\x15max_delivery_a\
+    ttempts\x18\x02\x20\x01(\x05R\x13maxDeliveryAttempts\"?\n\x10ExpirationP\
+    olicy\x12+\n\x03ttl\x18\x01\x20\x01(\x0b2\x19.google.protobuf.DurationR\
+    \x03ttl\"\xeb\x04\n\nPushConfig\x12#\n\rpush_endpoint\x18\x01\x20\x01(\t\
+    R\x0cpushEndpoint\x12L\n\nattributes\x18\x02\x20\x03(\x0b2,.google.pubsu\
+    b.v1.PushConfig.AttributesEntryR\nattributes\x12G\n\noidc_token\x18\x03\
+    \x20\x01(\x0b2&.google.pubsub.v1.PushConfig.OidcTokenH\0R\toidcToken\x12\
+    S\n\x0epubsub_wrapper\x18\x04\x20\x01(\x0b2*.google.pubsub.v1.PushConfig\
+    .PubsubWrapperH\x01R\rpubsubWrapper\x12G\n\nno_wrapper\x18\x05\x20\x01(\
+    \x0b2&.google.pubsub.v1.PushConfig.NoWrapperH\x01R\tnoWrapper\x1a[\n\tOi\
+    dcToken\x122\n\x15service_account_email\x18\x01\x20\x01(\tR\x13serviceAc\
+    countEmail\x12\x1a\n\x08audience\x18\x02\x20\x01(\tR\x08audience\x1a\x0f\
+    \n\rPubsubWrapper\x1a2\n\tNoWrapper\x12%\n\x0ewrite_metadata\x18\x01\x20\
+    \x01(\x08R\rwriteMetadata\x1a=\n\x0fAttributesEntry\x12\x10\n\x03key\x18\
+    \x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\
+    \x028\x01B\x17\n\x15authentication_methodB\t\n\x07wrapper\"\xd1\x02\n\
+    \x0eBigQueryConfig\x12\x14\n\x05table\x18\x01\x20\x01(\tR\x05table\x12(\
+    \n\x10use_topic_schema\x18\x02\x20\x01(\x08R\x0euseTopicSchema\x12%\n\
+    \x0ewrite_metadata\x18\x03\x20\x01(\x08R\rwriteMetadata\x12.\n\x13drop_u\
+    nknown_fields\x18\x04\x20\x01(\x08R\x11dropUnknownFields\x12A\n\x05state\
+    \x18\x05\x20\x01(\x0e2&.google.pubsub.v1.BigQueryConfig.StateR\x05stateB\
+    \x03\xe0A\x03\"e\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\0\x12\n\n\
+    \x06ACTIVE\x10\x01\x12\x15\n\x11PERMISSION_DENIED\x10\x02\x12\r\n\tNOT_F\
+    OUND\x10\x03\x12\x13\n\x0fSCHEMA_MISMATCH\x10\x04\"\xf3\x04\n\x12CloudSt\
+    orageConfig\x12\x1b\n\x06bucket\x18\x01\x20\x01(\tR\x06bucketB\x03\xe0A\
+    \x02\x12'\n\x0ffilename_prefix\x18\x02\x20\x01(\tR\x0efilenamePrefix\x12\
+    '\n\x0ffilename_suffix\x18\x03\x20\x01(\tR\x0efilenameSuffix\x12R\n\x0bt\
+    ext_config\x18\x04\x20\x01(\x0b2/.google.pubsub.v1.CloudStorageConfig.Te\
+    xtConfigH\0R\ntextConfig\x12R\n\x0bavro_config\x18\x05\x20\x01(\x0b2/.go\
+    ogle.pubsub.v1.CloudStorageConfig.AvroConfigH\0R\navroConfig\x12<\n\x0cm\
+    ax_duration\x18\x06\x20\x01(\x0b2\x19.google.protobuf.DurationR\x0bmaxDu\
+    ration\x12\x1b\n\tmax_bytes\x18\x07\x20\x01(\x03R\x08maxBytes\x12E\n\x05\
+    state\x18\t\x20\x01(\x0e2*.google.pubsub.v1.CloudStorageConfig.StateR\
+    \x05stateB\x03\xe0A\x03\x1a\x0c\n\nTextConfig\x1a3\n\nAvroConfig\x12%\n\
+    \x0ewrite_metadata\x18\x01\x20\x01(\x08R\rwriteMetadata\"P\n\x05State\
+    \x12\x15\n\x11STATE_UNSPECIFIED\x10\0\x12\n\n\x06ACTIVE\x10\x01\x12\x15\
+    \n\x11PERMISSION_DENIED\x10\x02\x12\r\n\tNOT_FOUND\x10\x03B\x0f\n\routpu\
+    t_format\"\x8e\x01\n\x0fReceivedMessage\x12\x15\n\x06ack_id\x18\x01\x20\
+    \x01(\tR\x05ackId\x129\n\x07message\x18\x02\x20\x01(\x0b2\x1f.google.pub\
+    sub.v1.PubsubMessageR\x07message\x12)\n\x10delivery_attempt\x18\x03\x20\
+    \x01(\x05R\x0fdeliveryAttempt\"h\n\x16GetSubscriptionRequest\x12N\n\x0cs\
+    ubscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.google\
+    apis.com/Subscription\xe0A\x02\"\xa6\x01\n\x19UpdateSubscriptionRequest\
+    \x12G\n\x0csubscription\x18\x01\x20\x01(\x0b2\x1e.google.pubsub.v1.Subsc\
+    riptionR\x0csubscriptionB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\
+    \x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x02\"\
+    \xa5\x01\n\x18ListSubscriptionsRequest\x12M\n\x07project\x18\x01\x20\x01\
+    (\tR\x07projectB3\xfaA-\n+cloudresourcemanager.googleapis.com/Project\
+    \xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\
+    \n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"\x89\x01\n\x19ListSubscri\
+    ptionsResponse\x12D\n\rsubscriptions\x18\x01\x20\x03(\x0b2\x1e.google.pu\
+    bsub.v1.SubscriptionR\rsubscriptions\x12&\n\x0fnext_page_token\x18\x02\
+    \x20\x01(\tR\rnextPageToken\"k\n\x19DeleteSubscriptionRequest\x12N\n\x0c\
+    subscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.googl\
+    eapis.com/Subscription\xe0A\x02\"\xad\x01\n\x17ModifyPushConfigRequest\
+    \x12N\n\x0csubscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"p\
+    ubsub.googleapis.com/Subscription\xe0A\x02\x12B\n\x0bpush_config\x18\x02\
+    \x20\x01(\x0b2\x1c.google.pubsub.v1.PushConfigR\npushConfigB\x03\xe0A\
+    \x02\"\xbb\x01\n\x0bPullRequest\x12N\n\x0csubscription\x18\x01\x20\x01(\
+    \tR\x0csubscriptionB*\xfaA$\n\"pubsub.googleapis.com/Subscription\xe0A\
+    \x02\x124\n\x12return_immediately\x18\x02\x20\x01(\x08R\x11returnImmedia\
+    telyB\x05\x18\x01\xe0A\x01\x12&\n\x0cmax_messages\x18\x03\x20\x01(\x05R\
+    \x0bmaxMessagesB\x03\xe0A\x02\"^\n\x0cPullResponse\x12N\n\x11received_me\
+    ssages\x18\x01\x20\x03(\x0b2!.google.pubsub.v1.ReceivedMessageR\x10recei\
+    vedMessages\"\xbf\x01\n\x18ModifyAckDeadlineRequest\x12N\n\x0csubscripti\
+    on\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.googleapis.com/\
+    Subscription\xe0A\x02\x12\x1c\n\x07ack_ids\x18\x04\x20\x03(\tR\x06ackIds\
+    B\x03\xe0A\x02\x125\n\x14ack_deadline_seconds\x18\x03\x20\x01(\x05R\x12a\
+    ckDeadlineSecondsB\x03\xe0A\x02\"\x82\x01\n\x12AcknowledgeRequest\x12N\n\
+    \x0csubscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.g\
+    oogleapis.com/Subscription\xe0A\x02\x12\x1c\n\x07ack_ids\x18\x02\x20\x03\
+    (\tR\x06ackIdsB\x03\xe0A\x02\"\xbd\x03\n\x14StreamingPullRequest\x12N\n\
+    \x0csubscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.g\
+    oogleapis.com/Subscription\xe0A\x02\x12\x17\n\x07ack_ids\x18\x02\x20\x03\
+    (\tR\x06ackIds\x126\n\x17modify_deadline_seconds\x18\x03\x20\x03(\x05R\
+    \x15modifyDeadlineSeconds\x125\n\x17modify_deadline_ack_ids\x18\x04\x20\
+    \x03(\tR\x14modifyDeadlineAckIds\x12B\n\x1bstream_ack_deadline_seconds\
+    \x18\x05\x20\x01(\x05R\x18streamAckDeadlineSecondsB\x03\xe0A\x02\x12\x1b\
+    \n\tclient_id\x18\x06\x20\x01(\tR\x08clientId\x128\n\x18max_outstanding_\
+    messages\x18\x07\x20\x01(\x03R\x16maxOutstandingMessages\x122\n\x15max_o\
+    utstanding_bytes\x18\x08\x20\x01(\x03R\x13maxOutstandingBytes\"\xe3\x07\
+    \n\x15StreamingPullResponse\x12N\n\x11received_messages\x18\x01\x20\x03(\
+    \x0b2!.google.pubsub.v1.ReceivedMessageR\x10receivedMessages\x12z\n\x18a\
+    cknowledge_confirmation\x18\x05\x20\x01(\x0b2?.google.pubsub.v1.Streamin\
+    gPullResponse.AcknowledgeConfirmationR\x17acknowledgeConfirmation\x12\
+    \x8e\x01\n\x20modify_ack_deadline_confirmation\x18\x03\x20\x01(\x0b2E.go\
+    ogle.pubsub.v1.StreamingPullResponse.ModifyAckDeadlineConfirmationR\x1dm\
+    odifyAckDeadlineConfirmation\x12w\n\x17subscription_properties\x18\x04\
+    \x20\x01(\x0b2>.google.pubsub.v1.StreamingPullResponse.SubscriptionPrope\
+    rtiesR\x16subscriptionProperties\x1a\xbf\x01\n\x17AcknowledgeConfirmatio\
+    n\x12\x17\n\x07ack_ids\x18\x01\x20\x03(\tR\x06ackIds\x12&\n\x0finvalid_a\
+    ck_ids\x18\x02\x20\x03(\tR\rinvalidAckIds\x12*\n\x11unordered_ack_ids\
+    \x18\x03\x20\x03(\tR\x0funorderedAckIds\x127\n\x18temporary_failed_ack_i\
+    ds\x18\x04\x20\x03(\tR\x15temporaryFailedAckIds\x1a\x99\x01\n\x1dModifyA\
+    ckDeadlineConfirmation\x12\x17\n\x07ack_ids\x18\x01\x20\x03(\tR\x06ackId\
+    s\x12&\n\x0finvalid_ack_ids\x18\x02\x20\x03(\tR\rinvalidAckIds\x127\n\
+    \x18temporary_failed_ack_ids\x18\x03\x20\x03(\tR\x15temporaryFailedAckId\
+    s\x1a\x95\x01\n\x16SubscriptionProperties\x12A\n\x1dexactly_once_deliver\
+    y_enabled\x18\x01\x20\x01(\x08R\x1aexactlyOnceDeliveryEnabled\x128\n\x18\
+    message_ordering_enabled\x18\x02\x20\x01(\x08R\x16messageOrderingEnabled\
+    \"\xab\x02\n\x15CreateSnapshotRequest\x12:\n\x04name\x18\x01\x20\x01(\tR\
+    \x04nameB&\xfaA\x20\n\x1epubsub.googleapis.com/Snapshot\xe0A\x02\x12N\n\
+    \x0csubscription\x18\x02\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.g\
+    oogleapis.com/Subscription\xe0A\x02\x12K\n\x06labels\x18\x03\x20\x03(\
+    \x0b23.google.pubsub.v1.CreateSnapshotRequest.LabelsEntryR\x06labels\x1a\
+    9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\
+    \x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"\x96\x01\n\x15UpdateSn\
+    apshotRequest\x12;\n\x08snapshot\x18\x01\x20\x01(\x0b2\x1a.google.pubsub\
+    .v1.SnapshotR\x08snapshotB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\
+    \x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x02\
+    \"\xdc\x02\n\x08Snapshot\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x126\n\x05topic\x18\x02\x20\x01(\tR\x05topicB\x20\xfaA\x1d\n\x1bpubsub.\
+    googleapis.com/Topic\x12;\n\x0bexpire_time\x18\x03\x20\x01(\x0b2\x1a.goo\
+    gle.protobuf.TimestampR\nexpireTime\x12>\n\x06labels\x18\x04\x20\x03(\
+    \x0b2&.google.pubsub.v1.Snapshot.LabelsEntryR\x06labels\x1a9\n\x0bLabels\
+    Entry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x01:L\xeaAI\n\x1epubsub.googleapis.com/S\
+    napshot\x12'projects/{project}/snapshots/{snapshot}\"X\n\x12GetSnapshotR\
+    equest\x12B\n\x08snapshot\x18\x01\x20\x01(\tR\x08snapshotB&\xfaA\x20\n\
+    \x1epubsub.googleapis.com/Snapshot\xe0A\x02\"\xa1\x01\n\x14ListSnapshots\
+    Request\x12M\n\x07project\x18\x01\x20\x01(\tR\x07projectB3\xfaA-\n+cloud\
+    resourcemanager.googleapis.com/Project\xe0A\x02\x12\x1b\n\tpage_size\x18\
+    \x02\x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\
+    \tpageToken\"y\n\x15ListSnapshotsResponse\x128\n\tsnapshots\x18\x01\x20\
+    \x03(\x0b2\x1a.google.pubsub.v1.SnapshotR\tsnapshots\x12&\n\x0fnext_page\
+    _token\x18\x02\x20\x01(\tR\rnextPageToken\"[\n\x15DeleteSnapshotRequest\
+    \x12B\n\x08snapshot\x18\x01\x20\x01(\tR\x08snapshotB&\xfaA\x20\n\x1epubs\
+    ub.googleapis.com/Snapshot\xe0A\x02\"\xdc\x01\n\x0bSeekRequest\x12N\n\
+    \x0csubscription\x18\x01\x20\x01(\tR\x0csubscriptionB*\xfaA$\n\"pubsub.g\
+    oogleapis.com/Subscription\xe0A\x02\x120\n\x04time\x18\x02\x20\x01(\x0b2\
+    \x1a.google.protobuf.TimestampH\0R\x04time\x12A\n\x08snapshot\x18\x03\
+    \x20\x01(\tH\0R\x08snapshotB#\xfaA\x20\n\x1epubsub.googleapis.com/Snapsh\
+    otB\x08\n\x06target\"\x0e\n\x0cSeekResponse2\xb8\x0b\n\tPublisher\x12q\n\
+    \x0bCreateTopic\x12\x17.google.pubsub.v1.Topic\x1a\x17.google.pubsub.v1.\
+    Topic\"0\x82\xd3\xe4\x93\x02#\x1a\x1e/v1/{name=projects/*/topics/*}:\x01\
+    *\xdaA\x04name\x12\x91\x01\n\x0bUpdateTopic\x12$.google.pubsub.v1.Update\
+    TopicRequest\x1a\x17.google.pubsub.v1.Topic\"C\x82\xd3\xe4\x93\x02)2$/v1\
+    /{topic.name=projects/*/topics/*}:\x01*\xdaA\x11topic,update_mask\x12\
+    \x93\x01\n\x07Publish\x12\x20.google.pubsub.v1.PublishRequest\x1a!.googl\
+    e.pubsub.v1.PublishResponse\"C\x82\xd3\xe4\x93\x02,\"'/v1/{topic=project\
+    s/*/topics/*}:publish:\x01*\xdaA\x0etopic,messages\x12w\n\x08GetTopic\
+    \x12!.google.pubsub.v1.GetTopicRequest\x1a\x17.google.pubsub.v1.Topic\"/\
+    \x82\xd3\xe4\x93\x02!\x12\x1f/v1/{topic=projects/*/topics/*}\xdaA\x05top\
+    ic\x12\x8a\x01\n\nListTopics\x12#.google.pubsub.v1.ListTopicsRequest\x1a\
+    $.google.pubsub.v1.ListTopicsResponse\"1\x82\xd3\xe4\x93\x02!\x12\x1f/v1\
+    /{project=projects/*}/topics\xdaA\x07project\x12\xba\x01\n\x16ListTopicS\
+    ubscriptions\x12/.google.pubsub.v1.ListTopicSubscriptionsRequest\x1a0.go\
+    ogle.pubsub.v1.ListTopicSubscriptionsResponse\"=\x82\xd3\xe4\x93\x02/\
+    \x12-/v1/{topic=projects/*/topics/*}/subscriptions\xdaA\x05topic\x12\xaa\
+    \x01\n\x12ListTopicSnapshots\x12+.google.pubsub.v1.ListTopicSnapshotsReq\
+    uest\x1a,.google.pubsub.v1.ListTopicSnapshotsResponse\"9\x82\xd3\xe4\x93\
+    \x02+\x12)/v1/{topic=projects/*/topics/*}/snapshots\xdaA\x05topic\x12|\n\
+    \x0bDeleteTopic\x12$.google.pubsub.v1.DeleteTopicRequest\x1a\x16.google.\
+    protobuf.Empty\"/\x82\xd3\xe4\x93\x02!*\x1f/v1/{topic=projects/*/topics/\
+    *}\xdaA\x05topic\x12\xad\x01\n\x12DetachSubscription\x12+.google.pubsub.\
+    v1.DetachSubscriptionRequest\x1a,.google.pubsub.v1.DetachSubscriptionRes\
+    ponse\"<\x82\xd3\xe4\x93\x026\"4/v1/{subscription=projects/*/subscriptio\
+    ns/*}:detach\x1ap\xd2AUhttps://www.googleapis.com/auth/cloud-platform,ht\
+    tps://www.googleapis.com/auth/pubsub\xcaA\x15pubsub.googleapis.com2\xd2\
+    \x15\n\nSubscriber\x12\xb4\x01\n\x12CreateSubscription\x12\x1e.google.pu\
+    bsub.v1.Subscription\x1a\x1e.google.pubsub.v1.Subscription\"^\x82\xd3\
+    \xe4\x93\x02*\x1a%/v1/{name=projects/*/subscriptions/*}:\x01*\xdaA+name,\
+    topic,push_config,ack_deadline_seconds\x12\xa1\x01\n\x0fGetSubscription\
+    \x12(.google.pubsub.v1.GetSubscriptionRequest\x1a\x1e.google.pubsub.v1.S\
+    ubscription\"D\x82\xd3\xe4\x93\x02/\x12-/v1/{subscription=projects/*/sub\
+    scriptions/*}\xdaA\x0csubscription\x12\xbb\x01\n\x12UpdateSubscription\
+    \x12+.google.pubsub.v1.UpdateSubscriptionRequest\x1a\x1e.google.pubsub.v\
+    1.Subscription\"X\x82\xd3\xe4\x93\x02722/v1/{subscription.name=projects/\
+    */subscriptions/*}:\x01*\xdaA\x18subscription,update_mask\x12\xa6\x01\n\
+    \x11ListSubscriptions\x12*.google.pubsub.v1.ListSubscriptionsRequest\x1a\
+    +.google.pubsub.v1.ListSubscriptionsResponse\"8\x82\xd3\xe4\x93\x02(\x12\
+    &/v1/{project=projects/*}/subscriptions\xdaA\x07project\x12\x9f\x01\n\
+    \x12DeleteSubscription\x12+.google.pubsub.v1.DeleteSubscriptionRequest\
+    \x1a\x16.google.protobuf.Empty\"D\x82\xd3\xe4\x93\x02/*-/v1/{subscriptio\
+    n=projects/*/subscriptions/*}\xdaA\x0csubscription\x12\xcf\x01\n\x11Modi\
+    fyAckDeadline\x12*.google.pubsub.v1.ModifyAckDeadlineRequest\x1a\x16.goo\
+    gle.protobuf.Empty\"v\x82\xd3\xe4\x93\x02D\"?/v1/{subscription=projects/\
+    */subscriptions/*}:modifyAckDeadline:\x01*\xdaA)subscription,ack_ids,ack\
+    _deadline_seconds\x12\xa8\x01\n\x0bAcknowledge\x12$.google.pubsub.v1.Ack\
+    nowledgeRequest\x1a\x16.google.protobuf.Empty\"[\x82\xd3\xe4\x93\x02>\"9\
+    /v1/{subscription=projects/*/subscriptions/*}:acknowledge:\x01*\xdaA\x14\
+    subscription,ack_ids\x12\xd0\x01\n\x04Pull\x12\x1d.google.pubsub.v1.Pull\
+    Request\x1a\x1e.google.pubsub.v1.PullResponse\"\x88\x01\x82\xd3\xe4\x93\
+    \x027\"2/v1/{subscription=projects/*/subscriptions/*}:pull:\x01*\xdaA,su\
+    bscription,return_immediately,max_messages\xdaA\x19subscription,max_mess\
+    ages\x12f\n\rStreamingPull\x12&.google.pubsub.v1.StreamingPullRequest\
+    \x1a'.google.pubsub.v1.StreamingPullResponse\"\0(\x010\x01\x12\xbb\x01\n\
+    \x10ModifyPushConfig\x12).google.pubsub.v1.ModifyPushConfigRequest\x1a\
+    \x16.google.protobuf.Empty\"d\x82\xd3\xe4\x93\x02C\">/v1/{subscription=p\
+    rojects/*/subscriptions/*}:modifyPushConfig:\x01*\xdaA\x18subscription,p\
+    ush_config\x12\x89\x01\n\x0bGetSnapshot\x12$.google.pubsub.v1.GetSnapsho\
+    tRequest\x1a\x1a.google.pubsub.v1.Snapshot\"8\x82\xd3\xe4\x93\x02'\x12%/\
+    v1/{snapshot=projects/*/snapshots/*}\xdaA\x08snapshot\x12\x96\x01\n\rLis\
+    tSnapshots\x12&.google.pubsub.v1.ListSnapshotsRequest\x1a'.google.pubsub\
+    .v1.ListSnapshotsResponse\"4\x82\xd3\xe4\x93\x02$\x12\"/v1/{project=proj\
+    ects/*}/snapshots\xdaA\x07project\x12\x97\x01\n\x0eCreateSnapshot\x12'.g\
+    oogle.pubsub.v1.CreateSnapshotRequest\x1a\x1a.google.pubsub.v1.Snapshot\
+    \"@\x82\xd3\xe4\x93\x02&\x1a!/v1/{name=projects/*/snapshots/*}:\x01*\xda\
+    A\x11name,subscription\x12\xa3\x01\n\x0eUpdateSnapshot\x12'.google.pubsu\
+    b.v1.UpdateSnapshotRequest\x1a\x1a.google.pubsub.v1.Snapshot\"L\x82\xd3\
+    \xe4\x93\x02/2*/v1/{snapshot.name=projects/*/snapshots/*}:\x01*\xdaA\x14\
+    snapshot,update_mask\x12\x8b\x01\n\x0eDeleteSnapshot\x12'.google.pubsub.\
+    v1.DeleteSnapshotRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\
+    \x93\x02'*%/v1/{snapshot=projects/*/snapshots/*}\xdaA\x08snapshot\x12\
+    \x84\x01\n\x04Seek\x12\x1d.google.pubsub.v1.SeekRequest\x1a\x1e.google.p\
+    ubsub.v1.SeekResponse\"=\x82\xd3\xe4\x93\x027\"2/v1/{subscription=projec\
+    ts/*/subscriptions/*}:seek:\x01*\x1ap\xd2AUhttps://www.googleapis.com/au\
+    th/cloud-platform,https://www.googleapis.com/auth/pubsub\xcaA\x15pubsub.\
+    googleapis.comB\xaa\x01\n\x14com.google.pubsub.v1B\x0bPubsubProtoP\x01Z2\
+    cloud.google.com/go/pubsub/apiv1/pubsubpb;pubsubpb\xf8\x01\x01\xaa\x02\
+    \x16Google.Cloud.PubSub.V1\xca\x02\x16Google\\Cloud\\PubSub\\V1\xea\x02\
+    \x19Google::Cloud::PubSub::V1J\xc4\xf3\x03\n\x07\x12\x05\x0e\0\xb7\x0c\
+    \x17\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202023\
+    \x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\
+    \x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20us\
+    e\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\x20Licens\
+    e.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\
+    \n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\
+    \x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\
+    \x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\x20Licen\
+    se\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHO\
+    UT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20\
+    express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20sp\
+    ecific\x20language\x20governing\x20permissions\x20and\n\x20limitations\
+    \x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x19\n\t\n\
+    \x02\x03\0\x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\x03\x13\0!\n\t\n\x02\x03\
+    \x02\x12\x03\x14\0)\n\t\n\x02\x03\x03\x12\x03\x15\0#\n\t\n\x02\x03\x04\
+    \x12\x03\x16\0(\n\t\n\x02\x03\x05\x12\x03\x17\0%\n\t\n\x02\x03\x06\x12\
+    \x03\x18\0*\n\t\n\x02\x03\x07\x12\x03\x19\0)\n\t\n\x02\x03\x08\x12\x03\
+    \x1a\0'\n\x08\n\x01\x08\x12\x03\x1c\0\x1f\n\t\n\x02\x08\x1f\x12\x03\x1c\
+    \0\x1f\n\x08\n\x01\x08\x12\x03\x1d\03\n\t\n\x02\x08%\x12\x03\x1d\03\n\
+    \x08\n\x01\x08\x12\x03\x1e\0I\n\t\n\x02\x08\x0b\x12\x03\x1e\0I\n\x08\n\
+    \x01\x08\x12\x03\x1f\0\"\n\t\n\x02\x08\n\x12\x03\x1f\0\"\n\x08\n\x01\x08\
+    \x12\x03\x20\0,\n\t\n\x02\x08\x08\x12\x03\x20\0,\n\x08\n\x01\x08\x12\x03\
+    !\0-\n\t\n\x02\x08\x01\x12\x03!\0-\n\x08\n\x01\x08\x12\x03\"\03\n\t\n\
+    \x02\x08)\x12\x03\"\03\n\x08\n\x01\x08\x12\x03#\02\n\t\n\x02\x08-\x12\
+    \x03#\02\nk\n\x02\x06\0\x12\x05'\0\x87\x01\x01\x1a^\x20The\x20service\
+    \x20that\x20an\x20application\x20uses\x20to\x20manipulate\x20topics,\x20\
+    and\x20to\x20send\n\x20messages\x20to\x20a\x20topic.\n\n\n\n\x03\x06\0\
+    \x01\x12\x03'\x08\x11\n\n\n\x03\x06\0\x03\x12\x03(\x02=\n\x0c\n\x05\x06\
+    \0\x03\x99\x08\x12\x03(\x02=\n\x0b\n\x03\x06\0\x03\x12\x04)\x02+/\n\r\n\
+    \x05\x06\0\x03\x9a\x08\x12\x04)\x02+/\n\xa1\x01\n\x04\x06\0\x02\0\x12\
+    \x04/\x025\x03\x1a\x92\x01\x20Creates\x20the\x20given\x20topic\x20with\
+    \x20the\x20given\x20name.\x20See\x20the\x20[resource\x20name\x20rules]\n\
+    \x20(https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).\
+    \n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03/\x06\x11\n\x0c\n\x05\x06\0\x02\0\
+    \x02\x12\x03/\x12\x17\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03/\"'\n\r\n\x05\
+    \x06\0\x02\0\x04\x12\x040\x043\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\xbc\
+    \"\x12\x040\x043\x06\n\x0c\n\x05\x06\0\x02\0\x04\x12\x034\x042\n\x0f\n\
+    \x08\x06\0\x02\0\x04\x9b\x08\0\x12\x034\x042\ng\n\x04\x06\0\x02\x01\x12\
+    \x049\x02?\x03\x1aY\x20Updates\x20an\x20existing\x20topic.\x20Note\x20th\
+    at\x20certain\x20properties\x20of\x20a\n\x20topic\x20are\x20not\x20modif\
+    iable.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x039\x06\x11\n\x0c\n\x05\x06\
+    \0\x02\x01\x02\x12\x039\x12$\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x039/4\n\
+    \r\n\x05\x06\0\x02\x01\x04\x12\x04:\x04=\x06\n\x11\n\t\x06\0\x02\x01\x04\
+    \xb0\xca\xbc\"\x12\x04:\x04=\x06\n\x0c\n\x05\x06\0\x02\x01\x04\x12\x03>\
+    \x04?\n\x0f\n\x08\x06\0\x02\x01\x04\x9b\x08\0\x12\x03>\x04?\ni\n\x04\x06\
+    \0\x02\x02\x12\x04C\x02I\x03\x1a[\x20Adds\x20one\x20or\x20more\x20messag\
+    es\x20to\x20the\x20topic.\x20Returns\x20`NOT_FOUND`\x20if\x20the\x20topi\
+    c\n\x20does\x20not\x20exist.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03C\
+    \x06\r\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03C\x0e\x1c\n\x0c\n\x05\x06\0\
+    \x02\x02\x03\x12\x03C'6\n\r\n\x05\x06\0\x02\x02\x04\x12\x04D\x04G\x06\n\
+    \x11\n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x04D\x04G\x06\n\x0c\n\x05\
+    \x06\0\x02\x02\x04\x12\x03H\x04<\n\x0f\n\x08\x06\0\x02\x02\x04\x9b\x08\0\
+    \x12\x03H\x04<\n2\n\x04\x06\0\x02\x03\x12\x04L\x02Q\x03\x1a$\x20Gets\x20\
+    the\x20configuration\x20of\x20a\x20topic.\n\n\x0c\n\x05\x06\0\x02\x03\
+    \x01\x12\x03L\x06\x0e\n\x0c\n\x05\x06\0\x02\x03\x02\x12\x03L\x0f\x1e\n\
+    \x0c\n\x05\x06\0\x02\x03\x03\x12\x03L).\n\r\n\x05\x06\0\x02\x03\x04\x12\
+    \x04M\x04O\x06\n\x11\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\"\x12\x04M\x04O\
+    \x06\n\x0c\n\x05\x06\0\x02\x03\x04\x12\x03P\x043\n\x0f\n\x08\x06\0\x02\
+    \x03\x04\x9b\x08\0\x12\x03P\x043\n&\n\x04\x06\0\x02\x04\x12\x04T\x02Y\
+    \x03\x1a\x18\x20Lists\x20matching\x20topics.\n\n\x0c\n\x05\x06\0\x02\x04\
+    \x01\x12\x03T\x06\x10\n\x0c\n\x05\x06\0\x02\x04\x02\x12\x03T\x11\"\n\x0c\
+    \n\x05\x06\0\x02\x04\x03\x12\x03T-?\n\r\n\x05\x06\0\x02\x04\x04\x12\x04U\
+    \x04W\x06\n\x11\n\t\x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\x04U\x04W\x06\n\
+    \x0c\n\x05\x06\0\x02\x04\x04\x12\x03X\x045\n\x0f\n\x08\x06\0\x02\x04\x04\
+    \x9b\x08\0\x12\x03X\x045\nL\n\x04\x06\0\x02\x05\x12\x04\\\x02b\x03\x1a>\
+    \x20Lists\x20the\x20names\x20of\x20the\x20attached\x20subscriptions\x20o\
+    n\x20this\x20topic.\n\n\x0c\n\x05\x06\0\x02\x05\x01\x12\x03\\\x06\x1c\n\
+    \x0c\n\x05\x06\0\x02\x05\x02\x12\x03\\\x1d:\n\x0c\n\x05\x06\0\x02\x05\
+    \x03\x12\x03]\x0f-\n\r\n\x05\x06\0\x02\x05\x04\x12\x04^\x04`\x06\n\x11\n\
+    \t\x06\0\x02\x05\x04\xb0\xca\xbc\"\x12\x04^\x04`\x06\n\x0c\n\x05\x06\0\
+    \x02\x05\x04\x12\x03a\x043\n\x0f\n\x08\x06\0\x02\x05\x04\x9b\x08\0\x12\
+    \x03a\x043\n\xd9\x02\n\x04\x06\0\x02\x06\x12\x04i\x02o\x03\x1a\xca\x02\
+    \x20Lists\x20the\x20names\x20of\x20the\x20snapshots\x20on\x20this\x20top\
+    ic.\x20Snapshots\x20are\x20used\x20in\n\x20[Seek](https://cloud.google.c\
+    om/pubsub/docs/replay-overview)\x20operations,\n\x20which\x20allow\x20yo\
+    u\x20to\x20manage\x20message\x20acknowledgments\x20in\x20bulk.\x20That\
+    \x20is,\x20you\x20can\n\x20set\x20the\x20acknowledgment\x20state\x20of\
+    \x20messages\x20in\x20an\x20existing\x20subscription\x20to\x20the\n\x20s\
+    tate\x20captured\x20by\x20a\x20snapshot.\n\n\x0c\n\x05\x06\0\x02\x06\x01\
+    \x12\x03i\x06\x18\n\x0c\n\x05\x06\0\x02\x06\x02\x12\x03i\x192\n\x0c\n\
+    \x05\x06\0\x02\x06\x03\x12\x03j\x0f)\n\r\n\x05\x06\0\x02\x06\x04\x12\x04\
+    k\x04m\x06\n\x11\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\x04k\x04m\x06\n\
+    \x0c\n\x05\x06\0\x02\x06\x04\x12\x03n\x043\n\x0f\n\x08\x06\0\x02\x06\x04\
+    \x9b\x08\0\x12\x03n\x043\n\xf3\x02\n\x04\x06\0\x02\x07\x12\x04v\x02{\x03\
+    \x1a\xe4\x02\x20Deletes\x20the\x20topic\x20with\x20the\x20given\x20name.\
+    \x20Returns\x20`NOT_FOUND`\x20if\x20the\x20topic\n\x20does\x20not\x20exi\
+    st.\x20After\x20a\x20topic\x20is\x20deleted,\x20a\x20new\x20topic\x20may\
+    \x20be\x20created\x20with\n\x20the\x20same\x20name;\x20this\x20is\x20an\
+    \x20entirely\x20new\x20topic\x20with\x20none\x20of\x20the\x20old\n\x20co\
+    nfiguration\x20or\x20subscriptions.\x20Existing\x20subscriptions\x20to\
+    \x20this\x20topic\x20are\n\x20not\x20deleted,\x20but\x20their\x20`topic`\
+    \x20field\x20is\x20set\x20to\x20`_deleted-topic_`.\n\n\x0c\n\x05\x06\0\
+    \x02\x07\x01\x12\x03v\x06\x11\n\x0c\n\x05\x06\0\x02\x07\x02\x12\x03v\x12\
+    $\n\x0c\n\x05\x06\0\x02\x07\x03\x12\x03v/D\n\r\n\x05\x06\0\x02\x07\x04\
+    \x12\x04w\x04y\x06\n\x11\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\x04w\
+    \x04y\x06\n\x0c\n\x05\x06\0\x02\x07\x04\x12\x03z\x043\n\x0f\n\x08\x06\0\
+    \x02\x07\x04\x9b\x08\0\x12\x03z\x043\n\x93\x02\n\x04\x06\0\x02\x08\x12\
+    \x06\x81\x01\x02\x86\x01\x03\x1a\x82\x02\x20Detaches\x20a\x20subscriptio\
+    n\x20from\x20this\x20topic.\x20All\x20messages\x20retained\x20in\x20the\
+    \n\x20subscription\x20are\x20dropped.\x20Subsequent\x20`Pull`\x20and\x20\
+    `StreamingPull`\x20requests\n\x20will\x20return\x20FAILED_PRECONDITION.\
+    \x20If\x20the\x20subscription\x20is\x20a\x20push\n\x20subscription,\x20p\
+    ushes\x20to\x20the\x20endpoint\x20will\x20stop.\n\n\r\n\x05\x06\0\x02\
+    \x08\x01\x12\x04\x81\x01\x06\x18\n\r\n\x05\x06\0\x02\x08\x02\x12\x04\x81\
+    \x01\x192\n\r\n\x05\x06\0\x02\x08\x03\x12\x04\x82\x01\x0f)\n\x0f\n\x05\
+    \x06\0\x02\x08\x04\x12\x06\x83\x01\x04\x85\x01\x06\n\x13\n\t\x06\0\x02\
+    \x08\x04\xb0\xca\xbc\"\x12\x06\x83\x01\x04\x85\x01\x06\nU\n\x02\x04\0\
+    \x12\x06\x8a\x01\0\x92\x01\x01\x1aG\x20A\x20policy\x20constraining\x20th\
+    e\x20storage\x20of\x20messages\x20published\x20to\x20the\x20topic.\n\n\
+    \x0b\n\x03\x04\0\x01\x12\x04\x8a\x01\x08\x1c\n\x8d\x03\n\x04\x04\0\x02\0\
+    \x12\x04\x91\x01\x022\x1a\xfe\x02\x20A\x20list\x20of\x20IDs\x20of\x20Goo\
+    gle\x20Cloud\x20regions\x20where\x20messages\x20that\x20are\x20published\
+    \n\x20to\x20the\x20topic\x20may\x20be\x20persisted\x20in\x20storage.\x20\
+    Messages\x20published\x20by\x20publishers\n\x20running\x20in\x20non-allo\
+    wed\x20Google\x20Cloud\x20regions\x20(or\x20running\x20outside\x20of\x20\
+    Google\n\x20Cloud\x20altogether)\x20are\x20routed\x20for\x20storage\x20i\
+    n\x20one\x20of\x20the\x20allowed\x20regions.\n\x20An\x20empty\x20list\
+    \x20means\x20that\x20no\x20regions\x20are\x20allowed,\x20and\x20is\x20no\
+    t\x20a\x20valid\n\x20configuration.\n\n\r\n\x05\x04\0\x02\0\x04\x12\x04\
+    \x91\x01\x02\n\n\r\n\x05\x04\0\x02\0\x05\x12\x04\x91\x01\x0b\x11\n\r\n\
+    \x05\x04\0\x02\0\x01\x12\x04\x91\x01\x12-\n\r\n\x05\x04\0\x02\0\x03\x12\
+    \x04\x91\x0101\nL\n\x02\x04\x01\x12\x06\x95\x01\0\xab\x01\x01\x1a>\x20Se\
+    ttings\x20for\x20validating\x20messages\x20published\x20against\x20a\x20\
+    schema.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\x95\x01\x08\x16\n\xef\x01\n\
+    \x04\x04\x01\x02\0\x12\x06\x9a\x01\x02\x9d\x01\x04\x1a\xde\x01\x20Requir\
+    ed.\x20The\x20name\x20of\x20the\x20schema\x20that\x20messages\x20publish\
+    ed\x20should\x20be\n\x20validated\x20against.\x20Format\x20is\x20`projec\
+    ts/{project}/schemas/{schema}`.\x20The\n\x20value\x20of\x20this\x20field\
+    \x20will\x20be\x20`_deleted-schema_`\x20if\x20the\x20schema\x20has\x20be\
+    en\n\x20deleted.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\x9a\x01\x02\x08\n\
+    \r\n\x05\x04\x01\x02\0\x01\x12\x04\x9a\x01\t\x0f\n\r\n\x05\x04\x01\x02\0\
+    \x03\x12\x04\x9a\x01\x12\x13\n\x0f\n\x05\x04\x01\x02\0\x08\x12\x06\x9a\
+    \x01\x14\x9d\x01\x03\n\x10\n\x08\x04\x01\x02\0\x08\x9c\x08\0\x12\x04\x9b\
+    \x01\x04*\n\x0f\n\x07\x04\x01\x02\0\x08\x9f\x08\x12\x04\x9c\x01\x04N\nD\
+    \n\x04\x04\x01\x02\x01\x12\x04\xa0\x01\x02\x18\x1a6\x20The\x20encoding\
+    \x20of\x20messages\x20validated\x20against\x20`schema`.\n\n\r\n\x05\x04\
+    \x01\x02\x01\x06\x12\x04\xa0\x01\x02\n\n\r\n\x05\x04\x01\x02\x01\x01\x12\
+    \x04\xa0\x01\x0b\x13\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\xa0\x01\x16\
+    \x17\n\xc6\x01\n\x04\x04\x01\x02\x02\x12\x04\xa5\x01\x02\x1f\x1a\xb7\x01\
+    \x20The\x20minimum\x20(inclusive)\x20revision\x20allowed\x20for\x20valid\
+    ating\x20messages.\x20If\x20empty\n\x20or\x20not\x20present,\x20allow\
+    \x20any\x20revision\x20to\x20be\x20validated\x20against\x20last_revision\
+    \x20or\n\x20any\x20revision\x20created\x20before.\n\n\r\n\x05\x04\x01\
+    \x02\x02\x05\x12\x04\xa5\x01\x02\x08\n\r\n\x05\x04\x01\x02\x02\x01\x12\
+    \x04\xa5\x01\t\x1a\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\xa5\x01\x1d\x1e\
+    \n\xc6\x01\n\x04\x04\x01\x02\x03\x12\x04\xaa\x01\x02\x1e\x1a\xb7\x01\x20\
+    The\x20maximum\x20(inclusive)\x20revision\x20allowed\x20for\x20validatin\
+    g\x20messages.\x20If\x20empty\n\x20or\x20not\x20present,\x20allow\x20any\
+    \x20revision\x20to\x20be\x20validated\x20against\x20first_revision\n\x20\
+    or\x20any\x20revision\x20created\x20after.\n\n\r\n\x05\x04\x01\x02\x03\
+    \x05\x12\x04\xaa\x01\x02\x08\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\xaa\
+    \x01\t\x19\n\r\n\x05\x04\x01\x02\x03\x03\x12\x04\xaa\x01\x1c\x1d\n!\n\
+    \x02\x04\x02\x12\x06\xae\x01\0\xdc\x01\x01\x1a\x13\x20A\x20topic\x20reso\
+    urce.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xae\x01\x08\r\n\r\n\x03\x04\x02\
+    \x07\x12\x06\xaf\x01\x02\xb3\x01\x04\n\x0f\n\x05\x04\x02\x07\x9d\x08\x12\
+    \x06\xaf\x01\x02\xb3\x01\x04\n\x8c\x03\n\x04\x04\x02\x02\0\x12\x04\xbb\
+    \x01\x02;\x1a\xfd\x02\x20Required.\x20The\x20name\x20of\x20the\x20topic.\
+    \x20It\x20must\x20have\x20the\x20format\n\x20`\"projects/{project}/topic\
+    s/{topic}\"`.\x20`{topic}`\x20must\x20start\x20with\x20a\x20letter,\n\
+    \x20and\x20contain\x20only\x20letters\x20(`[A-Za-z]`),\x20numbers\x20(`[\
+    0-9]`),\x20dashes\x20(`-`),\n\x20underscores\x20(`_`),\x20periods\x20(`.\
+    `),\x20tildes\x20(`~`),\x20plus\x20(`+`)\x20or\x20percent\n\x20signs\x20\
+    (`%`).\x20It\x20must\x20be\x20between\x203\x20and\x20255\x20characters\
+    \x20in\x20length,\x20and\x20it\n\x20must\x20not\x20start\x20with\x20`\"g\
+    oog\"`.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\xbb\x01\x02\x08\n\r\n\x05\
+    \x04\x02\x02\0\x01\x12\x04\xbb\x01\t\r\n\r\n\x05\x04\x02\x02\0\x03\x12\
+    \x04\xbb\x01\x10\x11\n\r\n\x05\x04\x02\x02\0\x08\x12\x04\xbb\x01\x12:\n\
+    \x10\n\x08\x04\x02\x02\0\x08\x9c\x08\0\x12\x04\xbb\x01\x139\nb\n\x04\x04\
+    \x02\x02\x01\x12\x04\xbf\x01\x02!\x1aT\x20See\x20[Creating\x20and\x20man\
+    aging\x20labels]\n\x20(https://cloud.google.com/pubsub/docs/labels).\n\n\
+    \r\n\x05\x04\x02\x02\x01\x06\x12\x04\xbf\x01\x02\x15\n\r\n\x05\x04\x02\
+    \x02\x01\x01\x12\x04\xbf\x01\x16\x1c\n\r\n\x05\x04\x02\x02\x01\x03\x12\
+    \x04\xbf\x01\x1f\x20\n\xb7\x01\n\x04\x04\x02\x02\x02\x12\x04\xc4\x01\x02\
+    2\x1a\xa8\x01\x20Policy\x20constraining\x20the\x20set\x20of\x20Google\
+    \x20Cloud\x20Platform\x20regions\x20where\x20messages\n\x20published\x20\
+    to\x20the\x20topic\x20may\x20be\x20stored.\x20If\x20not\x20present,\x20t\
+    hen\x20no\x20constraints\n\x20are\x20in\x20effect.\n\n\r\n\x05\x04\x02\
+    \x02\x02\x06\x12\x04\xc4\x01\x02\x16\n\r\n\x05\x04\x02\x02\x02\x01\x12\
+    \x04\xc4\x01\x17-\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xc4\x0101\n\xcb\
+    \x01\n\x04\x04\x02\x02\x03\x12\x04\xca\x01\x02\x1a\x1a\xbc\x01\x20The\
+    \x20resource\x20name\x20of\x20the\x20Cloud\x20KMS\x20CryptoKey\x20to\x20\
+    be\x20used\x20to\x20protect\x20access\n\x20to\x20messages\x20published\
+    \x20on\x20this\x20topic.\n\n\x20The\x20expected\x20format\x20is\x20`proj\
+    ects/*/locations/*/keyRings/*/cryptoKeys/*`.\n\n\r\n\x05\x04\x02\x02\x03\
+    \x05\x12\x04\xca\x01\x02\x08\n\r\n\x05\x04\x02\x02\x03\x01\x12\x04\xca\
+    \x01\t\x15\n\r\n\x05\x04\x02\x02\x03\x03\x12\x04\xca\x01\x18\x19\nL\n\
+    \x04\x04\x02\x02\x04\x12\x04\xcd\x01\x02%\x1a>\x20Settings\x20for\x20val\
+    idating\x20messages\x20published\x20against\x20a\x20schema.\n\n\r\n\x05\
+    \x04\x02\x02\x04\x06\x12\x04\xcd\x01\x02\x10\n\r\n\x05\x04\x02\x02\x04\
+    \x01\x12\x04\xcd\x01\x11\x20\n\r\n\x05\x04\x02\x02\x04\x03\x12\x04\xcd\
+    \x01#$\n\x8a\x01\n\x04\x04\x02\x02\x05\x12\x04\xd1\x01\x02\x19\x1a|\x20R\
+    eserved\x20for\x20future\x20use.\x20This\x20field\x20is\x20set\x20only\
+    \x20in\x20responses\x20from\x20the\n\x20server;\x20it\x20is\x20ignored\
+    \x20if\x20it\x20is\x20set\x20in\x20any\x20requests.\n\n\r\n\x05\x04\x02\
+    \x02\x05\x05\x12\x04\xd1\x01\x02\x06\n\r\n\x05\x04\x02\x02\x05\x01\x12\
+    \x04\xd1\x01\x07\x14\n\r\n\x05\x04\x02\x02\x05\x03\x12\x04\xd1\x01\x17\
+    \x18\n\xd2\x04\n\x04\x04\x02\x02\x06\x12\x04\xdb\x01\x02:\x1a\xc3\x04\
+    \x20Indicates\x20the\x20minimum\x20duration\x20to\x20retain\x20a\x20mess\
+    age\x20after\x20it\x20is\x20published\x20to\n\x20the\x20topic.\x20If\x20\
+    this\x20field\x20is\x20set,\x20messages\x20published\x20to\x20the\x20top\
+    ic\x20in\x20the\n\x20last\x20`message_retention_duration`\x20are\x20alwa\
+    ys\x20available\x20to\x20subscribers.\x20For\n\x20instance,\x20it\x20all\
+    ows\x20any\x20attached\x20subscription\x20to\x20[seek\x20to\x20a\n\x20ti\
+    mestamp](https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_\
+    time)\n\x20that\x20is\x20up\x20to\x20`message_retention_duration`\x20in\
+    \x20the\x20past.\x20If\x20this\x20field\x20is\n\x20not\x20set,\x20messag\
+    e\x20retention\x20is\x20controlled\x20by\x20settings\x20on\x20individual\
+    \n\x20subscriptions.\x20Cannot\x20be\x20more\x20than\x2031\x20days\x20or\
+    \x20less\x20than\x2010\x20minutes.\n\n\r\n\x05\x04\x02\x02\x06\x06\x12\
+    \x04\xdb\x01\x02\x1a\n\r\n\x05\x04\x02\x02\x06\x01\x12\x04\xdb\x01\x1b5\
+    \n\r\n\x05\x04\x02\x02\x06\x03\x12\x04\xdb\x0189\n\xf9\x03\n\x02\x04\x03\
+    \x12\x06\xe6\x01\0\x84\x02\x01\x1a\xea\x03\x20A\x20message\x20that\x20is\
+    \x20published\x20by\x20publishers\x20and\x20consumed\x20by\x20subscriber\
+    s.\x20The\n\x20message\x20must\x20contain\x20either\x20a\x20non-empty\
+    \x20data\x20field\x20or\x20at\x20least\x20one\x20attribute.\n\x20Note\
+    \x20that\x20client\x20libraries\x20represent\x20this\x20object\x20differ\
+    ently\n\x20depending\x20on\x20the\x20language.\x20See\x20the\x20correspo\
+    nding\x20[client\x20library\n\x20documentation](https://cloud.google.com\
+    /pubsub/docs/reference/libraries)\x20for\n\x20more\x20information.\x20Se\
+    e\x20[quotas\x20and\x20limits]\n\x20(https://cloud.google.com/pubsub/quo\
+    tas)\x20for\x20more\x20information\x20about\x20message\n\x20limits.\n\n\
+    \x0b\n\x03\x04\x03\x01\x12\x04\xe6\x01\x08\x15\nq\n\x04\x04\x03\x02\0\
+    \x12\x04\xe9\x01\x02\x11\x1ac\x20The\x20message\x20data\x20field.\x20If\
+    \x20this\x20field\x20is\x20empty,\x20the\x20message\x20must\x20contain\n\
+    \x20at\x20least\x20one\x20attribute.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\
+    \x04\xe9\x01\x02\x07\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xe9\x01\x08\x0c\
+    \n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xe9\x01\x0f\x10\n\xa9\x01\n\x04\x04\
+    \x03\x02\x01\x12\x04\xee\x01\x02%\x1a\x9a\x01\x20Attributes\x20for\x20th\
+    is\x20message.\x20If\x20this\x20field\x20is\x20empty,\x20the\x20message\
+    \x20must\n\x20contain\x20non-empty\x20data.\x20This\x20can\x20be\x20used\
+    \x20to\x20filter\x20messages\x20on\x20the\n\x20subscription.\n\n\r\n\x05\
+    \x04\x03\x02\x01\x06\x12\x04\xee\x01\x02\x15\n\r\n\x05\x04\x03\x02\x01\
+    \x01\x12\x04\xee\x01\x16\x20\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xee\
+    \x01#$\n\xb3\x02\n\x04\x04\x03\x02\x02\x12\x04\xf4\x01\x02\x18\x1a\xa4\
+    \x02\x20ID\x20of\x20this\x20message,\x20assigned\x20by\x20the\x20server\
+    \x20when\x20the\x20message\x20is\x20published.\n\x20Guaranteed\x20to\x20\
+    be\x20unique\x20within\x20the\x20topic.\x20This\x20value\x20may\x20be\
+    \x20read\x20by\x20a\n\x20subscriber\x20that\x20receives\x20a\x20`PubsubM\
+    essage`\x20via\x20a\x20`Pull`\x20call\x20or\x20a\x20push\n\x20delivery.\
+    \x20It\x20must\x20not\x20be\x20populated\x20by\x20the\x20publisher\x20in\
+    \x20a\x20`Publish`\x20call.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\xf4\
+    \x01\x02\x08\n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\xf4\x01\t\x13\n\r\n\
+    \x05\x04\x03\x02\x02\x03\x12\x04\xf4\x01\x16\x17\n\xbb\x01\n\x04\x04\x03\
+    \x02\x03\x12\x04\xf9\x01\x02-\x1a\xac\x01\x20The\x20time\x20at\x20which\
+    \x20the\x20message\x20was\x20published,\x20populated\x20by\x20the\x20ser\
+    ver\x20when\n\x20it\x20receives\x20the\x20`Publish`\x20call.\x20It\x20mu\
+    st\x20not\x20be\x20populated\x20by\x20the\n\x20publisher\x20in\x20a\x20`\
+    Publish`\x20call.\n\n\r\n\x05\x04\x03\x02\x03\x06\x12\x04\xf9\x01\x02\
+    \x1b\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xf9\x01\x1c(\n\r\n\x05\x04\
+    \x03\x02\x03\x03\x12\x04\xf9\x01+,\n\x94\x04\n\x04\x04\x03\x02\x04\x12\
+    \x04\x83\x02\x02\x1a\x1a\x85\x04\x20If\x20non-empty,\x20identifies\x20re\
+    lated\x20messages\x20for\x20which\x20publish\x20order\x20should\x20be\n\
+    \x20respected.\x20If\x20a\x20`Subscription`\x20has\x20`enable_message_or\
+    dering`\x20set\x20to\x20`true`,\n\x20messages\x20published\x20with\x20th\
+    e\x20same\x20non-empty\x20`ordering_key`\x20value\x20will\x20be\n\x20del\
+    ivered\x20to\x20subscribers\x20in\x20the\x20order\x20in\x20which\x20they\
+    \x20are\x20received\x20by\x20the\n\x20Pub/Sub\x20system.\x20All\x20`Pubs\
+    ubMessage`s\x20published\x20in\x20a\x20given\x20`PublishRequest`\n\x20mu\
+    st\x20specify\x20the\x20same\x20`ordering_key`\x20value.\n\x20For\x20mor\
+    e\x20information,\x20see\x20[ordering\n\x20messages](https://cloud.googl\
+    e.com/pubsub/docs/ordering).\n\n\r\n\x05\x04\x03\x02\x04\x05\x12\x04\x83\
+    \x02\x02\x08\n\r\n\x05\x04\x03\x02\x04\x01\x12\x04\x83\x02\t\x15\n\r\n\
+    \x05\x04\x03\x02\x04\x03\x12\x04\x83\x02\x18\x19\n0\n\x02\x04\x04\x12\
+    \x06\x87\x02\0\x8e\x02\x01\x1a\"\x20Request\x20for\x20the\x20GetTopic\
+    \x20method.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\x87\x02\x08\x17\ni\n\x04\
+    \x04\x04\x02\0\x12\x06\x8a\x02\x02\x8d\x02\x04\x1aY\x20Required.\x20The\
+    \x20name\x20of\x20the\x20topic\x20to\x20get.\n\x20Format\x20is\x20`proje\
+    cts/{project}/topics/{topic}`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\x8a\
+    \x02\x02\x08\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\x8a\x02\t\x0e\n\r\n\x05\
+    \x04\x04\x02\0\x03\x12\x04\x8a\x02\x11\x12\n\x0f\n\x05\x04\x04\x02\0\x08\
+    \x12\x06\x8a\x02\x13\x8d\x02\x03\n\x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\
+    \x12\x04\x8b\x02\x04*\n\x0f\n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x04\x8c\
+    \x02\x04M\n3\n\x02\x04\x05\x12\x06\x91\x02\0\x9c\x02\x01\x1a%\x20Request\
+    \x20for\x20the\x20UpdateTopic\x20method.\n\n\x0b\n\x03\x04\x05\x01\x12\
+    \x04\x91\x02\x08\x1a\n3\n\x04\x04\x05\x02\0\x12\x04\x93\x02\x02;\x1a%\
+    \x20Required.\x20The\x20updated\x20topic\x20object.\n\n\r\n\x05\x04\x05\
+    \x02\0\x06\x12\x04\x93\x02\x02\x07\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\
+    \x93\x02\x08\r\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\x93\x02\x10\x11\n\r\n\
+    \x05\x04\x05\x02\0\x08\x12\x04\x93\x02\x12:\n\x10\n\x08\x04\x05\x02\0\
+    \x08\x9c\x08\0\x12\x04\x93\x02\x139\n\xe5\x02\n\x04\x04\x05\x02\x01\x12\
+    \x06\x9a\x02\x02\x9b\x02/\x1a\xd4\x02\x20Required.\x20Indicates\x20which\
+    \x20fields\x20in\x20the\x20provided\x20topic\x20to\x20update.\x20Must\
+    \x20be\n\x20specified\x20and\x20non-empty.\x20Note\x20that\x20if\x20`upd\
+    ate_mask`\x20contains\n\x20\"message_storage_policy\"\x20but\x20the\x20`\
+    message_storage_policy`\x20is\x20not\x20set\x20in\n\x20the\x20`topic`\
+    \x20provided\x20above,\x20then\x20the\x20updated\x20value\x20is\x20deter\
+    mined\x20by\x20the\n\x20policy\x20configured\x20at\x20the\x20project\x20\
+    or\x20organization\x20level.\n\n\r\n\x05\x04\x05\x02\x01\x06\x12\x04\x9a\
+    \x02\x02\x1b\n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\x9a\x02\x1c'\n\r\n\
+    \x05\x04\x05\x02\x01\x03\x12\x04\x9a\x02*+\n\r\n\x05\x04\x05\x02\x01\x08\
+    \x12\x04\x9b\x02\x06.\n\x10\n\x08\x04\x05\x02\x01\x08\x9c\x08\0\x12\x04\
+    \x9b\x02\x07-\n/\n\x02\x04\x06\x12\x06\x9f\x02\0\xa9\x02\x01\x1a!\x20Req\
+    uest\x20for\x20the\x20Publish\x20method.\n\n\x0b\n\x03\x04\x06\x01\x12\
+    \x04\x9f\x02\x08\x16\n\x88\x01\n\x04\x04\x06\x02\0\x12\x06\xa2\x02\x02\
+    \xa5\x02\x04\x1ax\x20Required.\x20The\x20messages\x20in\x20the\x20reques\
+    t\x20will\x20be\x20published\x20on\x20this\x20topic.\n\x20Format\x20is\
+    \x20`projects/{project}/topics/{topic}`.\n\n\r\n\x05\x04\x06\x02\0\x05\
+    \x12\x04\xa2\x02\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\x04\xa2\x02\t\
+    \x0e\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xa2\x02\x11\x12\n\x0f\n\x05\x04\
+    \x06\x02\0\x08\x12\x06\xa2\x02\x13\xa5\x02\x03\n\x10\n\x08\x04\x06\x02\0\
+    \x08\x9c\x08\0\x12\x04\xa3\x02\x04*\n\x0f\n\x07\x04\x06\x02\0\x08\x9f\
+    \x08\x12\x04\xa4\x02\x04M\n2\n\x04\x04\x06\x02\x01\x12\x04\xa8\x02\x02O\
+    \x1a$\x20Required.\x20The\x20messages\x20to\x20publish.\n\n\r\n\x05\x04\
+    \x06\x02\x01\x04\x12\x04\xa8\x02\x02\n\n\r\n\x05\x04\x06\x02\x01\x06\x12\
+    \x04\xa8\x02\x0b\x18\n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xa8\x02\x19!\
+    \n\r\n\x05\x04\x06\x02\x01\x03\x12\x04\xa8\x02$%\n\r\n\x05\x04\x06\x02\
+    \x01\x08\x12\x04\xa8\x02&N\n\x10\n\x08\x04\x06\x02\x01\x08\x9c\x08\0\x12\
+    \x04\xa8\x02'M\n2\n\x02\x04\x07\x12\x06\xac\x02\0\xb1\x02\x01\x1a$\x20Re\
+    sponse\x20for\x20the\x20`Publish`\x20method.\n\n\x0b\n\x03\x04\x07\x01\
+    \x12\x04\xac\x02\x08\x17\n\xa8\x01\n\x04\x04\x07\x02\0\x12\x04\xb0\x02\
+    \x02\"\x1a\x99\x01\x20The\x20server-assigned\x20ID\x20of\x20each\x20publ\
+    ished\x20message,\x20in\x20the\x20same\x20order\x20as\n\x20the\x20messag\
+    es\x20in\x20the\x20request.\x20IDs\x20are\x20guaranteed\x20to\x20be\x20u\
+    nique\x20within\n\x20the\x20topic.\n\n\r\n\x05\x04\x07\x02\0\x04\x12\x04\
+    \xb0\x02\x02\n\n\r\n\x05\x04\x07\x02\0\x05\x12\x04\xb0\x02\x0b\x11\n\r\n\
+    \x05\x04\x07\x02\0\x01\x12\x04\xb0\x02\x12\x1d\n\r\n\x05\x04\x07\x02\0\
+    \x03\x12\x04\xb0\x02\x20!\n4\n\x02\x04\x08\x12\x06\xb4\x02\0\xc5\x02\x01\
+    \x1a&\x20Request\x20for\x20the\x20`ListTopics`\x20method.\n\n\x0b\n\x03\
+    \x04\x08\x01\x12\x04\xb4\x02\x08\x19\np\n\x04\x04\x08\x02\0\x12\x06\xb7\
+    \x02\x02\xbc\x02\x04\x1a`\x20Required.\x20The\x20name\x20of\x20the\x20pr\
+    oject\x20in\x20which\x20to\x20list\x20topics.\n\x20Format\x20is\x20`proj\
+    ects/{project-id}`.\n\n\r\n\x05\x04\x08\x02\0\x05\x12\x04\xb7\x02\x02\
+    \x08\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\xb7\x02\t\x10\n\r\n\x05\x04\x08\
+    \x02\0\x03\x12\x04\xb7\x02\x13\x14\n\x0f\n\x05\x04\x08\x02\0\x08\x12\x06\
+    \xb7\x02\x15\xbc\x02\x03\n\x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\x04\
+    \xb8\x02\x04*\n\x11\n\x07\x04\x08\x02\0\x08\x9f\x08\x12\x06\xb9\x02\x04\
+    \xbb\x02\x05\n3\n\x04\x04\x08\x02\x01\x12\x04\xbf\x02\x02\x16\x1a%\x20Ma\
+    ximum\x20number\x20of\x20topics\x20to\x20return.\n\n\r\n\x05\x04\x08\x02\
+    \x01\x05\x12\x04\xbf\x02\x02\x07\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\
+    \xbf\x02\x08\x11\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xbf\x02\x14\x15\n\
+    \xc4\x01\n\x04\x04\x08\x02\x02\x12\x04\xc4\x02\x02\x18\x1a\xb5\x01\x20Th\
+    e\x20value\x20returned\x20by\x20the\x20last\x20`ListTopicsResponse`;\x20\
+    indicates\x20that\x20this\x20is\n\x20a\x20continuation\x20of\x20a\x20pri\
+    or\x20`ListTopics`\x20call,\x20and\x20that\x20the\x20system\x20should\n\
+    \x20return\x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\x08\x02\
+    \x02\x05\x12\x04\xc4\x02\x02\x08\n\r\n\x05\x04\x08\x02\x02\x01\x12\x04\
+    \xc4\x02\t\x13\n\r\n\x05\x04\x08\x02\x02\x03\x12\x04\xc4\x02\x16\x17\n5\
+    \n\x02\x04\t\x12\x06\xc8\x02\0\xcf\x02\x01\x1a'\x20Response\x20for\x20th\
+    e\x20`ListTopics`\x20method.\n\n\x0b\n\x03\x04\t\x01\x12\x04\xc8\x02\x08\
+    \x1a\n%\n\x04\x04\t\x02\0\x12\x04\xca\x02\x02\x1c\x1a\x17\x20The\x20resu\
+    lting\x20topics.\n\n\r\n\x05\x04\t\x02\0\x04\x12\x04\xca\x02\x02\n\n\r\n\
+    \x05\x04\t\x02\0\x06\x12\x04\xca\x02\x0b\x10\n\r\n\x05\x04\t\x02\0\x01\
+    \x12\x04\xca\x02\x11\x17\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xca\x02\x1a\
+    \x1b\n\x99\x01\n\x04\x04\t\x02\x01\x12\x04\xce\x02\x02\x1d\x1a\x8a\x01\
+    \x20If\x20not\x20empty,\x20indicates\x20that\x20there\x20may\x20be\x20mo\
+    re\x20topics\x20that\x20match\x20the\n\x20request;\x20this\x20value\x20s\
+    hould\x20be\x20passed\x20in\x20a\x20new\x20`ListTopicsRequest`.\n\n\r\n\
+    \x05\x04\t\x02\x01\x05\x12\x04\xce\x02\x02\x08\n\r\n\x05\x04\t\x02\x01\
+    \x01\x12\x04\xce\x02\t\x18\n\r\n\x05\x04\t\x02\x01\x03\x12\x04\xce\x02\
+    \x1b\x1c\n@\n\x02\x04\n\x12\x06\xd2\x02\0\xe1\x02\x01\x1a2\x20Request\
+    \x20for\x20the\x20`ListTopicSubscriptions`\x20method.\n\n\x0b\n\x03\x04\
+    \n\x01\x12\x04\xd2\x02\x08%\n\x85\x01\n\x04\x04\n\x02\0\x12\x06\xd5\x02\
+    \x02\xd8\x02\x04\x1au\x20Required.\x20The\x20name\x20of\x20the\x20topic\
+    \x20that\x20subscriptions\x20are\x20attached\x20to.\n\x20Format\x20is\
+    \x20`projects/{project}/topics/{topic}`.\n\n\r\n\x05\x04\n\x02\0\x05\x12\
+    \x04\xd5\x02\x02\x08\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xd5\x02\t\x0e\n\r\
+    \n\x05\x04\n\x02\0\x03\x12\x04\xd5\x02\x11\x12\n\x0f\n\x05\x04\n\x02\0\
+    \x08\x12\x06\xd5\x02\x13\xd8\x02\x03\n\x10\n\x08\x04\n\x02\0\x08\x9c\x08\
+    \0\x12\x04\xd6\x02\x04*\n\x0f\n\x07\x04\n\x02\0\x08\x9f\x08\x12\x04\xd7\
+    \x02\x04M\n?\n\x04\x04\n\x02\x01\x12\x04\xdb\x02\x02\x16\x1a1\x20Maximum\
+    \x20number\x20of\x20subscription\x20names\x20to\x20return.\n\n\r\n\x05\
+    \x04\n\x02\x01\x05\x12\x04\xdb\x02\x02\x07\n\r\n\x05\x04\n\x02\x01\x01\
+    \x12\x04\xdb\x02\x08\x11\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xdb\x02\x14\
+    \x15\n\xdc\x01\n\x04\x04\n\x02\x02\x12\x04\xe0\x02\x02\x18\x1a\xcd\x01\
+    \x20The\x20value\x20returned\x20by\x20the\x20last\x20`ListTopicSubscript\
+    ionsResponse`;\x20indicates\n\x20that\x20this\x20is\x20a\x20continuation\
+    \x20of\x20a\x20prior\x20`ListTopicSubscriptions`\x20call,\x20and\n\x20th\
+    at\x20the\x20system\x20should\x20return\x20the\x20next\x20page\x20of\x20\
+    data.\n\n\r\n\x05\x04\n\x02\x02\x05\x12\x04\xe0\x02\x02\x08\n\r\n\x05\
+    \x04\n\x02\x02\x01\x12\x04\xe0\x02\t\x13\n\r\n\x05\x04\n\x02\x02\x03\x12\
+    \x04\xe0\x02\x16\x17\nA\n\x02\x04\x0b\x12\x06\xe4\x02\0\xee\x02\x01\x1a3\
+    \x20Response\x20for\x20the\x20`ListTopicSubscriptions`\x20method.\n\n\
+    \x0b\n\x03\x04\x0b\x01\x12\x04\xe4\x02\x08&\n\\\n\x04\x04\x0b\x02\0\x12\
+    \x06\xe6\x02\x02\xe8\x02\x05\x1aL\x20The\x20names\x20of\x20subscriptions\
+    \x20attached\x20to\x20the\x20topic\x20specified\x20in\x20the\x20request.\
+    \n\n\r\n\x05\x04\x0b\x02\0\x04\x12\x04\xe6\x02\x02\n\n\r\n\x05\x04\x0b\
+    \x02\0\x05\x12\x04\xe6\x02\x0b\x11\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\
+    \xe6\x02\x12\x1f\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xe6\x02\"#\n\x0f\n\
+    \x05\x04\x0b\x02\0\x08\x12\x06\xe6\x02$\xe8\x02\x04\n\x11\n\x07\x04\x0b\
+    \x02\0\x08\x9f\x08\x12\x06\xe6\x02%\xe8\x02\x03\n\xc7\x01\n\x04\x04\x0b\
+    \x02\x01\x12\x04\xed\x02\x02\x1d\x1a\xb8\x01\x20If\x20not\x20empty,\x20i\
+    ndicates\x20that\x20there\x20may\x20be\x20more\x20subscriptions\x20that\
+    \x20match\n\x20the\x20request;\x20this\x20value\x20should\x20be\x20passe\
+    d\x20in\x20a\x20new\n\x20`ListTopicSubscriptionsRequest`\x20to\x20get\
+    \x20more\x20subscriptions.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\x04\xed\
+    \x02\x02\x08\n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\xed\x02\t\x18\n\r\n\
+    \x05\x04\x0b\x02\x01\x03\x12\x04\xed\x02\x1b\x1c\n<\n\x02\x04\x0c\x12\
+    \x06\xf1\x02\0\x80\x03\x01\x1a.\x20Request\x20for\x20the\x20`ListTopicSn\
+    apshots`\x20method.\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\xf1\x02\x08!\n\x81\
+    \x01\n\x04\x04\x0c\x02\0\x12\x06\xf4\x02\x02\xf7\x02\x04\x1aq\x20Require\
+    d.\x20The\x20name\x20of\x20the\x20topic\x20that\x20snapshots\x20are\x20a\
+    ttached\x20to.\n\x20Format\x20is\x20`projects/{project}/topics/{topic}`.\
+    \n\n\r\n\x05\x04\x0c\x02\0\x05\x12\x04\xf4\x02\x02\x08\n\r\n\x05\x04\x0c\
+    \x02\0\x01\x12\x04\xf4\x02\t\x0e\n\r\n\x05\x04\x0c\x02\0\x03\x12\x04\xf4\
+    \x02\x11\x12\n\x0f\n\x05\x04\x0c\x02\0\x08\x12\x06\xf4\x02\x13\xf7\x02\
+    \x03\n\x10\n\x08\x04\x0c\x02\0\x08\x9c\x08\0\x12\x04\xf5\x02\x04*\n\x0f\
+    \n\x07\x04\x0c\x02\0\x08\x9f\x08\x12\x04\xf6\x02\x04M\n;\n\x04\x04\x0c\
+    \x02\x01\x12\x04\xfa\x02\x02\x16\x1a-\x20Maximum\x20number\x20of\x20snap\
+    shot\x20names\x20to\x20return.\n\n\r\n\x05\x04\x0c\x02\x01\x05\x12\x04\
+    \xfa\x02\x02\x07\n\r\n\x05\x04\x0c\x02\x01\x01\x12\x04\xfa\x02\x08\x11\n\
+    \r\n\x05\x04\x0c\x02\x01\x03\x12\x04\xfa\x02\x14\x15\n\xd4\x01\n\x04\x04\
+    \x0c\x02\x02\x12\x04\xff\x02\x02\x18\x1a\xc5\x01\x20The\x20value\x20retu\
+    rned\x20by\x20the\x20last\x20`ListTopicSnapshotsResponse`;\x20indicates\
+    \n\x20that\x20this\x20is\x20a\x20continuation\x20of\x20a\x20prior\x20`Li\
+    stTopicSnapshots`\x20call,\x20and\n\x20that\x20the\x20system\x20should\
+    \x20return\x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\x0c\x02\
+    \x02\x05\x12\x04\xff\x02\x02\x08\n\r\n\x05\x04\x0c\x02\x02\x01\x12\x04\
+    \xff\x02\t\x13\n\r\n\x05\x04\x0c\x02\x02\x03\x12\x04\xff\x02\x16\x17\n=\
+    \n\x02\x04\r\x12\x06\x83\x03\0\x8b\x03\x01\x1a/\x20Response\x20for\x20th\
+    e\x20`ListTopicSnapshots`\x20method.\n\n\x0b\n\x03\x04\r\x01\x12\x04\x83\
+    \x03\x08\"\nB\n\x04\x04\r\x02\0\x12\x04\x85\x03\x02\x20\x1a4\x20The\x20n\
+    ames\x20of\x20the\x20snapshots\x20that\x20match\x20the\x20request.\n\n\r\
+    \n\x05\x04\r\x02\0\x04\x12\x04\x85\x03\x02\n\n\r\n\x05\x04\r\x02\0\x05\
+    \x12\x04\x85\x03\x0b\x11\n\r\n\x05\x04\r\x02\0\x01\x12\x04\x85\x03\x12\
+    \x1b\n\r\n\x05\x04\r\x02\0\x03\x12\x04\x85\x03\x1e\x1f\n\xbb\x01\n\x04\
+    \x04\r\x02\x01\x12\x04\x8a\x03\x02\x1d\x1a\xac\x01\x20If\x20not\x20empty\
+    ,\x20indicates\x20that\x20there\x20may\x20be\x20more\x20snapshots\x20tha\
+    t\x20match\n\x20the\x20request;\x20this\x20value\x20should\x20be\x20pass\
+    ed\x20in\x20a\x20new\n\x20`ListTopicSnapshotsRequest`\x20to\x20get\x20mo\
+    re\x20snapshots.\n\n\r\n\x05\x04\r\x02\x01\x05\x12\x04\x8a\x03\x02\x08\n\
+    \r\n\x05\x04\r\x02\x01\x01\x12\x04\x8a\x03\t\x18\n\r\n\x05\x04\r\x02\x01\
+    \x03\x12\x04\x8a\x03\x1b\x1c\n5\n\x02\x04\x0e\x12\x06\x8e\x03\0\x95\x03\
+    \x01\x1a'\x20Request\x20for\x20the\x20`DeleteTopic`\x20method.\n\n\x0b\n\
+    \x03\x04\x0e\x01\x12\x04\x8e\x03\x08\x1a\nh\n\x04\x04\x0e\x02\0\x12\x06\
+    \x91\x03\x02\x94\x03\x04\x1aX\x20Required.\x20Name\x20of\x20the\x20topic\
+    \x20to\x20delete.\n\x20Format\x20is\x20`projects/{project}/topics/{topic\
+    }`.\n\n\r\n\x05\x04\x0e\x02\0\x05\x12\x04\x91\x03\x02\x08\n\r\n\x05\x04\
+    \x0e\x02\0\x01\x12\x04\x91\x03\t\x0e\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\
+    \x91\x03\x11\x12\n\x0f\n\x05\x04\x0e\x02\0\x08\x12\x06\x91\x03\x13\x94\
+    \x03\x03\n\x10\n\x08\x04\x0e\x02\0\x08\x9c\x08\0\x12\x04\x92\x03\x04*\n\
+    \x0f\n\x07\x04\x0e\x02\0\x08\x9f\x08\x12\x04\x93\x03\x04M\n:\n\x02\x04\
+    \x0f\x12\x06\x98\x03\0\xa1\x03\x01\x1a,\x20Request\x20for\x20the\x20Deta\
+    chSubscription\x20method.\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\x98\x03\x08!\
+    \nu\n\x04\x04\x0f\x02\0\x12\x06\x9b\x03\x02\xa0\x03\x04\x1ae\x20Required\
+    .\x20The\x20subscription\x20to\x20detach.\n\x20Format\x20is\x20`projects\
+    /{project}/subscriptions/{subscription}`.\n\n\r\n\x05\x04\x0f\x02\0\x05\
+    \x12\x04\x9b\x03\x02\x08\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\x9b\x03\t\
+    \x15\n\r\n\x05\x04\x0f\x02\0\x03\x12\x04\x9b\x03\x18\x19\n\x0f\n\x05\x04\
+    \x0f\x02\0\x08\x12\x06\x9b\x03\x1a\xa0\x03\x03\n\x10\n\x08\x04\x0f\x02\0\
+    \x08\x9c\x08\0\x12\x04\x9c\x03\x04*\n\x11\n\x07\x04\x0f\x02\0\x08\x9f\
+    \x08\x12\x06\x9d\x03\x04\x9f\x03\x05\nS\n\x02\x04\x10\x12\x04\xa5\x03\0%\
+    \x1aG\x20Response\x20for\x20the\x20DetachSubscription\x20method.\n\x20Re\
+    served\x20for\x20future\x20use.\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xa5\
+    \x03\x08\"\n\xe2\x01\n\x02\x06\x01\x12\x06\xaa\x03\0\x88\x05\x01\x1a\xd3\
+    \x01\x20The\x20service\x20that\x20an\x20application\x20uses\x20to\x20man\
+    ipulate\x20subscriptions\x20and\x20to\n\x20consume\x20messages\x20from\
+    \x20a\x20subscription\x20via\x20the\x20`Pull`\x20method\x20or\x20by\n\
+    \x20establishing\x20a\x20bi-directional\x20stream\x20using\x20the\x20`St\
+    reamingPull`\x20method.\n\n\x0b\n\x03\x06\x01\x01\x12\x04\xaa\x03\x08\
+    \x12\n\x0b\n\x03\x06\x01\x03\x12\x04\xab\x03\x02=\n\r\n\x05\x06\x01\x03\
+    \x99\x08\x12\x04\xab\x03\x02=\n\r\n\x03\x06\x01\x03\x12\x06\xac\x03\x02\
+    \xae\x03/\n\x0f\n\x05\x06\x01\x03\x9a\x08\x12\x06\xac\x03\x02\xae\x03/\n\
+    \xaa\x05\n\x04\x06\x01\x02\0\x12\x06\xbb\x03\x02\xc2\x03\x03\x1a\x99\x05\
+    \x20Creates\x20a\x20subscription\x20to\x20a\x20given\x20topic.\x20See\
+    \x20the\x20[resource\x20name\x20rules]\n\x20(https://cloud.google.com/pu\
+    bsub/docs/pubsub-basics#resource_names).\n\x20If\x20the\x20subscription\
+    \x20already\x20exists,\x20returns\x20`ALREADY_EXISTS`.\n\x20If\x20the\
+    \x20corresponding\x20topic\x20doesn't\x20exist,\x20returns\x20`NOT_FOUND\
+    `.\n\n\x20If\x20the\x20name\x20is\x20not\x20provided\x20in\x20the\x20req\
+    uest,\x20the\x20server\x20will\x20assign\x20a\x20random\n\x20name\x20for\
+    \x20this\x20subscription\x20on\x20the\x20same\x20project\x20as\x20the\
+    \x20topic,\x20conforming\n\x20to\x20the\x20[resource\x20name\x20format]\
+    \n\x20(https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names\
+    ).\x20The\n\x20generated\x20name\x20is\x20populated\x20in\x20the\x20retu\
+    rned\x20Subscription\x20object.\x20Note\x20that\n\x20for\x20REST\x20API\
+    \x20requests,\x20you\x20must\x20specify\x20a\x20name\x20in\x20the\x20req\
+    uest.\n\n\r\n\x05\x06\x01\x02\0\x01\x12\x04\xbb\x03\x06\x18\n\r\n\x05\
+    \x06\x01\x02\0\x02\x12\x04\xbb\x03\x19%\n\r\n\x05\x06\x01\x02\0\x03\x12\
+    \x04\xbb\x030<\n\x0f\n\x05\x06\x01\x02\0\x04\x12\x06\xbc\x03\x04\xbf\x03\
+    \x06\n\x13\n\t\x06\x01\x02\0\x04\xb0\xca\xbc\"\x12\x06\xbc\x03\x04\xbf\
+    \x03\x06\n\x0f\n\x05\x06\x01\x02\0\x04\x12\x06\xc0\x03\x04\xc1\x036\n\
+    \x12\n\x08\x06\x01\x02\0\x04\x9b\x08\0\x12\x06\xc0\x03\x04\xc1\x036\nC\n\
+    \x04\x06\x01\x02\x01\x12\x06\xc5\x03\x02\xca\x03\x03\x1a3\x20Gets\x20the\
     \x20configuration\x20details\x20of\x20a\x20subscription.\n\n\r\n\x05\x06\
-    \x01\x02\x01\x01\x12\x04\xd6\x02\x06\x15\n\r\n\x05\x06\x01\x02\x01\x02\
-    \x12\x04\xd6\x02\x16,\n\r\n\x05\x06\x01\x02\x01\x03\x12\x04\xd6\x027C\n\
-    \x0f\n\x05\x06\x01\x02\x01\x04\x12\x06\xd7\x02\x04\xd9\x02\x06\n\x13\n\t\
-    \x06\x01\x02\x01\x04\xb0\xca\xbc\"\x12\x06\xd7\x02\x04\xd9\x02\x06\n\x8b\
-    \x01\n\x04\x06\x01\x02\x02\x12\x06\xde\x02\x02\xe3\x02\x03\x1a{\x20Updat\
-    es\x20an\x20existing\x20subscription.\x20Note\x20that\x20certain\x20prop\
-    erties\x20of\x20a\n\x20subscription,\x20such\x20as\x20its\x20topic,\x20a\
-    re\x20not\x20modifiable.\n\n\r\n\x05\x06\x01\x02\x02\x01\x12\x04\xde\x02\
-    \x06\x18\n\r\n\x05\x06\x01\x02\x02\x02\x12\x04\xde\x02\x192\n\r\n\x05\
-    \x06\x01\x02\x02\x03\x12\x04\xde\x02=I\n\x0f\n\x05\x06\x01\x02\x02\x04\
-    \x12\x06\xdf\x02\x04\xe2\x02\x06\n\x13\n\t\x06\x01\x02\x02\x04\xb0\xca\
-    \xbc\"\x12\x06\xdf\x02\x04\xe2\x02\x06\n/\n\x04\x06\x01\x02\x03\x12\x06\
-    \xe6\x02\x02\xeb\x02\x03\x1a\x1f\x20Lists\x20matching\x20subscriptions.\
-    \n\n\r\n\x05\x06\x01\x02\x03\x01\x12\x04\xe6\x02\x06\x17\n\r\n\x05\x06\
-    \x01\x02\x03\x02\x12\x04\xe6\x02\x180\n\r\n\x05\x06\x01\x02\x03\x03\x12\
-    \x04\xe7\x02\x0f(\n\x0f\n\x05\x06\x01\x02\x03\x04\x12\x06\xe8\x02\x04\
-    \xea\x02\x06\n\x13\n\t\x06\x01\x02\x03\x04\xb0\xca\xbc\"\x12\x06\xe8\x02\
-    \x04\xea\x02\x06\n\xef\x02\n\x04\x06\x01\x02\x04\x12\x06\xf2\x02\x02\xf7\
-    \x02\x03\x1a\xde\x02\x20Deletes\x20an\x20existing\x20subscription.\x20Al\
-    l\x20messages\x20retained\x20in\x20the\x20subscription\n\x20are\x20immed\
-    iately\x20dropped.\x20Calls\x20to\x20`Pull`\x20after\x20deletion\x20will\
-    \x20return\n\x20`NOT_FOUND`.\x20After\x20a\x20subscription\x20is\x20dele\
-    ted,\x20a\x20new\x20one\x20may\x20be\x20created\x20with\n\x20the\x20same\
-    \x20name,\x20but\x20the\x20new\x20one\x20has\x20no\x20association\x20wit\
-    h\x20the\x20old\n\x20subscription\x20or\x20its\x20topic\x20unless\x20the\
-    \x20same\x20topic\x20is\x20specified.\n\n\r\n\x05\x06\x01\x02\x04\x01\
-    \x12\x04\xf2\x02\x06\x18\n\r\n\x05\x06\x01\x02\x04\x02\x12\x04\xf2\x02\
-    \x192\n\r\n\x05\x06\x01\x02\x04\x03\x12\x04\xf3\x02\x0f$\n\x0f\n\x05\x06\
-    \x01\x02\x04\x04\x12\x06\xf4\x02\x04\xf6\x02\x06\n\x13\n\t\x06\x01\x02\
-    \x04\x04\xb0\xca\xbc\"\x12\x06\xf4\x02\x04\xf6\x02\x06\n\xe7\x02\n\x04\
-    \x06\x01\x02\x05\x12\x06\xfe\x02\x02\x84\x03\x03\x1a\xd6\x02\x20Modifies\
-    \x20the\x20ack\x20deadline\x20for\x20a\x20specific\x20message.\x20This\
-    \x20method\x20is\x20useful\n\x20to\x20indicate\x20that\x20more\x20time\
-    \x20is\x20needed\x20to\x20process\x20a\x20message\x20by\x20the\n\x20subs\
-    criber,\x20or\x20to\x20make\x20the\x20message\x20available\x20for\x20red\
-    elivery\x20if\x20the\n\x20processing\x20was\x20interrupted.\x20Note\x20t\
-    hat\x20this\x20does\x20not\x20modify\x20the\n\x20subscription-level\x20`\
-    ackDeadlineSeconds`\x20used\x20for\x20subsequent\x20messages.\n\n\r\n\
-    \x05\x06\x01\x02\x05\x01\x12\x04\xfe\x02\x06\x17\n\r\n\x05\x06\x01\x02\
-    \x05\x02\x12\x04\xfe\x02\x180\n\r\n\x05\x06\x01\x02\x05\x03\x12\x04\xff\
-    \x02\x0f$\n\x0f\n\x05\x06\x01\x02\x05\x04\x12\x06\x80\x03\x04\x83\x03\
-    \x06\n\x13\n\t\x06\x01\x02\x05\x04\xb0\xca\xbc\"\x12\x06\x80\x03\x04\x83\
-    \x03\x06\n\xed\x02\n\x04\x06\x01\x02\x06\x12\x06\x8d\x03\x02\x92\x03\x03\
-    \x1a\xdc\x02\x20Acknowledges\x20the\x20messages\x20associated\x20with\
-    \x20the\x20`ack_ids`\x20in\x20the\n\x20`AcknowledgeRequest`.\x20The\x20P\
-    ub/Sub\x20system\x20can\x20remove\x20the\x20relevant\x20messages\n\x20fr\
-    om\x20the\x20subscription.\n\n\x20Acknowledging\x20a\x20message\x20whose\
-    \x20ack\x20deadline\x20has\x20expired\x20may\x20succeed,\n\x20but\x20suc\
-    h\x20a\x20message\x20may\x20be\x20redelivered\x20later.\x20Acknowledging\
-    \x20a\x20message\x20more\n\x20than\x20once\x20will\x20not\x20result\x20i\
-    n\x20an\x20error.\n\n\r\n\x05\x06\x01\x02\x06\x01\x12\x04\x8d\x03\x06\
-    \x11\n\r\n\x05\x06\x01\x02\x06\x02\x12\x04\x8d\x03\x12$\n\r\n\x05\x06\
-    \x01\x02\x06\x03\x12\x04\x8d\x03/D\n\x0f\n\x05\x06\x01\x02\x06\x04\x12\
-    \x06\x8e\x03\x04\x91\x03\x06\n\x13\n\t\x06\x01\x02\x06\x04\xb0\xca\xbc\"\
-    \x12\x06\x8e\x03\x04\x91\x03\x06\n\xab\x01\n\x04\x06\x01\x02\x07\x12\x06\
-    \x97\x03\x02\x9c\x03\x03\x1a\x9a\x01\x20Pulls\x20messages\x20from\x20the\
-    \x20server.\x20The\x20server\x20may\x20return\x20`UNAVAILABLE`\x20if\n\
-    \x20there\x20are\x20too\x20many\x20concurrent\x20pull\x20requests\x20pen\
-    ding\x20for\x20the\x20given\n\x20subscription.\n\n\r\n\x05\x06\x01\x02\
-    \x07\x01\x12\x04\x97\x03\x06\n\n\r\n\x05\x06\x01\x02\x07\x02\x12\x04\x97\
-    \x03\x0b\x16\n\r\n\x05\x06\x01\x02\x07\x03\x12\x04\x97\x03!-\n\x0f\n\x05\
-    \x06\x01\x02\x07\x04\x12\x06\x98\x03\x04\x9b\x03\x06\n\x13\n\t\x06\x01\
-    \x02\x07\x04\xb0\xca\xbc\"\x12\x06\x98\x03\x04\x9b\x03\x06\n\xe2\x03\n\
-    \x04\x06\x01\x02\x08\x12\x06\xa5\x03\x02\xa6\x03/\x1a\xd1\x03\x20Establi\
-    shes\x20a\x20stream\x20with\x20the\x20server,\x20which\x20sends\x20messa\
-    ges\x20down\x20to\x20the\n\x20client.\x20The\x20client\x20streams\x20ack\
-    nowledgements\x20and\x20ack\x20deadline\x20modifications\n\x20back\x20to\
-    \x20the\x20server.\x20The\x20server\x20will\x20close\x20the\x20stream\
-    \x20and\x20return\x20the\x20status\n\x20on\x20any\x20error.\x20The\x20se\
-    rver\x20may\x20close\x20the\x20stream\x20with\x20status\x20`UNAVAILABLE`\
-    \x20to\n\x20reassign\x20server-side\x20resources,\x20in\x20which\x20case\
-    ,\x20the\x20client\x20should\n\x20re-establish\x20the\x20stream.\x20Flow\
+    \x01\x02\x01\x01\x12\x04\xc5\x03\x06\x15\n\r\n\x05\x06\x01\x02\x01\x02\
+    \x12\x04\xc5\x03\x16,\n\r\n\x05\x06\x01\x02\x01\x03\x12\x04\xc5\x037C\n\
+    \x0f\n\x05\x06\x01\x02\x01\x04\x12\x06\xc6\x03\x04\xc8\x03\x06\n\x13\n\t\
+    \x06\x01\x02\x01\x04\xb0\xca\xbc\"\x12\x06\xc6\x03\x04\xc8\x03\x06\n\r\n\
+    \x05\x06\x01\x02\x01\x04\x12\x04\xc9\x03\x04:\n\x10\n\x08\x06\x01\x02\
+    \x01\x04\x9b\x08\0\x12\x04\xc9\x03\x04:\n\x8b\x01\n\x04\x06\x01\x02\x02\
+    \x12\x06\xce\x03\x02\xd4\x03\x03\x1a{\x20Updates\x20an\x20existing\x20su\
+    bscription.\x20Note\x20that\x20certain\x20properties\x20of\x20a\n\x20sub\
+    scription,\x20such\x20as\x20its\x20topic,\x20are\x20not\x20modifiable.\n\
+    \n\r\n\x05\x06\x01\x02\x02\x01\x12\x04\xce\x03\x06\x18\n\r\n\x05\x06\x01\
+    \x02\x02\x02\x12\x04\xce\x03\x192\n\r\n\x05\x06\x01\x02\x02\x03\x12\x04\
+    \xce\x03=I\n\x0f\n\x05\x06\x01\x02\x02\x04\x12\x06\xcf\x03\x04\xd2\x03\
+    \x06\n\x13\n\t\x06\x01\x02\x02\x04\xb0\xca\xbc\"\x12\x06\xcf\x03\x04\xd2\
+    \x03\x06\n\r\n\x05\x06\x01\x02\x02\x04\x12\x04\xd3\x03\x04F\n\x10\n\x08\
+    \x06\x01\x02\x02\x04\x9b\x08\0\x12\x04\xd3\x03\x04F\n/\n\x04\x06\x01\x02\
+    \x03\x12\x06\xd7\x03\x02\xdd\x03\x03\x1a\x1f\x20Lists\x20matching\x20sub\
+    scriptions.\n\n\r\n\x05\x06\x01\x02\x03\x01\x12\x04\xd7\x03\x06\x17\n\r\
+    \n\x05\x06\x01\x02\x03\x02\x12\x04\xd7\x03\x180\n\r\n\x05\x06\x01\x02\
+    \x03\x03\x12\x04\xd8\x03\x0f(\n\x0f\n\x05\x06\x01\x02\x03\x04\x12\x06\
+    \xd9\x03\x04\xdb\x03\x06\n\x13\n\t\x06\x01\x02\x03\x04\xb0\xca\xbc\"\x12\
+    \x06\xd9\x03\x04\xdb\x03\x06\n\r\n\x05\x06\x01\x02\x03\x04\x12\x04\xdc\
+    \x03\x045\n\x10\n\x08\x06\x01\x02\x03\x04\x9b\x08\0\x12\x04\xdc\x03\x045\
+    \n\xef\x02\n\x04\x06\x01\x02\x04\x12\x06\xe4\x03\x02\xea\x03\x03\x1a\xde\
+    \x02\x20Deletes\x20an\x20existing\x20subscription.\x20All\x20messages\
+    \x20retained\x20in\x20the\x20subscription\n\x20are\x20immediately\x20dro\
+    pped.\x20Calls\x20to\x20`Pull`\x20after\x20deletion\x20will\x20return\n\
+    \x20`NOT_FOUND`.\x20After\x20a\x20subscription\x20is\x20deleted,\x20a\
+    \x20new\x20one\x20may\x20be\x20created\x20with\n\x20the\x20same\x20name,\
+    \x20but\x20the\x20new\x20one\x20has\x20no\x20association\x20with\x20the\
+    \x20old\n\x20subscription\x20or\x20its\x20topic\x20unless\x20the\x20same\
+    \x20topic\x20is\x20specified.\n\n\r\n\x05\x06\x01\x02\x04\x01\x12\x04\
+    \xe4\x03\x06\x18\n\r\n\x05\x06\x01\x02\x04\x02\x12\x04\xe4\x03\x192\n\r\
+    \n\x05\x06\x01\x02\x04\x03\x12\x04\xe5\x03\x0f$\n\x0f\n\x05\x06\x01\x02\
+    \x04\x04\x12\x06\xe6\x03\x04\xe8\x03\x06\n\x13\n\t\x06\x01\x02\x04\x04\
+    \xb0\xca\xbc\"\x12\x06\xe6\x03\x04\xe8\x03\x06\n\r\n\x05\x06\x01\x02\x04\
+    \x04\x12\x04\xe9\x03\x04:\n\x10\n\x08\x06\x01\x02\x04\x04\x9b\x08\0\x12\
+    \x04\xe9\x03\x04:\n\xe7\x02\n\x04\x06\x01\x02\x05\x12\x06\xf1\x03\x02\
+    \xf9\x03\x03\x1a\xd6\x02\x20Modifies\x20the\x20ack\x20deadline\x20for\
+    \x20a\x20specific\x20message.\x20This\x20method\x20is\x20useful\n\x20to\
+    \x20indicate\x20that\x20more\x20time\x20is\x20needed\x20to\x20process\
+    \x20a\x20message\x20by\x20the\n\x20subscriber,\x20or\x20to\x20make\x20th\
+    e\x20message\x20available\x20for\x20redelivery\x20if\x20the\n\x20process\
+    ing\x20was\x20interrupted.\x20Note\x20that\x20this\x20does\x20not\x20mod\
+    ify\x20the\n\x20subscription-level\x20`ackDeadlineSeconds`\x20used\x20fo\
+    r\x20subsequent\x20messages.\n\n\r\n\x05\x06\x01\x02\x05\x01\x12\x04\xf1\
+    \x03\x06\x17\n\r\n\x05\x06\x01\x02\x05\x02\x12\x04\xf1\x03\x180\n\r\n\
+    \x05\x06\x01\x02\x05\x03\x12\x04\xf2\x03\x0f$\n\x0f\n\x05\x06\x01\x02\
+    \x05\x04\x12\x06\xf3\x03\x04\xf6\x03\x06\n\x13\n\t\x06\x01\x02\x05\x04\
+    \xb0\xca\xbc\"\x12\x06\xf3\x03\x04\xf6\x03\x06\n\x0f\n\x05\x06\x01\x02\
+    \x05\x04\x12\x06\xf7\x03\x04\xf8\x034\n\x12\n\x08\x06\x01\x02\x05\x04\
+    \x9b\x08\0\x12\x06\xf7\x03\x04\xf8\x034\n\xed\x02\n\x04\x06\x01\x02\x06\
+    \x12\x06\x82\x04\x02\x88\x04\x03\x1a\xdc\x02\x20Acknowledges\x20the\x20m\
+    essages\x20associated\x20with\x20the\x20`ack_ids`\x20in\x20the\n\x20`Ack\
+    nowledgeRequest`.\x20The\x20Pub/Sub\x20system\x20can\x20remove\x20the\
+    \x20relevant\x20messages\n\x20from\x20the\x20subscription.\n\n\x20Acknow\
+    ledging\x20a\x20message\x20whose\x20ack\x20deadline\x20has\x20expired\
+    \x20may\x20succeed,\n\x20but\x20such\x20a\x20message\x20may\x20be\x20red\
+    elivered\x20later.\x20Acknowledging\x20a\x20message\x20more\n\x20than\
+    \x20once\x20will\x20not\x20result\x20in\x20an\x20error.\n\n\r\n\x05\x06\
+    \x01\x02\x06\x01\x12\x04\x82\x04\x06\x11\n\r\n\x05\x06\x01\x02\x06\x02\
+    \x12\x04\x82\x04\x12$\n\r\n\x05\x06\x01\x02\x06\x03\x12\x04\x82\x04/D\n\
+    \x0f\n\x05\x06\x01\x02\x06\x04\x12\x06\x83\x04\x04\x86\x04\x06\n\x13\n\t\
+    \x06\x01\x02\x06\x04\xb0\xca\xbc\"\x12\x06\x83\x04\x04\x86\x04\x06\n\r\n\
+    \x05\x06\x01\x02\x06\x04\x12\x04\x87\x04\x04B\n\x10\n\x08\x06\x01\x02\
+    \x06\x04\x9b\x08\0\x12\x04\x87\x04\x04B\n1\n\x04\x06\x01\x02\x07\x12\x06\
+    \x8b\x04\x02\x93\x04\x03\x1a!\x20Pulls\x20messages\x20from\x20the\x20ser\
+    ver.\n\n\r\n\x05\x06\x01\x02\x07\x01\x12\x04\x8b\x04\x06\n\n\r\n\x05\x06\
+    \x01\x02\x07\x02\x12\x04\x8b\x04\x0b\x16\n\r\n\x05\x06\x01\x02\x07\x03\
+    \x12\x04\x8b\x04!-\n\x0f\n\x05\x06\x01\x02\x07\x04\x12\x06\x8c\x04\x04\
+    \x8f\x04\x06\n\x13\n\t\x06\x01\x02\x07\x04\xb0\xca\xbc\"\x12\x06\x8c\x04\
+    \x04\x8f\x04\x06\n\x0f\n\x05\x06\x01\x02\x07\x04\x12\x06\x90\x04\x04\x91\
+    \x047\n\x12\n\x08\x06\x01\x02\x07\x04\x9b\x08\0\x12\x06\x90\x04\x04\x91\
+    \x047\n\r\n\x05\x06\x01\x02\x07\x04\x12\x04\x92\x04\x04G\n\x10\n\x08\x06\
+    \x01\x02\x07\x04\x9b\x08\x01\x12\x04\x92\x04\x04G\n\xe2\x03\n\x04\x06\
+    \x01\x02\x08\x12\x06\x9c\x04\x02\x9d\x04/\x1a\xd1\x03\x20Establishes\x20\
+    a\x20stream\x20with\x20the\x20server,\x20which\x20sends\x20messages\x20d\
+    own\x20to\x20the\n\x20client.\x20The\x20client\x20streams\x20acknowledge\
+    ments\x20and\x20ack\x20deadline\x20modifications\n\x20back\x20to\x20the\
+    \x20server.\x20The\x20server\x20will\x20close\x20the\x20stream\x20and\
+    \x20return\x20the\x20status\n\x20on\x20any\x20error.\x20The\x20server\
+    \x20may\x20close\x20the\x20stream\x20with\x20status\x20`UNAVAILABLE`\x20\
+    to\n\x20reassign\x20server-side\x20resources,\x20in\x20which\x20case,\
+    \x20the\x20client\x20should\n\x20re-establish\x20the\x20stream.\x20Flow\
     \x20control\x20can\x20be\x20achieved\x20by\x20configuring\x20the\n\x20un\
-    derlying\x20RPC\x20channel.\n\n\r\n\x05\x06\x01\x02\x08\x01\x12\x04\xa5\
-    \x03\x06\x13\n\r\n\x05\x06\x01\x02\x08\x05\x12\x04\xa5\x03\x14\x1a\n\r\n\
-    \x05\x06\x01\x02\x08\x02\x12\x04\xa5\x03\x1b/\n\r\n\x05\x06\x01\x02\x08\
-    \x06\x12\x04\xa6\x03\x0f\x15\n\r\n\x05\x06\x01\x02\x08\x03\x12\x04\xa6\
-    \x03\x16+\n\xf7\x02\n\x04\x06\x01\x02\t\x12\x06\xae\x03\x02\xb4\x03\x03\
+    derlying\x20RPC\x20channel.\n\n\r\n\x05\x06\x01\x02\x08\x01\x12\x04\x9c\
+    \x04\x06\x13\n\r\n\x05\x06\x01\x02\x08\x05\x12\x04\x9c\x04\x14\x1a\n\r\n\
+    \x05\x06\x01\x02\x08\x02\x12\x04\x9c\x04\x1b/\n\r\n\x05\x06\x01\x02\x08\
+    \x06\x12\x04\x9d\x04\x0f\x15\n\r\n\x05\x06\x01\x02\x08\x03\x12\x04\x9d\
+    \x04\x16+\n\xf7\x02\n\x04\x06\x01\x02\t\x12\x06\xa5\x04\x02\xac\x04\x03\
     \x1a\xe6\x02\x20Modifies\x20the\x20`PushConfig`\x20for\x20a\x20specified\
     \x20subscription.\n\n\x20This\x20may\x20be\x20used\x20to\x20change\x20a\
     \x20push\x20subscription\x20to\x20a\x20pull\x20one\x20(signified\x20by\n\
@@ -9834,748 +14067,1233 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20push\x20subscription.\x20Messages\x20will\x20accumulate\x20for\x20de\
     livery\n\x20continuously\x20through\x20the\x20call\x20regardless\x20of\
     \x20changes\x20to\x20the\x20`PushConfig`.\n\n\r\n\x05\x06\x01\x02\t\x01\
-    \x12\x04\xae\x03\x06\x16\n\r\n\x05\x06\x01\x02\t\x02\x12\x04\xae\x03\x17\
-    .\n\r\n\x05\x06\x01\x02\t\x03\x12\x04\xaf\x03\x0f$\n\x0f\n\x05\x06\x01\
-    \x02\t\x04\x12\x06\xb0\x03\x04\xb3\x03\x06\n\x13\n\t\x06\x01\x02\t\x04\
-    \xb0\xca\xbc\"\x12\x06\xb0\x03\x04\xb3\x03\x06\n\xe4\x02\n\x04\x06\x01\
-    \x02\n\x12\x06\xbb\x03\x02\xbf\x03\x03\x1a\xd3\x02\x20Gets\x20the\x20con\
-    figuration\x20details\x20of\x20a\x20snapshot.\x20Snapshots\x20are\x20use\
-    d\x20in\n\x20<a\x20href=\"https://cloud.google.com/pubsub/docs/replay-ov\
-    erview\">Seek</a>\n\x20operations,\x20which\x20allow\x20you\x20to\x20man\
-    age\x20message\x20acknowledgments\x20in\x20bulk.\x20That\n\x20is,\x20you\
-    \x20can\x20set\x20the\x20acknowledgment\x20state\x20of\x20messages\x20in\
-    \x20an\x20existing\n\x20subscription\x20to\x20the\x20state\x20captured\
-    \x20by\x20a\x20snapshot.\n\n\r\n\x05\x06\x01\x02\n\x01\x12\x04\xbb\x03\
-    \x06\x11\n\r\n\x05\x06\x01\x02\n\x02\x12\x04\xbb\x03\x12$\n\r\n\x05\x06\
-    \x01\x02\n\x03\x12\x04\xbb\x03/7\n\x0f\n\x05\x06\x01\x02\n\x04\x12\x06\
-    \xbc\x03\x04\xbe\x03\x06\n\x13\n\t\x06\x01\x02\n\x04\xb0\xca\xbc\"\x12\
-    \x06\xbc\x03\x04\xbe\x03\x06\n\xd5\x02\n\x04\x06\x01\x02\x0b\x12\x06\xc7\
-    \x03\x02\xcb\x03\x03\x1a\xc4\x02\x20Lists\x20the\x20existing\x20snapshot\
-    s.\x20Snapshots\x20are\x20used\x20in\n\x20<a\x20href=\"https://cloud.goo\
-    gle.com/pubsub/docs/replay-overview\">Seek</a>\n\x20operations,\x20which\
-    \x20allow\n\x20you\x20to\x20manage\x20message\x20acknowledgments\x20in\
-    \x20bulk.\x20That\x20is,\x20you\x20can\x20set\x20the\n\x20acknowledgment\
-    \x20state\x20of\x20messages\x20in\x20an\x20existing\x20subscription\x20t\
-    o\x20the\x20state\n\x20captured\x20by\x20a\x20snapshot.\n\n\r\n\x05\x06\
-    \x01\x02\x0b\x01\x12\x04\xc7\x03\x06\x13\n\r\n\x05\x06\x01\x02\x0b\x02\
-    \x12\x04\xc7\x03\x14(\n\r\n\x05\x06\x01\x02\x0b\x03\x12\x04\xc7\x033H\n\
-    \x0f\n\x05\x06\x01\x02\x0b\x04\x12\x06\xc8\x03\x04\xca\x03\x06\n\x13\n\t\
-    \x06\x01\x02\x0b\x04\xb0\xca\xbc\"\x12\x06\xc8\x03\x04\xca\x03\x06\n\xb9\
-    \x08\n\x04\x06\x01\x02\x0c\x12\x06\xdf\x03\x02\xe4\x03\x03\x1a\xa8\x08\
-    \x20Creates\x20a\x20snapshot\x20from\x20the\x20requested\x20subscription\
-    .\x20Snapshots\x20are\x20used\x20in\n\x20<a\x20href=\"https://cloud.goog\
-    le.com/pubsub/docs/replay-overview\">Seek</a>\n\x20operations,\x20which\
-    \x20allow\n\x20you\x20to\x20manage\x20message\x20acknowledgments\x20in\
-    \x20bulk.\x20That\x20is,\x20you\x20can\x20set\x20the\n\x20acknowledgment\
-    \x20state\x20of\x20messages\x20in\x20an\x20existing\x20subscription\x20t\
-    o\x20the\x20state\n\x20captured\x20by\x20a\x20snapshot.\n\x20<br><br>If\
-    \x20the\x20snapshot\x20already\x20exists,\x20returns\x20`ALREADY_EXISTS`\
-    .\n\x20If\x20the\x20requested\x20subscription\x20doesn't\x20exist,\x20re\
-    turns\x20`NOT_FOUND`.\n\x20If\x20the\x20backlog\x20in\x20the\x20subscrip\
-    tion\x20is\x20too\x20old\x20--\x20and\x20the\x20resulting\x20snapshot\n\
-    \x20would\x20expire\x20in\x20less\x20than\x201\x20hour\x20--\x20then\x20\
-    `FAILED_PRECONDITION`\x20is\x20returned.\n\x20See\x20also\x20the\x20`Sna\
-    pshot.expire_time`\x20field.\x20If\x20the\x20name\x20is\x20not\x20provid\
-    ed\x20in\n\x20the\x20request,\x20the\x20server\x20will\x20assign\x20a\
-    \x20random\n\x20name\x20for\x20this\x20snapshot\x20on\x20the\x20same\x20\
-    project\x20as\x20the\x20subscription,\x20conforming\n\x20to\x20the\n\x20\
-    [resource\x20name\n\x20format](https://cloud.google.com/pubsub/docs/admi\
-    n#resource_names).\x20The\n\x20generated\x20name\x20is\x20populated\x20i\
-    n\x20the\x20returned\x20Snapshot\x20object.\x20Note\x20that\x20for\n\x20\
-    REST\x20API\x20requests,\x20you\x20must\x20specify\x20a\x20name\x20in\
-    \x20the\x20request.\n\n\r\n\x05\x06\x01\x02\x0c\x01\x12\x04\xdf\x03\x06\
-    \x14\n\r\n\x05\x06\x01\x02\x0c\x02\x12\x04\xdf\x03\x15*\n\r\n\x05\x06\
-    \x01\x02\x0c\x03\x12\x04\xdf\x035=\n\x0f\n\x05\x06\x01\x02\x0c\x04\x12\
-    \x06\xe0\x03\x04\xe3\x03\x06\n\x13\n\t\x06\x01\x02\x0c\x04\xb0\xca\xbc\"\
-    \x12\x06\xe0\x03\x04\xe3\x03\x06\n\xd5\x02\n\x04\x06\x01\x02\r\x12\x06\
-    \xec\x03\x02\xf1\x03\x03\x1a\xc4\x02\x20Updates\x20an\x20existing\x20sna\
-    pshot.\x20Snapshots\x20are\x20used\x20in\n\x20<a\x20href=\"https://cloud\
-    .google.com/pubsub/docs/replay-overview\">Seek</a>\n\x20operations,\x20w\
-    hich\x20allow\n\x20you\x20to\x20manage\x20message\x20acknowledgments\x20\
-    in\x20bulk.\x20That\x20is,\x20you\x20can\x20set\x20the\n\x20acknowledgme\
-    nt\x20state\x20of\x20messages\x20in\x20an\x20existing\x20subscription\
-    \x20to\x20the\x20state\n\x20captured\x20by\x20a\x20snapshot.\n\n\r\n\x05\
-    \x06\x01\x02\r\x01\x12\x04\xec\x03\x06\x14\n\r\n\x05\x06\x01\x02\r\x02\
-    \x12\x04\xec\x03\x15*\n\r\n\x05\x06\x01\x02\r\x03\x12\x04\xec\x035=\n\
-    \x0f\n\x05\x06\x01\x02\r\x04\x12\x06\xed\x03\x04\xf0\x03\x06\n\x13\n\t\
-    \x06\x01\x02\r\x04\xb0\xca\xbc\"\x12\x06\xed\x03\x04\xf0\x03\x06\n\x81\
-    \x05\n\x04\x06\x01\x02\x0e\x12\x06\xfd\x03\x02\x81\x04\x03\x1a\xf0\x04\
-    \x20Removes\x20an\x20existing\x20snapshot.\x20Snapshots\x20are\x20used\
-    \x20in\n\x20<a\x20href=\"https://cloud.google.com/pubsub/docs/replay-ove\
-    rview\">Seek</a>\n\x20operations,\x20which\x20allow\n\x20you\x20to\x20ma\
-    nage\x20message\x20acknowledgments\x20in\x20bulk.\x20That\x20is,\x20you\
-    \x20can\x20set\x20the\n\x20acknowledgment\x20state\x20of\x20messages\x20\
-    in\x20an\x20existing\x20subscription\x20to\x20the\x20state\n\x20captured\
-    \x20by\x20a\x20snapshot.<br><br>\n\x20When\x20the\x20snapshot\x20is\x20d\
-    eleted,\x20all\x20messages\x20retained\x20in\x20the\x20snapshot\n\x20are\
+    \x12\x04\xa5\x04\x06\x16\n\r\n\x05\x06\x01\x02\t\x02\x12\x04\xa5\x04\x17\
+    .\n\r\n\x05\x06\x01\x02\t\x03\x12\x04\xa6\x04\x0f$\n\x0f\n\x05\x06\x01\
+    \x02\t\x04\x12\x06\xa7\x04\x04\xaa\x04\x06\n\x13\n\t\x06\x01\x02\t\x04\
+    \xb0\xca\xbc\"\x12\x06\xa7\x04\x04\xaa\x04\x06\n\r\n\x05\x06\x01\x02\t\
+    \x04\x12\x04\xab\x04\x04F\n\x10\n\x08\x06\x01\x02\t\x04\x9b\x08\0\x12\
+    \x04\xab\x04\x04F\n\xd9\x02\n\x04\x06\x01\x02\n\x12\x06\xb3\x04\x02\xb8\
+    \x04\x03\x1a\xc8\x02\x20Gets\x20the\x20configuration\x20details\x20of\
+    \x20a\x20snapshot.\x20Snapshots\x20are\x20used\x20in\n\x20[Seek](https:/\
+    /cloud.google.com/pubsub/docs/replay-overview)\x20operations,\n\x20which\
+    \x20allow\x20you\x20to\x20manage\x20message\x20acknowledgments\x20in\x20\
+    bulk.\x20That\x20is,\x20you\x20can\n\x20set\x20the\x20acknowledgment\x20\
+    state\x20of\x20messages\x20in\x20an\x20existing\x20subscription\x20to\
+    \x20the\n\x20state\x20captured\x20by\x20a\x20snapshot.\n\n\r\n\x05\x06\
+    \x01\x02\n\x01\x12\x04\xb3\x04\x06\x11\n\r\n\x05\x06\x01\x02\n\x02\x12\
+    \x04\xb3\x04\x12$\n\r\n\x05\x06\x01\x02\n\x03\x12\x04\xb3\x04/7\n\x0f\n\
+    \x05\x06\x01\x02\n\x04\x12\x06\xb4\x04\x04\xb6\x04\x06\n\x13\n\t\x06\x01\
+    \x02\n\x04\xb0\xca\xbc\"\x12\x06\xb4\x04\x04\xb6\x04\x06\n\r\n\x05\x06\
+    \x01\x02\n\x04\x12\x04\xb7\x04\x046\n\x10\n\x08\x06\x01\x02\n\x04\x9b\
+    \x08\0\x12\x04\xb7\x04\x046\n\xca\x02\n\x04\x06\x01\x02\x0b\x12\x06\xbf\
+    \x04\x02\xc4\x04\x03\x1a\xb9\x02\x20Lists\x20the\x20existing\x20snapshot\
+    s.\x20Snapshots\x20are\x20used\x20in\x20[Seek](\n\x20https://cloud.googl\
+    e.com/pubsub/docs/replay-overview)\x20operations,\x20which\n\x20allow\
+    \x20you\x20to\x20manage\x20message\x20acknowledgments\x20in\x20bulk.\x20\
+    That\x20is,\x20you\x20can\x20set\n\x20the\x20acknowledgment\x20state\x20\
+    of\x20messages\x20in\x20an\x20existing\x20subscription\x20to\x20the\n\
+    \x20state\x20captured\x20by\x20a\x20snapshot.\n\n\r\n\x05\x06\x01\x02\
+    \x0b\x01\x12\x04\xbf\x04\x06\x13\n\r\n\x05\x06\x01\x02\x0b\x02\x12\x04\
+    \xbf\x04\x14(\n\r\n\x05\x06\x01\x02\x0b\x03\x12\x04\xbf\x043H\n\x0f\n\
+    \x05\x06\x01\x02\x0b\x04\x12\x06\xc0\x04\x04\xc2\x04\x06\n\x13\n\t\x06\
+    \x01\x02\x0b\x04\xb0\xca\xbc\"\x12\x06\xc0\x04\x04\xc2\x04\x06\n\r\n\x05\
+    \x06\x01\x02\x0b\x04\x12\x04\xc3\x04\x045\n\x10\n\x08\x06\x01\x02\x0b\
+    \x04\x9b\x08\0\x12\x04\xc3\x04\x045\n\xad\x08\n\x04\x06\x01\x02\x0c\x12\
+    \x06\xd6\x04\x02\xdc\x04\x03\x1a\x9c\x08\x20Creates\x20a\x20snapshot\x20\
+    from\x20the\x20requested\x20subscription.\x20Snapshots\x20are\x20used\
+    \x20in\n\x20[Seek](https://cloud.google.com/pubsub/docs/replay-overview)\
+    \x20operations,\n\x20which\x20allow\x20you\x20to\x20manage\x20message\
+    \x20acknowledgments\x20in\x20bulk.\x20That\x20is,\x20you\x20can\n\x20set\
+    \x20the\x20acknowledgment\x20state\x20of\x20messages\x20in\x20an\x20exis\
+    ting\x20subscription\x20to\x20the\n\x20state\x20captured\x20by\x20a\x20s\
+    napshot.\n\x20If\x20the\x20snapshot\x20already\x20exists,\x20returns\x20\
+    `ALREADY_EXISTS`.\n\x20If\x20the\x20requested\x20subscription\x20doesn't\
+    \x20exist,\x20returns\x20`NOT_FOUND`.\n\x20If\x20the\x20backlog\x20in\
+    \x20the\x20subscription\x20is\x20too\x20old\x20--\x20and\x20the\x20resul\
+    ting\x20snapshot\n\x20would\x20expire\x20in\x20less\x20than\x201\x20hour\
+    \x20--\x20then\x20`FAILED_PRECONDITION`\x20is\x20returned.\n\x20See\x20a\
+    lso\x20the\x20`Snapshot.expire_time`\x20field.\x20If\x20the\x20name\x20i\
+    s\x20not\x20provided\x20in\n\x20the\x20request,\x20the\x20server\x20will\
+    \x20assign\x20a\x20random\n\x20name\x20for\x20this\x20snapshot\x20on\x20\
+    the\x20same\x20project\x20as\x20the\x20subscription,\x20conforming\n\x20\
+    to\x20the\x20[resource\x20name\x20format]\n\x20(https://cloud.google.com\
+    /pubsub/docs/pubsub-basics#resource_names).\x20The\n\x20generated\x20nam\
+    e\x20is\x20populated\x20in\x20the\x20returned\x20Snapshot\x20object.\x20\
+    Note\x20that\x20for\n\x20REST\x20API\x20requests,\x20you\x20must\x20spec\
+    ify\x20a\x20name\x20in\x20the\x20request.\n\n\r\n\x05\x06\x01\x02\x0c\
+    \x01\x12\x04\xd6\x04\x06\x14\n\r\n\x05\x06\x01\x02\x0c\x02\x12\x04\xd6\
+    \x04\x15*\n\r\n\x05\x06\x01\x02\x0c\x03\x12\x04\xd6\x045=\n\x0f\n\x05\
+    \x06\x01\x02\x0c\x04\x12\x06\xd7\x04\x04\xda\x04\x06\n\x13\n\t\x06\x01\
+    \x02\x0c\x04\xb0\xca\xbc\"\x12\x06\xd7\x04\x04\xda\x04\x06\n\r\n\x05\x06\
+    \x01\x02\x0c\x04\x12\x04\xdb\x04\x04?\n\x10\n\x08\x06\x01\x02\x0c\x04\
+    \x9b\x08\0\x12\x04\xdb\x04\x04?\n\xc9\x02\n\x04\x06\x01\x02\r\x12\x06\
+    \xe3\x04\x02\xe9\x04\x03\x1a\xb8\x02\x20Updates\x20an\x20existing\x20sna\
+    pshot.\x20Snapshots\x20are\x20used\x20in\n\x20[Seek](https://cloud.googl\
+    e.com/pubsub/docs/replay-overview)\x20operations,\n\x20which\x20allow\
+    \x20you\x20to\x20manage\x20message\x20acknowledgments\x20in\x20bulk.\x20\
+    That\x20is,\x20you\x20can\n\x20set\x20the\x20acknowledgment\x20state\x20\
+    of\x20messages\x20in\x20an\x20existing\x20subscription\x20to\x20the\n\
+    \x20state\x20captured\x20by\x20a\x20snapshot.\n\n\r\n\x05\x06\x01\x02\r\
+    \x01\x12\x04\xe3\x04\x06\x14\n\r\n\x05\x06\x01\x02\r\x02\x12\x04\xe3\x04\
+    \x15*\n\r\n\x05\x06\x01\x02\r\x03\x12\x04\xe3\x045=\n\x0f\n\x05\x06\x01\
+    \x02\r\x04\x12\x06\xe4\x04\x04\xe7\x04\x06\n\x13\n\t\x06\x01\x02\r\x04\
+    \xb0\xca\xbc\"\x12\x06\xe4\x04\x04\xe7\x04\x06\n\r\n\x05\x06\x01\x02\r\
+    \x04\x12\x04\xe8\x04\x04B\n\x10\n\x08\x06\x01\x02\r\x04\x9b\x08\0\x12\
+    \x04\xe8\x04\x04B\n\xee\x04\n\x04\x06\x01\x02\x0e\x12\x06\xf4\x04\x02\
+    \xf9\x04\x03\x1a\xdd\x04\x20Removes\x20an\x20existing\x20snapshot.\x20Sn\
+    apshots\x20are\x20used\x20in\x20[Seek]\n\x20(https://cloud.google.com/pu\
+    bsub/docs/replay-overview)\x20operations,\x20which\n\x20allow\x20you\x20\
+    to\x20manage\x20message\x20acknowledgments\x20in\x20bulk.\x20That\x20is,\
+    \x20you\x20can\x20set\n\x20the\x20acknowledgment\x20state\x20of\x20messa\
+    ges\x20in\x20an\x20existing\x20subscription\x20to\x20the\n\x20state\x20c\
+    aptured\x20by\x20a\x20snapshot.\n\x20When\x20the\x20snapshot\x20is\x20de\
+    leted,\x20all\x20messages\x20retained\x20in\x20the\x20snapshot\n\x20are\
     \x20immediately\x20dropped.\x20After\x20a\x20snapshot\x20is\x20deleted,\
     \x20a\x20new\x20one\x20may\x20be\n\x20created\x20with\x20the\x20same\x20\
     name,\x20but\x20the\x20new\x20one\x20has\x20no\x20association\x20with\
     \x20the\x20old\n\x20snapshot\x20or\x20its\x20subscription,\x20unless\x20\
     the\x20same\x20subscription\x20is\x20specified.\n\n\r\n\x05\x06\x01\x02\
-    \x0e\x01\x12\x04\xfd\x03\x06\x14\n\r\n\x05\x06\x01\x02\x0e\x02\x12\x04\
-    \xfd\x03\x15*\n\r\n\x05\x06\x01\x02\x0e\x03\x12\x04\xfd\x035J\n\x0f\n\
-    \x05\x06\x01\x02\x0e\x04\x12\x06\xfe\x03\x04\x80\x04\x06\n\x13\n\t\x06\
-    \x01\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\xfe\x03\x04\x80\x04\x06\n\xf5\x03\
-    \n\x04\x06\x01\x02\x0f\x12\x06\x8b\x04\x02\x90\x04\x03\x1a\xe4\x03\x20Se\
-    eks\x20an\x20existing\x20subscription\x20to\x20a\x20point\x20in\x20time\
-    \x20or\x20to\x20a\x20given\x20snapshot,\n\x20whichever\x20is\x20provided\
-    \x20in\x20the\x20request.\x20Snapshots\x20are\x20used\x20in\n\x20<a\x20h\
-    ref=\"https://cloud.google.com/pubsub/docs/replay-overview\">Seek</a>\n\
-    \x20operations,\x20which\x20allow\n\x20you\x20to\x20manage\x20message\
-    \x20acknowledgments\x20in\x20bulk.\x20That\x20is,\x20you\x20can\x20set\
-    \x20the\n\x20acknowledgment\x20state\x20of\x20messages\x20in\x20an\x20ex\
-    isting\x20subscription\x20to\x20the\x20state\n\x20captured\x20by\x20a\
-    \x20snapshot.\x20Note\x20that\x20both\x20the\x20subscription\x20and\x20t\
-    he\x20snapshot\n\x20must\x20be\x20on\x20the\x20same\x20topic.\n\n\r\n\
-    \x05\x06\x01\x02\x0f\x01\x12\x04\x8b\x04\x06\n\n\r\n\x05\x06\x01\x02\x0f\
-    \x02\x12\x04\x8b\x04\x0b\x16\n\r\n\x05\x06\x01\x02\x0f\x03\x12\x04\x8b\
-    \x04!-\n\x0f\n\x05\x06\x01\x02\x0f\x04\x12\x06\x8c\x04\x04\x8f\x04\x06\n\
-    \x13\n\t\x06\x01\x02\x0f\x04\xb0\xca\xbc\"\x12\x06\x8c\x04\x04\x8f\x04\
-    \x06\n(\n\x02\x04\x0e\x12\x06\x94\x04\0\xf0\x04\x01\x1a\x1a\x20A\x20subs\
-    cription\x20resource.\n\n\x0b\n\x03\x04\x0e\x01\x12\x04\x94\x04\x08\x14\
-    \n\x9e\x03\n\x04\x04\x0e\x02\0\x12\x04\x9b\x04\x02\x12\x1a\x8f\x03\x20Th\
-    e\x20name\x20of\x20the\x20subscription.\x20It\x20must\x20have\x20the\x20\
-    format\n\x20`\"projects/{project}/subscriptions/{subscription}\"`.\x20`{\
-    subscription}`\x20must\n\x20start\x20with\x20a\x20letter,\x20and\x20cont\
-    ain\x20only\x20letters\x20(`[A-Za-z]`),\x20numbers\n\x20(`[0-9]`),\x20da\
-    shes\x20(`-`),\x20underscores\x20(`_`),\x20periods\x20(`.`),\x20tildes\
-    \x20(`~`),\n\x20plus\x20(`+`)\x20or\x20percent\x20signs\x20(`%`).\x20It\
-    \x20must\x20be\x20between\x203\x20and\x20255\x20characters\n\x20in\x20le\
-    ngth,\x20and\x20it\x20must\x20not\x20start\x20with\x20`\"goog\"`.\n\n\r\
-    \n\x05\x04\x0e\x02\0\x05\x12\x04\x9b\x04\x02\x08\n\r\n\x05\x04\x0e\x02\0\
-    \x01\x12\x04\x9b\x04\t\r\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\x9b\x04\x10\
-    \x11\n\xdd\x01\n\x04\x04\x0e\x02\x01\x12\x04\xa1\x04\x02\x13\x1a\xce\x01\
-    \x20The\x20name\x20of\x20the\x20topic\x20from\x20which\x20this\x20subscr\
-    iption\x20is\x20receiving\x20messages.\n\x20Format\x20is\x20`projects/{p\
-    roject}/topics/{topic}`.\n\x20The\x20value\x20of\x20this\x20field\x20wil\
-    l\x20be\x20`_deleted-topic_`\x20if\x20the\x20topic\x20has\x20been\n\x20d\
-    eleted.\n\n\r\n\x05\x04\x0e\x02\x01\x05\x12\x04\xa1\x04\x02\x08\n\r\n\
-    \x05\x04\x0e\x02\x01\x01\x12\x04\xa1\x04\t\x0e\n\r\n\x05\x04\x0e\x02\x01\
-    \x03\x12\x04\xa1\x04\x11\x12\n\xc9\x01\n\x04\x04\x0e\x02\x02\x12\x04\xa6\
-    \x04\x02\x1d\x1a\xba\x01\x20If\x20push\x20delivery\x20is\x20used\x20with\
-    \x20this\x20subscription,\x20this\x20field\x20is\n\x20used\x20to\x20conf\
-    igure\x20it.\x20An\x20empty\x20`pushConfig`\x20signifies\x20that\x20the\
-    \x20subscriber\n\x20will\x20pull\x20and\x20ack\x20messages\x20using\x20A\
-    PI\x20methods.\n\n\r\n\x05\x04\x0e\x02\x02\x06\x12\x04\xa6\x04\x02\x0c\n\
-    \r\n\x05\x04\x0e\x02\x02\x01\x12\x04\xa6\x04\r\x18\n\r\n\x05\x04\x0e\x02\
-    \x02\x03\x12\x04\xa6\x04\x1b\x1c\n\xc7\x08\n\x04\x04\x0e\x02\x03\x12\x04\
-    \xbc\x04\x02!\x1a\xb8\x08\x20The\x20approximate\x20amount\x20of\x20time\
-    \x20(on\x20a\x20best-effort\x20basis)\x20Pub/Sub\x20waits\x20for\n\x20th\
-    e\x20subscriber\x20to\x20acknowledge\x20receipt\x20before\x20resending\
-    \x20the\x20message.\x20In\x20the\n\x20interval\x20after\x20the\x20messag\
-    e\x20is\x20delivered\x20and\x20before\x20it\x20is\x20acknowledged,\x20it\
-    \n\x20is\x20considered\x20to\x20be\x20<i>outstanding</i>.\x20During\x20t\
-    hat\x20time\x20period,\x20the\n\x20message\x20will\x20not\x20be\x20redel\
-    ivered\x20(on\x20a\x20best-effort\x20basis).\n\n\x20For\x20pull\x20subsc\
-    riptions,\x20this\x20value\x20is\x20used\x20as\x20the\x20initial\x20valu\
-    e\x20for\x20the\x20ack\n\x20deadline.\x20To\x20override\x20this\x20value\
-    \x20for\x20a\x20given\x20message,\x20call\n\x20`ModifyAckDeadline`\x20wi\
-    th\x20the\x20corresponding\x20`ack_id`\x20if\x20using\n\x20non-streaming\
-    \x20pull\x20or\x20send\x20the\x20`ack_id`\x20in\x20a\n\x20`StreamingModi\
-    fyAckDeadlineRequest`\x20if\x20using\x20streaming\x20pull.\n\x20The\x20m\
-    inimum\x20custom\x20deadline\x20you\x20can\x20specify\x20is\x2010\x20sec\
-    onds.\n\x20The\x20maximum\x20custom\x20deadline\x20you\x20can\x20specify\
-    \x20is\x20600\x20seconds\x20(10\x20minutes).\n\x20If\x20this\x20paramete\
-    r\x20is\x200,\x20a\x20default\x20value\x20of\x2010\x20seconds\x20is\x20u\
-    sed.\n\n\x20For\x20push\x20delivery,\x20this\x20value\x20is\x20also\x20u\
-    sed\x20to\x20set\x20the\x20request\x20timeout\x20for\n\x20the\x20call\
-    \x20to\x20the\x20push\x20endpoint.\n\n\x20If\x20the\x20subscriber\x20nev\
-    er\x20acknowledges\x20the\x20message,\x20the\x20Pub/Sub\n\x20system\x20w\
-    ill\x20eventually\x20redeliver\x20the\x20message.\n\n\r\n\x05\x04\x0e\
-    \x02\x03\x05\x12\x04\xbc\x04\x02\x07\n\r\n\x05\x04\x0e\x02\x03\x01\x12\
-    \x04\xbc\x04\x08\x1c\n\r\n\x05\x04\x0e\x02\x03\x03\x12\x04\xbc\x04\x1f\
-    \x20\n\x80\x03\n\x04\x04\x0e\x02\x04\x12\x04\xc5\x04\x02!\x1a\xf1\x02\
-    \x20Indicates\x20whether\x20to\x20retain\x20acknowledged\x20messages.\
-    \x20If\x20true,\x20then\n\x20messages\x20are\x20not\x20expunged\x20from\
-    \x20the\x20subscription's\x20backlog,\x20even\x20if\x20they\x20are\n\x20\
-    acknowledged,\x20until\x20they\x20fall\x20out\x20of\x20the\x20`message_r\
-    etention_duration`\n\x20window.\x20This\x20must\x20be\x20true\x20if\x20y\
-    ou\x20would\x20like\x20to\n\x20<a\n\x20href=\"https://cloud.google.com/p\
-    ubsub/docs/replay-overview#seek_to_a_time\">\n\x20Seek\x20to\x20a\x20tim\
-    estamp</a>.\n\n\r\n\x05\x04\x0e\x02\x04\x05\x12\x04\xc5\x04\x02\x06\n\r\
-    \n\x05\x04\x0e\x02\x04\x01\x12\x04\xc5\x04\x07\x1c\n\r\n\x05\x04\x0e\x02\
-    \x04\x03\x12\x04\xc5\x04\x1f\x20\n\xf4\x02\n\x04\x04\x0e\x02\x05\x12\x04\
-    \xcd\x04\x02:\x1a\xe5\x02\x20How\x20long\x20to\x20retain\x20unacknowledg\
-    ed\x20messages\x20in\x20the\x20subscription's\x20backlog,\n\x20from\x20t\
-    he\x20moment\x20a\x20message\x20is\x20published.\n\x20If\x20`retain_acke\
-    d_messages`\x20is\x20true,\x20then\x20this\x20also\x20configures\x20the\
-    \x20retention\n\x20of\x20acknowledged\x20messages,\x20and\x20thus\x20con\
-    figures\x20how\x20far\x20back\x20in\x20time\x20a\x20`Seek`\n\x20can\x20b\
-    e\x20done.\x20Defaults\x20to\x207\x20days.\x20Cannot\x20be\x20more\x20th\
-    an\x207\x20days\x20or\x20less\x20than\x2010\n\x20minutes.\n\n\r\n\x05\
-    \x04\x0e\x02\x05\x06\x12\x04\xcd\x04\x02\x1a\n\r\n\x05\x04\x0e\x02\x05\
-    \x01\x12\x04\xcd\x04\x1b5\n\r\n\x05\x04\x0e\x02\x05\x03\x12\x04\xcd\x048\
-    9\nm\n\x04\x04\x0e\x02\x06\x12\x04\xd1\x04\x02!\x1a_\x20See\x20<a\x20hre\
-    f=\"https://cloud.google.com/pubsub/docs/labels\">\x20Creating\x20and\n\
-    \x20managing\x20labels</a>.\n\n\r\n\x05\x04\x0e\x02\x06\x06\x12\x04\xd1\
-    \x04\x02\x15\n\r\n\x05\x04\x0e\x02\x06\x01\x12\x04\xd1\x04\x16\x1c\n\r\n\
-    \x05\x04\x0e\x02\x06\x03\x12\x04\xd1\x04\x1f\x20\n\xd1\x03\n\x04\x04\x0e\
-    \x02\x07\x12\x04\xda\x04\x02$\x1a\xc2\x03\x20If\x20true,\x20messages\x20\
-    published\x20with\x20the\x20same\x20`ordering_key`\x20in\x20`PubsubMessa\
-    ge`\n\x20will\x20be\x20delivered\x20to\x20the\x20subscribers\x20in\x20th\
-    e\x20order\x20in\x20which\x20they\n\x20are\x20received\x20by\x20the\x20P\
-    ub/Sub\x20system.\x20Otherwise,\x20they\x20may\x20be\x20delivered\x20in\
-    \n\x20any\x20order.\n\x20<b>EXPERIMENTAL:</b>\x20This\x20feature\x20is\
-    \x20part\x20of\x20a\x20closed\x20alpha\x20release.\x20This\n\x20API\x20m\
-    ight\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20i\
-    s\x20not\x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20no\
-    t\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\r\n\
-    \x05\x04\x0e\x02\x07\x05\x12\x04\xda\x04\x02\x06\n\r\n\x05\x04\x0e\x02\
-    \x07\x01\x12\x04\xda\x04\x07\x1e\n\r\n\x05\x04\x0e\x02\x07\x03\x12\x04\
-    \xda\x04!#\n\xa9\x03\n\x04\x04\x0e\x02\x08\x12\x04\xe2\x04\x02*\x1a\x9a\
-    \x03\x20A\x20policy\x20that\x20specifies\x20the\x20conditions\x20for\x20\
-    this\x20subscription's\x20expiration.\n\x20A\x20subscription\x20is\x20co\
-    nsidered\x20active\x20as\x20long\x20as\x20any\x20connected\x20subscriber\
-    \x20is\n\x20successfully\x20consuming\x20messages\x20from\x20the\x20subs\
-    cription\x20or\x20is\x20issuing\n\x20operations\x20on\x20the\x20subscrip\
-    tion.\x20If\x20`expiration_policy`\x20is\x20not\x20set,\x20a\n\x20*defau\
-    lt\x20policy*\x20with\x20`ttl`\x20of\x2031\x20days\x20will\x20be\x20used\
-    .\x20The\x20minimum\x20allowed\n\x20value\x20for\x20`expiration_policy.t\
-    tl`\x20is\x201\x20day.\n\n\r\n\x05\x04\x0e\x02\x08\x06\x12\x04\xe2\x04\
-    \x02\x12\n\r\n\x05\x04\x0e\x02\x08\x01\x12\x04\xe2\x04\x13$\n\r\n\x05\
-    \x04\x0e\x02\x08\x03\x12\x04\xe2\x04')\n\xef\x04\n\x04\x04\x0e\x02\t\x12\
-    \x04\xef\x04\x02+\x1a\xe0\x04\x20A\x20policy\x20that\x20specifies\x20the\
-    \x20conditions\x20for\x20dead\x20lettering\x20messages\x20in\n\x20this\
-    \x20subscription.\x20If\x20dead_letter_policy\x20is\x20not\x20set,\x20de\
-    ad\x20lettering\n\x20is\x20disabled.\n\n\x20The\x20Cloud\x20Pub/Sub\x20s\
-    ervice\x20account\x20associated\x20with\x20this\x20subscriptions's\n\x20\
-    parent\x20project\x20(i.e.,\n\x20service-{project_number}@gcp-sa-pubsub.\
-    iam.gserviceaccount.com)\x20must\x20have\n\x20permission\x20to\x20Acknow\
-    ledge()\x20messages\x20on\x20this\x20subscription.\n\x20<b>EXPERIMENTAL:\
-    </b>\x20This\x20feature\x20is\x20part\x20of\x20a\x20closed\x20alpha\x20r\
-    elease.\x20This\n\x20API\x20might\x20be\x20changed\x20in\x20backward-inc\
-    ompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20product\
-    ion\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20d\
-    eprecation\x20policy.\n\n\r\n\x05\x04\x0e\x02\t\x06\x12\x04\xef\x04\x02\
-    \x12\n\r\n\x05\x04\x0e\x02\t\x01\x12\x04\xef\x04\x13%\n\r\n\x05\x04\x0e\
-    \x02\t\x03\x12\x04\xef\x04(*\n\xf9\x01\n\x02\x04\x0f\x12\x06\xf7\x04\0\
-    \x91\x05\x01\x1a\xea\x01\x20Dead\x20lettering\x20is\x20done\x20on\x20a\
-    \x20best\x20effort\x20basis.\x20The\x20same\x20message\x20might\x20be\n\
-    \x20dead\x20lettered\x20multiple\x20times.\n\n\x20If\x20validation\x20on\
-    \x20any\x20of\x20the\x20fields\x20fails\x20at\x20subscription\x20creatio\
-    n/updation,\n\x20the\x20create/update\x20subscription\x20request\x20will\
-    \x20fail.\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\xf7\x04\x08\x18\n\xa6\x04\n\
-    \x04\x04\x0f\x02\0\x12\x04\x81\x05\x02\x1f\x1a\x97\x04\x20The\x20name\
-    \x20of\x20the\x20topic\x20to\x20which\x20dead\x20letter\x20messages\x20s\
-    hould\x20be\x20published.\n\x20Format\x20is\x20`projects/{project}/topic\
-    s/{topic}`.The\x20Cloud\x20Pub/Sub\x20service\n\x20account\x20associated\
-    \x20with\x20the\x20enclosing\x20subscription's\x20parent\x20project\x20(\
-    i.e.,\n\x20service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.co\
-    m)\x20must\x20have\n\x20permission\x20to\x20Publish()\x20to\x20this\x20t\
-    opic.\n\n\x20The\x20operation\x20will\x20fail\x20if\x20the\x20topic\x20d\
-    oes\x20not\x20exist.\n\x20Users\x20should\x20ensure\x20that\x20there\x20\
-    is\x20a\x20subscription\x20attached\x20to\x20this\x20topic\n\x20since\
-    \x20messages\x20published\x20to\x20a\x20topic\x20with\x20no\x20subscript\
-    ions\x20are\x20lost.\n\n\r\n\x05\x04\x0f\x02\0\x05\x12\x04\x81\x05\x02\
-    \x08\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\x81\x05\t\x1a\n\r\n\x05\x04\x0f\
-    \x02\0\x03\x12\x04\x81\x05\x1d\x1e\n\x84\x04\n\x04\x04\x0f\x02\x01\x12\
-    \x04\x90\x05\x02\"\x1a\xf5\x03\x20The\x20maximum\x20number\x20of\x20deli\
-    very\x20attempts\x20for\x20any\x20message.\x20The\x20value\x20must\x20be\
-    \n\x20between\x205\x20and\x20100.\n\n\x20The\x20number\x20of\x20delivery\
-    \x20attempts\x20is\x20defined\x20as\x201\x20+\x20(the\x20sum\x20of\x20nu\
-    mber\x20of\n\x20NACKs\x20and\x20number\x20of\x20times\x20the\x20acknowle\
-    dgement\x20deadline\x20has\x20been\x20exceeded\n\x20for\x20the\x20messag\
-    e).\n\n\x20A\x20NACK\x20is\x20any\x20call\x20to\x20ModifyAckDeadline\x20\
-    with\x20a\x200\x20deadline.\x20Note\x20that\n\x20client\x20libraries\x20\
-    may\x20automatically\x20extend\x20ack_deadlines.\n\n\x20This\x20field\
-    \x20will\x20be\x20honored\x20on\x20a\x20best\x20effort\x20basis.\n\n\x20\
-    If\x20this\x20parameter\x20is\x200,\x20a\x20default\x20value\x20of\x205\
-    \x20is\x20used.\n\n\r\n\x05\x04\x0f\x02\x01\x05\x12\x04\x90\x05\x02\x07\
-    \n\r\n\x05\x04\x0f\x02\x01\x01\x12\x04\x90\x05\x08\x1d\n\r\n\x05\x04\x0f\
-    \x02\x01\x03\x12\x04\x90\x05\x20!\nt\n\x02\x04\x10\x12\x06\x95\x05\0\x9d\
-    \x05\x01\x1af\x20A\x20policy\x20that\x20specifies\x20the\x20conditions\
-    \x20for\x20resource\x20expiration\x20(i.e.,\n\x20automatic\x20resource\
-    \x20deletion).\n\n\x0b\n\x03\x04\x10\x01\x12\x04\x95\x05\x08\x18\n\x89\
-    \x03\n\x04\x04\x10\x02\0\x12\x04\x9c\x05\x02#\x1a\xfa\x02\x20Specifies\
-    \x20the\x20\"time-to-live\"\x20duration\x20for\x20an\x20associated\x20re\
-    source.\x20The\n\x20resource\x20expires\x20if\x20it\x20is\x20not\x20acti\
-    ve\x20for\x20a\x20period\x20of\x20`ttl`.\x20The\x20definition\n\x20of\
-    \x20\"activity\"\x20depends\x20on\x20the\x20type\x20of\x20the\x20associa\
-    ted\x20resource.\x20The\x20minimum\n\x20and\x20maximum\x20allowed\x20val\
-    ues\x20for\x20`ttl`\x20depend\x20on\x20the\x20type\x20of\x20the\x20assoc\
-    iated\n\x20resource,\x20as\x20well.\x20If\x20`ttl`\x20is\x20not\x20set,\
-    \x20the\x20associated\x20resource\x20never\n\x20expires.\n\n\r\n\x05\x04\
-    \x10\x02\0\x06\x12\x04\x9c\x05\x02\x1a\n\r\n\x05\x04\x10\x02\0\x01\x12\
-    \x04\x9c\x05\x1b\x1e\n\r\n\x05\x04\x10\x02\0\x03\x12\x04\x9c\x05!\"\n;\n\
-    \x02\x04\x11\x12\x06\xa0\x05\0\xda\x05\x01\x1a-\x20Configuration\x20for\
-    \x20a\x20push\x20delivery\x20endpoint.\n\n\x0b\n\x03\x04\x11\x01\x12\x04\
-    \xa0\x05\x08\x12\n\x9a\x01\n\x04\x04\x11\x03\0\x12\x06\xa4\x05\x02\xb3\
-    \x05\x03\x1a\x89\x01\x20Contains\x20information\x20needed\x20for\x20gene\
-    rating\x20an\n\x20[OpenID\x20Connect\n\x20token](https://developers.goog\
-    le.com/identity/protocols/OpenIDConnect).\n\n\r\n\x05\x04\x11\x03\0\x01\
-    \x12\x04\xa4\x05\n\x13\n\xab\x02\n\x06\x04\x11\x03\0\x02\0\x12\x04\xaa\
-    \x05\x04%\x1a\x9a\x02\x20[Service\x20account\n\x20email](https://cloud.g\
-    oogle.com/iam/docs/service-accounts)\n\x20to\x20be\x20used\x20for\x20gen\
-    erating\x20the\x20OIDC\x20token.\x20The\x20caller\x20(for\n\x20CreateSub\
-    scription,\x20UpdateSubscription,\x20and\x20ModifyPushConfig\x20RPCs)\
-    \x20must\n\x20have\x20the\x20iam.serviceAccounts.actAs\x20permission\x20\
-    for\x20the\x20service\x20account.\n\n\x0f\n\x07\x04\x11\x03\0\x02\0\x05\
-    \x12\x04\xaa\x05\x04\n\n\x0f\n\x07\x04\x11\x03\0\x02\0\x01\x12\x04\xaa\
-    \x05\x0b\x20\n\x0f\n\x07\x04\x11\x03\0\x02\0\x03\x12\x04\xaa\x05#$\n\xb0\
-    \x03\n\x06\x04\x11\x03\0\x02\x01\x12\x04\xb2\x05\x04\x18\x1a\x9f\x03\x20\
-    Audience\x20to\x20be\x20used\x20when\x20generating\x20OIDC\x20token.\x20\
-    The\x20audience\x20claim\n\x20identifies\x20the\x20recipients\x20that\
-    \x20the\x20JWT\x20is\x20intended\x20for.\x20The\x20audience\n\x20value\
-    \x20is\x20a\x20single\x20case-sensitive\x20string.\x20Having\x20multiple\
-    \x20values\x20(array)\n\x20for\x20the\x20audience\x20field\x20is\x20not\
-    \x20supported.\x20More\x20info\x20about\x20the\x20OIDC\x20JWT\n\x20token\
-    \x20audience\x20here:\x20https://tools.ietf.org/html/rfc7519#section-4.1\
-    .3\n\x20Note:\x20if\x20not\x20specified,\x20the\x20Push\x20endpoint\x20U\
-    RL\x20will\x20be\x20used.\n\n\x0f\n\x07\x04\x11\x03\0\x02\x01\x05\x12\
-    \x04\xb2\x05\x04\n\n\x0f\n\x07\x04\x11\x03\0\x02\x01\x01\x12\x04\xb2\x05\
-    \x0b\x13\n\x0f\n\x07\x04\x11\x03\0\x02\x01\x03\x12\x04\xb2\x05\x16\x17\n\
-    \x97\x01\n\x04\x04\x11\x02\0\x12\x04\xb7\x05\x02\x1b\x1a\x88\x01\x20A\
-    \x20URL\x20locating\x20the\x20endpoint\x20to\x20which\x20messages\x20sho\
-    uld\x20be\x20pushed.\n\x20For\x20example,\x20a\x20Webhook\x20endpoint\
-    \x20might\x20use\x20\"https://example.com/push\".\n\n\r\n\x05\x04\x11\
-    \x02\0\x05\x12\x04\xb7\x05\x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\
-    \xb7\x05\t\x16\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xb7\x05\x19\x1a\n\x82\
-    \x08\n\x04\x04\x11\x02\x01\x12\x04\xce\x05\x02%\x1a\xf3\x07\x20Endpoint\
-    \x20configuration\x20attributes\x20that\x20can\x20be\x20used\x20to\x20co\
-    ntrol\x20different\n\x20aspects\x20of\x20the\x20message\x20delivery.\n\n\
-    \x20The\x20only\x20currently\x20supported\x20attribute\x20is\x20`x-goog-\
-    version`,\x20which\x20you\x20can\n\x20use\x20to\x20change\x20the\x20form\
-    at\x20of\x20the\x20pushed\x20message.\x20This\x20attribute\n\x20indicate\
-    s\x20the\x20version\x20of\x20the\x20data\x20expected\x20by\x20the\x20end\
-    point.\x20This\n\x20controls\x20the\x20shape\x20of\x20the\x20pushed\x20m\
-    essage\x20(i.e.,\x20its\x20fields\x20and\x20metadata).\n\n\x20If\x20not\
-    \x20present\x20during\x20the\x20`CreateSubscription`\x20call,\x20it\x20w\
-    ill\x20default\x20to\n\x20the\x20version\x20of\x20the\x20Pub/Sub\x20API\
-    \x20used\x20to\x20make\x20such\x20call.\x20If\x20not\x20present\x20in\
-    \x20a\n\x20`ModifyPushConfig`\x20call,\x20its\x20value\x20will\x20not\
-    \x20be\x20changed.\x20`GetSubscription`\n\x20calls\x20will\x20always\x20\
-    return\x20a\x20valid\x20version,\x20even\x20if\x20the\x20subscription\
-    \x20was\n\x20created\x20without\x20this\x20attribute.\n\n\x20The\x20only\
-    \x20supported\x20values\x20for\x20the\x20`x-goog-version`\x20attribute\
+    \x0e\x01\x12\x04\xf4\x04\x06\x14\n\r\n\x05\x06\x01\x02\x0e\x02\x12\x04\
+    \xf4\x04\x15*\n\r\n\x05\x06\x01\x02\x0e\x03\x12\x04\xf4\x045J\n\x0f\n\
+    \x05\x06\x01\x02\x0e\x04\x12\x06\xf5\x04\x04\xf7\x04\x06\n\x13\n\t\x06\
+    \x01\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\xf5\x04\x04\xf7\x04\x06\n\r\n\x05\
+    \x06\x01\x02\x0e\x04\x12\x04\xf8\x04\x046\n\x10\n\x08\x06\x01\x02\x0e\
+    \x04\x9b\x08\0\x12\x04\xf8\x04\x046\n\xea\x03\n\x04\x06\x01\x02\x0f\x12\
+    \x06\x82\x05\x02\x87\x05\x03\x1a\xd9\x03\x20Seeks\x20an\x20existing\x20s\
+    ubscription\x20to\x20a\x20point\x20in\x20time\x20or\x20to\x20a\x20given\
+    \x20snapshot,\n\x20whichever\x20is\x20provided\x20in\x20the\x20request.\
+    \x20Snapshots\x20are\x20used\x20in\x20[Seek]\n\x20(https://cloud.google.\
+    com/pubsub/docs/replay-overview)\x20operations,\x20which\n\x20allow\x20y\
+    ou\x20to\x20manage\x20message\x20acknowledgments\x20in\x20bulk.\x20That\
+    \x20is,\x20you\x20can\x20set\n\x20the\x20acknowledgment\x20state\x20of\
+    \x20messages\x20in\x20an\x20existing\x20subscription\x20to\x20the\n\x20s\
+    tate\x20captured\x20by\x20a\x20snapshot.\x20Note\x20that\x20both\x20the\
+    \x20subscription\x20and\x20the\n\x20snapshot\x20must\x20be\x20on\x20the\
+    \x20same\x20topic.\n\n\r\n\x05\x06\x01\x02\x0f\x01\x12\x04\x82\x05\x06\n\
+    \n\r\n\x05\x06\x01\x02\x0f\x02\x12\x04\x82\x05\x0b\x16\n\r\n\x05\x06\x01\
+    \x02\x0f\x03\x12\x04\x82\x05!-\n\x0f\n\x05\x06\x01\x02\x0f\x04\x12\x06\
+    \x83\x05\x04\x86\x05\x06\n\x13\n\t\x06\x01\x02\x0f\x04\xb0\xca\xbc\"\x12\
+    \x06\x83\x05\x04\x86\x05\x06\n\xe4\x01\n\x02\x04\x11\x12\x06\x8d\x05\0\
+    \xb0\x06\x01\x1a\xd5\x01\x20A\x20subscription\x20resource.\x20If\x20none\
+    \x20of\x20`push_config`,\x20`bigquery_config`,\x20or\n\x20`cloud_storage\
+    _config`\x20is\x20set,\x20then\x20the\x20subscriber\x20will\x20pull\x20a\
+    nd\x20ack\x20messages\n\x20using\x20API\x20methods.\x20At\x20most\x20one\
+    \x20of\x20these\x20fields\x20may\x20be\x20set.\n\n\x0b\n\x03\x04\x11\x01\
+    \x12\x04\x8d\x05\x08\x14\n\r\n\x03\x04\x11\x07\x12\x06\x8e\x05\x02\x91\
+    \x05\x04\n\x0f\n\x05\x04\x11\x07\x9d\x08\x12\x06\x8e\x05\x02\x91\x05\x04\
+    \n5\n\x04\x04\x11\x04\0\x12\x06\x94\x05\x02\x9f\x05\x03\x1a%\x20Possible\
+    \x20states\x20for\x20a\x20subscription.\n\n\r\n\x05\x04\x11\x04\0\x01\
+    \x12\x04\x94\x05\x07\x0c\n6\n\x06\x04\x11\x04\0\x02\0\x12\x04\x96\x05\
+    \x04\x1a\x1a&\x20Default\x20value.\x20This\x20value\x20is\x20unused.\n\n\
+    \x0f\n\x07\x04\x11\x04\0\x02\0\x01\x12\x04\x96\x05\x04\x15\n\x0f\n\x07\
+    \x04\x11\x04\0\x02\0\x02\x12\x04\x96\x05\x18\x19\n@\n\x06\x04\x11\x04\0\
+    \x02\x01\x12\x04\x99\x05\x04\x0f\x1a0\x20The\x20subscription\x20can\x20a\
+    ctively\x20receive\x20messages\n\n\x0f\n\x07\x04\x11\x04\0\x02\x01\x01\
+    \x12\x04\x99\x05\x04\n\n\x0f\n\x07\x04\x11\x04\0\x02\x01\x02\x12\x04\x99\
+    \x05\r\x0e\n\xc6\x01\n\x06\x04\x11\x04\0\x02\x02\x12\x04\x9e\x05\x04\x17\
+    \x1a\xb5\x01\x20The\x20subscription\x20cannot\x20receive\x20messages\x20\
+    because\x20of\x20an\x20error\x20with\x20the\n\x20resource\x20to\x20which\
+    \x20it\x20pushes\x20messages.\x20See\x20the\x20more\x20detailed\x20error\
+    \x20state\n\x20in\x20the\x20corresponding\x20configuration.\n\n\x0f\n\
+    \x07\x04\x11\x04\0\x02\x02\x01\x12\x04\x9e\x05\x04\x12\n\x0f\n\x07\x04\
+    \x11\x04\0\x02\x02\x02\x12\x04\x9e\x05\x15\x16\n\xa8\x03\n\x04\x04\x11\
+    \x02\0\x12\x04\xa7\x05\x02;\x1a\x99\x03\x20Required.\x20The\x20name\x20o\
+    f\x20the\x20subscription.\x20It\x20must\x20have\x20the\x20format\n\x20`\
+    \"projects/{project}/subscriptions/{subscription}\"`.\x20`{subscription}\
+    `\x20must\n\x20start\x20with\x20a\x20letter,\x20and\x20contain\x20only\
+    \x20letters\x20(`[A-Za-z]`),\x20numbers\n\x20(`[0-9]`),\x20dashes\x20(`-\
+    `),\x20underscores\x20(`_`),\x20periods\x20(`.`),\x20tildes\x20(`~`),\n\
+    \x20plus\x20(`+`)\x20or\x20percent\x20signs\x20(`%`).\x20It\x20must\x20b\
+    e\x20between\x203\x20and\x20255\x20characters\n\x20in\x20length,\x20and\
+    \x20it\x20must\x20not\x20start\x20with\x20`\"goog\"`.\n\n\r\n\x05\x04\
+    \x11\x02\0\x05\x12\x04\xa7\x05\x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\
+    \x04\xa7\x05\t\r\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xa7\x05\x10\x11\n\r\
+    \n\x05\x04\x11\x02\0\x08\x12\x04\xa7\x05\x12:\n\x10\n\x08\x04\x11\x02\0\
+    \x08\x9c\x08\0\x12\x04\xa7\x05\x139\n\xe8\x01\n\x04\x04\x11\x02\x01\x12\
+    \x06\xac\x05\x02\xaf\x05\x04\x1a\xd7\x01\x20Required.\x20The\x20name\x20\
+    of\x20the\x20topic\x20from\x20which\x20this\x20subscription\x20is\x20rec\
+    eiving\n\x20messages.\x20Format\x20is\x20`projects/{project}/topics/{top\
+    ic}`.\x20The\x20value\x20of\x20this\n\x20field\x20will\x20be\x20`_delete\
+    d-topic_`\x20if\x20the\x20topic\x20has\x20been\x20deleted.\n\n\r\n\x05\
+    \x04\x11\x02\x01\x05\x12\x04\xac\x05\x02\x08\n\r\n\x05\x04\x11\x02\x01\
+    \x01\x12\x04\xac\x05\t\x0e\n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\xac\x05\
+    \x11\x12\n\x0f\n\x05\x04\x11\x02\x01\x08\x12\x06\xac\x05\x13\xaf\x05\x03\
+    \n\x10\n\x08\x04\x11\x02\x01\x08\x9c\x08\0\x12\x04\xad\x05\x04*\n\x0f\n\
+    \x07\x04\x11\x02\x01\x08\x9f\x08\x12\x04\xae\x05\x04M\ne\n\x04\x04\x11\
+    \x02\x02\x12\x04\xb3\x05\x02\x1d\x1aW\x20If\x20push\x20delivery\x20is\
+    \x20used\x20with\x20this\x20subscription,\x20this\x20field\x20is\n\x20us\
+    ed\x20to\x20configure\x20it.\n\n\r\n\x05\x04\x11\x02\x02\x06\x12\x04\xb3\
+    \x05\x02\x0c\n\r\n\x05\x04\x11\x02\x02\x01\x12\x04\xb3\x05\r\x18\n\r\n\
+    \x05\x04\x11\x02\x02\x03\x12\x04\xb3\x05\x1b\x1c\nl\n\x04\x04\x11\x02\
+    \x03\x12\x04\xb7\x05\x02&\x1a^\x20If\x20delivery\x20to\x20BigQuery\x20is\
+    \x20used\x20with\x20this\x20subscription,\x20this\x20field\x20is\n\x20us\
+    ed\x20to\x20configure\x20it.\n\n\r\n\x05\x04\x11\x02\x03\x06\x12\x04\xb7\
+    \x05\x02\x10\n\r\n\x05\x04\x11\x02\x03\x01\x12\x04\xb7\x05\x11\x20\n\r\n\
+    \x05\x04\x11\x02\x03\x03\x12\x04\xb7\x05#%\nx\n\x04\x04\x11\x02\x04\x12\
+    \x04\xbb\x05\x02/\x1aj\x20If\x20delivery\x20to\x20Google\x20Cloud\x20Sto\
+    rage\x20is\x20used\x20with\x20this\x20subscription,\x20this\n\x20field\
+    \x20is\x20used\x20to\x20configure\x20it.\n\n\r\n\x05\x04\x11\x02\x04\x06\
+    \x12\x04\xbb\x05\x02\x14\n\r\n\x05\x04\x11\x02\x04\x01\x12\x04\xbb\x05\
+    \x15)\n\r\n\x05\x04\x11\x02\x04\x03\x12\x04\xbb\x05,.\n\xc2\x08\n\x04\
+    \x04\x11\x02\x05\x12\x04\xd1\x05\x02!\x1a\xb3\x08\x20The\x20approximate\
+    \x20amount\x20of\x20time\x20(on\x20a\x20best-effort\x20basis)\x20Pub/Sub\
+    \x20waits\x20for\n\x20the\x20subscriber\x20to\x20acknowledge\x20receipt\
+    \x20before\x20resending\x20the\x20message.\x20In\x20the\n\x20interval\
+    \x20after\x20the\x20message\x20is\x20delivered\x20and\x20before\x20it\
+    \x20is\x20acknowledged,\x20it\n\x20is\x20considered\x20to\x20be\x20_outs\
+    tanding_.\x20During\x20that\x20time\x20period,\x20the\n\x20message\x20wi\
+    ll\x20not\x20be\x20redelivered\x20(on\x20a\x20best-effort\x20basis).\n\n\
+    \x20For\x20pull\x20subscriptions,\x20this\x20value\x20is\x20used\x20as\
+    \x20the\x20initial\x20value\x20for\x20the\x20ack\n\x20deadline.\x20To\
+    \x20override\x20this\x20value\x20for\x20a\x20given\x20message,\x20call\n\
+    \x20`ModifyAckDeadline`\x20with\x20the\x20corresponding\x20`ack_id`\x20i\
+    f\x20using\n\x20non-streaming\x20pull\x20or\x20send\x20the\x20`ack_id`\
+    \x20in\x20a\n\x20`StreamingModifyAckDeadlineRequest`\x20if\x20using\x20s\
+    treaming\x20pull.\n\x20The\x20minimum\x20custom\x20deadline\x20you\x20ca\
+    n\x20specify\x20is\x2010\x20seconds.\n\x20The\x20maximum\x20custom\x20de\
+    adline\x20you\x20can\x20specify\x20is\x20600\x20seconds\x20(10\x20minute\
+    s).\n\x20If\x20this\x20parameter\x20is\x200,\x20a\x20default\x20value\
+    \x20of\x2010\x20seconds\x20is\x20used.\n\n\x20For\x20push\x20delivery,\
+    \x20this\x20value\x20is\x20also\x20used\x20to\x20set\x20the\x20request\
+    \x20timeout\x20for\n\x20the\x20call\x20to\x20the\x20push\x20endpoint.\n\
+    \n\x20If\x20the\x20subscriber\x20never\x20acknowledges\x20the\x20message\
+    ,\x20the\x20Pub/Sub\n\x20system\x20will\x20eventually\x20redeliver\x20th\
+    e\x20message.\n\n\r\n\x05\x04\x11\x02\x05\x05\x12\x04\xd1\x05\x02\x07\n\
+    \r\n\x05\x04\x11\x02\x05\x01\x12\x04\xd1\x05\x08\x1c\n\r\n\x05\x04\x11\
+    \x02\x05\x03\x12\x04\xd1\x05\x1f\x20\n\xad\x03\n\x04\x04\x11\x02\x06\x12\
+    \x04\xd9\x05\x02!\x1a\x9e\x03\x20Indicates\x20whether\x20to\x20retain\
+    \x20acknowledged\x20messages.\x20If\x20true,\x20then\n\x20messages\x20ar\
+    e\x20not\x20expunged\x20from\x20the\x20subscription's\x20backlog,\x20eve\
+    n\x20if\x20they\x20are\n\x20acknowledged,\x20until\x20they\x20fall\x20ou\
+    t\x20of\x20the\x20`message_retention_duration`\n\x20window.\x20This\x20m\
+    ust\x20be\x20true\x20if\x20you\x20would\x20like\x20to\x20[`Seek`\x20to\
+    \x20a\x20timestamp]\n\x20(https://cloud.google.com/pubsub/docs/replay-ov\
+    erview#seek_to_a_time)\x20in\n\x20the\x20past\x20to\x20replay\x20previou\
+    sly-acknowledged\x20messages.\n\n\r\n\x05\x04\x11\x02\x06\x05\x12\x04\
+    \xd9\x05\x02\x06\n\r\n\x05\x04\x11\x02\x06\x01\x12\x04\xd9\x05\x07\x1c\n\
+    \r\n\x05\x04\x11\x02\x06\x03\x12\x04\xd9\x05\x1f\x20\n\xf4\x02\n\x04\x04\
+    \x11\x02\x07\x12\x04\xe1\x05\x02:\x1a\xe5\x02\x20How\x20long\x20to\x20re\
+    tain\x20unacknowledged\x20messages\x20in\x20the\x20subscription's\x20bac\
+    klog,\n\x20from\x20the\x20moment\x20a\x20message\x20is\x20published.\n\
+    \x20If\x20`retain_acked_messages`\x20is\x20true,\x20then\x20this\x20also\
+    \x20configures\x20the\x20retention\n\x20of\x20acknowledged\x20messages,\
+    \x20and\x20thus\x20configures\x20how\x20far\x20back\x20in\x20time\x20a\
+    \x20`Seek`\n\x20can\x20be\x20done.\x20Defaults\x20to\x207\x20days.\x20Ca\
+    nnot\x20be\x20more\x20than\x207\x20days\x20or\x20less\x20than\x2010\n\
+    \x20minutes.\n\n\r\n\x05\x04\x11\x02\x07\x06\x12\x04\xe1\x05\x02\x1a\n\r\
+    \n\x05\x04\x11\x02\x07\x01\x12\x04\xe1\x05\x1b5\n\r\n\x05\x04\x11\x02\
+    \x07\x03\x12\x04\xe1\x0589\na\n\x04\x04\x11\x02\x08\x12\x04\xe5\x05\x02!\
+    \x1aS\x20See\x20[Creating\x20and\x20managing\n\x20labels](https://cloud.\
+    google.com/pubsub/docs/labels).\n\n\r\n\x05\x04\x11\x02\x08\x06\x12\x04\
+    \xe5\x05\x02\x15\n\r\n\x05\x04\x11\x02\x08\x01\x12\x04\xe5\x05\x16\x1c\n\
+    \r\n\x05\x04\x11\x02\x08\x03\x12\x04\xe5\x05\x1f\x20\n\xf2\x01\n\x04\x04\
+    \x11\x02\t\x12\x04\xeb\x05\x02$\x1a\xe3\x01\x20If\x20true,\x20messages\
+    \x20published\x20with\x20the\x20same\x20`ordering_key`\x20in\x20`PubsubM\
+    essage`\n\x20will\x20be\x20delivered\x20to\x20the\x20subscribers\x20in\
+    \x20the\x20order\x20in\x20which\x20they\n\x20are\x20received\x20by\x20th\
+    e\x20Pub/Sub\x20system.\x20Otherwise,\x20they\x20may\x20be\x20delivered\
+    \x20in\n\x20any\x20order.\n\n\r\n\x05\x04\x11\x02\t\x05\x12\x04\xeb\x05\
+    \x02\x06\n\r\n\x05\x04\x11\x02\t\x01\x12\x04\xeb\x05\x07\x1e\n\r\n\x05\
+    \x04\x11\x02\t\x03\x12\x04\xeb\x05!#\n\x91\x04\n\x04\x04\x11\x02\n\x12\
+    \x04\xf4\x05\x02*\x1a\x82\x04\x20A\x20policy\x20that\x20specifies\x20the\
+    \x20conditions\x20for\x20this\x20subscription's\x20expiration.\n\x20A\
+    \x20subscription\x20is\x20considered\x20active\x20as\x20long\x20as\x20an\
+    y\x20connected\x20subscriber\x20is\n\x20successfully\x20consuming\x20mes\
+    sages\x20from\x20the\x20subscription\x20or\x20is\x20issuing\n\x20operati\
+    ons\x20on\x20the\x20subscription.\x20If\x20`expiration_policy`\x20is\x20\
+    not\x20set,\x20a\n\x20*default\x20policy*\x20with\x20`ttl`\x20of\x2031\
+    \x20days\x20will\x20be\x20used.\x20The\x20minimum\x20allowed\n\x20value\
+    \x20for\x20`expiration_policy.ttl`\x20is\x201\x20day.\x20If\x20`expirati\
+    on_policy`\x20is\x20set,\n\x20but\x20`expiration_policy.ttl`\x20is\x20no\
+    t\x20set,\x20the\x20subscription\x20never\x20expires.\n\n\r\n\x05\x04\
+    \x11\x02\n\x06\x12\x04\xf4\x05\x02\x12\n\r\n\x05\x04\x11\x02\n\x01\x12\
+    \x04\xf4\x05\x13$\n\r\n\x05\x04\x11\x02\n\x03\x12\x04\xf4\x05')\n\xa2\
+    \x02\n\x04\x04\x11\x02\x0b\x12\x04\xfb\x05\x02\x15\x1a\x93\x02\x20An\x20\
+    expression\x20written\x20in\x20the\x20Pub/Sub\x20[filter\n\x20language](\
+    https://cloud.google.com/pubsub/docs/filtering).\x20If\x20non-empty,\n\
+    \x20then\x20only\x20`PubsubMessage`s\x20whose\x20`attributes`\x20field\
+    \x20matches\x20the\x20filter\x20are\n\x20delivered\x20on\x20this\x20subs\
+    cription.\x20If\x20empty,\x20then\x20no\x20messages\x20are\x20filtered\n\
+    \x20out.\n\n\r\n\x05\x04\x11\x02\x0b\x05\x12\x04\xfb\x05\x02\x08\n\r\n\
+    \x05\x04\x11\x02\x0b\x01\x12\x04\xfb\x05\t\x0f\n\r\n\x05\x04\x11\x02\x0b\
+    \x03\x12\x04\xfb\x05\x12\x14\n\x90\x03\n\x04\x04\x11\x02\x0c\x12\x04\x85\
+    \x06\x02+\x1a\x81\x03\x20A\x20policy\x20that\x20specifies\x20the\x20cond\
+    itions\x20for\x20dead\x20lettering\x20messages\x20in\n\x20this\x20subscr\
+    iption.\x20If\x20dead_letter_policy\x20is\x20not\x20set,\x20dead\x20lett\
+    ering\n\x20is\x20disabled.\n\n\x20The\x20Cloud\x20Pub/Sub\x20service\x20\
+    account\x20associated\x20with\x20this\x20subscriptions's\n\x20parent\x20\
+    project\x20(i.e.,\n\x20service-{project_number}@gcp-sa-pubsub.iam.gservi\
+    ceaccount.com)\x20must\x20have\n\x20permission\x20to\x20Acknowledge()\
+    \x20messages\x20on\x20this\x20subscription.\n\n\r\n\x05\x04\x11\x02\x0c\
+    \x06\x12\x04\x85\x06\x02\x12\n\r\n\x05\x04\x11\x02\x0c\x01\x12\x04\x85\
+    \x06\x13%\n\r\n\x05\x04\x11\x02\x0c\x03\x12\x04\x85\x06(*\n\xe5\x02\n\
+    \x04\x04\x11\x02\r\x12\x04\x8e\x06\x02\x20\x1a\xd6\x02\x20A\x20policy\
+    \x20that\x20specifies\x20how\x20Pub/Sub\x20retries\x20message\x20deliver\
+    y\x20for\x20this\n\x20subscription.\n\n\x20If\x20not\x20set,\x20the\x20d\
+    efault\x20retry\x20policy\x20is\x20applied.\x20This\x20generally\x20impl\
+    ies\n\x20that\x20messages\x20will\x20be\x20retried\x20as\x20soon\x20as\
+    \x20possible\x20for\x20healthy\x20subscribers.\n\x20RetryPolicy\x20will\
+    \x20be\x20triggered\x20on\x20NACKs\x20or\x20acknowledgement\x20deadline\
+    \n\x20exceeded\x20events\x20for\x20a\x20given\x20message.\n\n\r\n\x05\
+    \x04\x11\x02\r\x06\x12\x04\x8e\x06\x02\r\n\r\n\x05\x04\x11\x02\r\x01\x12\
+    \x04\x8e\x06\x0e\x1a\n\r\n\x05\x04\x11\x02\r\x03\x12\x04\x8e\x06\x1d\x1f\
+    \n\xca\x02\n\x04\x04\x11\x02\x0e\x12\x04\x95\x06\x02\x15\x1a\xbb\x02\x20\
+    Indicates\x20whether\x20the\x20subscription\x20is\x20detached\x20from\
+    \x20its\x20topic.\x20Detached\n\x20subscriptions\x20don't\x20receive\x20\
+    messages\x20from\x20their\x20topic\x20and\x20don't\x20retain\x20any\n\
+    \x20backlog.\x20`Pull`\x20and\x20`StreamingPull`\x20requests\x20will\x20\
+    return\n\x20FAILED_PRECONDITION.\x20If\x20the\x20subscription\x20is\x20a\
+    \x20push\x20subscription,\x20pushes\x20to\n\x20the\x20endpoint\x20will\
+    \x20not\x20be\x20made.\n\n\r\n\x05\x04\x11\x02\x0e\x05\x12\x04\x95\x06\
+    \x02\x06\n\r\n\x05\x04\x11\x02\x0e\x01\x12\x04\x95\x06\x07\x0f\n\r\n\x05\
+    \x04\x11\x02\x0e\x03\x12\x04\x95\x06\x12\x14\n\xe7\x04\n\x04\x04\x11\x02\
+    \x0f\x12\x04\xa2\x06\x02)\x1a\xd8\x04\x20If\x20true,\x20Pub/Sub\x20provi\
+    des\x20the\x20following\x20guarantees\x20for\x20the\x20delivery\x20of\n\
+    \x20a\x20message\x20with\x20a\x20given\x20value\x20of\x20`message_id`\
+    \x20on\x20this\x20subscription:\n\n\x20*\x20The\x20message\x20sent\x20to\
+    \x20a\x20subscriber\x20is\x20guaranteed\x20not\x20to\x20be\x20resent\n\
+    \x20before\x20the\x20message's\x20acknowledgement\x20deadline\x20expires\
+    .\n\x20*\x20An\x20acknowledged\x20message\x20will\x20not\x20be\x20resent\
+    \x20to\x20a\x20subscriber.\n\n\x20Note\x20that\x20subscribers\x20may\x20\
+    still\x20receive\x20multiple\x20copies\x20of\x20a\x20message\n\x20when\
+    \x20`enable_exactly_once_delivery`\x20is\x20true\x20if\x20the\x20message\
+    \x20was\x20published\n\x20multiple\x20times\x20by\x20a\x20publisher\x20c\
+    lient.\x20These\x20copies\x20are\x20\x20considered\x20distinct\n\x20by\
+    \x20Pub/Sub\x20and\x20have\x20distinct\x20`message_id`\x20values.\n\n\r\
+    \n\x05\x04\x11\x02\x0f\x05\x12\x04\xa2\x06\x02\x06\n\r\n\x05\x04\x11\x02\
+    \x0f\x01\x12\x04\xa2\x06\x07#\n\r\n\x05\x04\x11\x02\x0f\x03\x12\x04\xa2\
+    \x06&(\n\xc7\x03\n\x04\x04\x11\x02\x10\x12\x06\xaa\x06\x02\xab\x062\x1a\
+    \xb6\x03\x20Output\x20only.\x20Indicates\x20the\x20minimum\x20duration\
+    \x20for\x20which\x20a\x20message\x20is\x20retained\n\x20after\x20it\x20i\
+    s\x20published\x20to\x20the\x20subscription's\x20topic.\x20If\x20this\
+    \x20field\x20is\x20set,\n\x20messages\x20published\x20to\x20the\x20subsc\
+    ription's\x20topic\x20in\x20the\x20last\n\x20`topic_message_retention_du\
+    ration`\x20are\x20always\x20available\x20to\x20subscribers.\x20See\n\x20\
+    the\x20`message_retention_duration`\x20field\x20in\x20`Topic`.\x20This\
+    \x20field\x20is\x20set\x20only\n\x20in\x20responses\x20from\x20the\x20se\
+    rver;\x20it\x20is\x20ignored\x20if\x20it\x20is\x20set\x20in\x20any\x20re\
+    quests.\n\n\r\n\x05\x04\x11\x02\x10\x06\x12\x04\xaa\x06\x02\x1a\n\r\n\
+    \x05\x04\x11\x02\x10\x01\x12\x04\xaa\x06\x1b;\n\r\n\x05\x04\x11\x02\x10\
+    \x03\x12\x04\xaa\x06>@\n\r\n\x05\x04\x11\x02\x10\x08\x12\x04\xab\x06\x06\
+    1\n\x10\n\x08\x04\x11\x02\x10\x08\x9c\x08\0\x12\x04\xab\x06\x070\ns\n\
+    \x04\x04\x11\x02\x11\x12\x04\xaf\x06\x02?\x1ae\x20Output\x20only.\x20An\
+    \x20output-only\x20field\x20indicating\x20whether\x20or\x20not\x20the\n\
+    \x20subscription\x20can\x20receive\x20messages.\n\n\r\n\x05\x04\x11\x02\
+    \x11\x06\x12\x04\xaf\x06\x02\x07\n\r\n\x05\x04\x11\x02\x11\x01\x12\x04\
+    \xaf\x06\x08\r\n\r\n\x05\x04\x11\x02\x11\x03\x12\x04\xaf\x06\x10\x12\n\r\
+    \n\x05\x04\x11\x02\x11\x08\x12\x04\xaf\x06\x13>\n\x10\n\x08\x04\x11\x02\
+    \x11\x08\x9c\x08\0\x12\x04\xaf\x06\x14=\n\x8d\x04\n\x02\x04\x12\x12\x06\
+    \xbd\x06\0\xc5\x06\x01\x1a\xfe\x03\x20A\x20policy\x20that\x20specifies\
+    \x20how\x20Cloud\x20Pub/Sub\x20retries\x20message\x20delivery.\n\n\x20Re\
+    try\x20delay\x20will\x20be\x20exponential\x20based\x20on\x20provided\x20\
+    minimum\x20and\x20maximum\n\x20backoffs.\x20https://en.wikipedia.org/wik\
+    i/Exponential_backoff.\n\n\x20RetryPolicy\x20will\x20be\x20triggered\x20\
+    on\x20NACKs\x20or\x20acknowledgement\x20deadline\x20exceeded\n\x20events\
+    \x20for\x20a\x20given\x20message.\n\n\x20Retry\x20Policy\x20is\x20implem\
+    ented\x20on\x20a\x20best\x20effort\x20basis.\x20At\x20times,\x20the\x20d\
+    elay\n\x20between\x20consecutive\x20deliveries\x20may\x20not\x20match\
+    \x20the\x20configuration.\x20That\x20is,\n\x20delay\x20can\x20be\x20more\
+    \x20or\x20less\x20than\x20configured\x20backoff.\n\n\x0b\n\x03\x04\x12\
+    \x01\x12\x04\xbd\x06\x08\x13\n\x99\x01\n\x04\x04\x12\x02\0\x12\x04\xc0\
+    \x06\x02/\x1a\x8a\x01\x20The\x20minimum\x20delay\x20between\x20consecuti\
+    ve\x20deliveries\x20of\x20a\x20given\x20message.\n\x20Value\x20should\
+    \x20be\x20between\x200\x20and\x20600\x20seconds.\x20Defaults\x20to\x2010\
+    \x20seconds.\n\n\r\n\x05\x04\x12\x02\0\x06\x12\x04\xc0\x06\x02\x1a\n\r\n\
+    \x05\x04\x12\x02\0\x01\x12\x04\xc0\x06\x1b*\n\r\n\x05\x04\x12\x02\0\x03\
+    \x12\x04\xc0\x06-.\n\x9a\x01\n\x04\x04\x12\x02\x01\x12\x04\xc4\x06\x02/\
+    \x1a\x8b\x01\x20The\x20maximum\x20delay\x20between\x20consecutive\x20del\
+    iveries\x20of\x20a\x20given\x20message.\n\x20Value\x20should\x20be\x20be\
+    tween\x200\x20and\x20600\x20seconds.\x20Defaults\x20to\x20600\x20seconds\
+    .\n\n\r\n\x05\x04\x12\x02\x01\x06\x12\x04\xc4\x06\x02\x1a\n\r\n\x05\x04\
+    \x12\x02\x01\x01\x12\x04\xc4\x06\x1b*\n\r\n\x05\x04\x12\x02\x01\x03\x12\
+    \x04\xc4\x06-.\n\xf9\x01\n\x02\x04\x13\x12\x06\xcc\x06\0\xe6\x06\x01\x1a\
+    \xea\x01\x20Dead\x20lettering\x20is\x20done\x20on\x20a\x20best\x20effort\
+    \x20basis.\x20The\x20same\x20message\x20might\x20be\n\x20dead\x20lettere\
+    d\x20multiple\x20times.\n\n\x20If\x20validation\x20on\x20any\x20of\x20th\
+    e\x20fields\x20fails\x20at\x20subscription\x20creation/updation,\n\x20th\
+    e\x20create/update\x20subscription\x20request\x20will\x20fail.\n\n\x0b\n\
+    \x03\x04\x13\x01\x12\x04\xcc\x06\x08\x18\n\xa6\x04\n\x04\x04\x13\x02\0\
+    \x12\x04\xd6\x06\x02\x1f\x1a\x97\x04\x20The\x20name\x20of\x20the\x20topi\
+    c\x20to\x20which\x20dead\x20letter\x20messages\x20should\x20be\x20publis\
+    hed.\n\x20Format\x20is\x20`projects/{project}/topics/{topic}`.The\x20Clo\
+    ud\x20Pub/Sub\x20service\n\x20account\x20associated\x20with\x20the\x20en\
+    closing\x20subscription's\x20parent\x20project\x20(i.e.,\n\x20service-{p\
+    roject_number}@gcp-sa-pubsub.iam.gserviceaccount.com)\x20must\x20have\n\
+    \x20permission\x20to\x20Publish()\x20to\x20this\x20topic.\n\n\x20The\x20\
+    operation\x20will\x20fail\x20if\x20the\x20topic\x20does\x20not\x20exist.\
+    \n\x20Users\x20should\x20ensure\x20that\x20there\x20is\x20a\x20subscript\
+    ion\x20attached\x20to\x20this\x20topic\n\x20since\x20messages\x20publish\
+    ed\x20to\x20a\x20topic\x20with\x20no\x20subscriptions\x20are\x20lost.\n\
+    \n\r\n\x05\x04\x13\x02\0\x05\x12\x04\xd6\x06\x02\x08\n\r\n\x05\x04\x13\
+    \x02\0\x01\x12\x04\xd6\x06\t\x1a\n\r\n\x05\x04\x13\x02\0\x03\x12\x04\xd6\
+    \x06\x1d\x1e\n\x84\x04\n\x04\x04\x13\x02\x01\x12\x04\xe5\x06\x02\"\x1a\
+    \xf5\x03\x20The\x20maximum\x20number\x20of\x20delivery\x20attempts\x20fo\
+    r\x20any\x20message.\x20The\x20value\x20must\x20be\n\x20between\x205\x20\
+    and\x20100.\n\n\x20The\x20number\x20of\x20delivery\x20attempts\x20is\x20\
+    defined\x20as\x201\x20+\x20(the\x20sum\x20of\x20number\x20of\n\x20NACKs\
+    \x20and\x20number\x20of\x20times\x20the\x20acknowledgement\x20deadline\
+    \x20has\x20been\x20exceeded\n\x20for\x20the\x20message).\n\n\x20A\x20NAC\
+    K\x20is\x20any\x20call\x20to\x20ModifyAckDeadline\x20with\x20a\x200\x20d\
+    eadline.\x20Note\x20that\n\x20client\x20libraries\x20may\x20automaticall\
+    y\x20extend\x20ack_deadlines.\n\n\x20This\x20field\x20will\x20be\x20hono\
+    red\x20on\x20a\x20best\x20effort\x20basis.\n\n\x20If\x20this\x20paramete\
+    r\x20is\x200,\x20a\x20default\x20value\x20of\x205\x20is\x20used.\n\n\r\n\
+    \x05\x04\x13\x02\x01\x05\x12\x04\xe5\x06\x02\x07\n\r\n\x05\x04\x13\x02\
+    \x01\x01\x12\x04\xe5\x06\x08\x1d\n\r\n\x05\x04\x13\x02\x01\x03\x12\x04\
+    \xe5\x06\x20!\nt\n\x02\x04\x14\x12\x06\xea\x06\0\xf2\x06\x01\x1af\x20A\
+    \x20policy\x20that\x20specifies\x20the\x20conditions\x20for\x20resource\
+    \x20expiration\x20(i.e.,\n\x20automatic\x20resource\x20deletion).\n\n\
+    \x0b\n\x03\x04\x14\x01\x12\x04\xea\x06\x08\x18\n\x89\x03\n\x04\x04\x14\
+    \x02\0\x12\x04\xf1\x06\x02#\x1a\xfa\x02\x20Specifies\x20the\x20\"time-to\
+    -live\"\x20duration\x20for\x20an\x20associated\x20resource.\x20The\n\x20\
+    resource\x20expires\x20if\x20it\x20is\x20not\x20active\x20for\x20a\x20pe\
+    riod\x20of\x20`ttl`.\x20The\x20definition\n\x20of\x20\"activity\"\x20dep\
+    ends\x20on\x20the\x20type\x20of\x20the\x20associated\x20resource.\x20The\
+    \x20minimum\n\x20and\x20maximum\x20allowed\x20values\x20for\x20`ttl`\x20\
+    depend\x20on\x20the\x20type\x20of\x20the\x20associated\n\x20resource,\
+    \x20as\x20well.\x20If\x20`ttl`\x20is\x20not\x20set,\x20the\x20associated\
+    \x20resource\x20never\n\x20expires.\n\n\r\n\x05\x04\x14\x02\0\x06\x12\
+    \x04\xf1\x06\x02\x1a\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\xf1\x06\x1b\x1e\
+    \n\r\n\x05\x04\x14\x02\0\x03\x12\x04\xf1\x06!\"\n;\n\x02\x04\x15\x12\x06\
+    \xf5\x06\0\xc8\x07\x01\x1a-\x20Configuration\x20for\x20a\x20push\x20deli\
+    very\x20endpoint.\n\n\x0b\n\x03\x04\x15\x01\x12\x04\xf5\x06\x08\x12\n\
+    \x9a\x01\n\x04\x04\x15\x03\0\x12\x06\xf9\x06\x02\x88\x07\x03\x1a\x89\x01\
+    \x20Contains\x20information\x20needed\x20for\x20generating\x20an\n\x20[O\
+    penID\x20Connect\n\x20token](https://developers.google.com/identity/prot\
+    ocols/OpenIDConnect).\n\n\r\n\x05\x04\x15\x03\0\x01\x12\x04\xf9\x06\n\
+    \x13\n\xfe\x01\n\x06\x04\x15\x03\0\x02\0\x12\x04\xff\x06\x04%\x1a\xed\
+    \x01\x20[Service\x20account\n\x20email](https://cloud.google.com/iam/doc\
+    s/service-accounts)\n\x20used\x20for\x20generating\x20the\x20OIDC\x20tok\
+    en.\x20For\x20more\x20information\n\x20on\x20setting\x20up\x20authentica\
+    tion,\x20see\n\x20[Push\x20subscriptions](https://cloud.google.com/pubsu\
+    b/docs/push).\n\n\x0f\n\x07\x04\x15\x03\0\x02\0\x05\x12\x04\xff\x06\x04\
+    \n\n\x0f\n\x07\x04\x15\x03\0\x02\0\x01\x12\x04\xff\x06\x0b\x20\n\x0f\n\
+    \x07\x04\x15\x03\0\x02\0\x03\x12\x04\xff\x06#$\n\xb0\x03\n\x06\x04\x15\
+    \x03\0\x02\x01\x12\x04\x87\x07\x04\x18\x1a\x9f\x03\x20Audience\x20to\x20\
+    be\x20used\x20when\x20generating\x20OIDC\x20token.\x20The\x20audience\
+    \x20claim\n\x20identifies\x20the\x20recipients\x20that\x20the\x20JWT\x20\
+    is\x20intended\x20for.\x20The\x20audience\n\x20value\x20is\x20a\x20singl\
+    e\x20case-sensitive\x20string.\x20Having\x20multiple\x20values\x20(array\
+    )\n\x20for\x20the\x20audience\x20field\x20is\x20not\x20supported.\x20Mor\
+    e\x20info\x20about\x20the\x20OIDC\x20JWT\n\x20token\x20audience\x20here:\
+    \x20https://tools.ietf.org/html/rfc7519#section-4.1.3\n\x20Note:\x20if\
+    \x20not\x20specified,\x20the\x20Push\x20endpoint\x20URL\x20will\x20be\
+    \x20used.\n\n\x0f\n\x07\x04\x15\x03\0\x02\x01\x05\x12\x04\x87\x07\x04\n\
+    \n\x0f\n\x07\x04\x15\x03\0\x02\x01\x01\x12\x04\x87\x07\x0b\x13\n\x0f\n\
+    \x07\x04\x15\x03\0\x02\x01\x03\x12\x04\x87\x07\x16\x17\n\xc5\x01\n\x04\
+    \x04\x15\x03\x01\x12\x04\x8d\x07\x02\x1a\x1a\xb6\x01\x20The\x20payload\
+    \x20to\x20the\x20push\x20endpoint\x20is\x20in\x20the\x20form\x20of\x20th\
+    e\x20JSON\x20representation\n\x20of\x20a\x20PubsubMessage\n\x20(https://\
+    cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessag\
+    e).\n\n\r\n\x05\x04\x15\x03\x01\x01\x12\x04\x8d\x07\n\x17\nF\n\x04\x04\
+    \x15\x03\x02\x12\x06\x90\x07\x02\x95\x07\x03\x1a6\x20Sets\x20the\x20`dat\
+    a`\x20field\x20as\x20the\x20HTTP\x20body\x20for\x20delivery.\n\n\r\n\x05\
+    \x04\x15\x03\x02\x01\x12\x04\x90\x07\n\x13\n\xd3\x01\n\x06\x04\x15\x03\
+    \x02\x02\0\x12\x04\x94\x07\x04\x1c\x1a\xc2\x01\x20When\x20true,\x20write\
+    s\x20the\x20Pub/Sub\x20message\x20metadata\x20to\n\x20`x-goog-pubsub-<KE\
+    Y>:<VAL>`\x20headers\x20of\x20the\x20HTTP\x20request.\x20Writes\x20the\n\
+    \x20Pub/Sub\x20message\x20attributes\x20to\x20`<KEY>:<VAL>`\x20headers\
+    \x20of\x20the\x20HTTP\x20request.\n\n\x0f\n\x07\x04\x15\x03\x02\x02\0\
+    \x05\x12\x04\x94\x07\x04\x08\n\x0f\n\x07\x04\x15\x03\x02\x02\0\x01\x12\
+    \x04\x94\x07\t\x17\n\x0f\n\x07\x04\x15\x03\x02\x02\0\x03\x12\x04\x94\x07\
+    \x1a\x1b\n\x97\x01\n\x04\x04\x15\x02\0\x12\x04\x99\x07\x02\x1b\x1a\x88\
+    \x01\x20A\x20URL\x20locating\x20the\x20endpoint\x20to\x20which\x20messag\
+    es\x20should\x20be\x20pushed.\n\x20For\x20example,\x20a\x20Webhook\x20en\
+    dpoint\x20might\x20use\x20`https://example.com/push`.\n\n\r\n\x05\x04\
+    \x15\x02\0\x05\x12\x04\x99\x07\x02\x08\n\r\n\x05\x04\x15\x02\0\x01\x12\
+    \x04\x99\x07\t\x16\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\x99\x07\x19\x1a\n\
+    \xeb\x07\n\x04\x04\x15\x02\x01\x12\x04\xb0\x07\x02%\x1a\xdc\x07\x20Endpo\
+    int\x20configuration\x20attributes\x20that\x20can\x20be\x20used\x20to\
+    \x20control\x20different\n\x20aspects\x20of\x20the\x20message\x20deliver\
+    y.\n\n\x20The\x20only\x20currently\x20supported\x20attribute\x20is\x20`x\
+    -goog-version`,\x20which\x20you\x20can\n\x20use\x20to\x20change\x20the\
+    \x20format\x20of\x20the\x20pushed\x20message.\x20This\x20attribute\n\x20\
+    indicates\x20the\x20version\x20of\x20the\x20data\x20expected\x20by\x20th\
+    e\x20endpoint.\x20This\n\x20controls\x20the\x20shape\x20of\x20the\x20pus\
+    hed\x20message\x20(i.e.,\x20its\x20fields\x20and\x20metadata).\n\n\x20If\
+    \x20not\x20present\x20during\x20the\x20`CreateSubscription`\x20call,\x20\
+    it\x20will\x20default\x20to\n\x20the\x20version\x20of\x20the\x20Pub/Sub\
+    \x20API\x20used\x20to\x20make\x20such\x20call.\x20If\x20not\x20present\
+    \x20in\x20a\n\x20`ModifyPushConfig`\x20call,\x20its\x20value\x20will\x20\
+    not\x20be\x20changed.\x20`GetSubscription`\n\x20calls\x20will\x20always\
+    \x20return\x20a\x20valid\x20version,\x20even\x20if\x20the\x20subscriptio\
+    n\x20was\n\x20created\x20without\x20this\x20attribute.\n\n\x20The\x20onl\
+    y\x20supported\x20values\x20for\x20the\x20`x-goog-version`\x20attribute\
     \x20are:\n\n\x20*\x20`v1beta1`:\x20uses\x20the\x20push\x20format\x20defi\
     ned\x20in\x20the\x20v1beta1\x20Pub/Sub\x20API.\n\x20*\x20`v1`\x20or\x20`\
     v1beta2`:\x20uses\x20the\x20push\x20format\x20defined\x20in\x20the\x20v1\
-    \x20Pub/Sub\x20API.\n\n\x20For\x20example:\n\x20<pre><code>attributes\
-    \x20{\x20\"x-goog-version\":\x20\"v1\"\x20}\x20</code></pre>\n\n\r\n\x05\
-    \x04\x11\x02\x01\x06\x12\x04\xce\x05\x02\x15\n\r\n\x05\x04\x11\x02\x01\
-    \x01\x12\x04\xce\x05\x16\x20\n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\xce\
-    \x05#$\n\xca\x02\n\x04\x04\x11\x08\0\x12\x06\xd5\x05\x02\xd9\x05\x03\x1a\
-    \xb9\x02\x20An\x20authentication\x20method\x20used\x20by\x20push\x20endp\
-    oints\x20to\x20verify\x20the\x20source\x20of\n\x20push\x20requests.\x20T\
-    his\x20can\x20be\x20used\x20with\x20push\x20endpoints\x20that\x20are\x20\
-    private\x20by\n\x20default\x20to\x20allow\x20requests\x20only\x20from\
-    \x20the\x20Cloud\x20Pub/Sub\x20system,\x20for\x20example.\n\x20This\x20f\
-    ield\x20is\x20optional\x20and\x20should\x20be\x20set\x20only\x20by\x20us\
-    ers\x20interested\x20in\n\x20authenticated\x20push.\n\n\r\n\x05\x04\x11\
-    \x08\0\x01\x12\x04\xd5\x05\x08\x1d\n\x9d\x01\n\x04\x04\x11\x02\x02\x12\
-    \x04\xd8\x05\x04\x1d\x1a\x8e\x01\x20If\x20specified,\x20Pub/Sub\x20will\
-    \x20generate\x20and\x20attach\x20an\x20OIDC\x20JWT\x20token\x20as\x20an\
-    \n\x20`Authorization`\x20header\x20in\x20the\x20HTTP\x20request\x20for\
-    \x20every\x20pushed\x20message.\n\n\r\n\x05\x04\x11\x02\x02\x06\x12\x04\
-    \xd8\x05\x04\r\n\r\n\x05\x04\x11\x02\x02\x01\x12\x04\xd8\x05\x0e\x18\n\r\
-    \n\x05\x04\x11\x02\x02\x03\x12\x04\xd8\x05\x1b\x1c\nB\n\x02\x04\x12\x12\
-    \x06\xdd\x05\0\xf5\x05\x01\x1a4\x20A\x20message\x20and\x20its\x20corresp\
-    onding\x20acknowledgment\x20ID.\n\n\x0b\n\x03\x04\x12\x01\x12\x04\xdd\
-    \x05\x08\x17\nH\n\x04\x04\x12\x02\0\x12\x04\xdf\x05\x02\x14\x1a:\x20This\
-    \x20ID\x20can\x20be\x20used\x20to\x20acknowledge\x20the\x20received\x20m\
-    essage.\n\n\r\n\x05\x04\x12\x02\0\x05\x12\x04\xdf\x05\x02\x08\n\r\n\x05\
-    \x04\x12\x02\0\x01\x12\x04\xdf\x05\t\x0f\n\r\n\x05\x04\x12\x02\0\x03\x12\
-    \x04\xdf\x05\x12\x13\n\x1c\n\x04\x04\x12\x02\x01\x12\x04\xe2\x05\x02\x1c\
-    \x1a\x0e\x20The\x20message.\n\n\r\n\x05\x04\x12\x02\x01\x06\x12\x04\xe2\
-    \x05\x02\x0f\n\r\n\x05\x04\x12\x02\x01\x01\x12\x04\xe2\x05\x10\x17\n\r\n\
-    \x05\x04\x12\x02\x01\x03\x12\x04\xe2\x05\x1a\x1b\n\xc6\x06\n\x04\x04\x12\
-    \x02\x02\x12\x04\xf4\x05\x02\x1d\x1a\xb7\x06\x20Delivery\x20attempt\x20c\
-    ounter\x20is\x201\x20+\x20(the\x20sum\x20of\x20number\x20of\x20NACKs\x20\
-    and\x20number\x20of\n\x20ack_deadline\x20exceeds)\x20for\x20this\x20mess\
-    age.\n\n\x20A\x20NACK\x20is\x20any\x20call\x20to\x20ModifyAckDeadline\
-    \x20with\x20a\x200\x20deadline.\x20An\x20ack_deadline\n\x20exceeds\x20ev\
-    ent\x20is\x20whenever\x20a\x20message\x20is\x20not\x20acknowledged\x20wi\
-    thin\n\x20ack_deadline.\x20Note\x20that\x20ack_deadline\x20is\x20initial\
-    ly\n\x20Subscription.ackDeadlineSeconds,\x20but\x20may\x20get\x20extende\
-    d\x20automatically\x20by\n\x20the\x20client\x20library.\n\n\x20The\x20fi\
-    rst\x20delivery\x20of\x20a\x20given\x20message\x20will\x20have\x20this\
-    \x20value\x20as\x201.\x20The\x20value\n\x20is\x20calculated\x20at\x20bes\
-    t\x20effort\x20and\x20is\x20approximate.\n\n\x20If\x20a\x20DeadLetterPol\
-    icy\x20is\x20not\x20set\x20on\x20the\x20subscription,\x20this\x20will\
-    \x20be\x200.\n\x20<b>EXPERIMENTAL:</b>\x20This\x20feature\x20is\x20part\
-    \x20of\x20a\x20closed\x20alpha\x20release.\x20This\n\x20API\x20might\x20\
-    be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\
-    \x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20sub\
-    ject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\r\n\x05\x04\
-    \x12\x02\x02\x05\x12\x04\xf4\x05\x02\x07\n\r\n\x05\x04\x12\x02\x02\x01\
-    \x12\x04\xf4\x05\x08\x18\n\r\n\x05\x04\x12\x02\x02\x03\x12\x04\xf4\x05\
-    \x1b\x1c\n7\n\x02\x04\x13\x12\x06\xf8\x05\0\xfc\x05\x01\x1a)\x20Request\
-    \x20for\x20the\x20GetSubscription\x20method.\n\n\x0b\n\x03\x04\x13\x01\
-    \x12\x04\xf8\x05\x08\x1e\ni\n\x04\x04\x13\x02\0\x12\x04\xfb\x05\x02\x1a\
-    \x1a[\x20The\x20name\x20of\x20the\x20subscription\x20to\x20get.\n\x20For\
-    mat\x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04\
-    \x13\x02\0\x05\x12\x04\xfb\x05\x02\x08\n\r\n\x05\x04\x13\x02\0\x01\x12\
-    \x04\xfb\x05\t\x15\n\r\n\x05\x04\x13\x02\0\x03\x12\x04\xfb\x05\x18\x19\n\
-    :\n\x02\x04\x14\x12\x06\xff\x05\0\x86\x06\x01\x1a,\x20Request\x20for\x20\
-    the\x20UpdateSubscription\x20method.\n\n\x0b\n\x03\x04\x14\x01\x12\x04\
-    \xff\x05\x08!\n0\n\x04\x04\x14\x02\0\x12\x04\x81\x06\x02\x20\x1a\"\x20Th\
-    e\x20updated\x20subscription\x20object.\n\n\r\n\x05\x04\x14\x02\0\x06\
-    \x12\x04\x81\x06\x02\x0e\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\x81\x06\x0f\
-    \x1b\n\r\n\x05\x04\x14\x02\0\x03\x12\x04\x81\x06\x1e\x1f\np\n\x04\x04\
-    \x14\x02\x01\x12\x04\x85\x06\x02,\x1ab\x20Indicates\x20which\x20fields\
-    \x20in\x20the\x20provided\x20subscription\x20to\x20update.\n\x20Must\x20\
-    be\x20specified\x20and\x20non-empty.\n\n\r\n\x05\x04\x14\x02\x01\x06\x12\
-    \x04\x85\x06\x02\x1b\n\r\n\x05\x04\x14\x02\x01\x01\x12\x04\x85\x06\x1c'\
-    \n\r\n\x05\x04\x14\x02\x01\x03\x12\x04\x85\x06*+\n;\n\x02\x04\x15\x12\
-    \x06\x89\x06\0\x95\x06\x01\x1a-\x20Request\x20for\x20the\x20`ListSubscri\
-    ptions`\x20method.\n\n\x0b\n\x03\x04\x15\x01\x12\x04\x89\x06\x08\x20\nk\
-    \n\x04\x04\x15\x02\0\x12\x04\x8c\x06\x02\x15\x1a]\x20The\x20name\x20of\
-    \x20the\x20project\x20in\x20which\x20to\x20list\x20subscriptions.\n\x20F\
-    ormat\x20is\x20`projects/{project-id}`.\n\n\r\n\x05\x04\x15\x02\0\x05\
-    \x12\x04\x8c\x06\x02\x08\n\r\n\x05\x04\x15\x02\0\x01\x12\x04\x8c\x06\t\
-    \x10\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\x8c\x06\x13\x14\n:\n\x04\x04\
-    \x15\x02\x01\x12\x04\x8f\x06\x02\x16\x1a,\x20Maximum\x20number\x20of\x20\
-    subscriptions\x20to\x20return.\n\n\r\n\x05\x04\x15\x02\x01\x05\x12\x04\
-    \x8f\x06\x02\x07\n\r\n\x05\x04\x15\x02\x01\x01\x12\x04\x8f\x06\x08\x11\n\
-    \r\n\x05\x04\x15\x02\x01\x03\x12\x04\x8f\x06\x14\x15\n\xd2\x01\n\x04\x04\
-    \x15\x02\x02\x12\x04\x94\x06\x02\x18\x1a\xc3\x01\x20The\x20value\x20retu\
-    rned\x20by\x20the\x20last\x20`ListSubscriptionsResponse`;\x20indicates\
-    \x20that\n\x20this\x20is\x20a\x20continuation\x20of\x20a\x20prior\x20`Li\
-    stSubscriptions`\x20call,\x20and\x20that\x20the\n\x20system\x20should\
-    \x20return\x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\x15\x02\
-    \x02\x05\x12\x04\x94\x06\x02\x08\n\r\n\x05\x04\x15\x02\x02\x01\x12\x04\
-    \x94\x06\t\x13\n\r\n\x05\x04\x15\x02\x02\x03\x12\x04\x94\x06\x16\x17\n<\
-    \n\x02\x04\x16\x12\x06\x98\x06\0\xa0\x06\x01\x1a.\x20Response\x20for\x20\
-    the\x20`ListSubscriptions`\x20method.\n\n\x0b\n\x03\x04\x16\x01\x12\x04\
-    \x98\x06\x08!\n9\n\x04\x04\x16\x02\0\x12\x04\x9a\x06\x02*\x1a+\x20The\
-    \x20subscriptions\x20that\x20match\x20the\x20request.\n\n\r\n\x05\x04\
-    \x16\x02\0\x04\x12\x04\x9a\x06\x02\n\n\r\n\x05\x04\x16\x02\0\x06\x12\x04\
-    \x9a\x06\x0b\x17\n\r\n\x05\x04\x16\x02\0\x01\x12\x04\x9a\x06\x18%\n\r\n\
-    \x05\x04\x16\x02\0\x03\x12\x04\x9a\x06()\n\xc2\x01\n\x04\x04\x16\x02\x01\
-    \x12\x04\x9f\x06\x02\x1d\x1a\xb3\x01\x20If\x20not\x20empty,\x20indicates\
-    \x20that\x20there\x20may\x20be\x20more\x20subscriptions\x20that\x20match\
-    \n\x20the\x20request;\x20this\x20value\x20should\x20be\x20passed\x20in\
-    \x20a\x20new\n\x20`ListSubscriptionsRequest`\x20to\x20get\x20more\x20sub\
-    scriptions.\n\n\r\n\x05\x04\x16\x02\x01\x05\x12\x04\x9f\x06\x02\x08\n\r\
-    \n\x05\x04\x16\x02\x01\x01\x12\x04\x9f\x06\t\x18\n\r\n\x05\x04\x16\x02\
-    \x01\x03\x12\x04\x9f\x06\x1b\x1c\n:\n\x02\x04\x17\x12\x06\xa3\x06\0\xa7\
-    \x06\x01\x1a,\x20Request\x20for\x20the\x20DeleteSubscription\x20method.\
-    \n\n\x0b\n\x03\x04\x17\x01\x12\x04\xa3\x06\x08!\n`\n\x04\x04\x17\x02\0\
-    \x12\x04\xa6\x06\x02\x1a\x1aR\x20The\x20subscription\x20to\x20delete.\n\
+    \x20Pub/Sub\x20API.\n\n\x20For\x20example:\n\x20`attributes\x20{\x20\"x-\
+    goog-version\":\x20\"v1\"\x20}`\n\n\r\n\x05\x04\x15\x02\x01\x06\x12\x04\
+    \xb0\x07\x02\x15\n\r\n\x05\x04\x15\x02\x01\x01\x12\x04\xb0\x07\x16\x20\n\
+    \r\n\x05\x04\x15\x02\x01\x03\x12\x04\xb0\x07#$\n\xca\x02\n\x04\x04\x15\
+    \x08\0\x12\x06\xb7\x07\x02\xbb\x07\x03\x1a\xb9\x02\x20An\x20authenticati\
+    on\x20method\x20used\x20by\x20push\x20endpoints\x20to\x20verify\x20the\
+    \x20source\x20of\n\x20push\x20requests.\x20This\x20can\x20be\x20used\x20\
+    with\x20push\x20endpoints\x20that\x20are\x20private\x20by\n\x20default\
+    \x20to\x20allow\x20requests\x20only\x20from\x20the\x20Cloud\x20Pub/Sub\
+    \x20system,\x20for\x20example.\n\x20This\x20field\x20is\x20optional\x20a\
+    nd\x20should\x20be\x20set\x20only\x20by\x20users\x20interested\x20in\n\
+    \x20authenticated\x20push.\n\n\r\n\x05\x04\x15\x08\0\x01\x12\x04\xb7\x07\
+    \x08\x1d\n\x9d\x01\n\x04\x04\x15\x02\x02\x12\x04\xba\x07\x04\x1d\x1a\x8e\
+    \x01\x20If\x20specified,\x20Pub/Sub\x20will\x20generate\x20and\x20attach\
+    \x20an\x20OIDC\x20JWT\x20token\x20as\x20an\n\x20`Authorization`\x20heade\
+    r\x20in\x20the\x20HTTP\x20request\x20for\x20every\x20pushed\x20message.\
+    \n\n\r\n\x05\x04\x15\x02\x02\x06\x12\x04\xba\x07\x04\r\n\r\n\x05\x04\x15\
+    \x02\x02\x01\x12\x04\xba\x07\x0e\x18\n\r\n\x05\x04\x15\x02\x02\x03\x12\
+    \x04\xba\x07\x1b\x1c\n\x93\x01\n\x04\x04\x15\x08\x01\x12\x06\xbf\x07\x02\
+    \xc7\x07\x03\x1a\x82\x01\x20The\x20format\x20of\x20the\x20delivered\x20m\
+    essage\x20to\x20the\x20push\x20endpoint\x20is\x20defined\x20by\n\x20the\
+    \x20chosen\x20wrapper.\x20When\x20unset,\x20`PubsubWrapper`\x20is\x20use\
+    d.\n\n\r\n\x05\x04\x15\x08\x01\x01\x12\x04\xbf\x07\x08\x0f\n\xcf\x01\n\
+    \x04\x04\x15\x02\x03\x12\x04\xc3\x07\x04%\x1a\xc0\x01\x20When\x20set,\
+    \x20the\x20payload\x20to\x20the\x20push\x20endpoint\x20is\x20in\x20the\
+    \x20form\x20of\x20the\x20JSON\n\x20representation\x20of\x20a\x20PubsubMe\
+    ssage\n\x20(https://cloud.google.com/pubsub/docs/reference/rpc/google.pu\
+    bsub.v1#pubsubmessage).\n\n\r\n\x05\x04\x15\x02\x03\x06\x12\x04\xc3\x07\
+    \x04\x11\n\r\n\x05\x04\x15\x02\x03\x01\x12\x04\xc3\x07\x12\x20\n\r\n\x05\
+    \x04\x15\x02\x03\x03\x12\x04\xc3\x07#$\nJ\n\x04\x04\x15\x02\x04\x12\x04\
+    \xc6\x07\x04\x1d\x1a<\x20When\x20set,\x20the\x20payload\x20to\x20the\x20\
+    push\x20endpoint\x20is\x20not\x20wrapped.\n\n\r\n\x05\x04\x15\x02\x04\
+    \x06\x12\x04\xc6\x07\x04\r\n\r\n\x05\x04\x15\x02\x04\x01\x12\x04\xc6\x07\
+    \x0e\x18\n\r\n\x05\x04\x15\x02\x04\x03\x12\x04\xc6\x07\x1b\x1c\n:\n\x02\
+    \x04\x16\x12\x06\xcb\x07\0\xfc\x07\x01\x1a,\x20Configuration\x20for\x20a\
+    \x20BigQuery\x20subscription.\n\n\x0b\n\x03\x04\x16\x01\x12\x04\xcb\x07\
+    \x08\x16\n>\n\x04\x04\x16\x04\0\x12\x06\xcd\x07\x02\xe1\x07\x03\x1a.\x20\
+    Possible\x20states\x20for\x20a\x20BigQuery\x20subscription.\n\n\r\n\x05\
+    \x04\x16\x04\0\x01\x12\x04\xcd\x07\x07\x0c\n6\n\x06\x04\x16\x04\0\x02\0\
+    \x12\x04\xcf\x07\x04\x1a\x1a&\x20Default\x20value.\x20This\x20value\x20i\
+    s\x20unused.\n\n\x0f\n\x07\x04\x16\x04\0\x02\0\x01\x12\x04\xcf\x07\x04\
+    \x15\n\x0f\n\x07\x04\x16\x04\0\x02\0\x02\x12\x04\xcf\x07\x18\x19\nI\n\
+    \x06\x04\x16\x04\0\x02\x01\x12\x04\xd2\x07\x04\x0f\x1a9\x20The\x20subscr\
+    iption\x20can\x20actively\x20send\x20messages\x20to\x20BigQuery\n\n\x0f\
+    \n\x07\x04\x16\x04\0\x02\x01\x01\x12\x04\xd2\x07\x04\n\n\x0f\n\x07\x04\
+    \x16\x04\0\x02\x01\x02\x12\x04\xd2\x07\r\x0e\n\xa3\x03\n\x06\x04\x16\x04\
+    \0\x02\x02\x12\x04\xda\x07\x04\x1a\x1a\x92\x03\x20Cannot\x20write\x20to\
+    \x20the\x20BigQuery\x20table\x20because\x20of\x20permission\x20denied\
+    \x20errors.\n\x20This\x20can\x20happen\x20if\n\x20-\x20Pub/Sub\x20SA\x20\
+    has\x20not\x20been\x20granted\x20the\x20[appropriate\x20BigQuery\x20IAM\
+    \n\x20permissions](https://cloud.google.com/pubsub/docs/create-subscript\
+    ion#assign_bigquery_service_account)\n\x20-\x20bigquery.googleapis.com\
+    \x20API\x20is\x20not\x20enabled\x20for\x20the\x20project\n\x20([instruct\
+    ions](https://cloud.google.com/service-usage/docs/enable-disable))\n\n\
+    \x0f\n\x07\x04\x16\x04\0\x02\x02\x01\x12\x04\xda\x07\x04\x15\n\x0f\n\x07\
+    \x04\x16\x04\0\x02\x02\x02\x12\x04\xda\x07\x18\x19\nO\n\x06\x04\x16\x04\
+    \0\x02\x03\x12\x04\xdd\x07\x04\x12\x1a?\x20Cannot\x20write\x20to\x20the\
+    \x20BigQuery\x20table\x20because\x20it\x20does\x20not\x20exist.\n\n\x0f\
+    \n\x07\x04\x16\x04\0\x02\x03\x01\x12\x04\xdd\x07\x04\r\n\x0f\n\x07\x04\
+    \x16\x04\0\x02\x03\x02\x12\x04\xdd\x07\x10\x11\nN\n\x06\x04\x16\x04\0\
+    \x02\x04\x12\x04\xe0\x07\x04\x18\x1a>\x20Cannot\x20write\x20to\x20the\
+    \x20BigQuery\x20table\x20due\x20to\x20a\x20schema\x20mismatch.\n\n\x0f\n\
+    \x07\x04\x16\x04\0\x02\x04\x01\x12\x04\xe0\x07\x04\x13\n\x0f\n\x07\x04\
+    \x16\x04\0\x02\x04\x02\x12\x04\xe0\x07\x16\x17\nl\n\x04\x04\x16\x02\0\
+    \x12\x04\xe5\x07\x02\x13\x1a^\x20The\x20name\x20of\x20the\x20table\x20to\
+    \x20which\x20to\x20write\x20data,\x20of\x20the\x20form\n\x20{projectId}.\
+    {datasetId}.{tableId}\n\n\r\n\x05\x04\x16\x02\0\x05\x12\x04\xe5\x07\x02\
+    \x08\n\r\n\x05\x04\x16\x02\0\x01\x12\x04\xe5\x07\t\x0e\n\r\n\x05\x04\x16\
+    \x02\0\x03\x12\x04\xe5\x07\x11\x12\nh\n\x04\x04\x16\x02\x01\x12\x04\xe9\
+    \x07\x02\x1c\x1aZ\x20When\x20true,\x20use\x20the\x20topic's\x20schema\
+    \x20as\x20the\x20columns\x20to\x20write\x20to\x20in\x20BigQuery,\n\x20if\
+    \x20it\x20exists.\n\n\r\n\x05\x04\x16\x02\x01\x05\x12\x04\xe9\x07\x02\
+    \x06\n\r\n\x05\x04\x16\x02\x01\x01\x12\x04\xe9\x07\x07\x17\n\r\n\x05\x04\
+    \x16\x02\x01\x03\x12\x04\xe9\x07\x1a\x1b\n\xdb\x02\n\x04\x04\x16\x02\x02\
+    \x12\x04\xf0\x07\x02\x1a\x1a\xcc\x02\x20When\x20true,\x20write\x20the\
+    \x20subscription\x20name,\x20message_id,\x20publish_time,\n\x20attribute\
+    s,\x20and\x20ordering_key\x20to\x20additional\x20columns\x20in\x20the\
+    \x20table.\x20The\n\x20subscription\x20name,\x20message_id,\x20and\x20pu\
+    blish_time\x20fields\x20are\x20put\x20in\x20their\x20own\n\x20columns\
+    \x20while\x20all\x20other\x20message\x20properties\x20(other\x20than\x20\
+    data)\x20are\x20written\x20to\n\x20a\x20JSON\x20object\x20in\x20the\x20a\
+    ttributes\x20column.\n\n\r\n\x05\x04\x16\x02\x02\x05\x12\x04\xf0\x07\x02\
+    \x06\n\r\n\x05\x04\x16\x02\x02\x01\x12\x04\xf0\x07\x07\x15\n\r\n\x05\x04\
+    \x16\x02\x02\x03\x12\x04\xf0\x07\x18\x19\n\xc9\x02\n\x04\x04\x16\x02\x03\
+    \x12\x04\xf7\x07\x02\x1f\x1a\xba\x02\x20When\x20true\x20and\x20use_topic\
+    _schema\x20is\x20true,\x20any\x20fields\x20that\x20are\x20a\x20part\x20o\
+    f\x20the\n\x20topic\x20schema\x20that\x20are\x20not\x20part\x20of\x20the\
+    \x20BigQuery\x20table\x20schema\x20are\x20dropped\n\x20when\x20writing\
+    \x20to\x20BigQuery.\x20Otherwise,\x20the\x20schemas\x20must\x20be\x20kep\
+    t\x20in\x20sync\x20and\n\x20any\x20messages\x20with\x20extra\x20fields\
+    \x20are\x20not\x20written\x20and\x20remain\x20in\x20the\n\x20subscriptio\
+    n's\x20backlog.\n\n\r\n\x05\x04\x16\x02\x03\x05\x12\x04\xf7\x07\x02\x06\
+    \n\r\n\x05\x04\x16\x02\x03\x01\x12\x04\xf7\x07\x07\x1a\n\r\n\x05\x04\x16\
+    \x02\x03\x03\x12\x04\xf7\x07\x1d\x1e\nw\n\x04\x04\x16\x02\x04\x12\x04\
+    \xfb\x07\x02>\x1ai\x20Output\x20only.\x20An\x20output-only\x20field\x20t\
+    hat\x20indicates\x20whether\x20or\x20not\x20the\n\x20subscription\x20can\
+    \x20receive\x20messages.\n\n\r\n\x05\x04\x16\x02\x04\x06\x12\x04\xfb\x07\
+    \x02\x07\n\r\n\x05\x04\x16\x02\x04\x01\x12\x04\xfb\x07\x08\r\n\r\n\x05\
+    \x04\x16\x02\x04\x03\x12\x04\xfb\x07\x10\x11\n\r\n\x05\x04\x16\x02\x04\
+    \x08\x12\x04\xfb\x07\x12=\n\x10\n\x08\x04\x16\x02\x04\x08\x9c\x08\0\x12\
+    \x04\xfb\x07\x13<\n?\n\x02\x04\x17\x12\x06\xff\x07\0\xc6\x08\x01\x1a1\
+    \x20Configuration\x20for\x20a\x20Cloud\x20Storage\x20subscription.\n\n\
+    \x0b\n\x03\x04\x17\x01\x12\x04\xff\x07\x08\x1a\n\x98\x01\n\x04\x04\x17\
+    \x03\0\x12\x04\x83\x08\x02\x17\x1a\x89\x01\x20Configuration\x20for\x20wr\
+    iting\x20message\x20data\x20in\x20text\x20format.\n\x20Message\x20payloa\
+    ds\x20will\x20be\x20written\x20to\x20files\x20as\x20raw\x20text,\x20sepa\
+    rated\x20by\x20a\n\x20newline.\n\n\r\n\x05\x04\x17\x03\0\x01\x12\x04\x83\
+    \x08\n\x14\n\x94\x01\n\x04\x04\x17\x03\x01\x12\x06\x87\x08\x02\x8f\x08\
+    \x03\x1a\x83\x01\x20Configuration\x20for\x20writing\x20message\x20data\
+    \x20in\x20Avro\x20format.\n\x20Message\x20payloads\x20and\x20metadata\
+    \x20will\x20be\x20written\x20to\x20files\x20as\x20an\x20Avro\x20binary.\
+    \n\n\r\n\x05\x04\x17\x03\x01\x01\x12\x04\x87\x08\n\x14\n\xfb\x02\n\x06\
+    \x04\x17\x03\x01\x02\0\x12\x04\x8e\x08\x04\x1c\x1a\xea\x02\x20When\x20tr\
+    ue,\x20write\x20the\x20subscription\x20name,\x20message_id,\x20publish_t\
+    ime,\n\x20attributes,\x20and\x20ordering_key\x20as\x20additional\x20fiel\
+    ds\x20in\x20the\x20output.\x20The\n\x20subscription\x20name,\x20message_\
+    id,\x20and\x20publish_time\x20fields\x20are\x20put\x20in\x20their\n\x20o\
+    wn\x20fields\x20while\x20all\x20other\x20message\x20properties\x20other\
+    \x20than\x20data\x20(for\n\x20example,\x20an\x20ordering_key,\x20if\x20p\
+    resent)\x20are\x20added\x20as\x20entries\x20in\x20the\n\x20attributes\
+    \x20map.\n\n\x0f\n\x07\x04\x17\x03\x01\x02\0\x05\x12\x04\x8e\x08\x04\x08\
+    \n\x0f\n\x07\x04\x17\x03\x01\x02\0\x01\x12\x04\x8e\x08\t\x17\n\x0f\n\x07\
+    \x04\x17\x03\x01\x02\0\x03\x12\x04\x8e\x08\x1a\x1b\nC\n\x04\x04\x17\x04\
+    \0\x12\x06\x92\x08\x02\x9f\x08\x03\x1a3\x20Possible\x20states\x20for\x20\
+    a\x20Cloud\x20Storage\x20subscription.\n\n\r\n\x05\x04\x17\x04\0\x01\x12\
+    \x04\x92\x08\x07\x0c\n6\n\x06\x04\x17\x04\0\x02\0\x12\x04\x94\x08\x04\
+    \x1a\x1a&\x20Default\x20value.\x20This\x20value\x20is\x20unused.\n\n\x0f\
+    \n\x07\x04\x17\x04\0\x02\0\x01\x12\x04\x94\x08\x04\x15\n\x0f\n\x07\x04\
+    \x17\x04\0\x02\0\x02\x12\x04\x94\x08\x18\x19\nO\n\x06\x04\x17\x04\0\x02\
+    \x01\x12\x04\x97\x08\x04\x0f\x1a?\x20The\x20subscription\x20can\x20activ\
+    ely\x20send\x20messages\x20to\x20Cloud\x20Storage.\n\n\x0f\n\x07\x04\x17\
+    \x04\0\x02\x01\x01\x12\x04\x97\x08\x04\n\n\x0f\n\x07\x04\x17\x04\0\x02\
+    \x01\x02\x12\x04\x97\x08\r\x0e\n`\n\x06\x04\x17\x04\0\x02\x02\x12\x04\
+    \x9b\x08\x04\x1a\x1aP\x20Cannot\x20write\x20to\x20the\x20Cloud\x20Storag\
+    e\x20bucket\x20because\x20of\x20permission\x20denied\n\x20errors.\n\n\
+    \x0f\n\x07\x04\x17\x04\0\x02\x02\x01\x12\x04\x9b\x08\x04\x15\n\x0f\n\x07\
+    \x04\x17\x04\0\x02\x02\x02\x12\x04\x9b\x08\x18\x19\nU\n\x06\x04\x17\x04\
+    \0\x02\x03\x12\x04\x9e\x08\x04\x12\x1aE\x20Cannot\x20write\x20to\x20the\
+    \x20Cloud\x20Storage\x20bucket\x20because\x20it\x20does\x20not\x20exist.\
+    \n\n\x0f\n\x07\x04\x17\x04\0\x02\x03\x01\x12\x04\x9e\x08\x04\r\n\x0f\n\
+    \x07\x04\x17\x04\0\x02\x03\x02\x12\x04\x9e\x08\x10\x11\n\x8c\x02\n\x04\
+    \x04\x17\x02\0\x12\x04\xa5\x08\x02=\x1a\xfd\x01\x20Required.\x20User-pro\
+    vided\x20name\x20for\x20the\x20Cloud\x20Storage\x20bucket.\n\x20The\x20b\
+    ucket\x20must\x20be\x20created\x20by\x20the\x20user.\x20The\x20bucket\
+    \x20name\x20must\x20be\x20without\n\x20any\x20prefix\x20like\x20\"gs://\
+    \".\x20See\x20the\x20[bucket\x20naming\n\x20requirements]\x20(https://cl\
+    oud.google.com/storage/docs/buckets#naming).\n\n\r\n\x05\x04\x17\x02\0\
+    \x05\x12\x04\xa5\x08\x02\x08\n\r\n\x05\x04\x17\x02\0\x01\x12\x04\xa5\x08\
+    \t\x0f\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xa5\x08\x12\x13\n\r\n\x05\x04\
+    \x17\x02\0\x08\x12\x04\xa5\x08\x14<\n\x10\n\x08\x04\x17\x02\0\x08\x9c\
+    \x08\0\x12\x04\xa5\x08\x15;\n\x9e\x01\n\x04\x04\x17\x02\x01\x12\x04\xa9\
+    \x08\x02\x1d\x1a\x8f\x01\x20User-provided\x20prefix\x20for\x20Cloud\x20S\
+    torage\x20filename.\x20See\x20the\x20[object\x20naming\n\x20requirements\
+    ](https://cloud.google.com/storage/docs/objects#naming).\n\n\r\n\x05\x04\
+    \x17\x02\x01\x05\x12\x04\xa9\x08\x02\x08\n\r\n\x05\x04\x17\x02\x01\x01\
+    \x12\x04\xa9\x08\t\x18\n\r\n\x05\x04\x17\x02\x01\x03\x12\x04\xa9\x08\x1b\
+    \x1c\n\xb4\x01\n\x04\x04\x17\x02\x02\x12\x04\xae\x08\x02\x1d\x1a\xa5\x01\
+    \x20User-provided\x20suffix\x20for\x20Cloud\x20Storage\x20filename.\x20S\
+    ee\x20the\x20[object\x20naming\n\x20requirements](https://cloud.google.c\
+    om/storage/docs/objects#naming).\x20Must\n\x20not\x20end\x20in\x20\"/\".\
+    \n\n\r\n\x05\x04\x17\x02\x02\x05\x12\x04\xae\x08\x02\x08\n\r\n\x05\x04\
+    \x17\x02\x02\x01\x12\x04\xae\x08\t\x18\n\r\n\x05\x04\x17\x02\x02\x03\x12\
+    \x04\xae\x08\x1b\x1c\n*\n\x04\x04\x17\x08\0\x12\x06\xb1\x08\x02\xb7\x08\
+    \x03\x1a\x1a\x20Defaults\x20to\x20text\x20format.\n\n\r\n\x05\x04\x17\
+    \x08\0\x01\x12\x04\xb1\x08\x08\x15\nU\n\x04\x04\x17\x02\x03\x12\x04\xb3\
+    \x08\x04\x1f\x1aG\x20If\x20set,\x20message\x20data\x20will\x20be\x20writ\
+    ten\x20to\x20Cloud\x20Storage\x20in\x20text\x20format.\n\n\r\n\x05\x04\
+    \x17\x02\x03\x06\x12\x04\xb3\x08\x04\x0e\n\r\n\x05\x04\x17\x02\x03\x01\
+    \x12\x04\xb3\x08\x0f\x1a\n\r\n\x05\x04\x17\x02\x03\x03\x12\x04\xb3\x08\
+    \x1d\x1e\nU\n\x04\x04\x17\x02\x04\x12\x04\xb6\x08\x04\x1f\x1aG\x20If\x20\
+    set,\x20message\x20data\x20will\x20be\x20written\x20to\x20Cloud\x20Stora\
+    ge\x20in\x20Avro\x20format.\n\n\r\n\x05\x04\x17\x02\x04\x06\x12\x04\xb6\
+    \x08\x04\x0e\n\r\n\x05\x04\x17\x02\x04\x01\x12\x04\xb6\x08\x0f\x1a\n\r\n\
+    \x05\x04\x17\x02\x04\x03\x12\x04\xb6\x08\x1d\x1e\n\xd0\x01\n\x04\x04\x17\
+    \x02\x05\x12\x04\xbc\x08\x02,\x1a\xc1\x01\x20The\x20maximum\x20duration\
+    \x20that\x20can\x20elapse\x20before\x20a\x20new\x20Cloud\x20Storage\x20f\
+    ile\x20is\n\x20created.\x20Min\x201\x20minute,\x20max\x2010\x20minutes,\
+    \x20default\x205\x20minutes.\x20May\x20not\x20exceed\n\x20the\x20subscri\
+    ption's\x20acknowledgement\x20deadline.\n\n\r\n\x05\x04\x17\x02\x05\x06\
+    \x12\x04\xbc\x08\x02\x1a\n\r\n\x05\x04\x17\x02\x05\x01\x12\x04\xbc\x08\
+    \x1b'\n\r\n\x05\x04\x17\x02\x05\x03\x12\x04\xbc\x08*+\n\xdb\x01\n\x04\
+    \x04\x17\x02\x06\x12\x04\xc1\x08\x02\x16\x1a\xcc\x01\x20The\x20maximum\
+    \x20bytes\x20that\x20can\x20be\x20written\x20to\x20a\x20Cloud\x20Storage\
+    \x20file\x20before\x20a\x20new\n\x20file\x20is\x20created.\x20Min\x201\
+    \x20KB,\x20max\x2010\x20GiB.\x20The\x20max_bytes\x20limit\x20may\x20be\
+    \x20exceeded\n\x20in\x20cases\x20where\x20messages\x20are\x20larger\x20t\
+    han\x20the\x20limit.\n\n\r\n\x05\x04\x17\x02\x06\x05\x12\x04\xc1\x08\x02\
+    \x07\n\r\n\x05\x04\x17\x02\x06\x01\x12\x04\xc1\x08\x08\x11\n\r\n\x05\x04\
+    \x17\x02\x06\x03\x12\x04\xc1\x08\x14\x15\nw\n\x04\x04\x17\x02\x07\x12\
+    \x04\xc5\x08\x02>\x1ai\x20Output\x20only.\x20An\x20output-only\x20field\
+    \x20that\x20indicates\x20whether\x20or\x20not\x20the\n\x20subscription\
+    \x20can\x20receive\x20messages.\n\n\r\n\x05\x04\x17\x02\x07\x06\x12\x04\
+    \xc5\x08\x02\x07\n\r\n\x05\x04\x17\x02\x07\x01\x12\x04\xc5\x08\x08\r\n\r\
+    \n\x05\x04\x17\x02\x07\x03\x12\x04\xc5\x08\x10\x11\n\r\n\x05\x04\x17\x02\
+    \x07\x08\x12\x04\xc5\x08\x12=\n\x10\n\x08\x04\x17\x02\x07\x08\x9c\x08\0\
+    \x12\x04\xc5\x08\x13<\nB\n\x02\x04\x18\x12\x06\xc9\x08\0\xe1\x08\x01\x1a\
+    4\x20A\x20message\x20and\x20its\x20corresponding\x20acknowledgment\x20ID\
+    .\n\n\x0b\n\x03\x04\x18\x01\x12\x04\xc9\x08\x08\x17\nH\n\x04\x04\x18\x02\
+    \0\x12\x04\xcb\x08\x02\x14\x1a:\x20This\x20ID\x20can\x20be\x20used\x20to\
+    \x20acknowledge\x20the\x20received\x20message.\n\n\r\n\x05\x04\x18\x02\0\
+    \x05\x12\x04\xcb\x08\x02\x08\n\r\n\x05\x04\x18\x02\0\x01\x12\x04\xcb\x08\
+    \t\x0f\n\r\n\x05\x04\x18\x02\0\x03\x12\x04\xcb\x08\x12\x13\n\x1c\n\x04\
+    \x04\x18\x02\x01\x12\x04\xce\x08\x02\x1c\x1a\x0e\x20The\x20message.\n\n\
+    \r\n\x05\x04\x18\x02\x01\x06\x12\x04\xce\x08\x02\x0f\n\r\n\x05\x04\x18\
+    \x02\x01\x01\x12\x04\xce\x08\x10\x17\n\r\n\x05\x04\x18\x02\x01\x03\x12\
+    \x04\xce\x08\x1a\x1b\n\xe5\x05\n\x04\x04\x18\x02\x02\x12\x04\xe0\x08\x02\
+    \x1d\x1a\xd6\x05\x20The\x20approximate\x20number\x20of\x20times\x20that\
+    \x20Cloud\x20Pub/Sub\x20has\x20attempted\x20to\x20deliver\n\x20the\x20as\
+    sociated\x20message\x20to\x20a\x20subscriber.\n\n\x20More\x20precisely,\
+    \x20this\x20is\x201\x20+\x20(number\x20of\x20NACKs)\x20+\n\x20(number\
+    \x20of\x20ack_deadline\x20exceeds)\x20for\x20this\x20message.\n\n\x20A\
+    \x20NACK\x20is\x20any\x20call\x20to\x20ModifyAckDeadline\x20with\x20a\
+    \x200\x20deadline.\x20An\x20ack_deadline\n\x20exceeds\x20event\x20is\x20\
+    whenever\x20a\x20message\x20is\x20not\x20acknowledged\x20within\n\x20ack\
+    _deadline.\x20Note\x20that\x20ack_deadline\x20is\x20initially\n\x20Subsc\
+    ription.ackDeadlineSeconds,\x20but\x20may\x20get\x20extended\x20automati\
+    cally\x20by\n\x20the\x20client\x20library.\n\n\x20Upon\x20the\x20first\
+    \x20delivery\x20of\x20a\x20given\x20message,\x20`delivery_attempt`\x20wi\
+    ll\x20have\x20a\n\x20value\x20of\x201.\x20The\x20value\x20is\x20calculat\
+    ed\x20at\x20best\x20effort\x20and\x20is\x20approximate.\n\n\x20If\x20a\
+    \x20DeadLetterPolicy\x20is\x20not\x20set\x20on\x20the\x20subscription,\
+    \x20this\x20will\x20be\x200.\n\n\r\n\x05\x04\x18\x02\x02\x05\x12\x04\xe0\
+    \x08\x02\x07\n\r\n\x05\x04\x18\x02\x02\x01\x12\x04\xe0\x08\x08\x18\n\r\n\
+    \x05\x04\x18\x02\x02\x03\x12\x04\xe0\x08\x1b\x1c\n7\n\x02\x04\x19\x12\
+    \x06\xe4\x08\0\xed\x08\x01\x1a)\x20Request\x20for\x20the\x20GetSubscript\
+    ion\x20method.\n\n\x0b\n\x03\x04\x19\x01\x12\x04\xe4\x08\x08\x1e\nu\n\
+    \x04\x04\x19\x02\0\x12\x06\xe7\x08\x02\xec\x08\x04\x1ae\x20Required.\x20\
+    The\x20name\x20of\x20the\x20subscription\x20to\x20get.\n\x20Format\x20is\
+    \x20`projects/{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04\x19\x02\0\
+    \x05\x12\x04\xe7\x08\x02\x08\n\r\n\x05\x04\x19\x02\0\x01\x12\x04\xe7\x08\
+    \t\x15\n\r\n\x05\x04\x19\x02\0\x03\x12\x04\xe7\x08\x18\x19\n\x0f\n\x05\
+    \x04\x19\x02\0\x08\x12\x06\xe7\x08\x1a\xec\x08\x03\n\x10\n\x08\x04\x19\
+    \x02\0\x08\x9c\x08\0\x12\x04\xe8\x08\x04*\n\x11\n\x07\x04\x19\x02\0\x08\
+    \x9f\x08\x12\x06\xe9\x08\x04\xeb\x08\x05\n:\n\x02\x04\x1a\x12\x06\xf0\
+    \x08\0\xf8\x08\x01\x1a,\x20Request\x20for\x20the\x20UpdateSubscription\
+    \x20method.\n\n\x0b\n\x03\x04\x1a\x01\x12\x04\xf0\x08\x08!\n:\n\x04\x04\
+    \x1a\x02\0\x12\x04\xf2\x08\x02I\x1a,\x20Required.\x20The\x20updated\x20s\
+    ubscription\x20object.\n\n\r\n\x05\x04\x1a\x02\0\x06\x12\x04\xf2\x08\x02\
+    \x0e\n\r\n\x05\x04\x1a\x02\0\x01\x12\x04\xf2\x08\x0f\x1b\n\r\n\x05\x04\
+    \x1a\x02\0\x03\x12\x04\xf2\x08\x1e\x1f\n\r\n\x05\x04\x1a\x02\0\x08\x12\
+    \x04\xf2\x08\x20H\n\x10\n\x08\x04\x1a\x02\0\x08\x9c\x08\0\x12\x04\xf2\
+    \x08!G\n|\n\x04\x04\x1a\x02\x01\x12\x06\xf6\x08\x02\xf7\x08/\x1al\x20Req\
+    uired.\x20Indicates\x20which\x20fields\x20in\x20the\x20provided\x20subsc\
+    ription\x20to\x20update.\n\x20Must\x20be\x20specified\x20and\x20non-empt\
+    y.\n\n\r\n\x05\x04\x1a\x02\x01\x06\x12\x04\xf6\x08\x02\x1b\n\r\n\x05\x04\
+    \x1a\x02\x01\x01\x12\x04\xf6\x08\x1c'\n\r\n\x05\x04\x1a\x02\x01\x03\x12\
+    \x04\xf6\x08*+\n\r\n\x05\x04\x1a\x02\x01\x08\x12\x04\xf7\x08\x06.\n\x10\
+    \n\x08\x04\x1a\x02\x01\x08\x9c\x08\0\x12\x04\xf7\x08\x07-\n;\n\x02\x04\
+    \x1b\x12\x06\xfb\x08\0\x8c\t\x01\x1a-\x20Request\x20for\x20the\x20`ListS\
+    ubscriptions`\x20method.\n\n\x0b\n\x03\x04\x1b\x01\x12\x04\xfb\x08\x08\
+    \x20\nw\n\x04\x04\x1b\x02\0\x12\x06\xfe\x08\x02\x83\t\x04\x1ag\x20Requir\
+    ed.\x20The\x20name\x20of\x20the\x20project\x20in\x20which\x20to\x20list\
+    \x20subscriptions.\n\x20Format\x20is\x20`projects/{project-id}`.\n\n\r\n\
+    \x05\x04\x1b\x02\0\x05\x12\x04\xfe\x08\x02\x08\n\r\n\x05\x04\x1b\x02\0\
+    \x01\x12\x04\xfe\x08\t\x10\n\r\n\x05\x04\x1b\x02\0\x03\x12\x04\xfe\x08\
+    \x13\x14\n\x0f\n\x05\x04\x1b\x02\0\x08\x12\x06\xfe\x08\x15\x83\t\x03\n\
+    \x10\n\x08\x04\x1b\x02\0\x08\x9c\x08\0\x12\x04\xff\x08\x04*\n\x11\n\x07\
+    \x04\x1b\x02\0\x08\x9f\x08\x12\x06\x80\t\x04\x82\t\x05\n:\n\x04\x04\x1b\
+    \x02\x01\x12\x04\x86\t\x02\x16\x1a,\x20Maximum\x20number\x20of\x20subscr\
+    iptions\x20to\x20return.\n\n\r\n\x05\x04\x1b\x02\x01\x05\x12\x04\x86\t\
+    \x02\x07\n\r\n\x05\x04\x1b\x02\x01\x01\x12\x04\x86\t\x08\x11\n\r\n\x05\
+    \x04\x1b\x02\x01\x03\x12\x04\x86\t\x14\x15\n\xd2\x01\n\x04\x04\x1b\x02\
+    \x02\x12\x04\x8b\t\x02\x18\x1a\xc3\x01\x20The\x20value\x20returned\x20by\
+    \x20the\x20last\x20`ListSubscriptionsResponse`;\x20indicates\x20that\n\
+    \x20this\x20is\x20a\x20continuation\x20of\x20a\x20prior\x20`ListSubscrip\
+    tions`\x20call,\x20and\x20that\x20the\n\x20system\x20should\x20return\
+    \x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\x04\x1b\x02\x02\x05\
+    \x12\x04\x8b\t\x02\x08\n\r\n\x05\x04\x1b\x02\x02\x01\x12\x04\x8b\t\t\x13\
+    \n\r\n\x05\x04\x1b\x02\x02\x03\x12\x04\x8b\t\x16\x17\n<\n\x02\x04\x1c\
+    \x12\x06\x8f\t\0\x97\t\x01\x1a.\x20Response\x20for\x20the\x20`ListSubscr\
+    iptions`\x20method.\n\n\x0b\n\x03\x04\x1c\x01\x12\x04\x8f\t\x08!\n9\n\
+    \x04\x04\x1c\x02\0\x12\x04\x91\t\x02*\x1a+\x20The\x20subscriptions\x20th\
+    at\x20match\x20the\x20request.\n\n\r\n\x05\x04\x1c\x02\0\x04\x12\x04\x91\
+    \t\x02\n\n\r\n\x05\x04\x1c\x02\0\x06\x12\x04\x91\t\x0b\x17\n\r\n\x05\x04\
+    \x1c\x02\0\x01\x12\x04\x91\t\x18%\n\r\n\x05\x04\x1c\x02\0\x03\x12\x04\
+    \x91\t()\n\xc2\x01\n\x04\x04\x1c\x02\x01\x12\x04\x96\t\x02\x1d\x1a\xb3\
+    \x01\x20If\x20not\x20empty,\x20indicates\x20that\x20there\x20may\x20be\
+    \x20more\x20subscriptions\x20that\x20match\n\x20the\x20request;\x20this\
+    \x20value\x20should\x20be\x20passed\x20in\x20a\x20new\n\x20`ListSubscrip\
+    tionsRequest`\x20to\x20get\x20more\x20subscriptions.\n\n\r\n\x05\x04\x1c\
+    \x02\x01\x05\x12\x04\x96\t\x02\x08\n\r\n\x05\x04\x1c\x02\x01\x01\x12\x04\
+    \x96\t\t\x18\n\r\n\x05\x04\x1c\x02\x01\x03\x12\x04\x96\t\x1b\x1c\n:\n\
+    \x02\x04\x1d\x12\x06\x9a\t\0\xa3\t\x01\x1a,\x20Request\x20for\x20the\x20\
+    DeleteSubscription\x20method.\n\n\x0b\n\x03\x04\x1d\x01\x12\x04\x9a\t\
+    \x08!\nl\n\x04\x04\x1d\x02\0\x12\x06\x9d\t\x02\xa2\t\x04\x1a\\\x20Requir\
+    ed.\x20The\x20subscription\x20to\x20delete.\n\x20Format\x20is\x20`projec\
+    ts/{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04\x1d\x02\0\x05\x12\x04\
+    \x9d\t\x02\x08\n\r\n\x05\x04\x1d\x02\0\x01\x12\x04\x9d\t\t\x15\n\r\n\x05\
+    \x04\x1d\x02\0\x03\x12\x04\x9d\t\x18\x19\n\x0f\n\x05\x04\x1d\x02\0\x08\
+    \x12\x06\x9d\t\x1a\xa2\t\x03\n\x10\n\x08\x04\x1d\x02\0\x08\x9c\x08\0\x12\
+    \x04\x9e\t\x04*\n\x11\n\x07\x04\x1d\x02\0\x08\x9f\x08\x12\x06\x9f\t\x04\
+    \xa1\t\x05\n8\n\x02\x04\x1e\x12\x06\xa6\t\0\xb7\t\x01\x1a*\x20Request\
+    \x20for\x20the\x20ModifyPushConfig\x20method.\n\n\x0b\n\x03\x04\x1e\x01\
+    \x12\x04\xa6\t\x08\x1f\nn\n\x04\x04\x1e\x02\0\x12\x06\xa9\t\x02\xae\t\
+    \x04\x1a^\x20Required.\x20The\x20name\x20of\x20the\x20subscription.\n\
     \x20Format\x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\r\n\
-    \x05\x04\x17\x02\0\x05\x12\x04\xa6\x06\x02\x08\n\r\n\x05\x04\x17\x02\0\
-    \x01\x12\x04\xa6\x06\t\x15\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xa6\x06\
-    \x18\x19\n8\n\x02\x04\x18\x12\x06\xaa\x06\0\xb6\x06\x01\x1a*\x20Request\
-    \x20for\x20the\x20ModifyPushConfig\x20method.\n\n\x0b\n\x03\x04\x18\x01\
-    \x12\x04\xaa\x06\x08\x1f\nb\n\x04\x04\x18\x02\0\x12\x04\xad\x06\x02\x1a\
-    \x1aT\x20The\x20name\x20of\x20the\x20subscription.\n\x20Format\x20is\x20\
-    `projects/{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04\x18\x02\0\x05\
-    \x12\x04\xad\x06\x02\x08\n\r\n\x05\x04\x18\x02\0\x01\x12\x04\xad\x06\t\
-    \x15\n\r\n\x05\x04\x18\x02\0\x03\x12\x04\xad\x06\x18\x19\n\xb8\x02\n\x04\
-    \x04\x18\x02\x01\x12\x04\xb5\x06\x02\x1d\x1a\xa9\x02\x20The\x20push\x20c\
-    onfiguration\x20for\x20future\x20deliveries.\n\n\x20An\x20empty\x20`push\
-    Config`\x20indicates\x20that\x20the\x20Pub/Sub\x20system\x20should\n\x20\
-    stop\x20pushing\x20messages\x20from\x20the\x20given\x20subscription\x20a\
-    nd\x20allow\n\x20messages\x20to\x20be\x20pulled\x20and\x20acknowledged\
-    \x20-\x20effectively\x20pausing\n\x20the\x20subscription\x20if\x20`Pull`\
-    \x20or\x20`StreamingPull`\x20is\x20not\x20called.\n\n\r\n\x05\x04\x18\
-    \x02\x01\x06\x12\x04\xb5\x06\x02\x0c\n\r\n\x05\x04\x18\x02\x01\x01\x12\
-    \x04\xb5\x06\r\x18\n\r\n\x05\x04\x18\x02\x01\x03\x12\x04\xb5\x06\x1b\x1c\
-    \n.\n\x02\x04\x19\x12\x06\xb9\x06\0\xc8\x06\x01\x1a\x20\x20Request\x20fo\
-    r\x20the\x20`Pull`\x20method.\n\n\x0b\n\x03\x04\x19\x01\x12\x04\xb9\x06\
-    \x08\x13\n{\n\x04\x04\x19\x02\0\x12\x04\xbc\x06\x02\x1a\x1am\x20The\x20s\
-    ubscription\x20from\x20which\x20messages\x20should\x20be\x20pulled.\n\
-    \x20Format\x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\r\n\
-    \x05\x04\x19\x02\0\x05\x12\x04\xbc\x06\x02\x08\n\r\n\x05\x04\x19\x02\0\
-    \x01\x12\x04\xbc\x06\t\x15\n\r\n\x05\x04\x19\x02\0\x03\x12\x04\xbc\x06\
-    \x18\x19\n\xa9\x02\n\x04\x04\x19\x02\x01\x12\x04\xc2\x06\x02\x1e\x1a\x9a\
-    \x02\x20If\x20this\x20field\x20set\x20to\x20true,\x20the\x20system\x20wi\
-    ll\x20respond\x20immediately\x20even\x20if\n\x20it\x20there\x20are\x20no\
-    \x20messages\x20available\x20to\x20return\x20in\x20the\x20`Pull`\x20resp\
-    onse.\n\x20Otherwise,\x20the\x20system\x20may\x20wait\x20(for\x20a\x20bo\
-    unded\x20amount\x20of\x20time)\x20until\x20at\n\x20least\x20one\x20messa\
-    ge\x20is\x20available,\x20rather\x20than\x20returning\x20no\x20messages.\
-    \n\n\r\n\x05\x04\x19\x02\x01\x05\x12\x04\xc2\x06\x02\x06\n\r\n\x05\x04\
-    \x19\x02\x01\x01\x12\x04\xc2\x06\x07\x19\n\r\n\x05\x04\x19\x02\x01\x03\
-    \x12\x04\xc2\x06\x1c\x1d\n\xa8\x01\n\x04\x04\x19\x02\x02\x12\x04\xc7\x06\
-    \x02\x19\x1a\x99\x01\x20The\x20maximum\x20number\x20of\x20messages\x20to\
-    \x20return\x20for\x20this\x20request.\x20Must\x20be\x20a\n\x20positive\
-    \x20integer.\x20The\x20Pub/Sub\x20system\x20may\x20return\x20fewer\x20th\
-    an\x20the\x20number\n\x20specified.\n\n\r\n\x05\x04\x19\x02\x02\x05\x12\
-    \x04\xc7\x06\x02\x07\n\r\n\x05\x04\x19\x02\x02\x01\x12\x04\xc7\x06\x08\
-    \x14\n\r\n\x05\x04\x19\x02\x02\x03\x12\x04\xc7\x06\x17\x18\n/\n\x02\x04\
-    \x1a\x12\x06\xcb\x06\0\xd1\x06\x01\x1a!\x20Response\x20for\x20the\x20`Pu\
-    ll`\x20method.\n\n\x0b\n\x03\x04\x1a\x01\x12\x04\xcb\x06\x08\x14\n\xaa\
-    \x02\n\x04\x04\x1a\x02\0\x12\x04\xd0\x06\x021\x1a\x9b\x02\x20Received\
-    \x20Pub/Sub\x20messages.\x20The\x20list\x20will\x20be\x20empty\x20if\x20\
-    there\x20are\x20no\x20more\n\x20messages\x20available\x20in\x20the\x20ba\
-    cklog.\x20For\x20JSON,\x20the\x20response\x20can\x20be\x20entirely\n\x20\
-    empty.\x20The\x20Pub/Sub\x20system\x20may\x20return\x20fewer\x20than\x20\
-    the\x20`maxMessages`\x20requested\n\x20even\x20if\x20there\x20are\x20mor\
-    e\x20messages\x20available\x20in\x20the\x20backlog.\n\n\r\n\x05\x04\x1a\
-    \x02\0\x04\x12\x04\xd0\x06\x02\n\n\r\n\x05\x04\x1a\x02\0\x06\x12\x04\xd0\
-    \x06\x0b\x1a\n\r\n\x05\x04\x1a\x02\0\x01\x12\x04\xd0\x06\x1b,\n\r\n\x05\
-    \x04\x1a\x02\0\x03\x12\x04\xd0\x06/0\n9\n\x02\x04\x1b\x12\x06\xd4\x06\0\
-    \xe5\x06\x01\x1a+\x20Request\x20for\x20the\x20ModifyAckDeadline\x20metho\
-    d.\n\n\x0b\n\x03\x04\x1b\x01\x12\x04\xd4\x06\x08\x20\nb\n\x04\x04\x1b\
-    \x02\0\x12\x04\xd7\x06\x02\x1a\x1aT\x20The\x20name\x20of\x20the\x20subsc\
-    ription.\n\x20Format\x20is\x20`projects/{project}/subscriptions/{sub}`.\
-    \n\n\r\n\x05\x04\x1b\x02\0\x05\x12\x04\xd7\x06\x02\x08\n\r\n\x05\x04\x1b\
-    \x02\0\x01\x12\x04\xd7\x06\t\x15\n\r\n\x05\x04\x1b\x02\0\x03\x12\x04\xd7\
-    \x06\x18\x19\n+\n\x04\x04\x1b\x02\x01\x12\x04\xda\x06\x02\x1e\x1a\x1d\
-    \x20List\x20of\x20acknowledgment\x20IDs.\n\n\r\n\x05\x04\x1b\x02\x01\x04\
-    \x12\x04\xda\x06\x02\n\n\r\n\x05\x04\x1b\x02\x01\x05\x12\x04\xda\x06\x0b\
-    \x11\n\r\n\x05\x04\x1b\x02\x01\x01\x12\x04\xda\x06\x12\x19\n\r\n\x05\x04\
-    \x1b\x02\x01\x03\x12\x04\xda\x06\x1c\x1d\n\xaa\x04\n\x04\x04\x1b\x02\x02\
-    \x12\x04\xe4\x06\x02!\x1a\x9b\x04\x20The\x20new\x20ack\x20deadline\x20wi\
-    th\x20respect\x20to\x20the\x20time\x20this\x20request\x20was\x20sent\x20\
-    to\n\x20the\x20Pub/Sub\x20system.\x20For\x20example,\x20if\x20the\x20val\
-    ue\x20is\x2010,\x20the\x20new\n\x20ack\x20deadline\x20will\x20expire\x20\
-    10\x20seconds\x20after\x20the\x20`ModifyAckDeadline`\x20call\n\x20was\
-    \x20made.\x20Specifying\x20zero\x20might\x20immediately\x20make\x20the\
-    \x20message\x20available\x20for\n\x20delivery\x20to\x20another\x20subscr\
-    iber\x20client.\x20This\x20typically\x20results\x20in\x20an\n\x20increas\
-    e\x20in\x20the\x20rate\x20of\x20message\x20redeliveries\x20(that\x20is,\
-    \x20duplicates).\n\x20The\x20minimum\x20deadline\x20you\x20can\x20specif\
-    y\x20is\x200\x20seconds.\n\x20The\x20maximum\x20deadline\x20you\x20can\
-    \x20specify\x20is\x20600\x20seconds\x20(10\x20minutes).\n\n\r\n\x05\x04\
-    \x1b\x02\x02\x05\x12\x04\xe4\x06\x02\x07\n\r\n\x05\x04\x1b\x02\x02\x01\
-    \x12\x04\xe4\x06\x08\x1c\n\r\n\x05\x04\x1b\x02\x02\x03\x12\x04\xe4\x06\
-    \x1f\x20\n3\n\x02\x04\x1c\x12\x06\xe8\x06\0\xf0\x06\x01\x1a%\x20Request\
-    \x20for\x20the\x20Acknowledge\x20method.\n\n\x0b\n\x03\x04\x1c\x01\x12\
-    \x04\xe8\x06\x08\x1a\nz\n\x04\x04\x1c\x02\0\x12\x04\xeb\x06\x02\x1a\x1al\
-    \x20The\x20subscription\x20whose\x20message\x20is\x20being\x20acknowledg\
-    ed.\n\x20Format\x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\r\
-    \n\x05\x04\x1c\x02\0\x05\x12\x04\xeb\x06\x02\x08\n\r\n\x05\x04\x1c\x02\0\
-    \x01\x12\x04\xeb\x06\t\x15\n\r\n\x05\x04\x1c\x02\0\x03\x12\x04\xeb\x06\
-    \x18\x19\n\x9e\x01\n\x04\x04\x1c\x02\x01\x12\x04\xef\x06\x02\x1e\x1a\x8f\
-    \x01\x20The\x20acknowledgment\x20ID\x20for\x20the\x20messages\x20being\
-    \x20acknowledged\x20that\x20was\x20returned\n\x20by\x20the\x20Pub/Sub\
-    \x20system\x20in\x20the\x20`Pull`\x20response.\x20Must\x20not\x20be\x20e\
-    mpty.\n\n\r\n\x05\x04\x1c\x02\x01\x04\x12\x04\xef\x06\x02\n\n\r\n\x05\
-    \x04\x1c\x02\x01\x05\x12\x04\xef\x06\x0b\x11\n\r\n\x05\x04\x1c\x02\x01\
-    \x01\x12\x04\xef\x06\x12\x19\n\r\n\x05\x04\x1c\x02\x01\x03\x12\x04\xef\
-    \x06\x1c\x1d\n\xe1\x01\n\x02\x04\x1d\x12\x06\xf5\x06\0\x9c\x07\x01\x1a\
-    \xd2\x01\x20Request\x20for\x20the\x20`StreamingPull`\x20streaming\x20RPC\
-    \x20method.\x20This\x20request\x20is\x20used\x20to\n\x20establish\x20the\
-    \x20initial\x20stream\x20as\x20well\x20as\x20to\x20stream\x20acknowledge\
-    ments\x20and\x20ack\n\x20deadline\x20modifications\x20from\x20the\x20cli\
-    ent\x20to\x20the\x20server.\n\n\x0b\n\x03\x04\x1d\x01\x12\x04\xf5\x06\
-    \x08\x1c\n\xfc\x01\n\x04\x04\x1d\x02\0\x12\x04\xfa\x06\x02\x1a\x1a\xed\
-    \x01\x20The\x20subscription\x20for\x20which\x20to\x20initialize\x20the\
-    \x20new\x20stream.\x20This\x20must\x20be\n\x20provided\x20in\x20the\x20f\
-    irst\x20request\x20on\x20the\x20stream,\x20and\x20must\x20not\x20be\x20s\
-    et\x20in\n\x20subsequent\x20requests\x20from\x20client\x20to\x20server.\
+    \x05\x04\x1e\x02\0\x05\x12\x04\xa9\t\x02\x08\n\r\n\x05\x04\x1e\x02\0\x01\
+    \x12\x04\xa9\t\t\x15\n\r\n\x05\x04\x1e\x02\0\x03\x12\x04\xa9\t\x18\x19\n\
+    \x0f\n\x05\x04\x1e\x02\0\x08\x12\x06\xa9\t\x1a\xae\t\x03\n\x10\n\x08\x04\
+    \x1e\x02\0\x08\x9c\x08\0\x12\x04\xaa\t\x04*\n\x11\n\x07\x04\x1e\x02\0\
+    \x08\x9f\x08\x12\x06\xab\t\x04\xad\t\x05\n\xc2\x02\n\x04\x04\x1e\x02\x01\
+    \x12\x04\xb6\t\x02F\x1a\xb3\x02\x20Required.\x20The\x20push\x20configura\
+    tion\x20for\x20future\x20deliveries.\n\n\x20An\x20empty\x20`pushConfig`\
+    \x20indicates\x20that\x20the\x20Pub/Sub\x20system\x20should\n\x20stop\
+    \x20pushing\x20messages\x20from\x20the\x20given\x20subscription\x20and\
+    \x20allow\n\x20messages\x20to\x20be\x20pulled\x20and\x20acknowledged\x20\
+    -\x20effectively\x20pausing\n\x20the\x20subscription\x20if\x20`Pull`\x20\
+    or\x20`StreamingPull`\x20is\x20not\x20called.\n\n\r\n\x05\x04\x1e\x02\
+    \x01\x06\x12\x04\xb6\t\x02\x0c\n\r\n\x05\x04\x1e\x02\x01\x01\x12\x04\xb6\
+    \t\r\x18\n\r\n\x05\x04\x1e\x02\x01\x03\x12\x04\xb6\t\x1b\x1c\n\r\n\x05\
+    \x04\x1e\x02\x01\x08\x12\x04\xb6\t\x1dE\n\x10\n\x08\x04\x1e\x02\x01\x08\
+    \x9c\x08\0\x12\x04\xb6\t\x1eD\n.\n\x02\x04\x1f\x12\x06\xba\t\0\xd2\t\x01\
+    \x1a\x20\x20Request\x20for\x20the\x20`Pull`\x20method.\n\n\x0b\n\x03\x04\
+    \x1f\x01\x12\x04\xba\t\x08\x13\n\x87\x01\n\x04\x04\x1f\x02\0\x12\x06\xbd\
+    \t\x02\xc2\t\x04\x1aw\x20Required.\x20The\x20subscription\x20from\x20whi\
+    ch\x20messages\x20should\x20be\x20pulled.\n\x20Format\x20is\x20`projects\
+    /{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04\x1f\x02\0\x05\x12\x04\
+    \xbd\t\x02\x08\n\r\n\x05\x04\x1f\x02\0\x01\x12\x04\xbd\t\t\x15\n\r\n\x05\
+    \x04\x1f\x02\0\x03\x12\x04\xbd\t\x18\x19\n\x0f\n\x05\x04\x1f\x02\0\x08\
+    \x12\x06\xbd\t\x1a\xc2\t\x03\n\x10\n\x08\x04\x1f\x02\0\x08\x9c\x08\0\x12\
+    \x04\xbe\t\x04*\n\x11\n\x07\x04\x1f\x02\0\x08\x9f\x08\x12\x06\xbf\t\x04\
+    \xc1\t\x05\n\xdf\x03\n\x04\x04\x1f\x02\x01\x12\x06\xcb\t\x02\xcc\tB\x1a\
+    \xce\x03\x20Optional.\x20If\x20this\x20field\x20set\x20to\x20true,\x20th\
+    e\x20system\x20will\x20respond\x20immediately\n\x20even\x20if\x20it\x20t\
+    here\x20are\x20no\x20messages\x20available\x20to\x20return\x20in\x20the\
+    \x20`Pull`\n\x20response.\x20Otherwise,\x20the\x20system\x20may\x20wait\
+    \x20(for\x20a\x20bounded\x20amount\x20of\x20time)\n\x20until\x20at\x20le\
+    ast\x20one\x20message\x20is\x20available,\x20rather\x20than\x20returning\
+    \x20no\x20messages.\n\x20Warning:\x20setting\x20this\x20field\x20to\x20`\
+    true`\x20is\x20discouraged\x20because\x20it\x20adversely\n\x20impacts\
+    \x20the\x20performance\x20of\x20`Pull`\x20operations.\x20We\x20recommend\
+    \x20that\x20users\x20do\n\x20not\x20set\x20this\x20field.\n\n\r\n\x05\
+    \x04\x1f\x02\x01\x05\x12\x04\xcb\t\x02\x06\n\r\n\x05\x04\x1f\x02\x01\x01\
+    \x12\x04\xcb\t\x07\x19\n\r\n\x05\x04\x1f\x02\x01\x03\x12\x04\xcb\t\x1c\
+    \x1d\n\r\n\x05\x04\x1f\x02\x01\x08\x12\x04\xcc\t\x06A\n\x0e\n\x06\x04\
+    \x1f\x02\x01\x08\x03\x12\x04\xcc\t\x07\x18\n\x10\n\x08\x04\x1f\x02\x01\
+    \x08\x9c\x08\0\x12\x04\xcc\t\x1a@\n\xb2\x01\n\x04\x04\x1f\x02\x02\x12\
+    \x04\xd1\t\x02B\x1a\xa3\x01\x20Required.\x20The\x20maximum\x20number\x20\
+    of\x20messages\x20to\x20return\x20for\x20this\x20request.\x20Must\n\x20b\
+    e\x20a\x20positive\x20integer.\x20The\x20Pub/Sub\x20system\x20may\x20ret\
+    urn\x20fewer\x20than\x20the\x20number\n\x20specified.\n\n\r\n\x05\x04\
+    \x1f\x02\x02\x05\x12\x04\xd1\t\x02\x07\n\r\n\x05\x04\x1f\x02\x02\x01\x12\
+    \x04\xd1\t\x08\x14\n\r\n\x05\x04\x1f\x02\x02\x03\x12\x04\xd1\t\x17\x18\n\
+    \r\n\x05\x04\x1f\x02\x02\x08\x12\x04\xd1\t\x19A\n\x10\n\x08\x04\x1f\x02\
+    \x02\x08\x9c\x08\0\x12\x04\xd1\t\x1a@\n/\n\x02\x04\x20\x12\x06\xd5\t\0\
+    \xdc\t\x01\x1a!\x20Response\x20for\x20the\x20`Pull`\x20method.\n\n\x0b\n\
+    \x03\x04\x20\x01\x12\x04\xd5\t\x08\x14\n\xeb\x02\n\x04\x04\x20\x02\0\x12\
+    \x04\xdb\t\x021\x1a\xdc\x02\x20Received\x20Pub/Sub\x20messages.\x20The\
+    \x20list\x20will\x20be\x20empty\x20if\x20there\x20are\x20no\x20more\n\
+    \x20messages\x20available\x20in\x20the\x20backlog,\x20or\x20if\x20no\x20\
+    messages\x20could\x20be\x20returned\n\x20before\x20the\x20request\x20tim\
+    eout.\x20For\x20JSON,\x20the\x20response\x20can\x20be\x20entirely\n\x20e\
+    mpty.\x20The\x20Pub/Sub\x20system\x20may\x20return\x20fewer\x20than\x20t\
+    he\x20`maxMessages`\x20requested\n\x20even\x20if\x20there\x20are\x20more\
+    \x20messages\x20available\x20in\x20the\x20backlog.\n\n\r\n\x05\x04\x20\
+    \x02\0\x04\x12\x04\xdb\t\x02\n\n\r\n\x05\x04\x20\x02\0\x06\x12\x04\xdb\t\
+    \x0b\x1a\n\r\n\x05\x04\x20\x02\0\x01\x12\x04\xdb\t\x1b,\n\r\n\x05\x04\
+    \x20\x02\0\x03\x12\x04\xdb\t/0\n9\n\x02\x04!\x12\x06\xdf\t\0\xf5\t\x01\
+    \x1a+\x20Request\x20for\x20the\x20ModifyAckDeadline\x20method.\n\n\x0b\n\
+    \x03\x04!\x01\x12\x04\xdf\t\x08\x20\nn\n\x04\x04!\x02\0\x12\x06\xe2\t\
+    \x02\xe7\t\x04\x1a^\x20Required.\x20The\x20name\x20of\x20the\x20subscrip\
+    tion.\n\x20Format\x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\
+    \r\n\x05\x04!\x02\0\x05\x12\x04\xe2\t\x02\x08\n\r\n\x05\x04!\x02\0\x01\
+    \x12\x04\xe2\t\t\x15\n\r\n\x05\x04!\x02\0\x03\x12\x04\xe2\t\x18\x19\n\
+    \x0f\n\x05\x04!\x02\0\x08\x12\x06\xe2\t\x1a\xe7\t\x03\n\x10\n\x08\x04!\
+    \x02\0\x08\x9c\x08\0\x12\x04\xe3\t\x04*\n\x11\n\x07\x04!\x02\0\x08\x9f\
+    \x08\x12\x06\xe4\t\x04\xe6\t\x05\n5\n\x04\x04!\x02\x01\x12\x04\xea\t\x02\
+    G\x1a'\x20Required.\x20List\x20of\x20acknowledgment\x20IDs.\n\n\r\n\x05\
+    \x04!\x02\x01\x04\x12\x04\xea\t\x02\n\n\r\n\x05\x04!\x02\x01\x05\x12\x04\
+    \xea\t\x0b\x11\n\r\n\x05\x04!\x02\x01\x01\x12\x04\xea\t\x12\x19\n\r\n\
+    \x05\x04!\x02\x01\x03\x12\x04\xea\t\x1c\x1d\n\r\n\x05\x04!\x02\x01\x08\
+    \x12\x04\xea\t\x1eF\n\x10\n\x08\x04!\x02\x01\x08\x9c\x08\0\x12\x04\xea\t\
+    \x1fE\n\xb4\x04\n\x04\x04!\x02\x02\x12\x04\xf4\t\x02J\x1a\xa5\x04\x20Req\
+    uired.\x20The\x20new\x20ack\x20deadline\x20with\x20respect\x20to\x20the\
+    \x20time\x20this\x20request\x20was\n\x20sent\x20to\x20the\x20Pub/Sub\x20\
+    system.\x20For\x20example,\x20if\x20the\x20value\x20is\x2010,\x20the\x20\
+    new\x20ack\n\x20deadline\x20will\x20expire\x2010\x20seconds\x20after\x20\
+    the\x20`ModifyAckDeadline`\x20call\x20was\n\x20made.\x20Specifying\x20ze\
+    ro\x20might\x20immediately\x20make\x20the\x20message\x20available\x20for\
+    \n\x20delivery\x20to\x20another\x20subscriber\x20client.\x20This\x20typi\
+    cally\x20results\x20in\x20an\n\x20increase\x20in\x20the\x20rate\x20of\
+    \x20message\x20redeliveries\x20(that\x20is,\x20duplicates).\n\x20The\x20\
+    minimum\x20deadline\x20you\x20can\x20specify\x20is\x200\x20seconds.\n\
+    \x20The\x20maximum\x20deadline\x20you\x20can\x20specify\x20is\x20600\x20\
+    seconds\x20(10\x20minutes).\n\n\r\n\x05\x04!\x02\x02\x05\x12\x04\xf4\t\
+    \x02\x07\n\r\n\x05\x04!\x02\x02\x01\x12\x04\xf4\t\x08\x1c\n\r\n\x05\x04!\
+    \x02\x02\x03\x12\x04\xf4\t\x1f\x20\n\r\n\x05\x04!\x02\x02\x08\x12\x04\
+    \xf4\t!I\n\x10\n\x08\x04!\x02\x02\x08\x9c\x08\0\x12\x04\xf4\t\"H\n3\n\
+    \x02\x04\"\x12\x06\xf8\t\0\x86\n\x01\x1a%\x20Request\x20for\x20the\x20Ac\
+    knowledge\x20method.\n\n\x0b\n\x03\x04\"\x01\x12\x04\xf8\t\x08\x1a\n\x86\
+    \x01\n\x04\x04\"\x02\0\x12\x06\xfb\t\x02\x80\n\x04\x1av\x20Required.\x20\
+    The\x20subscription\x20whose\x20message\x20is\x20being\x20acknowledged.\
     \n\x20Format\x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\r\n\
-    \x05\x04\x1d\x02\0\x05\x12\x04\xfa\x06\x02\x08\n\r\n\x05\x04\x1d\x02\0\
-    \x01\x12\x04\xfa\x06\t\x15\n\r\n\x05\x04\x1d\x02\0\x03\x12\x04\xfa\x06\
-    \x18\x19\n\x85\x03\n\x04\x04\x1d\x02\x01\x12\x04\x81\x07\x02\x1e\x1a\xf6\
-    \x02\x20List\x20of\x20acknowledgement\x20IDs\x20for\x20acknowledging\x20\
-    previously\x20received\x20messages\n\x20(received\x20on\x20this\x20strea\
-    m\x20or\x20a\x20different\x20stream).\x20If\x20an\x20ack\x20ID\x20has\
-    \x20expired,\n\x20the\x20corresponding\x20message\x20may\x20be\x20redeli\
-    vered\x20later.\x20Acknowledging\x20a\x20message\n\x20more\x20than\x20on\
-    ce\x20will\x20not\x20result\x20in\x20an\x20error.\x20If\x20the\x20acknow\
-    ledgement\x20ID\x20is\n\x20malformed,\x20the\x20stream\x20will\x20be\x20\
-    aborted\x20with\x20status\x20`INVALID_ARGUMENT`.\n\n\r\n\x05\x04\x1d\x02\
-    \x01\x04\x12\x04\x81\x07\x02\n\n\r\n\x05\x04\x1d\x02\x01\x05\x12\x04\x81\
-    \x07\x0b\x11\n\r\n\x05\x04\x1d\x02\x01\x01\x12\x04\x81\x07\x12\x19\n\r\n\
-    \x05\x04\x1d\x02\x01\x03\x12\x04\x81\x07\x1c\x1d\n\x89\x06\n\x04\x04\x1d\
-    \x02\x02\x12\x04\x8e\x07\x02-\x1a\xfa\x05\x20The\x20list\x20of\x20new\
-    \x20ack\x20deadlines\x20for\x20the\x20IDs\x20listed\x20in\n\x20`modify_d\
-    eadline_ack_ids`.\x20The\x20size\x20of\x20this\x20list\x20must\x20be\x20\
-    the\x20same\x20as\x20the\n\x20size\x20of\x20`modify_deadline_ack_ids`.\
-    \x20If\x20it\x20differs\x20the\x20stream\x20will\x20be\x20aborted\n\x20w\
-    ith\x20`INVALID_ARGUMENT`.\x20Each\x20element\x20in\x20this\x20list\x20i\
-    s\x20applied\x20to\x20the\n\x20element\x20in\x20the\x20same\x20position\
-    \x20in\x20`modify_deadline_ack_ids`.\x20The\x20new\x20ack\n\x20deadline\
-    \x20is\x20with\x20respect\x20to\x20the\x20time\x20this\x20request\x20was\
-    \x20sent\x20to\x20the\x20Pub/Sub\n\x20system.\x20Must\x20be\x20>=\x200.\
-    \x20For\x20example,\x20if\x20the\x20value\x20is\x2010,\x20the\x20new\x20\
-    ack\x20deadline\n\x20will\x20expire\x2010\x20seconds\x20after\x20this\
-    \x20request\x20is\x20received.\x20If\x20the\x20value\x20is\x200,\n\x20th\
-    e\x20message\x20is\x20immediately\x20made\x20available\x20for\x20another\
-    \x20streaming\x20or\n\x20non-streaming\x20pull\x20request.\x20If\x20the\
-    \x20value\x20is\x20<\x200\x20(an\x20error),\x20the\x20stream\x20will\n\
-    \x20be\x20aborted\x20with\x20status\x20`INVALID_ARGUMENT`.\n\n\r\n\x05\
-    \x04\x1d\x02\x02\x04\x12\x04\x8e\x07\x02\n\n\r\n\x05\x04\x1d\x02\x02\x05\
-    \x12\x04\x8e\x07\x0b\x10\n\r\n\x05\x04\x1d\x02\x02\x01\x12\x04\x8e\x07\
-    \x11(\n\r\n\x05\x04\x1d\x02\x02\x03\x12\x04\x8e\x07+,\n\xc8\x02\n\x04\
-    \x04\x1d\x02\x03\x12\x04\x95\x07\x02.\x1a\xb9\x02\x20List\x20of\x20ackno\
-    wledgement\x20IDs\x20whose\x20deadline\x20will\x20be\x20modified\x20base\
-    d\x20on\x20the\n\x20corresponding\x20element\x20in\x20`modify_deadline_s\
-    econds`.\x20This\x20field\x20can\x20be\x20used\n\x20to\x20indicate\x20th\
-    at\x20more\x20time\x20is\x20needed\x20to\x20process\x20a\x20message\x20b\
-    y\x20the\n\x20subscriber,\x20or\x20to\x20make\x20the\x20message\x20avail\
-    able\x20for\x20redelivery\x20if\x20the\n\x20processing\x20was\x20interru\
-    pted.\n\n\r\n\x05\x04\x1d\x02\x03\x04\x12\x04\x95\x07\x02\n\n\r\n\x05\
-    \x04\x1d\x02\x03\x05\x12\x04\x95\x07\x0b\x11\n\r\n\x05\x04\x1d\x02\x03\
-    \x01\x12\x04\x95\x07\x12)\n\r\n\x05\x04\x1d\x02\x03\x03\x12\x04\x95\x07,\
-    -\n\xb4\x02\n\x04\x04\x1d\x02\x04\x12\x04\x9b\x07\x02(\x1a\xa5\x02\x20Th\
-    e\x20ack\x20deadline\x20to\x20use\x20for\x20the\x20stream.\x20This\x20mu\
-    st\x20be\x20provided\x20in\x20the\n\x20first\x20request\x20on\x20the\x20\
-    stream,\x20but\x20it\x20can\x20also\x20be\x20updated\x20on\x20subsequent\
-    \n\x20requests\x20from\x20client\x20to\x20server.\x20The\x20minimum\x20d\
-    eadline\x20you\x20can\x20specify\x20is\x2010\n\x20seconds.\x20The\x20max\
-    imum\x20deadline\x20you\x20can\x20specify\x20is\x20600\x20seconds\x20(10\
-    \x20minutes).\n\n\r\n\x05\x04\x1d\x02\x04\x05\x12\x04\x9b\x07\x02\x07\n\
-    \r\n\x05\x04\x1d\x02\x04\x01\x12\x04\x9b\x07\x08#\n\r\n\x05\x04\x1d\x02\
-    \x04\x03\x12\x04\x9b\x07&'\n\x81\x01\n\x02\x04\x1e\x12\x06\xa0\x07\0\xa3\
-    \x07\x01\x1as\x20Response\x20for\x20the\x20`StreamingPull`\x20method.\
-    \x20This\x20response\x20is\x20used\x20to\x20stream\n\x20messages\x20from\
-    \x20the\x20server\x20to\x20the\x20client.\n\n\x0b\n\x03\x04\x1e\x01\x12\
-    \x04\xa0\x07\x08\x1d\nB\n\x04\x04\x1e\x02\0\x12\x04\xa2\x07\x021\x1a4\
-    \x20Received\x20Pub/Sub\x20messages.\x20This\x20will\x20not\x20be\x20emp\
-    ty.\n\n\r\n\x05\x04\x1e\x02\0\x04\x12\x04\xa2\x07\x02\n\n\r\n\x05\x04\
-    \x1e\x02\0\x06\x12\x04\xa2\x07\x0b\x1a\n\r\n\x05\x04\x1e\x02\0\x01\x12\
-    \x04\xa2\x07\x1b,\n\r\n\x05\x04\x1e\x02\0\x03\x12\x04\xa2\x07/0\n8\n\x02\
-    \x04\x1f\x12\x06\xa6\x07\0\xbe\x07\x01\x1a*\x20Request\x20for\x20the\x20\
-    `CreateSnapshot`\x20method.\n\n\x0b\n\x03\x04\x1f\x01\x12\x04\xa6\x07\
-    \x08\x1d\n\xa3\x03\n\x04\x04\x1f\x02\0\x12\x04\xae\x07\x02\x12\x1a\x94\
-    \x03\x20Optional\x20user-provided\x20name\x20for\x20this\x20snapshot.\n\
-    \x20If\x20the\x20name\x20is\x20not\x20provided\x20in\x20the\x20request,\
-    \x20the\x20server\x20will\x20assign\x20a\x20random\n\x20name\x20for\x20t\
-    his\x20snapshot\x20on\x20the\x20same\x20project\x20as\x20the\x20subscrip\
-    tion.\n\x20Note\x20that\x20for\x20REST\x20API\x20requests,\x20you\x20mus\
-    t\x20specify\x20a\x20name.\x20\x20See\x20the\n\x20<a\x20href=\"https://c\
-    loud.google.com/pubsub/docs/admin#resource_names\">\n\x20resource\x20nam\
-    e\x20rules</a>.\n\x20Format\x20is\x20`projects/{project}/snapshots/{snap\
-    }`.\n\n\r\n\x05\x04\x1f\x02\0\x05\x12\x04\xae\x07\x02\x08\n\r\n\x05\x04\
-    \x1f\x02\0\x01\x12\x04\xae\x07\t\r\n\r\n\x05\x04\x1f\x02\0\x03\x12\x04\
-    \xae\x07\x10\x11\n\xad\x04\n\x04\x04\x1f\x02\x01\x12\x04\xb9\x07\x02\x1a\
-    \x1a\x9e\x04\x20The\x20subscription\x20whose\x20backlog\x20the\x20snapsh\
-    ot\x20retains.\n\x20Specifically,\x20the\x20created\x20snapshot\x20is\
-    \x20guaranteed\x20to\x20retain:\n\x20\x20(a)\x20The\x20existing\x20backl\
-    og\x20on\x20the\x20subscription.\x20More\x20precisely,\x20this\x20is\n\
-    \x20\x20\x20\x20\x20\x20defined\x20as\x20the\x20messages\x20in\x20the\
-    \x20subscription's\x20backlog\x20that\x20are\n\x20\x20\x20\x20\x20\x20un\
-    acknowledged\x20upon\x20the\x20successful\x20completion\x20of\x20the\n\
-    \x20\x20\x20\x20\x20\x20`CreateSnapshot`\x20request;\x20as\x20well\x20as\
-    :\n\x20\x20(b)\x20Any\x20messages\x20published\x20to\x20the\x20subscript\
-    ion's\x20topic\x20following\x20the\n\x20\x20\x20\x20\x20\x20successful\
-    \x20completion\x20of\x20the\x20CreateSnapshot\x20request.\n\x20Format\
-    \x20is\x20`projects/{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04\x1f\
-    \x02\x01\x05\x12\x04\xb9\x07\x02\x08\n\r\n\x05\x04\x1f\x02\x01\x01\x12\
-    \x04\xb9\x07\t\x15\n\r\n\x05\x04\x1f\x02\x01\x03\x12\x04\xb9\x07\x18\x19\
-    \nm\n\x04\x04\x1f\x02\x02\x12\x04\xbd\x07\x02!\x1a_\x20See\x20<a\x20href\
-    =\"https://cloud.google.com/pubsub/docs/labels\">\x20Creating\x20and\n\
-    \x20managing\x20labels</a>.\n\n\r\n\x05\x04\x1f\x02\x02\x06\x12\x04\xbd\
-    \x07\x02\x15\n\r\n\x05\x04\x1f\x02\x02\x01\x12\x04\xbd\x07\x16\x1c\n\r\n\
-    \x05\x04\x1f\x02\x02\x03\x12\x04\xbd\x07\x1f\x20\n6\n\x02\x04\x20\x12\
-    \x06\xc1\x07\0\xc8\x07\x01\x1a(\x20Request\x20for\x20the\x20UpdateSnapsh\
-    ot\x20method.\n\n\x0b\n\x03\x04\x20\x01\x12\x04\xc1\x07\x08\x1d\n,\n\x04\
-    \x04\x20\x02\0\x12\x04\xc3\x07\x02\x18\x1a\x1e\x20The\x20updated\x20snap\
-    shot\x20object.\n\n\r\n\x05\x04\x20\x02\0\x06\x12\x04\xc3\x07\x02\n\n\r\
-    \n\x05\x04\x20\x02\0\x01\x12\x04\xc3\x07\x0b\x13\n\r\n\x05\x04\x20\x02\0\
-    \x03\x12\x04\xc3\x07\x16\x17\nl\n\x04\x04\x20\x02\x01\x12\x04\xc7\x07\
-    \x02,\x1a^\x20Indicates\x20which\x20fields\x20in\x20the\x20provided\x20s\
-    napshot\x20to\x20update.\n\x20Must\x20be\x20specified\x20and\x20non-empt\
-    y.\n\n\r\n\x05\x04\x20\x02\x01\x06\x12\x04\xc7\x07\x02\x1b\n\r\n\x05\x04\
-    \x20\x02\x01\x01\x12\x04\xc7\x07\x1c'\n\r\n\x05\x04\x20\x02\x01\x03\x12\
-    \x04\xc7\x07*+\n\xca\x02\n\x02\x04!\x12\x06\xd0\x07\0\xe6\x07\x01\x1a\
-    \xbb\x02\x20A\x20snapshot\x20resource.\x20Snapshots\x20are\x20used\x20in\
-    \n\x20<a\x20href=\"https://cloud.google.com/pubsub/docs/replay-overview\
-    \">Seek</a>\n\x20operations,\x20which\x20allow\n\x20you\x20to\x20manage\
-    \x20message\x20acknowledgments\x20in\x20bulk.\x20That\x20is,\x20you\x20c\
-    an\x20set\x20the\n\x20acknowledgment\x20state\x20of\x20messages\x20in\
-    \x20an\x20existing\x20subscription\x20to\x20the\x20state\n\x20captured\
-    \x20by\x20a\x20snapshot.\n\n\x0b\n\x03\x04!\x01\x12\x04\xd0\x07\x08\x10\
-    \n)\n\x04\x04!\x02\0\x12\x04\xd2\x07\x02\x12\x1a\x1b\x20The\x20name\x20o\
-    f\x20the\x20snapshot.\n\n\r\n\x05\x04!\x02\0\x05\x12\x04\xd2\x07\x02\x08\
-    \n\r\n\x05\x04!\x02\0\x01\x12\x04\xd2\x07\t\r\n\r\n\x05\x04!\x02\0\x03\
-    \x12\x04\xd2\x07\x10\x11\nU\n\x04\x04!\x02\x01\x12\x04\xd5\x07\x02\x13\
-    \x1aG\x20The\x20name\x20of\x20the\x20topic\x20from\x20which\x20this\x20s\
-    napshot\x20is\x20retaining\x20messages.\n\n\r\n\x05\x04!\x02\x01\x05\x12\
-    \x04\xd5\x07\x02\x08\n\r\n\x05\x04!\x02\x01\x01\x12\x04\xd5\x07\t\x0e\n\
-    \r\n\x05\x04!\x02\x01\x03\x12\x04\xd5\x07\x11\x12\n\xd4\x05\n\x04\x04!\
-    \x02\x02\x12\x04\xe1\x07\x02,\x1a\xc5\x05\x20The\x20snapshot\x20is\x20gu\
-    aranteed\x20to\x20exist\x20up\x20until\x20this\x20time.\n\x20A\x20newly-\
-    created\x20snapshot\x20expires\x20no\x20later\x20than\x207\x20days\x20fr\
-    om\x20the\x20time\x20of\x20its\n\x20creation.\x20Its\x20exact\x20lifetim\
-    e\x20is\x20determined\x20at\x20creation\x20by\x20the\x20existing\n\x20ba\
-    cklog\x20in\x20the\x20source\x20subscription.\x20Specifically,\x20the\
-    \x20lifetime\x20of\x20the\n\x20snapshot\x20is\x20`7\x20days\x20-\x20(age\
-    \x20of\x20oldest\x20unacked\x20message\x20in\x20the\x20subscription)`.\n\
-    \x20For\x20example,\x20consider\x20a\x20subscription\x20whose\x20oldest\
-    \x20unacked\x20message\x20is\x203\x20days\n\x20old.\x20If\x20a\x20snapsh\
-    ot\x20is\x20created\x20from\x20this\x20subscription,\x20the\x20snapshot\
-    \x20--\x20which\n\x20will\x20always\x20capture\x20this\x203-day-old\x20b\
-    acklog\x20as\x20long\x20as\x20the\x20snapshot\n\x20exists\x20--\x20will\
-    \x20expire\x20in\x204\x20days.\x20The\x20service\x20will\x20refuse\x20to\
-    \x20create\x20a\n\x20snapshot\x20that\x20would\x20expire\x20in\x20less\
-    \x20than\x201\x20hour\x20after\x20creation.\n\n\r\n\x05\x04!\x02\x02\x06\
-    \x12\x04\xe1\x07\x02\x1b\n\r\n\x05\x04!\x02\x02\x01\x12\x04\xe1\x07\x1c'\
-    \n\r\n\x05\x04!\x02\x02\x03\x12\x04\xe1\x07*+\nm\n\x04\x04!\x02\x03\x12\
-    \x04\xe5\x07\x02!\x1a_\x20See\x20<a\x20href=\"https://cloud.google.com/p\
-    ubsub/docs/labels\">\x20Creating\x20and\n\x20managing\x20labels</a>.\n\n\
-    \r\n\x05\x04!\x02\x03\x06\x12\x04\xe5\x07\x02\x15\n\r\n\x05\x04!\x02\x03\
-    \x01\x12\x04\xe5\x07\x16\x1c\n\r\n\x05\x04!\x02\x03\x03\x12\x04\xe5\x07\
-    \x1f\x20\n3\n\x02\x04\"\x12\x06\xe9\x07\0\xed\x07\x01\x1a%\x20Request\
-    \x20for\x20the\x20GetSnapshot\x20method.\n\n\x0b\n\x03\x04\"\x01\x12\x04\
-    \xe9\x07\x08\x1a\nb\n\x04\x04\"\x02\0\x12\x04\xec\x07\x02\x16\x1aT\x20Th\
-    e\x20name\x20of\x20the\x20snapshot\x20to\x20get.\n\x20Format\x20is\x20`p\
-    rojects/{project}/snapshots/{snap}`.\n\n\r\n\x05\x04\"\x02\0\x05\x12\x04\
-    \xec\x07\x02\x08\n\r\n\x05\x04\"\x02\0\x01\x12\x04\xec\x07\t\x11\n\r\n\
-    \x05\x04\"\x02\0\x03\x12\x04\xec\x07\x14\x15\n7\n\x02\x04#\x12\x06\xf0\
-    \x07\0\xfc\x07\x01\x1a)\x20Request\x20for\x20the\x20`ListSnapshots`\x20m\
-    ethod.\n\n\x0b\n\x03\x04#\x01\x12\x04\xf0\x07\x08\x1c\ng\n\x04\x04#\x02\
-    \0\x12\x04\xf3\x07\x02\x15\x1aY\x20The\x20name\x20of\x20the\x20project\
-    \x20in\x20which\x20to\x20list\x20snapshots.\n\x20Format\x20is\x20`projec\
-    ts/{project-id}`.\n\n\r\n\x05\x04#\x02\0\x05\x12\x04\xf3\x07\x02\x08\n\r\
-    \n\x05\x04#\x02\0\x01\x12\x04\xf3\x07\t\x10\n\r\n\x05\x04#\x02\0\x03\x12\
-    \x04\xf3\x07\x13\x14\n6\n\x04\x04#\x02\x01\x12\x04\xf6\x07\x02\x16\x1a(\
-    \x20Maximum\x20number\x20of\x20snapshots\x20to\x20return.\n\n\r\n\x05\
-    \x04#\x02\x01\x05\x12\x04\xf6\x07\x02\x07\n\r\n\x05\x04#\x02\x01\x01\x12\
-    \x04\xf6\x07\x08\x11\n\r\n\x05\x04#\x02\x01\x03\x12\x04\xf6\x07\x14\x15\
-    \n\xca\x01\n\x04\x04#\x02\x02\x12\x04\xfb\x07\x02\x18\x1a\xbb\x01\x20The\
-    \x20value\x20returned\x20by\x20the\x20last\x20`ListSnapshotsResponse`;\
-    \x20indicates\x20that\x20this\n\x20is\x20a\x20continuation\x20of\x20a\
-    \x20prior\x20`ListSnapshots`\x20call,\x20and\x20that\x20the\x20system\n\
-    \x20should\x20return\x20the\x20next\x20page\x20of\x20data.\n\n\r\n\x05\
-    \x04#\x02\x02\x05\x12\x04\xfb\x07\x02\x08\n\r\n\x05\x04#\x02\x02\x01\x12\
-    \x04\xfb\x07\t\x13\n\r\n\x05\x04#\x02\x02\x03\x12\x04\xfb\x07\x16\x17\n8\
-    \n\x02\x04$\x12\x06\xff\x07\0\x86\x08\x01\x1a*\x20Response\x20for\x20the\
-    \x20`ListSnapshots`\x20method.\n\n\x0b\n\x03\x04$\x01\x12\x04\xff\x07\
-    \x08\x1d\n(\n\x04\x04$\x02\0\x12\x04\x81\x08\x02\"\x1a\x1a\x20The\x20res\
-    ulting\x20snapshots.\n\n\r\n\x05\x04$\x02\0\x04\x12\x04\x81\x08\x02\n\n\
-    \r\n\x05\x04$\x02\0\x06\x12\x04\x81\x08\x0b\x13\n\r\n\x05\x04$\x02\0\x01\
-    \x12\x04\x81\x08\x14\x1d\n\r\n\x05\x04$\x02\0\x03\x12\x04\x81\x08\x20!\n\
-    \x9e\x01\n\x04\x04$\x02\x01\x12\x04\x85\x08\x02\x1d\x1a\x8f\x01\x20If\
-    \x20not\x20empty,\x20indicates\x20that\x20there\x20may\x20be\x20more\x20\
-    snapshot\x20that\x20match\x20the\n\x20request;\x20this\x20value\x20shoul\
-    d\x20be\x20passed\x20in\x20a\x20new\x20`ListSnapshotsRequest`.\n\n\r\n\
-    \x05\x04$\x02\x01\x05\x12\x04\x85\x08\x02\x08\n\r\n\x05\x04$\x02\x01\x01\
-    \x12\x04\x85\x08\t\x18\n\r\n\x05\x04$\x02\x01\x03\x12\x04\x85\x08\x1b\
-    \x1c\n8\n\x02\x04%\x12\x06\x89\x08\0\x8d\x08\x01\x1a*\x20Request\x20for\
-    \x20the\x20`DeleteSnapshot`\x20method.\n\n\x0b\n\x03\x04%\x01\x12\x04\
-    \x89\x08\x08\x1d\ne\n\x04\x04%\x02\0\x12\x04\x8c\x08\x02\x16\x1aW\x20The\
-    \x20name\x20of\x20the\x20snapshot\x20to\x20delete.\n\x20Format\x20is\x20\
-    `projects/{project}/snapshots/{snap}`.\n\n\r\n\x05\x04%\x02\0\x05\x12\
-    \x04\x8c\x08\x02\x08\n\r\n\x05\x04%\x02\0\x01\x12\x04\x8c\x08\t\x11\n\r\
-    \n\x05\x04%\x02\0\x03\x12\x04\x8c\x08\x14\x15\n.\n\x02\x04&\x12\x06\x90\
-    \x08\0\xa7\x08\x01\x1a\x20\x20Request\x20for\x20the\x20`Seek`\x20method.\
-    \n\n\x0b\n\x03\x04&\x01\x12\x04\x90\x08\x08\x13\n+\n\x04\x04&\x02\0\x12\
-    \x04\x92\x08\x02\x1a\x1a\x1d\x20The\x20subscription\x20to\x20affect.\n\n\
-    \r\n\x05\x04&\x02\0\x05\x12\x04\x92\x08\x02\x08\n\r\n\x05\x04&\x02\0\x01\
-    \x12\x04\x92\x08\t\x15\n\r\n\x05\x04&\x02\0\x03\x12\x04\x92\x08\x18\x19\
-    \n\x0e\n\x04\x04&\x08\0\x12\x06\x94\x08\x02\xa6\x08\x03\n\r\n\x05\x04&\
-    \x08\0\x01\x12\x04\x94\x08\x08\x0e\n\xbe\x05\n\x04\x04&\x02\x01\x12\x04\
-    \xa0\x08\x04'\x1a\xaf\x05\x20The\x20time\x20to\x20seek\x20to.\n\x20Messa\
-    ges\x20retained\x20in\x20the\x20subscription\x20that\x20were\x20publishe\
-    d\x20before\x20this\n\x20time\x20are\x20marked\x20as\x20acknowledged,\
-    \x20and\x20messages\x20retained\x20in\x20the\n\x20subscription\x20that\
-    \x20were\x20published\x20after\x20this\x20time\x20are\x20marked\x20as\n\
-    \x20unacknowledged.\x20Note\x20that\x20this\x20operation\x20affects\x20o\
-    nly\x20those\x20messages\n\x20retained\x20in\x20the\x20subscription\x20(\
-    configured\x20by\x20the\x20combination\x20of\n\x20`message_retention_dur\
-    ation`\x20and\x20`retain_acked_messages`).\x20For\x20example,\n\x20if\
-    \x20`time`\x20corresponds\x20to\x20a\x20point\x20before\x20the\x20messag\
-    e\x20retention\n\x20window\x20(or\x20to\x20a\x20point\x20before\x20the\
-    \x20system's\x20notion\x20of\x20the\x20subscription\n\x20creation\x20tim\
-    e),\x20only\x20retained\x20messages\x20will\x20be\x20marked\x20as\x20una\
-    cknowledged,\n\x20and\x20already-expunged\x20messages\x20will\x20not\x20\
-    be\x20restored.\n\n\r\n\x05\x04&\x02\x01\x06\x12\x04\xa0\x08\x04\x1d\n\r\
-    \n\x05\x04&\x02\x01\x01\x12\x04\xa0\x08\x1e\"\n\r\n\x05\x04&\x02\x01\x03\
-    \x12\x04\xa0\x08%&\n\xa8\x01\n\x04\x04&\x02\x02\x12\x04\xa5\x08\x04\x18\
+    \x05\x04\"\x02\0\x05\x12\x04\xfb\t\x02\x08\n\r\n\x05\x04\"\x02\0\x01\x12\
+    \x04\xfb\t\t\x15\n\r\n\x05\x04\"\x02\0\x03\x12\x04\xfb\t\x18\x19\n\x0f\n\
+    \x05\x04\"\x02\0\x08\x12\x06\xfb\t\x1a\x80\n\x03\n\x10\n\x08\x04\"\x02\0\
+    \x08\x9c\x08\0\x12\x04\xfc\t\x04*\n\x11\n\x07\x04\"\x02\0\x08\x9f\x08\
+    \x12\x06\xfd\t\x04\xff\t\x05\n\xa9\x01\n\x04\x04\"\x02\x01\x12\x04\x85\n\
+    \x02G\x1a\x9a\x01\x20Required.\x20The\x20acknowledgment\x20ID\x20for\x20\
+    the\x20messages\x20being\x20acknowledged\x20that\n\x20was\x20returned\
+    \x20by\x20the\x20Pub/Sub\x20system\x20in\x20the\x20`Pull`\x20response.\
+    \x20Must\x20not\x20be\n\x20empty.\n\n\r\n\x05\x04\"\x02\x01\x04\x12\x04\
+    \x85\n\x02\n\n\r\n\x05\x04\"\x02\x01\x05\x12\x04\x85\n\x0b\x11\n\r\n\x05\
+    \x04\"\x02\x01\x01\x12\x04\x85\n\x12\x19\n\r\n\x05\x04\"\x02\x01\x03\x12\
+    \x04\x85\n\x1c\x1d\n\r\n\x05\x04\"\x02\x01\x08\x12\x04\x85\n\x1eF\n\x10\
+    \n\x08\x04\"\x02\x01\x08\x9c\x08\0\x12\x04\x85\n\x1fE\n\xe1\x01\n\x02\
+    \x04#\x12\x06\x8b\n\0\xd6\n\x01\x1a\xd2\x01\x20Request\x20for\x20the\x20\
+    `StreamingPull`\x20streaming\x20RPC\x20method.\x20This\x20request\x20is\
+    \x20used\x20to\n\x20establish\x20the\x20initial\x20stream\x20as\x20well\
+    \x20as\x20to\x20stream\x20acknowledgements\x20and\x20ack\n\x20deadline\
+    \x20modifications\x20from\x20the\x20client\x20to\x20the\x20server.\n\n\
+    \x0b\n\x03\x04#\x01\x12\x04\x8b\n\x08\x1c\n\x88\x02\n\x04\x04#\x02\0\x12\
+    \x06\x90\n\x02\x95\n\x04\x1a\xf7\x01\x20Required.\x20The\x20subscription\
+    \x20for\x20which\x20to\x20initialize\x20the\x20new\x20stream.\x20This\n\
+    \x20must\x20be\x20provided\x20in\x20the\x20first\x20request\x20on\x20the\
+    \x20stream,\x20and\x20must\x20not\x20be\x20set\x20in\n\x20subsequent\x20\
+    requests\x20from\x20client\x20to\x20server.\n\x20Format\x20is\x20`projec\
+    ts/{project}/subscriptions/{sub}`.\n\n\r\n\x05\x04#\x02\0\x05\x12\x04\
+    \x90\n\x02\x08\n\r\n\x05\x04#\x02\0\x01\x12\x04\x90\n\t\x15\n\r\n\x05\
+    \x04#\x02\0\x03\x12\x04\x90\n\x18\x19\n\x0f\n\x05\x04#\x02\0\x08\x12\x06\
+    \x90\n\x1a\x95\n\x03\n\x10\n\x08\x04#\x02\0\x08\x9c\x08\0\x12\x04\x91\n\
+    \x04*\n\x11\n\x07\x04#\x02\0\x08\x9f\x08\x12\x06\x92\n\x04\x94\n\x05\n\
+    \x85\x03\n\x04\x04#\x02\x01\x12\x04\x9c\n\x02\x1e\x1a\xf6\x02\x20List\
+    \x20of\x20acknowledgement\x20IDs\x20for\x20acknowledging\x20previously\
+    \x20received\x20messages\n\x20(received\x20on\x20this\x20stream\x20or\
+    \x20a\x20different\x20stream).\x20If\x20an\x20ack\x20ID\x20has\x20expire\
+    d,\n\x20the\x20corresponding\x20message\x20may\x20be\x20redelivered\x20l\
+    ater.\x20Acknowledging\x20a\x20message\n\x20more\x20than\x20once\x20will\
+    \x20not\x20result\x20in\x20an\x20error.\x20If\x20the\x20acknowledgement\
+    \x20ID\x20is\n\x20malformed,\x20the\x20stream\x20will\x20be\x20aborted\
+    \x20with\x20status\x20`INVALID_ARGUMENT`.\n\n\r\n\x05\x04#\x02\x01\x04\
+    \x12\x04\x9c\n\x02\n\n\r\n\x05\x04#\x02\x01\x05\x12\x04\x9c\n\x0b\x11\n\
+    \r\n\x05\x04#\x02\x01\x01\x12\x04\x9c\n\x12\x19\n\r\n\x05\x04#\x02\x01\
+    \x03\x12\x04\x9c\n\x1c\x1d\n\x89\x06\n\x04\x04#\x02\x02\x12\x04\xa9\n\
+    \x02-\x1a\xfa\x05\x20The\x20list\x20of\x20new\x20ack\x20deadlines\x20for\
+    \x20the\x20IDs\x20listed\x20in\n\x20`modify_deadline_ack_ids`.\x20The\
+    \x20size\x20of\x20this\x20list\x20must\x20be\x20the\x20same\x20as\x20the\
+    \n\x20size\x20of\x20`modify_deadline_ack_ids`.\x20If\x20it\x20differs\
+    \x20the\x20stream\x20will\x20be\x20aborted\n\x20with\x20`INVALID_ARGUMEN\
+    T`.\x20Each\x20element\x20in\x20this\x20list\x20is\x20applied\x20to\x20t\
+    he\n\x20element\x20in\x20the\x20same\x20position\x20in\x20`modify_deadli\
+    ne_ack_ids`.\x20The\x20new\x20ack\n\x20deadline\x20is\x20with\x20respect\
+    \x20to\x20the\x20time\x20this\x20request\x20was\x20sent\x20to\x20the\x20\
+    Pub/Sub\n\x20system.\x20Must\x20be\x20>=\x200.\x20For\x20example,\x20if\
+    \x20the\x20value\x20is\x2010,\x20the\x20new\x20ack\x20deadline\n\x20will\
+    \x20expire\x2010\x20seconds\x20after\x20this\x20request\x20is\x20receive\
+    d.\x20If\x20the\x20value\x20is\x200,\n\x20the\x20message\x20is\x20immedi\
+    ately\x20made\x20available\x20for\x20another\x20streaming\x20or\n\x20non\
+    -streaming\x20pull\x20request.\x20If\x20the\x20value\x20is\x20<\x200\x20\
+    (an\x20error),\x20the\x20stream\x20will\n\x20be\x20aborted\x20with\x20st\
+    atus\x20`INVALID_ARGUMENT`.\n\n\r\n\x05\x04#\x02\x02\x04\x12\x04\xa9\n\
+    \x02\n\n\r\n\x05\x04#\x02\x02\x05\x12\x04\xa9\n\x0b\x10\n\r\n\x05\x04#\
+    \x02\x02\x01\x12\x04\xa9\n\x11(\n\r\n\x05\x04#\x02\x02\x03\x12\x04\xa9\n\
+    +,\n\xc8\x02\n\x04\x04#\x02\x03\x12\x04\xb0\n\x02.\x1a\xb9\x02\x20List\
+    \x20of\x20acknowledgement\x20IDs\x20whose\x20deadline\x20will\x20be\x20m\
+    odified\x20based\x20on\x20the\n\x20corresponding\x20element\x20in\x20`mo\
+    dify_deadline_seconds`.\x20This\x20field\x20can\x20be\x20used\n\x20to\
+    \x20indicate\x20that\x20more\x20time\x20is\x20needed\x20to\x20process\
+    \x20a\x20message\x20by\x20the\n\x20subscriber,\x20or\x20to\x20make\x20th\
+    e\x20message\x20available\x20for\x20redelivery\x20if\x20the\n\x20process\
+    ing\x20was\x20interrupted.\n\n\r\n\x05\x04#\x02\x03\x04\x12\x04\xb0\n\
+    \x02\n\n\r\n\x05\x04#\x02\x03\x05\x12\x04\xb0\n\x0b\x11\n\r\n\x05\x04#\
+    \x02\x03\x01\x12\x04\xb0\n\x12)\n\r\n\x05\x04#\x02\x03\x03\x12\x04\xb0\n\
+    ,-\n\xc0\x02\n\x04\x04#\x02\x04\x12\x06\xb6\n\x02\xb7\n/\x1a\xaf\x02\x20\
+    Required.\x20The\x20ack\x20deadline\x20to\x20use\x20for\x20the\x20stream\
+    .\x20This\x20must\x20be\x20provided\x20in\n\x20the\x20first\x20request\
+    \x20on\x20the\x20stream,\x20but\x20it\x20can\x20also\x20be\x20updated\
+    \x20on\x20subsequent\n\x20requests\x20from\x20client\x20to\x20server.\
+    \x20The\x20minimum\x20deadline\x20you\x20can\x20specify\x20is\x2010\n\
+    \x20seconds.\x20The\x20maximum\x20deadline\x20you\x20can\x20specify\x20i\
+    s\x20600\x20seconds\x20(10\x20minutes).\n\n\r\n\x05\x04#\x02\x04\x05\x12\
+    \x04\xb6\n\x02\x07\n\r\n\x05\x04#\x02\x04\x01\x12\x04\xb6\n\x08#\n\r\n\
+    \x05\x04#\x02\x04\x03\x12\x04\xb6\n&'\n\r\n\x05\x04#\x02\x04\x08\x12\x04\
+    \xb7\n\x06.\n\x10\n\x08\x04#\x02\x04\x08\x9c\x08\0\x12\x04\xb7\n\x07-\n\
+    \x9e\x03\n\x04\x04#\x02\x05\x12\x04\xbf\n\x02\x17\x1a\x8f\x03\x20A\x20un\
+    ique\x20identifier\x20that\x20is\x20used\x20to\x20distinguish\x20client\
+    \x20instances\x20from\x20each\n\x20other.\x20Only\x20needs\x20to\x20be\
+    \x20provided\x20on\x20the\x20initial\x20request.\x20When\x20a\x20stream\
+    \n\x20disconnects\x20and\x20reconnects\x20for\x20the\x20same\x20stream,\
+    \x20the\x20client_id\x20should\x20be\x20set\n\x20to\x20the\x20same\x20va\
+    lue\x20so\x20that\x20state\x20associated\x20with\x20the\x20old\x20stream\
+    \x20can\x20be\n\x20transferred\x20to\x20the\x20new\x20stream.\x20The\x20\
+    same\x20client_id\x20should\x20not\x20be\x20used\x20for\n\x20different\
+    \x20client\x20instances.\n\n\r\n\x05\x04#\x02\x05\x05\x12\x04\xbf\n\x02\
+    \x08\n\r\n\x05\x04#\x02\x05\x01\x12\x04\xbf\n\t\x12\n\r\n\x05\x04#\x02\
+    \x05\x03\x12\x04\xbf\n\x15\x16\n\xe0\x04\n\x04\x04#\x02\x06\x12\x04\xca\
+    \n\x02%\x1a\xd1\x04\x20Flow\x20control\x20settings\x20for\x20the\x20maxi\
+    mum\x20number\x20of\x20outstanding\x20messages.\x20When\n\x20there\x20ar\
+    e\x20`max_outstanding_messages`\x20or\x20more\x20currently\x20sent\x20to\
+    \x20the\n\x20streaming\x20pull\x20client\x20that\x20have\x20not\x20yet\
+    \x20been\x20acked\x20or\x20nacked,\x20the\x20server\n\x20stops\x20sendin\
+    g\x20more\x20messages.\x20The\x20sending\x20of\x20messages\x20resumes\
+    \x20once\x20the\n\x20number\x20of\x20outstanding\x20messages\x20is\x20le\
+    ss\x20than\x20this\x20value.\x20If\x20the\x20value\x20is\n\x20<=\x200,\
+    \x20there\x20is\x20no\x20limit\x20to\x20the\x20number\x20of\x20outstandi\
+    ng\x20messages.\x20This\n\x20property\x20can\x20only\x20be\x20set\x20on\
+    \x20the\x20initial\x20StreamingPullRequest.\x20If\x20it\x20is\x20set\n\
+    \x20on\x20a\x20subsequent\x20request,\x20the\x20stream\x20will\x20be\x20\
+    aborted\x20with\x20status\n\x20`INVALID_ARGUMENT`.\n\n\r\n\x05\x04#\x02\
+    \x06\x05\x12\x04\xca\n\x02\x07\n\r\n\x05\x04#\x02\x06\x01\x12\x04\xca\n\
+    \x08\x20\n\r\n\x05\x04#\x02\x06\x03\x12\x04\xca\n#$\n\xea\x04\n\x04\x04#\
+    \x02\x07\x12\x04\xd5\n\x02\"\x1a\xdb\x04\x20Flow\x20control\x20settings\
+    \x20for\x20the\x20maximum\x20number\x20of\x20outstanding\x20bytes.\x20Wh\
+    en\n\x20there\x20are\x20`max_outstanding_bytes`\x20or\x20more\x20worth\
+    \x20of\x20messages\x20currently\x20sent\n\x20to\x20the\x20streaming\x20p\
+    ull\x20client\x20that\x20have\x20not\x20yet\x20been\x20acked\x20or\x20na\
+    cked,\x20the\n\x20server\x20will\x20stop\x20sending\x20more\x20messages.\
+    \x20The\x20sending\x20of\x20messages\x20resumes\n\x20once\x20the\x20numb\
+    er\x20of\x20outstanding\x20bytes\x20is\x20less\x20than\x20this\x20value.\
+    \x20If\x20the\x20value\n\x20is\x20<=\x200,\x20there\x20is\x20no\x20limit\
+    \x20to\x20the\x20number\x20of\x20outstanding\x20bytes.\x20This\n\x20prop\
+    erty\x20can\x20only\x20be\x20set\x20on\x20the\x20initial\x20StreamingPul\
+    lRequest.\x20If\x20it\x20is\x20set\n\x20on\x20a\x20subsequent\x20request\
+    ,\x20the\x20stream\x20will\x20be\x20aborted\x20with\x20status\n\x20`INVA\
+    LID_ARGUMENT`.\n\n\r\n\x05\x04#\x02\x07\x05\x12\x04\xd5\n\x02\x07\n\r\n\
+    \x05\x04#\x02\x07\x01\x12\x04\xd5\n\x08\x1d\n\r\n\x05\x04#\x02\x07\x03\
+    \x12\x04\xd5\n\x20!\n\x81\x01\n\x02\x04$\x12\x06\xda\n\0\x90\x0b\x01\x1a\
+    s\x20Response\x20for\x20the\x20`StreamingPull`\x20method.\x20This\x20res\
+    ponse\x20is\x20used\x20to\x20stream\n\x20messages\x20from\x20the\x20serv\
+    er\x20to\x20the\x20client.\n\n\x0b\n\x03\x04$\x01\x12\x04\xda\n\x08\x1d\
+    \nz\n\x04\x04$\x03\0\x12\x06\xdd\n\x02\xea\n\x03\x1aj\x20Acknowledgement\
+    \x20IDs\x20sent\x20in\x20one\x20or\x20more\x20previous\x20requests\x20to\
+    \x20acknowledge\x20a\n\x20previously\x20received\x20message.\n\n\r\n\x05\
+    \x04$\x03\0\x01\x12\x04\xdd\n\n!\n=\n\x06\x04$\x03\0\x02\0\x12\x04\xdf\n\
+    \x04\x20\x1a-\x20Successfully\x20processed\x20acknowledgement\x20IDs.\n\
+    \n\x0f\n\x07\x04$\x03\0\x02\0\x04\x12\x04\xdf\n\x04\x0c\n\x0f\n\x07\x04$\
+    \x03\0\x02\0\x05\x12\x04\xdf\n\r\x13\n\x0f\n\x07\x04$\x03\0\x02\0\x01\
+    \x12\x04\xdf\n\x14\x1b\n\x0f\n\x07\x04$\x03\0\x02\0\x03\x12\x04\xdf\n\
+    \x1e\x1f\nq\n\x06\x04$\x03\0\x02\x01\x12\x04\xe3\n\x04(\x1aa\x20List\x20\
+    of\x20acknowledgement\x20IDs\x20that\x20were\x20malformed\x20or\x20whose\
+    \x20acknowledgement\n\x20deadline\x20has\x20expired.\n\n\x0f\n\x07\x04$\
+    \x03\0\x02\x01\x04\x12\x04\xe3\n\x04\x0c\n\x0f\n\x07\x04$\x03\0\x02\x01\
+    \x05\x12\x04\xe3\n\r\x13\n\x0f\n\x07\x04$\x03\0\x02\x01\x01\x12\x04\xe3\
+    \n\x14#\n\x0f\n\x07\x04$\x03\0\x02\x01\x03\x12\x04\xe3\n&'\nE\n\x06\x04$\
+    \x03\0\x02\x02\x12\x04\xe6\n\x04*\x1a5\x20List\x20of\x20acknowledgement\
+    \x20IDs\x20that\x20were\x20out\x20of\x20order.\n\n\x0f\n\x07\x04$\x03\0\
+    \x02\x02\x04\x12\x04\xe6\n\x04\x0c\n\x0f\n\x07\x04$\x03\0\x02\x02\x05\
+    \x12\x04\xe6\n\r\x13\n\x0f\n\x07\x04$\x03\0\x02\x02\x01\x12\x04\xe6\n\
+    \x14%\n\x0f\n\x07\x04$\x03\0\x02\x02\x03\x12\x04\xe6\n()\n[\n\x06\x04$\
+    \x03\0\x02\x03\x12\x04\xe9\n\x041\x1aK\x20List\x20of\x20acknowledgement\
+    \x20IDs\x20that\x20failed\x20processing\x20with\x20temporary\x20issues.\
+    \n\n\x0f\n\x07\x04$\x03\0\x02\x03\x04\x12\x04\xe9\n\x04\x0c\n\x0f\n\x07\
+    \x04$\x03\0\x02\x03\x05\x12\x04\xe9\n\r\x13\n\x0f\n\x07\x04$\x03\0\x02\
+    \x03\x01\x12\x04\xe9\n\x14,\n\x0f\n\x07\x04$\x03\0\x02\x03\x03\x12\x04\
+    \xe9\n/0\n{\n\x04\x04$\x03\x01\x12\x06\xee\n\x02\xf8\n\x03\x1ak\x20Ackno\
+    wledgement\x20IDs\x20sent\x20in\x20one\x20or\x20more\x20previous\x20requ\
+    ests\x20to\x20modify\x20the\n\x20deadline\x20for\x20a\x20specific\x20mes\
+    sage.\n\n\r\n\x05\x04$\x03\x01\x01\x12\x04\xee\n\n'\n=\n\x06\x04$\x03\
+    \x01\x02\0\x12\x04\xf0\n\x04\x20\x1a-\x20Successfully\x20processed\x20ac\
+    knowledgement\x20IDs.\n\n\x0f\n\x07\x04$\x03\x01\x02\0\x04\x12\x04\xf0\n\
+    \x04\x0c\n\x0f\n\x07\x04$\x03\x01\x02\0\x05\x12\x04\xf0\n\r\x13\n\x0f\n\
+    \x07\x04$\x03\x01\x02\0\x01\x12\x04\xf0\n\x14\x1b\n\x0f\n\x07\x04$\x03\
+    \x01\x02\0\x03\x12\x04\xf0\n\x1e\x1f\nq\n\x06\x04$\x03\x01\x02\x01\x12\
+    \x04\xf4\n\x04(\x1aa\x20List\x20of\x20acknowledgement\x20IDs\x20that\x20\
+    were\x20malformed\x20or\x20whose\x20acknowledgement\n\x20deadline\x20has\
+    \x20expired.\n\n\x0f\n\x07\x04$\x03\x01\x02\x01\x04\x12\x04\xf4\n\x04\
+    \x0c\n\x0f\n\x07\x04$\x03\x01\x02\x01\x05\x12\x04\xf4\n\r\x13\n\x0f\n\
+    \x07\x04$\x03\x01\x02\x01\x01\x12\x04\xf4\n\x14#\n\x0f\n\x07\x04$\x03\
+    \x01\x02\x01\x03\x12\x04\xf4\n&'\n[\n\x06\x04$\x03\x01\x02\x02\x12\x04\
+    \xf7\n\x041\x1aK\x20List\x20of\x20acknowledgement\x20IDs\x20that\x20fail\
+    ed\x20processing\x20with\x20temporary\x20issues.\n\n\x0f\n\x07\x04$\x03\
+    \x01\x02\x02\x04\x12\x04\xf7\n\x04\x0c\n\x0f\n\x07\x04$\x03\x01\x02\x02\
+    \x05\x12\x04\xf7\n\r\x13\n\x0f\n\x07\x04$\x03\x01\x02\x02\x01\x12\x04\
+    \xf7\n\x14,\n\x0f\n\x07\x04$\x03\x01\x02\x02\x03\x12\x04\xf7\n/0\nG\n\
+    \x04\x04$\x03\x02\x12\x06\xfb\n\x02\x81\x0b\x03\x1a7\x20Subscription\x20\
+    properties\x20sent\x20as\x20part\x20of\x20the\x20response.\n\n\r\n\x05\
+    \x04$\x03\x02\x01\x12\x04\xfb\n\n\x20\nR\n\x06\x04$\x03\x02\x02\0\x12\
+    \x04\xfd\n\x04+\x1aB\x20True\x20iff\x20exactly\x20once\x20delivery\x20is\
+    \x20enabled\x20for\x20this\x20subscription.\n\n\x0f\n\x07\x04$\x03\x02\
+    \x02\0\x05\x12\x04\xfd\n\x04\x08\n\x0f\n\x07\x04$\x03\x02\x02\0\x01\x12\
+    \x04\xfd\n\t&\n\x0f\n\x07\x04$\x03\x02\x02\0\x03\x12\x04\xfd\n)*\nM\n\
+    \x06\x04$\x03\x02\x02\x01\x12\x04\x80\x0b\x04&\x1a=\x20True\x20iff\x20me\
+    ssage\x20ordering\x20is\x20enabled\x20for\x20this\x20subscription.\n\n\
+    \x0f\n\x07\x04$\x03\x02\x02\x01\x05\x12\x04\x80\x0b\x04\x08\n\x0f\n\x07\
+    \x04$\x03\x02\x02\x01\x01\x12\x04\x80\x0b\t!\n\x0f\n\x07\x04$\x03\x02\
+    \x02\x01\x03\x12\x04\x80\x0b$%\nB\n\x04\x04$\x02\0\x12\x04\x84\x0b\x021\
+    \x1a4\x20Received\x20Pub/Sub\x20messages.\x20This\x20will\x20not\x20be\
+    \x20empty.\n\n\r\n\x05\x04$\x02\0\x04\x12\x04\x84\x0b\x02\n\n\r\n\x05\
+    \x04$\x02\0\x06\x12\x04\x84\x0b\x0b\x1a\n\r\n\x05\x04$\x02\0\x01\x12\x04\
+    \x84\x0b\x1b,\n\r\n\x05\x04$\x02\0\x03\x12\x04\x84\x0b/0\n`\n\x04\x04$\
+    \x02\x01\x12\x04\x88\x0b\x027\x1aR\x20This\x20field\x20will\x20only\x20b\
+    e\x20set\x20if\x20`enable_exactly_once_delivery`\x20is\x20set\x20to\n\
+    \x20`true`.\n\n\r\n\x05\x04$\x02\x01\x06\x12\x04\x88\x0b\x02\x19\n\r\n\
+    \x05\x04$\x02\x01\x01\x12\x04\x88\x0b\x1a2\n\r\n\x05\x04$\x02\x01\x03\
+    \x12\x04\x88\x0b56\n`\n\x04\x04$\x02\x02\x12\x04\x8c\x0b\x02E\x1aR\x20Th\
+    is\x20field\x20will\x20only\x20be\x20set\x20if\x20`enable_exactly_once_d\
+    elivery`\x20is\x20set\x20to\n\x20`true`.\n\n\r\n\x05\x04$\x02\x02\x06\
+    \x12\x04\x8c\x0b\x02\x1f\n\r\n\x05\x04$\x02\x02\x01\x12\x04\x8c\x0b\x20@\
+    \n\r\n\x05\x04$\x02\x02\x03\x12\x04\x8c\x0bCD\n=\n\x04\x04$\x02\x03\x12\
+    \x04\x8f\x0b\x025\x1a/\x20Properties\x20associated\x20with\x20this\x20su\
+    bscription.\n\n\r\n\x05\x04$\x02\x03\x06\x12\x04\x8f\x0b\x02\x18\n\r\n\
+    \x05\x04$\x02\x03\x01\x12\x04\x8f\x0b\x190\n\r\n\x05\x04$\x02\x03\x03\
+    \x12\x04\x8f\x0b34\n8\n\x02\x04%\x12\x06\x93\x0b\0\xb2\x0b\x01\x1a*\x20R\
+    equest\x20for\x20the\x20`CreateSnapshot`\x20method.\n\n\x0b\n\x03\x04%\
+    \x01\x12\x04\x93\x0b\x08\x1d\n\xa1\x03\n\x04\x04%\x02\0\x12\x06\x9a\x0b\
+    \x02\x9d\x0b\x04\x1a\x90\x03\x20Required.\x20User-provided\x20name\x20fo\
+    r\x20this\x20snapshot.\x20If\x20the\x20name\x20is\x20not\x20provided\n\
+    \x20in\x20the\x20request,\x20the\x20server\x20will\x20assign\x20a\x20ran\
+    dom\x20name\x20for\x20this\x20snapshot\x20on\n\x20the\x20same\x20project\
+    \x20as\x20the\x20subscription.\x20Note\x20that\x20for\x20REST\x20API\x20\
+    requests,\x20you\n\x20must\x20specify\x20a\x20name.\x20\x20See\x20the\
+    \x20[resource\x20name\n\x20rules](https://cloud.google.com/pubsub/docs/p\
+    ubsub-basics#resource_names).\n\x20Format\x20is\x20`projects/{project}/s\
+    napshots/{snap}`.\n\n\r\n\x05\x04%\x02\0\x05\x12\x04\x9a\x0b\x02\x08\n\r\
+    \n\x05\x04%\x02\0\x01\x12\x04\x9a\x0b\t\r\n\r\n\x05\x04%\x02\0\x03\x12\
+    \x04\x9a\x0b\x10\x11\n\x0f\n\x05\x04%\x02\0\x08\x12\x06\x9a\x0b\x12\x9d\
+    \x0b\x03\n\x10\n\x08\x04%\x02\0\x08\x9c\x08\0\x12\x04\x9b\x0b\x04*\n\x0f\
+    \n\x07\x04%\x02\0\x08\x9f\x08\x12\x04\x9c\x0b\x04P\n\xb9\x04\n\x04\x04%\
+    \x02\x01\x12\x06\xa8\x0b\x02\xad\x0b\x04\x1a\xa8\x04\x20Required.\x20The\
+    \x20subscription\x20whose\x20backlog\x20the\x20snapshot\x20retains.\n\
+    \x20Specifically,\x20the\x20created\x20snapshot\x20is\x20guaranteed\x20t\
+    o\x20retain:\n\x20\x20(a)\x20The\x20existing\x20backlog\x20on\x20the\x20\
+    subscription.\x20More\x20precisely,\x20this\x20is\n\x20\x20\x20\x20\x20\
+    \x20defined\x20as\x20the\x20messages\x20in\x20the\x20subscription's\x20b\
+    acklog\x20that\x20are\n\x20\x20\x20\x20\x20\x20unacknowledged\x20upon\
+    \x20the\x20successful\x20completion\x20of\x20the\n\x20\x20\x20\x20\x20\
+    \x20`CreateSnapshot`\x20request;\x20as\x20well\x20as:\n\x20\x20(b)\x20An\
+    y\x20messages\x20published\x20to\x20the\x20subscription's\x20topic\x20fo\
+    llowing\x20the\n\x20\x20\x20\x20\x20\x20successful\x20completion\x20of\
+    \x20the\x20CreateSnapshot\x20request.\n\x20Format\x20is\x20`projects/{pr\
+    oject}/subscriptions/{sub}`.\n\n\r\n\x05\x04%\x02\x01\x05\x12\x04\xa8\
+    \x0b\x02\x08\n\r\n\x05\x04%\x02\x01\x01\x12\x04\xa8\x0b\t\x15\n\r\n\x05\
+    \x04%\x02\x01\x03\x12\x04\xa8\x0b\x18\x19\n\x0f\n\x05\x04%\x02\x01\x08\
+    \x12\x06\xa8\x0b\x1a\xad\x0b\x03\n\x10\n\x08\x04%\x02\x01\x08\x9c\x08\0\
+    \x12\x04\xa9\x0b\x04*\n\x11\n\x07\x04%\x02\x01\x08\x9f\x08\x12\x06\xaa\
+    \x0b\x04\xac\x0b\x05\na\n\x04\x04%\x02\x02\x12\x04\xb1\x0b\x02!\x1aS\x20\
+    See\x20[Creating\x20and\x20managing\n\x20labels](https://cloud.google.co\
+    m/pubsub/docs/labels).\n\n\r\n\x05\x04%\x02\x02\x06\x12\x04\xb1\x0b\x02\
+    \x15\n\r\n\x05\x04%\x02\x02\x01\x12\x04\xb1\x0b\x16\x1c\n\r\n\x05\x04%\
+    \x02\x02\x03\x12\x04\xb1\x0b\x1f\x20\n6\n\x02\x04&\x12\x06\xb5\x0b\0\xbd\
+    \x0b\x01\x1a(\x20Request\x20for\x20the\x20UpdateSnapshot\x20method.\n\n\
+    \x0b\n\x03\x04&\x01\x12\x04\xb5\x0b\x08\x1d\n6\n\x04\x04&\x02\0\x12\x04\
+    \xb7\x0b\x02A\x1a(\x20Required.\x20The\x20updated\x20snapshot\x20object.\
+    \n\n\r\n\x05\x04&\x02\0\x06\x12\x04\xb7\x0b\x02\n\n\r\n\x05\x04&\x02\0\
+    \x01\x12\x04\xb7\x0b\x0b\x13\n\r\n\x05\x04&\x02\0\x03\x12\x04\xb7\x0b\
+    \x16\x17\n\r\n\x05\x04&\x02\0\x08\x12\x04\xb7\x0b\x18@\n\x10\n\x08\x04&\
+    \x02\0\x08\x9c\x08\0\x12\x04\xb7\x0b\x19?\nx\n\x04\x04&\x02\x01\x12\x06\
+    \xbb\x0b\x02\xbc\x0b/\x1ah\x20Required.\x20Indicates\x20which\x20fields\
+    \x20in\x20the\x20provided\x20snapshot\x20to\x20update.\n\x20Must\x20be\
+    \x20specified\x20and\x20non-empty.\n\n\r\n\x05\x04&\x02\x01\x06\x12\x04\
+    \xbb\x0b\x02\x1b\n\r\n\x05\x04&\x02\x01\x01\x12\x04\xbb\x0b\x1c'\n\r\n\
+    \x05\x04&\x02\x01\x03\x12\x04\xbb\x0b*+\n\r\n\x05\x04&\x02\x01\x08\x12\
+    \x04\xbc\x0b\x06.\n\x10\n\x08\x04&\x02\x01\x08\x9c\x08\0\x12\x04\xbc\x0b\
+    \x07-\n\xbe\x02\n\x02\x04'\x12\x06\xc4\x0b\0\xe1\x0b\x01\x1a\xaf\x02\x20\
+    A\x20snapshot\x20resource.\x20Snapshots\x20are\x20used\x20in\n\x20[Seek]\
+    (https://cloud.google.com/pubsub/docs/replay-overview)\n\x20operations,\
+    \x20which\x20allow\x20you\x20to\x20manage\x20message\x20acknowledgments\
+    \x20in\x20bulk.\x20That\n\x20is,\x20you\x20can\x20set\x20the\x20acknowle\
+    dgment\x20state\x20of\x20messages\x20in\x20an\x20existing\n\x20subscript\
+    ion\x20to\x20the\x20state\x20captured\x20by\x20a\x20snapshot.\n\n\x0b\n\
+    \x03\x04'\x01\x12\x04\xc4\x0b\x08\x10\n\r\n\x03\x04'\x07\x12\x06\xc5\x0b\
+    \x02\xc8\x0b\x04\n\x0f\n\x05\x04'\x07\x9d\x08\x12\x06\xc5\x0b\x02\xc8\
+    \x0b\x04\n)\n\x04\x04'\x02\0\x12\x04\xcb\x0b\x02\x12\x1a\x1b\x20The\x20n\
+    ame\x20of\x20the\x20snapshot.\n\n\r\n\x05\x04'\x02\0\x05\x12\x04\xcb\x0b\
+    \x02\x08\n\r\n\x05\x04'\x02\0\x01\x12\x04\xcb\x0b\t\r\n\r\n\x05\x04'\x02\
+    \0\x03\x12\x04\xcb\x0b\x10\x11\nW\n\x04\x04'\x02\x01\x12\x06\xce\x0b\x02\
+    \xd0\x0b\x04\x1aG\x20The\x20name\x20of\x20the\x20topic\x20from\x20which\
+    \x20this\x20snapshot\x20is\x20retaining\x20messages.\n\n\r\n\x05\x04'\
+    \x02\x01\x05\x12\x04\xce\x0b\x02\x08\n\r\n\x05\x04'\x02\x01\x01\x12\x04\
+    \xce\x0b\t\x0e\n\r\n\x05\x04'\x02\x01\x03\x12\x04\xce\x0b\x11\x12\n\x0f\
+    \n\x05\x04'\x02\x01\x08\x12\x06\xce\x0b\x13\xd0\x0b\x03\n\x0f\n\x07\x04'\
+    \x02\x01\x08\x9f\x08\x12\x04\xcf\x0b\x04M\n\xd4\x05\n\x04\x04'\x02\x02\
+    \x12\x04\xdc\x0b\x02,\x1a\xc5\x05\x20The\x20snapshot\x20is\x20guaranteed\
+    \x20to\x20exist\x20up\x20until\x20this\x20time.\n\x20A\x20newly-created\
+    \x20snapshot\x20expires\x20no\x20later\x20than\x207\x20days\x20from\x20t\
+    he\x20time\x20of\x20its\n\x20creation.\x20Its\x20exact\x20lifetime\x20is\
+    \x20determined\x20at\x20creation\x20by\x20the\x20existing\n\x20backlog\
+    \x20in\x20the\x20source\x20subscription.\x20Specifically,\x20the\x20life\
+    time\x20of\x20the\n\x20snapshot\x20is\x20`7\x20days\x20-\x20(age\x20of\
+    \x20oldest\x20unacked\x20message\x20in\x20the\x20subscription)`.\n\x20Fo\
+    r\x20example,\x20consider\x20a\x20subscription\x20whose\x20oldest\x20una\
+    cked\x20message\x20is\x203\x20days\n\x20old.\x20If\x20a\x20snapshot\x20i\
+    s\x20created\x20from\x20this\x20subscription,\x20the\x20snapshot\x20--\
+    \x20which\n\x20will\x20always\x20capture\x20this\x203-day-old\x20backlog\
+    \x20as\x20long\x20as\x20the\x20snapshot\n\x20exists\x20--\x20will\x20exp\
+    ire\x20in\x204\x20days.\x20The\x20service\x20will\x20refuse\x20to\x20cre\
+    ate\x20a\n\x20snapshot\x20that\x20would\x20expire\x20in\x20less\x20than\
+    \x201\x20hour\x20after\x20creation.\n\n\r\n\x05\x04'\x02\x02\x06\x12\x04\
+    \xdc\x0b\x02\x1b\n\r\n\x05\x04'\x02\x02\x01\x12\x04\xdc\x0b\x1c'\n\r\n\
+    \x05\x04'\x02\x02\x03\x12\x04\xdc\x0b*+\nb\n\x04\x04'\x02\x03\x12\x04\
+    \xe0\x0b\x02!\x1aT\x20See\x20[Creating\x20and\x20managing\x20labels]\n\
+    \x20(https://cloud.google.com/pubsub/docs/labels).\n\n\r\n\x05\x04'\x02\
+    \x03\x06\x12\x04\xe0\x0b\x02\x15\n\r\n\x05\x04'\x02\x03\x01\x12\x04\xe0\
+    \x0b\x16\x1c\n\r\n\x05\x04'\x02\x03\x03\x12\x04\xe0\x0b\x1f\x20\n3\n\x02\
+    \x04(\x12\x06\xe4\x0b\0\xeb\x0b\x01\x1a%\x20Request\x20for\x20the\x20Get\
+    Snapshot\x20method.\n\n\x0b\n\x03\x04(\x01\x12\x04\xe4\x0b\x08\x1a\nn\n\
+    \x04\x04(\x02\0\x12\x06\xe7\x0b\x02\xea\x0b\x04\x1a^\x20Required.\x20The\
+    \x20name\x20of\x20the\x20snapshot\x20to\x20get.\n\x20Format\x20is\x20`pr\
+    ojects/{project}/snapshots/{snap}`.\n\n\r\n\x05\x04(\x02\0\x05\x12\x04\
+    \xe7\x0b\x02\x08\n\r\n\x05\x04(\x02\0\x01\x12\x04\xe7\x0b\t\x11\n\r\n\
+    \x05\x04(\x02\0\x03\x12\x04\xe7\x0b\x14\x15\n\x0f\n\x05\x04(\x02\0\x08\
+    \x12\x06\xe7\x0b\x16\xea\x0b\x03\n\x10\n\x08\x04(\x02\0\x08\x9c\x08\0\
+    \x12\x04\xe8\x0b\x04*\n\x0f\n\x07\x04(\x02\0\x08\x9f\x08\x12\x04\xe9\x0b\
+    \x04P\n7\n\x02\x04)\x12\x06\xee\x0b\0\xff\x0b\x01\x1a)\x20Request\x20for\
+    \x20the\x20`ListSnapshots`\x20method.\n\n\x0b\n\x03\x04)\x01\x12\x04\xee\
+    \x0b\x08\x1c\ns\n\x04\x04)\x02\0\x12\x06\xf1\x0b\x02\xf6\x0b\x04\x1ac\
+    \x20Required.\x20The\x20name\x20of\x20the\x20project\x20in\x20which\x20t\
+    o\x20list\x20snapshots.\n\x20Format\x20is\x20`projects/{project-id}`.\n\
+    \n\r\n\x05\x04)\x02\0\x05\x12\x04\xf1\x0b\x02\x08\n\r\n\x05\x04)\x02\0\
+    \x01\x12\x04\xf1\x0b\t\x10\n\r\n\x05\x04)\x02\0\x03\x12\x04\xf1\x0b\x13\
+    \x14\n\x0f\n\x05\x04)\x02\0\x08\x12\x06\xf1\x0b\x15\xf6\x0b\x03\n\x10\n\
+    \x08\x04)\x02\0\x08\x9c\x08\0\x12\x04\xf2\x0b\x04*\n\x11\n\x07\x04)\x02\
+    \0\x08\x9f\x08\x12\x06\xf3\x0b\x04\xf5\x0b\x05\n6\n\x04\x04)\x02\x01\x12\
+    \x04\xf9\x0b\x02\x16\x1a(\x20Maximum\x20number\x20of\x20snapshots\x20to\
+    \x20return.\n\n\r\n\x05\x04)\x02\x01\x05\x12\x04\xf9\x0b\x02\x07\n\r\n\
+    \x05\x04)\x02\x01\x01\x12\x04\xf9\x0b\x08\x11\n\r\n\x05\x04)\x02\x01\x03\
+    \x12\x04\xf9\x0b\x14\x15\n\xca\x01\n\x04\x04)\x02\x02\x12\x04\xfe\x0b\
+    \x02\x18\x1a\xbb\x01\x20The\x20value\x20returned\x20by\x20the\x20last\
+    \x20`ListSnapshotsResponse`;\x20indicates\x20that\x20this\n\x20is\x20a\
+    \x20continuation\x20of\x20a\x20prior\x20`ListSnapshots`\x20call,\x20and\
+    \x20that\x20the\x20system\n\x20should\x20return\x20the\x20next\x20page\
+    \x20of\x20data.\n\n\r\n\x05\x04)\x02\x02\x05\x12\x04\xfe\x0b\x02\x08\n\r\
+    \n\x05\x04)\x02\x02\x01\x12\x04\xfe\x0b\t\x13\n\r\n\x05\x04)\x02\x02\x03\
+    \x12\x04\xfe\x0b\x16\x17\n8\n\x02\x04*\x12\x06\x82\x0c\0\x89\x0c\x01\x1a\
+    *\x20Response\x20for\x20the\x20`ListSnapshots`\x20method.\n\n\x0b\n\x03\
+    \x04*\x01\x12\x04\x82\x0c\x08\x1d\n(\n\x04\x04*\x02\0\x12\x04\x84\x0c\
+    \x02\"\x1a\x1a\x20The\x20resulting\x20snapshots.\n\n\r\n\x05\x04*\x02\0\
+    \x04\x12\x04\x84\x0c\x02\n\n\r\n\x05\x04*\x02\0\x06\x12\x04\x84\x0c\x0b\
+    \x13\n\r\n\x05\x04*\x02\0\x01\x12\x04\x84\x0c\x14\x1d\n\r\n\x05\x04*\x02\
+    \0\x03\x12\x04\x84\x0c\x20!\n\x9e\x01\n\x04\x04*\x02\x01\x12\x04\x88\x0c\
+    \x02\x1d\x1a\x8f\x01\x20If\x20not\x20empty,\x20indicates\x20that\x20ther\
+    e\x20may\x20be\x20more\x20snapshot\x20that\x20match\x20the\n\x20request;\
+    \x20this\x20value\x20should\x20be\x20passed\x20in\x20a\x20new\x20`ListSn\
+    apshotsRequest`.\n\n\r\n\x05\x04*\x02\x01\x05\x12\x04\x88\x0c\x02\x08\n\
+    \r\n\x05\x04*\x02\x01\x01\x12\x04\x88\x0c\t\x18\n\r\n\x05\x04*\x02\x01\
+    \x03\x12\x04\x88\x0c\x1b\x1c\n8\n\x02\x04+\x12\x06\x8c\x0c\0\x93\x0c\x01\
+    \x1a*\x20Request\x20for\x20the\x20`DeleteSnapshot`\x20method.\n\n\x0b\n\
+    \x03\x04+\x01\x12\x04\x8c\x0c\x08\x1d\nq\n\x04\x04+\x02\0\x12\x06\x8f\
+    \x0c\x02\x92\x0c\x04\x1aa\x20Required.\x20The\x20name\x20of\x20the\x20sn\
+    apshot\x20to\x20delete.\n\x20Format\x20is\x20`projects/{project}/snapsho\
+    ts/{snap}`.\n\n\r\n\x05\x04+\x02\0\x05\x12\x04\x8f\x0c\x02\x08\n\r\n\x05\
+    \x04+\x02\0\x01\x12\x04\x8f\x0c\t\x11\n\r\n\x05\x04+\x02\0\x03\x12\x04\
+    \x8f\x0c\x14\x15\n\x0f\n\x05\x04+\x02\0\x08\x12\x06\x8f\x0c\x16\x92\x0c\
+    \x03\n\x10\n\x08\x04+\x02\0\x08\x9c\x08\0\x12\x04\x90\x0c\x04*\n\x0f\n\
+    \x07\x04+\x02\0\x08\x9f\x08\x12\x04\x91\x0c\x04P\n.\n\x02\x04,\x12\x06\
+    \x96\x0c\0\xb4\x0c\x01\x1a\x20\x20Request\x20for\x20the\x20`Seek`\x20met\
+    hod.\n\n\x0b\n\x03\x04,\x01\x12\x04\x96\x0c\x08\x13\n7\n\x04\x04,\x02\0\
+    \x12\x06\x98\x0c\x02\x9d\x0c\x04\x1a'\x20Required.\x20The\x20subscriptio\
+    n\x20to\x20affect.\n\n\r\n\x05\x04,\x02\0\x05\x12\x04\x98\x0c\x02\x08\n\
+    \r\n\x05\x04,\x02\0\x01\x12\x04\x98\x0c\t\x15\n\r\n\x05\x04,\x02\0\x03\
+    \x12\x04\x98\x0c\x18\x19\n\x0f\n\x05\x04,\x02\0\x08\x12\x06\x98\x0c\x1a\
+    \x9d\x0c\x03\n\x10\n\x08\x04,\x02\0\x08\x9c\x08\0\x12\x04\x99\x0c\x04*\n\
+    \x11\n\x07\x04,\x02\0\x08\x9f\x08\x12\x06\x9a\x0c\x04\x9c\x0c\x05\n\x0e\
+    \n\x04\x04,\x08\0\x12\x06\x9f\x0c\x02\xb3\x0c\x03\n\r\n\x05\x04,\x08\0\
+    \x01\x12\x04\x9f\x0c\x08\x0e\n\xbe\x05\n\x04\x04,\x02\x01\x12\x04\xab\
+    \x0c\x04'\x1a\xaf\x05\x20The\x20time\x20to\x20seek\x20to.\n\x20Messages\
+    \x20retained\x20in\x20the\x20subscription\x20that\x20were\x20published\
+    \x20before\x20this\n\x20time\x20are\x20marked\x20as\x20acknowledged,\x20\
+    and\x20messages\x20retained\x20in\x20the\n\x20subscription\x20that\x20we\
+    re\x20published\x20after\x20this\x20time\x20are\x20marked\x20as\n\x20una\
+    cknowledged.\x20Note\x20that\x20this\x20operation\x20affects\x20only\x20\
+    those\x20messages\n\x20retained\x20in\x20the\x20subscription\x20(configu\
+    red\x20by\x20the\x20combination\x20of\n\x20`message_retention_duration`\
+    \x20and\x20`retain_acked_messages`).\x20For\x20example,\n\x20if\x20`time\
+    `\x20corresponds\x20to\x20a\x20point\x20before\x20the\x20message\x20rete\
+    ntion\n\x20window\x20(or\x20to\x20a\x20point\x20before\x20the\x20system'\
+    s\x20notion\x20of\x20the\x20subscription\n\x20creation\x20time),\x20only\
+    \x20retained\x20messages\x20will\x20be\x20marked\x20as\x20unacknowledged\
+    ,\n\x20and\x20already-expunged\x20messages\x20will\x20not\x20be\x20resto\
+    red.\n\n\r\n\x05\x04,\x02\x01\x06\x12\x04\xab\x0c\x04\x1d\n\r\n\x05\x04,\
+    \x02\x01\x01\x12\x04\xab\x0c\x1e\"\n\r\n\x05\x04,\x02\x01\x03\x12\x04\
+    \xab\x0c%&\n\xaa\x01\n\x04\x04,\x02\x02\x12\x06\xb0\x0c\x04\xb2\x0c\x07\
     \x1a\x99\x01\x20The\x20snapshot\x20to\x20seek\x20to.\x20The\x20snapshot'\
     s\x20topic\x20must\x20be\x20the\x20same\x20as\x20that\x20of\n\x20the\x20\
     provided\x20subscription.\n\x20Format\x20is\x20`projects/{project}/snaps\
-    hots/{snap}`.\n\n\r\n\x05\x04&\x02\x02\x05\x12\x04\xa5\x08\x04\n\n\r\n\
-    \x05\x04&\x02\x02\x01\x12\x04\xa5\x08\x0b\x13\n\r\n\x05\x04&\x02\x02\x03\
-    \x12\x04\xa5\x08\x16\x17\nF\n\x02\x04'\x12\x04\xaa\x08\0\x17\x1a:\x20Res\
-    ponse\x20for\x20the\x20`Seek`\x20method\x20(this\x20response\x20is\x20em\
-    pty).\n\n\x0b\n\x03\x04'\x01\x12\x04\xaa\x08\x08\x14b\x06proto3\
+    hots/{snap}`.\n\n\r\n\x05\x04,\x02\x02\x05\x12\x04\xb0\x0c\x04\n\n\r\n\
+    \x05\x04,\x02\x02\x01\x12\x04\xb0\x0c\x0b\x13\n\r\n\x05\x04,\x02\x02\x03\
+    \x12\x04\xb0\x0c\x16\x17\n\x0f\n\x05\x04,\x02\x02\x08\x12\x06\xb0\x0c\
+    \x18\xb2\x0c\x06\n\x11\n\x07\x04,\x02\x02\x08\x9f\x08\x12\x06\xb0\x0c\
+    \x19\xb2\x0c\x05\nF\n\x02\x04-\x12\x04\xb7\x0c\0\x17\x1a:\x20Response\
+    \x20for\x20the\x20`Seek`\x20method\x20(this\x20response\x20is\x20empty).\
+    \n\n\x0b\n\x03\x04-\x01\x12\x04\xb7\x0c\x08\x14b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

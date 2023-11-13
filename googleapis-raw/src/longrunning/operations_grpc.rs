@@ -53,7 +53,7 @@ const METHOD_OPERATIONS_WAIT_OPERATION: ::grpcio::Method<super::operations::Wait
 
 #[derive(Clone)]
 pub struct OperationsClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl OperationsClient {

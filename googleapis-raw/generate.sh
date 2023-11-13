@@ -71,23 +71,42 @@ bigtable/admin/v2
 bigtable/v2
 "
 
+# Spanner specific dependencies
+spanner_dirs="
+spanner/admin/database/v1
+spanner/admin/instance/v1
+spanner/v1
+"
+
+# The following directories should correspond with the ones defined under
+# `grpc/third_party/googleapis/google` and contain the various, required `.proto`
+# definition files that should be read and generated from.
+# *NOTE:* These often require some manual editing, since there's no way to automatically
+# determine what to use. Basically, when you generate, you may see some undefined
+# items and you get to go hunting for what they might be. (Often, looking at another
+# library can help determine paths.)
 proto_dirs="
 api
 api/servicecontrol/v1
 api/servicemanagement/v1
 cloud/asset/v1
+cloud/orgpolicy/v1
+cloud/orgpolicy/v2
+cloud/osconfig/v1
+cloud/osconfig/v1alpha
+cloud/osconfig/agentendpoint/v1
 logging/type
 type
 iam/v1
+identity/accesscontextmanager/v1
+identity/accesscontextmanager/type
 longrunning
 pubsub/v1
 pubsub/v1beta2
 rpc
-spanner/admin/database/v1
-spanner/admin/instance/v1
-spanner/v1
 $big_table_dirs
 $storage_dirs
+$spanner_dirs
 "
 
 # obsolete proto:
@@ -126,6 +145,12 @@ for dir in $proto_dirs; do
 done
 
 echo "Make sure you generate the mod.rs files!"
+
+# under `../tools/mod_updater` is a python script that can automatically try to genereate the
+# mod files. It's not perfect, but it works. You'll still need to add some of the foreign references
+# that can crop up during builds. (e.g. if you get missing references to `empty`, you need to add
+# `pub(crate) use crate::empty;` to the `mod.rs` file. Finding other references can be a bit of a
+# challenge, but it's possible.)
 
 # ls -1 --color=never . |grep -v mod |sed "s/\.rs//" |sed "s/^/pub mod /" | sed "s/$/;/" > mod.rs \; --print
 # echo "pub(crate) use crate::empty;" >> */v1/mod.rs

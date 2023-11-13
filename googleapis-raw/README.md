@@ -93,11 +93,28 @@ These may need to be specified in the directory mods (see `.src/storage/v1/mod.r
 Remember, you can use the `r#` prefix in rust to except a reserved name for use, e.g.
 `use mod crate::r#type`)
 
+## Monitoring for changes
+
+Google will introduce changes and modifications to the GRPC interface for spanner, bigtable and other service. You are STRONGLY encouraged to monitor the [project release notes](https://cloud.google.com/release-notes/all) (particularly for [Spanner](https://cloud.google.com/spanner/docs/release-notes) and [BigTable](https://cloud.google.com/bigtable/docs/release-notes), as well as any other service this library should start to support). RSS feeds are available for these release notes, and are listed on their respective pages.
+
 ### When Updating
 
-Remember to update the dependent submodules by calling
+When initializing the submodule dependencies, you can use
 
 `git submodule update --init --recursive`
+
+to do a targeted update of the grpc code:
+
+```bash
+git submodule update --remote grpc
+pushd grpc/third_party
+git submodule update --remote protobuf
+git submodule update --remote googleapis
+popd
+```
+
+to pull a version of the libraries you require. Unfortunately, I have found that `git submodule update` does **NOT** always properly update dependencies to the latest master/main version.  
+Be sure that the `grpc/third_party/googleapis` submodule is updated at least once per quarter. This directory contains the Protobuf declarations and can often contain undisclosed changes that need to be reflected into the generated code.
 
 **NOTE**: this may alter the pre-generated mod files requiring old
 modules to be dropped or new modules to be added. Ensure that the

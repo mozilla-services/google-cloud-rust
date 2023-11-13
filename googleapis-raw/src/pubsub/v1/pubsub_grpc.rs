@@ -72,9 +72,16 @@ const METHOD_PUBLISHER_DELETE_TOPIC: ::grpcio::Method<super::pubsub::DeleteTopic
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_PUBLISHER_DETACH_SUBSCRIPTION: ::grpcio::Method<super::pubsub::DetachSubscriptionRequest, super::pubsub::DetachSubscriptionResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.pubsub.v1.Publisher/DetachSubscription",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct PublisherClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl PublisherClient {
@@ -211,6 +218,22 @@ impl PublisherClient {
     pub fn delete_topic_async(&self, req: &super::pubsub::DeleteTopicRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_topic_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn detach_subscription_opt(&self, req: &super::pubsub::DetachSubscriptionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pubsub::DetachSubscriptionResponse> {
+        self.client.unary_call(&METHOD_PUBLISHER_DETACH_SUBSCRIPTION, req, opt)
+    }
+
+    pub fn detach_subscription(&self, req: &super::pubsub::DetachSubscriptionRequest) -> ::grpcio::Result<super::pubsub::DetachSubscriptionResponse> {
+        self.detach_subscription_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn detach_subscription_async_opt(&self, req: &super::pubsub::DetachSubscriptionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pubsub::DetachSubscriptionResponse>> {
+        self.client.unary_call_async(&METHOD_PUBLISHER_DETACH_SUBSCRIPTION, req, opt)
+    }
+
+    pub fn detach_subscription_async(&self, req: &super::pubsub::DetachSubscriptionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pubsub::DetachSubscriptionResponse>> {
+        self.detach_subscription_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -239,6 +262,9 @@ pub trait Publisher {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn delete_topic(&mut self, ctx: ::grpcio::RpcContext, _req: super::pubsub::DeleteTopicRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn detach_subscription(&mut self, ctx: ::grpcio::RpcContext, _req: super::pubsub::DetachSubscriptionRequest, sink: ::grpcio::UnarySink<super::pubsub::DetachSubscriptionResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -273,9 +299,13 @@ pub fn create_publisher<S: Publisher + Send + Clone + 'static>(s: S) -> ::grpcio
     builder = builder.add_unary_handler(&METHOD_PUBLISHER_LIST_TOPIC_SNAPSHOTS, move |ctx, req, resp| {
         instance.list_topic_snapshots(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PUBLISHER_DELETE_TOPIC, move |ctx, req, resp| {
         instance.delete_topic(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_PUBLISHER_DETACH_SUBSCRIPTION, move |ctx, req, resp| {
+        instance.detach_subscription(ctx, req, resp)
     });
     builder.build()
 }
@@ -394,7 +424,7 @@ const METHOD_SUBSCRIBER_SEEK: ::grpcio::Method<super::pubsub::SeekRequest, super
 
 #[derive(Clone)]
 pub struct SubscriberClient {
-    client: ::grpcio::Client,
+    pub client: ::grpcio::Client,
 }
 
 impl SubscriberClient {
