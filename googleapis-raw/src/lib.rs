@@ -21,6 +21,8 @@ const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_28_0;
 
 pub const API_CLIENT_ID: &str = "gcp-grpc-rs";
 
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 pub(crate) mod iam;
 pub(crate) mod rpc;
 pub(crate) mod r#type;
