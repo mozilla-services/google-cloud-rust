@@ -3,6 +3,14 @@
 Much of this library is auto-generated, so it would not make sense to list all of the changes between each version.
 However, if there are significant changes that may impact code, I will try to note them here.
 
+## 0.16.1
+
+* Update to the underlying gprc libraries to use latest version as of
+  19 Oct 2023
+
+* Expose `VERSION:&str` which indicates the crate version of this
+  library.
+
 ## 0.14.0
 
 ### Logins
