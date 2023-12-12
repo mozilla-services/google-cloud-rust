@@ -17,7 +17,7 @@ members = ["googleapis", "googleapis-raw"]
 resolver = "2"
 
 [workspace.package]
-version = "0.16.1" # don't forget to update `./googleapis/Cargo.toml`
+version = "0.17.0" # don't forget to update `./googleapis/Cargo.toml`
 authors = [
   "Ferrous Systems",
   "Mozilla Services Engineering <services-engineering+code@mozilla.com>",

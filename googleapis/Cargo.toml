@@ -26,7 +26,7 @@ description = "A set of client libraries to interact with various Google Cloud P
 [dependencies]
 futures.workspace = true
 grpcio = { workspace = true, features = ["_secure"] }
-google-cloud-rust-raw = { version = "0.16.1", path = "../googleapis-raw", features = [
+google-cloud-rust-raw = { version = "0.17.0", path = "../googleapis-raw", features = [
     "bigtable",
     "pubsub",
     "spanner",
