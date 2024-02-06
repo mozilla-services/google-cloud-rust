@@ -17,7 +17,7 @@
 // This appears as a comment in each generated file. Add it once here
 // to save a bit of time and effort.
 
-const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_28_0;
+const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_3_0;
 
 pub const API_CLIENT_ID: &str = "gcp-grpc-rs";
 
@@ -29,16 +29,16 @@ pub(crate) mod r#type;
 
 // pub mod empty;
 pub mod api;
-#[cfg(feature = "bigtable")]
 pub mod bigtable;
 pub mod cloud;
+#[cfg(feature = "bigtable")]
 #[cfg(any(feature = "bigtable", feature = "pubsub", feature = "spanner"))]
+#[cfg(feature = "pubsub")]
+#[cfg(feature = "spanner")]
 pub mod empty;
 pub mod identity;
 pub mod logging;
 pub mod longrunning;
 pub mod orgpolicy;
-#[cfg(feature = "pubsub")]
 pub mod pubsub;
-#[cfg(feature = "spanner")]
 pub mod spanner;

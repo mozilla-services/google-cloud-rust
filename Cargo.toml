@@ -17,7 +17,7 @@ members = ["googleapis", "googleapis-raw"]
 resolver = "2"
 
 [workspace.package]
-version = "0.16.1" # don't forget to update `./googleapis/Cargo.toml`
+version = "0.17.0" # don't forget to update `./googleapis/Cargo.toml`
 authors = [
   "Ferrous Systems",
   "Mozilla Services Engineering <services-engineering+code@mozilla.com>",
@@ -34,6 +34,10 @@ futures = "0.3.5"
 # Not providing that lock means that cargo will "helpfully" update beyond those
 # versions because versions are a suggestion, not a rule.
 # NOTE: update the versions in `README.md` as well.
-grpcio = { version = "=0.13.0" }
+grpcio = { version = "0.13.0", default-features = false, features = [
+  "boringssl",
+  "protobufv3-codec",
+] }
 # grpcio currently does NOT support protobuf 3+
-protobuf = { version = "=2.28.0" }
+# protobuf = { version = "=2.28.0" }
+protobuf = { version = "3.3.0" }

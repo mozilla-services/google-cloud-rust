@@ -31,7 +31,6 @@ use google_cloud_rust_raw::bigtable::v2::{
 use google_cloud_rust_raw::empty::Empty;
 use grpcio::{Channel, ChannelBuilder, ChannelCredentials, ClientUnaryReceiver, EnvBuilder};
 use protobuf::well_known_types::Duration;
-use protobuf::RepeatedField;
 
 #[allow(dead_code)]
 fn timestamp() -> u128 {

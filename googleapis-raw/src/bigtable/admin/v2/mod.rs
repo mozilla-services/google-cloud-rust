@@ -1,10 +1,9 @@
 // @generated
-
-use crate::{
+pub(crate) use crate::{
+    api::annotations,
     empty,
     iam::v1::{iam_policy, policy},
     longrunning::operations,
-    rpc::status,
 };
 
 pub mod bigtable_instance_admin;

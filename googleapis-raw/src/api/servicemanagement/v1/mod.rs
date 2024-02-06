@@ -1,8 +1,9 @@
 // @generated
 
-use crate::{
-    api::{config_change, service},
+pub(crate) use crate::{
+    api::{annotations, config_change, metric, service},
     longrunning::operations,
+    rpc::status,
 };
 
 pub mod resources;

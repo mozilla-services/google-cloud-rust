@@ -1,6 +1,6 @@
 // @generated
-
-use crate::{
+pub(crate) use crate::{
+    api::{annotations, client, field_behavior, resource},
     r#type::expr,
 };
 

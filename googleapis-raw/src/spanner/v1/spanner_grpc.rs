@@ -93,7 +93,7 @@ const METHOD_SPANNER_BEGIN_TRANSACTION: ::grpcio::Method<super::spanner::BeginTr
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_SPANNER_COMMIT: ::grpcio::Method<super::spanner::CommitRequest, super::commit_response::CommitResponse> = ::grpcio::Method {
+const METHOD_SPANNER_COMMIT: ::grpcio::Method<super::spanner::CommitRequest, super::spanner::CommitResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.v1.Spanner/Commit",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
@@ -117,13 +117,6 @@ const METHOD_SPANNER_PARTITION_QUERY: ::grpcio::Method<super::spanner::Partition
 const METHOD_SPANNER_PARTITION_READ: ::grpcio::Method<super::spanner::PartitionReadRequest, super::spanner::PartitionResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.v1.Spanner/PartitionRead",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
-const METHOD_SPANNER_BATCH_WRITE: ::grpcio::Method<super::spanner::BatchWriteRequest, super::spanner::BatchWriteResponse> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::ServerStreaming,
-    name: "/google.spanner.v1.Spanner/BatchWrite",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -300,19 +293,19 @@ impl SpannerClient {
         self.begin_transaction_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn commit_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::commit_response::CommitResponse> {
+    pub fn commit_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner::CommitResponse> {
         self.client.unary_call(&METHOD_SPANNER_COMMIT, req, opt)
     }
 
-    pub fn commit(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<super::commit_response::CommitResponse> {
+    pub fn commit(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<super::spanner::CommitResponse> {
         self.commit_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn commit_async_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::commit_response::CommitResponse>> {
+    pub fn commit_async_opt(&self, req: &super::spanner::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner::CommitResponse>> {
         self.client.unary_call_async(&METHOD_SPANNER_COMMIT, req, opt)
     }
 
-    pub fn commit_async(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::commit_response::CommitResponse>> {
+    pub fn commit_async(&self, req: &super::spanner::CommitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner::CommitResponse>> {
         self.commit_async_opt(req, ::grpcio::CallOption::default())
     }
 
@@ -363,14 +356,6 @@ impl SpannerClient {
     pub fn partition_read_async(&self, req: &super::spanner::PartitionReadRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner::PartitionResponse>> {
         self.partition_read_async_opt(req, ::grpcio::CallOption::default())
     }
-
-    pub fn batch_write_opt(&self, req: &super::spanner::BatchWriteRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::spanner::BatchWriteResponse>> {
-        self.client.server_streaming(&METHOD_SPANNER_BATCH_WRITE, req, opt)
-    }
-
-    pub fn batch_write(&self, req: &super::spanner::BatchWriteRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::spanner::BatchWriteResponse>> {
-        self.batch_write_opt(req, ::grpcio::CallOption::default())
-    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -410,7 +395,7 @@ pub trait Spanner {
     fn begin_transaction(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::BeginTransactionRequest, sink: ::grpcio::UnarySink<super::transaction::Transaction>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn commit(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::CommitRequest, sink: ::grpcio::UnarySink<super::commit_response::CommitResponse>) {
+    fn commit(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::CommitRequest, sink: ::grpcio::UnarySink<super::spanner::CommitResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn rollback(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::RollbackRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
@@ -420,9 +405,6 @@ pub trait Spanner {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn partition_read(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::PartitionReadRequest, sink: ::grpcio::UnarySink<super::spanner::PartitionResponse>) {
-        grpcio::unimplemented_call!(ctx, sink)
-    }
-    fn batch_write(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner::BatchWriteRequest, sink: ::grpcio::ServerStreamingSink<super::spanner::BatchWriteResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -485,13 +467,9 @@ pub fn create_spanner<S: Spanner + Send + Clone + 'static>(s: S) -> ::grpcio::Se
     builder = builder.add_unary_handler(&METHOD_SPANNER_PARTITION_QUERY, move |ctx, req, resp| {
         instance.partition_query(ctx, req, resp)
     });
-    let mut instance = s.clone();
+    let mut instance = s;
     builder = builder.add_unary_handler(&METHOD_SPANNER_PARTITION_READ, move |ctx, req, resp| {
         instance.partition_read(ctx, req, resp)
-    });
-    let mut instance = s;
-    builder = builder.add_server_streaming_handler(&METHOD_SPANNER_BATCH_WRITE, move |ctx, req, resp| {
-        instance.batch_write(ctx, req, resp)
     });
     builder.build()
 }
