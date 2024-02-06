@@ -1,5 +1,4 @@
 // @generated
-
 pub(crate) use crate::{
     api::annotations, logging::r#type::log_severity, r#type::money, rpc::status,
 };
