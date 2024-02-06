@@ -252,13 +252,17 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // create a suitable mutation with all values
     println!("Preparing write mutation to add singers");
+    /*
     let mut mutation_write = Mutation_Write::new();
     mutation_write.set_table("Singers".to_string());
     mutation_write.set_columns(RepeatedField::from_vec(columns));
     mutation_write.set_values(RepeatedField::from_vec(list_values));
     println!("Mutation write object");
     dbg!(mutation_write.clone());
-
+    */
+    let mut mutation =Mutation::new();
+    mutation.set_table("Singers".to_string());
+    mutation.
     // finally commit to database
     println!("Commit data to database {}", database_name);
     let mut commit = CommitRequest::new();

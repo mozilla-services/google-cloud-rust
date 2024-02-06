@@ -52,7 +52,7 @@ async fn async_main() {
 
     // Prepare a SQL command to execute.
     let mut req = ExecuteSqlRequest::new();
-    req.session = session.get_name().to_string();
+    req.session = session.name;
     req.sql = "select * from planets".to_string();
 
     // Execute the command synchronously.
