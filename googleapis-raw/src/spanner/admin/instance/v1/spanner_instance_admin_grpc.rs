@@ -65,6 +65,13 @@ const METHOD_INSTANCE_ADMIN_LIST_INSTANCES: ::grpcio::Method<super::spanner_inst
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS: ::grpcio::Method<super::spanner_instance_admin::ListInstancePartitionsRequest, super::spanner_instance_admin::ListInstancePartitionsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstancePartitions",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_INSTANCE_ADMIN_GET_INSTANCE: ::grpcio::Method<super::spanner_instance_admin::GetInstanceRequest, super::spanner_instance_admin::Instance> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/GetInstance",
@@ -110,6 +117,41 @@ const METHOD_INSTANCE_ADMIN_GET_IAM_POLICY: ::grpcio::Method<super::iam_policy::
 const METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS: ::grpcio::Method<super::iam_policy::TestIamPermissionsRequest, super::iam_policy::TestIamPermissionsResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/TestIamPermissions",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION: ::grpcio::Method<super::spanner_instance_admin::GetInstancePartitionRequest, super::spanner_instance_admin::InstancePartition> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/GetInstancePartition",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION: ::grpcio::Method<super::spanner_instance_admin::CreateInstancePartitionRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/CreateInstancePartition",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION: ::grpcio::Method<super::spanner_instance_admin::DeleteInstancePartitionRequest, super::empty::Empty> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/DeleteInstancePartition",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION: ::grpcio::Method<super::spanner_instance_admin::UpdateInstancePartitionRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/UpdateInstancePartition",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS: ::grpcio::Method<super::spanner_instance_admin::ListInstancePartitionOperationsRequest, super::spanner_instance_admin::ListInstancePartitionOperationsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstancePartitionOperations",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -238,6 +280,22 @@ impl InstanceAdminClient {
         self.list_instances_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn list_instance_partitions_opt(&self, req: &super::spanner_instance_admin::ListInstancePartitionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionsResponse> {
+        self.client.unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS, req, opt)
+    }
+
+    pub fn list_instance_partitions(&self, req: &super::spanner_instance_admin::ListInstancePartitionsRequest) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionsResponse> {
+        self.list_instance_partitions_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_instance_partitions_async_opt(&self, req: &super::spanner_instance_admin::ListInstancePartitionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancePartitionsResponse>> {
+        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS, req, opt)
+    }
+
+    pub fn list_instance_partitions_async(&self, req: &super::spanner_instance_admin::ListInstancePartitionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancePartitionsResponse>> {
+        self.list_instance_partitions_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn get_instance_opt(&self, req: &super::spanner_instance_admin::GetInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::Instance> {
         self.client.unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, req, opt)
     }
@@ -349,6 +407,86 @@ impl InstanceAdminClient {
     pub fn test_iam_permissions_async(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
         self.test_iam_permissions_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn get_instance_partition_opt(&self, req: &super::spanner_instance_admin::GetInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::InstancePartition> {
+        self.client.unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn get_instance_partition(&self, req: &super::spanner_instance_admin::GetInstancePartitionRequest) -> ::grpcio::Result<super::spanner_instance_admin::InstancePartition> {
+        self.get_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_instance_partition_async_opt(&self, req: &super::spanner_instance_admin::GetInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstancePartition>> {
+        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn get_instance_partition_async(&self, req: &super::spanner_instance_admin::GetInstancePartitionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstancePartition>> {
+        self.get_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_instance_partition_opt(&self, req: &super::spanner_instance_admin::CreateInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn create_instance_partition(&self, req: &super::spanner_instance_admin::CreateInstancePartitionRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.create_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_instance_partition_async_opt(&self, req: &super::spanner_instance_admin::CreateInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn create_instance_partition_async(&self, req: &super::spanner_instance_admin::CreateInstancePartitionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.create_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_instance_partition_opt(&self, req: &super::spanner_instance_admin::DeleteInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
+        self.client.unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn delete_instance_partition(&self, req: &super::spanner_instance_admin::DeleteInstancePartitionRequest) -> ::grpcio::Result<super::empty::Empty> {
+        self.delete_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_instance_partition_async_opt(&self, req: &super::spanner_instance_admin::DeleteInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn delete_instance_partition_async(&self, req: &super::spanner_instance_admin::DeleteInstancePartitionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.delete_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_instance_partition_opt(&self, req: &super::spanner_instance_admin::UpdateInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn update_instance_partition(&self, req: &super::spanner_instance_admin::UpdateInstancePartitionRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.update_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_instance_partition_async_opt(&self, req: &super::spanner_instance_admin::UpdateInstancePartitionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn update_instance_partition_async(&self, req: &super::spanner_instance_admin::UpdateInstancePartitionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.update_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_instance_partition_operations_opt(&self, req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionOperationsResponse> {
+        self.client.unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS, req, opt)
+    }
+
+    pub fn list_instance_partition_operations(&self, req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionOperationsResponse> {
+        self.list_instance_partition_operations_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_instance_partition_operations_async_opt(&self, req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancePartitionOperationsResponse>> {
+        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS, req, opt)
+    }
+
+    pub fn list_instance_partition_operations_async(&self, req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancePartitionOperationsResponse>> {
+        self.list_instance_partition_operations_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -376,6 +514,9 @@ pub trait InstanceAdmin {
     fn list_instances(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstancesRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancesResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
+    fn list_instance_partitions(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstancePartitionsRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancePartitionsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn get_instance(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::GetInstanceRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::Instance>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
@@ -395,6 +536,21 @@ pub trait InstanceAdmin {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn test_iam_permissions(&mut self, ctx: ::grpcio::RpcContext, _req: super::iam_policy::TestIamPermissionsRequest, sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_instance_partition(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::GetInstancePartitionRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::InstancePartition>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn create_instance_partition(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::CreateInstancePartitionRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn delete_instance_partition(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::DeleteInstancePartitionRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update_instance_partition(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::UpdateInstancePartitionRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn list_instance_partition_operations(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstancePartitionOperationsRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancePartitionOperationsResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -430,6 +586,10 @@ pub fn create_instance_admin<S: InstanceAdmin + Send + Clone + 'static>(s: S) ->
         instance.list_instances(ctx, req, resp)
     });
     let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS, move |ctx, req, resp| {
+        instance.list_instance_partitions(ctx, req, resp)
+    });
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, move |ctx, req, resp| {
         instance.get_instance(ctx, req, resp)
     });
@@ -453,9 +613,29 @@ pub fn create_instance_admin<S: InstanceAdmin + Send + Clone + 'static>(s: S) ->
     builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_IAM_POLICY, move |ctx, req, resp| {
         instance.get_iam_policy(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, move |ctx, req, resp| {
         instance.test_iam_permissions(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION, move |ctx, req, resp| {
+        instance.get_instance_partition(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION, move |ctx, req, resp| {
+        instance.create_instance_partition(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION, move |ctx, req, resp| {
+        instance.delete_instance_partition(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION, move |ctx, req, resp| {
+        instance.update_instance_partition(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS, move |ctx, req, resp| {
+        instance.list_instance_partition_operations(ctx, req, resp)
     });
     builder.build()
 }

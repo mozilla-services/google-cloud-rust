@@ -30,6 +30,8 @@ pub struct FeatureFlags {
     pub mutate_rows_rate_limit: bool,
     pub mutate_rows_rate_limit2: bool,
     pub last_scanned_row_responses: bool,
+    pub routing_cookie: bool,
+    pub retry_info: bool,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -105,6 +107,36 @@ impl FeatureFlags {
     pub fn set_last_scanned_row_responses(&mut self, v: bool) {
         self.last_scanned_row_responses = v;
     }
+
+    // bool routing_cookie = 6;
+
+
+    pub fn get_routing_cookie(&self) -> bool {
+        self.routing_cookie
+    }
+    pub fn clear_routing_cookie(&mut self) {
+        self.routing_cookie = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_routing_cookie(&mut self, v: bool) {
+        self.routing_cookie = v;
+    }
+
+    // bool retry_info = 7;
+
+
+    pub fn get_retry_info(&self) -> bool {
+        self.retry_info
+    }
+    pub fn clear_retry_info(&mut self) {
+        self.retry_info = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_retry_info(&mut self, v: bool) {
+        self.retry_info = v;
+    }
 }
 
 impl ::protobuf::Message for FeatureFlags {
@@ -144,6 +176,20 @@ impl ::protobuf::Message for FeatureFlags {
                     let tmp = is.read_bool()?;
                     self.last_scanned_row_responses = tmp;
                 },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.routing_cookie = tmp;
+                },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.retry_info = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -168,6 +214,12 @@ impl ::protobuf::Message for FeatureFlags {
         if self.last_scanned_row_responses != false {
             my_size += 2;
         }
+        if self.routing_cookie != false {
+            my_size += 2;
+        }
+        if self.retry_info != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -185,6 +237,12 @@ impl ::protobuf::Message for FeatureFlags {
         }
         if self.last_scanned_row_responses != false {
             os.write_bool(4, self.last_scanned_row_responses)?;
+        }
+        if self.routing_cookie != false {
+            os.write_bool(6, self.routing_cookie)?;
+        }
+        if self.retry_info != false {
+            os.write_bool(7, self.retry_info)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -244,6 +302,16 @@ impl ::protobuf::Message for FeatureFlags {
                 |m: &FeatureFlags| { &m.last_scanned_row_responses },
                 |m: &mut FeatureFlags| { &mut m.last_scanned_row_responses },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "routing_cookie",
+                |m: &FeatureFlags| { &m.routing_cookie },
+                |m: &mut FeatureFlags| { &mut m.routing_cookie },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "retry_info",
+                |m: &FeatureFlags| { &m.retry_info },
+                |m: &mut FeatureFlags| { &mut m.retry_info },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<FeatureFlags>(
                 "FeatureFlags",
                 fields,
@@ -264,6 +332,8 @@ impl ::protobuf::Clear for FeatureFlags {
         self.mutate_rows_rate_limit = false;
         self.mutate_rows_rate_limit2 = false;
         self.last_scanned_row_responses = false;
+        self.routing_cookie = false;
+        self.retry_info = false;
         self.unknown_fields.clear();
     }
 }
@@ -282,69 +352,80 @@ impl ::protobuf::reflect::ProtobufValue for FeatureFlags {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n&google/bigtable/v2/feature_flags.proto\x12\x12google.bigtable.v2\"\
-    \xdc\x01\n\x0cFeatureFlags\x12#\n\rreverse_scans\x18\x01\x20\x01(\x08R\
+    \xa2\x02\n\x0cFeatureFlags\x12#\n\rreverse_scans\x18\x01\x20\x01(\x08R\
     \x0creverseScans\x123\n\x16mutate_rows_rate_limit\x18\x03\x20\x01(\x08R\
     \x13mutateRowsRateLimit\x125\n\x17mutate_rows_rate_limit2\x18\x05\x20\
     \x01(\x08R\x14mutateRowsRateLimit2\x12;\n\x1alast_scanned_row_responses\
-    \x18\x04\x20\x01(\x08R\x17lastScannedRowResponsesB\xbd\x01\n\x16com.goog\
-    le.bigtable.v2B\x11FeatureFlagsProtoP\x01Z:google.golang.org/genproto/go\
-    ogleapis/bigtable/v2;bigtable\xaa\x02\x18Google.Cloud.Bigtable.V2\xca\
-    \x02\x18Google\\Cloud\\Bigtable\\V2\xea\x02\x1bGoogle::Cloud::Bigtable::\
-    V2J\xb7\x10\n\x06\x12\x04\x0e\04\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\
-    \x122\xb1\x04\x20Copyright\x202023\x20Google\x20LLC\n\n\x20Licensed\x20u\
-    nder\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\
-    \");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20co\
-    mpliance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20co\
-    py\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apach\
-    e.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\
-    \x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distrib\
-    uted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\
-    \x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
-    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
-    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
-    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\
-    \x02\x12\x03\x10\0\x1b\n\x08\n\x01\x08\x12\x03\x12\05\n\t\n\x02\x08%\x12\
-    \x03\x12\05\n\x08\n\x01\x08\x12\x03\x13\0Q\n\t\n\x02\x08\x0b\x12\x03\x13\
-    \0Q\n\x08\n\x01\x08\x12\x03\x14\0\"\n\t\n\x02\x08\n\x12\x03\x14\0\"\n\
-    \x08\n\x01\x08\x12\x03\x15\02\n\t\n\x02\x08\x08\x12\x03\x15\02\n\x08\n\
-    \x01\x08\x12\x03\x16\0/\n\t\n\x02\x08\x01\x12\x03\x16\0/\n\x08\n\x01\x08\
-    \x12\x03\x17\05\n\t\n\x02\x08)\x12\x03\x17\05\n\x08\n\x01\x08\x12\x03\
-    \x18\04\n\t\n\x02\x08-\x12\x03\x18\04\n\x86\x04\n\x02\x04\0\x12\x04\"\04\
-    \x01\x1a\xf9\x03\x20Feature\x20flags\x20supported\x20or\x20enabled\x20by\
-    \x20a\x20client.\n\x20This\x20is\x20intended\x20to\x20be\x20sent\x20as\
-    \x20part\x20of\x20request\x20metadata\x20to\x20assure\x20the\x20server\n\
-    \x20that\x20certain\x20behaviors\x20are\x20safe\x20to\x20enable.\x20This\
-    \x20proto\x20is\x20meant\x20to\x20be\n\x20serialized\x20and\x20websafe-b\
-    ase64\x20encoded\x20under\x20the\x20`bigtable-features`\x20metadata\n\
-    \x20key.\x20The\x20value\x20will\x20remain\x20constant\x20for\x20the\x20\
-    lifetime\x20of\x20a\x20client\x20and\x20due\x20to\n\x20HTTP2's\x20HPACK\
-    \x20compression,\x20the\x20request\x20overhead\x20will\x20be\x20tiny.\n\
-    \x20This\x20is\x20an\x20internal\x20implementation\x20detail\x20and\x20s\
-    hould\x20not\x20be\x20used\x20by\x20end\x20users\n\x20directly.\n\n\n\n\
-    \x03\x04\0\x01\x12\x03\"\x08\x14\n\xa0\x01\n\x04\x04\0\x02\0\x12\x03%\
-    \x02\x19\x1a\x92\x01\x20Notify\x20the\x20server\x20that\x20the\x20client\
-    \x20supports\x20reverse\x20scans.\x20The\x20server\x20will\n\x20reject\
-    \x20ReadRowsRequests\x20with\x20the\x20reverse\x20bit\x20set\x20when\x20\
-    this\x20is\x20absent.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03%\x02\x06\n\
-    \x0c\n\x05\x04\0\x02\0\x01\x12\x03%\x07\x14\n\x0c\n\x05\x04\0\x02\0\x03\
-    \x12\x03%\x17\x18\n\xc2\x01\n\x04\x04\0\x02\x01\x12\x03*\x02\"\x1a\xb4\
-    \x01\x20Notify\x20the\x20server\x20that\x20the\x20client\x20enables\x20b\
-    atch\x20write\x20flow\x20control\x20by\n\x20requesting\x20RateLimitInfo\
-    \x20from\x20MutateRowsResponse.\x20Due\x20to\x20technical\x20reasons,\n\
-    \x20this\x20disables\x20partial\x20retries.\n\n\x0c\n\x05\x04\0\x02\x01\
-    \x05\x12\x03*\x02\x06\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03*\x07\x1d\n\
-    \x0c\n\x05\x04\0\x02\x01\x03\x12\x03*\x20!\n\xa7\x01\n\x04\x04\0\x02\x02\
-    \x12\x03/\x02#\x1a\x99\x01\x20Notify\x20the\x20server\x20that\x20the\x20\
-    client\x20enables\x20batch\x20write\x20flow\x20control\x20by\n\x20reques\
-    ting\x20RateLimitInfo\x20from\x20MutateRowsResponse.\x20With\x20partial\
-    \x20retries\n\x20enabled.\n\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03/\x02\
-    \x06\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03/\x07\x1e\n\x0c\n\x05\x04\0\
-    \x02\x02\x03\x12\x03/!\"\n\x81\x01\n\x04\x04\0\x02\x03\x12\x033\x02&\x1a\
-    t\x20Notify\x20the\x20server\x20that\x20the\x20client\x20supports\x20the\
-    \x20last_scanned_row\x20field\n\x20in\x20ReadRowsResponse\x20for\x20long\
-    -running\x20scans.\n\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x033\x02\x06\n\
-    \x0c\n\x05\x04\0\x02\x03\x01\x12\x033\x07!\n\x0c\n\x05\x04\0\x02\x03\x03\
-    \x12\x033$%b\x06proto3\
+    \x18\x04\x20\x01(\x08R\x17lastScannedRowResponses\x12%\n\x0erouting_cook\
+    ie\x18\x06\x20\x01(\x08R\rroutingCookie\x12\x1d\n\nretry_info\x18\x07\
+    \x20\x01(\x08R\tretryInfoB\xbd\x01\n\x16com.google.bigtable.v2B\x11Featu\
+    reFlagsProtoP\x01Z:google.golang.org/genproto/googleapis/bigtable/v2;big\
+    table\xaa\x02\x18Google.Cloud.Bigtable.V2\xca\x02\x18Google\\Cloud\\Bigt\
+    able\\V2\xea\x02\x1bGoogle::Cloud::Bigtable::V2J\xfc\x12\n\x06\x12\x04\
+    \x0e\0<\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\
+    \x202023\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20L\
+    icense,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20no\
+    t\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\
+    \x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20Lice\
+    nse\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-\
+    2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\
+    \x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
+    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
+    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
+    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
+    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
+    tations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x1b\
+    \n\x08\n\x01\x08\x12\x03\x12\05\n\t\n\x02\x08%\x12\x03\x12\05\n\x08\n\
+    \x01\x08\x12\x03\x13\0Q\n\t\n\x02\x08\x0b\x12\x03\x13\0Q\n\x08\n\x01\x08\
+    \x12\x03\x14\0\"\n\t\n\x02\x08\n\x12\x03\x14\0\"\n\x08\n\x01\x08\x12\x03\
+    \x15\02\n\t\n\x02\x08\x08\x12\x03\x15\02\n\x08\n\x01\x08\x12\x03\x16\0/\
+    \n\t\n\x02\x08\x01\x12\x03\x16\0/\n\x08\n\x01\x08\x12\x03\x17\05\n\t\n\
+    \x02\x08)\x12\x03\x17\05\n\x08\n\x01\x08\x12\x03\x18\04\n\t\n\x02\x08-\
+    \x12\x03\x18\04\n\x86\x04\n\x02\x04\0\x12\x04\"\0<\x01\x1a\xf9\x03\x20Fe\
+    ature\x20flags\x20supported\x20or\x20enabled\x20by\x20a\x20client.\n\x20\
+    This\x20is\x20intended\x20to\x20be\x20sent\x20as\x20part\x20of\x20reques\
+    t\x20metadata\x20to\x20assure\x20the\x20server\n\x20that\x20certain\x20b\
+    ehaviors\x20are\x20safe\x20to\x20enable.\x20This\x20proto\x20is\x20meant\
+    \x20to\x20be\n\x20serialized\x20and\x20websafe-base64\x20encoded\x20unde\
+    r\x20the\x20`bigtable-features`\x20metadata\n\x20key.\x20The\x20value\
+    \x20will\x20remain\x20constant\x20for\x20the\x20lifetime\x20of\x20a\x20c\
+    lient\x20and\x20due\x20to\n\x20HTTP2's\x20HPACK\x20compression,\x20the\
+    \x20request\x20overhead\x20will\x20be\x20tiny.\n\x20This\x20is\x20an\x20\
+    internal\x20implementation\x20detail\x20and\x20should\x20not\x20be\x20us\
+    ed\x20by\x20end\x20users\n\x20directly.\n\n\n\n\x03\x04\0\x01\x12\x03\"\
+    \x08\x14\n\xa0\x01\n\x04\x04\0\x02\0\x12\x03%\x02\x19\x1a\x92\x01\x20Not\
+    ify\x20the\x20server\x20that\x20the\x20client\x20supports\x20reverse\x20\
+    scans.\x20The\x20server\x20will\n\x20reject\x20ReadRowsRequests\x20with\
+    \x20the\x20reverse\x20bit\x20set\x20when\x20this\x20is\x20absent.\n\n\
+    \x0c\n\x05\x04\0\x02\0\x05\x12\x03%\x02\x06\n\x0c\n\x05\x04\0\x02\0\x01\
+    \x12\x03%\x07\x14\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03%\x17\x18\n\xc2\x01\
+    \n\x04\x04\0\x02\x01\x12\x03*\x02\"\x1a\xb4\x01\x20Notify\x20the\x20serv\
+    er\x20that\x20the\x20client\x20enables\x20batch\x20write\x20flow\x20cont\
+    rol\x20by\n\x20requesting\x20RateLimitInfo\x20from\x20MutateRowsResponse\
+    .\x20Due\x20to\x20technical\x20reasons,\n\x20this\x20disables\x20partial\
+    \x20retries.\n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03*\x02\x06\n\x0c\n\
+    \x05\x04\0\x02\x01\x01\x12\x03*\x07\x1d\n\x0c\n\x05\x04\0\x02\x01\x03\
+    \x12\x03*\x20!\n\xa7\x01\n\x04\x04\0\x02\x02\x12\x03/\x02#\x1a\x99\x01\
+    \x20Notify\x20the\x20server\x20that\x20the\x20client\x20enables\x20batch\
+    \x20write\x20flow\x20control\x20by\n\x20requesting\x20RateLimitInfo\x20f\
+    rom\x20MutateRowsResponse.\x20With\x20partial\x20retries\n\x20enabled.\n\
+    \n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03/\x02\x06\n\x0c\n\x05\x04\0\x02\
+    \x02\x01\x12\x03/\x07\x1e\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03/!\"\n\
+    \x81\x01\n\x04\x04\0\x02\x03\x12\x033\x02&\x1at\x20Notify\x20the\x20serv\
+    er\x20that\x20the\x20client\x20supports\x20the\x20last_scanned_row\x20fi\
+    eld\n\x20in\x20ReadRowsResponse\x20for\x20long-running\x20scans.\n\n\x0c\
+    \n\x05\x04\0\x02\x03\x05\x12\x033\x02\x06\n\x0c\n\x05\x04\0\x02\x03\x01\
+    \x12\x033\x07!\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x033$%\nw\n\x04\x04\0\
+    \x02\x04\x12\x037\x02\x1a\x1aj\x20Notify\x20the\x20server\x20that\x20the\
+    \x20client\x20supports\x20using\x20encoded\x20routing\x20cookie\n\x20str\
+    ings\x20to\x20retry\x20requests\x20with.\n\n\x0c\n\x05\x04\0\x02\x04\x05\
+    \x12\x037\x02\x06\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x037\x07\x15\n\x0c\n\
+    \x05\x04\0\x02\x04\x03\x12\x037\x18\x19\nv\n\x04\x04\0\x02\x05\x12\x03;\
+    \x02\x16\x1ai\x20Notify\x20the\x20server\x20that\x20the\x20client\x20sup\
+    ports\x20using\x20retry\x20info\x20back\x20off\n\x20durations\x20to\x20r\
+    etry\x20requests\x20with.\n\n\x0c\n\x05\x04\0\x02\x05\x05\x12\x03;\x02\
+    \x06\n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03;\x07\x11\n\x0c\n\x05\x04\0\
+    \x02\x05\x03\x12\x03;\x14\x15b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -3660,6 +3660,7 @@ pub struct ModifyColumnFamiliesRequest {
     // message fields
     pub name: ::std::string::String,
     pub modifications: ::protobuf::RepeatedField<ModifyColumnFamiliesRequest_Modification>,
+    pub ignore_warnings: bool,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -3726,6 +3727,21 @@ impl ModifyColumnFamiliesRequest {
     pub fn take_modifications(&mut self) -> ::protobuf::RepeatedField<ModifyColumnFamiliesRequest_Modification> {
         ::std::mem::replace(&mut self.modifications, ::protobuf::RepeatedField::new())
     }
+
+    // bool ignore_warnings = 3;
+
+
+    pub fn get_ignore_warnings(&self) -> bool {
+        self.ignore_warnings
+    }
+    pub fn clear_ignore_warnings(&mut self) {
+        self.ignore_warnings = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ignore_warnings(&mut self, v: bool) {
+        self.ignore_warnings = v;
+    }
 }
 
 impl ::protobuf::Message for ModifyColumnFamiliesRequest {
@@ -3748,6 +3764,13 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
                 2 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.modifications)?;
                 },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.ignore_warnings = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3767,6 +3790,9 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.ignore_warnings != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3781,6 +3807,9 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.ignore_warnings != false {
+            os.write_bool(3, self.ignore_warnings)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -3829,6 +3858,11 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
                 |m: &ModifyColumnFamiliesRequest| { &m.modifications },
                 |m: &mut ModifyColumnFamiliesRequest| { &mut m.modifications },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "ignore_warnings",
+                |m: &ModifyColumnFamiliesRequest| { &m.ignore_warnings },
+                |m: &mut ModifyColumnFamiliesRequest| { &mut m.ignore_warnings },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<ModifyColumnFamiliesRequest>(
                 "ModifyColumnFamiliesRequest",
                 fields,
@@ -3847,6 +3881,7 @@ impl ::protobuf::Clear for ModifyColumnFamiliesRequest {
     fn clear(&mut self) {
         self.name.clear();
         self.modifications.clear();
+        self.ignore_warnings = false;
         self.unknown_fields.clear();
     }
 }
@@ -8806,6 +8841,1972 @@ impl ::protobuf::reflect::ProtobufValue for CopyBackupMetadata {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct CreateAuthorizedViewRequest {
+    // message fields
+    pub parent: ::std::string::String,
+    pub authorized_view_id: ::std::string::String,
+    pub authorized_view: ::protobuf::SingularPtrField<super::table::AuthorizedView>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CreateAuthorizedViewRequest {
+    fn default() -> &'a CreateAuthorizedViewRequest {
+        <CreateAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateAuthorizedViewRequest {
+    pub fn new() -> CreateAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    // string parent = 1;
+
+
+    pub fn get_parent(&self) -> &str {
+        &self.parent
+    }
+    pub fn clear_parent(&mut self) {
+        self.parent.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_parent(&mut self, v: ::std::string::String) {
+        self.parent = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_parent(&mut self) -> &mut ::std::string::String {
+        &mut self.parent
+    }
+
+    // Take field
+    pub fn take_parent(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.parent, ::std::string::String::new())
+    }
+
+    // string authorized_view_id = 2;
+
+
+    pub fn get_authorized_view_id(&self) -> &str {
+        &self.authorized_view_id
+    }
+    pub fn clear_authorized_view_id(&mut self) {
+        self.authorized_view_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_authorized_view_id(&mut self, v: ::std::string::String) {
+        self.authorized_view_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_authorized_view_id(&mut self) -> &mut ::std::string::String {
+        &mut self.authorized_view_id
+    }
+
+    // Take field
+    pub fn take_authorized_view_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.authorized_view_id, ::std::string::String::new())
+    }
+
+    // .google.bigtable.admin.v2.AuthorizedView authorized_view = 3;
+
+
+    pub fn get_authorized_view(&self) -> &super::table::AuthorizedView {
+        self.authorized_view.as_ref().unwrap_or_else(|| <super::table::AuthorizedView as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_authorized_view(&mut self) {
+        self.authorized_view.clear();
+    }
+
+    pub fn has_authorized_view(&self) -> bool {
+        self.authorized_view.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_authorized_view(&mut self, v: super::table::AuthorizedView) {
+        self.authorized_view = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_authorized_view(&mut self) -> &mut super::table::AuthorizedView {
+        if self.authorized_view.is_none() {
+            self.authorized_view.set_default();
+        }
+        self.authorized_view.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_authorized_view(&mut self) -> super::table::AuthorizedView {
+        self.authorized_view.take().unwrap_or_else(|| super::table::AuthorizedView::new())
+    }
+}
+
+impl ::protobuf::Message for CreateAuthorizedViewRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.authorized_view {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.parent)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.authorized_view_id)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.authorized_view)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.authorized_view_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.authorized_view_id);
+        }
+        if let Some(ref v) = self.authorized_view.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.authorized_view_id.is_empty() {
+            os.write_string(2, &self.authorized_view_id)?;
+        }
+        if let Some(ref v) = self.authorized_view.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CreateAuthorizedViewRequest {
+        CreateAuthorizedViewRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "parent",
+                |m: &CreateAuthorizedViewRequest| { &m.parent },
+                |m: &mut CreateAuthorizedViewRequest| { &mut m.parent },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "authorized_view_id",
+                |m: &CreateAuthorizedViewRequest| { &m.authorized_view_id },
+                |m: &mut CreateAuthorizedViewRequest| { &mut m.authorized_view_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::table::AuthorizedView>>(
+                "authorized_view",
+                |m: &CreateAuthorizedViewRequest| { &m.authorized_view },
+                |m: &mut CreateAuthorizedViewRequest| { &mut m.authorized_view },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CreateAuthorizedViewRequest>(
+                "CreateAuthorizedViewRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CreateAuthorizedViewRequest {
+        static instance: ::protobuf::rt::LazyV2<CreateAuthorizedViewRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CreateAuthorizedViewRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for CreateAuthorizedViewRequest {
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.authorized_view_id.clear();
+        self.authorized_view.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CreateAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateAuthorizedViewRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CreateAuthorizedViewMetadata {
+    // message fields
+    pub original_request: ::protobuf::SingularPtrField<CreateAuthorizedViewRequest>,
+    pub request_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub finish_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CreateAuthorizedViewMetadata {
+    fn default() -> &'a CreateAuthorizedViewMetadata {
+        <CreateAuthorizedViewMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateAuthorizedViewMetadata {
+    pub fn new() -> CreateAuthorizedViewMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.CreateAuthorizedViewRequest original_request = 1;
+
+
+    pub fn get_original_request(&self) -> &CreateAuthorizedViewRequest {
+        self.original_request.as_ref().unwrap_or_else(|| <CreateAuthorizedViewRequest as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_original_request(&mut self) {
+        self.original_request.clear();
+    }
+
+    pub fn has_original_request(&self) -> bool {
+        self.original_request.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_original_request(&mut self, v: CreateAuthorizedViewRequest) {
+        self.original_request = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_original_request(&mut self) -> &mut CreateAuthorizedViewRequest {
+        if self.original_request.is_none() {
+            self.original_request.set_default();
+        }
+        self.original_request.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_original_request(&mut self) -> CreateAuthorizedViewRequest {
+        self.original_request.take().unwrap_or_else(|| CreateAuthorizedViewRequest::new())
+    }
+
+    // .google.protobuf.Timestamp request_time = 2;
+
+
+    pub fn get_request_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.request_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_request_time(&mut self) {
+        self.request_time.clear();
+    }
+
+    pub fn has_request_time(&self) -> bool {
+        self.request_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_request_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.request_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_request_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.request_time.is_none() {
+            self.request_time.set_default();
+        }
+        self.request_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_request_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.request_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp finish_time = 3;
+
+
+    pub fn get_finish_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.finish_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_finish_time(&mut self) {
+        self.finish_time.clear();
+    }
+
+    pub fn has_finish_time(&self) -> bool {
+        self.finish_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_finish_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.finish_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_finish_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.finish_time.is_none() {
+            self.finish_time.set_default();
+        }
+        self.finish_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_finish_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.finish_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+}
+
+impl ::protobuf::Message for CreateAuthorizedViewMetadata {
+    fn is_initialized(&self) -> bool {
+        for v in &self.original_request {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.request_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.finish_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.original_request)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.request_time)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.finish_time)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.original_request.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.request_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.finish_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.original_request.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.request_time.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.finish_time.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CreateAuthorizedViewMetadata {
+        CreateAuthorizedViewMetadata::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CreateAuthorizedViewRequest>>(
+                "original_request",
+                |m: &CreateAuthorizedViewMetadata| { &m.original_request },
+                |m: &mut CreateAuthorizedViewMetadata| { &mut m.original_request },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "request_time",
+                |m: &CreateAuthorizedViewMetadata| { &m.request_time },
+                |m: &mut CreateAuthorizedViewMetadata| { &mut m.request_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "finish_time",
+                |m: &CreateAuthorizedViewMetadata| { &m.finish_time },
+                |m: &mut CreateAuthorizedViewMetadata| { &mut m.finish_time },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CreateAuthorizedViewMetadata>(
+                "CreateAuthorizedViewMetadata",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CreateAuthorizedViewMetadata {
+        static instance: ::protobuf::rt::LazyV2<CreateAuthorizedViewMetadata> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CreateAuthorizedViewMetadata::new)
+    }
+}
+
+impl ::protobuf::Clear for CreateAuthorizedViewMetadata {
+    fn clear(&mut self) {
+        self.original_request.clear();
+        self.request_time.clear();
+        self.finish_time.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CreateAuthorizedViewMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateAuthorizedViewMetadata {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ListAuthorizedViewsRequest {
+    // message fields
+    pub parent: ::std::string::String,
+    pub page_size: i32,
+    pub page_token: ::std::string::String,
+    pub view: super::table::AuthorizedView_ResponseView,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ListAuthorizedViewsRequest {
+    fn default() -> &'a ListAuthorizedViewsRequest {
+        <ListAuthorizedViewsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListAuthorizedViewsRequest {
+    pub fn new() -> ListAuthorizedViewsRequest {
+        ::std::default::Default::default()
+    }
+
+    // string parent = 1;
+
+
+    pub fn get_parent(&self) -> &str {
+        &self.parent
+    }
+    pub fn clear_parent(&mut self) {
+        self.parent.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_parent(&mut self, v: ::std::string::String) {
+        self.parent = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_parent(&mut self) -> &mut ::std::string::String {
+        &mut self.parent
+    }
+
+    // Take field
+    pub fn take_parent(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.parent, ::std::string::String::new())
+    }
+
+    // int32 page_size = 2;
+
+
+    pub fn get_page_size(&self) -> i32 {
+        self.page_size
+    }
+    pub fn clear_page_size(&mut self) {
+        self.page_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page_size(&mut self, v: i32) {
+        self.page_size = v;
+    }
+
+    // string page_token = 3;
+
+
+    pub fn get_page_token(&self) -> &str {
+        &self.page_token
+    }
+    pub fn clear_page_token(&mut self) {
+        self.page_token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page_token(&mut self, v: ::std::string::String) {
+        self.page_token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_page_token(&mut self) -> &mut ::std::string::String {
+        &mut self.page_token
+    }
+
+    // Take field
+    pub fn take_page_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.page_token, ::std::string::String::new())
+    }
+
+    // .google.bigtable.admin.v2.AuthorizedView.ResponseView view = 4;
+
+
+    pub fn get_view(&self) -> super::table::AuthorizedView_ResponseView {
+        self.view
+    }
+    pub fn clear_view(&mut self) {
+        self.view = super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_view(&mut self, v: super::table::AuthorizedView_ResponseView) {
+        self.view = v;
+    }
+}
+
+impl ::protobuf::Message for ListAuthorizedViewsRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.parent)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.page_size = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.page_token)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.view, 4, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.page_size, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.page_token);
+        }
+        if self.view != super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(4, self.view);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(2, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(3, &self.page_token)?;
+        }
+        if self.view != super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED {
+            os.write_enum(4, ::protobuf::ProtobufEnum::value(&self.view))?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ListAuthorizedViewsRequest {
+        ListAuthorizedViewsRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "parent",
+                |m: &ListAuthorizedViewsRequest| { &m.parent },
+                |m: &mut ListAuthorizedViewsRequest| { &mut m.parent },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "page_size",
+                |m: &ListAuthorizedViewsRequest| { &m.page_size },
+                |m: &mut ListAuthorizedViewsRequest| { &mut m.page_size },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "page_token",
+                |m: &ListAuthorizedViewsRequest| { &m.page_token },
+                |m: &mut ListAuthorizedViewsRequest| { &mut m.page_token },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::table::AuthorizedView_ResponseView>>(
+                "view",
+                |m: &ListAuthorizedViewsRequest| { &m.view },
+                |m: &mut ListAuthorizedViewsRequest| { &mut m.view },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListAuthorizedViewsRequest>(
+                "ListAuthorizedViewsRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ListAuthorizedViewsRequest {
+        static instance: ::protobuf::rt::LazyV2<ListAuthorizedViewsRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ListAuthorizedViewsRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for ListAuthorizedViewsRequest {
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.view = super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ListAuthorizedViewsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListAuthorizedViewsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ListAuthorizedViewsResponse {
+    // message fields
+    pub authorized_views: ::protobuf::RepeatedField<super::table::AuthorizedView>,
+    pub next_page_token: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ListAuthorizedViewsResponse {
+    fn default() -> &'a ListAuthorizedViewsResponse {
+        <ListAuthorizedViewsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListAuthorizedViewsResponse {
+    pub fn new() -> ListAuthorizedViewsResponse {
+        ::std::default::Default::default()
+    }
+
+    // repeated .google.bigtable.admin.v2.AuthorizedView authorized_views = 1;
+
+
+    pub fn get_authorized_views(&self) -> &[super::table::AuthorizedView] {
+        &self.authorized_views
+    }
+    pub fn clear_authorized_views(&mut self) {
+        self.authorized_views.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_authorized_views(&mut self, v: ::protobuf::RepeatedField<super::table::AuthorizedView>) {
+        self.authorized_views = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_authorized_views(&mut self) -> &mut ::protobuf::RepeatedField<super::table::AuthorizedView> {
+        &mut self.authorized_views
+    }
+
+    // Take field
+    pub fn take_authorized_views(&mut self) -> ::protobuf::RepeatedField<super::table::AuthorizedView> {
+        ::std::mem::replace(&mut self.authorized_views, ::protobuf::RepeatedField::new())
+    }
+
+    // string next_page_token = 2;
+
+
+    pub fn get_next_page_token(&self) -> &str {
+        &self.next_page_token
+    }
+    pub fn clear_next_page_token(&mut self) {
+        self.next_page_token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_next_page_token(&mut self, v: ::std::string::String) {
+        self.next_page_token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_next_page_token(&mut self) -> &mut ::std::string::String {
+        &mut self.next_page_token
+    }
+
+    // Take field
+    pub fn take_next_page_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.next_page_token, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for ListAuthorizedViewsResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.authorized_views {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.authorized_views)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.next_page_token)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.authorized_views {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.authorized_views {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ListAuthorizedViewsResponse {
+        ListAuthorizedViewsResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::table::AuthorizedView>>(
+                "authorized_views",
+                |m: &ListAuthorizedViewsResponse| { &m.authorized_views },
+                |m: &mut ListAuthorizedViewsResponse| { &mut m.authorized_views },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "next_page_token",
+                |m: &ListAuthorizedViewsResponse| { &m.next_page_token },
+                |m: &mut ListAuthorizedViewsResponse| { &mut m.next_page_token },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListAuthorizedViewsResponse>(
+                "ListAuthorizedViewsResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ListAuthorizedViewsResponse {
+        static instance: ::protobuf::rt::LazyV2<ListAuthorizedViewsResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ListAuthorizedViewsResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for ListAuthorizedViewsResponse {
+    fn clear(&mut self) {
+        self.authorized_views.clear();
+        self.next_page_token.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ListAuthorizedViewsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListAuthorizedViewsResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct GetAuthorizedViewRequest {
+    // message fields
+    pub name: ::std::string::String,
+    pub view: super::table::AuthorizedView_ResponseView,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GetAuthorizedViewRequest {
+    fn default() -> &'a GetAuthorizedViewRequest {
+        <GetAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GetAuthorizedViewRequest {
+    pub fn new() -> GetAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // .google.bigtable.admin.v2.AuthorizedView.ResponseView view = 2;
+
+
+    pub fn get_view(&self) -> super::table::AuthorizedView_ResponseView {
+        self.view
+    }
+    pub fn clear_view(&mut self) {
+        self.view = super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_view(&mut self, v: super::table::AuthorizedView_ResponseView) {
+        self.view = v;
+    }
+}
+
+impl ::protobuf::Message for GetAuthorizedViewRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.view, 2, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.view != super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(2, self.view);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.view != super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.view))?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GetAuthorizedViewRequest {
+        GetAuthorizedViewRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &GetAuthorizedViewRequest| { &m.name },
+                |m: &mut GetAuthorizedViewRequest| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::table::AuthorizedView_ResponseView>>(
+                "view",
+                |m: &GetAuthorizedViewRequest| { &m.view },
+                |m: &mut GetAuthorizedViewRequest| { &mut m.view },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GetAuthorizedViewRequest>(
+                "GetAuthorizedViewRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GetAuthorizedViewRequest {
+        static instance: ::protobuf::rt::LazyV2<GetAuthorizedViewRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GetAuthorizedViewRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for GetAuthorizedViewRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.view = super::table::AuthorizedView_ResponseView::RESPONSE_VIEW_UNSPECIFIED;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GetAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetAuthorizedViewRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct UpdateAuthorizedViewRequest {
+    // message fields
+    pub authorized_view: ::protobuf::SingularPtrField<super::table::AuthorizedView>,
+    pub update_mask: ::protobuf::SingularPtrField<::protobuf::well_known_types::FieldMask>,
+    pub ignore_warnings: bool,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateAuthorizedViewRequest {
+    fn default() -> &'a UpdateAuthorizedViewRequest {
+        <UpdateAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateAuthorizedViewRequest {
+    pub fn new() -> UpdateAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.AuthorizedView authorized_view = 1;
+
+
+    pub fn get_authorized_view(&self) -> &super::table::AuthorizedView {
+        self.authorized_view.as_ref().unwrap_or_else(|| <super::table::AuthorizedView as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_authorized_view(&mut self) {
+        self.authorized_view.clear();
+    }
+
+    pub fn has_authorized_view(&self) -> bool {
+        self.authorized_view.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_authorized_view(&mut self, v: super::table::AuthorizedView) {
+        self.authorized_view = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_authorized_view(&mut self) -> &mut super::table::AuthorizedView {
+        if self.authorized_view.is_none() {
+            self.authorized_view.set_default();
+        }
+        self.authorized_view.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_authorized_view(&mut self) -> super::table::AuthorizedView {
+        self.authorized_view.take().unwrap_or_else(|| super::table::AuthorizedView::new())
+    }
+
+    // .google.protobuf.FieldMask update_mask = 2;
+
+
+    pub fn get_update_mask(&self) -> &::protobuf::well_known_types::FieldMask {
+        self.update_mask.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::FieldMask as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_update_mask(&mut self) {
+        self.update_mask.clear();
+    }
+
+    pub fn has_update_mask(&self) -> bool {
+        self.update_mask.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_update_mask(&mut self, v: ::protobuf::well_known_types::FieldMask) {
+        self.update_mask = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_update_mask(&mut self) -> &mut ::protobuf::well_known_types::FieldMask {
+        if self.update_mask.is_none() {
+            self.update_mask.set_default();
+        }
+        self.update_mask.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_update_mask(&mut self) -> ::protobuf::well_known_types::FieldMask {
+        self.update_mask.take().unwrap_or_else(|| ::protobuf::well_known_types::FieldMask::new())
+    }
+
+    // bool ignore_warnings = 3;
+
+
+    pub fn get_ignore_warnings(&self) -> bool {
+        self.ignore_warnings
+    }
+    pub fn clear_ignore_warnings(&mut self) {
+        self.ignore_warnings = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ignore_warnings(&mut self, v: bool) {
+        self.ignore_warnings = v;
+    }
+}
+
+impl ::protobuf::Message for UpdateAuthorizedViewRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.authorized_view {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.update_mask {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.authorized_view)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.update_mask)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.ignore_warnings = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.authorized_view.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.update_mask.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.ignore_warnings != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.authorized_view.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.update_mask.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.ignore_warnings != false {
+            os.write_bool(3, self.ignore_warnings)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateAuthorizedViewRequest {
+        UpdateAuthorizedViewRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::table::AuthorizedView>>(
+                "authorized_view",
+                |m: &UpdateAuthorizedViewRequest| { &m.authorized_view },
+                |m: &mut UpdateAuthorizedViewRequest| { &mut m.authorized_view },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::FieldMask>>(
+                "update_mask",
+                |m: &UpdateAuthorizedViewRequest| { &m.update_mask },
+                |m: &mut UpdateAuthorizedViewRequest| { &mut m.update_mask },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "ignore_warnings",
+                |m: &UpdateAuthorizedViewRequest| { &m.ignore_warnings },
+                |m: &mut UpdateAuthorizedViewRequest| { &mut m.ignore_warnings },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateAuthorizedViewRequest>(
+                "UpdateAuthorizedViewRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateAuthorizedViewRequest {
+        static instance: ::protobuf::rt::LazyV2<UpdateAuthorizedViewRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateAuthorizedViewRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateAuthorizedViewRequest {
+    fn clear(&mut self) {
+        self.authorized_view.clear();
+        self.update_mask.clear();
+        self.ignore_warnings = false;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateAuthorizedViewRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct UpdateAuthorizedViewMetadata {
+    // message fields
+    pub original_request: ::protobuf::SingularPtrField<UpdateAuthorizedViewRequest>,
+    pub request_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub finish_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateAuthorizedViewMetadata {
+    fn default() -> &'a UpdateAuthorizedViewMetadata {
+        <UpdateAuthorizedViewMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateAuthorizedViewMetadata {
+    pub fn new() -> UpdateAuthorizedViewMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.UpdateAuthorizedViewRequest original_request = 1;
+
+
+    pub fn get_original_request(&self) -> &UpdateAuthorizedViewRequest {
+        self.original_request.as_ref().unwrap_or_else(|| <UpdateAuthorizedViewRequest as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_original_request(&mut self) {
+        self.original_request.clear();
+    }
+
+    pub fn has_original_request(&self) -> bool {
+        self.original_request.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_original_request(&mut self, v: UpdateAuthorizedViewRequest) {
+        self.original_request = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_original_request(&mut self) -> &mut UpdateAuthorizedViewRequest {
+        if self.original_request.is_none() {
+            self.original_request.set_default();
+        }
+        self.original_request.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_original_request(&mut self) -> UpdateAuthorizedViewRequest {
+        self.original_request.take().unwrap_or_else(|| UpdateAuthorizedViewRequest::new())
+    }
+
+    // .google.protobuf.Timestamp request_time = 2;
+
+
+    pub fn get_request_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.request_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_request_time(&mut self) {
+        self.request_time.clear();
+    }
+
+    pub fn has_request_time(&self) -> bool {
+        self.request_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_request_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.request_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_request_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.request_time.is_none() {
+            self.request_time.set_default();
+        }
+        self.request_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_request_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.request_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp finish_time = 3;
+
+
+    pub fn get_finish_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.finish_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_finish_time(&mut self) {
+        self.finish_time.clear();
+    }
+
+    pub fn has_finish_time(&self) -> bool {
+        self.finish_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_finish_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.finish_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_finish_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.finish_time.is_none() {
+            self.finish_time.set_default();
+        }
+        self.finish_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_finish_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.finish_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+}
+
+impl ::protobuf::Message for UpdateAuthorizedViewMetadata {
+    fn is_initialized(&self) -> bool {
+        for v in &self.original_request {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.request_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.finish_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.original_request)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.request_time)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.finish_time)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.original_request.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.request_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.finish_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.original_request.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.request_time.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.finish_time.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateAuthorizedViewMetadata {
+        UpdateAuthorizedViewMetadata::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<UpdateAuthorizedViewRequest>>(
+                "original_request",
+                |m: &UpdateAuthorizedViewMetadata| { &m.original_request },
+                |m: &mut UpdateAuthorizedViewMetadata| { &mut m.original_request },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "request_time",
+                |m: &UpdateAuthorizedViewMetadata| { &m.request_time },
+                |m: &mut UpdateAuthorizedViewMetadata| { &mut m.request_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "finish_time",
+                |m: &UpdateAuthorizedViewMetadata| { &m.finish_time },
+                |m: &mut UpdateAuthorizedViewMetadata| { &mut m.finish_time },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateAuthorizedViewMetadata>(
+                "UpdateAuthorizedViewMetadata",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateAuthorizedViewMetadata {
+        static instance: ::protobuf::rt::LazyV2<UpdateAuthorizedViewMetadata> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateAuthorizedViewMetadata::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateAuthorizedViewMetadata {
+    fn clear(&mut self) {
+        self.original_request.clear();
+        self.request_time.clear();
+        self.finish_time.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateAuthorizedViewMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateAuthorizedViewMetadata {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DeleteAuthorizedViewRequest {
+    // message fields
+    pub name: ::std::string::String,
+    pub etag: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteAuthorizedViewRequest {
+    fn default() -> &'a DeleteAuthorizedViewRequest {
+        <DeleteAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteAuthorizedViewRequest {
+    pub fn new() -> DeleteAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // string etag = 2;
+
+
+    pub fn get_etag(&self) -> &str {
+        &self.etag
+    }
+    pub fn clear_etag(&mut self) {
+        self.etag.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_etag(&mut self, v: ::std::string::String) {
+        self.etag = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_etag(&mut self) -> &mut ::std::string::String {
+        &mut self.etag
+    }
+
+    // Take field
+    pub fn take_etag(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.etag, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for DeleteAuthorizedViewRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.etag)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.etag.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.etag);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.etag.is_empty() {
+            os.write_string(2, &self.etag)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DeleteAuthorizedViewRequest {
+        DeleteAuthorizedViewRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &DeleteAuthorizedViewRequest| { &m.name },
+                |m: &mut DeleteAuthorizedViewRequest| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "etag",
+                |m: &DeleteAuthorizedViewRequest| { &m.etag },
+                |m: &mut DeleteAuthorizedViewRequest| { &mut m.etag },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DeleteAuthorizedViewRequest>(
+                "DeleteAuthorizedViewRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DeleteAuthorizedViewRequest {
+        static instance: ::protobuf::rt::LazyV2<DeleteAuthorizedViewRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DeleteAuthorizedViewRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for DeleteAuthorizedViewRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.etag.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteAuthorizedViewRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n3google/bigtable/admin/v2/bigtable_table_admin.proto\x12\x18google.big\
     table.admin.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/cli\
@@ -8868,83 +10869,119 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     eleteTableMetadata\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\
     \nstart_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstart\
     Time\x125\n\x08end_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.Timest\
-    ampR\x07endTime\"\x8e\x03\n\x1bModifyColumnFamiliesRequest\x12>\n\x04nam\
+    ampR\x07endTime\"\xbc\x03\n\x1bModifyColumnFamiliesRequest\x12>\n\x04nam\
     e\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Ta\
     ble\xe0A\x02\x12m\n\rmodifications\x18\x02\x20\x03(\x0b2B.google.bigtabl\
     e.admin.v2.ModifyColumnFamiliesRequest.ModificationR\rmodificationsB\x03\
-    \xe0A\x02\x1a\xbf\x01\n\x0cModification\x12\x0e\n\x02id\x18\x01\x20\x01(\
-    \tR\x02id\x12@\n\x06create\x18\x02\x20\x01(\x0b2&.google.bigtable.admin.\
-    v2.ColumnFamilyH\0R\x06create\x12@\n\x06update\x18\x03\x20\x01(\x0b2&.go\
-    ogle.bigtable.admin.v2.ColumnFamilyH\0R\x06update\x12\x14\n\x04drop\x18\
-    \x04\x20\x01(\x08H\0R\x04dropB\x05\n\x03mod\"a\n\x1fGenerateConsistencyT\
-    okenRequest\x12>\n\x04name\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtab\
-    leadmin.googleapis.com/Table\xe0A\x02\"O\n\x20GenerateConsistencyTokenRe\
-    sponse\x12+\n\x11consistency_token\x18\x01\x20\x01(\tR\x10consistencyTok\
-    en\"\x8b\x01\n\x17CheckConsistencyRequest\x12>\n\x04name\x18\x01\x20\x01\
-    (\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\x02\x120\
-    \n\x11consistency_token\x18\x02\x20\x01(\tR\x10consistencyTokenB\x03\xe0\
-    A\x02\":\n\x18CheckConsistencyResponse\x12\x1e\n\nconsistent\x18\x01\x20\
-    \x01(\x08R\nconsistent\"\x93\x02\n\x14SnapshotTableRequest\x12>\n\x04nam\
-    e\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Ta\
-    ble\xe0A\x02\x12F\n\x07cluster\x18\x02\x20\x01(\tR\x07clusterB,\xfaA&\n$\
-    bigtableadmin.googleapis.com/Cluster\xe0A\x02\x12$\n\x0bsnapshot_id\x18\
-    \x03\x20\x01(\tR\nsnapshotIdB\x03\xe0A\x02\x12+\n\x03ttl\x18\x04\x20\x01\
-    (\x0b2\x19.google.protobuf.DurationR\x03ttl\x12\x20\n\x0bdescription\x18\
-    \x05\x20\x01(\tR\x0bdescription\"W\n\x12GetSnapshotRequest\x12A\n\x04nam\
-    e\x18\x01\x20\x01(\tR\x04nameB-\xfaA'\n%bigtableadmin.googleapis.com/Sna\
-    pshot\xe0A\x02\"\x98\x01\n\x14ListSnapshotsRequest\x12D\n\x06parent\x18\
+    \xe0A\x02\x12,\n\x0fignore_warnings\x18\x03\x20\x01(\x08R\x0eignoreWarni\
+    ngsB\x03\xe0A\x01\x1a\xbf\x01\n\x0cModification\x12\x0e\n\x02id\x18\x01\
+    \x20\x01(\tR\x02id\x12@\n\x06create\x18\x02\x20\x01(\x0b2&.google.bigtab\
+    le.admin.v2.ColumnFamilyH\0R\x06create\x12@\n\x06update\x18\x03\x20\x01(\
+    \x0b2&.google.bigtable.admin.v2.ColumnFamilyH\0R\x06update\x12\x14\n\x04\
+    drop\x18\x04\x20\x01(\x08H\0R\x04dropB\x05\n\x03mod\"a\n\x1fGenerateCons\
+    istencyTokenRequest\x12>\n\x04name\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\
+    \"bigtableadmin.googleapis.com/Table\xe0A\x02\"O\n\x20GenerateConsistenc\
+    yTokenResponse\x12+\n\x11consistency_token\x18\x01\x20\x01(\tR\x10consis\
+    tencyToken\"\x8b\x01\n\x17CheckConsistencyRequest\x12>\n\x04name\x18\x01\
+    \x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\
+    \x02\x120\n\x11consistency_token\x18\x02\x20\x01(\tR\x10consistencyToken\
+    B\x03\xe0A\x02\":\n\x18CheckConsistencyResponse\x12\x1e\n\nconsistent\
+    \x18\x01\x20\x01(\x08R\nconsistent\"\x93\x02\n\x14SnapshotTableRequest\
+    \x12>\n\x04name\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.goo\
+    gleapis.com/Table\xe0A\x02\x12F\n\x07cluster\x18\x02\x20\x01(\tR\x07clus\
+    terB,\xfaA&\n$bigtableadmin.googleapis.com/Cluster\xe0A\x02\x12$\n\x0bsn\
+    apshot_id\x18\x03\x20\x01(\tR\nsnapshotIdB\x03\xe0A\x02\x12+\n\x03ttl\
+    \x18\x04\x20\x01(\x0b2\x19.google.protobuf.DurationR\x03ttl\x12\x20\n\
+    \x0bdescription\x18\x05\x20\x01(\tR\x0bdescription\"W\n\x12GetSnapshotRe\
+    quest\x12A\n\x04name\x18\x01\x20\x01(\tR\x04nameB-\xfaA'\n%bigtableadmin\
+    .googleapis.com/Snapshot\xe0A\x02\"\x98\x01\n\x14ListSnapshotsRequest\
+    \x12D\n\x06parent\x18\x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtableadmin.\
+    googleapis.com/Cluster\xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\
+    \x05R\x08pageSize\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"\
+    \x81\x01\n\x15ListSnapshotsResponse\x12@\n\tsnapshots\x18\x01\x20\x03(\
+    \x0b2\".google.bigtable.admin.v2.SnapshotR\tsnapshots\x12&\n\x0fnext_pag\
+    e_token\x18\x02\x20\x01(\tR\rnextPageToken\"Z\n\x15DeleteSnapshotRequest\
+    \x12A\n\x04name\x18\x01\x20\x01(\tR\x04nameB-\xfaA'\n%bigtableadmin.goog\
+    leapis.com/Snapshot\xe0A\x02\"\xee\x01\n\x15SnapshotTableMetadata\x12Y\n\
+    \x10original_request\x18\x01\x20\x01(\x0b2..google.bigtable.admin.v2.Sna\
+    pshotTableRequestR\x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\
+    \x01(\x0b2\x1a.google.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinis\
+    h_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime\
+    \"\x82\x02\n\x1fCreateTableFromSnapshotMetadata\x12c\n\x10original_reque\
+    st\x18\x01\x20\x01(\x0b28.google.bigtable.admin.v2.CreateTableFromSnapsh\
+    otRequestR\x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_tim\
+    e\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\xbc\
+    \x01\n\x13CreateBackupRequest\x12D\n\x06parent\x18\x01\x20\x01(\tR\x06pa\
+    rentB,\xfaA&\n$bigtableadmin.googleapis.com/Cluster\xe0A\x02\x12\x20\n\t\
+    backup_id\x18\x02\x20\x01(\tR\x08backupIdB\x03\xe0A\x02\x12=\n\x06backup\
+    \x18\x03\x20\x01(\x0b2\x20.google.bigtable.admin.v2.BackupR\x06backupB\
+    \x03\xe0A\x02\"\xbf\x01\n\x14CreateBackupMetadata\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12!\n\x0csource_table\x18\x02\x20\x01(\tR\x0bs\
+    ourceTable\x129\n\nstart_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.\
+    TimestampR\tstartTime\x125\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.googl\
+    e.protobuf.TimestampR\x07endTime\"\x96\x01\n\x13UpdateBackupRequest\x12=\
+    \n\x06backup\x18\x01\x20\x01(\x0b2\x20.google.bigtable.admin.v2.BackupR\
+    \x06backupB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\x1a\
+    .google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x02\"S\n\x10GetBackupR\
+    equest\x12?\n\x04name\x18\x01\x20\x01(\tR\x04nameB+\xfaA%\n#bigtableadmi\
+    n.googleapis.com/Backup\xe0A\x02\"V\n\x13DeleteBackupRequest\x12?\n\x04n\
+    ame\x18\x01\x20\x01(\tR\x04nameB+\xfaA%\n#bigtableadmin.googleapis.com/B\
+    ackup\xe0A\x02\"\xc9\x01\n\x12ListBackupsRequest\x12D\n\x06parent\x18\
     \x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtableadmin.googleapis.com/Cluste\
-    r\xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\
-    \x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"\x81\x01\n\x15ListSna\
-    pshotsResponse\x12@\n\tsnapshots\x18\x01\x20\x03(\x0b2\".google.bigtable\
-    .admin.v2.SnapshotR\tsnapshots\x12&\n\x0fnext_page_token\x18\x02\x20\x01\
-    (\tR\rnextPageToken\"Z\n\x15DeleteSnapshotRequest\x12A\n\x04name\x18\x01\
-    \x20\x01(\tR\x04nameB-\xfaA'\n%bigtableadmin.googleapis.com/Snapshot\xe0\
-    A\x02\"\xee\x01\n\x15SnapshotTableMetadata\x12Y\n\x10original_request\
-    \x18\x01\x20\x01(\x0b2..google.bigtable.admin.v2.SnapshotTableRequestR\
-    \x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\x1a.goo\
-    gle.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\x03\x20\
-    \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\x82\x02\n\x1fCre\
-    ateTableFromSnapshotMetadata\x12c\n\x10original_request\x18\x01\x20\x01(\
-    \x0b28.google.bigtable.admin.v2.CreateTableFromSnapshotRequestR\x0forigi\
-    nalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\x1a.google.proto\
-    buf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\x03\x20\x01(\x0b\
-    2\x1a.google.protobuf.TimestampR\nfinishTime\"\xbc\x01\n\x13CreateBackup\
-    Request\x12D\n\x06parent\x18\x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtabl\
-    eadmin.googleapis.com/Cluster\xe0A\x02\x12\x20\n\tbackup_id\x18\x02\x20\
-    \x01(\tR\x08backupIdB\x03\xe0A\x02\x12=\n\x06backup\x18\x03\x20\x01(\x0b\
-    2\x20.google.bigtable.admin.v2.BackupR\x06backupB\x03\xe0A\x02\"\xbf\x01\
-    \n\x14CreateBackupMetadata\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12!\n\x0csource_table\x18\x02\x20\x01(\tR\x0bsourceTable\x129\n\nstart\
-    _time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\
-    \x125\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
-    \x07endTime\"\x96\x01\n\x13UpdateBackupRequest\x12=\n\x06backup\x18\x01\
-    \x20\x01(\x0b2\x20.google.bigtable.admin.v2.BackupR\x06backupB\x03\xe0A\
-    \x02\x12@\n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.Fie\
-    ldMaskR\nupdateMaskB\x03\xe0A\x02\"S\n\x10GetBackupRequest\x12?\n\x04nam\
-    e\x18\x01\x20\x01(\tR\x04nameB+\xfaA%\n#bigtableadmin.googleapis.com/Bac\
-    kup\xe0A\x02\"V\n\x13DeleteBackupRequest\x12?\n\x04name\x18\x01\x20\x01(\
-    \tR\x04nameB+\xfaA%\n#bigtableadmin.googleapis.com/Backup\xe0A\x02\"\xc9\
-    \x01\n\x12ListBackupsRequest\x12D\n\x06parent\x18\x01\x20\x01(\tR\x06par\
-    entB,\xfaA&\n$bigtableadmin.googleapis.com/Cluster\xe0A\x02\x12\x16\n\
-    \x06filter\x18\x02\x20\x01(\tR\x06filter\x12\x19\n\x08order_by\x18\x03\
-    \x20\x01(\tR\x07orderBy\x12\x1b\n\tpage_size\x18\x04\x20\x01(\x05R\x08pa\
-    geSize\x12\x1d\n\npage_token\x18\x05\x20\x01(\tR\tpageToken\"y\n\x13List\
-    BackupsResponse\x12:\n\x07backups\x18\x01\x20\x03(\x0b2\x20.google.bigta\
-    ble.admin.v2.BackupR\x07backups\x12&\n\x0fnext_page_token\x18\x02\x20\
-    \x01(\tR\rnextPageToken\"\x8f\x02\n\x11CopyBackupRequest\x12D\n\x06paren\
-    t\x18\x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtableadmin.googleapis.com/C\
-    luster\xe0A\x02\x12\x20\n\tbackup_id\x18\x02\x20\x01(\tR\x08backupIdB\
-    \x03\xe0A\x02\x12P\n\rsource_backup\x18\x03\x20\x01(\tR\x0csourceBackupB\
-    +\xfaA%\n#bigtableadmin.googleapis.com/Backup\xe0A\x02\x12@\n\x0bexpire_\
-    time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nexpireTimeB\
-    \x03\xe0A\x02\"\xef\x01\n\x12CopyBackupMetadata\x12<\n\x04name\x18\x01\
-    \x20\x01(\tR\x04nameB(\xfaA%\n#bigtableadmin.googleapis.com/Backup\x12R\
-    \n\x12source_backup_info\x18\x02\x20\x01(\x0b2$.google.bigtable.admin.v2\
-    .BackupInfoR\x10sourceBackupInfo\x12G\n\x08progress\x18\x03\x20\x01(\x0b\
-    2+.google.bigtable.admin.v2.OperationProgressR\x08progress2\xa2*\n\x12Bi\
-    gtableTableAdmin\x12\xab\x01\n\x0bCreateTable\x12,.google.bigtable.admin\
-    .v2.CreateTableRequest\x1a\x1f.google.bigtable.admin.v2.Table\"M\x82\xd3\
+    r\xe0A\x02\x12\x16\n\x06filter\x18\x02\x20\x01(\tR\x06filter\x12\x19\n\
+    \x08order_by\x18\x03\x20\x01(\tR\x07orderBy\x12\x1b\n\tpage_size\x18\x04\
+    \x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_token\x18\x05\x20\x01(\tR\tpa\
+    geToken\"y\n\x13ListBackupsResponse\x12:\n\x07backups\x18\x01\x20\x03(\
+    \x0b2\x20.google.bigtable.admin.v2.BackupR\x07backups\x12&\n\x0fnext_pag\
+    e_token\x18\x02\x20\x01(\tR\rnextPageToken\"\x8f\x02\n\x11CopyBackupRequ\
+    est\x12D\n\x06parent\x18\x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtableadm\
+    in.googleapis.com/Cluster\xe0A\x02\x12\x20\n\tbackup_id\x18\x02\x20\x01(\
+    \tR\x08backupIdB\x03\xe0A\x02\x12P\n\rsource_backup\x18\x03\x20\x01(\tR\
+    \x0csourceBackupB+\xfaA%\n#bigtableadmin.googleapis.com/Backup\xe0A\x02\
+    \x12@\n\x0bexpire_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.Timesta\
+    mpR\nexpireTimeB\x03\xe0A\x02\"\xef\x01\n\x12CopyBackupMetadata\x12<\n\
+    \x04name\x18\x01\x20\x01(\tR\x04nameB(\xfaA%\n#bigtableadmin.googleapis.\
+    com/Backup\x12R\n\x12source_backup_info\x18\x02\x20\x01(\x0b2$.google.bi\
+    gtable.admin.v2.BackupInfoR\x10sourceBackupInfo\x12G\n\x08progress\x18\
+    \x03\x20\x01(\x0b2+.google.bigtable.admin.v2.OperationProgressR\x08progr\
+    ess\"\xf5\x01\n\x1bCreateAuthorizedViewRequest\x12K\n\x06parent\x18\x01\
+    \x20\x01(\tR\x06parentB3\xfaA-\x12+bigtableadmin.googleapis.com/Authoriz\
+    edView\xe0A\x02\x121\n\x12authorized_view_id\x18\x02\x20\x01(\tR\x10auth\
+    orizedViewIdB\x03\xe0A\x02\x12V\n\x0fauthorized_view\x18\x03\x20\x01(\
+    \x0b2(.google.bigtable.admin.v2.AuthorizedViewR\x0eauthorizedViewB\x03\
+    \xe0A\x02\"\xfc\x01\n\x1cCreateAuthorizedViewMetadata\x12`\n\x10original\
+    _request\x18\x01\x20\x01(\x0b25.google.bigtable.admin.v2.CreateAuthorize\
+    dViewRequestR\x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_tim\
+    e\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\xff\
+    \x01\n\x1aListAuthorizedViewsRequest\x12K\n\x06parent\x18\x01\x20\x01(\t\
+    R\x06parentB3\xfaA-\x12+bigtableadmin.googleapis.com/AuthorizedView\xe0A\
+    \x02\x12\x20\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSizeB\x03\xe0A\
+    \x01\x12\"\n\npage_token\x18\x03\x20\x01(\tR\tpageTokenB\x03\xe0A\x01\
+    \x12N\n\x04view\x18\x04\x20\x01(\x0e25.google.bigtable.admin.v2.Authoriz\
+    edView.ResponseViewR\x04viewB\x03\xe0A\x01\"\x9a\x01\n\x1bListAuthorized\
+    ViewsResponse\x12S\n\x10authorized_views\x18\x01\x20\x03(\x0b2(.google.b\
+    igtable.admin.v2.AuthorizedViewR\x0fauthorizedViews\x12&\n\x0fnext_page_\
+    token\x18\x02\x20\x01(\tR\rnextPageToken\"\xb3\x01\n\x18GetAuthorizedVie\
+    wRequest\x12G\n\x04name\x18\x01\x20\x01(\tR\x04nameB3\xfaA-\n+bigtablead\
+    min.googleapis.com/AuthorizedView\xe0A\x02\x12N\n\x04view\x18\x02\x20\
+    \x01(\x0e25.google.bigtable.admin.v2.AuthorizedView.ResponseViewR\x04vie\
+    wB\x03\xe0A\x01\"\xe5\x01\n\x1bUpdateAuthorizedViewRequest\x12V\n\x0faut\
+    horized_view\x18\x01\x20\x01(\x0b2(.google.bigtable.admin.v2.AuthorizedV\
+    iewR\x0eauthorizedViewB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\
+    \x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x01\x12,\
+    \n\x0fignore_warnings\x18\x03\x20\x01(\x08R\x0eignoreWarningsB\x03\xe0A\
+    \x01\"\xfc\x01\n\x1cUpdateAuthorizedViewMetadata\x12`\n\x10original_requ\
+    est\x18\x01\x20\x01(\x0b25.google.bigtable.admin.v2.UpdateAuthorizedView\
+    RequestR\x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\
+    \x1a.google.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\
+    \x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\x7f\n\
+    \x1bDeleteAuthorizedViewRequest\x12G\n\x04name\x18\x01\x20\x01(\tR\x04na\
+    meB3\xfaA-\n+bigtableadmin.googleapis.com/AuthorizedView\xe0A\x02\x12\
+    \x17\n\x04etag\x18\x02\x20\x01(\tR\x04etagB\x03\xe0A\x012\xb63\n\x12Bigt\
+    ableTableAdmin\x12\xab\x01\n\x0bCreateTable\x12,.google.bigtable.admin.v\
+    2.CreateTableRequest\x1a\x1f.google.bigtable.admin.v2.Table\"M\x82\xd3\
     \xe4\x93\x02/\"*/v2/{parent=projects/*/instances/*}/tables:\x01*\xdaA\
     \x15parent,table_id,table\x12\x8a\x02\n\x17CreateTableFromSnapshot\x128.\
     google.bigtable.admin.v2.CreateTableFromSnapshotRequest\x1a\x1d.google.l\
@@ -8966,7 +11003,27 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04name\x12\xc6\x01\n\rUndeleteTable\x12..google.bigtable.admin.v2.Unde\
     leteTableRequest\x1a\x1d.google.longrunning.Operation\"f\xcaA\x1e\n\x05T\
     able\x12\x15UndeleteTableMetadata\x82\xd3\xe4\x93\x028\"3/v2/{name=proje\
-    cts/*/instances/*/tables/*}:undelete:\x01*\xdaA\x04name\x12\xcf\x01\n\
+    cts/*/instances/*/tables/*}:undelete:\x01*\xdaA\x04name\x12\xa1\x02\n\
+    \x14CreateAuthorizedView\x125.google.bigtable.admin.v2.CreateAuthorizedV\
+    iewRequest\x1a\x1d.google.longrunning.Operation\"\xb2\x01\xcaA.\n\x0eAut\
+    horizedView\x12\x1cCreateAuthorizedViewMetadata\x82\xd3\xe4\x93\x02O\"</\
+    v2/{parent=projects/*/instances/*/tables/*}/authorizedViews:\x0fauthoriz\
+    ed_view\xdaA)parent,authorized_view,authorized_view_id\x12\xd1\x01\n\x13\
+    ListAuthorizedViews\x124.google.bigtable.admin.v2.ListAuthorizedViewsReq\
+    uest\x1a5.google.bigtable.admin.v2.ListAuthorizedViewsResponse\"M\x82\
+    \xd3\xe4\x93\x02>\x12</v2/{parent=projects/*/instances/*/tables/*}/autho\
+    rizedViews\xdaA\x06parent\x12\xbe\x01\n\x11GetAuthorizedView\x122.google\
+    .bigtable.admin.v2.GetAuthorizedViewRequest\x1a(.google.bigtable.admin.v\
+    2.AuthorizedView\"K\x82\xd3\xe4\x93\x02>\x12</v2/{name=projects/*/instan\
+    ces/*/tables/*/authorizedViews/*}\xdaA\x04name\x12\xa3\x02\n\x14UpdateAu\
+    thorizedView\x125.google.bigtable.admin.v2.UpdateAuthorizedViewRequest\
+    \x1a\x1d.google.longrunning.Operation\"\xb4\x01\xcaA.\n\x0eAuthorizedVie\
+    w\x12\x1cUpdateAuthorizedViewMetadata\x82\xd3\xe4\x93\x02_2L/v2/{authori\
+    zed_view.name=projects/*/instances/*/tables/*/authorizedViews/*}:\x0faut\
+    horized_view\xdaA\x1bauthorized_view,update_mask\x12\xb2\x01\n\x14Delete\
+    AuthorizedView\x125.google.bigtable.admin.v2.DeleteAuthorizedViewRequest\
+    \x1a\x16.google.protobuf.Empty\"K\x82\xd3\xe4\x93\x02>*</v2/{name=projec\
+    ts/*/instances/*/tables/*/authorizedViews/*}\xdaA\x04name\x12\xcf\x01\n\
     \x14ModifyColumnFamilies\x125.google.bigtable.admin.v2.ModifyColumnFamil\
     iesRequest\x1a\x1f.google.bigtable.admin.v2.Table\"_\x82\xd3\xe4\x93\x02\
     D\"?/v2/{name=projects/*/instances/*/tables/*}:modifyColumnFamilies:\x01\
@@ -9041,7 +11098,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     leAdminProtoP\x01Z=google.golang.org/genproto/googleapis/bigtable/admin/\
     v2;admin\xaa\x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\Cl\
     oud\\Bigtable\\Admin\\V2\xea\x02\"Google::Cloud::Bigtable::Admin::V2J\
-    \xb1\xc4\x02\n\x07\x12\x05\x0e\0\xa8\t\x01\n\xbc\x04\n\x01\x0c\x12\x03\
+    \xfe\xff\x02\n\x07\x12\x05\x0e\0\xfd\n\x01\n\xbc\x04\n\x01\x0c\x12\x03\
     \x0e\0\x122\xb1\x04\x20Copyright\x202023\x20Google\x20LLC\n\n\x20License\
     d\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"L\
     icense\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\
@@ -9066,7 +11123,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x08\n\x01\x08\x12\x03#\08\n\t\n\x02\x08\x08\x12\x03#\08\n\x08\n\x01\x08\
     \x12\x03$\05\n\t\n\x02\x08\x01\x12\x03$\05\n\x08\n\x01\x08\x12\x03%\0<\n\
     \t\n\x02\x08)\x12\x03%\0<\n\x08\n\x01\x08\x12\x03&\0;\n\t\n\x02\x08-\x12\
-    \x03&\0;\n\xac\x01\n\x02\x06\0\x12\x05-\0\xfd\x02\x01\x1a\x9e\x01\x20Ser\
+    \x03&\0;\n\xac\x01\n\x02\x06\0\x12\x05-\0\xb4\x03\x01\x1a\x9e\x01\x20Ser\
     vice\x20for\x20creating,\x20configuring,\x20and\x20deleting\x20Cloud\x20\
     Bigtable\x20tables.\n\n\n\x20Provides\x20access\x20to\x20the\x20table\
     \x20schemas\x20only,\x20not\x20the\x20data\x20stored\x20within\n\x20the\
@@ -9134,328 +11191,369 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x06\x04\x12\x04\x83\x01\x042\n\x10\n\x08\x06\0\x02\x06\x04\x9b\x08\0\
     \x12\x04\x83\x01\x042\n\x0f\n\x05\x06\0\x02\x06\x04\x12\x06\x84\x01\x04\
     \x87\x01\x06\n\x11\n\x07\x06\0\x02\x06\x04\x99\x08\x12\x06\x84\x01\x04\
-    \x87\x01\x06\n\x9d\x02\n\x04\x06\0\x02\x07\x12\x06\x8e\x01\x02\x94\x01\
-    \x03\x1a\x8c\x02\x20Performs\x20a\x20series\x20of\x20column\x20family\
-    \x20modifications\x20on\x20the\x20specified\x20table.\n\x20Either\x20all\
-    \x20or\x20none\x20of\x20the\x20modifications\x20will\x20occur\x20before\
-    \x20this\x20method\n\x20returns,\x20but\x20data\x20requests\x20received\
-    \x20prior\x20to\x20that\x20point\x20may\x20see\x20a\x20table\n\x20where\
-    \x20only\x20some\x20modifications\x20have\x20taken\x20effect.\n\n\r\n\
-    \x05\x06\0\x02\x07\x01\x12\x04\x8e\x01\x06\x1a\n\r\n\x05\x06\0\x02\x07\
-    \x02\x12\x04\x8e\x01\x1b6\n\r\n\x05\x06\0\x02\x07\x03\x12\x04\x8e\x01AF\
-    \n\x0f\n\x05\x06\0\x02\x07\x04\x12\x06\x8f\x01\x04\x92\x01\x06\n\x13\n\t\
-    \x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\x06\x8f\x01\x04\x92\x01\x06\n\r\n\
-    \x05\x06\0\x02\x07\x04\x12\x04\x93\x01\x04@\n\x10\n\x08\x06\0\x02\x07\
-    \x04\x9b\x08\0\x12\x04\x93\x01\x04@\n\xbd\x01\n\x04\x06\0\x02\x08\x12\
-    \x06\x99\x01\x02\x9e\x01\x03\x1a\xac\x01\x20Permanently\x20drop/delete\
-    \x20a\x20row\x20range\x20from\x20a\x20specified\x20table.\x20The\x20requ\
-    est\x20can\n\x20specify\x20whether\x20to\x20delete\x20all\x20rows\x20in\
-    \x20a\x20table,\x20or\x20only\x20those\x20that\x20match\x20a\n\x20partic\
-    ular\x20prefix.\n\n\r\n\x05\x06\0\x02\x08\x01\x12\x04\x99\x01\x06\x12\n\
-    \r\n\x05\x06\0\x02\x08\x02\x12\x04\x99\x01\x13&\n\r\n\x05\x06\0\x02\x08\
-    \x03\x12\x04\x99\x011F\n\x0f\n\x05\x06\0\x02\x08\x04\x12\x06\x9a\x01\x04\
-    \x9d\x01\x06\n\x13\n\t\x06\0\x02\x08\x04\xb0\xca\xbc\"\x12\x06\x9a\x01\
-    \x04\x9d\x01\x06\n\xf5\x01\n\x04\x06\0\x02\t\x12\x06\xa4\x01\x02\xab\x01\
-    \x03\x1a\xe4\x01\x20Generates\x20a\x20consistency\x20token\x20for\x20a\
-    \x20Table,\x20which\x20can\x20be\x20used\x20in\n\x20CheckConsistency\x20\
-    to\x20check\x20whether\x20mutations\x20to\x20the\x20table\x20that\x20fin\
-    ished\n\x20before\x20this\x20call\x20started\x20have\x20been\x20replicat\
-    ed.\x20The\x20tokens\x20will\x20be\x20available\n\x20for\x2090\x20days.\
-    \n\n\r\n\x05\x06\0\x02\t\x01\x12\x04\xa4\x01\x06\x1e\n\r\n\x05\x06\0\x02\
-    \t\x02\x12\x04\xa4\x01\x1f>\n\r\n\x05\x06\0\x02\t\x03\x12\x04\xa5\x01\
-    \x0f/\n\x0f\n\x05\x06\0\x02\t\x04\x12\x06\xa6\x01\x04\xa9\x01\x06\n\x13\
-    \n\t\x06\0\x02\t\x04\xb0\xca\xbc\"\x12\x06\xa6\x01\x04\xa9\x01\x06\n\r\n\
-    \x05\x06\0\x02\t\x04\x12\x04\xaa\x01\x042\n\x10\n\x08\x06\0\x02\t\x04\
-    \x9b\x08\0\x12\x04\xaa\x01\x042\n\xbd\x01\n\x04\x06\0\x02\n\x12\x06\xb0\
-    \x01\x02\xb7\x01\x03\x1a\xac\x01\x20Checks\x20replication\x20consistency\
-    \x20based\x20on\x20a\x20consistency\x20token,\x20that\x20is,\x20if\n\x20\
-    replication\x20has\x20caught\x20up\x20based\x20on\x20the\x20conditions\
-    \x20specified\x20in\x20the\x20token\n\x20and\x20the\x20check\x20request.\
-    \n\n\r\n\x05\x06\0\x02\n\x01\x12\x04\xb0\x01\x06\x16\n\r\n\x05\x06\0\x02\
-    \n\x02\x12\x04\xb0\x01\x17.\n\r\n\x05\x06\0\x02\n\x03\x12\x04\xb1\x01\
-    \x0f'\n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\xb2\x01\x04\xb5\x01\x06\n\x13\
-    \n\t\x06\0\x02\n\x04\xb0\xca\xbc\"\x12\x06\xb2\x01\x04\xb5\x01\x06\n\r\n\
-    \x05\x06\0\x02\n\x04\x12\x04\xb6\x01\x04D\n\x10\n\x08\x06\0\x02\n\x04\
-    \x9b\x08\0\x12\x04\xb6\x01\x04D\n\xca\x03\n\x04\x06\0\x02\x0b\x12\x06\
-    \xc1\x01\x02\xcd\x01\x03\x1a\xb9\x03\x20Creates\x20a\x20new\x20snapshot\
-    \x20in\x20the\x20specified\x20cluster\x20from\x20the\x20specified\n\x20s\
-    ource\x20table.\x20The\x20cluster\x20and\x20the\x20table\x20must\x20be\
-    \x20in\x20the\x20same\x20instance.\n\n\x20Note:\x20This\x20is\x20a\x20pr\
-    ivate\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20Th\
-    is\n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20\
-    Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20c\
-    hanged\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\n\x20r\
-    ecommended\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\
-    \x20to\x20any\x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\
-    \x02\x0b\x01\x12\x04\xc1\x01\x06\x13\n\r\n\x05\x06\0\x02\x0b\x02\x12\x04\
-    \xc1\x01\x14(\n\r\n\x05\x06\0\x02\x0b\x03\x12\x04\xc2\x01\x0f+\n\x0f\n\
-    \x05\x06\0\x02\x0b\x04\x12\x06\xc3\x01\x04\xc6\x01\x06\n\x13\n\t\x06\0\
-    \x02\x0b\x04\xb0\xca\xbc\"\x12\x06\xc3\x01\x04\xc6\x01\x06\n\x0f\n\x05\
-    \x06\0\x02\x0b\x04\x12\x06\xc7\x01\x04\xc8\x01/\n\x12\n\x08\x06\0\x02\
-    \x0b\x04\x9b\x08\0\x12\x06\xc7\x01\x04\xc8\x01/\n\x0f\n\x05\x06\0\x02\
-    \x0b\x04\x12\x06\xc9\x01\x04\xcc\x01\x06\n\x11\n\x07\x06\0\x02\x0b\x04\
-    \x99\x08\x12\x06\xc9\x01\x04\xcc\x01\x06\n\xf8\x02\n\x04\x06\0\x02\x0c\
-    \x12\x06\xd6\x01\x02\xdb\x01\x03\x1a\xe7\x02\x20Gets\x20metadata\x20info\
-    rmation\x20about\x20the\x20specified\x20snapshot.\n\n\x20Note:\x20This\
-    \x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\
-    \x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20availab\
-    le\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\
-    \x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\
-    \x20is\x20not\n\x20recommended\x20for\x20production\x20use.\x20It\x20is\
-    \x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\n\x20policy.\
-    \n\n\r\n\x05\x06\0\x02\x0c\x01\x12\x04\xd6\x01\x06\x11\n\r\n\x05\x06\0\
-    \x02\x0c\x02\x12\x04\xd6\x01\x12$\n\r\n\x05\x06\0\x02\x0c\x03\x12\x04\
-    \xd6\x01/7\n\x0f\n\x05\x06\0\x02\x0c\x04\x12\x06\xd7\x01\x04\xd9\x01\x06\
-    \n\x13\n\t\x06\0\x02\x0c\x04\xb0\xca\xbc\"\x12\x06\xd7\x01\x04\xd9\x01\
-    \x06\n\r\n\x05\x06\0\x02\x0c\x04\x12\x04\xda\x01\x042\n\x10\n\x08\x06\0\
-    \x02\x0c\x04\x9b\x08\0\x12\x04\xda\x01\x042\n\xfb\x02\n\x04\x06\0\x02\r\
-    \x12\x06\xe4\x01\x02\xe9\x01\x03\x1a\xea\x02\x20Lists\x20all\x20snapshot\
-    s\x20associated\x20with\x20the\x20specified\x20cluster.\n\n\x20Note:\x20\
-    This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtabl\
-    e\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20availa\
-    ble\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20featur\
-    e\x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20an\
-    d\x20is\x20not\n\x20recommended\x20for\x20production\x20use.\x20It\x20is\
-    \x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\n\x20policy.\
-    \n\n\r\n\x05\x06\0\x02\r\x01\x12\x04\xe4\x01\x06\x13\n\r\n\x05\x06\0\x02\
-    \r\x02\x12\x04\xe4\x01\x14(\n\r\n\x05\x06\0\x02\r\x03\x12\x04\xe4\x013H\
-    \n\x0f\n\x05\x06\0\x02\r\x04\x12\x06\xe5\x01\x04\xe7\x01\x06\n\x13\n\t\
-    \x06\0\x02\r\x04\xb0\xca\xbc\"\x12\x06\xe5\x01\x04\xe7\x01\x06\n\r\n\x05\
-    \x06\0\x02\r\x04\x12\x04\xe8\x01\x044\n\x10\n\x08\x06\0\x02\r\x04\x9b\
-    \x08\0\x12\x04\xe8\x01\x044\n\xec\x02\n\x04\x06\0\x02\x0e\x12\x06\xf2\
-    \x01\x02\xf7\x01\x03\x1a\xdb\x02\x20Permanently\x20deletes\x20the\x20spe\
-    cified\x20snapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\
-    \x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20featur\
-    e\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigta\
-    ble\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\
+    \x87\x01\x06\n:\n\x04\x06\0\x02\x07\x12\x06\x8b\x01\x02\x97\x01\x03\x1a*\
+    \x20Creates\x20a\x20new\x20AuthorizedView\x20in\x20a\x20table.\n\n\r\n\
+    \x05\x06\0\x02\x07\x01\x12\x04\x8b\x01\x06\x1a\n\r\n\x05\x06\0\x02\x07\
+    \x02\x12\x04\x8b\x01\x1b6\n\r\n\x05\x06\0\x02\x07\x03\x12\x04\x8c\x01\
+    \x0f+\n\x0f\n\x05\x06\0\x02\x07\x04\x12\x06\x8d\x01\x04\x90\x01\x06\n\
+    \x13\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\x06\x8d\x01\x04\x90\x01\x06\
+    \n\x0f\n\x05\x06\0\x02\x07\x04\x12\x06\x91\x01\x04\x92\x014\n\x12\n\x08\
+    \x06\0\x02\x07\x04\x9b\x08\0\x12\x06\x91\x01\x04\x92\x014\n\x0f\n\x05\
+    \x06\0\x02\x07\x04\x12\x06\x93\x01\x04\x96\x01\x06\n\x11\n\x07\x06\0\x02\
+    \x07\x04\x99\x08\x12\x06\x93\x01\x04\x96\x01\x06\nB\n\x04\x06\0\x02\x08\
+    \x12\x06\x9a\x01\x02\xa0\x01\x03\x1a2\x20Lists\x20all\x20AuthorizedViews\
+    \x20from\x20a\x20specific\x20table.\n\n\r\n\x05\x06\0\x02\x08\x01\x12\
+    \x04\x9a\x01\x06\x19\n\r\n\x05\x06\0\x02\x08\x02\x12\x04\x9a\x01\x1a4\n\
+    \r\n\x05\x06\0\x02\x08\x03\x12\x04\x9b\x01\x0f*\n\x0f\n\x05\x06\0\x02\
+    \x08\x04\x12\x06\x9c\x01\x04\x9e\x01\x06\n\x13\n\t\x06\0\x02\x08\x04\xb0\
+    \xca\xbc\"\x12\x06\x9c\x01\x04\x9e\x01\x06\n\r\n\x05\x06\0\x02\x08\x04\
+    \x12\x04\x9f\x01\x044\n\x10\n\x08\x06\0\x02\x08\x04\x9b\x08\0\x12\x04\
+    \x9f\x01\x044\nC\n\x04\x06\0\x02\t\x12\x06\xa3\x01\x02\xa8\x01\x03\x1a3\
+    \x20Gets\x20information\x20from\x20a\x20specified\x20AuthorizedView.\n\n\
+    \r\n\x05\x06\0\x02\t\x01\x12\x04\xa3\x01\x06\x17\n\r\n\x05\x06\0\x02\t\
+    \x02\x12\x04\xa3\x01\x180\n\r\n\x05\x06\0\x02\t\x03\x12\x04\xa3\x01;I\n\
+    \x0f\n\x05\x06\0\x02\t\x04\x12\x06\xa4\x01\x04\xa6\x01\x06\n\x13\n\t\x06\
+    \0\x02\t\x04\xb0\xca\xbc\"\x12\x06\xa4\x01\x04\xa6\x01\x06\n\r\n\x05\x06\
+    \0\x02\t\x04\x12\x04\xa7\x01\x042\n\x10\n\x08\x06\0\x02\t\x04\x9b\x08\0\
+    \x12\x04\xa7\x01\x042\n7\n\x04\x06\0\x02\n\x12\x06\xab\x01\x02\xb6\x01\
+    \x03\x1a'\x20Updates\x20an\x20AuthorizedView\x20in\x20a\x20table.\n\n\r\
+    \n\x05\x06\0\x02\n\x01\x12\x04\xab\x01\x06\x1a\n\r\n\x05\x06\0\x02\n\x02\
+    \x12\x04\xab\x01\x1b6\n\r\n\x05\x06\0\x02\n\x03\x12\x04\xac\x01\x0f+\n\
+    \x0f\n\x05\x06\0\x02\n\x04\x12\x06\xad\x01\x04\xb0\x01\x06\n\x13\n\t\x06\
+    \0\x02\n\x04\xb0\xca\xbc\"\x12\x06\xad\x01\x04\xb0\x01\x06\n\r\n\x05\x06\
+    \0\x02\n\x04\x12\x04\xb1\x01\x04I\n\x10\n\x08\x06\0\x02\n\x04\x9b\x08\0\
+    \x12\x04\xb1\x01\x04I\n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\xb2\x01\x04\
+    \xb5\x01\x06\n\x11\n\x07\x06\0\x02\n\x04\x99\x08\x12\x06\xb2\x01\x04\xb5\
+    \x01\x06\nA\n\x04\x06\0\x02\x0b\x12\x06\xb9\x01\x02\xbf\x01\x03\x1a1\x20\
+    Permanently\x20deletes\x20a\x20specified\x20AuthorizedView.\n\n\r\n\x05\
+    \x06\0\x02\x0b\x01\x12\x04\xb9\x01\x06\x1a\n\r\n\x05\x06\0\x02\x0b\x02\
+    \x12\x04\xb9\x01\x1b6\n\r\n\x05\x06\0\x02\x0b\x03\x12\x04\xba\x01\x0f$\n\
+    \x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\xbb\x01\x04\xbd\x01\x06\n\x13\n\t\
+    \x06\0\x02\x0b\x04\xb0\xca\xbc\"\x12\x06\xbb\x01\x04\xbd\x01\x06\n\r\n\
+    \x05\x06\0\x02\x0b\x04\x12\x04\xbe\x01\x042\n\x10\n\x08\x06\0\x02\x0b\
+    \x04\x9b\x08\0\x12\x04\xbe\x01\x042\n\x9d\x02\n\x04\x06\0\x02\x0c\x12\
+    \x06\xc5\x01\x02\xcb\x01\x03\x1a\x8c\x02\x20Performs\x20a\x20series\x20o\
+    f\x20column\x20family\x20modifications\x20on\x20the\x20specified\x20tabl\
+    e.\n\x20Either\x20all\x20or\x20none\x20of\x20the\x20modifications\x20wil\
+    l\x20occur\x20before\x20this\x20method\n\x20returns,\x20but\x20data\x20r\
+    equests\x20received\x20prior\x20to\x20that\x20point\x20may\x20see\x20a\
+    \x20table\n\x20where\x20only\x20some\x20modifications\x20have\x20taken\
+    \x20effect.\n\n\r\n\x05\x06\0\x02\x0c\x01\x12\x04\xc5\x01\x06\x1a\n\r\n\
+    \x05\x06\0\x02\x0c\x02\x12\x04\xc5\x01\x1b6\n\r\n\x05\x06\0\x02\x0c\x03\
+    \x12\x04\xc5\x01AF\n\x0f\n\x05\x06\0\x02\x0c\x04\x12\x06\xc6\x01\x04\xc9\
+    \x01\x06\n\x13\n\t\x06\0\x02\x0c\x04\xb0\xca\xbc\"\x12\x06\xc6\x01\x04\
+    \xc9\x01\x06\n\r\n\x05\x06\0\x02\x0c\x04\x12\x04\xca\x01\x04@\n\x10\n\
+    \x08\x06\0\x02\x0c\x04\x9b\x08\0\x12\x04\xca\x01\x04@\n\xbd\x01\n\x04\
+    \x06\0\x02\r\x12\x06\xd0\x01\x02\xd5\x01\x03\x1a\xac\x01\x20Permanently\
+    \x20drop/delete\x20a\x20row\x20range\x20from\x20a\x20specified\x20table.\
+    \x20The\x20request\x20can\n\x20specify\x20whether\x20to\x20delete\x20all\
+    \x20rows\x20in\x20a\x20table,\x20or\x20only\x20those\x20that\x20match\
+    \x20a\n\x20particular\x20prefix.\n\n\r\n\x05\x06\0\x02\r\x01\x12\x04\xd0\
+    \x01\x06\x12\n\r\n\x05\x06\0\x02\r\x02\x12\x04\xd0\x01\x13&\n\r\n\x05\
+    \x06\0\x02\r\x03\x12\x04\xd0\x011F\n\x0f\n\x05\x06\0\x02\r\x04\x12\x06\
+    \xd1\x01\x04\xd4\x01\x06\n\x13\n\t\x06\0\x02\r\x04\xb0\xca\xbc\"\x12\x06\
+    \xd1\x01\x04\xd4\x01\x06\n\xf5\x01\n\x04\x06\0\x02\x0e\x12\x06\xdb\x01\
+    \x02\xe2\x01\x03\x1a\xe4\x01\x20Generates\x20a\x20consistency\x20token\
+    \x20for\x20a\x20Table,\x20which\x20can\x20be\x20used\x20in\n\x20CheckCon\
+    sistency\x20to\x20check\x20whether\x20mutations\x20to\x20the\x20table\
+    \x20that\x20finished\n\x20before\x20this\x20call\x20started\x20have\x20b\
+    een\x20replicated.\x20The\x20tokens\x20will\x20be\x20available\n\x20for\
+    \x2090\x20days.\n\n\r\n\x05\x06\0\x02\x0e\x01\x12\x04\xdb\x01\x06\x1e\n\
+    \r\n\x05\x06\0\x02\x0e\x02\x12\x04\xdb\x01\x1f>\n\r\n\x05\x06\0\x02\x0e\
+    \x03\x12\x04\xdc\x01\x0f/\n\x0f\n\x05\x06\0\x02\x0e\x04\x12\x06\xdd\x01\
+    \x04\xe0\x01\x06\n\x13\n\t\x06\0\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\xdd\
+    \x01\x04\xe0\x01\x06\n\r\n\x05\x06\0\x02\x0e\x04\x12\x04\xe1\x01\x042\n\
+    \x10\n\x08\x06\0\x02\x0e\x04\x9b\x08\0\x12\x04\xe1\x01\x042\n\xbd\x01\n\
+    \x04\x06\0\x02\x0f\x12\x06\xe7\x01\x02\xee\x01\x03\x1a\xac\x01\x20Checks\
+    \x20replication\x20consistency\x20based\x20on\x20a\x20consistency\x20tok\
+    en,\x20that\x20is,\x20if\n\x20replication\x20has\x20caught\x20up\x20base\
+    d\x20on\x20the\x20conditions\x20specified\x20in\x20the\x20token\n\x20and\
+    \x20the\x20check\x20request.\n\n\r\n\x05\x06\0\x02\x0f\x01\x12\x04\xe7\
+    \x01\x06\x16\n\r\n\x05\x06\0\x02\x0f\x02\x12\x04\xe7\x01\x17.\n\r\n\x05\
+    \x06\0\x02\x0f\x03\x12\x04\xe8\x01\x0f'\n\x0f\n\x05\x06\0\x02\x0f\x04\
+    \x12\x06\xe9\x01\x04\xec\x01\x06\n\x13\n\t\x06\0\x02\x0f\x04\xb0\xca\xbc\
+    \"\x12\x06\xe9\x01\x04\xec\x01\x06\n\r\n\x05\x06\0\x02\x0f\x04\x12\x04\
+    \xed\x01\x04D\n\x10\n\x08\x06\0\x02\x0f\x04\x9b\x08\0\x12\x04\xed\x01\
+    \x04D\n\xca\x03\n\x04\x06\0\x02\x10\x12\x06\xf8\x01\x02\x84\x02\x03\x1a\
+    \xb9\x03\x20Creates\x20a\x20new\x20snapshot\x20in\x20the\x20specified\
+    \x20cluster\x20from\x20the\x20specified\n\x20source\x20table.\x20The\x20\
+    cluster\x20and\x20the\x20table\x20must\x20be\x20in\x20the\x20same\x20ins\
+    tance.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\
+    \x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20\
+    not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20cust\
+    omers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-\
+    incompatible\x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20prod\
+    uction\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\
+    \x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\x10\x01\x12\x04\xf8\
+    \x01\x06\x13\n\r\n\x05\x06\0\x02\x10\x02\x12\x04\xf8\x01\x14(\n\r\n\x05\
+    \x06\0\x02\x10\x03\x12\x04\xf9\x01\x0f+\n\x0f\n\x05\x06\0\x02\x10\x04\
+    \x12\x06\xfa\x01\x04\xfd\x01\x06\n\x13\n\t\x06\0\x02\x10\x04\xb0\xca\xbc\
+    \"\x12\x06\xfa\x01\x04\xfd\x01\x06\n\x0f\n\x05\x06\0\x02\x10\x04\x12\x06\
+    \xfe\x01\x04\xff\x01/\n\x12\n\x08\x06\0\x02\x10\x04\x9b\x08\0\x12\x06\
+    \xfe\x01\x04\xff\x01/\n\x0f\n\x05\x06\0\x02\x10\x04\x12\x06\x80\x02\x04\
+    \x83\x02\x06\n\x11\n\x07\x06\0\x02\x10\x04\x99\x08\x12\x06\x80\x02\x04\
+    \x83\x02\x06\n\xf8\x02\n\x04\x06\0\x02\x11\x12\x06\x8d\x02\x02\x92\x02\
+    \x03\x1a\xe7\x02\x20Gets\x20metadata\x20information\x20about\x20the\x20s\
+    pecified\x20snapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alph\
+    a\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20featu\
+    re\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigt\
+    able\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\
     \x20backward-incompatible\x20ways\x20and\x20is\x20not\n\x20recommended\
     \x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\
-    \x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\x0e\x01\
-    \x12\x04\xf2\x01\x06\x14\n\r\n\x05\x06\0\x02\x0e\x02\x12\x04\xf2\x01\x15\
-    *\n\r\n\x05\x06\0\x02\x0e\x03\x12\x04\xf2\x015J\n\x0f\n\x05\x06\0\x02\
-    \x0e\x04\x12\x06\xf3\x01\x04\xf5\x01\x06\n\x13\n\t\x06\0\x02\x0e\x04\xb0\
-    \xca\xbc\"\x12\x06\xf3\x01\x04\xf5\x01\x06\n\r\n\x05\x06\0\x02\x0e\x04\
-    \x12\x04\xf6\x01\x042\n\x10\n\x08\x06\0\x02\x0e\x04\x9b\x08\0\x12\x04\
-    \xf6\x01\x042\n\x98\x04\n\x04\x06\0\x02\x0f\x12\x06\x81\x02\x02\x8b\x02\
-    \x03\x1a\x87\x04\x20Starts\x20creating\x20a\x20new\x20Cloud\x20Bigtable\
-    \x20Backup.\x20\x20The\x20returned\x20backup\n\x20[long-running\x20opera\
-    tion][google.longrunning.Operation]\x20can\x20be\x20used\x20to\n\x20trac\
-    k\x20creation\x20of\x20the\x20backup.\x20The\n\x20[metadata][google.long\
-    running.Operation.metadata]\x20field\x20type\x20is\n\x20[CreateBackupMet\
-    adata][google.bigtable.admin.v2.CreateBackupMetadata].\x20The\n\x20[resp\
-    onse][google.longrunning.Operation.response]\x20field\x20type\x20is\n\
-    \x20[Backup][google.bigtable.admin.v2.Backup],\x20if\x20successful.\x20C\
-    ancelling\x20the\n\x20returned\x20operation\x20will\x20stop\x20the\x20cr\
-    eation\x20and\x20delete\x20the\x20backup.\n\n\r\n\x05\x06\0\x02\x0f\x01\
-    \x12\x04\x81\x02\x06\x12\n\r\n\x05\x06\0\x02\x0f\x02\x12\x04\x81\x02\x13\
-    &\n\r\n\x05\x06\0\x02\x0f\x03\x12\x04\x81\x021M\n\x0f\n\x05\x06\0\x02\
-    \x0f\x04\x12\x06\x82\x02\x04\x85\x02\x06\n\x13\n\t\x06\0\x02\x0f\x04\xb0\
-    \xca\xbc\"\x12\x06\x82\x02\x04\x85\x02\x06\n\r\n\x05\x06\0\x02\x0f\x04\
-    \x12\x04\x86\x02\x04E\n\x10\n\x08\x06\0\x02\x0f\x04\x9b\x08\0\x12\x04\
-    \x86\x02\x04E\n\x0f\n\x05\x06\0\x02\x0f\x04\x12\x06\x87\x02\x04\x8a\x02\
-    \x06\n\x11\n\x07\x06\0\x02\x0f\x04\x99\x08\x12\x06\x87\x02\x04\x8a\x02\
-    \x06\nP\n\x04\x06\0\x02\x10\x12\x06\x8e\x02\x02\x93\x02\x03\x1a@\x20Gets\
-    \x20metadata\x20on\x20a\x20pending\x20or\x20completed\x20Cloud\x20Bigtab\
-    le\x20Backup.\n\n\r\n\x05\x06\0\x02\x10\x01\x12\x04\x8e\x02\x06\x0f\n\r\
-    \n\x05\x06\0\x02\x10\x02\x12\x04\x8e\x02\x10\x20\n\r\n\x05\x06\0\x02\x10\
-    \x03\x12\x04\x8e\x02+1\n\x0f\n\x05\x06\0\x02\x10\x04\x12\x06\x8f\x02\x04\
-    \x91\x02\x06\n\x13\n\t\x06\0\x02\x10\x04\xb0\xca\xbc\"\x12\x06\x8f\x02\
-    \x04\x91\x02\x06\n\r\n\x05\x06\0\x02\x10\x04\x12\x04\x92\x02\x042\n\x10\
-    \n\x08\x06\0\x02\x10\x04\x9b\x08\0\x12\x04\x92\x02\x042\nG\n\x04\x06\0\
-    \x02\x11\x12\x06\x96\x02\x02\x9c\x02\x03\x1a7\x20Updates\x20a\x20pending\
-    \x20or\x20completed\x20Cloud\x20Bigtable\x20Backup.\n\n\r\n\x05\x06\0\
-    \x02\x11\x01\x12\x04\x96\x02\x06\x12\n\r\n\x05\x06\0\x02\x11\x02\x12\x04\
-    \x96\x02\x13&\n\r\n\x05\x06\0\x02\x11\x03\x12\x04\x96\x0217\n\x0f\n\x05\
-    \x06\0\x02\x11\x04\x12\x06\x97\x02\x04\x9a\x02\x06\n\x13\n\t\x06\0\x02\
-    \x11\x04\xb0\xca\xbc\"\x12\x06\x97\x02\x04\x9a\x02\x06\n\r\n\x05\x06\0\
-    \x02\x11\x04\x12\x04\x9b\x02\x04@\n\x10\n\x08\x06\0\x02\x11\x04\x9b\x08\
-    \0\x12\x04\x9b\x02\x04@\nG\n\x04\x06\0\x02\x12\x12\x06\x9f\x02\x02\xa4\
-    \x02\x03\x1a7\x20Deletes\x20a\x20pending\x20or\x20completed\x20Cloud\x20\
-    Bigtable\x20backup.\n\n\r\n\x05\x06\0\x02\x12\x01\x12\x04\x9f\x02\x06\
-    \x12\n\r\n\x05\x06\0\x02\x12\x02\x12\x04\x9f\x02\x13&\n\r\n\x05\x06\0\
-    \x02\x12\x03\x12\x04\x9f\x021F\n\x0f\n\x05\x06\0\x02\x12\x04\x12\x06\xa0\
-    \x02\x04\xa2\x02\x06\n\x13\n\t\x06\0\x02\x12\x04\xb0\xca\xbc\"\x12\x06\
-    \xa0\x02\x04\xa2\x02\x06\n\r\n\x05\x06\0\x02\x12\x04\x12\x04\xa3\x02\x04\
-    2\n\x10\n\x08\x06\0\x02\x12\x04\x9b\x08\0\x12\x04\xa3\x02\x042\n\\\n\x04\
-    \x06\0\x02\x13\x12\x06\xa8\x02\x02\xad\x02\x03\x1aL\x20Lists\x20Cloud\
-    \x20Bigtable\x20backups.\x20Returns\x20both\x20completed\x20and\x20pendi\
-    ng\n\x20backups.\n\n\r\n\x05\x06\0\x02\x13\x01\x12\x04\xa8\x02\x06\x11\n\
-    \r\n\x05\x06\0\x02\x13\x02\x12\x04\xa8\x02\x12$\n\r\n\x05\x06\0\x02\x13\
-    \x03\x12\x04\xa8\x02/B\n\x0f\n\x05\x06\0\x02\x13\x04\x12\x06\xa9\x02\x04\
-    \xab\x02\x06\n\x13\n\t\x06\0\x02\x13\x04\xb0\xca\xbc\"\x12\x06\xa9\x02\
-    \x04\xab\x02\x06\n\r\n\x05\x06\0\x02\x13\x04\x12\x04\xac\x02\x044\n\x10\
-    \n\x08\x06\0\x02\x13\x04\x9b\x08\0\x12\x04\xac\x02\x044\n\xe2\x03\n\x04\
-    \x06\0\x02\x14\x12\x06\xb6\x02\x02\xbf\x02\x03\x1a\xd1\x03\x20Create\x20\
-    a\x20new\x20table\x20by\x20restoring\x20from\x20a\x20completed\x20backup\
-    .\x20\x20The\n\x20returned\x20table\x20[long-running\x20operation][googl\
-    e.longrunning.Operation]\x20can\n\x20be\x20used\x20to\x20track\x20the\
-    \x20progress\x20of\x20the\x20operation,\x20and\x20to\x20cancel\x20it.\
-    \x20\x20The\n\x20[metadata][google.longrunning.Operation.metadata]\x20fi\
-    eld\x20type\x20is\n\x20[RestoreTableMetadata][google.bigtable.admin.Rest\
-    oreTableMetadata].\x20\x20The\n\x20[response][google.longrunning.Operati\
-    on.response]\x20type\x20is\n\x20[Table][google.bigtable.admin.v2.Table],\
-    \x20if\x20successful.\n\n\r\n\x05\x06\0\x02\x14\x01\x12\x04\xb6\x02\x06\
-    \x12\n\r\n\x05\x06\0\x02\x14\x02\x12\x04\xb6\x02\x13&\n\r\n\x05\x06\0\
-    \x02\x14\x03\x12\x04\xb6\x021M\n\x0f\n\x05\x06\0\x02\x14\x04\x12\x06\xb7\
-    \x02\x04\xba\x02\x06\n\x13\n\t\x06\0\x02\x14\x04\xb0\xca\xbc\"\x12\x06\
-    \xb7\x02\x04\xba\x02\x06\n\x0f\n\x05\x06\0\x02\x14\x04\x12\x06\xbb\x02\
-    \x04\xbe\x02\x06\n\x11\n\x07\x06\0\x02\x14\x04\x99\x08\x12\x06\xbb\x02\
-    \x04\xbe\x02\x06\n\x8b\x01\n\x04\x06\0\x02\x15\x12\x06\xc3\x02\x02\xce\
-    \x02\x03\x1a{\x20Copy\x20a\x20Cloud\x20Bigtable\x20backup\x20to\x20a\x20\
-    new\x20backup\x20in\x20the\x20destination\x20cluster\n\x20located\x20in\
-    \x20the\x20destination\x20instance\x20and\x20project.\n\n\r\n\x05\x06\0\
-    \x02\x15\x01\x12\x04\xc3\x02\x06\x10\n\r\n\x05\x06\0\x02\x15\x02\x12\x04\
-    \xc3\x02\x11\"\n\r\n\x05\x06\0\x02\x15\x03\x12\x04\xc3\x02-I\n\x0f\n\x05\
-    \x06\0\x02\x15\x04\x12\x06\xc4\x02\x04\xc7\x02\x06\n\x13\n\t\x06\0\x02\
-    \x15\x04\xb0\xca\xbc\"\x12\x06\xc4\x02\x04\xc7\x02\x06\n\x0f\n\x05\x06\0\
-    \x02\x15\x04\x12\x06\xc8\x02\x04\xc9\x025\n\x12\n\x08\x06\0\x02\x15\x04\
-    \x9b\x08\0\x12\x06\xc8\x02\x04\xc9\x025\n\x0f\n\x05\x06\0\x02\x15\x04\
-    \x12\x06\xca\x02\x04\xcd\x02\x06\n\x11\n\x07\x06\0\x02\x15\x04\x99\x08\
-    \x12\x06\xca\x02\x04\xcd\x02\x06\n\xa2\x01\n\x04\x06\0\x02\x16\x12\x06\
-    \xd3\x02\x02\xde\x02\x03\x1a\x91\x01\x20Gets\x20the\x20access\x20control\
-    \x20policy\x20for\x20a\x20Table\x20or\x20Backup\x20resource.\n\x20Return\
-    s\x20an\x20empty\x20policy\x20if\x20the\x20resource\x20exists\x20but\x20\
-    does\x20not\x20have\x20a\x20policy\n\x20set.\n\n\r\n\x05\x06\0\x02\x16\
-    \x01\x12\x04\xd3\x02\x06\x12\n\r\n\x05\x06\0\x02\x16\x02\x12\x04\xd3\x02\
-    \x134\n\r\n\x05\x06\0\x02\x16\x03\x12\x04\xd4\x02\x0f#\n\x0f\n\x05\x06\0\
-    \x02\x16\x04\x12\x06\xd5\x02\x04\xdc\x02\x06\n\x13\n\t\x06\0\x02\x16\x04\
-    \xb0\xca\xbc\"\x12\x06\xd5\x02\x04\xdc\x02\x06\n\r\n\x05\x06\0\x02\x16\
-    \x04\x12\x04\xdd\x02\x046\n\x10\n\x08\x06\0\x02\x16\x04\x9b\x08\0\x12\
-    \x04\xdd\x02\x046\nn\n\x04\x06\0\x02\x17\x12\x06\xe2\x02\x02\xed\x02\x03\
-    \x1a^\x20Sets\x20the\x20access\x20control\x20policy\x20on\x20a\x20Table\
-    \x20or\x20Backup\x20resource.\n\x20Replaces\x20any\x20existing\x20policy\
-    .\n\n\r\n\x05\x06\0\x02\x17\x01\x12\x04\xe2\x02\x06\x12\n\r\n\x05\x06\0\
-    \x02\x17\x02\x12\x04\xe2\x02\x134\n\r\n\x05\x06\0\x02\x17\x03\x12\x04\
-    \xe3\x02\x0f#\n\x0f\n\x05\x06\0\x02\x17\x04\x12\x06\xe4\x02\x04\xeb\x02\
-    \x06\n\x13\n\t\x06\0\x02\x17\x04\xb0\xca\xbc\"\x12\x06\xe4\x02\x04\xeb\
-    \x02\x06\n\r\n\x05\x06\0\x02\x17\x04\x12\x04\xec\x02\x04=\n\x10\n\x08\
-    \x06\0\x02\x17\x04\x9b\x08\0\x12\x04\xec\x02\x04=\ne\n\x04\x06\0\x02\x18\
-    \x12\x06\xf1\x02\x02\xfc\x02\x03\x1aU\x20Returns\x20permissions\x20that\
-    \x20the\x20caller\x20has\x20on\x20the\x20specified\x20Table\x20or\x20Bac\
-    kup\n\x20resource.\n\n\r\n\x05\x06\0\x02\x18\x01\x12\x04\xf1\x02\x06\x18\
-    \n\r\n\x05\x06\0\x02\x18\x02\x12\x04\xf1\x02\x19@\n\r\n\x05\x06\0\x02\
-    \x18\x03\x12\x04\xf2\x02\x0f7\n\x0f\n\x05\x06\0\x02\x18\x04\x12\x06\xf3\
-    \x02\x04\xfa\x02\x06\n\x13\n\t\x06\0\x02\x18\x04\xb0\xca\xbc\"\x12\x06\
-    \xf3\x02\x04\xfa\x02\x06\n\r\n\x05\x06\0\x02\x18\x04\x12\x04\xfb\x02\x04\
-    B\n\x10\n\x08\x06\0\x02\x18\x04\x9b\x08\0\x12\x04\xfb\x02\x04B\nj\n\x02\
-    \x04\0\x12\x06\x81\x03\0\x99\x03\x01\x1a\\\x20The\x20request\x20for\n\
-    \x20[RestoreTable][google.bigtable.admin.v2.BigtableTableAdmin.RestoreTa\
-    ble].\n\n\x0b\n\x03\x04\0\x01\x12\x04\x81\x03\x08\x1b\n\x9f\x01\n\x04\
-    \x04\0\x02\0\x12\x06\x84\x03\x02\x89\x03\x04\x1a\x8e\x01\x20Required.\
-    \x20The\x20name\x20of\x20the\x20instance\x20in\x20which\x20to\x20create\
-    \x20the\x20restored\n\x20table.\x20Values\x20are\x20of\x20the\x20form\
-    \x20`projects/<project>/instances/<instance>`.\n\n\r\n\x05\x04\0\x02\0\
-    \x05\x12\x04\x84\x03\x02\x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\x84\x03\t\
-    \x0f\n\r\n\x05\x04\0\x02\0\x03\x12\x04\x84\x03\x12\x13\n\x0f\n\x05\x04\0\
-    \x02\0\x08\x12\x06\x84\x03\x14\x89\x03\x03\n\x10\n\x08\x04\0\x02\0\x08\
-    \x9c\x08\0\x12\x04\x85\x03\x04*\n\x11\n\x07\x04\0\x02\0\x08\x9f\x08\x12\
-    \x06\x86\x03\x04\x88\x03\x05\n\xf5\x01\n\x04\x04\0\x02\x01\x12\x04\x8f\
-    \x03\x02?\x1a\xe6\x01\x20Required.\x20The\x20id\x20of\x20the\x20table\
-    \x20to\x20create\x20and\x20restore\x20to.\x20This\n\x20table\x20must\x20\
-    not\x20already\x20exist.\x20The\x20`table_id`\x20appended\x20to\n\x20`pa\
-    rent`\x20forms\x20the\x20full\x20table\x20name\x20of\x20the\x20form\n\
-    \x20`projects/<project>/instances/<instance>/tables/<table_id>`.\n\n\r\n\
-    \x05\x04\0\x02\x01\x05\x12\x04\x8f\x03\x02\x08\n\r\n\x05\x04\0\x02\x01\
-    \x01\x12\x04\x8f\x03\t\x11\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\x8f\x03\
-    \x14\x15\n\r\n\x05\x04\0\x02\x01\x08\x12\x04\x8f\x03\x16>\n\x10\n\x08\
-    \x04\0\x02\x01\x08\x9c\x08\0\x12\x04\x8f\x03\x17=\n=\n\x04\x04\0\x08\0\
-    \x12\x06\x92\x03\x02\x98\x03\x03\x1a-\x20Required.\x20The\x20source\x20f\
-    rom\x20which\x20to\x20restore.\n\n\r\n\x05\x04\0\x08\0\x01\x12\x04\x92\
-    \x03\x08\x0e\n\xa4\x01\n\x04\x04\0\x02\x02\x12\x06\x95\x03\x04\x97\x03\
-    \x07\x1a\x93\x01\x20Name\x20of\x20the\x20backup\x20from\x20which\x20to\
-    \x20restore.\x20\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<p\
-    roject>/instances/<instance>/clusters/<cluster>/backups/<backup>`.\n\n\r\
-    \n\x05\x04\0\x02\x02\x05\x12\x04\x95\x03\x04\n\n\r\n\x05\x04\0\x02\x02\
-    \x01\x12\x04\x95\x03\x0b\x11\n\r\n\x05\x04\0\x02\x02\x03\x12\x04\x95\x03\
-    \x14\x15\n\x0f\n\x05\x04\0\x02\x02\x08\x12\x06\x95\x03\x16\x97\x03\x06\n\
-    \x11\n\x07\x04\0\x02\x02\x08\x9f\x08\x12\x06\x95\x03\x17\x97\x03\x05\n\
-    \x94\x01\n\x02\x04\x01\x12\x06\x9d\x03\0\xba\x03\x01\x1a\x85\x01\x20Meta\
-    data\x20type\x20for\x20the\x20long-running\x20operation\x20returned\x20b\
-    y\n\x20[RestoreTable][google.bigtable.admin.v2.BigtableTableAdmin.Restor\
-    eTable].\n\n\x0b\n\x03\x04\x01\x01\x12\x04\x9d\x03\x08\x1c\n@\n\x04\x04\
-    \x01\x02\0\x12\x04\x9f\x03\x02\x12\x1a2\x20Name\x20of\x20the\x20table\
-    \x20being\x20created\x20and\x20restored\x20to.\n\n\r\n\x05\x04\x01\x02\0\
-    \x05\x12\x04\x9f\x03\x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x9f\x03\
-    \t\r\n\r\n\x05\x04\x01\x02\0\x03\x12\x04\x9f\x03\x10\x11\n/\n\x04\x04\
-    \x01\x02\x01\x12\x04\xa2\x03\x02$\x1a!\x20The\x20type\x20of\x20the\x20re\
-    store\x20source.\n\n\r\n\x05\x04\x01\x02\x01\x06\x12\x04\xa2\x03\x02\x13\
-    \n\r\n\x05\x04\x01\x02\x01\x01\x12\x04\xa2\x03\x14\x1f\n\r\n\x05\x04\x01\
-    \x02\x01\x03\x12\x04\xa2\x03\"#\n\xad\x01\n\x04\x04\x01\x08\0\x12\x06\
-    \xa7\x03\x02\xa9\x03\x03\x1a\x9c\x01\x20Information\x20about\x20the\x20s\
-    ource\x20used\x20to\x20restore\x20the\x20table,\x20as\x20specified\x20by\
-    \n\x20`source`\x20in\n\x20[RestoreTableRequest][google.bigtable.admin.v2\
-    .RestoreTableRequest].\n\n\r\n\x05\x04\x01\x08\0\x01\x12\x04\xa7\x03\x08\
-    \x13\n\x0c\n\x04\x04\x01\x02\x02\x12\x04\xa8\x03\x04\x1f\n\r\n\x05\x04\
-    \x01\x02\x02\x06\x12\x04\xa8\x03\x04\x0e\n\r\n\x05\x04\x01\x02\x02\x01\
-    \x12\x04\xa8\x03\x0f\x1a\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\xa8\x03\
-    \x1d\x1e\n\xca\x04\n\x04\x04\x01\x02\x03\x12\x04\xb4\x03\x02+\x1a\xbb\
-    \x04\x20If\x20exists,\x20the\x20name\x20of\x20the\x20long-running\x20ope\
-    ration\x20that\x20will\x20be\x20used\x20to\n\x20track\x20the\x20post-res\
-    tore\x20optimization\x20process\x20to\x20optimize\x20the\x20performance\
-    \x20of\n\x20the\x20restored\x20table.\x20The\x20metadata\x20type\x20of\
-    \x20the\x20long-running\x20operation\x20is\n\x20[OptimizeRestoreTableMet\
-    adata][].\x20The\x20response\x20type\x20is\n\x20[Empty][google.protobuf.\
-    Empty].\x20This\x20long-running\x20operation\x20may\x20be\n\x20automatic\
-    ally\x20created\x20by\x20the\x20system\x20if\x20applicable\x20after\x20t\
-    he\n\x20RestoreTable\x20long-running\x20operation\x20completes\x20succes\
-    sfully.\x20This\x20operation\n\x20may\x20not\x20be\x20created\x20if\x20t\
-    he\x20table\x20is\x20already\x20optimized\x20or\x20the\x20restore\x20was\
-    \n\x20not\x20successful.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\xb4\x03\
-    \x02\x08\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\xb4\x03\t&\n\r\n\x05\x04\
-    \x01\x02\x03\x03\x12\x04\xb4\x03)*\ny\n\x04\x04\x01\x02\x04\x12\x04\xb9\
-    \x03\x02!\x1ak\x20The\x20progress\x20of\x20the\n\x20[RestoreTable][googl\
-    e.bigtable.admin.v2.BigtableTableAdmin.RestoreTable]\n\x20operation.\n\n\
-    \r\n\x05\x04\x01\x02\x04\x06\x12\x04\xb9\x03\x02\x13\n\r\n\x05\x04\x01\
-    \x02\x04\x01\x12\x04\xb9\x03\x14\x1c\n\r\n\x05\x04\x01\x02\x04\x03\x12\
-    \x04\xb9\x03\x1f\x20\n\xa1\x02\n\x02\x04\x02\x12\x06\xc0\x03\0\xc6\x03\
-    \x01\x1a\x92\x02\x20Metadata\x20type\x20for\x20the\x20long-running\x20op\
-    eration\x20used\x20to\x20track\x20the\x20progress\n\x20of\x20optimizatio\
-    ns\x20performed\x20on\x20a\x20newly\x20restored\x20table.\x20This\x20lon\
-    g-running\n\x20operation\x20is\x20automatically\x20created\x20by\x20the\
-    \x20system\x20after\x20the\x20successful\n\x20completion\x20of\x20a\x20t\
-    able\x20restore,\x20and\x20cannot\x20be\x20cancelled.\n\n\x0b\n\x03\x04\
-    \x02\x01\x12\x04\xc0\x03\x08%\n;\n\x04\x04\x02\x02\0\x12\x04\xc2\x03\x02\
-    \x12\x1a-\x20Name\x20of\x20the\x20restored\x20table\x20being\x20optimize\
-    d.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\xc2\x03\x02\x08\n\r\n\x05\x04\
-    \x02\x02\0\x01\x12\x04\xc2\x03\t\r\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\
-    \xc2\x03\x10\x11\n?\n\x04\x04\x02\x02\x01\x12\x04\xc5\x03\x02!\x1a1\x20T\
-    he\x20progress\x20of\x20the\x20post-restore\x20optimizations.\n\n\r\n\
-    \x05\x04\x02\x02\x01\x06\x12\x04\xc5\x03\x02\x13\n\r\n\x05\x04\x02\x02\
-    \x01\x01\x12\x04\xc5\x03\x14\x1c\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\
-    \xc5\x03\x1f\x20\n\x98\x01\n\x02\x04\x03\x12\x06\xca\x03\0\xf3\x03\x01\
-    \x1a\x89\x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2\
-    .BigtableTableAdmin.CreateTable][google.bigtable.admin.v2.BigtableTableA\
-    dmin.CreateTable]\n\n\x0b\n\x03\x04\x03\x01\x12\x04\xca\x03\x08\x1a\nC\n\
-    \x04\x04\x03\x03\0\x12\x06\xcc\x03\x02\xcf\x03\x03\x1a3\x20An\x20initial\
-    \x20split\x20point\x20for\x20a\x20newly\x20created\x20table.\n\n\r\n\x05\
-    \x04\x03\x03\0\x01\x12\x04\xcc\x03\n\x0f\n?\n\x06\x04\x03\x03\0\x02\0\
-    \x12\x04\xce\x03\x04\x12\x1a/\x20Row\x20key\x20to\x20use\x20as\x20an\x20\
-    initial\x20tablet\x20boundary.\n\n\x0f\n\x07\x04\x03\x03\0\x02\0\x05\x12\
-    \x04\xce\x03\x04\t\n\x0f\n\x07\x04\x03\x03\0\x02\0\x01\x12\x04\xce\x03\n\
-    \r\n\x0f\n\x07\x04\x03\x03\0\x02\0\x03\x12\x04\xce\x03\x10\x11\n\x9d\x01\
-    \n\x04\x04\x03\x02\0\x12\x06\xd3\x03\x02\xd8\x03\x04\x1a\x8c\x01\x20Requ\
-    ired.\x20The\x20unique\x20name\x20of\x20the\x20instance\x20in\x20which\
-    \x20to\x20create\x20the\x20table.\n\x20Values\x20are\x20of\x20the\x20for\
-    m\x20`projects/{project}/instances/{instance}`.\n\n\r\n\x05\x04\x03\x02\
-    \0\x05\x12\x04\xd3\x03\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xd3\
-    \x03\t\x0f\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xd3\x03\x12\x13\n\x0f\n\
-    \x05\x04\x03\x02\0\x08\x12\x06\xd3\x03\x14\xd8\x03\x03\n\x10\n\x08\x04\
-    \x03\x02\0\x08\x9c\x08\0\x12\x04\xd4\x03\x04*\n\x11\n\x07\x04\x03\x02\0\
-    \x08\x9f\x08\x12\x06\xd5\x03\x04\xd7\x03\x05\n\xba\x01\n\x04\x04\x03\x02\
-    \x01\x12\x04\xdd\x03\x02?\x1a\xab\x01\x20Required.\x20The\x20name\x20by\
-    \x20which\x20the\x20new\x20table\x20should\x20be\x20referred\x20to\x20wi\
-    thin\x20the\n\x20parent\x20instance,\x20e.g.,\x20`foobar`\x20rather\x20t\
-    han\x20`{parent}/tables/foobar`.\n\x20Maximum\x2050\x20characters.\n\n\r\
-    \n\x05\x04\x03\x02\x01\x05\x12\x04\xdd\x03\x02\x08\n\r\n\x05\x04\x03\x02\
-    \x01\x01\x12\x04\xdd\x03\t\x11\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xdd\
-    \x03\x14\x15\n\r\n\x05\x04\x03\x02\x01\x08\x12\x04\xdd\x03\x16>\n\x10\n\
-    \x08\x04\x03\x02\x01\x08\x9c\x08\0\x12\x04\xdd\x03\x17=\n.\n\x04\x04\x03\
-    \x02\x02\x12\x04\xe0\x03\x02;\x1a\x20\x20Required.\x20The\x20Table\x20to\
-    \x20create.\n\n\r\n\x05\x04\x03\x02\x02\x06\x12\x04\xe0\x03\x02\x07\n\r\
-    \n\x05\x04\x03\x02\x02\x01\x12\x04\xe0\x03\x08\r\n\r\n\x05\x04\x03\x02\
-    \x02\x03\x12\x04\xe0\x03\x10\x11\n\r\n\x05\x04\x03\x02\x02\x08\x12\x04\
-    \xe0\x03\x12:\n\x10\n\x08\x04\x03\x02\x02\x08\x9c\x08\0\x12\x04\xe0\x03\
-    \x139\n\x99\x06\n\x04\x04\x03\x02\x03\x12\x04\xf2\x03\x02$\x1a\x8a\x06\
+    \x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\x11\x01\
+    \x12\x04\x8d\x02\x06\x11\n\r\n\x05\x06\0\x02\x11\x02\x12\x04\x8d\x02\x12\
+    $\n\r\n\x05\x06\0\x02\x11\x03\x12\x04\x8d\x02/7\n\x0f\n\x05\x06\0\x02\
+    \x11\x04\x12\x06\x8e\x02\x04\x90\x02\x06\n\x13\n\t\x06\0\x02\x11\x04\xb0\
+    \xca\xbc\"\x12\x06\x8e\x02\x04\x90\x02\x06\n\r\n\x05\x06\0\x02\x11\x04\
+    \x12\x04\x91\x02\x042\n\x10\n\x08\x06\0\x02\x11\x04\x9b\x08\0\x12\x04\
+    \x91\x02\x042\n\xfb\x02\n\x04\x06\0\x02\x12\x12\x06\x9b\x02\x02\xa0\x02\
+    \x03\x1a\xea\x02\x20Lists\x20all\x20snapshots\x20associated\x20with\x20t\
+    he\x20specified\x20cluster.\n\n\x20Note:\x20This\x20is\x20a\x20private\
+    \x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\
+    \x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20Clou\
+    d\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20chang\
+    ed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\n\x20recom\
+    mended\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\
+    \x20any\x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\
+    \x12\x01\x12\x04\x9b\x02\x06\x13\n\r\n\x05\x06\0\x02\x12\x02\x12\x04\x9b\
+    \x02\x14(\n\r\n\x05\x06\0\x02\x12\x03\x12\x04\x9b\x023H\n\x0f\n\x05\x06\
+    \0\x02\x12\x04\x12\x06\x9c\x02\x04\x9e\x02\x06\n\x13\n\t\x06\0\x02\x12\
+    \x04\xb0\xca\xbc\"\x12\x06\x9c\x02\x04\x9e\x02\x06\n\r\n\x05\x06\0\x02\
+    \x12\x04\x12\x04\x9f\x02\x044\n\x10\n\x08\x06\0\x02\x12\x04\x9b\x08\0\
+    \x12\x04\x9f\x02\x044\n\xec\x02\n\x04\x06\0\x02\x13\x12\x06\xa9\x02\x02\
+    \xae\x02\x03\x1a\xdb\x02\x20Permanently\x20deletes\x20the\x20specified\
+    \x20snapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20rel\
+    ease\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\
+    \x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20\
+    customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backw\
+    ard-incompatible\x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20\
+    production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20\
+    or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\x13\x01\x12\x04\xa9\
+    \x02\x06\x14\n\r\n\x05\x06\0\x02\x13\x02\x12\x04\xa9\x02\x15*\n\r\n\x05\
+    \x06\0\x02\x13\x03\x12\x04\xa9\x025J\n\x0f\n\x05\x06\0\x02\x13\x04\x12\
+    \x06\xaa\x02\x04\xac\x02\x06\n\x13\n\t\x06\0\x02\x13\x04\xb0\xca\xbc\"\
+    \x12\x06\xaa\x02\x04\xac\x02\x06\n\r\n\x05\x06\0\x02\x13\x04\x12\x04\xad\
+    \x02\x042\n\x10\n\x08\x06\0\x02\x13\x04\x9b\x08\0\x12\x04\xad\x02\x042\n\
+    \x98\x04\n\x04\x06\0\x02\x14\x12\x06\xb8\x02\x02\xc2\x02\x03\x1a\x87\x04\
+    \x20Starts\x20creating\x20a\x20new\x20Cloud\x20Bigtable\x20Backup.\x20\
+    \x20The\x20returned\x20backup\n\x20[long-running\x20operation][google.lo\
+    ngrunning.Operation]\x20can\x20be\x20used\x20to\n\x20track\x20creation\
+    \x20of\x20the\x20backup.\x20The\n\x20[metadata][google.longrunning.Opera\
+    tion.metadata]\x20field\x20type\x20is\n\x20[CreateBackupMetadata][google\
+    .bigtable.admin.v2.CreateBackupMetadata].\x20The\n\x20[response][google.\
+    longrunning.Operation.response]\x20field\x20type\x20is\n\x20[Backup][goo\
+    gle.bigtable.admin.v2.Backup],\x20if\x20successful.\x20Cancelling\x20the\
+    \n\x20returned\x20operation\x20will\x20stop\x20the\x20creation\x20and\
+    \x20delete\x20the\x20backup.\n\n\r\n\x05\x06\0\x02\x14\x01\x12\x04\xb8\
+    \x02\x06\x12\n\r\n\x05\x06\0\x02\x14\x02\x12\x04\xb8\x02\x13&\n\r\n\x05\
+    \x06\0\x02\x14\x03\x12\x04\xb8\x021M\n\x0f\n\x05\x06\0\x02\x14\x04\x12\
+    \x06\xb9\x02\x04\xbc\x02\x06\n\x13\n\t\x06\0\x02\x14\x04\xb0\xca\xbc\"\
+    \x12\x06\xb9\x02\x04\xbc\x02\x06\n\r\n\x05\x06\0\x02\x14\x04\x12\x04\xbd\
+    \x02\x04E\n\x10\n\x08\x06\0\x02\x14\x04\x9b\x08\0\x12\x04\xbd\x02\x04E\n\
+    \x0f\n\x05\x06\0\x02\x14\x04\x12\x06\xbe\x02\x04\xc1\x02\x06\n\x11\n\x07\
+    \x06\0\x02\x14\x04\x99\x08\x12\x06\xbe\x02\x04\xc1\x02\x06\nP\n\x04\x06\
+    \0\x02\x15\x12\x06\xc5\x02\x02\xca\x02\x03\x1a@\x20Gets\x20metadata\x20o\
+    n\x20a\x20pending\x20or\x20completed\x20Cloud\x20Bigtable\x20Backup.\n\n\
+    \r\n\x05\x06\0\x02\x15\x01\x12\x04\xc5\x02\x06\x0f\n\r\n\x05\x06\0\x02\
+    \x15\x02\x12\x04\xc5\x02\x10\x20\n\r\n\x05\x06\0\x02\x15\x03\x12\x04\xc5\
+    \x02+1\n\x0f\n\x05\x06\0\x02\x15\x04\x12\x06\xc6\x02\x04\xc8\x02\x06\n\
+    \x13\n\t\x06\0\x02\x15\x04\xb0\xca\xbc\"\x12\x06\xc6\x02\x04\xc8\x02\x06\
+    \n\r\n\x05\x06\0\x02\x15\x04\x12\x04\xc9\x02\x042\n\x10\n\x08\x06\0\x02\
+    \x15\x04\x9b\x08\0\x12\x04\xc9\x02\x042\nG\n\x04\x06\0\x02\x16\x12\x06\
+    \xcd\x02\x02\xd3\x02\x03\x1a7\x20Updates\x20a\x20pending\x20or\x20comple\
+    ted\x20Cloud\x20Bigtable\x20Backup.\n\n\r\n\x05\x06\0\x02\x16\x01\x12\
+    \x04\xcd\x02\x06\x12\n\r\n\x05\x06\0\x02\x16\x02\x12\x04\xcd\x02\x13&\n\
+    \r\n\x05\x06\0\x02\x16\x03\x12\x04\xcd\x0217\n\x0f\n\x05\x06\0\x02\x16\
+    \x04\x12\x06\xce\x02\x04\xd1\x02\x06\n\x13\n\t\x06\0\x02\x16\x04\xb0\xca\
+    \xbc\"\x12\x06\xce\x02\x04\xd1\x02\x06\n\r\n\x05\x06\0\x02\x16\x04\x12\
+    \x04\xd2\x02\x04@\n\x10\n\x08\x06\0\x02\x16\x04\x9b\x08\0\x12\x04\xd2\
+    \x02\x04@\nG\n\x04\x06\0\x02\x17\x12\x06\xd6\x02\x02\xdb\x02\x03\x1a7\
+    \x20Deletes\x20a\x20pending\x20or\x20completed\x20Cloud\x20Bigtable\x20b\
+    ackup.\n\n\r\n\x05\x06\0\x02\x17\x01\x12\x04\xd6\x02\x06\x12\n\r\n\x05\
+    \x06\0\x02\x17\x02\x12\x04\xd6\x02\x13&\n\r\n\x05\x06\0\x02\x17\x03\x12\
+    \x04\xd6\x021F\n\x0f\n\x05\x06\0\x02\x17\x04\x12\x06\xd7\x02\x04\xd9\x02\
+    \x06\n\x13\n\t\x06\0\x02\x17\x04\xb0\xca\xbc\"\x12\x06\xd7\x02\x04\xd9\
+    \x02\x06\n\r\n\x05\x06\0\x02\x17\x04\x12\x04\xda\x02\x042\n\x10\n\x08\
+    \x06\0\x02\x17\x04\x9b\x08\0\x12\x04\xda\x02\x042\n\\\n\x04\x06\0\x02\
+    \x18\x12\x06\xdf\x02\x02\xe4\x02\x03\x1aL\x20Lists\x20Cloud\x20Bigtable\
+    \x20backups.\x20Returns\x20both\x20completed\x20and\x20pending\n\x20back\
+    ups.\n\n\r\n\x05\x06\0\x02\x18\x01\x12\x04\xdf\x02\x06\x11\n\r\n\x05\x06\
+    \0\x02\x18\x02\x12\x04\xdf\x02\x12$\n\r\n\x05\x06\0\x02\x18\x03\x12\x04\
+    \xdf\x02/B\n\x0f\n\x05\x06\0\x02\x18\x04\x12\x06\xe0\x02\x04\xe2\x02\x06\
+    \n\x13\n\t\x06\0\x02\x18\x04\xb0\xca\xbc\"\x12\x06\xe0\x02\x04\xe2\x02\
+    \x06\n\r\n\x05\x06\0\x02\x18\x04\x12\x04\xe3\x02\x044\n\x10\n\x08\x06\0\
+    \x02\x18\x04\x9b\x08\0\x12\x04\xe3\x02\x044\n\xe2\x03\n\x04\x06\0\x02\
+    \x19\x12\x06\xed\x02\x02\xf6\x02\x03\x1a\xd1\x03\x20Create\x20a\x20new\
+    \x20table\x20by\x20restoring\x20from\x20a\x20completed\x20backup.\x20\
+    \x20The\n\x20returned\x20table\x20[long-running\x20operation][google.lon\
+    grunning.Operation]\x20can\n\x20be\x20used\x20to\x20track\x20the\x20prog\
+    ress\x20of\x20the\x20operation,\x20and\x20to\x20cancel\x20it.\x20\x20The\
+    \n\x20[metadata][google.longrunning.Operation.metadata]\x20field\x20type\
+    \x20is\n\x20[RestoreTableMetadata][google.bigtable.admin.RestoreTableMet\
+    adata].\x20\x20The\n\x20[response][google.longrunning.Operation.response\
+    ]\x20type\x20is\n\x20[Table][google.bigtable.admin.v2.Table],\x20if\x20s\
+    uccessful.\n\n\r\n\x05\x06\0\x02\x19\x01\x12\x04\xed\x02\x06\x12\n\r\n\
+    \x05\x06\0\x02\x19\x02\x12\x04\xed\x02\x13&\n\r\n\x05\x06\0\x02\x19\x03\
+    \x12\x04\xed\x021M\n\x0f\n\x05\x06\0\x02\x19\x04\x12\x06\xee\x02\x04\xf1\
+    \x02\x06\n\x13\n\t\x06\0\x02\x19\x04\xb0\xca\xbc\"\x12\x06\xee\x02\x04\
+    \xf1\x02\x06\n\x0f\n\x05\x06\0\x02\x19\x04\x12\x06\xf2\x02\x04\xf5\x02\
+    \x06\n\x11\n\x07\x06\0\x02\x19\x04\x99\x08\x12\x06\xf2\x02\x04\xf5\x02\
+    \x06\n\x8b\x01\n\x04\x06\0\x02\x1a\x12\x06\xfa\x02\x02\x85\x03\x03\x1a{\
+    \x20Copy\x20a\x20Cloud\x20Bigtable\x20backup\x20to\x20a\x20new\x20backup\
+    \x20in\x20the\x20destination\x20cluster\n\x20located\x20in\x20the\x20des\
+    tination\x20instance\x20and\x20project.\n\n\r\n\x05\x06\0\x02\x1a\x01\
+    \x12\x04\xfa\x02\x06\x10\n\r\n\x05\x06\0\x02\x1a\x02\x12\x04\xfa\x02\x11\
+    \"\n\r\n\x05\x06\0\x02\x1a\x03\x12\x04\xfa\x02-I\n\x0f\n\x05\x06\0\x02\
+    \x1a\x04\x12\x06\xfb\x02\x04\xfe\x02\x06\n\x13\n\t\x06\0\x02\x1a\x04\xb0\
+    \xca\xbc\"\x12\x06\xfb\x02\x04\xfe\x02\x06\n\x0f\n\x05\x06\0\x02\x1a\x04\
+    \x12\x06\xff\x02\x04\x80\x035\n\x12\n\x08\x06\0\x02\x1a\x04\x9b\x08\0\
+    \x12\x06\xff\x02\x04\x80\x035\n\x0f\n\x05\x06\0\x02\x1a\x04\x12\x06\x81\
+    \x03\x04\x84\x03\x06\n\x11\n\x07\x06\0\x02\x1a\x04\x99\x08\x12\x06\x81\
+    \x03\x04\x84\x03\x06\n\xa2\x01\n\x04\x06\0\x02\x1b\x12\x06\x8a\x03\x02\
+    \x95\x03\x03\x1a\x91\x01\x20Gets\x20the\x20access\x20control\x20policy\
+    \x20for\x20a\x20Table\x20or\x20Backup\x20resource.\n\x20Returns\x20an\
+    \x20empty\x20policy\x20if\x20the\x20resource\x20exists\x20but\x20does\
+    \x20not\x20have\x20a\x20policy\n\x20set.\n\n\r\n\x05\x06\0\x02\x1b\x01\
+    \x12\x04\x8a\x03\x06\x12\n\r\n\x05\x06\0\x02\x1b\x02\x12\x04\x8a\x03\x13\
+    4\n\r\n\x05\x06\0\x02\x1b\x03\x12\x04\x8b\x03\x0f#\n\x0f\n\x05\x06\0\x02\
+    \x1b\x04\x12\x06\x8c\x03\x04\x93\x03\x06\n\x13\n\t\x06\0\x02\x1b\x04\xb0\
+    \xca\xbc\"\x12\x06\x8c\x03\x04\x93\x03\x06\n\r\n\x05\x06\0\x02\x1b\x04\
+    \x12\x04\x94\x03\x046\n\x10\n\x08\x06\0\x02\x1b\x04\x9b\x08\0\x12\x04\
+    \x94\x03\x046\nn\n\x04\x06\0\x02\x1c\x12\x06\x99\x03\x02\xa4\x03\x03\x1a\
+    ^\x20Sets\x20the\x20access\x20control\x20policy\x20on\x20a\x20Table\x20o\
+    r\x20Backup\x20resource.\n\x20Replaces\x20any\x20existing\x20policy.\n\n\
+    \r\n\x05\x06\0\x02\x1c\x01\x12\x04\x99\x03\x06\x12\n\r\n\x05\x06\0\x02\
+    \x1c\x02\x12\x04\x99\x03\x134\n\r\n\x05\x06\0\x02\x1c\x03\x12\x04\x9a\
+    \x03\x0f#\n\x0f\n\x05\x06\0\x02\x1c\x04\x12\x06\x9b\x03\x04\xa2\x03\x06\
+    \n\x13\n\t\x06\0\x02\x1c\x04\xb0\xca\xbc\"\x12\x06\x9b\x03\x04\xa2\x03\
+    \x06\n\r\n\x05\x06\0\x02\x1c\x04\x12\x04\xa3\x03\x04=\n\x10\n\x08\x06\0\
+    \x02\x1c\x04\x9b\x08\0\x12\x04\xa3\x03\x04=\ne\n\x04\x06\0\x02\x1d\x12\
+    \x06\xa8\x03\x02\xb3\x03\x03\x1aU\x20Returns\x20permissions\x20that\x20t\
+    he\x20caller\x20has\x20on\x20the\x20specified\x20Table\x20or\x20Backup\n\
+    \x20resource.\n\n\r\n\x05\x06\0\x02\x1d\x01\x12\x04\xa8\x03\x06\x18\n\r\
+    \n\x05\x06\0\x02\x1d\x02\x12\x04\xa8\x03\x19@\n\r\n\x05\x06\0\x02\x1d\
+    \x03\x12\x04\xa9\x03\x0f7\n\x0f\n\x05\x06\0\x02\x1d\x04\x12\x06\xaa\x03\
+    \x04\xb1\x03\x06\n\x13\n\t\x06\0\x02\x1d\x04\xb0\xca\xbc\"\x12\x06\xaa\
+    \x03\x04\xb1\x03\x06\n\r\n\x05\x06\0\x02\x1d\x04\x12\x04\xb2\x03\x04B\n\
+    \x10\n\x08\x06\0\x02\x1d\x04\x9b\x08\0\x12\x04\xb2\x03\x04B\nj\n\x02\x04\
+    \0\x12\x06\xb8\x03\0\xd0\x03\x01\x1a\\\x20The\x20request\x20for\n\x20[Re\
+    storeTable][google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable].\n\
+    \n\x0b\n\x03\x04\0\x01\x12\x04\xb8\x03\x08\x1b\n\x9f\x01\n\x04\x04\0\x02\
+    \0\x12\x06\xbb\x03\x02\xc0\x03\x04\x1a\x8e\x01\x20Required.\x20The\x20na\
+    me\x20of\x20the\x20instance\x20in\x20which\x20to\x20create\x20the\x20res\
+    tored\n\x20table.\x20Values\x20are\x20of\x20the\x20form\x20`projects/<pr\
+    oject>/instances/<instance>`.\n\n\r\n\x05\x04\0\x02\0\x05\x12\x04\xbb\
+    \x03\x02\x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xbb\x03\t\x0f\n\r\n\x05\
+    \x04\0\x02\0\x03\x12\x04\xbb\x03\x12\x13\n\x0f\n\x05\x04\0\x02\0\x08\x12\
+    \x06\xbb\x03\x14\xc0\x03\x03\n\x10\n\x08\x04\0\x02\0\x08\x9c\x08\0\x12\
+    \x04\xbc\x03\x04*\n\x11\n\x07\x04\0\x02\0\x08\x9f\x08\x12\x06\xbd\x03\
+    \x04\xbf\x03\x05\n\xf5\x01\n\x04\x04\0\x02\x01\x12\x04\xc6\x03\x02?\x1a\
+    \xe6\x01\x20Required.\x20The\x20id\x20of\x20the\x20table\x20to\x20create\
+    \x20and\x20restore\x20to.\x20This\n\x20table\x20must\x20not\x20already\
+    \x20exist.\x20The\x20`table_id`\x20appended\x20to\n\x20`parent`\x20forms\
+    \x20the\x20full\x20table\x20name\x20of\x20the\x20form\n\x20`projects/<pr\
+    oject>/instances/<instance>/tables/<table_id>`.\n\n\r\n\x05\x04\0\x02\
+    \x01\x05\x12\x04\xc6\x03\x02\x08\n\r\n\x05\x04\0\x02\x01\x01\x12\x04\xc6\
+    \x03\t\x11\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\xc6\x03\x14\x15\n\r\n\x05\
+    \x04\0\x02\x01\x08\x12\x04\xc6\x03\x16>\n\x10\n\x08\x04\0\x02\x01\x08\
+    \x9c\x08\0\x12\x04\xc6\x03\x17=\n=\n\x04\x04\0\x08\0\x12\x06\xc9\x03\x02\
+    \xcf\x03\x03\x1a-\x20Required.\x20The\x20source\x20from\x20which\x20to\
+    \x20restore.\n\n\r\n\x05\x04\0\x08\0\x01\x12\x04\xc9\x03\x08\x0e\n\xa4\
+    \x01\n\x04\x04\0\x02\x02\x12\x06\xcc\x03\x04\xce\x03\x07\x1a\x93\x01\x20\
+    Name\x20of\x20the\x20backup\x20from\x20which\x20to\x20restore.\x20\x20Va\
+    lues\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<ins\
+    tance>/clusters/<cluster>/backups/<backup>`.\n\n\r\n\x05\x04\0\x02\x02\
+    \x05\x12\x04\xcc\x03\x04\n\n\r\n\x05\x04\0\x02\x02\x01\x12\x04\xcc\x03\
+    \x0b\x11\n\r\n\x05\x04\0\x02\x02\x03\x12\x04\xcc\x03\x14\x15\n\x0f\n\x05\
+    \x04\0\x02\x02\x08\x12\x06\xcc\x03\x16\xce\x03\x06\n\x11\n\x07\x04\0\x02\
+    \x02\x08\x9f\x08\x12\x06\xcc\x03\x17\xce\x03\x05\n\x94\x01\n\x02\x04\x01\
+    \x12\x06\xd4\x03\0\xf1\x03\x01\x1a\x85\x01\x20Metadata\x20type\x20for\
+    \x20the\x20long-running\x20operation\x20returned\x20by\n\x20[RestoreTabl\
+    e][google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable].\n\n\x0b\n\
+    \x03\x04\x01\x01\x12\x04\xd4\x03\x08\x1c\n@\n\x04\x04\x01\x02\0\x12\x04\
+    \xd6\x03\x02\x12\x1a2\x20Name\x20of\x20the\x20table\x20being\x20created\
+    \x20and\x20restored\x20to.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\xd6\x03\
+    \x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\xd6\x03\t\r\n\r\n\x05\x04\
+    \x01\x02\0\x03\x12\x04\xd6\x03\x10\x11\n/\n\x04\x04\x01\x02\x01\x12\x04\
+    \xd9\x03\x02$\x1a!\x20The\x20type\x20of\x20the\x20restore\x20source.\n\n\
+    \r\n\x05\x04\x01\x02\x01\x06\x12\x04\xd9\x03\x02\x13\n\r\n\x05\x04\x01\
+    \x02\x01\x01\x12\x04\xd9\x03\x14\x1f\n\r\n\x05\x04\x01\x02\x01\x03\x12\
+    \x04\xd9\x03\"#\n\xad\x01\n\x04\x04\x01\x08\0\x12\x06\xde\x03\x02\xe0\
+    \x03\x03\x1a\x9c\x01\x20Information\x20about\x20the\x20source\x20used\
+    \x20to\x20restore\x20the\x20table,\x20as\x20specified\x20by\n\x20`source\
+    `\x20in\n\x20[RestoreTableRequest][google.bigtable.admin.v2.RestoreTable\
+    Request].\n\n\r\n\x05\x04\x01\x08\0\x01\x12\x04\xde\x03\x08\x13\n\x0c\n\
+    \x04\x04\x01\x02\x02\x12\x04\xdf\x03\x04\x1f\n\r\n\x05\x04\x01\x02\x02\
+    \x06\x12\x04\xdf\x03\x04\x0e\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\xdf\
+    \x03\x0f\x1a\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\xdf\x03\x1d\x1e\n\xca\
+    \x04\n\x04\x04\x01\x02\x03\x12\x04\xeb\x03\x02+\x1a\xbb\x04\x20If\x20exi\
+    sts,\x20the\x20name\x20of\x20the\x20long-running\x20operation\x20that\
+    \x20will\x20be\x20used\x20to\n\x20track\x20the\x20post-restore\x20optimi\
+    zation\x20process\x20to\x20optimize\x20the\x20performance\x20of\n\x20the\
+    \x20restored\x20table.\x20The\x20metadata\x20type\x20of\x20the\x20long-r\
+    unning\x20operation\x20is\n\x20[OptimizeRestoreTableMetadata][].\x20The\
+    \x20response\x20type\x20is\n\x20[Empty][google.protobuf.Empty].\x20This\
+    \x20long-running\x20operation\x20may\x20be\n\x20automatically\x20created\
+    \x20by\x20the\x20system\x20if\x20applicable\x20after\x20the\n\x20Restore\
+    Table\x20long-running\x20operation\x20completes\x20successfully.\x20This\
+    \x20operation\n\x20may\x20not\x20be\x20created\x20if\x20the\x20table\x20\
+    is\x20already\x20optimized\x20or\x20the\x20restore\x20was\n\x20not\x20su\
+    ccessful.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\xeb\x03\x02\x08\n\r\n\
+    \x05\x04\x01\x02\x03\x01\x12\x04\xeb\x03\t&\n\r\n\x05\x04\x01\x02\x03\
+    \x03\x12\x04\xeb\x03)*\ny\n\x04\x04\x01\x02\x04\x12\x04\xf0\x03\x02!\x1a\
+    k\x20The\x20progress\x20of\x20the\n\x20[RestoreTable][google.bigtable.ad\
+    min.v2.BigtableTableAdmin.RestoreTable]\n\x20operation.\n\n\r\n\x05\x04\
+    \x01\x02\x04\x06\x12\x04\xf0\x03\x02\x13\n\r\n\x05\x04\x01\x02\x04\x01\
+    \x12\x04\xf0\x03\x14\x1c\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\xf0\x03\
+    \x1f\x20\n\xa1\x02\n\x02\x04\x02\x12\x06\xf7\x03\0\xfd\x03\x01\x1a\x92\
+    \x02\x20Metadata\x20type\x20for\x20the\x20long-running\x20operation\x20u\
+    sed\x20to\x20track\x20the\x20progress\n\x20of\x20optimizations\x20perfor\
+    med\x20on\x20a\x20newly\x20restored\x20table.\x20This\x20long-running\n\
+    \x20operation\x20is\x20automatically\x20created\x20by\x20the\x20system\
+    \x20after\x20the\x20successful\n\x20completion\x20of\x20a\x20table\x20re\
+    store,\x20and\x20cannot\x20be\x20cancelled.\n\n\x0b\n\x03\x04\x02\x01\
+    \x12\x04\xf7\x03\x08%\n;\n\x04\x04\x02\x02\0\x12\x04\xf9\x03\x02\x12\x1a\
+    -\x20Name\x20of\x20the\x20restored\x20table\x20being\x20optimized.\n\n\r\
+    \n\x05\x04\x02\x02\0\x05\x12\x04\xf9\x03\x02\x08\n\r\n\x05\x04\x02\x02\0\
+    \x01\x12\x04\xf9\x03\t\r\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xf9\x03\x10\
+    \x11\n?\n\x04\x04\x02\x02\x01\x12\x04\xfc\x03\x02!\x1a1\x20The\x20progre\
+    ss\x20of\x20the\x20post-restore\x20optimizations.\n\n\r\n\x05\x04\x02\
+    \x02\x01\x06\x12\x04\xfc\x03\x02\x13\n\r\n\x05\x04\x02\x02\x01\x01\x12\
+    \x04\xfc\x03\x14\x1c\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xfc\x03\x1f\
+    \x20\n\x98\x01\n\x02\x04\x03\x12\x06\x81\x04\0\xaa\x04\x01\x1a\x89\x01\
+    \x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTab\
+    leAdmin.CreateTable][google.bigtable.admin.v2.BigtableTableAdmin.CreateT\
+    able]\n\n\x0b\n\x03\x04\x03\x01\x12\x04\x81\x04\x08\x1a\nC\n\x04\x04\x03\
+    \x03\0\x12\x06\x83\x04\x02\x86\x04\x03\x1a3\x20An\x20initial\x20split\
+    \x20point\x20for\x20a\x20newly\x20created\x20table.\n\n\r\n\x05\x04\x03\
+    \x03\0\x01\x12\x04\x83\x04\n\x0f\n?\n\x06\x04\x03\x03\0\x02\0\x12\x04\
+    \x85\x04\x04\x12\x1a/\x20Row\x20key\x20to\x20use\x20as\x20an\x20initial\
+    \x20tablet\x20boundary.\n\n\x0f\n\x07\x04\x03\x03\0\x02\0\x05\x12\x04\
+    \x85\x04\x04\t\n\x0f\n\x07\x04\x03\x03\0\x02\0\x01\x12\x04\x85\x04\n\r\n\
+    \x0f\n\x07\x04\x03\x03\0\x02\0\x03\x12\x04\x85\x04\x10\x11\n\x9d\x01\n\
+    \x04\x04\x03\x02\0\x12\x06\x8a\x04\x02\x8f\x04\x04\x1a\x8c\x01\x20Requir\
+    ed.\x20The\x20unique\x20name\x20of\x20the\x20instance\x20in\x20which\x20\
+    to\x20create\x20the\x20table.\n\x20Values\x20are\x20of\x20the\x20form\
+    \x20`projects/{project}/instances/{instance}`.\n\n\r\n\x05\x04\x03\x02\0\
+    \x05\x12\x04\x8a\x04\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\x8a\x04\
+    \t\x0f\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\x8a\x04\x12\x13\n\x0f\n\x05\
+    \x04\x03\x02\0\x08\x12\x06\x8a\x04\x14\x8f\x04\x03\n\x10\n\x08\x04\x03\
+    \x02\0\x08\x9c\x08\0\x12\x04\x8b\x04\x04*\n\x11\n\x07\x04\x03\x02\0\x08\
+    \x9f\x08\x12\x06\x8c\x04\x04\x8e\x04\x05\n\xba\x01\n\x04\x04\x03\x02\x01\
+    \x12\x04\x94\x04\x02?\x1a\xab\x01\x20Required.\x20The\x20name\x20by\x20w\
+    hich\x20the\x20new\x20table\x20should\x20be\x20referred\x20to\x20within\
+    \x20the\n\x20parent\x20instance,\x20e.g.,\x20`foobar`\x20rather\x20than\
+    \x20`{parent}/tables/foobar`.\n\x20Maximum\x2050\x20characters.\n\n\r\n\
+    \x05\x04\x03\x02\x01\x05\x12\x04\x94\x04\x02\x08\n\r\n\x05\x04\x03\x02\
+    \x01\x01\x12\x04\x94\x04\t\x11\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\x94\
+    \x04\x14\x15\n\r\n\x05\x04\x03\x02\x01\x08\x12\x04\x94\x04\x16>\n\x10\n\
+    \x08\x04\x03\x02\x01\x08\x9c\x08\0\x12\x04\x94\x04\x17=\n.\n\x04\x04\x03\
+    \x02\x02\x12\x04\x97\x04\x02;\x1a\x20\x20Required.\x20The\x20Table\x20to\
+    \x20create.\n\n\r\n\x05\x04\x03\x02\x02\x06\x12\x04\x97\x04\x02\x07\n\r\
+    \n\x05\x04\x03\x02\x02\x01\x12\x04\x97\x04\x08\r\n\r\n\x05\x04\x03\x02\
+    \x02\x03\x12\x04\x97\x04\x10\x11\n\r\n\x05\x04\x03\x02\x02\x08\x12\x04\
+    \x97\x04\x12:\n\x10\n\x08\x04\x03\x02\x02\x08\x9c\x08\0\x12\x04\x97\x04\
+    \x139\n\x99\x06\n\x04\x04\x03\x02\x03\x12\x04\xa9\x04\x02$\x1a\x8a\x06\
     \x20The\x20optional\x20list\x20of\x20row\x20keys\x20that\x20will\x20be\
     \x20used\x20to\x20initially\x20split\x20the\n\x20table\x20into\x20severa\
     l\x20tablets\x20(tablets\x20are\x20similar\x20to\x20HBase\x20regions).\n\
@@ -9475,10 +11573,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x204\x20`[customer_2,\x20other)\x20\x20\x20\x20\x20\x20=>\x20{\"custome\
     r_2\"}.`\n\x20\x20\x20\x20\x20-\x20Tablet\x205\x20`[other,\x20)\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20=>\x20{\"other\"\
-    ,\x20\"zz\"}.`\n\n\r\n\x05\x04\x03\x02\x03\x04\x12\x04\xf2\x03\x02\n\n\r\
-    \n\x05\x04\x03\x02\x03\x06\x12\x04\xf2\x03\x0b\x10\n\r\n\x05\x04\x03\x02\
-    \x03\x01\x12\x04\xf2\x03\x11\x1f\n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\
-    \xf2\x03\"#\n\xdd\x03\n\x02\x04\x04\x12\x06\xfc\x03\0\x94\x04\x01\x1a\
+    ,\x20\"zz\"}.`\n\n\r\n\x05\x04\x03\x02\x03\x04\x12\x04\xa9\x04\x02\n\n\r\
+    \n\x05\x04\x03\x02\x03\x06\x12\x04\xa9\x04\x0b\x10\n\r\n\x05\x04\x03\x02\
+    \x03\x01\x12\x04\xa9\x04\x11\x1f\n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\
+    \xa9\x04\"#\n\xdd\x03\n\x02\x04\x04\x12\x06\xb3\x04\0\xcb\x04\x01\x1a\
     \xce\x03\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Big\
     tableTableAdmin.CreateTableFromSnapshot][google.bigtable.admin.v2.Bigtab\
     leTableAdmin.CreateTableFromSnapshot]\n\n\x20Note:\x20This\x20is\x20a\
@@ -9488,77 +11586,77 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     e\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\
     \x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20sub\
     ject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\
-    \x04\x04\x01\x12\x04\xfc\x03\x08&\n\x9d\x01\n\x04\x04\x04\x02\0\x12\x06\
-    \xff\x03\x02\x84\x04\x04\x1a\x8c\x01\x20Required.\x20The\x20unique\x20na\
+    \x04\x04\x01\x12\x04\xb3\x04\x08&\n\x9d\x01\n\x04\x04\x04\x02\0\x12\x06\
+    \xb6\x04\x02\xbb\x04\x04\x1a\x8c\x01\x20Required.\x20The\x20unique\x20na\
     me\x20of\x20the\x20instance\x20in\x20which\x20to\x20create\x20the\x20tab\
     le.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/{project}/insta\
-    nces/{instance}`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\xff\x03\x02\x08\
-    \n\r\n\x05\x04\x04\x02\0\x01\x12\x04\xff\x03\t\x0f\n\r\n\x05\x04\x04\x02\
-    \0\x03\x12\x04\xff\x03\x12\x13\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\xff\
-    \x03\x14\x84\x04\x03\n\x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\x04\x80\
-    \x04\x04*\n\x11\n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x06\x81\x04\x04\x83\
-    \x04\x05\n\xa2\x01\n\x04\x04\x04\x02\x01\x12\x04\x88\x04\x02?\x1a\x93\
+    nces/{instance}`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\xb6\x04\x02\x08\
+    \n\r\n\x05\x04\x04\x02\0\x01\x12\x04\xb6\x04\t\x0f\n\r\n\x05\x04\x04\x02\
+    \0\x03\x12\x04\xb6\x04\x12\x13\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\xb6\
+    \x04\x14\xbb\x04\x03\n\x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\x04\xb7\
+    \x04\x04*\n\x11\n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x06\xb8\x04\x04\xba\
+    \x04\x05\n\xa2\x01\n\x04\x04\x04\x02\x01\x12\x04\xbf\x04\x02?\x1a\x93\
     \x01\x20Required.\x20The\x20name\x20by\x20which\x20the\x20new\x20table\
     \x20should\x20be\x20referred\x20to\x20within\x20the\n\x20parent\x20insta\
     nce,\x20e.g.,\x20`foobar`\x20rather\x20than\x20`{parent}/tables/foobar`.\
-    \n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\x88\x04\x02\x08\n\r\n\x05\x04\
-    \x04\x02\x01\x01\x12\x04\x88\x04\t\x11\n\r\n\x05\x04\x04\x02\x01\x03\x12\
-    \x04\x88\x04\x14\x15\n\r\n\x05\x04\x04\x02\x01\x08\x12\x04\x88\x04\x16>\
-    \n\x10\n\x08\x04\x04\x02\x01\x08\x9c\x08\0\x12\x04\x88\x04\x17=\n\x83\
-    \x02\n\x04\x04\x04\x02\x02\x12\x06\x8e\x04\x02\x93\x04\x04\x1a\xf2\x01\
+    \n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\xbf\x04\x02\x08\n\r\n\x05\x04\
+    \x04\x02\x01\x01\x12\x04\xbf\x04\t\x11\n\r\n\x05\x04\x04\x02\x01\x03\x12\
+    \x04\xbf\x04\x14\x15\n\r\n\x05\x04\x04\x02\x01\x08\x12\x04\xbf\x04\x16>\
+    \n\x10\n\x08\x04\x04\x02\x01\x08\x9c\x08\0\x12\x04\xbf\x04\x17=\n\x83\
+    \x02\n\x04\x04\x04\x02\x02\x12\x06\xc5\x04\x02\xca\x04\x04\x1a\xf2\x01\
     \x20Required.\x20The\x20unique\x20name\x20of\x20the\x20snapshot\x20from\
     \x20which\x20to\x20restore\x20the\x20table.\n\x20The\x20snapshot\x20and\
     \x20the\x20table\x20must\x20be\x20in\x20the\x20same\x20instance.\x20Valu\
     es\x20are\x20of\x20the\n\x20form\n\x20`projects/{project}/instances/{ins\
     tance}/clusters/{cluster}/snapshots/{snapshot}`.\n\n\r\n\x05\x04\x04\x02\
-    \x02\x05\x12\x04\x8e\x04\x02\x08\n\r\n\x05\x04\x04\x02\x02\x01\x12\x04\
-    \x8e\x04\t\x18\n\r\n\x05\x04\x04\x02\x02\x03\x12\x04\x8e\x04\x1b\x1c\n\
-    \x0f\n\x05\x04\x04\x02\x02\x08\x12\x06\x8e\x04\x1d\x93\x04\x03\n\x10\n\
-    \x08\x04\x04\x02\x02\x08\x9c\x08\0\x12\x04\x8f\x04\x04*\n\x11\n\x07\x04\
-    \x04\x02\x02\x08\x9f\x08\x12\x06\x90\x04\x04\x92\x04\x05\n\x9a\x01\n\x02\
-    \x04\x05\x12\x06\x98\x04\0\xac\x04\x01\x1a\x8b\x01\x20Request\x20message\
+    \x02\x05\x12\x04\xc5\x04\x02\x08\n\r\n\x05\x04\x04\x02\x02\x01\x12\x04\
+    \xc5\x04\t\x18\n\r\n\x05\x04\x04\x02\x02\x03\x12\x04\xc5\x04\x1b\x1c\n\
+    \x0f\n\x05\x04\x04\x02\x02\x08\x12\x06\xc5\x04\x1d\xca\x04\x03\n\x10\n\
+    \x08\x04\x04\x02\x02\x08\x9c\x08\0\x12\x04\xc6\x04\x04*\n\x11\n\x07\x04\
+    \x04\x02\x02\x08\x9f\x08\x12\x06\xc7\x04\x04\xc9\x04\x05\n\x9a\x01\n\x02\
+    \x04\x05\x12\x06\xcf\x04\0\xe3\x04\x01\x1a\x8b\x01\x20Request\x20message\
     \x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange][\
     google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange]\n\n\x0b\n\x03\
-    \x04\x05\x01\x12\x04\x98\x04\x08\x1b\n\xae\x01\n\x04\x04\x05\x02\0\x12\
-    \x06\x9c\x04\x02\xa1\x04\x04\x1a\x9d\x01\x20Required.\x20The\x20unique\
+    \x04\x05\x01\x12\x04\xcf\x04\x08\x1b\n\xae\x01\n\x04\x04\x05\x02\0\x12\
+    \x06\xd3\x04\x02\xd8\x04\x04\x1a\x9d\x01\x20Required.\x20The\x20unique\
     \x20name\x20of\x20the\x20table\x20on\x20which\x20to\x20drop\x20a\x20rang\
     e\x20of\x20rows.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/\
     {project}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04\x05\x02\
-    \0\x05\x12\x04\x9c\x04\x02\x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\x9c\
-    \x04\t\r\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\x9c\x04\x10\x11\n\x0f\n\x05\
-    \x04\x05\x02\0\x08\x12\x06\x9c\x04\x12\xa1\x04\x03\n\x10\n\x08\x04\x05\
-    \x02\0\x08\x9c\x08\0\x12\x04\x9d\x04\x04*\n\x11\n\x07\x04\x05\x02\0\x08\
-    \x9f\x08\x12\x06\x9e\x04\x04\xa0\x04\x05\n/\n\x04\x04\x05\x08\0\x12\x06\
-    \xa4\x04\x02\xab\x04\x03\x1a\x1f\x20Delete\x20all\x20rows\x20or\x20by\
-    \x20prefix.\n\n\r\n\x05\x04\x05\x08\0\x01\x12\x04\xa4\x04\x08\x0e\nc\n\
-    \x04\x04\x05\x02\x01\x12\x04\xa7\x04\x04\x1d\x1aU\x20Delete\x20all\x20ro\
+    \0\x05\x12\x04\xd3\x04\x02\x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xd3\
+    \x04\t\r\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\xd3\x04\x10\x11\n\x0f\n\x05\
+    \x04\x05\x02\0\x08\x12\x06\xd3\x04\x12\xd8\x04\x03\n\x10\n\x08\x04\x05\
+    \x02\0\x08\x9c\x08\0\x12\x04\xd4\x04\x04*\n\x11\n\x07\x04\x05\x02\0\x08\
+    \x9f\x08\x12\x06\xd5\x04\x04\xd7\x04\x05\n/\n\x04\x04\x05\x08\0\x12\x06\
+    \xdb\x04\x02\xe2\x04\x03\x1a\x1f\x20Delete\x20all\x20rows\x20or\x20by\
+    \x20prefix.\n\n\r\n\x05\x04\x05\x08\0\x01\x12\x04\xdb\x04\x08\x0e\nc\n\
+    \x04\x04\x05\x02\x01\x12\x04\xde\x04\x04\x1d\x1aU\x20Delete\x20all\x20ro\
     ws\x20that\x20start\x20with\x20this\x20row\x20key\x20prefix.\x20Prefix\
     \x20cannot\x20be\n\x20zero\x20length.\n\n\r\n\x05\x04\x05\x02\x01\x05\
-    \x12\x04\xa7\x04\x04\t\n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\xa7\x04\n\
-    \x18\n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\xa7\x04\x1b\x1c\nO\n\x04\x04\
-    \x05\x02\x02\x12\x04\xaa\x04\x04(\x1aA\x20Delete\x20all\x20rows\x20in\
+    \x12\x04\xde\x04\x04\t\n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\xde\x04\n\
+    \x18\n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\xde\x04\x1b\x1c\nO\n\x04\x04\
+    \x05\x02\x02\x12\x04\xe1\x04\x04(\x1aA\x20Delete\x20all\x20rows\x20in\
     \x20the\x20table.\x20Setting\x20this\x20to\x20false\x20is\x20a\x20no-op.\
-    \n\n\r\n\x05\x04\x05\x02\x02\x05\x12\x04\xaa\x04\x04\x08\n\r\n\x05\x04\
-    \x05\x02\x02\x01\x12\x04\xaa\x04\t#\n\r\n\x05\x04\x05\x02\x02\x03\x12\
-    \x04\xaa\x04&'\n\x96\x01\n\x02\x04\x06\x12\x06\xb0\x04\0\xcb\x04\x01\x1a\
+    \n\n\r\n\x05\x04\x05\x02\x02\x05\x12\x04\xe1\x04\x04\x08\n\r\n\x05\x04\
+    \x05\x02\x02\x01\x12\x04\xe1\x04\t#\n\r\n\x05\x04\x05\x02\x02\x03\x12\
+    \x04\xe1\x04&'\n\x96\x01\n\x02\x04\x06\x12\x06\xe7\x04\0\x82\x05\x01\x1a\
     \x87\x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Big\
     tableTableAdmin.ListTables][google.bigtable.admin.v2.BigtableTableAdmin.\
-    ListTables]\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xb0\x04\x08\x19\n\xa2\x01\
-    \n\x04\x04\x06\x02\0\x12\x06\xb3\x04\x02\xb8\x04\x04\x1a\x91\x01\x20Requ\
+    ListTables]\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xe7\x04\x08\x19\n\xa2\x01\
+    \n\x04\x04\x06\x02\0\x12\x06\xea\x04\x02\xef\x04\x04\x1a\x91\x01\x20Requ\
     ired.\x20The\x20unique\x20name\x20of\x20the\x20instance\x20for\x20which\
     \x20tables\x20should\x20be\n\x20listed.\x20Values\x20are\x20of\x20the\
     \x20form\x20`projects/{project}/instances/{instance}`.\n\n\r\n\x05\x04\
-    \x06\x02\0\x05\x12\x04\xb3\x04\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\
-    \x04\xb3\x04\t\x0f\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xb3\x04\x12\x13\n\
-    \x0f\n\x05\x04\x06\x02\0\x08\x12\x06\xb3\x04\x14\xb8\x04\x03\n\x10\n\x08\
-    \x04\x06\x02\0\x08\x9c\x08\0\x12\x04\xb4\x04\x04*\n\x11\n\x07\x04\x06\
-    \x02\0\x08\x9f\x08\x12\x06\xb5\x04\x04\xb7\x04\x05\n\x84\x01\n\x04\x04\
-    \x06\x02\x01\x12\x04\xbc\x04\x02\x16\x1av\x20The\x20view\x20to\x20be\x20\
+    \x06\x02\0\x05\x12\x04\xea\x04\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\
+    \x04\xea\x04\t\x0f\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xea\x04\x12\x13\n\
+    \x0f\n\x05\x04\x06\x02\0\x08\x12\x06\xea\x04\x14\xef\x04\x03\n\x10\n\x08\
+    \x04\x06\x02\0\x08\x9c\x08\0\x12\x04\xeb\x04\x04*\n\x11\n\x07\x04\x06\
+    \x02\0\x08\x9f\x08\x12\x06\xec\x04\x04\xee\x04\x05\n\x84\x01\n\x04\x04\
+    \x06\x02\x01\x12\x04\xf3\x04\x02\x16\x1av\x20The\x20view\x20to\x20be\x20\
     applied\x20to\x20the\x20returned\x20tables'\x20fields.\n\x20NAME_ONLY\
     \x20view\x20(default)\x20and\x20REPLICATION_VIEW\x20are\x20supported.\n\
-    \n\r\n\x05\x04\x06\x02\x01\x06\x12\x04\xbc\x04\x02\x0c\n\r\n\x05\x04\x06\
-    \x02\x01\x01\x12\x04\xbc\x04\r\x11\n\r\n\x05\x04\x06\x02\x01\x03\x12\x04\
-    \xbc\x04\x14\x15\n\xbd\x03\n\x04\x04\x06\x02\x02\x12\x04\xc7\x04\x02\x16\
+    \n\r\n\x05\x04\x06\x02\x01\x06\x12\x04\xf3\x04\x02\x0c\n\r\n\x05\x04\x06\
+    \x02\x01\x01\x12\x04\xf3\x04\r\x11\n\r\n\x05\x04\x06\x02\x01\x03\x12\x04\
+    \xf3\x04\x14\x15\n\xbd\x03\n\x04\x04\x06\x02\x02\x12\x04\xfe\x04\x02\x16\
     \x1a\xae\x03\x20Maximum\x20number\x20of\x20results\x20per\x20page.\n\n\
     \x20A\x20page_size\x20of\x20zero\x20lets\x20the\x20server\x20choose\x20t\
     he\x20number\x20of\x20items\x20to\x20return.\n\x20A\x20page_size\x20whic\
@@ -9568,55 +11666,55 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20paginated\x20calls\x20are\x20not\x20required\n\x20to\x20pass\x20a\
     \x20page_size.\x20If\x20a\x20page_size\x20is\x20set\x20in\x20subsequent\
     \x20calls,\x20it\x20must\n\x20match\x20the\x20page_size\x20given\x20in\
-    \x20the\x20first\x20request.\n\n\r\n\x05\x04\x06\x02\x02\x05\x12\x04\xc7\
-    \x04\x02\x07\n\r\n\x05\x04\x06\x02\x02\x01\x12\x04\xc7\x04\x08\x11\n\r\n\
-    \x05\x04\x06\x02\x02\x03\x12\x04\xc7\x04\x14\x15\nK\n\x04\x04\x06\x02\
-    \x03\x12\x04\xca\x04\x02\x18\x1a=\x20The\x20value\x20of\x20`next_page_to\
+    \x20the\x20first\x20request.\n\n\r\n\x05\x04\x06\x02\x02\x05\x12\x04\xfe\
+    \x04\x02\x07\n\r\n\x05\x04\x06\x02\x02\x01\x12\x04\xfe\x04\x08\x11\n\r\n\
+    \x05\x04\x06\x02\x02\x03\x12\x04\xfe\x04\x14\x15\nK\n\x04\x04\x06\x02\
+    \x03\x12\x04\x81\x05\x02\x18\x1a=\x20The\x20value\x20of\x20`next_page_to\
     ken`\x20returned\x20by\x20a\x20previous\x20call.\n\n\r\n\x05\x04\x06\x02\
-    \x03\x05\x12\x04\xca\x04\x02\x08\n\r\n\x05\x04\x06\x02\x03\x01\x12\x04\
-    \xca\x04\t\x13\n\r\n\x05\x04\x06\x02\x03\x03\x12\x04\xca\x04\x16\x17\n\
-    \x97\x01\n\x02\x04\x07\x12\x06\xcf\x04\0\xd7\x04\x01\x1a\x88\x01\x20Resp\
+    \x03\x05\x12\x04\x81\x05\x02\x08\n\r\n\x05\x04\x06\x02\x03\x01\x12\x04\
+    \x81\x05\t\x13\n\r\n\x05\x04\x06\x02\x03\x03\x12\x04\x81\x05\x16\x17\n\
+    \x97\x01\n\x02\x04\x07\x12\x06\x86\x05\0\x8e\x05\x01\x1a\x88\x01\x20Resp\
     onse\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin\
     .ListTables][google.bigtable.admin.v2.BigtableTableAdmin.ListTables]\n\n\
-    \x0b\n\x03\x04\x07\x01\x12\x04\xcf\x04\x08\x1a\n=\n\x04\x04\x07\x02\0\
-    \x12\x04\xd1\x04\x02\x1c\x1a/\x20The\x20tables\x20present\x20in\x20the\
-    \x20requested\x20instance.\n\n\r\n\x05\x04\x07\x02\0\x04\x12\x04\xd1\x04\
-    \x02\n\n\r\n\x05\x04\x07\x02\0\x06\x12\x04\xd1\x04\x0b\x10\n\r\n\x05\x04\
-    \x07\x02\0\x01\x12\x04\xd1\x04\x11\x17\n\r\n\x05\x04\x07\x02\0\x03\x12\
-    \x04\xd1\x04\x1a\x1b\n\xa4\x01\n\x04\x04\x07\x02\x01\x12\x04\xd6\x04\x02\
+    \x0b\n\x03\x04\x07\x01\x12\x04\x86\x05\x08\x1a\n=\n\x04\x04\x07\x02\0\
+    \x12\x04\x88\x05\x02\x1c\x1a/\x20The\x20tables\x20present\x20in\x20the\
+    \x20requested\x20instance.\n\n\r\n\x05\x04\x07\x02\0\x04\x12\x04\x88\x05\
+    \x02\n\n\r\n\x05\x04\x07\x02\0\x06\x12\x04\x88\x05\x0b\x10\n\r\n\x05\x04\
+    \x07\x02\0\x01\x12\x04\x88\x05\x11\x17\n\r\n\x05\x04\x07\x02\0\x03\x12\
+    \x04\x88\x05\x1a\x1b\n\xa4\x01\n\x04\x04\x07\x02\x01\x12\x04\x8d\x05\x02\
     \x1d\x1a\x95\x01\x20Set\x20if\x20not\x20all\x20tables\x20could\x20be\x20\
     returned\x20in\x20a\x20single\x20response.\n\x20Pass\x20this\x20value\
     \x20to\x20`page_token`\x20in\x20another\x20request\x20to\x20get\x20the\
     \x20next\n\x20page\x20of\x20results.\n\n\r\n\x05\x04\x07\x02\x01\x05\x12\
-    \x04\xd6\x04\x02\x08\n\r\n\x05\x04\x07\x02\x01\x01\x12\x04\xd6\x04\t\x18\
-    \n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\xd6\x04\x1b\x1c\n\x92\x01\n\x02\
-    \x04\x08\x12\x06\xdb\x04\0\xe9\x04\x01\x1a\x83\x01\x20Request\x20message\
+    \x04\x8d\x05\x02\x08\n\r\n\x05\x04\x07\x02\x01\x01\x12\x04\x8d\x05\t\x18\
+    \n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\x8d\x05\x1b\x1c\n\x92\x01\n\x02\
+    \x04\x08\x12\x06\x92\x05\0\xa0\x05\x01\x1a\x83\x01\x20Request\x20message\
     \x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.GetTable][goog\
     le.bigtable.admin.v2.BigtableTableAdmin.GetTable]\n\n\x0b\n\x03\x04\x08\
-    \x01\x12\x04\xdb\x04\x08\x17\n\x97\x01\n\x04\x04\x08\x02\0\x12\x06\xdf\
-    \x04\x02\xe4\x04\x04\x1a\x86\x01\x20Required.\x20The\x20unique\x20name\
+    \x01\x12\x04\x92\x05\x08\x17\n\x97\x01\n\x04\x04\x08\x02\0\x12\x06\x96\
+    \x05\x02\x9b\x05\x04\x1a\x86\x01\x20Required.\x20The\x20unique\x20name\
     \x20of\x20the\x20requested\x20table.\n\x20Values\x20are\x20of\x20the\x20\
     form\n\x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\
-    \r\n\x05\x04\x08\x02\0\x05\x12\x04\xdf\x04\x02\x08\n\r\n\x05\x04\x08\x02\
-    \0\x01\x12\x04\xdf\x04\t\r\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\xdf\x04\
-    \x10\x11\n\x0f\n\x05\x04\x08\x02\0\x08\x12\x06\xdf\x04\x12\xe4\x04\x03\n\
-    \x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\x04\xe0\x04\x04*\n\x11\n\x07\
-    \x04\x08\x02\0\x08\x9f\x08\x12\x06\xe1\x04\x04\xe3\x04\x05\nq\n\x04\x04\
-    \x08\x02\x01\x12\x04\xe8\x04\x02\x16\x1ac\x20The\x20view\x20to\x20be\x20\
+    \r\n\x05\x04\x08\x02\0\x05\x12\x04\x96\x05\x02\x08\n\r\n\x05\x04\x08\x02\
+    \0\x01\x12\x04\x96\x05\t\r\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\x96\x05\
+    \x10\x11\n\x0f\n\x05\x04\x08\x02\0\x08\x12\x06\x96\x05\x12\x9b\x05\x03\n\
+    \x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\x04\x97\x05\x04*\n\x11\n\x07\
+    \x04\x08\x02\0\x08\x9f\x08\x12\x06\x98\x05\x04\x9a\x05\x05\nq\n\x04\x04\
+    \x08\x02\x01\x12\x04\x9f\x05\x02\x16\x1ac\x20The\x20view\x20to\x20be\x20\
     applied\x20to\x20the\x20returned\x20table's\x20fields.\n\x20Defaults\x20\
     to\x20`SCHEMA_VIEW`\x20if\x20unspecified.\n\n\r\n\x05\x04\x08\x02\x01\
-    \x06\x12\x04\xe8\x04\x02\x0c\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xe8\
-    \x04\r\x11\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xe8\x04\x14\x15\nh\n\
-    \x02\x04\t\x12\x06\xed\x04\0\x80\x05\x01\x1aZ\x20The\x20request\x20for\n\
+    \x06\x12\x04\x9f\x05\x02\x0c\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\x9f\
+    \x05\r\x11\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\x9f\x05\x14\x15\nh\n\
+    \x02\x04\t\x12\x06\xa4\x05\0\xb7\x05\x01\x1aZ\x20The\x20request\x20for\n\
     \x20[UpdateTable][google.bigtable.admin.v2.BigtableTableAdmin.UpdateTabl\
-    e].\n\n\x0b\n\x03\x04\t\x01\x12\x04\xed\x04\x08\x1a\nq\n\x04\x04\t\x02\0\
-    \x12\x04\xf0\x04\x02;\x1ac\x20Required.\x20The\x20table\x20to\x20update.\
+    e].\n\n\x0b\n\x03\x04\t\x01\x12\x04\xa4\x05\x08\x1a\nq\n\x04\x04\t\x02\0\
+    \x12\x04\xa7\x05\x02;\x1ac\x20Required.\x20The\x20table\x20to\x20update.\
     \n\x20The\x20table's\x20`name`\x20field\x20is\x20used\x20to\x20identify\
     \x20the\x20table\x20to\x20update.\n\n\r\n\x05\x04\t\x02\0\x06\x12\x04\
-    \xf0\x04\x02\x07\n\r\n\x05\x04\t\x02\0\x01\x12\x04\xf0\x04\x08\r\n\r\n\
-    \x05\x04\t\x02\0\x03\x12\x04\xf0\x04\x10\x11\n\r\n\x05\x04\t\x02\0\x08\
-    \x12\x04\xf0\x04\x12:\n\x10\n\x08\x04\t\x02\0\x08\x9c\x08\0\x12\x04\xf0\
-    \x04\x139\n\x96\x04\n\x04\x04\t\x02\x01\x12\x06\xfe\x04\x02\xff\x04/\x1a\
+    \xa7\x05\x02\x07\n\r\n\x05\x04\t\x02\0\x01\x12\x04\xa7\x05\x08\r\n\r\n\
+    \x05\x04\t\x02\0\x03\x12\x04\xa7\x05\x10\x11\n\r\n\x05\x04\t\x02\0\x08\
+    \x12\x04\xa7\x05\x12:\n\x10\n\x08\x04\t\x02\0\x08\x9c\x08\0\x12\x04\xa7\
+    \x05\x139\n\x96\x04\n\x04\x04\t\x02\x01\x12\x06\xb5\x05\x02\xb6\x05/\x1a\
     \x85\x04\x20Required.\x20The\x20list\x20of\x20fields\x20to\x20update.\n\
     \x20A\x20mask\x20specifying\x20which\x20fields\x20(e.g.\x20`change_strea\
     m_config`)\x20in\x20the\x20`table`\n\x20field\x20should\x20be\x20updated\
@@ -9627,461 +11725,467 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\n\x20*\x20`change_stream_config`\n\x20*\x20`change_stream_config.rete\
     ntion_period`\n\x20*\x20`deletion_protection`\n\n\x20If\x20`column_famil\
     ies`\x20is\x20set\x20in\x20`update_mask`,\x20it\x20will\x20return\x20an\
-    \n\x20UNIMPLEMENTED\x20error.\n\n\r\n\x05\x04\t\x02\x01\x06\x12\x04\xfe\
-    \x04\x02\x1b\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xfe\x04\x1c'\n\r\n\x05\
-    \x04\t\x02\x01\x03\x12\x04\xfe\x04*+\n\r\n\x05\x04\t\x02\x01\x08\x12\x04\
-    \xff\x04\x06.\n\x10\n\x08\x04\t\x02\x01\x08\x9c\x08\0\x12\x04\xff\x04\
-    \x07-\n\x84\x01\n\x02\x04\n\x12\x06\x84\x05\0\x8d\x05\x01\x1av\x20Metada\
+    \n\x20UNIMPLEMENTED\x20error.\n\n\r\n\x05\x04\t\x02\x01\x06\x12\x04\xb5\
+    \x05\x02\x1b\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xb5\x05\x1c'\n\r\n\x05\
+    \x04\t\x02\x01\x03\x12\x04\xb5\x05*+\n\r\n\x05\x04\t\x02\x01\x08\x12\x04\
+    \xb6\x05\x06.\n\x10\n\x08\x04\t\x02\x01\x08\x9c\x08\0\x12\x04\xb6\x05\
+    \x07-\n\x84\x01\n\x02\x04\n\x12\x06\xbb\x05\0\xc4\x05\x01\x1av\x20Metada\
     ta\x20type\x20for\x20the\x20operation\x20returned\x20by\n\x20[UpdateTabl\
     e][google.bigtable.admin.v2.BigtableTableAdmin.UpdateTable].\n\n\x0b\n\
-    \x03\x04\n\x01\x12\x04\x84\x05\x08\x1b\n4\n\x04\x04\n\x02\0\x12\x04\x86\
+    \x03\x04\n\x01\x12\x04\xbb\x05\x08\x1b\n4\n\x04\x04\n\x02\0\x12\x04\xbd\
     \x05\x02\x12\x1a&\x20The\x20name\x20of\x20the\x20table\x20being\x20updat\
-    ed.\n\n\r\n\x05\x04\n\x02\0\x05\x12\x04\x86\x05\x02\x08\n\r\n\x05\x04\n\
-    \x02\0\x01\x12\x04\x86\x05\t\r\n\r\n\x05\x04\n\x02\0\x03\x12\x04\x86\x05\
-    \x10\x11\n9\n\x04\x04\n\x02\x01\x12\x04\x89\x05\x02+\x1a+\x20The\x20time\
+    ed.\n\n\r\n\x05\x04\n\x02\0\x05\x12\x04\xbd\x05\x02\x08\n\r\n\x05\x04\n\
+    \x02\0\x01\x12\x04\xbd\x05\t\r\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xbd\x05\
+    \x10\x11\n9\n\x04\x04\n\x02\x01\x12\x04\xc0\x05\x02+\x1a+\x20The\x20time\
     \x20at\x20which\x20this\x20operation\x20started.\n\n\r\n\x05\x04\n\x02\
-    \x01\x06\x12\x04\x89\x05\x02\x1b\n\r\n\x05\x04\n\x02\x01\x01\x12\x04\x89\
-    \x05\x1c&\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\x89\x05)*\nR\n\x04\x04\n\
-    \x02\x02\x12\x04\x8c\x05\x02)\x1aD\x20If\x20set,\x20the\x20time\x20at\
+    \x01\x06\x12\x04\xc0\x05\x02\x1b\n\r\n\x05\x04\n\x02\x01\x01\x12\x04\xc0\
+    \x05\x1c&\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xc0\x05)*\nR\n\x04\x04\n\
+    \x02\x02\x12\x04\xc3\x05\x02)\x1aD\x20If\x20set,\x20the\x20time\x20at\
     \x20which\x20this\x20operation\x20finished\x20or\x20was\x20canceled.\n\n\
-    \r\n\x05\x04\n\x02\x02\x06\x12\x04\x8c\x05\x02\x1b\n\r\n\x05\x04\n\x02\
-    \x02\x01\x12\x04\x8c\x05\x1c$\n\r\n\x05\x04\n\x02\x02\x03\x12\x04\x8c\
-    \x05'(\n\x98\x01\n\x02\x04\x0b\x12\x06\x91\x05\0\x9b\x05\x01\x1a\x89\x01\
+    \r\n\x05\x04\n\x02\x02\x06\x12\x04\xc3\x05\x02\x1b\n\r\n\x05\x04\n\x02\
+    \x02\x01\x12\x04\xc3\x05\x1c$\n\r\n\x05\x04\n\x02\x02\x03\x12\x04\xc3\
+    \x05'(\n\x98\x01\n\x02\x04\x0b\x12\x06\xc8\x05\0\xd2\x05\x01\x1a\x89\x01\
     \x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTab\
     leAdmin.DeleteTable][google.bigtable.admin.v2.BigtableTableAdmin.DeleteT\
-    able]\n\n\x0b\n\x03\x04\x0b\x01\x12\x04\x91\x05\x08\x1a\n\x9b\x01\n\x04\
-    \x04\x0b\x02\0\x12\x06\x95\x05\x02\x9a\x05\x04\x1a\x8a\x01\x20Required.\
+    able]\n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xc8\x05\x08\x1a\n\x9b\x01\n\x04\
+    \x04\x0b\x02\0\x12\x06\xcc\x05\x02\xd1\x05\x04\x1a\x8a\x01\x20Required.\
     \x20The\x20unique\x20name\x20of\x20the\x20table\x20to\x20be\x20deleted.\
     \n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instan\
     ces/{instance}/tables/{table}`.\n\n\r\n\x05\x04\x0b\x02\0\x05\x12\x04\
-    \x95\x05\x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\x95\x05\t\r\n\r\n\
-    \x05\x04\x0b\x02\0\x03\x12\x04\x95\x05\x10\x11\n\x0f\n\x05\x04\x0b\x02\0\
-    \x08\x12\x06\x95\x05\x12\x9a\x05\x03\n\x10\n\x08\x04\x0b\x02\0\x08\x9c\
-    \x08\0\x12\x04\x96\x05\x04*\n\x11\n\x07\x04\x0b\x02\0\x08\x9f\x08\x12\
-    \x06\x97\x05\x04\x99\x05\x05\n\x9c\x01\n\x02\x04\x0c\x12\x06\x9f\x05\0\
-    \xa9\x05\x01\x1a\x8d\x01\x20Request\x20message\x20for\n\x20[google.bigta\
+    \xcc\x05\x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\xcc\x05\t\r\n\r\n\
+    \x05\x04\x0b\x02\0\x03\x12\x04\xcc\x05\x10\x11\n\x0f\n\x05\x04\x0b\x02\0\
+    \x08\x12\x06\xcc\x05\x12\xd1\x05\x03\n\x10\n\x08\x04\x0b\x02\0\x08\x9c\
+    \x08\0\x12\x04\xcd\x05\x04*\n\x11\n\x07\x04\x0b\x02\0\x08\x9f\x08\x12\
+    \x06\xce\x05\x04\xd0\x05\x05\n\x9c\x01\n\x02\x04\x0c\x12\x06\xd6\x05\0\
+    \xe0\x05\x01\x1a\x8d\x01\x20Request\x20message\x20for\n\x20[google.bigta\
     ble.admin.v2.BigtableTableAdmin.UndeleteTable][google.bigtable.admin.v2.\
-    BigtableTableAdmin.UndeleteTable]\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\x9f\
-    \x05\x08\x1c\n\x9c\x01\n\x04\x04\x0c\x02\0\x12\x06\xa3\x05\x02\xa8\x05\
+    BigtableTableAdmin.UndeleteTable]\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\xd6\
+    \x05\x08\x1c\n\x9c\x01\n\x04\x04\x0c\x02\0\x12\x06\xda\x05\x02\xdf\x05\
     \x04\x1a\x8b\x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20t\
     able\x20to\x20be\x20restored.\n\x20Values\x20are\x20of\x20the\x20form\n\
     \x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\
-    \x05\x04\x0c\x02\0\x05\x12\x04\xa3\x05\x02\x08\n\r\n\x05\x04\x0c\x02\0\
-    \x01\x12\x04\xa3\x05\t\r\n\r\n\x05\x04\x0c\x02\0\x03\x12\x04\xa3\x05\x10\
-    \x11\n\x0f\n\x05\x04\x0c\x02\0\x08\x12\x06\xa3\x05\x12\xa8\x05\x03\n\x10\
-    \n\x08\x04\x0c\x02\0\x08\x9c\x08\0\x12\x04\xa4\x05\x04*\n\x11\n\x07\x04\
-    \x0c\x02\0\x08\x9f\x08\x12\x06\xa5\x05\x04\xa7\x05\x05\n\xb5\x01\n\x02\
-    \x04\r\x12\x06\xad\x05\0\xb6\x05\x01\x1a\xa6\x01\x20Metadata\x20type\x20\
+    \x05\x04\x0c\x02\0\x05\x12\x04\xda\x05\x02\x08\n\r\n\x05\x04\x0c\x02\0\
+    \x01\x12\x04\xda\x05\t\r\n\r\n\x05\x04\x0c\x02\0\x03\x12\x04\xda\x05\x10\
+    \x11\n\x0f\n\x05\x04\x0c\x02\0\x08\x12\x06\xda\x05\x12\xdf\x05\x03\n\x10\
+    \n\x08\x04\x0c\x02\0\x08\x9c\x08\0\x12\x04\xdb\x05\x04*\n\x11\n\x07\x04\
+    \x0c\x02\0\x08\x9f\x08\x12\x06\xdc\x05\x04\xde\x05\x05\n\xb5\x01\n\x02\
+    \x04\r\x12\x06\xe4\x05\0\xed\x05\x01\x1a\xa6\x01\x20Metadata\x20type\x20\
     for\x20the\x20operation\x20returned\x20by\n\x20[google.bigtable.admin.v2\
     .BigtableTableAdmin.UndeleteTable][google.bigtable.admin.v2.BigtableTabl\
-    eAdmin.UndeleteTable].\n\n\x0b\n\x03\x04\r\x01\x12\x04\xad\x05\x08\x1d\n\
-    5\n\x04\x04\r\x02\0\x12\x04\xaf\x05\x02\x12\x1a'\x20The\x20name\x20of\
+    eAdmin.UndeleteTable].\n\n\x0b\n\x03\x04\r\x01\x12\x04\xe4\x05\x08\x1d\n\
+    5\n\x04\x04\r\x02\0\x12\x04\xe6\x05\x02\x12\x1a'\x20The\x20name\x20of\
     \x20the\x20table\x20being\x20restored.\n\n\r\n\x05\x04\r\x02\0\x05\x12\
-    \x04\xaf\x05\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xaf\x05\t\r\n\r\n\
-    \x05\x04\r\x02\0\x03\x12\x04\xaf\x05\x10\x11\n9\n\x04\x04\r\x02\x01\x12\
-    \x04\xb2\x05\x02+\x1a+\x20The\x20time\x20at\x20which\x20this\x20operatio\
-    n\x20started.\n\n\r\n\x05\x04\r\x02\x01\x06\x12\x04\xb2\x05\x02\x1b\n\r\
-    \n\x05\x04\r\x02\x01\x01\x12\x04\xb2\x05\x1c&\n\r\n\x05\x04\r\x02\x01\
-    \x03\x12\x04\xb2\x05)*\nS\n\x04\x04\r\x02\x02\x12\x04\xb5\x05\x02)\x1aE\
+    \x04\xe6\x05\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xe6\x05\t\r\n\r\n\
+    \x05\x04\r\x02\0\x03\x12\x04\xe6\x05\x10\x11\n9\n\x04\x04\r\x02\x01\x12\
+    \x04\xe9\x05\x02+\x1a+\x20The\x20time\x20at\x20which\x20this\x20operatio\
+    n\x20started.\n\n\r\n\x05\x04\r\x02\x01\x06\x12\x04\xe9\x05\x02\x1b\n\r\
+    \n\x05\x04\r\x02\x01\x01\x12\x04\xe9\x05\x1c&\n\r\n\x05\x04\r\x02\x01\
+    \x03\x12\x04\xe9\x05)*\nS\n\x04\x04\r\x02\x02\x12\x04\xec\x05\x02)\x1aE\
     \x20If\x20set,\x20the\x20time\x20at\x20which\x20this\x20operation\x20fin\
     ished\x20or\x20was\x20cancelled.\n\n\r\n\x05\x04\r\x02\x02\x06\x12\x04\
-    \xb5\x05\x02\x1b\n\r\n\x05\x04\r\x02\x02\x01\x12\x04\xb5\x05\x1c$\n\r\n\
-    \x05\x04\r\x02\x02\x03\x12\x04\xb5\x05'(\n\xaa\x01\n\x02\x04\x0e\x12\x06\
-    \xba\x05\0\xe0\x05\x01\x1a\x9b\x01\x20Request\x20message\x20for\n\x20[go\
+    \xec\x05\x02\x1b\n\r\n\x05\x04\r\x02\x02\x01\x12\x04\xec\x05\x1c$\n\r\n\
+    \x05\x04\r\x02\x02\x03\x12\x04\xec\x05'(\n\xaa\x01\n\x02\x04\x0e\x12\x06\
+    \xf1\x05\0\x9a\x06\x01\x1a\x9b\x01\x20Request\x20message\x20for\n\x20[go\
     ogle.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies][google.b\
     igtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies]\n\n\x0b\n\x03\
-    \x04\x0e\x01\x12\x04\xba\x05\x08#\nL\n\x04\x04\x0e\x03\0\x12\x06\xbc\x05\
-    \x02\xce\x05\x03\x1a<\x20A\x20create,\x20update,\x20or\x20delete\x20of\
+    \x04\x0e\x01\x12\x04\xf1\x05\x08#\nL\n\x04\x04\x0e\x03\0\x12\x06\xf3\x05\
+    \x02\x85\x06\x03\x1a<\x20A\x20create,\x20update,\x20or\x20delete\x20of\
     \x20a\x20particular\x20column\x20family.\n\n\r\n\x05\x04\x0e\x03\0\x01\
-    \x12\x04\xbc\x05\n\x16\n=\n\x06\x04\x0e\x03\0\x02\0\x12\x04\xbe\x05\x04\
+    \x12\x04\xf3\x05\n\x16\n=\n\x06\x04\x0e\x03\0\x02\0\x12\x04\xf5\x05\x04\
     \x12\x1a-\x20The\x20ID\x20of\x20the\x20column\x20family\x20to\x20be\x20m\
-    odified.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\0\x05\x12\x04\xbe\x05\x04\n\n\
-    \x0f\n\x07\x04\x0e\x03\0\x02\0\x01\x12\x04\xbe\x05\x0b\r\n\x0f\n\x07\x04\
-    \x0e\x03\0\x02\0\x03\x12\x04\xbe\x05\x10\x11\n0\n\x06\x04\x0e\x03\0\x08\
-    \0\x12\x06\xc1\x05\x04\xcd\x05\x05\x1a\x1e\x20Column\x20family\x20modifi\
-    cations.\n\n\x0f\n\x07\x04\x0e\x03\0\x08\0\x01\x12\x04\xc1\x05\n\r\ny\n\
-    \x06\x04\x0e\x03\0\x02\x01\x12\x04\xc4\x05\x06\x1e\x1ai\x20Create\x20a\
+    odified.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\0\x05\x12\x04\xf5\x05\x04\n\n\
+    \x0f\n\x07\x04\x0e\x03\0\x02\0\x01\x12\x04\xf5\x05\x0b\r\n\x0f\n\x07\x04\
+    \x0e\x03\0\x02\0\x03\x12\x04\xf5\x05\x10\x11\n0\n\x06\x04\x0e\x03\0\x08\
+    \0\x12\x06\xf8\x05\x04\x84\x06\x05\x1a\x1e\x20Column\x20family\x20modifi\
+    cations.\n\n\x0f\n\x07\x04\x0e\x03\0\x08\0\x01\x12\x04\xf8\x05\n\r\ny\n\
+    \x06\x04\x0e\x03\0\x02\x01\x12\x04\xfb\x05\x06\x1e\x1ai\x20Create\x20a\
     \x20new\x20column\x20family\x20with\x20the\x20specified\x20schema,\x20or\
     \x20fail\x20if\n\x20one\x20already\x20exists\x20with\x20the\x20given\x20\
-    ID.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x01\x06\x12\x04\xc4\x05\x06\x12\n\
-    \x0f\n\x07\x04\x0e\x03\0\x02\x01\x01\x12\x04\xc4\x05\x13\x19\n\x0f\n\x07\
-    \x04\x0e\x03\0\x02\x01\x03\x12\x04\xc4\x05\x1c\x1d\n\x82\x01\n\x06\x04\
-    \x0e\x03\0\x02\x02\x12\x04\xc8\x05\x06\x1e\x1ar\x20Update\x20an\x20exist\
+    ID.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x01\x06\x12\x04\xfb\x05\x06\x12\n\
+    \x0f\n\x07\x04\x0e\x03\0\x02\x01\x01\x12\x04\xfb\x05\x13\x19\n\x0f\n\x07\
+    \x04\x0e\x03\0\x02\x01\x03\x12\x04\xfb\x05\x1c\x1d\n\x82\x01\n\x06\x04\
+    \x0e\x03\0\x02\x02\x12\x04\xff\x05\x06\x1e\x1ar\x20Update\x20an\x20exist\
     ing\x20column\x20family\x20to\x20the\x20specified\x20schema,\x20or\x20fa\
     il\n\x20if\x20no\x20column\x20family\x20exists\x20with\x20the\x20given\
-    \x20ID.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x02\x06\x12\x04\xc8\x05\x06\x12\
-    \n\x0f\n\x07\x04\x0e\x03\0\x02\x02\x01\x12\x04\xc8\x05\x13\x19\n\x0f\n\
-    \x07\x04\x0e\x03\0\x02\x02\x03\x12\x04\xc8\x05\x1c\x1d\ng\n\x06\x04\x0e\
-    \x03\0\x02\x03\x12\x04\xcc\x05\x06\x14\x1aW\x20Drop\x20(delete)\x20the\
+    \x20ID.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x02\x06\x12\x04\xff\x05\x06\x12\
+    \n\x0f\n\x07\x04\x0e\x03\0\x02\x02\x01\x12\x04\xff\x05\x13\x19\n\x0f\n\
+    \x07\x04\x0e\x03\0\x02\x02\x03\x12\x04\xff\x05\x1c\x1d\ng\n\x06\x04\x0e\
+    \x03\0\x02\x03\x12\x04\x83\x06\x06\x14\x1aW\x20Drop\x20(delete)\x20the\
     \x20column\x20family\x20with\x20the\x20given\x20ID,\x20or\x20fail\x20if\
     \x20no\x20such\n\x20family\x20exists.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\
-    \x03\x05\x12\x04\xcc\x05\x06\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x03\x01\x12\
-    \x04\xcc\x05\x0b\x0f\n\x0f\n\x07\x04\x0e\x03\0\x02\x03\x03\x12\x04\xcc\
-    \x05\x12\x13\n\xaf\x01\n\x04\x04\x0e\x02\0\x12\x06\xd3\x05\x02\xd8\x05\
+    \x03\x05\x12\x04\x83\x06\x06\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x03\x01\x12\
+    \x04\x83\x06\x0b\x0f\n\x0f\n\x07\x04\x0e\x03\0\x02\x03\x03\x12\x04\x83\
+    \x06\x12\x13\n\xaf\x01\n\x04\x04\x0e\x02\0\x12\x06\x8a\x06\x02\x8f\x06\
     \x04\x1a\x9e\x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20t\
     able\x20whose\x20families\x20should\x20be\x20modified.\n\x20Values\x20ar\
     e\x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/tab\
-    les/{table}`.\n\n\r\n\x05\x04\x0e\x02\0\x05\x12\x04\xd3\x05\x02\x08\n\r\
-    \n\x05\x04\x0e\x02\0\x01\x12\x04\xd3\x05\t\r\n\r\n\x05\x04\x0e\x02\0\x03\
-    \x12\x04\xd3\x05\x10\x11\n\x0f\n\x05\x04\x0e\x02\0\x08\x12\x06\xd3\x05\
-    \x12\xd8\x05\x03\n\x10\n\x08\x04\x0e\x02\0\x08\x9c\x08\0\x12\x04\xd4\x05\
-    \x04*\n\x11\n\x07\x04\x0e\x02\0\x08\x9f\x08\x12\x06\xd5\x05\x04\xd7\x05\
-    \x05\n\x89\x02\n\x04\x04\x0e\x02\x01\x12\x06\xde\x05\x02\xdf\x05/\x1a\
+    les/{table}`.\n\n\r\n\x05\x04\x0e\x02\0\x05\x12\x04\x8a\x06\x02\x08\n\r\
+    \n\x05\x04\x0e\x02\0\x01\x12\x04\x8a\x06\t\r\n\r\n\x05\x04\x0e\x02\0\x03\
+    \x12\x04\x8a\x06\x10\x11\n\x0f\n\x05\x04\x0e\x02\0\x08\x12\x06\x8a\x06\
+    \x12\x8f\x06\x03\n\x10\n\x08\x04\x0e\x02\0\x08\x9c\x08\0\x12\x04\x8b\x06\
+    \x04*\n\x11\n\x07\x04\x0e\x02\0\x08\x9f\x08\x12\x06\x8c\x06\x04\x8e\x06\
+    \x05\n\x89\x02\n\x04\x04\x0e\x02\x01\x12\x06\x95\x06\x02\x96\x06/\x1a\
     \xf8\x01\x20Required.\x20Modifications\x20to\x20be\x20atomically\x20appl\
     ied\x20to\x20the\x20specified\x20table's\n\x20families.\x20Entries\x20ar\
     e\x20applied\x20in\x20order,\x20meaning\x20that\x20earlier\x20modificati\
     ons\n\x20can\x20be\x20masked\x20by\x20later\x20ones\x20(in\x20the\x20cas\
     e\x20of\x20repeated\x20updates\x20to\x20the\x20same\n\x20family,\x20for\
-    \x20example).\n\n\r\n\x05\x04\x0e\x02\x01\x04\x12\x04\xde\x05\x02\n\n\r\
-    \n\x05\x04\x0e\x02\x01\x06\x12\x04\xde\x05\x0b\x17\n\r\n\x05\x04\x0e\x02\
-    \x01\x01\x12\x04\xde\x05\x18%\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\xde\
-    \x05()\n\r\n\x05\x04\x0e\x02\x01\x08\x12\x04\xdf\x05\x06.\n\x10\n\x08\
-    \x04\x0e\x02\x01\x08\x9c\x08\0\x12\x04\xdf\x05\x07-\n\xb2\x01\n\x02\x04\
-    \x0f\x12\x06\xe4\x05\0\xee\x05\x01\x1a\xa3\x01\x20Request\x20message\x20\
-    for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistenc\
-    yToken][google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyT\
-    oken]\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\xe4\x05\x08'\n\xb5\x01\n\x04\x04\
-    \x0f\x02\0\x12\x06\xe8\x05\x02\xed\x05\x04\x1a\xa4\x01\x20Required.\x20T\
-    he\x20unique\x20name\x20of\x20the\x20Table\x20for\x20which\x20to\x20crea\
-    te\x20a\x20consistency\n\x20token.\x20Values\x20are\x20of\x20the\x20form\
-    \n\x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\
-    \x05\x04\x0f\x02\0\x05\x12\x04\xe8\x05\x02\x08\n\r\n\x05\x04\x0f\x02\0\
-    \x01\x12\x04\xe8\x05\t\r\n\r\n\x05\x04\x0f\x02\0\x03\x12\x04\xe8\x05\x10\
-    \x11\n\x0f\n\x05\x04\x0f\x02\0\x08\x12\x06\xe8\x05\x12\xed\x05\x03\n\x10\
-    \n\x08\x04\x0f\x02\0\x08\x9c\x08\0\x12\x04\xe9\x05\x04*\n\x11\n\x07\x04\
-    \x0f\x02\0\x08\x9f\x08\x12\x06\xea\x05\x04\xec\x05\x05\n\xb3\x01\n\x02\
-    \x04\x10\x12\x06\xf2\x05\0\xf5\x05\x01\x1a\xa4\x01\x20Response\x20messag\
-    e\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsi\
-    stencyToken][google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsist\
-    encyToken]\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xf2\x05\x08(\n0\n\x04\x04\
-    \x10\x02\0\x12\x04\xf4\x05\x02\x1f\x1a\"\x20The\x20generated\x20consiste\
-    ncy\x20token.\n\n\r\n\x05\x04\x10\x02\0\x05\x12\x04\xf4\x05\x02\x08\n\r\
-    \n\x05\x04\x10\x02\0\x01\x12\x04\xf4\x05\t\x1a\n\r\n\x05\x04\x10\x02\0\
-    \x03\x12\x04\xf4\x05\x1d\x1e\n\xa2\x01\n\x02\x04\x11\x12\x06\xf9\x05\0\
-    \x86\x06\x01\x1a\x93\x01\x20Request\x20message\x20for\n\x20[google.bigta\
-    ble.admin.v2.BigtableTableAdmin.CheckConsistency][google.bigtable.admin.\
-    v2.BigtableTableAdmin.CheckConsistency]\n\n\x0b\n\x03\x04\x11\x01\x12\
-    \x04\xf9\x05\x08\x1f\n\xb8\x01\n\x04\x04\x11\x02\0\x12\x06\xfd\x05\x02\
-    \x82\x06\x04\x1a\xa7\x01\x20Required.\x20The\x20unique\x20name\x20of\x20\
-    the\x20Table\x20for\x20which\x20to\x20check\x20replication\n\x20consiste\
-    ncy.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/inst\
-    ances/{instance}/tables/{table}`.\n\n\r\n\x05\x04\x11\x02\0\x05\x12\x04\
-    \xfd\x05\x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\xfd\x05\t\r\n\r\n\
-    \x05\x04\x11\x02\0\x03\x12\x04\xfd\x05\x10\x11\n\x0f\n\x05\x04\x11\x02\0\
-    \x08\x12\x06\xfd\x05\x12\x82\x06\x03\n\x10\n\x08\x04\x11\x02\0\x08\x9c\
-    \x08\0\x12\x04\xfe\x05\x04*\n\x11\n\x07\x04\x11\x02\0\x08\x9f\x08\x12\
-    \x06\xff\x05\x04\x81\x06\x05\nY\n\x04\x04\x11\x02\x01\x12\x04\x85\x06\
-    \x02H\x1aK\x20Required.\x20The\x20token\x20created\x20using\x20GenerateC\
-    onsistencyToken\x20for\x20the\x20Table.\n\n\r\n\x05\x04\x11\x02\x01\x05\
-    \x12\x04\x85\x06\x02\x08\n\r\n\x05\x04\x11\x02\x01\x01\x12\x04\x85\x06\t\
-    \x1a\n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\x85\x06\x1d\x1e\n\r\n\x05\x04\
-    \x11\x02\x01\x08\x12\x04\x85\x06\x1fG\n\x10\n\x08\x04\x11\x02\x01\x08\
-    \x9c\x08\0\x12\x04\x85\x06\x20F\n\xa3\x01\n\x02\x04\x12\x12\x06\x8a\x06\
-    \0\x8e\x06\x01\x1a\x94\x01\x20Response\x20message\x20for\n\x20[google.bi\
-    gtable.admin.v2.BigtableTableAdmin.CheckConsistency][google.bigtable.adm\
-    in.v2.BigtableTableAdmin.CheckConsistency]\n\n\x0b\n\x03\x04\x12\x01\x12\
-    \x04\x8a\x06\x08\x20\n\x9a\x01\n\x04\x04\x12\x02\0\x12\x04\x8d\x06\x02\
-    \x16\x1a\x8b\x01\x20True\x20only\x20if\x20the\x20token\x20is\x20consiste\
-    nt.\x20A\x20token\x20is\x20consistent\x20if\x20replication\n\x20has\x20c\
-    aught\x20up\x20with\x20the\x20restrictions\x20specified\x20in\x20the\x20\
-    request.\n\n\r\n\x05\x04\x12\x02\0\x05\x12\x04\x8d\x06\x02\x06\n\r\n\x05\
-    \x04\x12\x02\0\x01\x12\x04\x8d\x06\x07\x11\n\r\n\x05\x04\x12\x02\0\x03\
-    \x12\x04\x8d\x06\x14\x15\n\xc9\x03\n\x02\x04\x13\x12\x06\x97\x06\0\xba\
-    \x06\x01\x1a\xba\x03\x20Request\x20message\x20for\n\x20[google.bigtable.\
-    admin.v2.BigtableTableAdmin.SnapshotTable][google.bigtable.admin.v2.Bigt\
-    ableTableAdmin.SnapshotTable]\n\n\x20Note:\x20This\x20is\x20a\x20private\
+    \x20example).\n\n\r\n\x05\x04\x0e\x02\x01\x04\x12\x04\x95\x06\x02\n\n\r\
+    \n\x05\x04\x0e\x02\x01\x06\x12\x04\x95\x06\x0b\x17\n\r\n\x05\x04\x0e\x02\
+    \x01\x01\x12\x04\x95\x06\x18%\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\x95\
+    \x06()\n\r\n\x05\x04\x0e\x02\x01\x08\x12\x04\x96\x06\x06.\n\x10\n\x08\
+    \x04\x0e\x02\x01\x08\x9c\x08\0\x12\x04\x96\x06\x07-\n[\n\x04\x04\x0e\x02\
+    \x02\x12\x04\x99\x06\x02D\x1aM\x20Optional.\x20If\x20true,\x20ignore\x20\
+    safety\x20checks\x20when\x20modifying\x20the\x20column\x20families.\n\n\
+    \r\n\x05\x04\x0e\x02\x02\x05\x12\x04\x99\x06\x02\x06\n\r\n\x05\x04\x0e\
+    \x02\x02\x01\x12\x04\x99\x06\x07\x16\n\r\n\x05\x04\x0e\x02\x02\x03\x12\
+    \x04\x99\x06\x19\x1a\n\r\n\x05\x04\x0e\x02\x02\x08\x12\x04\x99\x06\x1bC\
+    \n\x10\n\x08\x04\x0e\x02\x02\x08\x9c\x08\0\x12\x04\x99\x06\x1cB\n\xb2\
+    \x01\n\x02\x04\x0f\x12\x06\x9e\x06\0\xa8\x06\x01\x1a\xa3\x01\x20Request\
+    \x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.Gen\
+    erateConsistencyToken][google.bigtable.admin.v2.BigtableTableAdmin.Gener\
+    ateConsistencyToken]\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\x9e\x06\x08'\n\
+    \xb5\x01\n\x04\x04\x0f\x02\0\x12\x06\xa2\x06\x02\xa7\x06\x04\x1a\xa4\x01\
+    \x20Required.\x20The\x20unique\x20name\x20of\x20the\x20Table\x20for\x20w\
+    hich\x20to\x20create\x20a\x20consistency\n\x20token.\x20Values\x20are\
+    \x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/tabl\
+    es/{table}`.\n\n\r\n\x05\x04\x0f\x02\0\x05\x12\x04\xa2\x06\x02\x08\n\r\n\
+    \x05\x04\x0f\x02\0\x01\x12\x04\xa2\x06\t\r\n\r\n\x05\x04\x0f\x02\0\x03\
+    \x12\x04\xa2\x06\x10\x11\n\x0f\n\x05\x04\x0f\x02\0\x08\x12\x06\xa2\x06\
+    \x12\xa7\x06\x03\n\x10\n\x08\x04\x0f\x02\0\x08\x9c\x08\0\x12\x04\xa3\x06\
+    \x04*\n\x11\n\x07\x04\x0f\x02\0\x08\x9f\x08\x12\x06\xa4\x06\x04\xa6\x06\
+    \x05\n\xb3\x01\n\x02\x04\x10\x12\x06\xac\x06\0\xaf\x06\x01\x1a\xa4\x01\
+    \x20Response\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTa\
+    bleAdmin.GenerateConsistencyToken][google.bigtable.admin.v2.BigtableTabl\
+    eAdmin.GenerateConsistencyToken]\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xac\
+    \x06\x08(\n0\n\x04\x04\x10\x02\0\x12\x04\xae\x06\x02\x1f\x1a\"\x20The\
+    \x20generated\x20consistency\x20token.\n\n\r\n\x05\x04\x10\x02\0\x05\x12\
+    \x04\xae\x06\x02\x08\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\xae\x06\t\x1a\n\
+    \r\n\x05\x04\x10\x02\0\x03\x12\x04\xae\x06\x1d\x1e\n\xa2\x01\n\x02\x04\
+    \x11\x12\x06\xb3\x06\0\xc0\x06\x01\x1a\x93\x01\x20Request\x20message\x20\
+    for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency][\
+    google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency]\n\n\x0b\n\
+    \x03\x04\x11\x01\x12\x04\xb3\x06\x08\x1f\n\xb8\x01\n\x04\x04\x11\x02\0\
+    \x12\x06\xb7\x06\x02\xbc\x06\x04\x1a\xa7\x01\x20Required.\x20The\x20uniq\
+    ue\x20name\x20of\x20the\x20Table\x20for\x20which\x20to\x20check\x20repli\
+    cation\n\x20consistency.\x20Values\x20are\x20of\x20the\x20form\n\x20`pro\
+    jects/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04\
+    \x11\x02\0\x05\x12\x04\xb7\x06\x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\
+    \x04\xb7\x06\t\r\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xb7\x06\x10\x11\n\
+    \x0f\n\x05\x04\x11\x02\0\x08\x12\x06\xb7\x06\x12\xbc\x06\x03\n\x10\n\x08\
+    \x04\x11\x02\0\x08\x9c\x08\0\x12\x04\xb8\x06\x04*\n\x11\n\x07\x04\x11\
+    \x02\0\x08\x9f\x08\x12\x06\xb9\x06\x04\xbb\x06\x05\nY\n\x04\x04\x11\x02\
+    \x01\x12\x04\xbf\x06\x02H\x1aK\x20Required.\x20The\x20token\x20created\
+    \x20using\x20GenerateConsistencyToken\x20for\x20the\x20Table.\n\n\r\n\
+    \x05\x04\x11\x02\x01\x05\x12\x04\xbf\x06\x02\x08\n\r\n\x05\x04\x11\x02\
+    \x01\x01\x12\x04\xbf\x06\t\x1a\n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\xbf\
+    \x06\x1d\x1e\n\r\n\x05\x04\x11\x02\x01\x08\x12\x04\xbf\x06\x1fG\n\x10\n\
+    \x08\x04\x11\x02\x01\x08\x9c\x08\0\x12\x04\xbf\x06\x20F\n\xa3\x01\n\x02\
+    \x04\x12\x12\x06\xc4\x06\0\xc8\x06\x01\x1a\x94\x01\x20Response\x20messag\
+    e\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.CheckConsiste\
+    ncy][google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency]\n\n\
+    \x0b\n\x03\x04\x12\x01\x12\x04\xc4\x06\x08\x20\n\x9a\x01\n\x04\x04\x12\
+    \x02\0\x12\x04\xc7\x06\x02\x16\x1a\x8b\x01\x20True\x20only\x20if\x20the\
+    \x20token\x20is\x20consistent.\x20A\x20token\x20is\x20consistent\x20if\
+    \x20replication\n\x20has\x20caught\x20up\x20with\x20the\x20restrictions\
+    \x20specified\x20in\x20the\x20request.\n\n\r\n\x05\x04\x12\x02\0\x05\x12\
+    \x04\xc7\x06\x02\x06\n\r\n\x05\x04\x12\x02\0\x01\x12\x04\xc7\x06\x07\x11\
+    \n\r\n\x05\x04\x12\x02\0\x03\x12\x04\xc7\x06\x14\x15\n\xc9\x03\n\x02\x04\
+    \x13\x12\x06\xd1\x06\0\xf4\x06\x01\x1a\xba\x03\x20Request\x20message\x20\
+    for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.SnapshotTable][goo\
+    gle.bigtable.admin.v2.BigtableTableAdmin.SnapshotTable]\n\n\x20Note:\x20\
+    This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtabl\
+    e\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20availa\
+    ble\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20featur\
+    e\x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20an\
+    d\x20is\x20not\x20recommended\n\x20for\x20production\x20use.\x20It\x20is\
+    \x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\
+    \n\x0b\n\x03\x04\x13\x01\x12\x04\xd1\x06\x08\x1c\n\xa8\x01\n\x04\x04\x13\
+    \x02\0\x12\x06\xd5\x06\x02\xda\x06\x04\x1a\x97\x01\x20Required.\x20The\
+    \x20unique\x20name\x20of\x20the\x20table\x20to\x20have\x20the\x20snapsho\
+    t\x20taken.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{proj\
+    ect}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04\x13\x02\0\x05\
+    \x12\x04\xd5\x06\x02\x08\n\r\n\x05\x04\x13\x02\0\x01\x12\x04\xd5\x06\t\r\
+    \n\r\n\x05\x04\x13\x02\0\x03\x12\x04\xd5\x06\x10\x11\n\x0f\n\x05\x04\x13\
+    \x02\0\x08\x12\x06\xd5\x06\x12\xda\x06\x03\n\x10\n\x08\x04\x13\x02\0\x08\
+    \x9c\x08\0\x12\x04\xd6\x06\x04*\n\x11\n\x07\x04\x13\x02\0\x08\x9f\x08\
+    \x12\x06\xd7\x06\x04\xd9\x06\x05\n\xb2\x01\n\x04\x04\x13\x02\x01\x12\x06\
+    \xdf\x06\x02\xe4\x06\x04\x1a\xa1\x01\x20Required.\x20The\x20name\x20of\
+    \x20the\x20cluster\x20where\x20the\x20snapshot\x20will\x20be\x20created\
+    \x20in.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}\
+    /instances/{instance}/clusters/{cluster}`.\n\n\r\n\x05\x04\x13\x02\x01\
+    \x05\x12\x04\xdf\x06\x02\x08\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\xdf\
+    \x06\t\x10\n\r\n\x05\x04\x13\x02\x01\x03\x12\x04\xdf\x06\x13\x14\n\x0f\n\
+    \x05\x04\x13\x02\x01\x08\x12\x06\xdf\x06\x15\xe4\x06\x03\n\x10\n\x08\x04\
+    \x13\x02\x01\x08\x9c\x08\0\x12\x04\xe0\x06\x04*\n\x11\n\x07\x04\x13\x02\
+    \x01\x08\x9f\x08\x12\x06\xe1\x06\x04\xe3\x06\x05\n\x8c\x02\n\x04\x04\x13\
+    \x02\x02\x12\x04\xea\x06\x02B\x1a\xfd\x01\x20Required.\x20The\x20ID\x20b\
+    y\x20which\x20the\x20new\x20snapshot\x20should\x20be\x20referred\x20to\
+    \x20within\x20the\n\x20parent\x20cluster,\x20e.g.,\x20`mysnapshot`\x20of\
+    \x20the\x20form:\n\x20`[_a-zA-Z0-9][-_.a-zA-Z0-9]*`\x20rather\x20than\n\
+    \x20`projects/{project}/instances/{instance}/clusters/{cluster}/snapshot\
+    s/mysnapshot`.\n\n\r\n\x05\x04\x13\x02\x02\x05\x12\x04\xea\x06\x02\x08\n\
+    \r\n\x05\x04\x13\x02\x02\x01\x12\x04\xea\x06\t\x14\n\r\n\x05\x04\x13\x02\
+    \x02\x03\x12\x04\xea\x06\x17\x18\n\r\n\x05\x04\x13\x02\x02\x08\x12\x04\
+    \xea\x06\x19A\n\x10\n\x08\x04\x13\x02\x02\x08\x9c\x08\0\x12\x04\xea\x06\
+    \x1a@\n\x9c\x02\n\x04\x04\x13\x02\x03\x12\x04\xf0\x06\x02#\x1a\x8d\x02\
+    \x20The\x20amount\x20of\x20time\x20that\x20the\x20new\x20snapshot\x20can\
+    \x20stay\x20active\x20after\x20it\x20is\n\x20created.\x20Once\x20'ttl'\
+    \x20expires,\x20the\x20snapshot\x20will\x20get\x20deleted.\x20The\x20max\
+    imum\n\x20amount\x20of\x20time\x20a\x20snapshot\x20can\x20stay\x20active\
+    \x20is\x207\x20days.\x20If\x20'ttl'\x20is\x20not\n\x20specified,\x20the\
+    \x20default\x20value\x20of\x2024\x20hours\x20will\x20be\x20used.\n\n\r\n\
+    \x05\x04\x13\x02\x03\x06\x12\x04\xf0\x06\x02\x1a\n\r\n\x05\x04\x13\x02\
+    \x03\x01\x12\x04\xf0\x06\x1b\x1e\n\r\n\x05\x04\x13\x02\x03\x03\x12\x04\
+    \xf0\x06!\"\n,\n\x04\x04\x13\x02\x04\x12\x04\xf3\x06\x02\x19\x1a\x1e\x20\
+    Description\x20of\x20the\x20snapshot.\n\n\r\n\x05\x04\x13\x02\x04\x05\
+    \x12\x04\xf3\x06\x02\x08\n\r\n\x05\x04\x13\x02\x04\x01\x12\x04\xf3\x06\t\
+    \x14\n\r\n\x05\x04\x13\x02\x04\x03\x12\x04\xf3\x06\x17\x18\n\xc5\x03\n\
+    \x02\x04\x14\x12\x06\xfd\x06\0\x87\x07\x01\x1a\xb6\x03\x20Request\x20mes\
+    sage\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.GetSnapsho\
+    t][google.bigtable.admin.v2.BigtableTableAdmin.GetSnapshot]\n\n\x20Note:\
+    \x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Big\
+    table\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20av\
+    ailable\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20fe\
+    ature\x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\
+    \x20and\x20is\x20not\x20recommended\n\x20for\x20production\x20use.\x20It\
+    \x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20pol\
+    icy.\n\n\x0b\n\x03\x04\x14\x01\x12\x04\xfd\x06\x08\x1a\n\xb3\x01\n\x04\
+    \x04\x14\x02\0\x12\x06\x81\x07\x02\x86\x07\x04\x1a\xa2\x01\x20Required.\
+    \x20The\x20unique\x20name\x20of\x20the\x20requested\x20snapshot.\n\x20Va\
+    lues\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{ins\
+    tance}/clusters/{cluster}/snapshots/{snapshot}`.\n\n\r\n\x05\x04\x14\x02\
+    \0\x05\x12\x04\x81\x07\x02\x08\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\x81\
+    \x07\t\r\n\r\n\x05\x04\x14\x02\0\x03\x12\x04\x81\x07\x10\x11\n\x0f\n\x05\
+    \x04\x14\x02\0\x08\x12\x06\x81\x07\x12\x86\x07\x03\n\x10\n\x08\x04\x14\
+    \x02\0\x08\x9c\x08\0\x12\x04\x82\x07\x04*\n\x11\n\x07\x04\x14\x02\0\x08\
+    \x9f\x08\x12\x06\x83\x07\x04\x85\x07\x05\n\xc9\x03\n\x02\x04\x15\x12\x06\
+    \x90\x07\0\xa3\x07\x01\x1a\xba\x03\x20Request\x20message\x20for\n\x20[go\
+    ogle.bigtable.admin.v2.BigtableTableAdmin.ListSnapshots][google.bigtable\
+    .admin.v2.BigtableTableAdmin.ListSnapshots]\n\n\x20Note:\x20This\x20is\
+    \x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snaps\
+    hots.\x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\
+    \x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20migh\
+    t\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\
+    \x20not\x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\
+    \x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\
+    \n\x03\x04\x15\x01\x12\x04\x90\x07\x08\x1c\n\xbf\x02\n\x04\x04\x15\x02\0\
+    \x12\x06\x96\x07\x02\x9b\x07\x04\x1a\xae\x02\x20Required.\x20The\x20uniq\
+    ue\x20name\x20of\x20the\x20cluster\x20for\x20which\x20snapshots\x20shoul\
+    d\x20be\n\x20listed.\x20Values\x20are\x20of\x20the\x20form\n\x20`project\
+    s/{project}/instances/{instance}/clusters/{cluster}`.\n\x20Use\x20`{clus\
+    ter}\x20=\x20'-'`\x20to\x20list\x20snapshots\x20for\x20all\x20clusters\
+    \x20in\x20an\x20instance,\n\x20e.g.,\x20`projects/{project}/instances/{i\
+    nstance}/clusters/-`.\n\n\r\n\x05\x04\x15\x02\0\x05\x12\x04\x96\x07\x02\
+    \x08\n\r\n\x05\x04\x15\x02\0\x01\x12\x04\x96\x07\t\x0f\n\r\n\x05\x04\x15\
+    \x02\0\x03\x12\x04\x96\x07\x12\x13\n\x0f\n\x05\x04\x15\x02\0\x08\x12\x06\
+    \x96\x07\x14\x9b\x07\x03\n\x10\n\x08\x04\x15\x02\0\x08\x9c\x08\0\x12\x04\
+    \x97\x07\x04*\n\x11\n\x07\x04\x15\x02\0\x08\x9f\x08\x12\x06\x98\x07\x04\
+    \x9a\x07\x05\ni\n\x04\x04\x15\x02\x01\x12\x04\x9f\x07\x02\x16\x1a[\x20Th\
+    e\x20maximum\x20number\x20of\x20snapshots\x20to\x20return\x20per\x20page\
+    .\n\x20CURRENTLY\x20UNIMPLEMENTED\x20AND\x20IGNORED.\n\n\r\n\x05\x04\x15\
+    \x02\x01\x05\x12\x04\x9f\x07\x02\x07\n\r\n\x05\x04\x15\x02\x01\x01\x12\
+    \x04\x9f\x07\x08\x11\n\r\n\x05\x04\x15\x02\x01\x03\x12\x04\x9f\x07\x14\
+    \x15\nK\n\x04\x04\x15\x02\x02\x12\x04\xa2\x07\x02\x18\x1a=\x20The\x20val\
+    ue\x20of\x20`next_page_token`\x20returned\x20by\x20a\x20previous\x20call\
+    .\n\n\r\n\x05\x04\x15\x02\x02\x05\x12\x04\xa2\x07\x02\x08\n\r\n\x05\x04\
+    \x15\x02\x02\x01\x12\x04\xa2\x07\t\x13\n\r\n\x05\x04\x15\x02\x02\x03\x12\
+    \x04\xa2\x07\x16\x17\n\xca\x03\n\x02\x04\x16\x12\x06\xac\x07\0\xb4\x07\
+    \x01\x1a\xbb\x03\x20Response\x20message\x20for\n\x20[google.bigtable.adm\
+    in.v2.BigtableTableAdmin.ListSnapshots][google.bigtable.admin.v2.Bigtabl\
+    eTableAdmin.ListSnapshots]\n\n\x20Note:\x20This\x20is\x20a\x20private\
     \x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\
     \x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20Clou\
     d\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20chang\
     ed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recomme\
     nded\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\
-    \x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x13\x01\
-    \x12\x04\x97\x06\x08\x1c\n\xa8\x01\n\x04\x04\x13\x02\0\x12\x06\x9b\x06\
-    \x02\xa0\x06\x04\x1a\x97\x01\x20Required.\x20The\x20unique\x20name\x20of\
-    \x20the\x20table\x20to\x20have\x20the\x20snapshot\x20taken.\n\x20Values\
+    \x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x16\x01\
+    \x12\x04\xac\x07\x08\x1d\n?\n\x04\x04\x16\x02\0\x12\x04\xae\x07\x02\"\
+    \x1a1\x20The\x20snapshots\x20present\x20in\x20the\x20requested\x20cluste\
+    r.\n\n\r\n\x05\x04\x16\x02\0\x04\x12\x04\xae\x07\x02\n\n\r\n\x05\x04\x16\
+    \x02\0\x06\x12\x04\xae\x07\x0b\x13\n\r\n\x05\x04\x16\x02\0\x01\x12\x04\
+    \xae\x07\x14\x1d\n\r\n\x05\x04\x16\x02\0\x03\x12\x04\xae\x07\x20!\n\xa7\
+    \x01\n\x04\x04\x16\x02\x01\x12\x04\xb3\x07\x02\x1d\x1a\x98\x01\x20Set\
+    \x20if\x20not\x20all\x20snapshots\x20could\x20be\x20returned\x20in\x20a\
+    \x20single\x20response.\n\x20Pass\x20this\x20value\x20to\x20`page_token`\
+    \x20in\x20another\x20request\x20to\x20get\x20the\x20next\n\x20page\x20of\
+    \x20results.\n\n\r\n\x05\x04\x16\x02\x01\x05\x12\x04\xb3\x07\x02\x08\n\r\
+    \n\x05\x04\x16\x02\x01\x01\x12\x04\xb3\x07\t\x18\n\r\n\x05\x04\x16\x02\
+    \x01\x03\x12\x04\xb3\x07\x1b\x1c\n\xcb\x03\n\x02\x04\x17\x12\x06\xbd\x07\
+    \0\xc7\x07\x01\x1a\xbc\x03\x20Request\x20message\x20for\n\x20[google.big\
+    table.admin.v2.BigtableTableAdmin.DeleteSnapshot][google.bigtable.admin.\
+    v2.BigtableTableAdmin.DeleteSnapshot]\n\n\x20Note:\x20This\x20is\x20a\
+    \x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\
+    \x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20mo\
+    st\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20b\
+    e\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\
+    \x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20sub\
+    ject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\
+    \x04\x17\x01\x12\x04\xbd\x07\x08\x1d\n\xb7\x01\n\x04\x04\x17\x02\0\x12\
+    \x06\xc1\x07\x02\xc6\x07\x04\x1a\xa6\x01\x20Required.\x20The\x20unique\
+    \x20name\x20of\x20the\x20snapshot\x20to\x20be\x20deleted.\n\x20Values\
     \x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{instanc\
-    e}/tables/{table}`.\n\n\r\n\x05\x04\x13\x02\0\x05\x12\x04\x9b\x06\x02\
-    \x08\n\r\n\x05\x04\x13\x02\0\x01\x12\x04\x9b\x06\t\r\n\r\n\x05\x04\x13\
-    \x02\0\x03\x12\x04\x9b\x06\x10\x11\n\x0f\n\x05\x04\x13\x02\0\x08\x12\x06\
-    \x9b\x06\x12\xa0\x06\x03\n\x10\n\x08\x04\x13\x02\0\x08\x9c\x08\0\x12\x04\
-    \x9c\x06\x04*\n\x11\n\x07\x04\x13\x02\0\x08\x9f\x08\x12\x06\x9d\x06\x04\
-    \x9f\x06\x05\n\xb2\x01\n\x04\x04\x13\x02\x01\x12\x06\xa5\x06\x02\xaa\x06\
-    \x04\x1a\xa1\x01\x20Required.\x20The\x20name\x20of\x20the\x20cluster\x20\
-    where\x20the\x20snapshot\x20will\x20be\x20created\x20in.\n\x20Values\x20\
-    are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/c\
-    lusters/{cluster}`.\n\n\r\n\x05\x04\x13\x02\x01\x05\x12\x04\xa5\x06\x02\
-    \x08\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\xa5\x06\t\x10\n\r\n\x05\x04\
-    \x13\x02\x01\x03\x12\x04\xa5\x06\x13\x14\n\x0f\n\x05\x04\x13\x02\x01\x08\
-    \x12\x06\xa5\x06\x15\xaa\x06\x03\n\x10\n\x08\x04\x13\x02\x01\x08\x9c\x08\
-    \0\x12\x04\xa6\x06\x04*\n\x11\n\x07\x04\x13\x02\x01\x08\x9f\x08\x12\x06\
-    \xa7\x06\x04\xa9\x06\x05\n\x8c\x02\n\x04\x04\x13\x02\x02\x12\x04\xb0\x06\
-    \x02B\x1a\xfd\x01\x20Required.\x20The\x20ID\x20by\x20which\x20the\x20new\
-    \x20snapshot\x20should\x20be\x20referred\x20to\x20within\x20the\n\x20par\
-    ent\x20cluster,\x20e.g.,\x20`mysnapshot`\x20of\x20the\x20form:\n\x20`[_a\
-    -zA-Z0-9][-_.a-zA-Z0-9]*`\x20rather\x20than\n\x20`projects/{project}/ins\
-    tances/{instance}/clusters/{cluster}/snapshots/mysnapshot`.\n\n\r\n\x05\
-    \x04\x13\x02\x02\x05\x12\x04\xb0\x06\x02\x08\n\r\n\x05\x04\x13\x02\x02\
-    \x01\x12\x04\xb0\x06\t\x14\n\r\n\x05\x04\x13\x02\x02\x03\x12\x04\xb0\x06\
-    \x17\x18\n\r\n\x05\x04\x13\x02\x02\x08\x12\x04\xb0\x06\x19A\n\x10\n\x08\
-    \x04\x13\x02\x02\x08\x9c\x08\0\x12\x04\xb0\x06\x1a@\n\x9c\x02\n\x04\x04\
-    \x13\x02\x03\x12\x04\xb6\x06\x02#\x1a\x8d\x02\x20The\x20amount\x20of\x20\
-    time\x20that\x20the\x20new\x20snapshot\x20can\x20stay\x20active\x20after\
-    \x20it\x20is\n\x20created.\x20Once\x20'ttl'\x20expires,\x20the\x20snapsh\
-    ot\x20will\x20get\x20deleted.\x20The\x20maximum\n\x20amount\x20of\x20tim\
-    e\x20a\x20snapshot\x20can\x20stay\x20active\x20is\x207\x20days.\x20If\
-    \x20'ttl'\x20is\x20not\n\x20specified,\x20the\x20default\x20value\x20of\
-    \x2024\x20hours\x20will\x20be\x20used.\n\n\r\n\x05\x04\x13\x02\x03\x06\
-    \x12\x04\xb6\x06\x02\x1a\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\xb6\x06\
-    \x1b\x1e\n\r\n\x05\x04\x13\x02\x03\x03\x12\x04\xb6\x06!\"\n,\n\x04\x04\
-    \x13\x02\x04\x12\x04\xb9\x06\x02\x19\x1a\x1e\x20Description\x20of\x20the\
-    \x20snapshot.\n\n\r\n\x05\x04\x13\x02\x04\x05\x12\x04\xb9\x06\x02\x08\n\
-    \r\n\x05\x04\x13\x02\x04\x01\x12\x04\xb9\x06\t\x14\n\r\n\x05\x04\x13\x02\
-    \x04\x03\x12\x04\xb9\x06\x17\x18\n\xc5\x03\n\x02\x04\x14\x12\x06\xc3\x06\
-    \0\xcd\x06\x01\x1a\xb6\x03\x20Request\x20message\x20for\n\x20[google.big\
-    table.admin.v2.BigtableTableAdmin.GetSnapshot][google.bigtable.admin.v2.\
-    BigtableTableAdmin.GetSnapshot]\n\n\x20Note:\x20This\x20is\x20a\x20priva\
-    te\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\
-    \n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cl\
-    oud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20cha\
-    nged\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recom\
-    mended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20t\
-    o\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x14\
-    \x01\x12\x04\xc3\x06\x08\x1a\n\xb3\x01\n\x04\x04\x14\x02\0\x12\x06\xc7\
-    \x06\x02\xcc\x06\x04\x1a\xa2\x01\x20Required.\x20The\x20unique\x20name\
-    \x20of\x20the\x20requested\x20snapshot.\n\x20Values\x20are\x20of\x20the\
-    \x20form\n\x20`projects/{project}/instances/{instance}/clusters/{cluster\
-    }/snapshots/{snapshot}`.\n\n\r\n\x05\x04\x14\x02\0\x05\x12\x04\xc7\x06\
-    \x02\x08\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\xc7\x06\t\r\n\r\n\x05\x04\
-    \x14\x02\0\x03\x12\x04\xc7\x06\x10\x11\n\x0f\n\x05\x04\x14\x02\0\x08\x12\
-    \x06\xc7\x06\x12\xcc\x06\x03\n\x10\n\x08\x04\x14\x02\0\x08\x9c\x08\0\x12\
-    \x04\xc8\x06\x04*\n\x11\n\x07\x04\x14\x02\0\x08\x9f\x08\x12\x06\xc9\x06\
-    \x04\xcb\x06\x05\n\xc9\x03\n\x02\x04\x15\x12\x06\xd6\x06\0\xe9\x06\x01\
-    \x1a\xba\x03\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2\
-    .BigtableTableAdmin.ListSnapshots][google.bigtable.admin.v2.BigtableTabl\
-    eAdmin.ListSnapshots]\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alph\
-    a\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20featu\
-    re\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigt\
-    able\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\
+    e}/clusters/{cluster}/snapshots/{snapshot}`.\n\n\r\n\x05\x04\x17\x02\0\
+    \x05\x12\x04\xc1\x07\x02\x08\n\r\n\x05\x04\x17\x02\0\x01\x12\x04\xc1\x07\
+    \t\r\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xc1\x07\x10\x11\n\x0f\n\x05\x04\
+    \x17\x02\0\x08\x12\x06\xc1\x07\x12\xc6\x07\x03\n\x10\n\x08\x04\x17\x02\0\
+    \x08\x9c\x08\0\x12\x04\xc2\x07\x04*\n\x11\n\x07\x04\x17\x02\0\x08\x9f\
+    \x08\x12\x06\xc3\x07\x04\xc5\x07\x05\n\xf7\x02\n\x02\x04\x18\x12\x06\xcf\
+    \x07\0\xd8\x07\x01\x1a\xe8\x02\x20The\x20metadata\x20for\x20the\x20Opera\
+    tion\x20returned\x20by\x20SnapshotTable.\n\n\x20Note:\x20This\x20is\x20a\
+    \x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\
+    \x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20mo\
+    st\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20b\
+    e\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\
+    \x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20sub\
+    ject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\
+    \x04\x18\x01\x12\x04\xcf\x07\x08\x1d\nY\n\x04\x04\x18\x02\0\x12\x04\xd1\
+    \x07\x02,\x1aK\x20The\x20request\x20that\x20prompted\x20the\x20initiatio\
+    n\x20of\x20this\x20SnapshotTable\x20operation.\n\n\r\n\x05\x04\x18\x02\0\
+    \x06\x12\x04\xd1\x07\x02\x16\n\r\n\x05\x04\x18\x02\0\x01\x12\x04\xd1\x07\
+    \x17'\n\r\n\x05\x04\x18\x02\0\x03\x12\x04\xd1\x07*+\nD\n\x04\x04\x18\x02\
+    \x01\x12\x04\xd4\x07\x02-\x1a6\x20The\x20time\x20at\x20which\x20the\x20o\
+    riginal\x20request\x20was\x20received.\n\n\r\n\x05\x04\x18\x02\x01\x06\
+    \x12\x04\xd4\x07\x02\x1b\n\r\n\x05\x04\x18\x02\x01\x01\x12\x04\xd4\x07\
+    \x1c(\n\r\n\x05\x04\x18\x02\x01\x03\x12\x04\xd4\x07+,\nU\n\x04\x04\x18\
+    \x02\x02\x12\x04\xd7\x07\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\
+    \x20operation\x20failed\x20or\x20was\x20completed\x20successfully.\n\n\r\
+    \n\x05\x04\x18\x02\x02\x06\x12\x04\xd7\x07\x02\x1b\n\r\n\x05\x04\x18\x02\
+    \x02\x01\x12\x04\xd7\x07\x1c'\n\r\n\x05\x04\x18\x02\x02\x03\x12\x04\xd7\
+    \x07*+\n\x81\x03\n\x02\x04\x19\x12\x06\xe0\x07\0\xea\x07\x01\x1a\xf2\x02\
+    \x20The\x20metadata\x20for\x20the\x20Operation\x20returned\x20by\x20Crea\
+    teTableFromSnapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\
+    \x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20featur\
+    e\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigta\
+    ble\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\
     \x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\
     \x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\
-    \x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x15\x01\x12\
-    \x04\xd6\x06\x08\x1c\n\xbf\x02\n\x04\x04\x15\x02\0\x12\x06\xdc\x06\x02\
-    \xe1\x06\x04\x1a\xae\x02\x20Required.\x20The\x20unique\x20name\x20of\x20\
-    the\x20cluster\x20for\x20which\x20snapshots\x20should\x20be\n\x20listed.\
-    \x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instance\
-    s/{instance}/clusters/{cluster}`.\n\x20Use\x20`{cluster}\x20=\x20'-'`\
-    \x20to\x20list\x20snapshots\x20for\x20all\x20clusters\x20in\x20an\x20ins\
-    tance,\n\x20e.g.,\x20`projects/{project}/instances/{instance}/clusters/-\
-    `.\n\n\r\n\x05\x04\x15\x02\0\x05\x12\x04\xdc\x06\x02\x08\n\r\n\x05\x04\
-    \x15\x02\0\x01\x12\x04\xdc\x06\t\x0f\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\
-    \xdc\x06\x12\x13\n\x0f\n\x05\x04\x15\x02\0\x08\x12\x06\xdc\x06\x14\xe1\
-    \x06\x03\n\x10\n\x08\x04\x15\x02\0\x08\x9c\x08\0\x12\x04\xdd\x06\x04*\n\
-    \x11\n\x07\x04\x15\x02\0\x08\x9f\x08\x12\x06\xde\x06\x04\xe0\x06\x05\ni\
-    \n\x04\x04\x15\x02\x01\x12\x04\xe5\x06\x02\x16\x1a[\x20The\x20maximum\
-    \x20number\x20of\x20snapshots\x20to\x20return\x20per\x20page.\n\x20CURRE\
-    NTLY\x20UNIMPLEMENTED\x20AND\x20IGNORED.\n\n\r\n\x05\x04\x15\x02\x01\x05\
-    \x12\x04\xe5\x06\x02\x07\n\r\n\x05\x04\x15\x02\x01\x01\x12\x04\xe5\x06\
-    \x08\x11\n\r\n\x05\x04\x15\x02\x01\x03\x12\x04\xe5\x06\x14\x15\nK\n\x04\
-    \x04\x15\x02\x02\x12\x04\xe8\x06\x02\x18\x1a=\x20The\x20value\x20of\x20`\
-    next_page_token`\x20returned\x20by\x20a\x20previous\x20call.\n\n\r\n\x05\
-    \x04\x15\x02\x02\x05\x12\x04\xe8\x06\x02\x08\n\r\n\x05\x04\x15\x02\x02\
-    \x01\x12\x04\xe8\x06\t\x13\n\r\n\x05\x04\x15\x02\x02\x03\x12\x04\xe8\x06\
-    \x16\x17\n\xca\x03\n\x02\x04\x16\x12\x06\xf2\x06\0\xfa\x06\x01\x1a\xbb\
-    \x03\x20Response\x20message\x20for\n\x20[google.bigtable.admin.v2.Bigtab\
-    leTableAdmin.ListSnapshots][google.bigtable.admin.v2.BigtableTableAdmin.\
-    ListSnapshots]\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20re\
-    lease\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20i\
-    s\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\
-    \x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20b\
-    ackward-incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\
-    \x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\
-    \x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x16\x01\x12\x04\xf2\
-    \x06\x08\x1d\n?\n\x04\x04\x16\x02\0\x12\x04\xf4\x06\x02\"\x1a1\x20The\
-    \x20snapshots\x20present\x20in\x20the\x20requested\x20cluster.\n\n\r\n\
-    \x05\x04\x16\x02\0\x04\x12\x04\xf4\x06\x02\n\n\r\n\x05\x04\x16\x02\0\x06\
-    \x12\x04\xf4\x06\x0b\x13\n\r\n\x05\x04\x16\x02\0\x01\x12\x04\xf4\x06\x14\
-    \x1d\n\r\n\x05\x04\x16\x02\0\x03\x12\x04\xf4\x06\x20!\n\xa7\x01\n\x04\
-    \x04\x16\x02\x01\x12\x04\xf9\x06\x02\x1d\x1a\x98\x01\x20Set\x20if\x20not\
-    \x20all\x20snapshots\x20could\x20be\x20returned\x20in\x20a\x20single\x20\
-    response.\n\x20Pass\x20this\x20value\x20to\x20`page_token`\x20in\x20anot\
-    her\x20request\x20to\x20get\x20the\x20next\n\x20page\x20of\x20results.\n\
-    \n\r\n\x05\x04\x16\x02\x01\x05\x12\x04\xf9\x06\x02\x08\n\r\n\x05\x04\x16\
-    \x02\x01\x01\x12\x04\xf9\x06\t\x18\n\r\n\x05\x04\x16\x02\x01\x03\x12\x04\
-    \xf9\x06\x1b\x1c\n\xcb\x03\n\x02\x04\x17\x12\x06\x83\x07\0\x8d\x07\x01\
-    \x1a\xbc\x03\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2\
-    .BigtableTableAdmin.DeleteSnapshot][google.bigtable.admin.v2.BigtableTab\
-    leAdmin.DeleteSnapshot]\n\n\x20Note:\x20This\x20is\x20a\x20private\x20al\
-    pha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20fea\
-    ture\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bi\
-    gtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20i\
-    n\x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\
-    \x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\
-    \x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x17\x01\x12\
-    \x04\x83\x07\x08\x1d\n\xb7\x01\n\x04\x04\x17\x02\0\x12\x06\x87\x07\x02\
-    \x8c\x07\x04\x1a\xa6\x01\x20Required.\x20The\x20unique\x20name\x20of\x20\
-    the\x20snapshot\x20to\x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\
-    \x20form\n\x20`projects/{project}/instances/{instance}/clusters/{cluster\
-    }/snapshots/{snapshot}`.\n\n\r\n\x05\x04\x17\x02\0\x05\x12\x04\x87\x07\
-    \x02\x08\n\r\n\x05\x04\x17\x02\0\x01\x12\x04\x87\x07\t\r\n\r\n\x05\x04\
-    \x17\x02\0\x03\x12\x04\x87\x07\x10\x11\n\x0f\n\x05\x04\x17\x02\0\x08\x12\
-    \x06\x87\x07\x12\x8c\x07\x03\n\x10\n\x08\x04\x17\x02\0\x08\x9c\x08\0\x12\
-    \x04\x88\x07\x04*\n\x11\n\x07\x04\x17\x02\0\x08\x9f\x08\x12\x06\x89\x07\
-    \x04\x8b\x07\x05\n\xf7\x02\n\x02\x04\x18\x12\x06\x95\x07\0\x9e\x07\x01\
-    \x1a\xe8\x02\x20The\x20metadata\x20for\x20the\x20Operation\x20returned\
-    \x20by\x20SnapshotTable.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20a\
-    lpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20fe\
-    ature\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20B\
-    igtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20\
-    in\x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\
-    \x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\
-    \x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x18\x01\x12\
-    \x04\x95\x07\x08\x1d\nY\n\x04\x04\x18\x02\0\x12\x04\x97\x07\x02,\x1aK\
-    \x20The\x20request\x20that\x20prompted\x20the\x20initiation\x20of\x20thi\
-    s\x20SnapshotTable\x20operation.\n\n\r\n\x05\x04\x18\x02\0\x06\x12\x04\
-    \x97\x07\x02\x16\n\r\n\x05\x04\x18\x02\0\x01\x12\x04\x97\x07\x17'\n\r\n\
-    \x05\x04\x18\x02\0\x03\x12\x04\x97\x07*+\nD\n\x04\x04\x18\x02\x01\x12\
-    \x04\x9a\x07\x02-\x1a6\x20The\x20time\x20at\x20which\x20the\x20original\
-    \x20request\x20was\x20received.\n\n\r\n\x05\x04\x18\x02\x01\x06\x12\x04\
-    \x9a\x07\x02\x1b\n\r\n\x05\x04\x18\x02\x01\x01\x12\x04\x9a\x07\x1c(\n\r\
-    \n\x05\x04\x18\x02\x01\x03\x12\x04\x9a\x07+,\nU\n\x04\x04\x18\x02\x02\
-    \x12\x04\x9d\x07\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\x20opera\
+    \x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x19\x01\x12\
+    \x04\xe0\x07\x08'\nd\n\x04\x04\x19\x02\0\x12\x04\xe3\x07\x026\x1aV\x20Th\
+    e\x20request\x20that\x20prompted\x20the\x20initiation\x20of\x20this\x20C\
+    reateTableFromSnapshot\n\x20operation.\n\n\r\n\x05\x04\x19\x02\0\x06\x12\
+    \x04\xe3\x07\x02\x20\n\r\n\x05\x04\x19\x02\0\x01\x12\x04\xe3\x07!1\n\r\n\
+    \x05\x04\x19\x02\0\x03\x12\x04\xe3\x0745\nD\n\x04\x04\x19\x02\x01\x12\
+    \x04\xe6\x07\x02-\x1a6\x20The\x20time\x20at\x20which\x20the\x20original\
+    \x20request\x20was\x20received.\n\n\r\n\x05\x04\x19\x02\x01\x06\x12\x04\
+    \xe6\x07\x02\x1b\n\r\n\x05\x04\x19\x02\x01\x01\x12\x04\xe6\x07\x1c(\n\r\
+    \n\x05\x04\x19\x02\x01\x03\x12\x04\xe6\x07+,\nU\n\x04\x04\x19\x02\x02\
+    \x12\x04\xe9\x07\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\x20opera\
     tion\x20failed\x20or\x20was\x20completed\x20successfully.\n\n\r\n\x05\
-    \x04\x18\x02\x02\x06\x12\x04\x9d\x07\x02\x1b\n\r\n\x05\x04\x18\x02\x02\
-    \x01\x12\x04\x9d\x07\x1c'\n\r\n\x05\x04\x18\x02\x02\x03\x12\x04\x9d\x07*\
-    +\n\x81\x03\n\x02\x04\x19\x12\x06\xa6\x07\0\xb0\x07\x01\x1a\xf2\x02\x20T\
-    he\x20metadata\x20for\x20the\x20Operation\x20returned\x20by\x20CreateTab\
-    leFromSnapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20r\
-    elease\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20\
-    is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\
-    \x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20b\
-    ackward-incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\
-    \x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\
-    \x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x19\x01\x12\x04\xa6\
-    \x07\x08'\nd\n\x04\x04\x19\x02\0\x12\x04\xa9\x07\x026\x1aV\x20The\x20req\
-    uest\x20that\x20prompted\x20the\x20initiation\x20of\x20this\x20CreateTab\
-    leFromSnapshot\n\x20operation.\n\n\r\n\x05\x04\x19\x02\0\x06\x12\x04\xa9\
-    \x07\x02\x20\n\r\n\x05\x04\x19\x02\0\x01\x12\x04\xa9\x07!1\n\r\n\x05\x04\
-    \x19\x02\0\x03\x12\x04\xa9\x0745\nD\n\x04\x04\x19\x02\x01\x12\x04\xac\
-    \x07\x02-\x1a6\x20The\x20time\x20at\x20which\x20the\x20original\x20reque\
-    st\x20was\x20received.\n\n\r\n\x05\x04\x19\x02\x01\x06\x12\x04\xac\x07\
-    \x02\x1b\n\r\n\x05\x04\x19\x02\x01\x01\x12\x04\xac\x07\x1c(\n\r\n\x05\
-    \x04\x19\x02\x01\x03\x12\x04\xac\x07+,\nU\n\x04\x04\x19\x02\x02\x12\x04\
-    \xaf\x07\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\x20operation\x20\
-    failed\x20or\x20was\x20completed\x20successfully.\n\n\r\n\x05\x04\x19\
-    \x02\x02\x06\x12\x04\xaf\x07\x02\x1b\n\r\n\x05\x04\x19\x02\x02\x01\x12\
-    \x04\xaf\x07\x1c'\n\r\n\x05\x04\x19\x02\x02\x03\x12\x04\xaf\x07*+\nj\n\
-    \x02\x04\x1a\x12\x06\xb4\x07\0\xc9\x07\x01\x1a\\\x20The\x20request\x20fo\
-    r\n\x20[CreateBackup][google.bigtable.admin.v2.BigtableTableAdmin.Create\
-    Backup].\n\n\x0b\n\x03\x04\x1a\x01\x12\x04\xb4\x07\x08\x1b\n\xef\x01\n\
-    \x04\x04\x1a\x02\0\x12\x06\xb8\x07\x02\xbd\x07\x04\x1a\xde\x01\x20Requir\
-    ed.\x20This\x20must\x20be\x20one\x20of\x20the\x20clusters\x20in\x20the\
-    \x20instance\x20in\x20which\x20this\n\x20table\x20is\x20located.\x20The\
-    \x20backup\x20will\x20be\x20stored\x20in\x20this\x20cluster.\x20Values\
-    \x20are\n\x20of\x20the\x20form\x20`projects/{project}/instances/{instanc\
-    e}/clusters/{cluster}`.\n\n\r\n\x05\x04\x1a\x02\0\x05\x12\x04\xb8\x07\
-    \x02\x08\n\r\n\x05\x04\x1a\x02\0\x01\x12\x04\xb8\x07\t\x0f\n\r\n\x05\x04\
-    \x1a\x02\0\x03\x12\x04\xb8\x07\x12\x13\n\x0f\n\x05\x04\x1a\x02\0\x08\x12\
-    \x06\xb8\x07\x14\xbd\x07\x03\n\x10\n\x08\x04\x1a\x02\0\x08\x9c\x08\0\x12\
-    \x04\xb9\x07\x04*\n\x11\n\x07\x04\x1a\x02\0\x08\x9f\x08\x12\x06\xba\x07\
-    \x04\xbc\x07\x05\n\x89\x03\n\x04\x04\x1a\x02\x01\x12\x04\xc5\x07\x02@\
-    \x1a\xfa\x02\x20Required.\x20The\x20id\x20of\x20the\x20backup\x20to\x20b\
-    e\x20created.\x20The\x20`backup_id`\x20along\x20with\n\x20the\x20parent\
+    \x04\x19\x02\x02\x06\x12\x04\xe9\x07\x02\x1b\n\r\n\x05\x04\x19\x02\x02\
+    \x01\x12\x04\xe9\x07\x1c'\n\r\n\x05\x04\x19\x02\x02\x03\x12\x04\xe9\x07*\
+    +\nj\n\x02\x04\x1a\x12\x06\xee\x07\0\x83\x08\x01\x1a\\\x20The\x20request\
+    \x20for\n\x20[CreateBackup][google.bigtable.admin.v2.BigtableTableAdmin.\
+    CreateBackup].\n\n\x0b\n\x03\x04\x1a\x01\x12\x04\xee\x07\x08\x1b\n\xef\
+    \x01\n\x04\x04\x1a\x02\0\x12\x06\xf2\x07\x02\xf7\x07\x04\x1a\xde\x01\x20\
+    Required.\x20This\x20must\x20be\x20one\x20of\x20the\x20clusters\x20in\
+    \x20the\x20instance\x20in\x20which\x20this\n\x20table\x20is\x20located.\
+    \x20The\x20backup\x20will\x20be\x20stored\x20in\x20this\x20cluster.\x20V\
+    alues\x20are\n\x20of\x20the\x20form\x20`projects/{project}/instances/{in\
+    stance}/clusters/{cluster}`.\n\n\r\n\x05\x04\x1a\x02\0\x05\x12\x04\xf2\
+    \x07\x02\x08\n\r\n\x05\x04\x1a\x02\0\x01\x12\x04\xf2\x07\t\x0f\n\r\n\x05\
+    \x04\x1a\x02\0\x03\x12\x04\xf2\x07\x12\x13\n\x0f\n\x05\x04\x1a\x02\0\x08\
+    \x12\x06\xf2\x07\x14\xf7\x07\x03\n\x10\n\x08\x04\x1a\x02\0\x08\x9c\x08\0\
+    \x12\x04\xf3\x07\x04*\n\x11\n\x07\x04\x1a\x02\0\x08\x9f\x08\x12\x06\xf4\
+    \x07\x04\xf6\x07\x05\n\x89\x03\n\x04\x04\x1a\x02\x01\x12\x04\xff\x07\x02\
+    @\x1a\xfa\x02\x20Required.\x20The\x20id\x20of\x20the\x20backup\x20to\x20\
+    be\x20created.\x20The\x20`backup_id`\x20along\x20with\n\x20the\x20parent\
     \x20`parent`\x20are\x20combined\x20as\x20{parent}/backups/{backup_id}\
     \x20to\x20create\n\x20the\x20full\x20backup\x20name,\x20of\x20the\x20for\
     m:\n\x20`projects/{project}/instances/{instance}/clusters/{cluster}/back\
     ups/{backup_id}`.\n\x20This\x20string\x20must\x20be\x20between\x201\x20a\
     nd\x2050\x20characters\x20in\x20length\x20and\x20match\x20the\n\x20regex\
     \x20[_a-zA-Z0-9][-_.a-zA-Z0-9]*.\n\n\r\n\x05\x04\x1a\x02\x01\x05\x12\x04\
-    \xc5\x07\x02\x08\n\r\n\x05\x04\x1a\x02\x01\x01\x12\x04\xc5\x07\t\x12\n\r\
-    \n\x05\x04\x1a\x02\x01\x03\x12\x04\xc5\x07\x15\x16\n\r\n\x05\x04\x1a\x02\
-    \x01\x08\x12\x04\xc5\x07\x17?\n\x10\n\x08\x04\x1a\x02\x01\x08\x9c\x08\0\
-    \x12\x04\xc5\x07\x18>\n/\n\x04\x04\x1a\x02\x02\x12\x04\xc8\x07\x02=\x1a!\
+    \xff\x07\x02\x08\n\r\n\x05\x04\x1a\x02\x01\x01\x12\x04\xff\x07\t\x12\n\r\
+    \n\x05\x04\x1a\x02\x01\x03\x12\x04\xff\x07\x15\x16\n\r\n\x05\x04\x1a\x02\
+    \x01\x08\x12\x04\xff\x07\x17?\n\x10\n\x08\x04\x1a\x02\x01\x08\x9c\x08\0\
+    \x12\x04\xff\x07\x18>\n/\n\x04\x04\x1a\x02\x02\x12\x04\x82\x08\x02=\x1a!\
     \x20Required.\x20The\x20backup\x20to\x20create.\n\n\r\n\x05\x04\x1a\x02\
-    \x02\x06\x12\x04\xc8\x07\x02\x08\n\r\n\x05\x04\x1a\x02\x02\x01\x12\x04\
-    \xc8\x07\t\x0f\n\r\n\x05\x04\x1a\x02\x02\x03\x12\x04\xc8\x07\x12\x13\n\r\
-    \n\x05\x04\x1a\x02\x02\x08\x12\x04\xc8\x07\x14<\n\x10\n\x08\x04\x1a\x02\
-    \x02\x08\x9c\x08\0\x12\x04\xc8\x07\x15;\n\x86\x01\n\x02\x04\x1b\x12\x06\
-    \xcd\x07\0\xd9\x07\x01\x1ax\x20Metadata\x20type\x20for\x20the\x20operati\
+    \x02\x06\x12\x04\x82\x08\x02\x08\n\r\n\x05\x04\x1a\x02\x02\x01\x12\x04\
+    \x82\x08\t\x0f\n\r\n\x05\x04\x1a\x02\x02\x03\x12\x04\x82\x08\x12\x13\n\r\
+    \n\x05\x04\x1a\x02\x02\x08\x12\x04\x82\x08\x14<\n\x10\n\x08\x04\x1a\x02\
+    \x02\x08\x9c\x08\0\x12\x04\x82\x08\x15;\n\x86\x01\n\x02\x04\x1b\x12\x06\
+    \x87\x08\0\x93\x08\x01\x1ax\x20Metadata\x20type\x20for\x20the\x20operati\
     on\x20returned\x20by\n\x20[CreateBackup][google.bigtable.admin.v2.Bigtab\
-    leTableAdmin.CreateBackup].\n\n\x0b\n\x03\x04\x1b\x01\x12\x04\xcd\x07\
-    \x08\x1c\n5\n\x04\x04\x1b\x02\0\x12\x04\xcf\x07\x02\x12\x1a'\x20The\x20n\
+    leTableAdmin.CreateBackup].\n\n\x0b\n\x03\x04\x1b\x01\x12\x04\x87\x08\
+    \x08\x1c\n5\n\x04\x04\x1b\x02\0\x12\x04\x89\x08\x02\x12\x1a'\x20The\x20n\
     ame\x20of\x20the\x20backup\x20being\x20created.\n\n\r\n\x05\x04\x1b\x02\
-    \0\x05\x12\x04\xcf\x07\x02\x08\n\r\n\x05\x04\x1b\x02\0\x01\x12\x04\xcf\
-    \x07\t\r\n\r\n\x05\x04\x1b\x02\0\x03\x12\x04\xcf\x07\x10\x11\nA\n\x04\
-    \x04\x1b\x02\x01\x12\x04\xd2\x07\x02\x1a\x1a3\x20The\x20name\x20of\x20th\
+    \0\x05\x12\x04\x89\x08\x02\x08\n\r\n\x05\x04\x1b\x02\0\x01\x12\x04\x89\
+    \x08\t\r\n\r\n\x05\x04\x1b\x02\0\x03\x12\x04\x89\x08\x10\x11\nA\n\x04\
+    \x04\x1b\x02\x01\x12\x04\x8c\x08\x02\x1a\x1a3\x20The\x20name\x20of\x20th\
     e\x20table\x20the\x20backup\x20is\x20created\x20from.\n\n\r\n\x05\x04\
-    \x1b\x02\x01\x05\x12\x04\xd2\x07\x02\x08\n\r\n\x05\x04\x1b\x02\x01\x01\
-    \x12\x04\xd2\x07\t\x15\n\r\n\x05\x04\x1b\x02\x01\x03\x12\x04\xd2\x07\x18\
-    \x19\n9\n\x04\x04\x1b\x02\x02\x12\x04\xd5\x07\x02+\x1a+\x20The\x20time\
+    \x1b\x02\x01\x05\x12\x04\x8c\x08\x02\x08\n\r\n\x05\x04\x1b\x02\x01\x01\
+    \x12\x04\x8c\x08\t\x15\n\r\n\x05\x04\x1b\x02\x01\x03\x12\x04\x8c\x08\x18\
+    \x19\n9\n\x04\x04\x1b\x02\x02\x12\x04\x8f\x08\x02+\x1a+\x20The\x20time\
     \x20at\x20which\x20this\x20operation\x20started.\n\n\r\n\x05\x04\x1b\x02\
-    \x02\x06\x12\x04\xd5\x07\x02\x1b\n\r\n\x05\x04\x1b\x02\x02\x01\x12\x04\
-    \xd5\x07\x1c&\n\r\n\x05\x04\x1b\x02\x02\x03\x12\x04\xd5\x07)*\nS\n\x04\
-    \x04\x1b\x02\x03\x12\x04\xd8\x07\x02)\x1aE\x20If\x20set,\x20the\x20time\
+    \x02\x06\x12\x04\x8f\x08\x02\x1b\n\r\n\x05\x04\x1b\x02\x02\x01\x12\x04\
+    \x8f\x08\x1c&\n\r\n\x05\x04\x1b\x02\x02\x03\x12\x04\x8f\x08)*\nS\n\x04\
+    \x04\x1b\x02\x03\x12\x04\x92\x08\x02)\x1aE\x20If\x20set,\x20the\x20time\
     \x20at\x20which\x20this\x20operation\x20finished\x20or\x20was\x20cancell\
-    ed.\n\n\r\n\x05\x04\x1b\x02\x03\x06\x12\x04\xd8\x07\x02\x1b\n\r\n\x05\
-    \x04\x1b\x02\x03\x01\x12\x04\xd8\x07\x1c$\n\r\n\x05\x04\x1b\x02\x03\x03\
-    \x12\x04\xd8\x07'(\nj\n\x02\x04\x1c\x12\x06\xdd\x07\0\xec\x07\x01\x1a\\\
+    ed.\n\n\r\n\x05\x04\x1b\x02\x03\x06\x12\x04\x92\x08\x02\x1b\n\r\n\x05\
+    \x04\x1b\x02\x03\x01\x12\x04\x92\x08\x1c$\n\r\n\x05\x04\x1b\x02\x03\x03\
+    \x12\x04\x92\x08'(\nj\n\x02\x04\x1c\x12\x06\x97\x08\0\xa6\x08\x01\x1a\\\
     \x20The\x20request\x20for\n\x20[UpdateBackup][google.bigtable.admin.v2.B\
-    igtableTableAdmin.UpdateBackup].\n\n\x0b\n\x03\x04\x1c\x01\x12\x04\xdd\
-    \x07\x08\x1b\n\xf2\x01\n\x04\x04\x1c\x02\0\x12\x04\xe3\x07\x02=\x1a\xe3\
+    igtableTableAdmin.UpdateBackup].\n\n\x0b\n\x03\x04\x1c\x01\x12\x04\x97\
+    \x08\x08\x1b\n\xf2\x01\n\x04\x04\x1c\x02\0\x12\x04\x9d\x08\x02=\x1a\xe3\
     \x01\x20Required.\x20The\x20backup\x20to\x20update.\x20`backup.name`,\
     \x20and\x20the\x20fields\x20to\x20be\x20updated\n\x20as\x20specified\x20\
     by\x20`update_mask`\x20are\x20required.\x20Other\x20fields\x20are\x20ign\
     ored.\n\x20Update\x20is\x20only\x20supported\x20for\x20the\x20following\
     \x20fields:\n\n\x20\x20*\x20`backup.expire_time`.\n\n\r\n\x05\x04\x1c\
-    \x02\0\x06\x12\x04\xe3\x07\x02\x08\n\r\n\x05\x04\x1c\x02\0\x01\x12\x04\
-    \xe3\x07\t\x0f\n\r\n\x05\x04\x1c\x02\0\x03\x12\x04\xe3\x07\x12\x13\n\r\n\
-    \x05\x04\x1c\x02\0\x08\x12\x04\xe3\x07\x14<\n\x10\n\x08\x04\x1c\x02\0\
-    \x08\x9c\x08\0\x12\x04\xe3\x07\x15;\n\xd8\x02\n\x04\x04\x1c\x02\x01\x12\
-    \x06\xea\x07\x02\xeb\x07/\x1a\xc7\x02\x20Required.\x20A\x20mask\x20speci\
+    \x02\0\x06\x12\x04\x9d\x08\x02\x08\n\r\n\x05\x04\x1c\x02\0\x01\x12\x04\
+    \x9d\x08\t\x0f\n\r\n\x05\x04\x1c\x02\0\x03\x12\x04\x9d\x08\x12\x13\n\r\n\
+    \x05\x04\x1c\x02\0\x08\x12\x04\x9d\x08\x14<\n\x10\n\x08\x04\x1c\x02\0\
+    \x08\x9c\x08\0\x12\x04\x9d\x08\x15;\n\xd8\x02\n\x04\x04\x1c\x02\x01\x12\
+    \x06\xa4\x08\x02\xa5\x08/\x1a\xc7\x02\x20Required.\x20A\x20mask\x20speci\
     fying\x20which\x20fields\x20(e.g.\x20`expire_time`)\x20in\x20the\n\x20Ba\
     ckup\x20resource\x20should\x20be\x20updated.\x20This\x20mask\x20is\x20re\
     lative\x20to\x20the\x20Backup\n\x20resource,\x20not\x20to\x20the\x20requ\
     est\x20message.\x20The\x20field\x20mask\x20must\x20always\x20be\n\x20spe\
     cified;\x20this\x20prevents\x20any\x20future\x20fields\x20from\x20being\
     \x20erased\x20accidentally\n\x20by\x20clients\x20that\x20do\x20not\x20kn\
-    ow\x20about\x20them.\n\n\r\n\x05\x04\x1c\x02\x01\x06\x12\x04\xea\x07\x02\
-    \x1b\n\r\n\x05\x04\x1c\x02\x01\x01\x12\x04\xea\x07\x1c'\n\r\n\x05\x04\
-    \x1c\x02\x01\x03\x12\x04\xea\x07*+\n\r\n\x05\x04\x1c\x02\x01\x08\x12\x04\
-    \xeb\x07\x06.\n\x10\n\x08\x04\x1c\x02\x01\x08\x9c\x08\0\x12\x04\xeb\x07\
-    \x07-\nd\n\x02\x04\x1d\x12\x06\xf0\x07\0\xfa\x07\x01\x1aV\x20The\x20requ\
+    ow\x20about\x20them.\n\n\r\n\x05\x04\x1c\x02\x01\x06\x12\x04\xa4\x08\x02\
+    \x1b\n\r\n\x05\x04\x1c\x02\x01\x01\x12\x04\xa4\x08\x1c'\n\r\n\x05\x04\
+    \x1c\x02\x01\x03\x12\x04\xa4\x08*+\n\r\n\x05\x04\x1c\x02\x01\x08\x12\x04\
+    \xa5\x08\x06.\n\x10\n\x08\x04\x1c\x02\x01\x08\x9c\x08\0\x12\x04\xa5\x08\
+    \x07-\nd\n\x02\x04\x1d\x12\x06\xaa\x08\0\xb4\x08\x01\x1aV\x20The\x20requ\
     est\x20for\n\x20[GetBackup][google.bigtable.admin.v2.BigtableTableAdmin.\
-    GetBackup].\n\n\x0b\n\x03\x04\x1d\x01\x12\x04\xf0\x07\x08\x18\n\x98\x01\
-    \n\x04\x04\x1d\x02\0\x12\x06\xf4\x07\x02\xf9\x07\x04\x1a\x87\x01\x20Requ\
+    GetBackup].\n\n\x0b\n\x03\x04\x1d\x01\x12\x04\xaa\x08\x08\x18\n\x98\x01\
+    \n\x04\x04\x1d\x02\0\x12\x06\xae\x08\x02\xb3\x08\x04\x1a\x87\x01\x20Requ\
     ired.\x20Name\x20of\x20the\x20backup.\n\x20Values\x20are\x20of\x20the\
     \x20form\n\x20`projects/{project}/instances/{instance}/clusters/{cluster\
-    }/backups/{backup}`.\n\n\r\n\x05\x04\x1d\x02\0\x05\x12\x04\xf4\x07\x02\
-    \x08\n\r\n\x05\x04\x1d\x02\0\x01\x12\x04\xf4\x07\t\r\n\r\n\x05\x04\x1d\
-    \x02\0\x03\x12\x04\xf4\x07\x10\x11\n\x0f\n\x05\x04\x1d\x02\0\x08\x12\x06\
-    \xf4\x07\x12\xf9\x07\x03\n\x10\n\x08\x04\x1d\x02\0\x08\x9c\x08\0\x12\x04\
-    \xf5\x07\x04*\n\x11\n\x07\x04\x1d\x02\0\x08\x9f\x08\x12\x06\xf6\x07\x04\
-    \xf8\x07\x05\nj\n\x02\x04\x1e\x12\x06\xfe\x07\0\x88\x08\x01\x1a\\\x20The\
+    }/backups/{backup}`.\n\n\r\n\x05\x04\x1d\x02\0\x05\x12\x04\xae\x08\x02\
+    \x08\n\r\n\x05\x04\x1d\x02\0\x01\x12\x04\xae\x08\t\r\n\r\n\x05\x04\x1d\
+    \x02\0\x03\x12\x04\xae\x08\x10\x11\n\x0f\n\x05\x04\x1d\x02\0\x08\x12\x06\
+    \xae\x08\x12\xb3\x08\x03\n\x10\n\x08\x04\x1d\x02\0\x08\x9c\x08\0\x12\x04\
+    \xaf\x08\x04*\n\x11\n\x07\x04\x1d\x02\0\x08\x9f\x08\x12\x06\xb0\x08\x04\
+    \xb2\x08\x05\nj\n\x02\x04\x1e\x12\x06\xb8\x08\0\xc2\x08\x01\x1a\\\x20The\
     \x20request\x20for\n\x20[DeleteBackup][google.bigtable.admin.v2.Bigtable\
-    TableAdmin.DeleteBackup].\n\n\x0b\n\x03\x04\x1e\x01\x12\x04\xfe\x07\x08\
-    \x1b\n\xa2\x01\n\x04\x04\x1e\x02\0\x12\x06\x82\x08\x02\x87\x08\x04\x1a\
+    TableAdmin.DeleteBackup].\n\n\x0b\n\x03\x04\x1e\x01\x12\x04\xb8\x08\x08\
+    \x1b\n\xa2\x01\n\x04\x04\x1e\x02\0\x12\x06\xbc\x08\x02\xc1\x08\x04\x1a\
     \x91\x01\x20Required.\x20Name\x20of\x20the\x20backup\x20to\x20delete.\n\
     \x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instance\
     s/{instance}/clusters/{cluster}/backups/{backup}`.\n\n\r\n\x05\x04\x1e\
-    \x02\0\x05\x12\x04\x82\x08\x02\x08\n\r\n\x05\x04\x1e\x02\0\x01\x12\x04\
-    \x82\x08\t\r\n\r\n\x05\x04\x1e\x02\0\x03\x12\x04\x82\x08\x10\x11\n\x0f\n\
-    \x05\x04\x1e\x02\0\x08\x12\x06\x82\x08\x12\x87\x08\x03\n\x10\n\x08\x04\
-    \x1e\x02\0\x08\x9c\x08\0\x12\x04\x83\x08\x04*\n\x11\n\x07\x04\x1e\x02\0\
-    \x08\x9f\x08\x12\x06\x84\x08\x04\x86\x08\x05\nh\n\x02\x04\x1f\x12\x06\
-    \x8c\x08\0\xdd\x08\x01\x1aZ\x20The\x20request\x20for\n\x20[ListBackups][\
-    google.bigtable.admin.v2.BigtableTableAdmin.ListBackups].\n\n\x0b\n\x03\
-    \x04\x1f\x01\x12\x04\x8c\x08\x08\x1a\n\x9a\x02\n\x04\x04\x1f\x02\0\x12\
-    \x06\x91\x08\x02\x96\x08\x04\x1a\x89\x02\x20Required.\x20The\x20cluster\
+    \x02\0\x05\x12\x04\xbc\x08\x02\x08\n\r\n\x05\x04\x1e\x02\0\x01\x12\x04\
+    \xbc\x08\t\r\n\r\n\x05\x04\x1e\x02\0\x03\x12\x04\xbc\x08\x10\x11\n\x0f\n\
+    \x05\x04\x1e\x02\0\x08\x12\x06\xbc\x08\x12\xc1\x08\x03\n\x10\n\x08\x04\
+    \x1e\x02\0\x08\x9c\x08\0\x12\x04\xbd\x08\x04*\n\x11\n\x07\x04\x1e\x02\0\
+    \x08\x9f\x08\x12\x06\xbe\x08\x04\xc0\x08\x05\nh\n\x02\x04\x1f\x12\x06\
+    \xc6\x08\0\x97\t\x01\x1aZ\x20The\x20request\x20for\n\x20[ListBackups][go\
+    ogle.bigtable.admin.v2.BigtableTableAdmin.ListBackups].\n\n\x0b\n\x03\
+    \x04\x1f\x01\x12\x04\xc6\x08\x08\x1a\n\x9a\x02\n\x04\x04\x1f\x02\0\x12\
+    \x06\xcb\x08\x02\xd0\x08\x04\x1a\x89\x02\x20Required.\x20The\x20cluster\
     \x20to\x20list\x20backups\x20from.\x20\x20Values\x20are\x20of\x20the\n\
     \x20form\x20`projects/{project}/instances/{instance}/clusters/{cluster}`\
     .\n\x20Use\x20`{cluster}\x20=\x20'-'`\x20to\x20list\x20backups\x20for\
     \x20all\x20clusters\x20in\x20an\x20instance,\n\x20e.g.,\x20`projects/{pr\
     oject}/instances/{instance}/clusters/-`.\n\n\r\n\x05\x04\x1f\x02\0\x05\
-    \x12\x04\x91\x08\x02\x08\n\r\n\x05\x04\x1f\x02\0\x01\x12\x04\x91\x08\t\
-    \x0f\n\r\n\x05\x04\x1f\x02\0\x03\x12\x04\x91\x08\x12\x13\n\x0f\n\x05\x04\
-    \x1f\x02\0\x08\x12\x06\x91\x08\x14\x96\x08\x03\n\x10\n\x08\x04\x1f\x02\0\
-    \x08\x9c\x08\0\x12\x04\x92\x08\x04*\n\x11\n\x07\x04\x1f\x02\0\x08\x9f\
-    \x08\x12\x06\x93\x08\x04\x95\x08\x05\n\xa8\x0c\n\x04\x04\x1f\x02\x01\x12\
-    \x04\xb9\x08\x02\x14\x1a\x99\x0c\x20A\x20filter\x20expression\x20that\
+    \x12\x04\xcb\x08\x02\x08\n\r\n\x05\x04\x1f\x02\0\x01\x12\x04\xcb\x08\t\
+    \x0f\n\r\n\x05\x04\x1f\x02\0\x03\x12\x04\xcb\x08\x12\x13\n\x0f\n\x05\x04\
+    \x1f\x02\0\x08\x12\x06\xcb\x08\x14\xd0\x08\x03\n\x10\n\x08\x04\x1f\x02\0\
+    \x08\x9c\x08\0\x12\x04\xcc\x08\x04*\n\x11\n\x07\x04\x1f\x02\0\x08\x9f\
+    \x08\x12\x06\xcd\x08\x04\xcf\x08\x05\n\xa8\x0c\n\x04\x04\x1f\x02\x01\x12\
+    \x04\xf3\x08\x02\x14\x1a\x99\x0c\x20A\x20filter\x20expression\x20that\
     \x20filters\x20backups\x20listed\x20in\x20the\x20response.\n\x20The\x20e\
     xpression\x20must\x20specify\x20the\x20field\x20name,\x20a\x20comparison\
     \x20operator,\n\x20and\x20the\x20value\x20that\x20you\x20want\x20to\x20u\
@@ -10115,9 +12219,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x20\x20\x20\x20\x20of\x20the\x20backup\x20is\x20before\x202018-03-2\
     8T14:50:00Z.\n\x20*\x20`size_bytes\x20>\x2010000000000`\x20-->\x20The\
     \x20backup's\x20size\x20is\x20greater\x20than\x2010GB\n\n\r\n\x05\x04\
-    \x1f\x02\x01\x05\x12\x04\xb9\x08\x02\x08\n\r\n\x05\x04\x1f\x02\x01\x01\
-    \x12\x04\xb9\x08\t\x0f\n\r\n\x05\x04\x1f\x02\x01\x03\x12\x04\xb9\x08\x12\
-    \x13\n\xf7\x05\n\x04\x04\x1f\x02\x02\x12\x04\xd1\x08\x02\x16\x1a\xe8\x05\
+    \x1f\x02\x01\x05\x12\x04\xf3\x08\x02\x08\n\r\n\x05\x04\x1f\x02\x01\x01\
+    \x12\x04\xf3\x08\t\x0f\n\r\n\x05\x04\x1f\x02\x01\x03\x12\x04\xf3\x08\x12\
+    \x13\n\xf7\x05\n\x04\x04\x1f\x02\x02\x12\x04\x8b\t\x02\x16\x1a\xe8\x05\
     \x20An\x20expression\x20for\x20specifying\x20the\x20sort\x20order\x20of\
     \x20the\x20results\x20of\x20the\x20request.\n\x20The\x20string\x20value\
     \x20should\x20specify\x20one\x20or\x20more\x20fields\x20in\n\x20[Backup]\
@@ -10133,104 +12237,280 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     he\x20syntax\x20are\x20insigificant.\n\n\x20If\x20order_by\x20is\x20empt\
     y,\x20results\x20will\x20be\x20sorted\x20by\x20`start_time`\x20in\x20des\
     cending\n\x20order\x20starting\x20from\x20the\x20most\x20recently\x20cre\
-    ated\x20backup.\n\n\r\n\x05\x04\x1f\x02\x02\x05\x12\x04\xd1\x08\x02\x08\
-    \n\r\n\x05\x04\x1f\x02\x02\x01\x12\x04\xd1\x08\t\x11\n\r\n\x05\x04\x1f\
-    \x02\x02\x03\x12\x04\xd1\x08\x14\x15\n\x84\x01\n\x04\x04\x1f\x02\x03\x12\
-    \x04\xd5\x08\x02\x16\x1av\x20Number\x20of\x20backups\x20to\x20be\x20retu\
-    rned\x20in\x20the\x20response.\x20If\x200\x20or\n\x20less,\x20defaults\
-    \x20to\x20the\x20server's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\
-    \x05\x04\x1f\x02\x03\x05\x12\x04\xd5\x08\x02\x07\n\r\n\x05\x04\x1f\x02\
-    \x03\x01\x12\x04\xd5\x08\x08\x11\n\r\n\x05\x04\x1f\x02\x03\x03\x12\x04\
-    \xd5\x08\x14\x15\n\x95\x02\n\x04\x04\x1f\x02\x04\x12\x04\xdc\x08\x02\x18\
-    \x1a\x86\x02\x20If\x20non-empty,\x20`page_token`\x20should\x20contain\
-    \x20a\n\x20[next_page_token][google.bigtable.admin.v2.ListBackupsRespons\
-    e.next_page_token]\n\x20from\x20a\x20previous\n\x20[ListBackupsResponse]\
-    [google.bigtable.admin.v2.ListBackupsResponse]\x20to\x20the\n\x20same\
-    \x20`parent`\x20and\x20with\x20the\x20same\x20`filter`.\n\n\r\n\x05\x04\
-    \x1f\x02\x04\x05\x12\x04\xdc\x08\x02\x08\n\r\n\x05\x04\x1f\x02\x04\x01\
-    \x12\x04\xdc\x08\t\x13\n\r\n\x05\x04\x1f\x02\x04\x03\x12\x04\xdc\x08\x16\
-    \x17\ni\n\x02\x04\x20\x12\x06\xe1\x08\0\xe9\x08\x01\x1a[\x20The\x20respo\
-    nse\x20for\n\x20[ListBackups][google.bigtable.admin.v2.BigtableTableAdmi\
-    n.ListBackups].\n\n\x0b\n\x03\x04\x20\x01\x12\x04\xe1\x08\x08\x1b\n-\n\
-    \x04\x04\x20\x02\0\x12\x04\xe3\x08\x02\x1e\x1a\x1f\x20The\x20list\x20of\
-    \x20matching\x20backups.\n\n\r\n\x05\x04\x20\x02\0\x04\x12\x04\xe3\x08\
-    \x02\n\n\r\n\x05\x04\x20\x02\0\x06\x12\x04\xe3\x08\x0b\x11\n\r\n\x05\x04\
-    \x20\x02\0\x01\x12\x04\xe3\x08\x12\x19\n\r\n\x05\x04\x20\x02\0\x03\x12\
-    \x04\xe3\x08\x1c\x1d\n\xb3\x01\n\x04\x04\x20\x02\x01\x12\x04\xe8\x08\x02\
-    \x1d\x1a\xa4\x01\x20`next_page_token`\x20can\x20be\x20sent\x20in\x20a\
-    \x20subsequent\n\x20[ListBackups][google.bigtable.admin.v2.BigtableTable\
-    Admin.ListBackups]\x20call\n\x20to\x20fetch\x20more\x20of\x20the\x20matc\
-    hing\x20backups.\n\n\r\n\x05\x04\x20\x02\x01\x05\x12\x04\xe8\x08\x02\x08\
-    \n\r\n\x05\x04\x20\x02\x01\x01\x12\x04\xe8\x08\t\x18\n\r\n\x05\x04\x20\
-    \x02\x01\x03\x12\x04\xe8\x08\x1b\x1c\nf\n\x02\x04!\x12\x06\xed\x08\0\x95\
-    \t\x01\x1aX\x20The\x20request\x20for\n\x20[CopyBackup][google.bigtable.a\
-    dmin.v2.BigtableTableAdmin.CopyBackup].\n\n\x0b\n\x03\x04!\x01\x12\x04\
-    \xed\x08\x08\x19\n\xdc\x01\n\x04\x04!\x02\0\x12\x06\xf1\x08\x02\xf6\x08\
-    \x04\x1a\xcb\x01\x20Required.\x20The\x20name\x20of\x20the\x20destination\
-    \x20cluster\x20that\x20will\x20contain\x20the\x20backup\n\x20copy.\x20Th\
-    e\x20cluster\x20must\x20already\x20exists.\x20Values\x20are\x20of\x20the\
-    \x20form:\n\x20`projects/{project}/instances/{instance}/clusters/{cluste\
-    r}`.\n\n\r\n\x05\x04!\x02\0\x05\x12\x04\xf1\x08\x02\x08\n\r\n\x05\x04!\
-    \x02\0\x01\x12\x04\xf1\x08\t\x0f\n\r\n\x05\x04!\x02\0\x03\x12\x04\xf1\
-    \x08\x12\x13\n\x0f\n\x05\x04!\x02\0\x08\x12\x06\xf1\x08\x14\xf6\x08\x03\
-    \n\x10\n\x08\x04!\x02\0\x08\x9c\x08\0\x12\x04\xf2\x08\x04*\n\x11\n\x07\
-    \x04!\x02\0\x08\x9f\x08\x12\x06\xf3\x08\x04\xf5\x08\x05\n\xf4\x02\n\x04\
-    \x04!\x02\x01\x12\x04\xfe\x08\x02@\x1a\xe5\x02\x20Required.\x20The\x20id\
-    \x20of\x20the\x20new\x20backup.\x20The\x20`backup_id`\x20along\x20with\
+    ated\x20backup.\n\n\r\n\x05\x04\x1f\x02\x02\x05\x12\x04\x8b\t\x02\x08\n\
+    \r\n\x05\x04\x1f\x02\x02\x01\x12\x04\x8b\t\t\x11\n\r\n\x05\x04\x1f\x02\
+    \x02\x03\x12\x04\x8b\t\x14\x15\n\x84\x01\n\x04\x04\x1f\x02\x03\x12\x04\
+    \x8f\t\x02\x16\x1av\x20Number\x20of\x20backups\x20to\x20be\x20returned\
+    \x20in\x20the\x20response.\x20If\x200\x20or\n\x20less,\x20defaults\x20to\
+    \x20the\x20server's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\
+    \x04\x1f\x02\x03\x05\x12\x04\x8f\t\x02\x07\n\r\n\x05\x04\x1f\x02\x03\x01\
+    \x12\x04\x8f\t\x08\x11\n\r\n\x05\x04\x1f\x02\x03\x03\x12\x04\x8f\t\x14\
+    \x15\n\x95\x02\n\x04\x04\x1f\x02\x04\x12\x04\x96\t\x02\x18\x1a\x86\x02\
+    \x20If\x20non-empty,\x20`page_token`\x20should\x20contain\x20a\n\x20[nex\
+    t_page_token][google.bigtable.admin.v2.ListBackupsResponse.next_page_tok\
+    en]\n\x20from\x20a\x20previous\n\x20[ListBackupsResponse][google.bigtabl\
+    e.admin.v2.ListBackupsResponse]\x20to\x20the\n\x20same\x20`parent`\x20an\
+    d\x20with\x20the\x20same\x20`filter`.\n\n\r\n\x05\x04\x1f\x02\x04\x05\
+    \x12\x04\x96\t\x02\x08\n\r\n\x05\x04\x1f\x02\x04\x01\x12\x04\x96\t\t\x13\
+    \n\r\n\x05\x04\x1f\x02\x04\x03\x12\x04\x96\t\x16\x17\ni\n\x02\x04\x20\
+    \x12\x06\x9b\t\0\xa3\t\x01\x1a[\x20The\x20response\x20for\n\x20[ListBack\
+    ups][google.bigtable.admin.v2.BigtableTableAdmin.ListBackups].\n\n\x0b\n\
+    \x03\x04\x20\x01\x12\x04\x9b\t\x08\x1b\n-\n\x04\x04\x20\x02\0\x12\x04\
+    \x9d\t\x02\x1e\x1a\x1f\x20The\x20list\x20of\x20matching\x20backups.\n\n\
+    \r\n\x05\x04\x20\x02\0\x04\x12\x04\x9d\t\x02\n\n\r\n\x05\x04\x20\x02\0\
+    \x06\x12\x04\x9d\t\x0b\x11\n\r\n\x05\x04\x20\x02\0\x01\x12\x04\x9d\t\x12\
+    \x19\n\r\n\x05\x04\x20\x02\0\x03\x12\x04\x9d\t\x1c\x1d\n\xb3\x01\n\x04\
+    \x04\x20\x02\x01\x12\x04\xa2\t\x02\x1d\x1a\xa4\x01\x20`next_page_token`\
+    \x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[ListBackups][google\
+    .bigtable.admin.v2.BigtableTableAdmin.ListBackups]\x20call\n\x20to\x20fe\
+    tch\x20more\x20of\x20the\x20matching\x20backups.\n\n\r\n\x05\x04\x20\x02\
+    \x01\x05\x12\x04\xa2\t\x02\x08\n\r\n\x05\x04\x20\x02\x01\x01\x12\x04\xa2\
+    \t\t\x18\n\r\n\x05\x04\x20\x02\x01\x03\x12\x04\xa2\t\x1b\x1c\nf\n\x02\
+    \x04!\x12\x06\xa7\t\0\xcf\t\x01\x1aX\x20The\x20request\x20for\n\x20[Copy\
+    Backup][google.bigtable.admin.v2.BigtableTableAdmin.CopyBackup].\n\n\x0b\
+    \n\x03\x04!\x01\x12\x04\xa7\t\x08\x19\n\xdc\x01\n\x04\x04!\x02\0\x12\x06\
+    \xab\t\x02\xb0\t\x04\x1a\xcb\x01\x20Required.\x20The\x20name\x20of\x20th\
+    e\x20destination\x20cluster\x20that\x20will\x20contain\x20the\x20backup\
+    \n\x20copy.\x20The\x20cluster\x20must\x20already\x20exists.\x20Values\
+    \x20are\x20of\x20the\x20form:\n\x20`projects/{project}/instances/{instan\
+    ce}/clusters/{cluster}`.\n\n\r\n\x05\x04!\x02\0\x05\x12\x04\xab\t\x02\
+    \x08\n\r\n\x05\x04!\x02\0\x01\x12\x04\xab\t\t\x0f\n\r\n\x05\x04!\x02\0\
+    \x03\x12\x04\xab\t\x12\x13\n\x0f\n\x05\x04!\x02\0\x08\x12\x06\xab\t\x14\
+    \xb0\t\x03\n\x10\n\x08\x04!\x02\0\x08\x9c\x08\0\x12\x04\xac\t\x04*\n\x11\
+    \n\x07\x04!\x02\0\x08\x9f\x08\x12\x06\xad\t\x04\xaf\t\x05\n\xf4\x02\n\
+    \x04\x04!\x02\x01\x12\x04\xb8\t\x02@\x1a\xe5\x02\x20Required.\x20The\x20\
+    id\x20of\x20the\x20new\x20backup.\x20The\x20`backup_id`\x20along\x20with\
     \x20`parent`\n\x20are\x20combined\x20as\x20{parent}/backups/{backup_id}\
     \x20to\x20create\x20the\x20full\x20backup\n\x20name,\x20of\x20the\x20for\
     m:\n\x20`projects/{project}/instances/{instance}/clusters/{cluster}/back\
     ups/{backup_id}`.\n\x20This\x20string\x20must\x20be\x20between\x201\x20a\
     nd\x2050\x20characters\x20in\x20length\x20and\x20match\x20the\n\x20regex\
     \x20[_a-zA-Z0-9][-_.a-zA-Z0-9]*.\n\n\r\n\x05\x04!\x02\x01\x05\x12\x04\
-    \xfe\x08\x02\x08\n\r\n\x05\x04!\x02\x01\x01\x12\x04\xfe\x08\t\x12\n\r\n\
-    \x05\x04!\x02\x01\x03\x12\x04\xfe\x08\x15\x16\n\r\n\x05\x04!\x02\x01\x08\
-    \x12\x04\xfe\x08\x17?\n\x10\n\x08\x04!\x02\x01\x08\x9c\x08\0\x12\x04\xfe\
-    \x08\x18>\n\x96\x03\n\x04\x04!\x02\x02\x12\x06\x87\t\x02\x8c\t\x04\x1a\
-    \x85\x03\x20Required.\x20The\x20source\x20backup\x20to\x20be\x20copied\
-    \x20from.\n\x20The\x20source\x20backup\x20needs\x20to\x20be\x20in\x20REA\
-    DY\x20state\x20for\x20it\x20to\x20be\x20copied.\n\x20Copying\x20a\x20cop\
-    ied\x20backup\x20is\x20not\x20allowed.\n\x20Once\x20CopyBackup\x20is\x20\
-    in\x20progress,\x20the\x20source\x20backup\x20cannot\x20be\x20deleted\
-    \x20or\n\x20cleaned\x20up\x20on\x20expiration\x20until\x20CopyBackup\x20\
-    is\x20finished.\n\x20Values\x20are\x20of\x20the\x20form:\n\x20`projects/\
-    <project>/instances/<instance>/clusters/<cluster>/backups/<backup>`.\n\n\
-    \r\n\x05\x04!\x02\x02\x05\x12\x04\x87\t\x02\x08\n\r\n\x05\x04!\x02\x02\
-    \x01\x12\x04\x87\t\t\x16\n\r\n\x05\x04!\x02\x02\x03\x12\x04\x87\t\x19\
-    \x1a\n\x0f\n\x05\x04!\x02\x02\x08\x12\x06\x87\t\x1b\x8c\t\x03\n\x10\n\
-    \x08\x04!\x02\x02\x08\x9c\x08\0\x12\x04\x88\t\x04*\n\x11\n\x07\x04!\x02\
-    \x02\x08\x9f\x08\x12\x06\x89\t\x04\x8b\t\x05\n\xbd\x02\n\x04\x04!\x02\
-    \x03\x12\x06\x93\t\x02\x94\t/\x1a\xac\x02\x20Required.\x20Required.\x20T\
-    he\x20expiration\x20time\x20of\x20the\x20copied\x20backup\x20with\n\x20m\
-    icrosecond\x20granularity\x20that\x20must\x20be\x20at\x20least\x206\x20h\
-    ours\x20and\x20at\x20most\x2030\x20days\n\x20from\x20the\x20time\x20the\
-    \x20request\x20is\x20received.\x20Once\x20the\x20`expire_time`\x20has\n\
-    \x20passed,\x20Cloud\x20Bigtable\x20will\x20delete\x20the\x20backup\x20a\
-    nd\x20free\x20the\x20resources\x20used\n\x20by\x20the\x20backup.\n\n\r\n\
-    \x05\x04!\x02\x03\x06\x12\x04\x93\t\x02\x1b\n\r\n\x05\x04!\x02\x03\x01\
-    \x12\x04\x93\t\x1c'\n\r\n\x05\x04!\x02\x03\x03\x12\x04\x93\t*+\n\r\n\x05\
-    \x04!\x02\x03\x08\x12\x04\x94\t\x06.\n\x10\n\x08\x04!\x02\x03\x08\x9c\
-    \x08\0\x12\x04\x94\t\x07-\n\x96\x01\n\x02\x04\"\x12\x06\x99\t\0\xa8\t\
-    \x01\x1a\x87\x01\x20Metadata\x20type\x20for\x20the\x20google.longrunning\
-    .Operation\x20returned\x20by\n\x20[CopyBackup][google.bigtable.admin.v2.\
-    BigtableTableAdmin.CopyBackup].\n\n\x0b\n\x03\x04\"\x01\x12\x04\x99\t\
-    \x08\x1a\n\xbb\x01\n\x04\x04\"\x02\0\x12\x06\x9d\t\x02\x9f\t\x05\x1a\xaa\
-    \x01\x20The\x20name\x20of\x20the\x20backup\x20being\x20created\x20throug\
-    h\x20the\x20copy\x20operation.\n\x20Values\x20are\x20of\x20the\x20form\n\
-    \x20`projects/<project>/instances/<instance>/clusters/<cluster>/backups/\
-    <backup>`.\n\n\r\n\x05\x04\"\x02\0\x05\x12\x04\x9d\t\x02\x08\n\r\n\x05\
-    \x04\"\x02\0\x01\x12\x04\x9d\t\t\r\n\r\n\x05\x04\"\x02\0\x03\x12\x04\x9d\
-    \t\x10\x11\n\x0f\n\x05\x04\"\x02\0\x08\x12\x06\x9d\t\x12\x9f\t\x04\n\x11\
-    \n\x07\x04\"\x02\0\x08\x9f\x08\x12\x06\x9d\t\x13\x9f\t\x03\nN\n\x04\x04\
-    \"\x02\x01\x12\x04\xa2\t\x02$\x1a@\x20Information\x20about\x20the\x20sou\
-    rce\x20backup\x20that\x20is\x20being\x20copied\x20from.\n\n\r\n\x05\x04\
-    \"\x02\x01\x06\x12\x04\xa2\t\x02\x0c\n\r\n\x05\x04\"\x02\x01\x01\x12\x04\
-    \xa2\t\r\x1f\n\r\n\x05\x04\"\x02\x01\x03\x12\x04\xa2\t\"#\nu\n\x04\x04\"\
-    \x02\x02\x12\x04\xa7\t\x02!\x1ag\x20The\x20progress\x20of\x20the\n\x20[C\
-    opyBackup][google.bigtable.admin.v2.BigtableTableAdmin.CopyBackup]\n\x20\
-    operation.\n\n\r\n\x05\x04\"\x02\x02\x06\x12\x04\xa7\t\x02\x13\n\r\n\x05\
-    \x04\"\x02\x02\x01\x12\x04\xa7\t\x14\x1c\n\r\n\x05\x04\"\x02\x02\x03\x12\
-    \x04\xa7\t\x1f\x20b\x06proto3\
+    \xb8\t\x02\x08\n\r\n\x05\x04!\x02\x01\x01\x12\x04\xb8\t\t\x12\n\r\n\x05\
+    \x04!\x02\x01\x03\x12\x04\xb8\t\x15\x16\n\r\n\x05\x04!\x02\x01\x08\x12\
+    \x04\xb8\t\x17?\n\x10\n\x08\x04!\x02\x01\x08\x9c\x08\0\x12\x04\xb8\t\x18\
+    >\n\x96\x03\n\x04\x04!\x02\x02\x12\x06\xc1\t\x02\xc6\t\x04\x1a\x85\x03\
+    \x20Required.\x20The\x20source\x20backup\x20to\x20be\x20copied\x20from.\
+    \n\x20The\x20source\x20backup\x20needs\x20to\x20be\x20in\x20READY\x20sta\
+    te\x20for\x20it\x20to\x20be\x20copied.\n\x20Copying\x20a\x20copied\x20ba\
+    ckup\x20is\x20not\x20allowed.\n\x20Once\x20CopyBackup\x20is\x20in\x20pro\
+    gress,\x20the\x20source\x20backup\x20cannot\x20be\x20deleted\x20or\n\x20\
+    cleaned\x20up\x20on\x20expiration\x20until\x20CopyBackup\x20is\x20finish\
+    ed.\n\x20Values\x20are\x20of\x20the\x20form:\n\x20`projects/<project>/in\
+    stances/<instance>/clusters/<cluster>/backups/<backup>`.\n\n\r\n\x05\x04\
+    !\x02\x02\x05\x12\x04\xc1\t\x02\x08\n\r\n\x05\x04!\x02\x02\x01\x12\x04\
+    \xc1\t\t\x16\n\r\n\x05\x04!\x02\x02\x03\x12\x04\xc1\t\x19\x1a\n\x0f\n\
+    \x05\x04!\x02\x02\x08\x12\x06\xc1\t\x1b\xc6\t\x03\n\x10\n\x08\x04!\x02\
+    \x02\x08\x9c\x08\0\x12\x04\xc2\t\x04*\n\x11\n\x07\x04!\x02\x02\x08\x9f\
+    \x08\x12\x06\xc3\t\x04\xc5\t\x05\n\xbd\x02\n\x04\x04!\x02\x03\x12\x06\
+    \xcd\t\x02\xce\t/\x1a\xac\x02\x20Required.\x20Required.\x20The\x20expira\
+    tion\x20time\x20of\x20the\x20copied\x20backup\x20with\n\x20microsecond\
+    \x20granularity\x20that\x20must\x20be\x20at\x20least\x206\x20hours\x20an\
+    d\x20at\x20most\x2030\x20days\n\x20from\x20the\x20time\x20the\x20request\
+    \x20is\x20received.\x20Once\x20the\x20`expire_time`\x20has\n\x20passed,\
+    \x20Cloud\x20Bigtable\x20will\x20delete\x20the\x20backup\x20and\x20free\
+    \x20the\x20resources\x20used\n\x20by\x20the\x20backup.\n\n\r\n\x05\x04!\
+    \x02\x03\x06\x12\x04\xcd\t\x02\x1b\n\r\n\x05\x04!\x02\x03\x01\x12\x04\
+    \xcd\t\x1c'\n\r\n\x05\x04!\x02\x03\x03\x12\x04\xcd\t*+\n\r\n\x05\x04!\
+    \x02\x03\x08\x12\x04\xce\t\x06.\n\x10\n\x08\x04!\x02\x03\x08\x9c\x08\0\
+    \x12\x04\xce\t\x07-\n\x96\x01\n\x02\x04\"\x12\x06\xd3\t\0\xe2\t\x01\x1a\
+    \x87\x01\x20Metadata\x20type\x20for\x20the\x20google.longrunning.Operati\
+    on\x20returned\x20by\n\x20[CopyBackup][google.bigtable.admin.v2.Bigtable\
+    TableAdmin.CopyBackup].\n\n\x0b\n\x03\x04\"\x01\x12\x04\xd3\t\x08\x1a\n\
+    \xbb\x01\n\x04\x04\"\x02\0\x12\x06\xd7\t\x02\xd9\t\x05\x1a\xaa\x01\x20Th\
+    e\x20name\x20of\x20the\x20backup\x20being\x20created\x20through\x20the\
+    \x20copy\x20operation.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`pro\
+    jects/<project>/instances/<instance>/clusters/<cluster>/backups/<backup>\
+    `.\n\n\r\n\x05\x04\"\x02\0\x05\x12\x04\xd7\t\x02\x08\n\r\n\x05\x04\"\x02\
+    \0\x01\x12\x04\xd7\t\t\r\n\r\n\x05\x04\"\x02\0\x03\x12\x04\xd7\t\x10\x11\
+    \n\x0f\n\x05\x04\"\x02\0\x08\x12\x06\xd7\t\x12\xd9\t\x04\n\x11\n\x07\x04\
+    \"\x02\0\x08\x9f\x08\x12\x06\xd7\t\x13\xd9\t\x03\nN\n\x04\x04\"\x02\x01\
+    \x12\x04\xdc\t\x02$\x1a@\x20Information\x20about\x20the\x20source\x20bac\
+    kup\x20that\x20is\x20being\x20copied\x20from.\n\n\r\n\x05\x04\"\x02\x01\
+    \x06\x12\x04\xdc\t\x02\x0c\n\r\n\x05\x04\"\x02\x01\x01\x12\x04\xdc\t\r\
+    \x1f\n\r\n\x05\x04\"\x02\x01\x03\x12\x04\xdc\t\"#\nu\n\x04\x04\"\x02\x02\
+    \x12\x04\xe1\t\x02!\x1ag\x20The\x20progress\x20of\x20the\n\x20[CopyBacku\
+    p][google.bigtable.admin.v2.BigtableTableAdmin.CopyBackup]\n\x20operatio\
+    n.\n\n\r\n\x05\x04\"\x02\x02\x06\x12\x04\xe1\t\x02\x13\n\r\n\x05\x04\"\
+    \x02\x02\x01\x12\x04\xe1\t\x14\x1c\n\r\n\x05\x04\"\x02\x02\x03\x12\x04\
+    \xe1\t\x1f\x20\ny\n\x02\x04#\x12\x06\xe6\t\0\xf9\t\x01\x1ak\x20The\x20re\
+    quest\x20for\n\x20[CreateAuthorizedView][google.bigtable.admin.v2.Bigtab\
+    leTableAdmin.CreateAuthorizedView]\n\n\x0b\n\x03\x04#\x01\x12\x04\xe6\t\
+    \x08#\n\xac\x01\n\x04\x04#\x02\0\x12\x06\xea\t\x02\xef\t\x04\x1a\x9b\x01\
+    \x20Required.\x20This\x20is\x20the\x20name\x20of\x20the\x20table\x20the\
+    \x20AuthorizedView\x20belongs\x20to.\n\x20Values\x20are\x20of\x20the\x20\
+    form\n\x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\
+    \r\n\x05\x04#\x02\0\x05\x12\x04\xea\t\x02\x08\n\r\n\x05\x04#\x02\0\x01\
+    \x12\x04\xea\t\t\x0f\n\r\n\x05\x04#\x02\0\x03\x12\x04\xea\t\x12\x13\n\
+    \x0f\n\x05\x04#\x02\0\x08\x12\x06\xea\t\x14\xef\t\x03\n\x10\n\x08\x04#\
+    \x02\0\x08\x9c\x08\0\x12\x04\xeb\t\x04*\n\x11\n\x07\x04#\x02\0\x08\x9f\
+    \x08\x12\x06\xec\t\x04\xee\t\x05\n\xa9\x02\n\x04\x04#\x02\x01\x12\x04\
+    \xf5\t\x02I\x1a\x9a\x02\x20Required.\x20The\x20id\x20of\x20the\x20Author\
+    izedView\x20to\x20create.\x20This\x20AuthorizedView\x20must\n\x20not\x20\
+    already\x20exist.\x20The\x20`authorized_view_id`\x20appended\x20to\x20`p\
+    arent`\x20forms\x20the\n\x20full\x20AuthorizedView\x20name\x20of\x20the\
+    \x20form\n\x20`projects/{project}/instances/{instance}/tables/{table}/au\
+    thorizedView/{authorized_view}`.\n\n\r\n\x05\x04#\x02\x01\x05\x12\x04\
+    \xf5\t\x02\x08\n\r\n\x05\x04#\x02\x01\x01\x12\x04\xf5\t\t\x1b\n\r\n\x05\
+    \x04#\x02\x01\x03\x12\x04\xf5\t\x1e\x1f\n\r\n\x05\x04#\x02\x01\x08\x12\
+    \x04\xf5\t\x20H\n\x10\n\x08\x04#\x02\x01\x08\x9c\x08\0\x12\x04\xf5\t!G\n\
+    7\n\x04\x04#\x02\x02\x12\x04\xf8\t\x02N\x1a)\x20Required.\x20The\x20Auth\
+    orizedView\x20to\x20create.\n\n\r\n\x05\x04#\x02\x02\x06\x12\x04\xf8\t\
+    \x02\x10\n\r\n\x05\x04#\x02\x02\x01\x12\x04\xf8\t\x11\x20\n\r\n\x05\x04#\
+    \x02\x02\x03\x12\x04\xf8\t#$\n\r\n\x05\x04#\x02\x02\x08\x12\x04\xf8\t%M\
+    \n\x10\n\x08\x04#\x02\x02\x08\x9c\x08\0\x12\x04\xf8\t&L\nP\n\x02\x04$\
+    \x12\x06\xfc\t\0\x85\n\x01\x1aB\x20The\x20metadata\x20for\x20the\x20Oper\
+    ation\x20returned\x20by\x20CreateAuthorizedView.\n\n\x0b\n\x03\x04$\x01\
+    \x12\x04\xfc\t\x08$\nZ\n\x04\x04$\x02\0\x12\x04\xfe\t\x023\x1aL\x20The\
+    \x20request\x20that\x20prompted\x20the\x20initiation\x20of\x20this\x20Cr\
+    eateInstance\x20operation.\n\n\r\n\x05\x04$\x02\0\x06\x12\x04\xfe\t\x02\
+    \x1d\n\r\n\x05\x04$\x02\0\x01\x12\x04\xfe\t\x1e.\n\r\n\x05\x04$\x02\0\
+    \x03\x12\x04\xfe\t12\nD\n\x04\x04$\x02\x01\x12\x04\x81\n\x02-\x1a6\x20Th\
+    e\x20time\x20at\x20which\x20the\x20original\x20request\x20was\x20receive\
+    d.\n\n\r\n\x05\x04$\x02\x01\x06\x12\x04\x81\n\x02\x1b\n\r\n\x05\x04$\x02\
+    \x01\x01\x12\x04\x81\n\x1c(\n\r\n\x05\x04$\x02\x01\x03\x12\x04\x81\n+,\n\
+    U\n\x04\x04$\x02\x02\x12\x04\x84\n\x02,\x1aG\x20The\x20time\x20at\x20whi\
+    ch\x20the\x20operation\x20failed\x20or\x20was\x20completed\x20successful\
+    ly.\n\n\r\n\x05\x04$\x02\x02\x06\x12\x04\x84\n\x02\x1b\n\r\n\x05\x04$\
+    \x02\x02\x01\x12\x04\x84\n\x1c'\n\r\n\x05\x04$\x02\x02\x03\x12\x04\x84\n\
+    *+\n\xa8\x01\n\x02\x04%\x12\x06\x89\n\0\xa5\n\x01\x1a\x99\x01\x20Request\
+    \x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.Lis\
+    tAuthorizedViews][google.bigtable.admin.v2.BigtableTableAdmin.ListAuthor\
+    izedViews]\n\n\x0b\n\x03\x04%\x01\x12\x04\x89\n\x08\"\n\xb8\x01\n\x04\
+    \x04%\x02\0\x12\x06\x8d\n\x02\x92\n\x04\x1a\xa7\x01\x20Required.\x20The\
+    \x20unique\x20name\x20of\x20the\x20table\x20for\x20which\x20AuthorizedVi\
+    ews\x20should\x20be\n\x20listed.\x20Values\x20are\x20of\x20the\x20form\n\
+    \x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\
+    \x05\x04%\x02\0\x05\x12\x04\x8d\n\x02\x08\n\r\n\x05\x04%\x02\0\x01\x12\
+    \x04\x8d\n\t\x0f\n\r\n\x05\x04%\x02\0\x03\x12\x04\x8d\n\x12\x13\n\x0f\n\
+    \x05\x04%\x02\0\x08\x12\x06\x8d\n\x14\x92\n\x03\n\x10\n\x08\x04%\x02\0\
+    \x08\x9c\x08\0\x12\x04\x8e\n\x04*\n\x11\n\x07\x04%\x02\0\x08\x9f\x08\x12\
+    \x06\x8f\n\x04\x91\n\x05\n\xc7\x03\n\x04\x04%\x02\x01\x12\x04\x9d\n\x02?\
+    \x1a\xb8\x03\x20Optional.\x20Maximum\x20number\x20of\x20results\x20per\
+    \x20page.\n\n\x20A\x20page_size\x20of\x20zero\x20lets\x20the\x20server\
+    \x20choose\x20the\x20number\x20of\x20items\x20to\x20return.\n\x20A\x20pa\
+    ge_size\x20which\x20is\x20strictly\x20positive\x20will\x20return\x20at\
+    \x20most\x20that\x20many\x20items.\n\x20A\x20negative\x20page_size\x20wi\
+    ll\x20cause\x20an\x20error.\n\n\x20Following\x20the\x20first\x20request,\
+    \x20subsequent\x20paginated\x20calls\x20are\x20not\x20required\n\x20to\
+    \x20pass\x20a\x20page_size.\x20If\x20a\x20page_size\x20is\x20set\x20in\
+    \x20subsequent\x20calls,\x20it\x20must\n\x20match\x20the\x20page_size\
+    \x20given\x20in\x20the\x20first\x20request.\n\n\r\n\x05\x04%\x02\x01\x05\
+    \x12\x04\x9d\n\x02\x07\n\r\n\x05\x04%\x02\x01\x01\x12\x04\x9d\n\x08\x11\
+    \n\r\n\x05\x04%\x02\x01\x03\x12\x04\x9d\n\x14\x15\n\r\n\x05\x04%\x02\x01\
+    \x08\x12\x04\x9d\n\x16>\n\x10\n\x08\x04%\x02\x01\x08\x9c\x08\0\x12\x04\
+    \x9d\n\x17=\nU\n\x04\x04%\x02\x02\x12\x04\xa0\n\x02A\x1aG\x20Optional.\
+    \x20The\x20value\x20of\x20`next_page_token`\x20returned\x20by\x20a\x20pr\
+    evious\x20call.\n\n\r\n\x05\x04%\x02\x02\x05\x12\x04\xa0\n\x02\x08\n\r\n\
+    \x05\x04%\x02\x02\x01\x12\x04\xa0\n\t\x13\n\r\n\x05\x04%\x02\x02\x03\x12\
+    \x04\xa0\n\x16\x17\n\r\n\x05\x04%\x02\x02\x08\x12\x04\xa0\n\x18@\n\x10\n\
+    \x08\x04%\x02\x02\x08\x9c\x08\0\x12\x04\xa0\n\x19?\no\n\x04\x04%\x02\x03\
+    \x12\x04\xa4\n\x02P\x1aa\x20Optional.\x20The\x20resource_view\x20to\x20b\
+    e\x20applied\x20to\x20the\x20returned\x20views'\x20fields.\n\x20Default\
+    \x20to\x20NAME_ONLY.\n\n\r\n\x05\x04%\x02\x03\x06\x12\x04\xa4\n\x02\x1d\
+    \n\r\n\x05\x04%\x02\x03\x01\x12\x04\xa4\n\x1e\"\n\r\n\x05\x04%\x02\x03\
+    \x03\x12\x04\xa4\n%&\n\r\n\x05\x04%\x02\x03\x08\x12\x04\xa4\n'O\n\x10\n\
+    \x08\x04%\x02\x03\x08\x9c\x08\0\x12\x04\xa4\n(N\n\xa9\x01\n\x02\x04&\x12\
+    \x06\xa9\n\0\xb1\n\x01\x1a\x9a\x01\x20Response\x20message\x20for\n\x20[g\
+    oogle.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews][google.b\
+    igtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews]\n\n\x0b\n\x03\
+    \x04&\x01\x12\x04\xa9\n\x08#\nC\n\x04\x04&\x02\0\x12\x04\xab\n\x02/\x1a5\
+    \x20The\x20AuthorizedViews\x20present\x20in\x20the\x20requested\x20table\
+    .\n\n\r\n\x05\x04&\x02\0\x04\x12\x04\xab\n\x02\n\n\r\n\x05\x04&\x02\0\
+    \x06\x12\x04\xab\n\x0b\x19\n\r\n\x05\x04&\x02\0\x01\x12\x04\xab\n\x1a*\n\
+    \r\n\x05\x04&\x02\0\x03\x12\x04\xab\n-.\n\xa4\x01\n\x04\x04&\x02\x01\x12\
+    \x04\xb0\n\x02\x1d\x1a\x95\x01\x20Set\x20if\x20not\x20all\x20tables\x20c\
+    ould\x20be\x20returned\x20in\x20a\x20single\x20response.\n\x20Pass\x20th\
+    is\x20value\x20to\x20`page_token`\x20in\x20another\x20request\x20to\x20g\
+    et\x20the\x20next\n\x20page\x20of\x20results.\n\n\r\n\x05\x04&\x02\x01\
+    \x05\x12\x04\xb0\n\x02\x08\n\r\n\x05\x04&\x02\x01\x01\x12\x04\xb0\n\t\
+    \x18\n\r\n\x05\x04&\x02\x01\x03\x12\x04\xb0\n\x1b\x1c\n\xa4\x01\n\x02\
+    \x04'\x12\x06\xb5\n\0\xc3\n\x01\x1a\x95\x01\x20Request\x20message\x20for\
+    \n\x20[google.bigtable.admin.v2.BigtableTableAdmin.GetAuthorizedView][go\
+    ogle.bigtable.admin.v2.BigtableTableAdmin.GetAuthorizedView]\n\n\x0b\n\
+    \x03\x04'\x01\x12\x04\xb5\n\x08\x20\n\xc2\x01\n\x04\x04'\x02\0\x12\x06\
+    \xb9\n\x02\xbe\n\x04\x1a\xb1\x01\x20Required.\x20The\x20unique\x20name\
+    \x20of\x20the\x20requested\x20AuthorizedView.\n\x20Values\x20are\x20of\
+    \x20the\x20form\n\x20`projects/{project}/instances/{instance}/tables/{ta\
+    ble}/authorizedViews/{authorized_view}`.\n\n\r\n\x05\x04'\x02\0\x05\x12\
+    \x04\xb9\n\x02\x08\n\r\n\x05\x04'\x02\0\x01\x12\x04\xb9\n\t\r\n\r\n\x05\
+    \x04'\x02\0\x03\x12\x04\xb9\n\x10\x11\n\x0f\n\x05\x04'\x02\0\x08\x12\x06\
+    \xb9\n\x12\xbe\n\x03\n\x10\n\x08\x04'\x02\0\x08\x9c\x08\0\x12\x04\xba\n\
+    \x04*\n\x11\n\x07\x04'\x02\0\x08\x9f\x08\x12\x06\xbb\n\x04\xbd\n\x05\nu\
+    \n\x04\x04'\x02\x01\x12\x04\xc2\n\x02P\x1ag\x20Optional.\x20The\x20resou\
+    rce_view\x20to\x20be\x20applied\x20to\x20the\x20returned\x20AuthorizedVi\
+    ew's\n\x20fields.\x20Default\x20to\x20BASIC.\n\n\r\n\x05\x04'\x02\x01\
+    \x06\x12\x04\xc2\n\x02\x1d\n\r\n\x05\x04'\x02\x01\x01\x12\x04\xc2\n\x1e\
+    \"\n\r\n\x05\x04'\x02\x01\x03\x12\x04\xc2\n%&\n\r\n\x05\x04'\x02\x01\x08\
+    \x12\x04\xc2\n'O\n\x10\n\x08\x04'\x02\x01\x08\x9c\x08\0\x12\x04\xc2\n(N\
+    \nz\n\x02\x04(\x12\x06\xc7\n\0\xdb\n\x01\x1al\x20The\x20request\x20for\n\
+    \x20[UpdateAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.U\
+    pdateAuthorizedView].\n\n\x0b\n\x03\x04(\x01\x12\x04\xc7\n\x08#\n\x84\
+    \x02\n\x04\x04(\x02\0\x12\x04\xcc\n\x02N\x1a\xf5\x01\x20Required.\x20The\
+    \x20AuthorizedView\x20to\x20update.\x20The\x20`name`\x20in\x20`authorize\
+    d_view`\x20is\n\x20used\x20to\x20identify\x20the\x20AuthorizedView.\x20A\
+    uthorizedView\x20name\x20must\x20in\x20this\n\x20format\n\x20projects/<p\
+    roject>/instances/<instance>/tables/<table>/authorizedViews/<authorized_\
+    view>\n\n\r\n\x05\x04(\x02\0\x06\x12\x04\xcc\n\x02\x10\n\r\n\x05\x04(\
+    \x02\0\x01\x12\x04\xcc\n\x11\x20\n\r\n\x05\x04(\x02\0\x03\x12\x04\xcc\n#\
+    $\n\r\n\x05\x04(\x02\0\x08\x12\x04\xcc\n%M\n\x10\n\x08\x04(\x02\0\x08\
+    \x9c\x08\0\x12\x04\xcc\n&L\n\xaf\x03\n\x04\x04(\x02\x01\x12\x06\xd5\n\
+    \x02\xd6\n/\x1a\x9e\x03\x20Optional.\x20The\x20list\x20of\x20fields\x20t\
+    o\x20update.\n\x20A\x20mask\x20specifying\x20which\x20fields\x20in\x20th\
+    e\x20AuthorizedView\x20resource\x20should\x20be\n\x20updated.\x20This\
+    \x20mask\x20is\x20relative\x20to\x20the\x20AuthorizedView\x20resource,\
+    \x20not\x20to\x20the\n\x20request\x20message.\x20A\x20field\x20will\x20b\
+    e\x20overwritten\x20if\x20it\x20is\x20in\x20the\x20mask.\x20If\n\x20empt\
+    y,\x20all\x20fields\x20set\x20in\x20the\x20request\x20will\x20be\x20over\
+    written.\x20A\x20special\x20value\n\x20`*`\x20means\x20to\x20overwrite\
+    \x20all\x20fields\x20(including\x20fields\x20not\x20set\x20in\x20the\n\
+    \x20request).\n\n\r\n\x05\x04(\x02\x01\x06\x12\x04\xd5\n\x02\x1b\n\r\n\
+    \x05\x04(\x02\x01\x01\x12\x04\xd5\n\x1c'\n\r\n\x05\x04(\x02\x01\x03\x12\
+    \x04\xd5\n*+\n\r\n\x05\x04(\x02\x01\x08\x12\x04\xd6\n\x06.\n\x10\n\x08\
+    \x04(\x02\x01\x08\x9c\x08\0\x12\x04\xd6\n\x07-\n^\n\x04\x04(\x02\x02\x12\
+    \x04\xda\n\x02D\x1aP\x20Optional.\x20If\x20true,\x20ignore\x20the\x20saf\
+    ety\x20checks\x20when\x20updating\x20the\n\x20AuthorizedView.\n\n\r\n\
+    \x05\x04(\x02\x02\x05\x12\x04\xda\n\x02\x06\n\r\n\x05\x04(\x02\x02\x01\
+    \x12\x04\xda\n\x07\x16\n\r\n\x05\x04(\x02\x02\x03\x12\x04\xda\n\x19\x1a\
+    \n\r\n\x05\x04(\x02\x02\x08\x12\x04\xda\n\x1bC\n\x10\n\x08\x04(\x02\x02\
+    \x08\x9c\x08\0\x12\x04\xda\n\x1cB\n\xa5\x01\n\x02\x04)\x12\x06\xdf\n\0\
+    \xe9\n\x01\x1a\x96\x01\x20Metadata\x20for\x20the\x20google.longrunning.O\
+    peration\x20returned\x20by\n\x20[UpdateAuthorizedView][google.bigtable.a\
+    dmin.v2.BigtableTableAdmin.UpdateAuthorizedView].\n\n\x0b\n\x03\x04)\x01\
+    \x12\x04\xdf\n\x08$\na\n\x04\x04)\x02\0\x12\x04\xe2\n\x023\x1aS\x20The\
+    \x20request\x20that\x20prompted\x20the\x20initiation\x20of\x20this\x20Up\
+    dateAuthorizedView\n\x20operation.\n\n\r\n\x05\x04)\x02\0\x06\x12\x04\
+    \xe2\n\x02\x1d\n\r\n\x05\x04)\x02\0\x01\x12\x04\xe2\n\x1e.\n\r\n\x05\x04\
+    )\x02\0\x03\x12\x04\xe2\n12\nD\n\x04\x04)\x02\x01\x12\x04\xe5\n\x02-\x1a\
+    6\x20The\x20time\x20at\x20which\x20the\x20original\x20request\x20was\x20\
+    received.\n\n\r\n\x05\x04)\x02\x01\x06\x12\x04\xe5\n\x02\x1b\n\r\n\x05\
+    \x04)\x02\x01\x01\x12\x04\xe5\n\x1c(\n\r\n\x05\x04)\x02\x01\x03\x12\x04\
+    \xe5\n+,\nU\n\x04\x04)\x02\x02\x12\x04\xe8\n\x02,\x1aG\x20The\x20time\
+    \x20at\x20which\x20the\x20operation\x20failed\x20or\x20was\x20completed\
+    \x20successfully.\n\n\r\n\x05\x04)\x02\x02\x06\x12\x04\xe8\n\x02\x1b\n\r\
+    \n\x05\x04)\x02\x02\x01\x12\x04\xe8\n\x1c'\n\r\n\x05\x04)\x02\x02\x03\
+    \x12\x04\xe8\n*+\n\xaa\x01\n\x02\x04*\x12\x06\xed\n\0\xfd\n\x01\x1a\x9b\
+    \x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Bigtabl\
+    eTableAdmin.DeleteAuthorizedView][google.bigtable.admin.v2.BigtableTable\
+    Admin.DeleteAuthorizedView]\n\n\x0b\n\x03\x04*\x01\x12\x04\xed\n\x08#\n\
+    \xc6\x01\n\x04\x04*\x02\0\x12\x06\xf1\n\x02\xf6\n\x04\x1a\xb5\x01\x20Req\
+    uired.\x20The\x20unique\x20name\x20of\x20the\x20AuthorizedView\x20to\x20\
+    be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{p\
+    roject}/instances/{instance}/tables/{table}/authorizedViews/{authorized_\
+    view}`.\n\n\r\n\x05\x04*\x02\0\x05\x12\x04\xf1\n\x02\x08\n\r\n\x05\x04*\
+    \x02\0\x01\x12\x04\xf1\n\t\r\n\r\n\x05\x04*\x02\0\x03\x12\x04\xf1\n\x10\
+    \x11\n\x0f\n\x05\x04*\x02\0\x08\x12\x06\xf1\n\x12\xf6\n\x03\n\x10\n\x08\
+    \x04*\x02\0\x08\x9c\x08\0\x12\x04\xf2\n\x04*\n\x11\n\x07\x04*\x02\0\x08\
+    \x9f\x08\x12\x06\xf3\n\x04\xf5\n\x05\n\xd7\x01\n\x04\x04*\x02\x01\x12\
+    \x04\xfc\n\x02;\x1a\xc8\x01\x20Optional.\x20The\x20current\x20etag\x20of\
+    \x20the\x20AuthorizedView.\n\x20If\x20an\x20etag\x20is\x20provided\x20an\
+    d\x20does\x20not\x20match\x20the\x20current\x20etag\x20of\x20the\n\x20Au\
+    thorizedView,\x20deletion\x20will\x20be\x20blocked\x20and\x20an\x20ABORT\
+    ED\x20error\x20will\x20be\n\x20returned.\n\n\r\n\x05\x04*\x02\x01\x05\
+    \x12\x04\xfc\n\x02\x08\n\r\n\x05\x04*\x02\x01\x01\x12\x04\xfc\n\t\r\n\r\
+    \n\x05\x04*\x02\x01\x03\x12\x04\xfc\n\x10\x11\n\r\n\x05\x04*\x02\x01\x08\
+    \x12\x04\xfc\n\x12:\n\x10\n\x08\x04*\x02\x01\x08\x9c\x08\0\x12\x04\xfc\n\
+    \x139b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

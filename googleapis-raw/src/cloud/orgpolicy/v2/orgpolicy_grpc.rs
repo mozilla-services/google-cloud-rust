@@ -65,6 +65,41 @@ const METHOD_ORG_POLICY_DELETE_POLICY: ::grpcio::Method<super::orgpolicy::Delete
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_ORG_POLICY_CREATE_CUSTOM_CONSTRAINT: ::grpcio::Method<super::orgpolicy::CreateCustomConstraintRequest, super::constraint::CustomConstraint> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.cloud.orgpolicy.v2.OrgPolicy/CreateCustomConstraint",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_ORG_POLICY_UPDATE_CUSTOM_CONSTRAINT: ::grpcio::Method<super::orgpolicy::UpdateCustomConstraintRequest, super::constraint::CustomConstraint> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.cloud.orgpolicy.v2.OrgPolicy/UpdateCustomConstraint",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_ORG_POLICY_GET_CUSTOM_CONSTRAINT: ::grpcio::Method<super::orgpolicy::GetCustomConstraintRequest, super::constraint::CustomConstraint> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.cloud.orgpolicy.v2.OrgPolicy/GetCustomConstraint",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_ORG_POLICY_LIST_CUSTOM_CONSTRAINTS: ::grpcio::Method<super::orgpolicy::ListCustomConstraintsRequest, super::orgpolicy::ListCustomConstraintsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.cloud.orgpolicy.v2.OrgPolicy/ListCustomConstraints",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_ORG_POLICY_DELETE_CUSTOM_CONSTRAINT: ::grpcio::Method<super::orgpolicy::DeleteCustomConstraintRequest, super::empty::Empty> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.cloud.orgpolicy.v2.OrgPolicy/DeleteCustomConstraint",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct OrgPolicyClient {
     pub client: ::grpcio::Client,
@@ -188,6 +223,86 @@ impl OrgPolicyClient {
     pub fn delete_policy_async(&self, req: &super::orgpolicy::DeletePolicyRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_policy_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn create_custom_constraint_opt(&self, req: &super::orgpolicy::CreateCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::constraint::CustomConstraint> {
+        self.client.unary_call(&METHOD_ORG_POLICY_CREATE_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn create_custom_constraint(&self, req: &super::orgpolicy::CreateCustomConstraintRequest) -> ::grpcio::Result<super::constraint::CustomConstraint> {
+        self.create_custom_constraint_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_custom_constraint_async_opt(&self, req: &super::orgpolicy::CreateCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::constraint::CustomConstraint>> {
+        self.client.unary_call_async(&METHOD_ORG_POLICY_CREATE_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn create_custom_constraint_async(&self, req: &super::orgpolicy::CreateCustomConstraintRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::constraint::CustomConstraint>> {
+        self.create_custom_constraint_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_custom_constraint_opt(&self, req: &super::orgpolicy::UpdateCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::constraint::CustomConstraint> {
+        self.client.unary_call(&METHOD_ORG_POLICY_UPDATE_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn update_custom_constraint(&self, req: &super::orgpolicy::UpdateCustomConstraintRequest) -> ::grpcio::Result<super::constraint::CustomConstraint> {
+        self.update_custom_constraint_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_custom_constraint_async_opt(&self, req: &super::orgpolicy::UpdateCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::constraint::CustomConstraint>> {
+        self.client.unary_call_async(&METHOD_ORG_POLICY_UPDATE_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn update_custom_constraint_async(&self, req: &super::orgpolicy::UpdateCustomConstraintRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::constraint::CustomConstraint>> {
+        self.update_custom_constraint_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_custom_constraint_opt(&self, req: &super::orgpolicy::GetCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::constraint::CustomConstraint> {
+        self.client.unary_call(&METHOD_ORG_POLICY_GET_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn get_custom_constraint(&self, req: &super::orgpolicy::GetCustomConstraintRequest) -> ::grpcio::Result<super::constraint::CustomConstraint> {
+        self.get_custom_constraint_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_custom_constraint_async_opt(&self, req: &super::orgpolicy::GetCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::constraint::CustomConstraint>> {
+        self.client.unary_call_async(&METHOD_ORG_POLICY_GET_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn get_custom_constraint_async(&self, req: &super::orgpolicy::GetCustomConstraintRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::constraint::CustomConstraint>> {
+        self.get_custom_constraint_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_custom_constraints_opt(&self, req: &super::orgpolicy::ListCustomConstraintsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::orgpolicy::ListCustomConstraintsResponse> {
+        self.client.unary_call(&METHOD_ORG_POLICY_LIST_CUSTOM_CONSTRAINTS, req, opt)
+    }
+
+    pub fn list_custom_constraints(&self, req: &super::orgpolicy::ListCustomConstraintsRequest) -> ::grpcio::Result<super::orgpolicy::ListCustomConstraintsResponse> {
+        self.list_custom_constraints_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_custom_constraints_async_opt(&self, req: &super::orgpolicy::ListCustomConstraintsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::orgpolicy::ListCustomConstraintsResponse>> {
+        self.client.unary_call_async(&METHOD_ORG_POLICY_LIST_CUSTOM_CONSTRAINTS, req, opt)
+    }
+
+    pub fn list_custom_constraints_async(&self, req: &super::orgpolicy::ListCustomConstraintsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::orgpolicy::ListCustomConstraintsResponse>> {
+        self.list_custom_constraints_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_custom_constraint_opt(&self, req: &super::orgpolicy::DeleteCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
+        self.client.unary_call(&METHOD_ORG_POLICY_DELETE_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn delete_custom_constraint(&self, req: &super::orgpolicy::DeleteCustomConstraintRequest) -> ::grpcio::Result<super::empty::Empty> {
+        self.delete_custom_constraint_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_custom_constraint_async_opt(&self, req: &super::orgpolicy::DeleteCustomConstraintRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client.unary_call_async(&METHOD_ORG_POLICY_DELETE_CUSTOM_CONSTRAINT, req, opt)
+    }
+
+    pub fn delete_custom_constraint_async(&self, req: &super::orgpolicy::DeleteCustomConstraintRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.delete_custom_constraint_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -213,6 +328,21 @@ pub trait OrgPolicy {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn delete_policy(&mut self, ctx: ::grpcio::RpcContext, _req: super::orgpolicy::DeletePolicyRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn create_custom_constraint(&mut self, ctx: ::grpcio::RpcContext, _req: super::orgpolicy::CreateCustomConstraintRequest, sink: ::grpcio::UnarySink<super::constraint::CustomConstraint>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update_custom_constraint(&mut self, ctx: ::grpcio::RpcContext, _req: super::orgpolicy::UpdateCustomConstraintRequest, sink: ::grpcio::UnarySink<super::constraint::CustomConstraint>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_custom_constraint(&mut self, ctx: ::grpcio::RpcContext, _req: super::orgpolicy::GetCustomConstraintRequest, sink: ::grpcio::UnarySink<super::constraint::CustomConstraint>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn list_custom_constraints(&mut self, ctx: ::grpcio::RpcContext, _req: super::orgpolicy::ListCustomConstraintsRequest, sink: ::grpcio::UnarySink<super::orgpolicy::ListCustomConstraintsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn delete_custom_constraint(&mut self, ctx: ::grpcio::RpcContext, _req: super::orgpolicy::DeleteCustomConstraintRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -243,9 +373,29 @@ pub fn create_org_policy<S: OrgPolicy + Send + Clone + 'static>(s: S) -> ::grpci
     builder = builder.add_unary_handler(&METHOD_ORG_POLICY_UPDATE_POLICY, move |ctx, req, resp| {
         instance.update_policy(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_ORG_POLICY_DELETE_POLICY, move |ctx, req, resp| {
         instance.delete_policy(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_ORG_POLICY_CREATE_CUSTOM_CONSTRAINT, move |ctx, req, resp| {
+        instance.create_custom_constraint(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_ORG_POLICY_UPDATE_CUSTOM_CONSTRAINT, move |ctx, req, resp| {
+        instance.update_custom_constraint(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_ORG_POLICY_GET_CUSTOM_CONSTRAINT, move |ctx, req, resp| {
+        instance.get_custom_constraint(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_ORG_POLICY_LIST_CUSTOM_CONSTRAINTS, move |ctx, req, resp| {
+        instance.list_custom_constraints(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_ORG_POLICY_DELETE_CUSTOM_CONSTRAINT, move |ctx, req, resp| {
+        instance.delete_custom_constraint(ctx, req, resp)
     });
     builder.build()
 }

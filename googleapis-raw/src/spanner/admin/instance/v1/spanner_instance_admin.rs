@@ -4716,6 +4716,7 @@ pub struct ListInstancesRequest {
     pub page_size: i32,
     pub page_token: ::std::string::String,
     pub filter: ::std::string::String,
+    pub instance_deadline: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -4824,10 +4825,48 @@ impl ListInstancesRequest {
     pub fn take_filter(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.filter, ::std::string::String::new())
     }
+
+    // .google.protobuf.Timestamp instance_deadline = 5;
+
+
+    pub fn get_instance_deadline(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.instance_deadline.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_deadline(&mut self) {
+        self.instance_deadline.clear();
+    }
+
+    pub fn has_instance_deadline(&self) -> bool {
+        self.instance_deadline.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_deadline(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.instance_deadline = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_deadline(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.instance_deadline.is_none() {
+            self.instance_deadline.set_default();
+        }
+        self.instance_deadline.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_deadline(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.instance_deadline.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
 }
 
 impl ::protobuf::Message for ListInstancesRequest {
     fn is_initialized(&self) -> bool {
+        for v in &self.instance_deadline {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -4850,6 +4889,9 @@ impl ::protobuf::Message for ListInstancesRequest {
                 },
                 4 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.filter)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_deadline)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -4875,6 +4917,10 @@ impl ::protobuf::Message for ListInstancesRequest {
         if !self.filter.is_empty() {
             my_size += ::protobuf::rt::string_size(4, &self.filter);
         }
+        if let Some(ref v) = self.instance_deadline.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4892,6 +4938,11 @@ impl ::protobuf::Message for ListInstancesRequest {
         }
         if !self.filter.is_empty() {
             os.write_string(4, &self.filter)?;
+        }
+        if let Some(ref v) = self.instance_deadline.as_ref() {
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4951,6 +5002,11 @@ impl ::protobuf::Message for ListInstancesRequest {
                 |m: &ListInstancesRequest| { &m.filter },
                 |m: &mut ListInstancesRequest| { &mut m.filter },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "instance_deadline",
+                |m: &ListInstancesRequest| { &m.instance_deadline },
+                |m: &mut ListInstancesRequest| { &mut m.instance_deadline },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListInstancesRequest>(
                 "ListInstancesRequest",
                 fields,
@@ -4971,6 +5027,7 @@ impl ::protobuf::Clear for ListInstancesRequest {
         self.page_size = 0;
         self.page_token.clear();
         self.filter.clear();
+        self.instance_deadline.clear();
         self.unknown_fields.clear();
     }
 }
@@ -4992,6 +5049,7 @@ pub struct ListInstancesResponse {
     // message fields
     pub instances: ::protobuf::RepeatedField<Instance>,
     pub next_page_token: ::std::string::String,
+    pub unreachable: ::protobuf::RepeatedField<::std::string::String>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -5058,6 +5116,31 @@ impl ListInstancesResponse {
     pub fn take_next_page_token(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.next_page_token, ::std::string::String::new())
     }
+
+    // repeated string unreachable = 3;
+
+
+    pub fn get_unreachable(&self) -> &[::std::string::String] {
+        &self.unreachable
+    }
+    pub fn clear_unreachable(&mut self) {
+        self.unreachable.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_unreachable(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.unreachable = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_unreachable(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.unreachable
+    }
+
+    // Take field
+    pub fn take_unreachable(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.unreachable, ::protobuf::RepeatedField::new())
+    }
 }
 
 impl ::protobuf::Message for ListInstancesResponse {
@@ -5080,6 +5163,9 @@ impl ::protobuf::Message for ListInstancesResponse {
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.next_page_token)?;
                 },
+                3 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.unreachable)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -5099,6 +5185,9 @@ impl ::protobuf::Message for ListInstancesResponse {
         if !self.next_page_token.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
         }
+        for value in &self.unreachable {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -5113,6 +5202,9 @@ impl ::protobuf::Message for ListInstancesResponse {
         if !self.next_page_token.is_empty() {
             os.write_string(2, &self.next_page_token)?;
         }
+        for v in &self.unreachable {
+            os.write_string(3, &v)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -5161,6 +5253,11 @@ impl ::protobuf::Message for ListInstancesResponse {
                 |m: &ListInstancesResponse| { &m.next_page_token },
                 |m: &mut ListInstancesResponse| { &mut m.next_page_token },
             ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "unreachable",
+                |m: &ListInstancesResponse| { &m.unreachable },
+                |m: &mut ListInstancesResponse| { &mut m.unreachable },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListInstancesResponse>(
                 "ListInstancesResponse",
                 fields,
@@ -5179,6 +5276,7 @@ impl ::protobuf::Clear for ListInstancesResponse {
     fn clear(&mut self) {
         self.instances.clear();
         self.next_page_token.clear();
+        self.unreachable.clear();
         self.unknown_fields.clear();
     }
 }
@@ -6851,6 +6949,3338 @@ impl ::protobuf::reflect::ProtobufValue for UpdateInstanceConfigMetadata {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct InstancePartition {
+    // message fields
+    pub name: ::std::string::String,
+    pub config: ::std::string::String,
+    pub display_name: ::std::string::String,
+    pub state: InstancePartition_State,
+    pub create_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub update_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub referencing_databases: ::protobuf::RepeatedField<::std::string::String>,
+    pub referencing_backups: ::protobuf::RepeatedField<::std::string::String>,
+    pub etag: ::std::string::String,
+    // message oneof groups
+    pub compute_capacity: ::std::option::Option<InstancePartition_oneof_compute_capacity>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a InstancePartition {
+    fn default() -> &'a InstancePartition {
+        <InstancePartition as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+pub enum InstancePartition_oneof_compute_capacity {
+    node_count(i32),
+    processing_units(i32),
+}
+
+impl InstancePartition {
+    pub fn new() -> InstancePartition {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // string config = 2;
+
+
+    pub fn get_config(&self) -> &str {
+        &self.config
+    }
+    pub fn clear_config(&mut self) {
+        self.config.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_config(&mut self, v: ::std::string::String) {
+        self.config = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_config(&mut self) -> &mut ::std::string::String {
+        &mut self.config
+    }
+
+    // Take field
+    pub fn take_config(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.config, ::std::string::String::new())
+    }
+
+    // string display_name = 3;
+
+
+    pub fn get_display_name(&self) -> &str {
+        &self.display_name
+    }
+    pub fn clear_display_name(&mut self) {
+        self.display_name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_display_name(&mut self, v: ::std::string::String) {
+        self.display_name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_display_name(&mut self) -> &mut ::std::string::String {
+        &mut self.display_name
+    }
+
+    // Take field
+    pub fn take_display_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.display_name, ::std::string::String::new())
+    }
+
+    // int32 node_count = 5;
+
+
+    pub fn get_node_count(&self) -> i32 {
+        match self.compute_capacity {
+            ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::node_count(v)) => v,
+            _ => 0,
+        }
+    }
+    pub fn clear_node_count(&mut self) {
+        self.compute_capacity = ::std::option::Option::None;
+    }
+
+    pub fn has_node_count(&self) -> bool {
+        match self.compute_capacity {
+            ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::node_count(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node_count(&mut self, v: i32) {
+        self.compute_capacity = ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::node_count(v))
+    }
+
+    // int32 processing_units = 6;
+
+
+    pub fn get_processing_units(&self) -> i32 {
+        match self.compute_capacity {
+            ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::processing_units(v)) => v,
+            _ => 0,
+        }
+    }
+    pub fn clear_processing_units(&mut self) {
+        self.compute_capacity = ::std::option::Option::None;
+    }
+
+    pub fn has_processing_units(&self) -> bool {
+        match self.compute_capacity {
+            ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::processing_units(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_processing_units(&mut self, v: i32) {
+        self.compute_capacity = ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::processing_units(v))
+    }
+
+    // .google.spanner.admin.instance.v1.InstancePartition.State state = 7;
+
+
+    pub fn get_state(&self) -> InstancePartition_State {
+        self.state
+    }
+    pub fn clear_state(&mut self) {
+        self.state = InstancePartition_State::STATE_UNSPECIFIED;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_state(&mut self, v: InstancePartition_State) {
+        self.state = v;
+    }
+
+    // .google.protobuf.Timestamp create_time = 8;
+
+
+    pub fn get_create_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.create_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_create_time(&mut self) {
+        self.create_time.clear();
+    }
+
+    pub fn has_create_time(&self) -> bool {
+        self.create_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_create_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.create_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_create_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.create_time.is_none() {
+            self.create_time.set_default();
+        }
+        self.create_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_create_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.create_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp update_time = 9;
+
+
+    pub fn get_update_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.update_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_update_time(&mut self) {
+        self.update_time.clear();
+    }
+
+    pub fn has_update_time(&self) -> bool {
+        self.update_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_update_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.update_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_update_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.update_time.is_none() {
+            self.update_time.set_default();
+        }
+        self.update_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_update_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.update_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // repeated string referencing_databases = 10;
+
+
+    pub fn get_referencing_databases(&self) -> &[::std::string::String] {
+        &self.referencing_databases
+    }
+    pub fn clear_referencing_databases(&mut self) {
+        self.referencing_databases.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_referencing_databases(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.referencing_databases = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_referencing_databases(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.referencing_databases
+    }
+
+    // Take field
+    pub fn take_referencing_databases(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.referencing_databases, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated string referencing_backups = 11;
+
+
+    pub fn get_referencing_backups(&self) -> &[::std::string::String] {
+        &self.referencing_backups
+    }
+    pub fn clear_referencing_backups(&mut self) {
+        self.referencing_backups.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_referencing_backups(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.referencing_backups = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_referencing_backups(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.referencing_backups
+    }
+
+    // Take field
+    pub fn take_referencing_backups(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.referencing_backups, ::protobuf::RepeatedField::new())
+    }
+
+    // string etag = 12;
+
+
+    pub fn get_etag(&self) -> &str {
+        &self.etag
+    }
+    pub fn clear_etag(&mut self) {
+        self.etag.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_etag(&mut self, v: ::std::string::String) {
+        self.etag = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_etag(&mut self) -> &mut ::std::string::String {
+        &mut self.etag
+    }
+
+    // Take field
+    pub fn take_etag(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.etag, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for InstancePartition {
+    fn is_initialized(&self) -> bool {
+        for v in &self.create_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.update_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.config)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.display_name)?;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.compute_capacity = ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::node_count(is.read_int32()?));
+                },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.compute_capacity = ::std::option::Option::Some(InstancePartition_oneof_compute_capacity::processing_units(is.read_int32()?));
+                },
+                7 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.state, 7, &mut self.unknown_fields)?
+                },
+                8 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.create_time)?;
+                },
+                9 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.update_time)?;
+                },
+                10 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.referencing_databases)?;
+                },
+                11 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.referencing_backups)?;
+                },
+                12 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.etag)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.config.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.config);
+        }
+        if !self.display_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.display_name);
+        }
+        if self.state != InstancePartition_State::STATE_UNSPECIFIED {
+            my_size += ::protobuf::rt::enum_size(7, self.state);
+        }
+        if let Some(ref v) = self.create_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.update_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        for value in &self.referencing_databases {
+            my_size += ::protobuf::rt::string_size(10, &value);
+        };
+        for value in &self.referencing_backups {
+            my_size += ::protobuf::rt::string_size(11, &value);
+        };
+        if !self.etag.is_empty() {
+            my_size += ::protobuf::rt::string_size(12, &self.etag);
+        }
+        if let ::std::option::Option::Some(ref v) = self.compute_capacity {
+            match v {
+                &InstancePartition_oneof_compute_capacity::node_count(v) => {
+                    my_size += ::protobuf::rt::value_size(5, v, ::protobuf::wire_format::WireTypeVarint);
+                },
+                &InstancePartition_oneof_compute_capacity::processing_units(v) => {
+                    my_size += ::protobuf::rt::value_size(6, v, ::protobuf::wire_format::WireTypeVarint);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.config.is_empty() {
+            os.write_string(2, &self.config)?;
+        }
+        if !self.display_name.is_empty() {
+            os.write_string(3, &self.display_name)?;
+        }
+        if self.state != InstancePartition_State::STATE_UNSPECIFIED {
+            os.write_enum(7, ::protobuf::ProtobufEnum::value(&self.state))?;
+        }
+        if let Some(ref v) = self.create_time.as_ref() {
+            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.update_time.as_ref() {
+            os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        for v in &self.referencing_databases {
+            os.write_string(10, &v)?;
+        };
+        for v in &self.referencing_backups {
+            os.write_string(11, &v)?;
+        };
+        if !self.etag.is_empty() {
+            os.write_string(12, &self.etag)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.compute_capacity {
+            match v {
+                &InstancePartition_oneof_compute_capacity::node_count(v) => {
+                    os.write_int32(5, v)?;
+                },
+                &InstancePartition_oneof_compute_capacity::processing_units(v) => {
+                    os.write_int32(6, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> InstancePartition {
+        InstancePartition::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &InstancePartition| { &m.name },
+                |m: &mut InstancePartition| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "config",
+                |m: &InstancePartition| { &m.config },
+                |m: &mut InstancePartition| { &mut m.config },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "display_name",
+                |m: &InstancePartition| { &m.display_name },
+                |m: &mut InstancePartition| { &mut m.display_name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_i32_accessor::<_>(
+                "node_count",
+                InstancePartition::has_node_count,
+                InstancePartition::get_node_count,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_i32_accessor::<_>(
+                "processing_units",
+                InstancePartition::has_processing_units,
+                InstancePartition::get_processing_units,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<InstancePartition_State>>(
+                "state",
+                |m: &InstancePartition| { &m.state },
+                |m: &mut InstancePartition| { &mut m.state },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "create_time",
+                |m: &InstancePartition| { &m.create_time },
+                |m: &mut InstancePartition| { &mut m.create_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "update_time",
+                |m: &InstancePartition| { &m.update_time },
+                |m: &mut InstancePartition| { &mut m.update_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "referencing_databases",
+                |m: &InstancePartition| { &m.referencing_databases },
+                |m: &mut InstancePartition| { &mut m.referencing_databases },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "referencing_backups",
+                |m: &InstancePartition| { &m.referencing_backups },
+                |m: &mut InstancePartition| { &mut m.referencing_backups },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "etag",
+                |m: &InstancePartition| { &m.etag },
+                |m: &mut InstancePartition| { &mut m.etag },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<InstancePartition>(
+                "InstancePartition",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static InstancePartition {
+        static instance: ::protobuf::rt::LazyV2<InstancePartition> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(InstancePartition::new)
+    }
+}
+
+impl ::protobuf::Clear for InstancePartition {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.config.clear();
+        self.display_name.clear();
+        self.compute_capacity = ::std::option::Option::None;
+        self.compute_capacity = ::std::option::Option::None;
+        self.state = InstancePartition_State::STATE_UNSPECIFIED;
+        self.create_time.clear();
+        self.update_time.clear();
+        self.referencing_databases.clear();
+        self.referencing_backups.clear();
+        self.etag.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for InstancePartition {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for InstancePartition {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum InstancePartition_State {
+    STATE_UNSPECIFIED = 0,
+    CREATING = 1,
+    READY = 2,
+}
+
+impl ::protobuf::ProtobufEnum for InstancePartition_State {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<InstancePartition_State> {
+        match value {
+            0 => ::std::option::Option::Some(InstancePartition_State::STATE_UNSPECIFIED),
+            1 => ::std::option::Option::Some(InstancePartition_State::CREATING),
+            2 => ::std::option::Option::Some(InstancePartition_State::READY),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [InstancePartition_State] = &[
+            InstancePartition_State::STATE_UNSPECIFIED,
+            InstancePartition_State::CREATING,
+            InstancePartition_State::READY,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<InstancePartition_State>("InstancePartition.State", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for InstancePartition_State {
+}
+
+impl ::std::default::Default for InstancePartition_State {
+    fn default() -> Self {
+        InstancePartition_State::STATE_UNSPECIFIED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for InstancePartition_State {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CreateInstancePartitionMetadata {
+    // message fields
+    pub instance_partition: ::protobuf::SingularPtrField<InstancePartition>,
+    pub start_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub cancel_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub end_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CreateInstancePartitionMetadata {
+    fn default() -> &'a CreateInstancePartitionMetadata {
+        <CreateInstancePartitionMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateInstancePartitionMetadata {
+    pub fn new() -> CreateInstancePartitionMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.spanner.admin.instance.v1.InstancePartition instance_partition = 1;
+
+
+    pub fn get_instance_partition(&self) -> &InstancePartition {
+        self.instance_partition.as_ref().unwrap_or_else(|| <InstancePartition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_partition(&mut self) {
+        self.instance_partition.clear();
+    }
+
+    pub fn has_instance_partition(&self) -> bool {
+        self.instance_partition.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition(&mut self, v: InstancePartition) {
+        self.instance_partition = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition(&mut self) -> &mut InstancePartition {
+        if self.instance_partition.is_none() {
+            self.instance_partition.set_default();
+        }
+        self.instance_partition.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_partition(&mut self) -> InstancePartition {
+        self.instance_partition.take().unwrap_or_else(|| InstancePartition::new())
+    }
+
+    // .google.protobuf.Timestamp start_time = 2;
+
+
+    pub fn get_start_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.start_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_start_time(&mut self) {
+        self.start_time.clear();
+    }
+
+    pub fn has_start_time(&self) -> bool {
+        self.start_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.start_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.start_time.is_none() {
+            self.start_time.set_default();
+        }
+        self.start_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_start_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.start_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp cancel_time = 3;
+
+
+    pub fn get_cancel_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.cancel_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_cancel_time(&mut self) {
+        self.cancel_time.clear();
+    }
+
+    pub fn has_cancel_time(&self) -> bool {
+        self.cancel_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cancel_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.cancel_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cancel_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.cancel_time.is_none() {
+            self.cancel_time.set_default();
+        }
+        self.cancel_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_cancel_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.cancel_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp end_time = 4;
+
+
+    pub fn get_end_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.end_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_end_time(&mut self) {
+        self.end_time.clear();
+    }
+
+    pub fn has_end_time(&self) -> bool {
+        self.end_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.end_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.end_time.is_none() {
+            self.end_time.set_default();
+        }
+        self.end_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_end_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.end_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+}
+
+impl ::protobuf::Message for CreateInstancePartitionMetadata {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partition {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.start_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.cancel_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.end_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_partition)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.start_time)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cancel_time)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.end_time)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.cancel_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.start_time.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.cancel_time.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.end_time.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CreateInstancePartitionMetadata {
+        CreateInstancePartitionMetadata::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<InstancePartition>>(
+                "instance_partition",
+                |m: &CreateInstancePartitionMetadata| { &m.instance_partition },
+                |m: &mut CreateInstancePartitionMetadata| { &mut m.instance_partition },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "start_time",
+                |m: &CreateInstancePartitionMetadata| { &m.start_time },
+                |m: &mut CreateInstancePartitionMetadata| { &mut m.start_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "cancel_time",
+                |m: &CreateInstancePartitionMetadata| { &m.cancel_time },
+                |m: &mut CreateInstancePartitionMetadata| { &mut m.cancel_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "end_time",
+                |m: &CreateInstancePartitionMetadata| { &m.end_time },
+                |m: &mut CreateInstancePartitionMetadata| { &mut m.end_time },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CreateInstancePartitionMetadata>(
+                "CreateInstancePartitionMetadata",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CreateInstancePartitionMetadata {
+        static instance: ::protobuf::rt::LazyV2<CreateInstancePartitionMetadata> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CreateInstancePartitionMetadata::new)
+    }
+}
+
+impl ::protobuf::Clear for CreateInstancePartitionMetadata {
+    fn clear(&mut self) {
+        self.instance_partition.clear();
+        self.start_time.clear();
+        self.cancel_time.clear();
+        self.end_time.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CreateInstancePartitionMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateInstancePartitionMetadata {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CreateInstancePartitionRequest {
+    // message fields
+    pub parent: ::std::string::String,
+    pub instance_partition_id: ::std::string::String,
+    pub instance_partition: ::protobuf::SingularPtrField<InstancePartition>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CreateInstancePartitionRequest {
+    fn default() -> &'a CreateInstancePartitionRequest {
+        <CreateInstancePartitionRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateInstancePartitionRequest {
+    pub fn new() -> CreateInstancePartitionRequest {
+        ::std::default::Default::default()
+    }
+
+    // string parent = 1;
+
+
+    pub fn get_parent(&self) -> &str {
+        &self.parent
+    }
+    pub fn clear_parent(&mut self) {
+        self.parent.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_parent(&mut self, v: ::std::string::String) {
+        self.parent = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_parent(&mut self) -> &mut ::std::string::String {
+        &mut self.parent
+    }
+
+    // Take field
+    pub fn take_parent(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.parent, ::std::string::String::new())
+    }
+
+    // string instance_partition_id = 2;
+
+
+    pub fn get_instance_partition_id(&self) -> &str {
+        &self.instance_partition_id
+    }
+    pub fn clear_instance_partition_id(&mut self) {
+        self.instance_partition_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition_id(&mut self, v: ::std::string::String) {
+        self.instance_partition_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition_id(&mut self) -> &mut ::std::string::String {
+        &mut self.instance_partition_id
+    }
+
+    // Take field
+    pub fn take_instance_partition_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.instance_partition_id, ::std::string::String::new())
+    }
+
+    // .google.spanner.admin.instance.v1.InstancePartition instance_partition = 3;
+
+
+    pub fn get_instance_partition(&self) -> &InstancePartition {
+        self.instance_partition.as_ref().unwrap_or_else(|| <InstancePartition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_partition(&mut self) {
+        self.instance_partition.clear();
+    }
+
+    pub fn has_instance_partition(&self) -> bool {
+        self.instance_partition.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition(&mut self, v: InstancePartition) {
+        self.instance_partition = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition(&mut self) -> &mut InstancePartition {
+        if self.instance_partition.is_none() {
+            self.instance_partition.set_default();
+        }
+        self.instance_partition.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_partition(&mut self) -> InstancePartition {
+        self.instance_partition.take().unwrap_or_else(|| InstancePartition::new())
+    }
+}
+
+impl ::protobuf::Message for CreateInstancePartitionRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partition {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.parent)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.instance_partition_id)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_partition)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.instance_partition_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.instance_partition_id);
+        }
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.instance_partition_id.is_empty() {
+            os.write_string(2, &self.instance_partition_id)?;
+        }
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CreateInstancePartitionRequest {
+        CreateInstancePartitionRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "parent",
+                |m: &CreateInstancePartitionRequest| { &m.parent },
+                |m: &mut CreateInstancePartitionRequest| { &mut m.parent },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "instance_partition_id",
+                |m: &CreateInstancePartitionRequest| { &m.instance_partition_id },
+                |m: &mut CreateInstancePartitionRequest| { &mut m.instance_partition_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<InstancePartition>>(
+                "instance_partition",
+                |m: &CreateInstancePartitionRequest| { &m.instance_partition },
+                |m: &mut CreateInstancePartitionRequest| { &mut m.instance_partition },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CreateInstancePartitionRequest>(
+                "CreateInstancePartitionRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CreateInstancePartitionRequest {
+        static instance: ::protobuf::rt::LazyV2<CreateInstancePartitionRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CreateInstancePartitionRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for CreateInstancePartitionRequest {
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.instance_partition_id.clear();
+        self.instance_partition.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CreateInstancePartitionRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateInstancePartitionRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DeleteInstancePartitionRequest {
+    // message fields
+    pub name: ::std::string::String,
+    pub etag: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteInstancePartitionRequest {
+    fn default() -> &'a DeleteInstancePartitionRequest {
+        <DeleteInstancePartitionRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteInstancePartitionRequest {
+    pub fn new() -> DeleteInstancePartitionRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // string etag = 2;
+
+
+    pub fn get_etag(&self) -> &str {
+        &self.etag
+    }
+    pub fn clear_etag(&mut self) {
+        self.etag.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_etag(&mut self, v: ::std::string::String) {
+        self.etag = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_etag(&mut self) -> &mut ::std::string::String {
+        &mut self.etag
+    }
+
+    // Take field
+    pub fn take_etag(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.etag, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for DeleteInstancePartitionRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.etag)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.etag.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.etag);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.etag.is_empty() {
+            os.write_string(2, &self.etag)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DeleteInstancePartitionRequest {
+        DeleteInstancePartitionRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &DeleteInstancePartitionRequest| { &m.name },
+                |m: &mut DeleteInstancePartitionRequest| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "etag",
+                |m: &DeleteInstancePartitionRequest| { &m.etag },
+                |m: &mut DeleteInstancePartitionRequest| { &mut m.etag },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DeleteInstancePartitionRequest>(
+                "DeleteInstancePartitionRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DeleteInstancePartitionRequest {
+        static instance: ::protobuf::rt::LazyV2<DeleteInstancePartitionRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DeleteInstancePartitionRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for DeleteInstancePartitionRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.etag.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteInstancePartitionRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteInstancePartitionRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct GetInstancePartitionRequest {
+    // message fields
+    pub name: ::std::string::String,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GetInstancePartitionRequest {
+    fn default() -> &'a GetInstancePartitionRequest {
+        <GetInstancePartitionRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GetInstancePartitionRequest {
+    pub fn new() -> GetInstancePartitionRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for GetInstancePartitionRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GetInstancePartitionRequest {
+        GetInstancePartitionRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &GetInstancePartitionRequest| { &m.name },
+                |m: &mut GetInstancePartitionRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GetInstancePartitionRequest>(
+                "GetInstancePartitionRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GetInstancePartitionRequest {
+        static instance: ::protobuf::rt::LazyV2<GetInstancePartitionRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GetInstancePartitionRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for GetInstancePartitionRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GetInstancePartitionRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetInstancePartitionRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct UpdateInstancePartitionRequest {
+    // message fields
+    pub instance_partition: ::protobuf::SingularPtrField<InstancePartition>,
+    pub field_mask: ::protobuf::SingularPtrField<::protobuf::well_known_types::FieldMask>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateInstancePartitionRequest {
+    fn default() -> &'a UpdateInstancePartitionRequest {
+        <UpdateInstancePartitionRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateInstancePartitionRequest {
+    pub fn new() -> UpdateInstancePartitionRequest {
+        ::std::default::Default::default()
+    }
+
+    // .google.spanner.admin.instance.v1.InstancePartition instance_partition = 1;
+
+
+    pub fn get_instance_partition(&self) -> &InstancePartition {
+        self.instance_partition.as_ref().unwrap_or_else(|| <InstancePartition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_partition(&mut self) {
+        self.instance_partition.clear();
+    }
+
+    pub fn has_instance_partition(&self) -> bool {
+        self.instance_partition.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition(&mut self, v: InstancePartition) {
+        self.instance_partition = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition(&mut self) -> &mut InstancePartition {
+        if self.instance_partition.is_none() {
+            self.instance_partition.set_default();
+        }
+        self.instance_partition.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_partition(&mut self) -> InstancePartition {
+        self.instance_partition.take().unwrap_or_else(|| InstancePartition::new())
+    }
+
+    // .google.protobuf.FieldMask field_mask = 2;
+
+
+    pub fn get_field_mask(&self) -> &::protobuf::well_known_types::FieldMask {
+        self.field_mask.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::FieldMask as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_field_mask(&mut self) {
+        self.field_mask.clear();
+    }
+
+    pub fn has_field_mask(&self) -> bool {
+        self.field_mask.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_mask(&mut self, v: ::protobuf::well_known_types::FieldMask) {
+        self.field_mask = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_field_mask(&mut self) -> &mut ::protobuf::well_known_types::FieldMask {
+        if self.field_mask.is_none() {
+            self.field_mask.set_default();
+        }
+        self.field_mask.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_field_mask(&mut self) -> ::protobuf::well_known_types::FieldMask {
+        self.field_mask.take().unwrap_or_else(|| ::protobuf::well_known_types::FieldMask::new())
+    }
+}
+
+impl ::protobuf::Message for UpdateInstancePartitionRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partition {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.field_mask {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_partition)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.field_mask)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.field_mask.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.field_mask.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateInstancePartitionRequest {
+        UpdateInstancePartitionRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<InstancePartition>>(
+                "instance_partition",
+                |m: &UpdateInstancePartitionRequest| { &m.instance_partition },
+                |m: &mut UpdateInstancePartitionRequest| { &mut m.instance_partition },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::FieldMask>>(
+                "field_mask",
+                |m: &UpdateInstancePartitionRequest| { &m.field_mask },
+                |m: &mut UpdateInstancePartitionRequest| { &mut m.field_mask },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateInstancePartitionRequest>(
+                "UpdateInstancePartitionRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateInstancePartitionRequest {
+        static instance: ::protobuf::rt::LazyV2<UpdateInstancePartitionRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateInstancePartitionRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateInstancePartitionRequest {
+    fn clear(&mut self) {
+        self.instance_partition.clear();
+        self.field_mask.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateInstancePartitionRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateInstancePartitionRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct UpdateInstancePartitionMetadata {
+    // message fields
+    pub instance_partition: ::protobuf::SingularPtrField<InstancePartition>,
+    pub start_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub cancel_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    pub end_time: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateInstancePartitionMetadata {
+    fn default() -> &'a UpdateInstancePartitionMetadata {
+        <UpdateInstancePartitionMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateInstancePartitionMetadata {
+    pub fn new() -> UpdateInstancePartitionMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.spanner.admin.instance.v1.InstancePartition instance_partition = 1;
+
+
+    pub fn get_instance_partition(&self) -> &InstancePartition {
+        self.instance_partition.as_ref().unwrap_or_else(|| <InstancePartition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_partition(&mut self) {
+        self.instance_partition.clear();
+    }
+
+    pub fn has_instance_partition(&self) -> bool {
+        self.instance_partition.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition(&mut self, v: InstancePartition) {
+        self.instance_partition = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition(&mut self) -> &mut InstancePartition {
+        if self.instance_partition.is_none() {
+            self.instance_partition.set_default();
+        }
+        self.instance_partition.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_partition(&mut self) -> InstancePartition {
+        self.instance_partition.take().unwrap_or_else(|| InstancePartition::new())
+    }
+
+    // .google.protobuf.Timestamp start_time = 2;
+
+
+    pub fn get_start_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.start_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_start_time(&mut self) {
+        self.start_time.clear();
+    }
+
+    pub fn has_start_time(&self) -> bool {
+        self.start_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.start_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.start_time.is_none() {
+            self.start_time.set_default();
+        }
+        self.start_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_start_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.start_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp cancel_time = 3;
+
+
+    pub fn get_cancel_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.cancel_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_cancel_time(&mut self) {
+        self.cancel_time.clear();
+    }
+
+    pub fn has_cancel_time(&self) -> bool {
+        self.cancel_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cancel_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.cancel_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cancel_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.cancel_time.is_none() {
+            self.cancel_time.set_default();
+        }
+        self.cancel_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_cancel_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.cancel_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+
+    // .google.protobuf.Timestamp end_time = 4;
+
+
+    pub fn get_end_time(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.end_time.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_end_time(&mut self) {
+        self.end_time.clear();
+    }
+
+    pub fn has_end_time(&self) -> bool {
+        self.end_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_time(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.end_time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_time(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.end_time.is_none() {
+            self.end_time.set_default();
+        }
+        self.end_time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_end_time(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.end_time.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+}
+
+impl ::protobuf::Message for UpdateInstancePartitionMetadata {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partition {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.start_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.cancel_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.end_time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_partition)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.start_time)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cancel_time)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.end_time)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.cancel_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.instance_partition.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.start_time.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.cancel_time.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.end_time.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateInstancePartitionMetadata {
+        UpdateInstancePartitionMetadata::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<InstancePartition>>(
+                "instance_partition",
+                |m: &UpdateInstancePartitionMetadata| { &m.instance_partition },
+                |m: &mut UpdateInstancePartitionMetadata| { &mut m.instance_partition },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "start_time",
+                |m: &UpdateInstancePartitionMetadata| { &m.start_time },
+                |m: &mut UpdateInstancePartitionMetadata| { &mut m.start_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "cancel_time",
+                |m: &UpdateInstancePartitionMetadata| { &m.cancel_time },
+                |m: &mut UpdateInstancePartitionMetadata| { &mut m.cancel_time },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "end_time",
+                |m: &UpdateInstancePartitionMetadata| { &m.end_time },
+                |m: &mut UpdateInstancePartitionMetadata| { &mut m.end_time },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateInstancePartitionMetadata>(
+                "UpdateInstancePartitionMetadata",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateInstancePartitionMetadata {
+        static instance: ::protobuf::rt::LazyV2<UpdateInstancePartitionMetadata> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateInstancePartitionMetadata::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateInstancePartitionMetadata {
+    fn clear(&mut self) {
+        self.instance_partition.clear();
+        self.start_time.clear();
+        self.cancel_time.clear();
+        self.end_time.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateInstancePartitionMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateInstancePartitionMetadata {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ListInstancePartitionsRequest {
+    // message fields
+    pub parent: ::std::string::String,
+    pub page_size: i32,
+    pub page_token: ::std::string::String,
+    pub instance_partition_deadline: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ListInstancePartitionsRequest {
+    fn default() -> &'a ListInstancePartitionsRequest {
+        <ListInstancePartitionsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListInstancePartitionsRequest {
+    pub fn new() -> ListInstancePartitionsRequest {
+        ::std::default::Default::default()
+    }
+
+    // string parent = 1;
+
+
+    pub fn get_parent(&self) -> &str {
+        &self.parent
+    }
+    pub fn clear_parent(&mut self) {
+        self.parent.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_parent(&mut self, v: ::std::string::String) {
+        self.parent = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_parent(&mut self) -> &mut ::std::string::String {
+        &mut self.parent
+    }
+
+    // Take field
+    pub fn take_parent(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.parent, ::std::string::String::new())
+    }
+
+    // int32 page_size = 2;
+
+
+    pub fn get_page_size(&self) -> i32 {
+        self.page_size
+    }
+    pub fn clear_page_size(&mut self) {
+        self.page_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page_size(&mut self, v: i32) {
+        self.page_size = v;
+    }
+
+    // string page_token = 3;
+
+
+    pub fn get_page_token(&self) -> &str {
+        &self.page_token
+    }
+    pub fn clear_page_token(&mut self) {
+        self.page_token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page_token(&mut self, v: ::std::string::String) {
+        self.page_token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_page_token(&mut self) -> &mut ::std::string::String {
+        &mut self.page_token
+    }
+
+    // Take field
+    pub fn take_page_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.page_token, ::std::string::String::new())
+    }
+
+    // .google.protobuf.Timestamp instance_partition_deadline = 4;
+
+
+    pub fn get_instance_partition_deadline(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.instance_partition_deadline.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_partition_deadline(&mut self) {
+        self.instance_partition_deadline.clear();
+    }
+
+    pub fn has_instance_partition_deadline(&self) -> bool {
+        self.instance_partition_deadline.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition_deadline(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.instance_partition_deadline = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition_deadline(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.instance_partition_deadline.is_none() {
+            self.instance_partition_deadline.set_default();
+        }
+        self.instance_partition_deadline.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_partition_deadline(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.instance_partition_deadline.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+}
+
+impl ::protobuf::Message for ListInstancePartitionsRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partition_deadline {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.parent)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.page_size = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.page_token)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_partition_deadline)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.page_size, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.page_token);
+        }
+        if let Some(ref v) = self.instance_partition_deadline.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(2, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(3, &self.page_token)?;
+        }
+        if let Some(ref v) = self.instance_partition_deadline.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ListInstancePartitionsRequest {
+        ListInstancePartitionsRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "parent",
+                |m: &ListInstancePartitionsRequest| { &m.parent },
+                |m: &mut ListInstancePartitionsRequest| { &mut m.parent },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "page_size",
+                |m: &ListInstancePartitionsRequest| { &m.page_size },
+                |m: &mut ListInstancePartitionsRequest| { &mut m.page_size },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "page_token",
+                |m: &ListInstancePartitionsRequest| { &m.page_token },
+                |m: &mut ListInstancePartitionsRequest| { &mut m.page_token },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "instance_partition_deadline",
+                |m: &ListInstancePartitionsRequest| { &m.instance_partition_deadline },
+                |m: &mut ListInstancePartitionsRequest| { &mut m.instance_partition_deadline },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListInstancePartitionsRequest>(
+                "ListInstancePartitionsRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ListInstancePartitionsRequest {
+        static instance: ::protobuf::rt::LazyV2<ListInstancePartitionsRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ListInstancePartitionsRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for ListInstancePartitionsRequest {
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.instance_partition_deadline.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ListInstancePartitionsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListInstancePartitionsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ListInstancePartitionsResponse {
+    // message fields
+    pub instance_partitions: ::protobuf::RepeatedField<InstancePartition>,
+    pub next_page_token: ::std::string::String,
+    pub unreachable: ::protobuf::RepeatedField<::std::string::String>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ListInstancePartitionsResponse {
+    fn default() -> &'a ListInstancePartitionsResponse {
+        <ListInstancePartitionsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListInstancePartitionsResponse {
+    pub fn new() -> ListInstancePartitionsResponse {
+        ::std::default::Default::default()
+    }
+
+    // repeated .google.spanner.admin.instance.v1.InstancePartition instance_partitions = 1;
+
+
+    pub fn get_instance_partitions(&self) -> &[InstancePartition] {
+        &self.instance_partitions
+    }
+    pub fn clear_instance_partitions(&mut self) {
+        self.instance_partitions.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partitions(&mut self, v: ::protobuf::RepeatedField<InstancePartition>) {
+        self.instance_partitions = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_instance_partitions(&mut self) -> &mut ::protobuf::RepeatedField<InstancePartition> {
+        &mut self.instance_partitions
+    }
+
+    // Take field
+    pub fn take_instance_partitions(&mut self) -> ::protobuf::RepeatedField<InstancePartition> {
+        ::std::mem::replace(&mut self.instance_partitions, ::protobuf::RepeatedField::new())
+    }
+
+    // string next_page_token = 2;
+
+
+    pub fn get_next_page_token(&self) -> &str {
+        &self.next_page_token
+    }
+    pub fn clear_next_page_token(&mut self) {
+        self.next_page_token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_next_page_token(&mut self, v: ::std::string::String) {
+        self.next_page_token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_next_page_token(&mut self) -> &mut ::std::string::String {
+        &mut self.next_page_token
+    }
+
+    // Take field
+    pub fn take_next_page_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.next_page_token, ::std::string::String::new())
+    }
+
+    // repeated string unreachable = 3;
+
+
+    pub fn get_unreachable(&self) -> &[::std::string::String] {
+        &self.unreachable
+    }
+    pub fn clear_unreachable(&mut self) {
+        self.unreachable.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_unreachable(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.unreachable = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_unreachable(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.unreachable
+    }
+
+    // Take field
+    pub fn take_unreachable(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.unreachable, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for ListInstancePartitionsResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partitions {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.instance_partitions)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.next_page_token)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.unreachable)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.instance_partitions {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        for value in &self.unreachable {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.instance_partitions {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        for v in &self.unreachable {
+            os.write_string(3, &v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ListInstancePartitionsResponse {
+        ListInstancePartitionsResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<InstancePartition>>(
+                "instance_partitions",
+                |m: &ListInstancePartitionsResponse| { &m.instance_partitions },
+                |m: &mut ListInstancePartitionsResponse| { &mut m.instance_partitions },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "next_page_token",
+                |m: &ListInstancePartitionsResponse| { &m.next_page_token },
+                |m: &mut ListInstancePartitionsResponse| { &mut m.next_page_token },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "unreachable",
+                |m: &ListInstancePartitionsResponse| { &m.unreachable },
+                |m: &mut ListInstancePartitionsResponse| { &mut m.unreachable },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListInstancePartitionsResponse>(
+                "ListInstancePartitionsResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ListInstancePartitionsResponse {
+        static instance: ::protobuf::rt::LazyV2<ListInstancePartitionsResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ListInstancePartitionsResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for ListInstancePartitionsResponse {
+    fn clear(&mut self) {
+        self.instance_partitions.clear();
+        self.next_page_token.clear();
+        self.unreachable.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ListInstancePartitionsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListInstancePartitionsResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ListInstancePartitionOperationsRequest {
+    // message fields
+    pub parent: ::std::string::String,
+    pub filter: ::std::string::String,
+    pub page_size: i32,
+    pub page_token: ::std::string::String,
+    pub instance_partition_deadline: ::protobuf::SingularPtrField<::protobuf::well_known_types::Timestamp>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ListInstancePartitionOperationsRequest {
+    fn default() -> &'a ListInstancePartitionOperationsRequest {
+        <ListInstancePartitionOperationsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListInstancePartitionOperationsRequest {
+    pub fn new() -> ListInstancePartitionOperationsRequest {
+        ::std::default::Default::default()
+    }
+
+    // string parent = 1;
+
+
+    pub fn get_parent(&self) -> &str {
+        &self.parent
+    }
+    pub fn clear_parent(&mut self) {
+        self.parent.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_parent(&mut self, v: ::std::string::String) {
+        self.parent = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_parent(&mut self) -> &mut ::std::string::String {
+        &mut self.parent
+    }
+
+    // Take field
+    pub fn take_parent(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.parent, ::std::string::String::new())
+    }
+
+    // string filter = 2;
+
+
+    pub fn get_filter(&self) -> &str {
+        &self.filter
+    }
+    pub fn clear_filter(&mut self) {
+        self.filter.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_filter(&mut self, v: ::std::string::String) {
+        self.filter = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_filter(&mut self) -> &mut ::std::string::String {
+        &mut self.filter
+    }
+
+    // Take field
+    pub fn take_filter(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.filter, ::std::string::String::new())
+    }
+
+    // int32 page_size = 3;
+
+
+    pub fn get_page_size(&self) -> i32 {
+        self.page_size
+    }
+    pub fn clear_page_size(&mut self) {
+        self.page_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page_size(&mut self, v: i32) {
+        self.page_size = v;
+    }
+
+    // string page_token = 4;
+
+
+    pub fn get_page_token(&self) -> &str {
+        &self.page_token
+    }
+    pub fn clear_page_token(&mut self) {
+        self.page_token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page_token(&mut self, v: ::std::string::String) {
+        self.page_token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_page_token(&mut self) -> &mut ::std::string::String {
+        &mut self.page_token
+    }
+
+    // Take field
+    pub fn take_page_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.page_token, ::std::string::String::new())
+    }
+
+    // .google.protobuf.Timestamp instance_partition_deadline = 5;
+
+
+    pub fn get_instance_partition_deadline(&self) -> &::protobuf::well_known_types::Timestamp {
+        self.instance_partition_deadline.as_ref().unwrap_or_else(|| <::protobuf::well_known_types::Timestamp as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_instance_partition_deadline(&mut self) {
+        self.instance_partition_deadline.clear();
+    }
+
+    pub fn has_instance_partition_deadline(&self) -> bool {
+        self.instance_partition_deadline.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_instance_partition_deadline(&mut self, v: ::protobuf::well_known_types::Timestamp) {
+        self.instance_partition_deadline = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_instance_partition_deadline(&mut self) -> &mut ::protobuf::well_known_types::Timestamp {
+        if self.instance_partition_deadline.is_none() {
+            self.instance_partition_deadline.set_default();
+        }
+        self.instance_partition_deadline.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_instance_partition_deadline(&mut self) -> ::protobuf::well_known_types::Timestamp {
+        self.instance_partition_deadline.take().unwrap_or_else(|| ::protobuf::well_known_types::Timestamp::new())
+    }
+}
+
+impl ::protobuf::Message for ListInstancePartitionOperationsRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.instance_partition_deadline {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.parent)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.filter)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.page_size = tmp;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.page_token)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.instance_partition_deadline)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.filter.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.filter);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.page_size, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.page_token);
+        }
+        if let Some(ref v) = self.instance_partition_deadline.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.filter.is_empty() {
+            os.write_string(2, &self.filter)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(3, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(4, &self.page_token)?;
+        }
+        if let Some(ref v) = self.instance_partition_deadline.as_ref() {
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ListInstancePartitionOperationsRequest {
+        ListInstancePartitionOperationsRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "parent",
+                |m: &ListInstancePartitionOperationsRequest| { &m.parent },
+                |m: &mut ListInstancePartitionOperationsRequest| { &mut m.parent },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "filter",
+                |m: &ListInstancePartitionOperationsRequest| { &m.filter },
+                |m: &mut ListInstancePartitionOperationsRequest| { &mut m.filter },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "page_size",
+                |m: &ListInstancePartitionOperationsRequest| { &m.page_size },
+                |m: &mut ListInstancePartitionOperationsRequest| { &mut m.page_size },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "page_token",
+                |m: &ListInstancePartitionOperationsRequest| { &m.page_token },
+                |m: &mut ListInstancePartitionOperationsRequest| { &mut m.page_token },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<::protobuf::well_known_types::Timestamp>>(
+                "instance_partition_deadline",
+                |m: &ListInstancePartitionOperationsRequest| { &m.instance_partition_deadline },
+                |m: &mut ListInstancePartitionOperationsRequest| { &mut m.instance_partition_deadline },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListInstancePartitionOperationsRequest>(
+                "ListInstancePartitionOperationsRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ListInstancePartitionOperationsRequest {
+        static instance: ::protobuf::rt::LazyV2<ListInstancePartitionOperationsRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ListInstancePartitionOperationsRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for ListInstancePartitionOperationsRequest {
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.filter.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.instance_partition_deadline.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ListInstancePartitionOperationsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListInstancePartitionOperationsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ListInstancePartitionOperationsResponse {
+    // message fields
+    pub operations: ::protobuf::RepeatedField<super::operations::Operation>,
+    pub next_page_token: ::std::string::String,
+    pub unreachable_instance_partitions: ::protobuf::RepeatedField<::std::string::String>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ListInstancePartitionOperationsResponse {
+    fn default() -> &'a ListInstancePartitionOperationsResponse {
+        <ListInstancePartitionOperationsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListInstancePartitionOperationsResponse {
+    pub fn new() -> ListInstancePartitionOperationsResponse {
+        ::std::default::Default::default()
+    }
+
+    // repeated .google.longrunning.Operation operations = 1;
+
+
+    pub fn get_operations(&self) -> &[super::operations::Operation] {
+        &self.operations
+    }
+    pub fn clear_operations(&mut self) {
+        self.operations.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_operations(&mut self, v: ::protobuf::RepeatedField<super::operations::Operation>) {
+        self.operations = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_operations(&mut self) -> &mut ::protobuf::RepeatedField<super::operations::Operation> {
+        &mut self.operations
+    }
+
+    // Take field
+    pub fn take_operations(&mut self) -> ::protobuf::RepeatedField<super::operations::Operation> {
+        ::std::mem::replace(&mut self.operations, ::protobuf::RepeatedField::new())
+    }
+
+    // string next_page_token = 2;
+
+
+    pub fn get_next_page_token(&self) -> &str {
+        &self.next_page_token
+    }
+    pub fn clear_next_page_token(&mut self) {
+        self.next_page_token.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_next_page_token(&mut self, v: ::std::string::String) {
+        self.next_page_token = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_next_page_token(&mut self) -> &mut ::std::string::String {
+        &mut self.next_page_token
+    }
+
+    // Take field
+    pub fn take_next_page_token(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.next_page_token, ::std::string::String::new())
+    }
+
+    // repeated string unreachable_instance_partitions = 3;
+
+
+    pub fn get_unreachable_instance_partitions(&self) -> &[::std::string::String] {
+        &self.unreachable_instance_partitions
+    }
+    pub fn clear_unreachable_instance_partitions(&mut self) {
+        self.unreachable_instance_partitions.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_unreachable_instance_partitions(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.unreachable_instance_partitions = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_unreachable_instance_partitions(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.unreachable_instance_partitions
+    }
+
+    // Take field
+    pub fn take_unreachable_instance_partitions(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.unreachable_instance_partitions, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for ListInstancePartitionOperationsResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.operations {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.operations)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.next_page_token)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.unreachable_instance_partitions)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.operations {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        for value in &self.unreachable_instance_partitions {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.operations {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        for v in &self.unreachable_instance_partitions {
+            os.write_string(3, &v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ListInstancePartitionOperationsResponse {
+        ListInstancePartitionOperationsResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::operations::Operation>>(
+                "operations",
+                |m: &ListInstancePartitionOperationsResponse| { &m.operations },
+                |m: &mut ListInstancePartitionOperationsResponse| { &mut m.operations },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "next_page_token",
+                |m: &ListInstancePartitionOperationsResponse| { &m.next_page_token },
+                |m: &mut ListInstancePartitionOperationsResponse| { &mut m.next_page_token },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "unreachable_instance_partitions",
+                |m: &ListInstancePartitionOperationsResponse| { &m.unreachable_instance_partitions },
+                |m: &mut ListInstancePartitionOperationsResponse| { &mut m.unreachable_instance_partitions },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ListInstancePartitionOperationsResponse>(
+                "ListInstancePartitionOperationsResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ListInstancePartitionOperationsResponse {
+        static instance: ::protobuf::rt::LazyV2<ListInstancePartitionOperationsResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ListInstancePartitionOperationsResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for ListInstancePartitionOperationsResponse {
+    fn clear(&mut self) {
+        self.operations.clear();
+        self.next_page_token.clear();
+        self.unreachable_instance_partitions.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ListInstancePartitionOperationsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListInstancePartitionOperationsResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n=google/spanner/admin/instance/v1/spanner_instance_admin.proto\x12\x20\
     google.spanner.admin.instance.v1\x1a\x1cgoogle/api/annotations.proto\x1a\
@@ -6954,59 +10384,124 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     parentB3\xfaA-\n+cloudresourcemanager.googleapis.com/Project\xe0A\x02\
     \x12$\n\x0binstance_id\x18\x02\x20\x01(\tR\ninstanceIdB\x03\xe0A\x02\x12\
     K\n\x08instance\x18\x03\x20\x01(\x0b2*.google.spanner.admin.instance.v1.\
-    InstanceR\x08instanceB\x03\xe0A\x02\"\xb7\x01\n\x14ListInstancesRequest\
+    InstanceR\x08instanceB\x03\xe0A\x02\"\x80\x02\n\x14ListInstancesRequest\
     \x12K\n\x06parent\x18\x01\x20\x01(\tR\x06parentB3\xfaA-\n+cloudresourcem\
     anager.googleapis.com/Project\xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\
     \x01(\x05R\x08pageSize\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageTo\
-    ken\x12\x16\n\x06filter\x18\x04\x20\x01(\tR\x06filter\"\x89\x01\n\x15Lis\
-    tInstancesResponse\x12H\n\tinstances\x18\x01\x20\x03(\x0b2*.google.spann\
-    er.admin.instance.v1.InstanceR\tinstances\x12&\n\x0fnext_page_token\x18\
-    \x02\x20\x01(\tR\rnextPageToken\"\xa4\x01\n\x15UpdateInstanceRequest\x12\
-    K\n\x08instance\x18\x01\x20\x01(\x0b2*.google.spanner.admin.instance.v1.\
-    InstanceR\x08instanceB\x03\xe0A\x02\x12>\n\nfield_mask\x18\x02\x20\x01(\
-    \x0b2\x1a.google.protobuf.FieldMaskR\tfieldMaskB\x03\xe0A\x02\"T\n\x15De\
-    leteInstanceRequest\x12;\n\x04name\x18\x01\x20\x01(\tR\x04nameB'\xfaA!\n\
-    \x1fspanner.googleapis.com/Instance\xe0A\x02\"\x8f\x02\n\x16CreateInstan\
-    ceMetadata\x12F\n\x08instance\x18\x01\x20\x01(\x0b2*.google.spanner.admi\
-    n.instance.v1.InstanceR\x08instance\x129\n\nstart_time\x18\x02\x20\x01(\
-    \x0b2\x1a.google.protobuf.TimestampR\tstartTime\x12;\n\x0bcancel_time\
-    \x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\ncancelTime\x125\n\
-    \x08end_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07end\
-    Time\"\x8f\x02\n\x16UpdateInstanceMetadata\x12F\n\x08instance\x18\x01\
-    \x20\x01(\x0b2*.google.spanner.admin.instance.v1.InstanceR\x08instance\
-    \x129\n\nstart_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
-    \tstartTime\x12;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\x1a.google.proto\
-    buf.TimestampR\ncancelTime\x125\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.\
-    google.protobuf.TimestampR\x07endTime\"\x87\x02\n\x1cCreateInstanceConfi\
-    gMetadata\x12Y\n\x0finstance_config\x18\x01\x20\x01(\x0b20.google.spanne\
-    r.admin.instance.v1.InstanceConfigR\x0einstanceConfig\x12O\n\x08progress\
-    \x18\x02\x20\x01(\x0b23.google.spanner.admin.instance.v1.OperationProgre\
-    ssR\x08progress\x12;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\x1a.google.p\
-    rotobuf.TimestampR\ncancelTime\"\x87\x02\n\x1cUpdateInstanceConfigMetada\
-    ta\x12Y\n\x0finstance_config\x18\x01\x20\x01(\x0b20.google.spanner.admin\
-    .instance.v1.InstanceConfigR\x0einstanceConfig\x12O\n\x08progress\x18\
-    \x02\x20\x01(\x0b23.google.spanner.admin.instance.v1.OperationProgressR\
-    \x08progress\x12;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\x1a.google.prot\
-    obuf.TimestampR\ncancelTime2\xf2\x18\n\rInstanceAdmin\x12\xcc\x01\n\x13L\
-    istInstanceConfigs\x12<.google.spanner.admin.instance.v1.ListInstanceCon\
-    figsRequest\x1a=.google.spanner.admin.instance.v1.ListInstanceConfigsRes\
-    ponse\"8\x82\xd3\xe4\x93\x02)\x12'/v1/{parent=projects/*}/instanceConfig\
-    s\xdaA\x06parent\x12\xb9\x01\n\x11GetInstanceConfig\x12:.google.spanner.\
-    admin.instance.v1.GetInstanceConfigRequest\x1a0.google.spanner.admin.ins\
-    tance.v1.InstanceConfig\"6\x82\xd3\xe4\x93\x02)\x12'/v1/{name=projects/*\
-    /instanceConfigs/*}\xdaA\x04name\x12\xc8\x02\n\x14CreateInstanceConfig\
-    \x12=.google.spanner.admin.instance.v1.CreateInstanceConfigRequest\x1a\
-    \x1d.google.longrunning.Operation\"\xd1\x01\xcaAp\n/google.spanner.admin\
-    .instance.v1.InstanceConfig\x12=google.spanner.admin.instance.v1.CreateI\
-    nstanceConfigMetadata\x82\xd3\xe4\x93\x02,\"'/v1/{parent=projects/*}/ins\
-    tanceConfigs:\x01*\xdaA)parent,instance_config,instance_config_id\x12\
-    \xca\x02\n\x14UpdateInstanceConfig\x12=.google.spanner.admin.instance.v1\
-    .UpdateInstanceConfigRequest\x1a\x1d.google.longrunning.Operation\"\xd3\
-    \x01\xcaAp\n/google.spanner.admin.instance.v1.InstanceConfig\x12=google.\
-    spanner.admin.instance.v1.UpdateInstanceConfigMetadata\x82\xd3\xe4\x93\
-    \x02<27/v1/{instance_config.name=projects/*/instanceConfigs/*}:\x01*\xda\
-    A\x1binstance_config,update_mask\x12\xa5\x01\n\x14DeleteInstanceConfig\
-    \x12=.google.spanner.admin.instance.v1.DeleteInstanceConfigRequest\x1a\
+    ken\x12\x16\n\x06filter\x18\x04\x20\x01(\tR\x06filter\x12G\n\x11instance\
+    _deadline\x18\x05\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x10instan\
+    ceDeadline\"\xab\x01\n\x15ListInstancesResponse\x12H\n\tinstances\x18\
+    \x01\x20\x03(\x0b2*.google.spanner.admin.instance.v1.InstanceR\tinstance\
+    s\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\x12\x20\n\
+    \x0bunreachable\x18\x03\x20\x03(\tR\x0bunreachable\"\xa4\x01\n\x15Update\
+    InstanceRequest\x12K\n\x08instance\x18\x01\x20\x01(\x0b2*.google.spanner\
+    .admin.instance.v1.InstanceR\x08instanceB\x03\xe0A\x02\x12>\n\nfield_mas\
+    k\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\tfieldMaskB\x03\
+    \xe0A\x02\"T\n\x15DeleteInstanceRequest\x12;\n\x04name\x18\x01\x20\x01(\
+    \tR\x04nameB'\xfaA!\n\x1fspanner.googleapis.com/Instance\xe0A\x02\"\x8f\
+    \x02\n\x16CreateInstanceMetadata\x12F\n\x08instance\x18\x01\x20\x01(\x0b\
+    2*.google.spanner.admin.instance.v1.InstanceR\x08instance\x129\n\nstart_\
+    time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\x12\
+    ;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
+    \ncancelTime\x125\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.google.protobu\
+    f.TimestampR\x07endTime\"\x8f\x02\n\x16UpdateInstanceMetadata\x12F\n\x08\
+    instance\x18\x01\x20\x01(\x0b2*.google.spanner.admin.instance.v1.Instanc\
+    eR\x08instance\x129\n\nstart_time\x18\x02\x20\x01(\x0b2\x1a.google.proto\
+    buf.TimestampR\tstartTime\x12;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\
+    \x1a.google.protobuf.TimestampR\ncancelTime\x125\n\x08end_time\x18\x04\
+    \x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07endTime\"\x87\x02\n\x1c\
+    CreateInstanceConfigMetadata\x12Y\n\x0finstance_config\x18\x01\x20\x01(\
+    \x0b20.google.spanner.admin.instance.v1.InstanceConfigR\x0einstanceConfi\
+    g\x12O\n\x08progress\x18\x02\x20\x01(\x0b23.google.spanner.admin.instanc\
+    e.v1.OperationProgressR\x08progress\x12;\n\x0bcancel_time\x18\x03\x20\
+    \x01(\x0b2\x1a.google.protobuf.TimestampR\ncancelTime\"\x87\x02\n\x1cUpd\
+    ateInstanceConfigMetadata\x12Y\n\x0finstance_config\x18\x01\x20\x01(\x0b\
+    20.google.spanner.admin.instance.v1.InstanceConfigR\x0einstanceConfig\
+    \x12O\n\x08progress\x18\x02\x20\x01(\x0b23.google.spanner.admin.instance\
+    .v1.OperationProgressR\x08progress\x12;\n\x0bcancel_time\x18\x03\x20\x01\
+    (\x0b2\x1a.google.protobuf.TimestampR\ncancelTime\"\x94\x06\n\x11Instanc\
+    ePartition\x12\x17\n\x04name\x18\x01\x20\x01(\tR\x04nameB\x03\xe0A\x02\
+    \x12E\n\x06config\x18\x02\x20\x01(\tR\x06configB-\xfaA'\n%spanner.google\
+    apis.com/InstanceConfig\xe0A\x02\x12&\n\x0cdisplay_name\x18\x03\x20\x01(\
+    \tR\x0bdisplayNameB\x03\xe0A\x02\x12\x1f\n\nnode_count\x18\x05\x20\x01(\
+    \x05H\0R\tnodeCount\x12+\n\x10processing_units\x18\x06\x20\x01(\x05H\0R\
+    \x0fprocessingUnits\x12T\n\x05state\x18\x07\x20\x01(\x0e29.google.spanne\
+    r.admin.instance.v1.InstancePartition.StateR\x05stateB\x03\xe0A\x03\x12@\
+    \n\x0bcreate_time\x18\x08\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\n\
+    createTimeB\x03\xe0A\x03\x12@\n\x0bupdate_time\x18\t\x20\x01(\x0b2\x1a.g\
+    oogle.protobuf.TimestampR\nupdateTimeB\x03\xe0A\x03\x128\n\x15referencin\
+    g_databases\x18\n\x20\x03(\tR\x14referencingDatabasesB\x03\xe0A\x03\x124\
+    \n\x13referencing_backups\x18\x0b\x20\x03(\tR\x12referencingBackupsB\x03\
+    \xe0A\x03\x12\x12\n\x04etag\x18\x0c\x20\x01(\tR\x04etag\"7\n\x05State\
+    \x12\x15\n\x11STATE_UNSPECIFIED\x10\0\x12\x0c\n\x08CREATING\x10\x01\x12\
+    \t\n\x05READY\x10\x02B\x12\n\x10compute_capacity:~\xeaA{\n(spanner.googl\
+    eapis.com/InstancePartition\x12Oprojects/{project}/instances/{instance}/\
+    instancePartitions/{instance_partition}\"\xb4\x02\n\x1fCreateInstancePar\
+    titionMetadata\x12b\n\x12instance_partition\x18\x01\x20\x01(\x0b23.googl\
+    e.spanner.admin.instance.v1.InstancePartitionR\x11instancePartition\x129\
+    \n\nstart_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tsta\
+    rtTime\x12;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.T\
+    imestampR\ncancelTime\x125\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.googl\
+    e.protobuf.TimestampR\x07endTime\"\x83\x02\n\x1eCreateInstancePartitionR\
+    equest\x12?\n\x06parent\x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspann\
+    er.googleapis.com/Instance\xe0A\x02\x127\n\x15instance_partition_id\x18\
+    \x02\x20\x01(\tR\x13instancePartitionIdB\x03\xe0A\x02\x12g\n\x12instance\
+    _partition\x18\x03\x20\x01(\x0b23.google.spanner.admin.instance.v1.Insta\
+    ncePartitionR\x11instancePartitionB\x03\xe0A\x02\"z\n\x1eDeleteInstanceP\
+    artitionRequest\x12D\n\x04name\x18\x01\x20\x01(\tR\x04nameB0\xfaA*\n(spa\
+    nner.googleapis.com/InstancePartition\xe0A\x02\x12\x12\n\x04etag\x18\x02\
+    \x20\x01(\tR\x04etag\"c\n\x1bGetInstancePartitionRequest\x12D\n\x04name\
+    \x18\x01\x20\x01(\tR\x04nameB0\xfaA*\n(spanner.googleapis.com/InstancePa\
+    rtition\xe0A\x02\"\xc9\x01\n\x1eUpdateInstancePartitionRequest\x12g\n\
+    \x12instance_partition\x18\x01\x20\x01(\x0b23.google.spanner.admin.insta\
+    nce.v1.InstancePartitionR\x11instancePartitionB\x03\xe0A\x02\x12>\n\nfie\
+    ld_mask\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\tfieldMaskB\
+    \x03\xe0A\x02\"\xb4\x02\n\x1fUpdateInstancePartitionMetadata\x12b\n\x12i\
+    nstance_partition\x18\x01\x20\x01(\x0b23.google.spanner.admin.instance.v\
+    1.InstancePartitionR\x11instancePartition\x129\n\nstart_time\x18\x02\x20\
+    \x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\x12;\n\x0bcancel_ti\
+    me\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\ncancelTime\x125\
+    \n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07e\
+    ndTime\"\xfd\x01\n\x1dListInstancePartitionsRequest\x12?\n\x06parent\x18\
+    \x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspanner.googleapis.com/Instance\
+    \xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\
+    \n\npage_token\x18\x03\x20\x01(\tR\tpageToken\x12_\n\x1binstance_partiti\
+    on_deadline\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x19inst\
+    ancePartitionDeadlineB\x03\xe0A\x01\"\xd0\x01\n\x1eListInstancePartition\
+    sResponse\x12d\n\x13instance_partitions\x18\x01\x20\x03(\x0b23.google.sp\
+    anner.admin.instance.v1.InstancePartitionR\x12instancePartitions\x12&\n\
+    \x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\x12\x20\n\x0bunre\
+    achable\x18\x03\x20\x03(\tR\x0bunreachable\"\xad\x02\n&ListInstanceParti\
+    tionOperationsRequest\x12?\n\x06parent\x18\x01\x20\x01(\tR\x06parentB'\
+    \xfaA!\n\x1fspanner.googleapis.com/Instance\xe0A\x02\x12\x1b\n\x06filter\
+    \x18\x02\x20\x01(\tR\x06filterB\x03\xe0A\x01\x12\x20\n\tpage_size\x18\
+    \x03\x20\x01(\x05R\x08pageSizeB\x03\xe0A\x01\x12\"\n\npage_token\x18\x04\
+    \x20\x01(\tR\tpageTokenB\x03\xe0A\x01\x12_\n\x1binstance_partition_deadl\
+    ine\x18\x05\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x19instancePart\
+    itionDeadlineB\x03\xe0A\x01\"\xd8\x01\n'ListInstancePartitionOperationsR\
+    esponse\x12=\n\noperations\x18\x01\x20\x03(\x0b2\x1d.google.longrunning.\
+    OperationR\noperations\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rne\
+    xtPageToken\x12F\n\x1funreachable_instance_partitions\x18\x03\x20\x03(\t\
+    R\x1dunreachableInstancePartitions2\xce%\n\rInstanceAdmin\x12\xcc\x01\n\
+    \x13ListInstanceConfigs\x12<.google.spanner.admin.instance.v1.ListInstan\
+    ceConfigsRequest\x1a=.google.spanner.admin.instance.v1.ListInstanceConfi\
+    gsResponse\"8\x82\xd3\xe4\x93\x02)\x12'/v1/{parent=projects/*}/instanceC\
+    onfigs\xdaA\x06parent\x12\xb9\x01\n\x11GetInstanceConfig\x12:.google.spa\
+    nner.admin.instance.v1.GetInstanceConfigRequest\x1a0.google.spanner.admi\
+    n.instance.v1.InstanceConfig\"6\x82\xd3\xe4\x93\x02)\x12'/v1/{name=proje\
+    cts/*/instanceConfigs/*}\xdaA\x04name\x12\xc8\x02\n\x14CreateInstanceCon\
+    fig\x12=.google.spanner.admin.instance.v1.CreateInstanceConfigRequest\
+    \x1a\x1d.google.longrunning.Operation\"\xd1\x01\xcaAp\n/google.spanner.a\
+    dmin.instance.v1.InstanceConfig\x12=google.spanner.admin.instance.v1.Cre\
+    ateInstanceConfigMetadata\x82\xd3\xe4\x93\x02,\"'/v1/{parent=projects/*}\
+    /instanceConfigs:\x01*\xdaA)parent,instance_config,instance_config_id\
+    \x12\xca\x02\n\x14UpdateInstanceConfig\x12=.google.spanner.admin.instanc\
+    e.v1.UpdateInstanceConfigRequest\x1a\x1d.google.longrunning.Operation\"\
+    \xd3\x01\xcaAp\n/google.spanner.admin.instance.v1.InstanceConfig\x12=goo\
+    gle.spanner.admin.instance.v1.UpdateInstanceConfigMetadata\x82\xd3\xe4\
+    \x93\x02<27/v1/{instance_config.name=projects/*/instanceConfigs/*}:\x01*\
+    \xdaA\x1binstance_config,update_mask\x12\xa5\x01\n\x14DeleteInstanceConf\
+    ig\x12=.google.spanner.admin.instance.v1.DeleteInstanceConfigRequest\x1a\
     \x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02)*'/v1/{name=projects/*\
     /instanceConfigs/*}\xdaA\x04name\x12\xf0\x01\n\x1cListInstanceConfigOper\
     ations\x12E.google.spanner.admin.instance.v1.ListInstanceConfigOperation\
@@ -7015,283 +10510,317 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ConfigOperations\xdaA\x06parent\x12\xb4\x01\n\rListInstances\x126.google\
     .spanner.admin.instance.v1.ListInstancesRequest\x1a7.google.spanner.admi\
     n.instance.v1.ListInstancesResponse\"2\x82\xd3\xe4\x93\x02#\x12!/v1/{par\
-    ent=projects/*}/instances\xdaA\x06parent\x12\xa1\x01\n\x0bGetInstance\
-    \x124.google.spanner.admin.instance.v1.GetInstanceRequest\x1a*.google.sp\
-    anner.admin.instance.v1.Instance\"0\x82\xd3\xe4\x93\x02#\x12!/v1/{name=p\
-    rojects/*/instances/*}\xdaA\x04name\x12\x9c\x02\n\x0eCreateInstance\x127\
-    .google.spanner.admin.instance.v1.CreateInstanceRequest\x1a\x1d.google.l\
-    ongrunning.Operation\"\xb1\x01\xcaAd\n)google.spanner.admin.instance.v1.\
-    Instance\x127google.spanner.admin.instance.v1.CreateInstanceMetadata\x82\
-    \xd3\xe4\x93\x02&\"!/v1/{parent=projects/*}/instances:\x01*\xdaA\x1bpare\
-    nt,instance_id,instance\x12\x9d\x02\n\x0eUpdateInstance\x127.google.span\
-    ner.admin.instance.v1.UpdateInstanceRequest\x1a\x1d.google.longrunning.O\
-    peration\"\xb2\x01\xcaAd\n)google.spanner.admin.instance.v1.Instance\x12\
-    7google.spanner.admin.instance.v1.UpdateInstanceMetadata\x82\xd3\xe4\x93\
-    \x02/2*/v1/{instance.name=projects/*/instances/*}:\x01*\xdaA\x13instance\
-    ,field_mask\x12\x93\x01\n\x0eDeleteInstance\x127.google.spanner.admin.in\
-    stance.v1.DeleteInstanceRequest\x1a\x16.google.protobuf.Empty\"0\x82\xd3\
-    \xe4\x93\x02#*!/v1/{name=projects/*/instances/*}\xdaA\x04name\x12\x9a\
-    \x01\n\x0cSetIamPolicy\x12\".google.iam.v1.SetIamPolicyRequest\x1a\x15.g\
-    oogle.iam.v1.Policy\"O\x82\xd3\xe4\x93\x027\"2/v1/{resource=projects/*/i\
-    nstances/*}:setIamPolicy:\x01*\xdaA\x0fresource,policy\x12\x93\x01\n\x0c\
-    GetIamPolicy\x12\".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.\
-    v1.Policy\"H\x82\xd3\xe4\x93\x027\"2/v1/{resource=projects/*/instances/*\
-    }:getIamPolicy:\x01*\xdaA\x08resource\x12\xc5\x01\n\x12TestIamPermission\
-    s\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIa\
-    mPermissionsResponse\"Z\x82\xd3\xe4\x93\x02=\"8/v1/{resource=projects/*/\
-    instances/*}:testIamPermissions:\x01*\xdaA\x14resource,permissions\x1ax\
-    \xd2A\\https://www.googleapis.com/auth/cloud-platform,https://www.google\
-    apis.com/auth/spanner.admin\xcaA\x16spanner.googleapis.comB\x8b\x02\n$co\
-    m.google.spanner.admin.instance.v1B\x19SpannerInstanceAdminProtoP\x01ZFc\
-    loud.google.com/go/spanner/admin/instance/apiv1/instancepb;instancepb\
-    \xaa\x02&Google.Cloud.Spanner.Admin.Instance.V1\xca\x02&Google\\Cloud\\S\
-    panner\\Admin\\Instance\\V1\xea\x02+Google::Cloud::Spanner::Admin::Insta\
-    nce::V1J\x9c\xde\x02\n\x07\x12\x05\x0e\0\x84\t\x01\n\xbc\x04\n\x01\x0c\
-    \x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202022\x20Google\x20LLC\n\n\
-    \x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20\
-    (the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20e\
-    xcept\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20\
-    obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\
-    \x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\
-    \x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20s\
-    oftware\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\
-    \x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\
-    \x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20impli\
-    ed.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20\
-    governing\x20permissions\x20and\n\x20limitations\x20under\x20the\x20Lice\
-    nse.\n\n\x08\n\x01\x02\x12\x03\x10\0)\n\t\n\x02\x03\0\x12\x03\x12\0&\n\t\
-    \n\x02\x03\x01\x12\x03\x13\0!\n\t\n\x02\x03\x02\x12\x03\x14\0)\n\t\n\x02\
-    \x03\x03\x12\x03\x15\0#\n\t\n\x02\x03\x04\x12\x03\x16\0(\n\t\n\x02\x03\
-    \x05\x12\x03\x17\0$\n\t\n\x02\x03\x06\x12\x03\x18\0-\n\t\n\x02\x03\x07\
-    \x12\x03\x19\0%\n\t\n\x02\x03\x08\x12\x03\x1a\0*\n\t\n\x02\x03\t\x12\x03\
-    \x1b\0)\n\t\n\x02\x03\n\x12\x03\x1c\07\n\x08\n\x01\x08\x12\x03\x1e\0C\n\
-    \t\n\x02\x08%\x12\x03\x1e\0C\n\x08\n\x01\x08\x12\x03\x1f\0]\n\t\n\x02\
-    \x08\x0b\x12\x03\x1f\0]\n\x08\n\x01\x08\x12\x03\x20\0\"\n\t\n\x02\x08\n\
-    \x12\x03\x20\0\"\n\x08\n\x01\x08\x12\x03!\0:\n\t\n\x02\x08\x08\x12\x03!\
-    \0:\n\x08\n\x01\x08\x12\x03\"\0=\n\t\n\x02\x08\x01\x12\x03\"\0=\n\x08\n\
-    \x01\x08\x12\x03#\0E\n\t\n\x02\x08)\x12\x03#\0E\n\x08\n\x01\x08\x12\x03$\
-    \0D\n\t\n\x02\x08-\x12\x03$\0D\n\xdd\x08\n\x02\x06\0\x12\x05;\0\x95\x03\
-    \x01\x1a\xcf\x08\x20Cloud\x20Spanner\x20Instance\x20Admin\x20API\n\n\x20\
-    The\x20Cloud\x20Spanner\x20Instance\x20Admin\x20API\x20can\x20be\x20used\
-    \x20to\x20create,\x20delete,\n\x20modify\x20and\x20list\x20instances.\
-    \x20Instances\x20are\x20dedicated\x20Cloud\x20Spanner\x20serving\n\x20an\
-    d\x20storage\x20resources\x20to\x20be\x20used\x20by\x20Cloud\x20Spanner\
-    \x20databases.\n\n\x20Each\x20instance\x20has\x20a\x20\"configuration\",\
-    \x20which\x20dictates\x20where\x20the\n\x20serving\x20resources\x20for\
-    \x20the\x20Cloud\x20Spanner\x20instance\x20are\x20located\x20(e.g.,\n\
-    \x20US-central,\x20Europe).\x20Configurations\x20are\x20created\x20by\
-    \x20Google\x20based\x20on\n\x20resource\x20availability.\n\n\x20Cloud\
-    \x20Spanner\x20billing\x20is\x20based\x20on\x20the\x20instances\x20that\
-    \x20exist\x20and\x20their\n\x20sizes.\x20After\x20an\x20instance\x20exis\
-    ts,\x20there\x20are\x20no\x20additional\n\x20per-database\x20or\x20per-o\
-    peration\x20charges\x20for\x20use\x20of\x20the\x20instance\n\x20(though\
-    \x20there\x20may\x20be\x20additional\x20network\x20bandwidth\x20charges)\
-    .\n\x20Instances\x20offer\x20isolation:\x20problems\x20with\x20databases\
-    \x20in\x20one\x20instance\n\x20will\x20not\x20affect\x20other\x20instanc\
-    es.\x20However,\x20within\x20an\x20instance\n\x20databases\x20can\x20aff\
-    ect\x20each\x20other.\x20For\x20example,\x20if\x20one\x20database\x20in\
-    \x20an\n\x20instance\x20receives\x20a\x20lot\x20of\x20requests\x20and\
-    \x20consumes\x20most\x20of\x20the\n\x20instance\x20resources,\x20fewer\
-    \x20resources\x20are\x20available\x20for\x20other\n\x20databases\x20in\
-    \x20that\x20instance,\x20and\x20their\x20performance\x20may\x20suffer.\n\
-    \n\n\n\x03\x06\0\x01\x12\x03;\x08\x15\n\n\n\x03\x06\0\x03\x12\x03<\x02>\
-    \n\x0c\n\x05\x06\0\x03\x99\x08\x12\x03<\x02>\n\x0b\n\x03\x06\0\x03\x12\
-    \x04=\x02?6\n\r\n\x05\x06\0\x03\x9a\x08\x12\x04=\x02?6\nP\n\x04\x06\0\
-    \x02\0\x12\x04B\x02H\x03\x1aB\x20Lists\x20the\x20supported\x20instance\
-    \x20configurations\x20for\x20a\x20given\x20project.\n\n\x0c\n\x05\x06\0\
-    \x02\0\x01\x12\x03B\x06\x19\n\x0c\n\x05\x06\0\x02\0\x02\x12\x03B\x1a4\n\
-    \x0c\n\x05\x06\0\x02\0\x03\x12\x03C\x0f*\n\r\n\x05\x06\0\x02\0\x04\x12\
-    \x04D\x04F\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\xbc\"\x12\x04D\x04F\x06\
-    \n\x0c\n\x05\x06\0\x02\0\x04\x12\x03G\x044\n\x0f\n\x08\x06\0\x02\0\x04\
-    \x9b\x08\0\x12\x03G\x044\nK\n\x04\x06\0\x02\x01\x12\x04K\x02P\x03\x1a=\
-    \x20Gets\x20information\x20about\x20a\x20particular\x20instance\x20confi\
-    guration.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03K\x06\x17\n\x0c\n\x05\
-    \x06\0\x02\x01\x02\x12\x03K\x180\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03K;\
-    I\n\r\n\x05\x06\0\x02\x01\x04\x12\x04L\x04N\x06\n\x11\n\t\x06\0\x02\x01\
-    \x04\xb0\xca\xbc\"\x12\x04L\x04N\x06\n\x0c\n\x05\x06\0\x02\x01\x04\x12\
-    \x03O\x042\n\x0f\n\x08\x06\0\x02\x01\x04\x9b\x08\0\x12\x03O\x042\n\xca\
-    \x0e\n\x04\x06\0\x02\x02\x12\x05{\x02\x87\x01\x03\x1a\xba\x0e\x20Creates\
-    \x20an\x20instance\x20config\x20and\x20begins\x20preparing\x20it\x20to\
-    \x20be\x20used.\x20The\n\x20returned\x20[long-running\x20operation][goog\
-    le.longrunning.Operation]\n\x20can\x20be\x20used\x20to\x20track\x20the\
-    \x20progress\x20of\x20preparing\x20the\x20new\n\x20instance\x20config.\
-    \x20The\x20instance\x20config\x20name\x20is\x20assigned\x20by\x20the\x20\
-    caller.\x20If\x20the\n\x20named\x20instance\x20config\x20already\x20exis\
-    ts,\x20`CreateInstanceConfig`\x20returns\n\x20`ALREADY_EXISTS`.\n\n\x20I\
-    mmediately\x20after\x20the\x20request\x20returns:\n\n\x20\x20\x20*\x20Th\
-    e\x20instance\x20config\x20is\x20readable\x20via\x20the\x20API,\x20with\
-    \x20all\x20requested\n\x20\x20\x20\x20\x20attributes.\x20The\x20instance\
-    \x20config's\n\x20\x20\x20\x20\x20[reconciling][google.spanner.admin.ins\
-    tance.v1.InstanceConfig.reconciling]\n\x20\x20\x20\x20\x20field\x20is\
-    \x20set\x20to\x20true.\x20Its\x20state\x20is\x20`CREATING`.\n\n\x20While\
-    \x20the\x20operation\x20is\x20pending:\n\n\x20\x20\x20*\x20Cancelling\
-    \x20the\x20operation\x20renders\x20the\x20instance\x20config\x20immediat\
-    ely\n\x20\x20\x20\x20\x20unreadable\x20via\x20the\x20API.\n\x20\x20\x20*\
-    \x20Except\x20for\x20deleting\x20the\x20creating\x20resource,\x20all\x20\
-    other\x20attempts\x20to\x20modify\n\x20\x20\x20\x20\x20the\x20instance\
-    \x20config\x20are\x20rejected.\n\n\x20Upon\x20completion\x20of\x20the\
-    \x20returned\x20operation:\n\n\x20\x20\x20*\x20Instances\x20can\x20be\
-    \x20created\x20using\x20the\x20instance\x20configuration.\n\x20\x20\x20*\
-    \x20The\x20instance\x20config's\n\x20\x20\x20[reconciling][google.spanne\
-    r.admin.instance.v1.InstanceConfig.reconciling]\n\x20\x20\x20field\x20be\
-    comes\x20false.\x20Its\x20state\x20becomes\x20`READY`.\n\n\x20The\x20ret\
-    urned\x20[long-running\x20operation][google.longrunning.Operation]\x20wi\
-    ll\n\x20have\x20a\x20name\x20of\x20the\x20format\n\x20`<instance_config_\
-    name>/operations/<operation_id>`\x20and\x20can\x20be\x20used\x20to\x20tr\
-    ack\n\x20creation\x20of\x20the\x20instance\x20config.\x20The\n\x20[metad\
-    ata][google.longrunning.Operation.metadata]\x20field\x20type\x20is\n\x20\
-    [CreateInstanceConfigMetadata][google.spanner.admin.instance.v1.CreateIn\
-    stanceConfigMetadata].\n\x20The\x20[response][google.longrunning.Operati\
-    on.response]\x20field\x20type\x20is\n\x20[InstanceConfig][google.spanner\
-    .admin.instance.v1.InstanceConfig],\x20if\n\x20successful.\n\n\x20Author\
-    ization\x20requires\x20`spanner.instanceConfigs.create`\x20permission\
-    \x20on\n\x20the\x20resource\n\x20[parent][google.spanner.admin.instance.\
-    v1.CreateInstanceConfigRequest.parent].\n\n\x0c\n\x05\x06\0\x02\x02\x01\
-    \x12\x03{\x06\x1a\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03{\x1b6\n\x0c\n\
-    \x05\x06\0\x02\x02\x03\x12\x03|\x0f+\n\x0e\n\x05\x06\0\x02\x02\x04\x12\
-    \x05}\x04\x80\x01\x06\n\x12\n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x05}\
-    \x04\x80\x01\x06\n\x0f\n\x05\x06\0\x02\x02\x04\x12\x06\x81\x01\x04\x82\
-    \x014\n\x12\n\x08\x06\0\x02\x02\x04\x9b\x08\0\x12\x06\x81\x01\x04\x82\
-    \x014\n\x0f\n\x05\x06\0\x02\x02\x04\x12\x06\x83\x01\x04\x86\x01\x06\n\
-    \x11\n\x07\x06\0\x02\x02\x04\x99\x08\x12\x06\x83\x01\x04\x86\x01\x06\n\
-    \x99\x0f\n\x04\x06\0\x02\x03\x12\x06\xb5\x01\x02\xc0\x01\x03\x1a\x88\x0f\
-    \x20Updates\x20an\x20instance\x20config.\x20The\x20returned\n\x20[long-r\
-    unning\x20operation][google.longrunning.Operation]\x20can\x20be\x20used\
-    \x20to\x20track\n\x20the\x20progress\x20of\x20updating\x20the\x20instanc\
-    e.\x20If\x20the\x20named\x20instance\x20config\x20does\n\x20not\x20exist\
-    ,\x20returns\x20`NOT_FOUND`.\n\n\x20Only\x20user\x20managed\x20configura\
-    tions\x20can\x20be\x20updated.\n\n\x20Immediately\x20after\x20the\x20req\
-    uest\x20returns:\n\n\x20\x20\x20*\x20The\x20instance\x20config's\n\x20\
-    \x20\x20\x20\x20[reconciling][google.spanner.admin.instance.v1.InstanceC\
-    onfig.reconciling]\n\x20\x20\x20\x20\x20field\x20is\x20set\x20to\x20true\
-    .\n\n\x20While\x20the\x20operation\x20is\x20pending:\n\n\x20\x20\x20*\
-    \x20Cancelling\x20the\x20operation\x20sets\x20its\x20metadata's\n\x20\
-    \x20\x20\x20\x20[cancel_time][google.spanner.admin.instance.v1.UpdateIns\
-    tanceConfigMetadata.cancel_time].\n\x20\x20\x20\x20\x20The\x20operation\
-    \x20is\x20guaranteed\x20to\x20succeed\x20at\x20undoing\x20all\x20changes\
-    ,\x20after\n\x20\x20\x20\x20\x20which\x20point\x20it\x20terminates\x20wi\
-    th\x20a\x20`CANCELLED`\x20status.\n\x20\x20\x20*\x20All\x20other\x20atte\
-    mpts\x20to\x20modify\x20the\x20instance\x20config\x20are\x20rejected.\n\
-    \x20\x20\x20*\x20Reading\x20the\x20instance\x20config\x20via\x20the\x20A\
-    PI\x20continues\x20to\x20give\x20the\n\x20\x20\x20\x20\x20pre-request\
-    \x20values.\n\n\x20Upon\x20completion\x20of\x20the\x20returned\x20operat\
-    ion:\n\n\x20\x20\x20*\x20Creating\x20instances\x20using\x20the\x20instan\
-    ce\x20configuration\x20uses\x20the\x20new\n\x20\x20\x20\x20\x20values.\n\
-    \x20\x20\x20*\x20The\x20instance\x20config's\x20new\x20values\x20are\x20\
-    readable\x20via\x20the\x20API.\n\x20\x20\x20*\x20The\x20instance\x20conf\
-    ig's\n\x20\x20\x20[reconciling][google.spanner.admin.instance.v1.Instanc\
-    eConfig.reconciling]\n\x20\x20\x20field\x20becomes\x20false.\n\n\x20The\
-    \x20returned\x20[long-running\x20operation][google.longrunning.Operation\
-    ]\x20will\n\x20have\x20a\x20name\x20of\x20the\x20format\n\x20`<instance_\
-    config_name>/operations/<operation_id>`\x20and\x20can\x20be\x20used\x20t\
-    o\x20track\n\x20the\x20instance\x20config\x20modification.\x20\x20The\n\
-    \x20[metadata][google.longrunning.Operation.metadata]\x20field\x20type\
-    \x20is\n\x20[UpdateInstanceConfigMetadata][google.spanner.admin.instance\
-    .v1.UpdateInstanceConfigMetadata].\n\x20The\x20[response][google.longrun\
-    ning.Operation.response]\x20field\x20type\x20is\n\x20[InstanceConfig][go\
-    ogle.spanner.admin.instance.v1.InstanceConfig],\x20if\n\x20successful.\n\
-    \n\x20Authorization\x20requires\x20`spanner.instanceConfigs.update`\x20p\
-    ermission\x20on\n\x20the\x20resource\x20[name][google.spanner.admin.inst\
-    ance.v1.InstanceConfig.name].\n\n\r\n\x05\x06\0\x02\x03\x01\x12\x04\xb5\
-    \x01\x06\x1a\n\r\n\x05\x06\0\x02\x03\x02\x12\x04\xb5\x01\x1b6\n\r\n\x05\
-    \x06\0\x02\x03\x03\x12\x04\xb6\x01\x0f+\n\x0f\n\x05\x06\0\x02\x03\x04\
-    \x12\x06\xb7\x01\x04\xba\x01\x06\n\x13\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\
-    \"\x12\x06\xb7\x01\x04\xba\x01\x06\n\r\n\x05\x06\0\x02\x03\x04\x12\x04\
-    \xbb\x01\x04I\n\x10\n\x08\x06\0\x02\x03\x04\x9b\x08\0\x12\x04\xbb\x01\
-    \x04I\n\x0f\n\x05\x06\0\x02\x03\x04\x12\x06\xbc\x01\x04\xbf\x01\x06\n\
-    \x11\n\x07\x06\0\x02\x03\x04\x99\x08\x12\x06\xbc\x01\x04\xbf\x01\x06\n\
-    \x86\x03\n\x04\x06\0\x02\x04\x12\x06\xca\x01\x02\xd0\x01\x03\x1a\xf5\x02\
-    \x20Deletes\x20the\x20instance\x20config.\x20Deletion\x20is\x20only\x20a\
-    llowed\x20when\x20no\n\x20instances\x20are\x20using\x20the\x20configurat\
-    ion.\x20If\x20any\x20instances\x20are\x20using\n\x20the\x20config,\x20re\
-    turns\x20`FAILED_PRECONDITION`.\n\n\x20Only\x20user\x20managed\x20config\
-    urations\x20can\x20be\x20deleted.\n\n\x20Authorization\x20requires\x20`s\
-    panner.instanceConfigs.delete`\x20permission\x20on\n\x20the\x20resource\
-    \x20[name][google.spanner.admin.instance.v1.InstanceConfig.name].\n\n\r\
-    \n\x05\x06\0\x02\x04\x01\x12\x04\xca\x01\x06\x1a\n\r\n\x05\x06\0\x02\x04\
-    \x02\x12\x04\xca\x01\x1b6\n\r\n\x05\x06\0\x02\x04\x03\x12\x04\xcb\x01\
-    \x0f$\n\x0f\n\x05\x06\0\x02\x04\x04\x12\x06\xcc\x01\x04\xce\x01\x06\n\
-    \x13\n\t\x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\x06\xcc\x01\x04\xce\x01\x06\
-    \n\r\n\x05\x06\0\x02\x04\x04\x12\x04\xcf\x01\x042\n\x10\n\x08\x06\0\x02\
-    \x04\x04\x9b\x08\0\x12\x04\xcf\x01\x042\n\xaa\x05\n\x04\x06\0\x02\x05\
-    \x12\x06\xdd\x01\x02\xe3\x01\x03\x1a\x99\x05\x20Lists\x20the\x20user-man\
-    aged\x20instance\x20config\x20[long-running\n\x20operations][google.long\
-    running.Operation]\x20in\x20the\x20given\x20project.\x20An\x20instance\n\
-    \x20config\x20operation\x20has\x20a\x20name\x20of\x20the\x20form\n\x20`p\
-    rojects/<project>/instanceConfigs/<instance_config>/operations/<operatio\
-    n>`.\n\x20The\x20long-running\x20operation\n\x20[metadata][google.longru\
-    nning.Operation.metadata]\x20field\x20type\n\x20`metadata.type_url`\x20d\
-    escribes\x20the\x20type\x20of\x20the\x20metadata.\x20Operations\x20retur\
-    ned\n\x20include\x20those\x20that\x20have\x20completed/failed/canceled\
-    \x20within\x20the\x20last\x207\x20days,\n\x20and\x20pending\x20operation\
-    s.\x20Operations\x20returned\x20are\x20ordered\x20by\n\x20`operation.met\
-    adata.value.start_time`\x20in\x20descending\x20order\x20starting\n\x20fr\
-    om\x20the\x20most\x20recently\x20started\x20operation.\n\n\r\n\x05\x06\0\
-    \x02\x05\x01\x12\x04\xdd\x01\x06\"\n\r\n\x05\x06\0\x02\x05\x02\x12\x04\
-    \xdd\x01#F\n\r\n\x05\x06\0\x02\x05\x03\x12\x04\xde\x01\x0f3\n\x0f\n\x05\
-    \x06\0\x02\x05\x04\x12\x06\xdf\x01\x04\xe1\x01\x06\n\x13\n\t\x06\0\x02\
-    \x05\x04\xb0\xca\xbc\"\x12\x06\xdf\x01\x04\xe1\x01\x06\n\r\n\x05\x06\0\
-    \x02\x05\x04\x12\x04\xe2\x01\x044\n\x10\n\x08\x06\0\x02\x05\x04\x9b\x08\
-    \0\x12\x04\xe2\x01\x044\n;\n\x04\x06\0\x02\x06\x12\x06\xe6\x01\x02\xeb\
-    \x01\x03\x1a+\x20Lists\x20all\x20instances\x20in\x20the\x20given\x20proj\
-    ect.\n\n\r\n\x05\x06\0\x02\x06\x01\x12\x04\xe6\x01\x06\x13\n\r\n\x05\x06\
-    \0\x02\x06\x02\x12\x04\xe6\x01\x14(\n\r\n\x05\x06\0\x02\x06\x03\x12\x04\
-    \xe6\x013H\n\x0f\n\x05\x06\0\x02\x06\x04\x12\x06\xe7\x01\x04\xe9\x01\x06\
-    \n\x13\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\x06\xe7\x01\x04\xe9\x01\
-    \x06\n\r\n\x05\x06\0\x02\x06\x04\x12\x04\xea\x01\x044\n\x10\n\x08\x06\0\
-    \x02\x06\x04\x9b\x08\0\x12\x04\xea\x01\x044\n?\n\x04\x06\0\x02\x07\x12\
-    \x06\xee\x01\x02\xf3\x01\x03\x1a/\x20Gets\x20information\x20about\x20a\
-    \x20particular\x20instance.\n\n\r\n\x05\x06\0\x02\x07\x01\x12\x04\xee\
-    \x01\x06\x11\n\r\n\x05\x06\0\x02\x07\x02\x12\x04\xee\x01\x12$\n\r\n\x05\
-    \x06\0\x02\x07\x03\x12\x04\xee\x01/7\n\x0f\n\x05\x06\0\x02\x07\x04\x12\
-    \x06\xef\x01\x04\xf1\x01\x06\n\x13\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\
-    \x12\x06\xef\x01\x04\xf1\x01\x06\n\r\n\x05\x06\0\x02\x07\x04\x12\x04\xf2\
-    \x01\x042\n\x10\n\x08\x06\0\x02\x07\x04\x9b\x08\0\x12\x04\xf2\x01\x042\n\
-    \xaa\x0c\n\x04\x06\0\x02\x08\x12\x06\x97\x02\x02\xa2\x02\x03\x1a\x99\x0c\
-    \x20Creates\x20an\x20instance\x20and\x20begins\x20preparing\x20it\x20to\
-    \x20begin\x20serving.\x20The\n\x20returned\x20[long-running\x20operation\
-    ][google.longrunning.Operation]\n\x20can\x20be\x20used\x20to\x20track\
-    \x20the\x20progress\x20of\x20preparing\x20the\x20new\n\x20instance.\x20T\
-    he\x20instance\x20name\x20is\x20assigned\x20by\x20the\x20caller.\x20If\
-    \x20the\n\x20named\x20instance\x20already\x20exists,\x20`CreateInstance`\
-    \x20returns\n\x20`ALREADY_EXISTS`.\n\n\x20Immediately\x20upon\x20complet\
-    ion\x20of\x20this\x20request:\n\n\x20\x20\x20*\x20The\x20instance\x20is\
-    \x20readable\x20via\x20the\x20API,\x20with\x20all\x20requested\x20attrib\
-    utes\n\x20\x20\x20\x20\x20but\x20no\x20allocated\x20resources.\x20Its\
-    \x20state\x20is\x20`CREATING`.\n\n\x20Until\x20completion\x20of\x20the\
-    \x20returned\x20operation:\n\n\x20\x20\x20*\x20Cancelling\x20the\x20oper\
-    ation\x20renders\x20the\x20instance\x20immediately\x20unreadable\n\x20\
-    \x20\x20\x20\x20via\x20the\x20API.\n\x20\x20\x20*\x20The\x20instance\x20\
-    can\x20be\x20deleted.\n\x20\x20\x20*\x20All\x20other\x20attempts\x20to\
-    \x20modify\x20the\x20instance\x20are\x20rejected.\n\n\x20Upon\x20complet\
-    ion\x20of\x20the\x20returned\x20operation:\n\n\x20\x20\x20*\x20Billing\
-    \x20for\x20all\x20successfully-allocated\x20resources\x20begins\x20(some\
-    \x20types\n\x20\x20\x20\x20\x20may\x20have\x20lower\x20than\x20the\x20re\
-    quested\x20levels).\n\x20\x20\x20*\x20Databases\x20can\x20be\x20created\
-    \x20in\x20the\x20instance.\n\x20\x20\x20*\x20The\x20instance's\x20alloca\
-    ted\x20resource\x20levels\x20are\x20readable\x20via\x20the\x20API.\n\x20\
-    \x20\x20*\x20The\x20instance's\x20state\x20becomes\x20`READY`.\n\n\x20Th\
-    e\x20returned\x20[long-running\x20operation][google.longrunning.Operatio\
-    n]\x20will\n\x20have\x20a\x20name\x20of\x20the\x20format\x20`<instance_n\
-    ame>/operations/<operation_id>`\x20and\n\x20can\x20be\x20used\x20to\x20t\
-    rack\x20creation\x20of\x20the\x20instance.\x20\x20The\n\x20[metadata][go\
-    ogle.longrunning.Operation.metadata]\x20field\x20type\x20is\n\x20[Create\
-    InstanceMetadata][google.spanner.admin.instance.v1.CreateInstanceMetadat\
-    a].\n\x20The\x20[response][google.longrunning.Operation.response]\x20fie\
-    ld\x20type\x20is\n\x20[Instance][google.spanner.admin.instance.v1.Instan\
-    ce],\x20if\x20successful.\n\n\r\n\x05\x06\0\x02\x08\x01\x12\x04\x97\x02\
-    \x06\x14\n\r\n\x05\x06\0\x02\x08\x02\x12\x04\x97\x02\x15*\n\r\n\x05\x06\
-    \0\x02\x08\x03\x12\x04\x98\x02\x0f+\n\x0f\n\x05\x06\0\x02\x08\x04\x12\
-    \x06\x99\x02\x04\x9c\x02\x06\n\x13\n\t\x06\0\x02\x08\x04\xb0\xca\xbc\"\
-    \x12\x06\x99\x02\x04\x9c\x02\x06\n\r\n\x05\x06\0\x02\x08\x04\x12\x04\x9d\
-    \x02\x04I\n\x10\n\x08\x06\0\x02\x08\x04\x9b\x08\0\x12\x04\x9d\x02\x04I\n\
-    \x0f\n\x05\x06\0\x02\x08\x04\x12\x06\x9e\x02\x04\xa1\x02\x06\n\x11\n\x07\
-    \x06\0\x02\x08\x04\x99\x08\x12\x06\x9e\x02\x04\xa1\x02\x06\n\xbc\x0f\n\
-    \x04\x06\0\x02\t\x12\x06\xcc\x02\x02\xd7\x02\x03\x1a\xab\x0f\x20Updates\
-    \x20an\x20instance,\x20and\x20begins\x20allocating\x20or\x20releasing\
-    \x20resources\n\x20as\x20requested.\x20The\x20returned\x20[long-running\
-    \n\x20operation][google.longrunning.Operation]\x20can\x20be\x20used\x20t\
-    o\x20track\x20the\n\x20progress\x20of\x20updating\x20the\x20instance.\
+    ent=projects/*}/instances\xdaA\x06parent\x12\xe4\x01\n\x16ListInstancePa\
+    rtitions\x12?.google.spanner.admin.instance.v1.ListInstancePartitionsReq\
+    uest\x1a@.google.spanner.admin.instance.v1.ListInstancePartitionsRespons\
+    e\"G\x82\xd3\xe4\x93\x028\x126/v1/{parent=projects/*/instances/*}/instan\
+    cePartitions\xdaA\x06parent\x12\xa1\x01\n\x0bGetInstance\x124.google.spa\
+    nner.admin.instance.v1.GetInstanceRequest\x1a*.google.spanner.admin.inst\
+    ance.v1.Instance\"0\x82\xd3\xe4\x93\x02#\x12!/v1/{name=projects/*/instan\
+    ces/*}\xdaA\x04name\x12\x9c\x02\n\x0eCreateInstance\x127.google.spanner.\
+    admin.instance.v1.CreateInstanceRequest\x1a\x1d.google.longrunning.Opera\
+    tion\"\xb1\x01\xcaAd\n)google.spanner.admin.instance.v1.Instance\x127goo\
+    gle.spanner.admin.instance.v1.CreateInstanceMetadata\x82\xd3\xe4\x93\x02\
+    &\"!/v1/{parent=projects/*}/instances:\x01*\xdaA\x1bparent,instance_id,i\
+    nstance\x12\x9d\x02\n\x0eUpdateInstance\x127.google.spanner.admin.instan\
+    ce.v1.UpdateInstanceRequest\x1a\x1d.google.longrunning.Operation\"\xb2\
+    \x01\xcaAd\n)google.spanner.admin.instance.v1.Instance\x127google.spanne\
+    r.admin.instance.v1.UpdateInstanceMetadata\x82\xd3\xe4\x93\x02/2*/v1/{in\
+    stance.name=projects/*/instances/*}:\x01*\xdaA\x13instance,field_mask\
+    \x12\x93\x01\n\x0eDeleteInstance\x127.google.spanner.admin.instance.v1.D\
+    eleteInstanceRequest\x1a\x16.google.protobuf.Empty\"0\x82\xd3\xe4\x93\
+    \x02#*!/v1/{name=projects/*/instances/*}\xdaA\x04name\x12\x9a\x01\n\x0cS\
+    etIamPolicy\x12\".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v\
+    1.Policy\"O\x82\xd3\xe4\x93\x027\"2/v1/{resource=projects/*/instances/*}\
+    :setIamPolicy:\x01*\xdaA\x0fresource,policy\x12\x93\x01\n\x0cGetIamPolic\
+    y\x12\".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\
+    H\x82\xd3\xe4\x93\x027\"2/v1/{resource=projects/*/instances/*}:getIamPol\
+    icy:\x01*\xdaA\x08resource\x12\xc5\x01\n\x12TestIamPermissions\x12(.goog\
+    le.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermission\
+    sResponse\"Z\x82\xd3\xe4\x93\x02=\"8/v1/{resource=projects/*/instances/*\
+    }:testIamPermissions:\x01*\xdaA\x14resource,permissions\x12\xd1\x01\n\
+    \x14GetInstancePartition\x12=.google.spanner.admin.instance.v1.GetInstan\
+    cePartitionRequest\x1a3.google.spanner.admin.instance.v1.InstancePartiti\
+    on\"E\x82\xd3\xe4\x93\x028\x126/v1/{name=projects/*/instances/*/instance\
+    Partitions/*}\xdaA\x04name\x12\xe9\x02\n\x17CreateInstancePartition\x12@\
+    .google.spanner.admin.instance.v1.CreateInstancePartitionRequest\x1a\x1d\
+    .google.longrunning.Operation\"\xec\x01\xcaAv\n2google.spanner.admin.ins\
+    tance.v1.InstancePartition\x12@google.spanner.admin.instance.v1.CreateIn\
+    stancePartitionMetadata\x82\xd3\xe4\x93\x02;\"6/v1/{parent=projects/*/in\
+    stances/*}/instancePartitions:\x01*\xdaA/parent,instance_partition,insta\
+    nce_partition_id\x12\xba\x01\n\x17DeleteInstancePartition\x12@.google.sp\
+    anner.admin.instance.v1.DeleteInstancePartitionRequest\x1a\x16.google.pr\
+    otobuf.Empty\"E\x82\xd3\xe4\x93\x028*6/v1/{name=projects/*/instances/*/i\
+    nstancePartitions/*}\xdaA\x04name\x12\xea\x02\n\x17UpdateInstancePartiti\
+    on\x12@.google.spanner.admin.instance.v1.UpdateInstancePartitionRequest\
+    \x1a\x1d.google.longrunning.Operation\"\xed\x01\xcaAv\n2google.spanner.a\
+    dmin.instance.v1.InstancePartition\x12@google.spanner.admin.instance.v1.\
+    UpdateInstancePartitionMetadata\x82\xd3\xe4\x93\x02N2I/v1/{instance_part\
+    ition.name=projects/*/instances/*/instancePartitions/*}:\x01*\xdaA\x1din\
+    stance_partition,field_mask\x12\x88\x02\n\x1fListInstancePartitionOperat\
+    ions\x12H.google.spanner.admin.instance.v1.ListInstancePartitionOperatio\
+    nsRequest\x1aI.google.spanner.admin.instance.v1.ListInstancePartitionOpe\
+    rationsResponse\"P\x82\xd3\xe4\x93\x02A\x12?/v1/{parent=projects/*/insta\
+    nces/*}/instancePartitionOperations\xdaA\x06parent\x1ax\xd2A\\https://ww\
+    w.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/spa\
+    nner.admin\xcaA\x16spanner.googleapis.comB\x8b\x02\n$com.google.spanner.\
+    admin.instance.v1B\x19SpannerInstanceAdminProtoP\x01ZFcloud.google.com/g\
+    o/spanner/admin/instance/apiv1/instancepb;instancepb\xaa\x02&Google.Clou\
+    d.Spanner.Admin.Instance.V1\xca\x02&Google\\Cloud\\Spanner\\Admin\\Insta\
+    nce\\V1\xea\x02+Google::Cloud::Spanner::Admin::Instance::V1J\x9b\x96\x04\
+    \n\x07\x12\x05\x0e\0\xb0\r\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\
+    \xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\
+    \x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\
+    \n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compli\
+    ance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\
+    \x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.\
+    org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\
+    \x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distrib\
+    uted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\
+    \x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
+    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
+    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
+    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\
+    \x02\x12\x03\x10\0)\n\t\n\x02\x03\0\x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\
+    \x03\x13\0!\n\t\n\x02\x03\x02\x12\x03\x14\0)\n\t\n\x02\x03\x03\x12\x03\
+    \x15\0#\n\t\n\x02\x03\x04\x12\x03\x16\0(\n\t\n\x02\x03\x05\x12\x03\x17\0\
+    $\n\t\n\x02\x03\x06\x12\x03\x18\0-\n\t\n\x02\x03\x07\x12\x03\x19\0%\n\t\
+    \n\x02\x03\x08\x12\x03\x1a\0*\n\t\n\x02\x03\t\x12\x03\x1b\0)\n\t\n\x02\
+    \x03\n\x12\x03\x1c\07\n\x08\n\x01\x08\x12\x03\x1e\0C\n\t\n\x02\x08%\x12\
+    \x03\x1e\0C\n\x08\n\x01\x08\x12\x03\x1f\0]\n\t\n\x02\x08\x0b\x12\x03\x1f\
+    \0]\n\x08\n\x01\x08\x12\x03\x20\0\"\n\t\n\x02\x08\n\x12\x03\x20\0\"\n\
+    \x08\n\x01\x08\x12\x03!\0:\n\t\n\x02\x08\x08\x12\x03!\0:\n\x08\n\x01\x08\
+    \x12\x03\"\0=\n\t\n\x02\x08\x01\x12\x03\"\0=\n\x08\n\x01\x08\x12\x03#\0E\
+    \n\t\n\x02\x08)\x12\x03#\0E\n\x08\n\x01\x08\x12\x03$\0D\n\t\n\x02\x08-\
+    \x12\x03$\0D\n\xdd\x08\n\x02\x06\0\x12\x05;\0\xb9\x04\x01\x1a\xcf\x08\
+    \x20Cloud\x20Spanner\x20Instance\x20Admin\x20API\n\n\x20The\x20Cloud\x20\
+    Spanner\x20Instance\x20Admin\x20API\x20can\x20be\x20used\x20to\x20create\
+    ,\x20delete,\n\x20modify\x20and\x20list\x20instances.\x20Instances\x20ar\
+    e\x20dedicated\x20Cloud\x20Spanner\x20serving\n\x20and\x20storage\x20res\
+    ources\x20to\x20be\x20used\x20by\x20Cloud\x20Spanner\x20databases.\n\n\
+    \x20Each\x20instance\x20has\x20a\x20\"configuration\",\x20which\x20dicta\
+    tes\x20where\x20the\n\x20serving\x20resources\x20for\x20the\x20Cloud\x20\
+    Spanner\x20instance\x20are\x20located\x20(e.g.,\n\x20US-central,\x20Euro\
+    pe).\x20Configurations\x20are\x20created\x20by\x20Google\x20based\x20on\
+    \n\x20resource\x20availability.\n\n\x20Cloud\x20Spanner\x20billing\x20is\
+    \x20based\x20on\x20the\x20instances\x20that\x20exist\x20and\x20their\n\
+    \x20sizes.\x20After\x20an\x20instance\x20exists,\x20there\x20are\x20no\
+    \x20additional\n\x20per-database\x20or\x20per-operation\x20charges\x20fo\
+    r\x20use\x20of\x20the\x20instance\n\x20(though\x20there\x20may\x20be\x20\
+    additional\x20network\x20bandwidth\x20charges).\n\x20Instances\x20offer\
+    \x20isolation:\x20problems\x20with\x20databases\x20in\x20one\x20instance\
+    \n\x20will\x20not\x20affect\x20other\x20instances.\x20However,\x20within\
+    \x20an\x20instance\n\x20databases\x20can\x20affect\x20each\x20other.\x20\
+    For\x20example,\x20if\x20one\x20database\x20in\x20an\n\x20instance\x20re\
+    ceives\x20a\x20lot\x20of\x20requests\x20and\x20consumes\x20most\x20of\
+    \x20the\n\x20instance\x20resources,\x20fewer\x20resources\x20are\x20avai\
+    lable\x20for\x20other\n\x20databases\x20in\x20that\x20instance,\x20and\
+    \x20their\x20performance\x20may\x20suffer.\n\n\n\n\x03\x06\0\x01\x12\x03\
+    ;\x08\x15\n\n\n\x03\x06\0\x03\x12\x03<\x02>\n\x0c\n\x05\x06\0\x03\x99\
+    \x08\x12\x03<\x02>\n\x0b\n\x03\x06\0\x03\x12\x04=\x02?6\n\r\n\x05\x06\0\
+    \x03\x9a\x08\x12\x04=\x02?6\nP\n\x04\x06\0\x02\0\x12\x04B\x02H\x03\x1aB\
+    \x20Lists\x20the\x20supported\x20instance\x20configurations\x20for\x20a\
+    \x20given\x20project.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03B\x06\x19\n\
+    \x0c\n\x05\x06\0\x02\0\x02\x12\x03B\x1a4\n\x0c\n\x05\x06\0\x02\0\x03\x12\
+    \x03C\x0f*\n\r\n\x05\x06\0\x02\0\x04\x12\x04D\x04F\x06\n\x11\n\t\x06\0\
+    \x02\0\x04\xb0\xca\xbc\"\x12\x04D\x04F\x06\n\x0c\n\x05\x06\0\x02\0\x04\
+    \x12\x03G\x044\n\x0f\n\x08\x06\0\x02\0\x04\x9b\x08\0\x12\x03G\x044\nK\n\
+    \x04\x06\0\x02\x01\x12\x04K\x02P\x03\x1a=\x20Gets\x20information\x20abou\
+    t\x20a\x20particular\x20instance\x20configuration.\n\n\x0c\n\x05\x06\0\
+    \x02\x01\x01\x12\x03K\x06\x17\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x03K\x18\
+    0\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03K;I\n\r\n\x05\x06\0\x02\x01\x04\
+    \x12\x04L\x04N\x06\n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x04L\
+    \x04N\x06\n\x0c\n\x05\x06\0\x02\x01\x04\x12\x03O\x042\n\x0f\n\x08\x06\0\
+    \x02\x01\x04\x9b\x08\0\x12\x03O\x042\n\xca\x0e\n\x04\x06\0\x02\x02\x12\
+    \x05{\x02\x87\x01\x03\x1a\xba\x0e\x20Creates\x20an\x20instance\x20config\
+    \x20and\x20begins\x20preparing\x20it\x20to\x20be\x20used.\x20The\n\x20re\
+    turned\x20[long-running\x20operation][google.longrunning.Operation]\n\
+    \x20can\x20be\x20used\x20to\x20track\x20the\x20progress\x20of\x20prepari\
+    ng\x20the\x20new\n\x20instance\x20config.\x20The\x20instance\x20config\
+    \x20name\x20is\x20assigned\x20by\x20the\x20caller.\x20If\x20the\n\x20nam\
+    ed\x20instance\x20config\x20already\x20exists,\x20`CreateInstanceConfig`\
+    \x20returns\n\x20`ALREADY_EXISTS`.\n\n\x20Immediately\x20after\x20the\
+    \x20request\x20returns:\n\n\x20\x20\x20*\x20The\x20instance\x20config\
+    \x20is\x20readable\x20via\x20the\x20API,\x20with\x20all\x20requested\n\
+    \x20\x20\x20\x20\x20attributes.\x20The\x20instance\x20config's\n\x20\x20\
+    \x20\x20\x20[reconciling][google.spanner.admin.instance.v1.InstanceConfi\
+    g.reconciling]\n\x20\x20\x20\x20\x20field\x20is\x20set\x20to\x20true.\
+    \x20Its\x20state\x20is\x20`CREATING`.\n\n\x20While\x20the\x20operation\
+    \x20is\x20pending:\n\n\x20\x20\x20*\x20Cancelling\x20the\x20operation\
+    \x20renders\x20the\x20instance\x20config\x20immediately\n\x20\x20\x20\
+    \x20\x20unreadable\x20via\x20the\x20API.\n\x20\x20\x20*\x20Except\x20for\
+    \x20deleting\x20the\x20creating\x20resource,\x20all\x20other\x20attempts\
+    \x20to\x20modify\n\x20\x20\x20\x20\x20the\x20instance\x20config\x20are\
+    \x20rejected.\n\n\x20Upon\x20completion\x20of\x20the\x20returned\x20oper\
+    ation:\n\n\x20\x20\x20*\x20Instances\x20can\x20be\x20created\x20using\
+    \x20the\x20instance\x20configuration.\n\x20\x20\x20*\x20The\x20instance\
+    \x20config's\n\x20\x20\x20[reconciling][google.spanner.admin.instance.v1\
+    .InstanceConfig.reconciling]\n\x20\x20\x20field\x20becomes\x20false.\x20\
+    Its\x20state\x20becomes\x20`READY`.\n\n\x20The\x20returned\x20[long-runn\
+    ing\x20operation][google.longrunning.Operation]\x20will\n\x20have\x20a\
+    \x20name\x20of\x20the\x20format\n\x20`<instance_config_name>/operations/\
+    <operation_id>`\x20and\x20can\x20be\x20used\x20to\x20track\n\x20creation\
+    \x20of\x20the\x20instance\x20config.\x20The\n\x20[metadata][google.longr\
+    unning.Operation.metadata]\x20field\x20type\x20is\n\x20[CreateInstanceCo\
+    nfigMetadata][google.spanner.admin.instance.v1.CreateInstanceConfigMetad\
+    ata].\n\x20The\x20[response][google.longrunning.Operation.response]\x20f\
+    ield\x20type\x20is\n\x20[InstanceConfig][google.spanner.admin.instance.v\
+    1.InstanceConfig],\x20if\n\x20successful.\n\n\x20Authorization\x20requir\
+    es\x20`spanner.instanceConfigs.create`\x20permission\x20on\n\x20the\x20r\
+    esource\n\x20[parent][google.spanner.admin.instance.v1.CreateInstanceCon\
+    figRequest.parent].\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03{\x06\x1a\n\
+    \x0c\n\x05\x06\0\x02\x02\x02\x12\x03{\x1b6\n\x0c\n\x05\x06\0\x02\x02\x03\
+    \x12\x03|\x0f+\n\x0e\n\x05\x06\0\x02\x02\x04\x12\x05}\x04\x80\x01\x06\n\
+    \x12\n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x05}\x04\x80\x01\x06\n\x0f\
+    \n\x05\x06\0\x02\x02\x04\x12\x06\x81\x01\x04\x82\x014\n\x12\n\x08\x06\0\
+    \x02\x02\x04\x9b\x08\0\x12\x06\x81\x01\x04\x82\x014\n\x0f\n\x05\x06\0\
+    \x02\x02\x04\x12\x06\x83\x01\x04\x86\x01\x06\n\x11\n\x07\x06\0\x02\x02\
+    \x04\x99\x08\x12\x06\x83\x01\x04\x86\x01\x06\n\x99\x0f\n\x04\x06\0\x02\
+    \x03\x12\x06\xb5\x01\x02\xc0\x01\x03\x1a\x88\x0f\x20Updates\x20an\x20ins\
+    tance\x20config.\x20The\x20returned\n\x20[long-running\x20operation][goo\
+    gle.longrunning.Operation]\x20can\x20be\x20used\x20to\x20track\n\x20the\
+    \x20progress\x20of\x20updating\x20the\x20instance.\x20If\x20the\x20named\
+    \x20instance\x20config\x20does\n\x20not\x20exist,\x20returns\x20`NOT_FOU\
+    ND`.\n\n\x20Only\x20user\x20managed\x20configurations\x20can\x20be\x20up\
+    dated.\n\n\x20Immediately\x20after\x20the\x20request\x20returns:\n\n\x20\
+    \x20\x20*\x20The\x20instance\x20config's\n\x20\x20\x20\x20\x20[reconcili\
+    ng][google.spanner.admin.instance.v1.InstanceConfig.reconciling]\n\x20\
+    \x20\x20\x20\x20field\x20is\x20set\x20to\x20true.\n\n\x20While\x20the\
+    \x20operation\x20is\x20pending:\n\n\x20\x20\x20*\x20Cancelling\x20the\
+    \x20operation\x20sets\x20its\x20metadata's\n\x20\x20\x20\x20\x20[cancel_\
+    time][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.canc\
+    el_time].\n\x20\x20\x20\x20\x20The\x20operation\x20is\x20guaranteed\x20t\
+    o\x20succeed\x20at\x20undoing\x20all\x20changes,\x20after\n\x20\x20\x20\
+    \x20\x20which\x20point\x20it\x20terminates\x20with\x20a\x20`CANCELLED`\
+    \x20status.\n\x20\x20\x20*\x20All\x20other\x20attempts\x20to\x20modify\
+    \x20the\x20instance\x20config\x20are\x20rejected.\n\x20\x20\x20*\x20Read\
+    ing\x20the\x20instance\x20config\x20via\x20the\x20API\x20continues\x20to\
+    \x20give\x20the\n\x20\x20\x20\x20\x20pre-request\x20values.\n\n\x20Upon\
+    \x20completion\x20of\x20the\x20returned\x20operation:\n\n\x20\x20\x20*\
+    \x20Creating\x20instances\x20using\x20the\x20instance\x20configuration\
+    \x20uses\x20the\x20new\n\x20\x20\x20\x20\x20values.\n\x20\x20\x20*\x20Th\
+    e\x20instance\x20config's\x20new\x20values\x20are\x20readable\x20via\x20\
+    the\x20API.\n\x20\x20\x20*\x20The\x20instance\x20config's\n\x20\x20\x20[\
+    reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling\
+    ]\n\x20\x20\x20field\x20becomes\x20false.\n\n\x20The\x20returned\x20[lon\
+    g-running\x20operation][google.longrunning.Operation]\x20will\n\x20have\
+    \x20a\x20name\x20of\x20the\x20format\n\x20`<instance_config_name>/operat\
+    ions/<operation_id>`\x20and\x20can\x20be\x20used\x20to\x20track\n\x20the\
+    \x20instance\x20config\x20modification.\x20\x20The\n\x20[metadata][googl\
+    e.longrunning.Operation.metadata]\x20field\x20type\x20is\n\x20[UpdateIns\
+    tanceConfigMetadata][google.spanner.admin.instance.v1.UpdateInstanceConf\
+    igMetadata].\n\x20The\x20[response][google.longrunning.Operation.respons\
+    e]\x20field\x20type\x20is\n\x20[InstanceConfig][google.spanner.admin.ins\
+    tance.v1.InstanceConfig],\x20if\n\x20successful.\n\n\x20Authorization\
+    \x20requires\x20`spanner.instanceConfigs.update`\x20permission\x20on\n\
+    \x20the\x20resource\x20[name][google.spanner.admin.instance.v1.InstanceC\
+    onfig.name].\n\n\r\n\x05\x06\0\x02\x03\x01\x12\x04\xb5\x01\x06\x1a\n\r\n\
+    \x05\x06\0\x02\x03\x02\x12\x04\xb5\x01\x1b6\n\r\n\x05\x06\0\x02\x03\x03\
+    \x12\x04\xb6\x01\x0f+\n\x0f\n\x05\x06\0\x02\x03\x04\x12\x06\xb7\x01\x04\
+    \xba\x01\x06\n\x13\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\"\x12\x06\xb7\x01\
+    \x04\xba\x01\x06\n\r\n\x05\x06\0\x02\x03\x04\x12\x04\xbb\x01\x04I\n\x10\
+    \n\x08\x06\0\x02\x03\x04\x9b\x08\0\x12\x04\xbb\x01\x04I\n\x0f\n\x05\x06\
+    \0\x02\x03\x04\x12\x06\xbc\x01\x04\xbf\x01\x06\n\x11\n\x07\x06\0\x02\x03\
+    \x04\x99\x08\x12\x06\xbc\x01\x04\xbf\x01\x06\n\x86\x03\n\x04\x06\0\x02\
+    \x04\x12\x06\xca\x01\x02\xd0\x01\x03\x1a\xf5\x02\x20Deletes\x20the\x20in\
+    stance\x20config.\x20Deletion\x20is\x20only\x20allowed\x20when\x20no\n\
+    \x20instances\x20are\x20using\x20the\x20configuration.\x20If\x20any\x20i\
+    nstances\x20are\x20using\n\x20the\x20config,\x20returns\x20`FAILED_PRECO\
+    NDITION`.\n\n\x20Only\x20user\x20managed\x20configurations\x20can\x20be\
+    \x20deleted.\n\n\x20Authorization\x20requires\x20`spanner.instanceConfig\
+    s.delete`\x20permission\x20on\n\x20the\x20resource\x20[name][google.span\
+    ner.admin.instance.v1.InstanceConfig.name].\n\n\r\n\x05\x06\0\x02\x04\
+    \x01\x12\x04\xca\x01\x06\x1a\n\r\n\x05\x06\0\x02\x04\x02\x12\x04\xca\x01\
+    \x1b6\n\r\n\x05\x06\0\x02\x04\x03\x12\x04\xcb\x01\x0f$\n\x0f\n\x05\x06\0\
+    \x02\x04\x04\x12\x06\xcc\x01\x04\xce\x01\x06\n\x13\n\t\x06\0\x02\x04\x04\
+    \xb0\xca\xbc\"\x12\x06\xcc\x01\x04\xce\x01\x06\n\r\n\x05\x06\0\x02\x04\
+    \x04\x12\x04\xcf\x01\x042\n\x10\n\x08\x06\0\x02\x04\x04\x9b\x08\0\x12\
+    \x04\xcf\x01\x042\n\xaa\x05\n\x04\x06\0\x02\x05\x12\x06\xdd\x01\x02\xe3\
+    \x01\x03\x1a\x99\x05\x20Lists\x20the\x20user-managed\x20instance\x20conf\
+    ig\x20[long-running\n\x20operations][google.longrunning.Operation]\x20in\
+    \x20the\x20given\x20project.\x20An\x20instance\n\x20config\x20operation\
+    \x20has\x20a\x20name\x20of\x20the\x20form\n\x20`projects/<project>/insta\
+    nceConfigs/<instance_config>/operations/<operation>`.\n\x20The\x20long-r\
+    unning\x20operation\n\x20[metadata][google.longrunning.Operation.metadat\
+    a]\x20field\x20type\n\x20`metadata.type_url`\x20describes\x20the\x20type\
+    \x20of\x20the\x20metadata.\x20Operations\x20returned\n\x20include\x20tho\
+    se\x20that\x20have\x20completed/failed/canceled\x20within\x20the\x20last\
+    \x207\x20days,\n\x20and\x20pending\x20operations.\x20Operations\x20retur\
+    ned\x20are\x20ordered\x20by\n\x20`operation.metadata.value.start_time`\
+    \x20in\x20descending\x20order\x20starting\n\x20from\x20the\x20most\x20re\
+    cently\x20started\x20operation.\n\n\r\n\x05\x06\0\x02\x05\x01\x12\x04\
+    \xdd\x01\x06\"\n\r\n\x05\x06\0\x02\x05\x02\x12\x04\xdd\x01#F\n\r\n\x05\
+    \x06\0\x02\x05\x03\x12\x04\xde\x01\x0f3\n\x0f\n\x05\x06\0\x02\x05\x04\
+    \x12\x06\xdf\x01\x04\xe1\x01\x06\n\x13\n\t\x06\0\x02\x05\x04\xb0\xca\xbc\
+    \"\x12\x06\xdf\x01\x04\xe1\x01\x06\n\r\n\x05\x06\0\x02\x05\x04\x12\x04\
+    \xe2\x01\x044\n\x10\n\x08\x06\0\x02\x05\x04\x9b\x08\0\x12\x04\xe2\x01\
+    \x044\n;\n\x04\x06\0\x02\x06\x12\x06\xe6\x01\x02\xeb\x01\x03\x1a+\x20Lis\
+    ts\x20all\x20instances\x20in\x20the\x20given\x20project.\n\n\r\n\x05\x06\
+    \0\x02\x06\x01\x12\x04\xe6\x01\x06\x13\n\r\n\x05\x06\0\x02\x06\x02\x12\
+    \x04\xe6\x01\x14(\n\r\n\x05\x06\0\x02\x06\x03\x12\x04\xe6\x013H\n\x0f\n\
+    \x05\x06\0\x02\x06\x04\x12\x06\xe7\x01\x04\xe9\x01\x06\n\x13\n\t\x06\0\
+    \x02\x06\x04\xb0\xca\xbc\"\x12\x06\xe7\x01\x04\xe9\x01\x06\n\r\n\x05\x06\
+    \0\x02\x06\x04\x12\x04\xea\x01\x044\n\x10\n\x08\x06\0\x02\x06\x04\x9b\
+    \x08\0\x12\x04\xea\x01\x044\nG\n\x04\x06\0\x02\x07\x12\x06\xee\x01\x02\
+    \xf4\x01\x03\x1a7\x20Lists\x20all\x20instance\x20partitions\x20for\x20th\
+    e\x20given\x20instance.\n\n\r\n\x05\x06\0\x02\x07\x01\x12\x04\xee\x01\
+    \x06\x1c\n\r\n\x05\x06\0\x02\x07\x02\x12\x04\xee\x01\x1d:\n\r\n\x05\x06\
+    \0\x02\x07\x03\x12\x04\xef\x01\x0f-\n\x0f\n\x05\x06\0\x02\x07\x04\x12\
+    \x06\xf0\x01\x04\xf2\x01\x06\n\x13\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\
+    \x12\x06\xf0\x01\x04\xf2\x01\x06\n\r\n\x05\x06\0\x02\x07\x04\x12\x04\xf3\
+    \x01\x044\n\x10\n\x08\x06\0\x02\x07\x04\x9b\x08\0\x12\x04\xf3\x01\x044\n\
+    ?\n\x04\x06\0\x02\x08\x12\x06\xf7\x01\x02\xfc\x01\x03\x1a/\x20Gets\x20in\
+    formation\x20about\x20a\x20particular\x20instance.\n\n\r\n\x05\x06\0\x02\
+    \x08\x01\x12\x04\xf7\x01\x06\x11\n\r\n\x05\x06\0\x02\x08\x02\x12\x04\xf7\
+    \x01\x12$\n\r\n\x05\x06\0\x02\x08\x03\x12\x04\xf7\x01/7\n\x0f\n\x05\x06\
+    \0\x02\x08\x04\x12\x06\xf8\x01\x04\xfa\x01\x06\n\x13\n\t\x06\0\x02\x08\
+    \x04\xb0\xca\xbc\"\x12\x06\xf8\x01\x04\xfa\x01\x06\n\r\n\x05\x06\0\x02\
+    \x08\x04\x12\x04\xfb\x01\x042\n\x10\n\x08\x06\0\x02\x08\x04\x9b\x08\0\
+    \x12\x04\xfb\x01\x042\n\xaa\x0c\n\x04\x06\0\x02\t\x12\x06\xa0\x02\x02\
+    \xab\x02\x03\x1a\x99\x0c\x20Creates\x20an\x20instance\x20and\x20begins\
+    \x20preparing\x20it\x20to\x20begin\x20serving.\x20The\n\x20returned\x20[\
+    long-running\x20operation][google.longrunning.Operation]\n\x20can\x20be\
+    \x20used\x20to\x20track\x20the\x20progress\x20of\x20preparing\x20the\x20\
+    new\n\x20instance.\x20The\x20instance\x20name\x20is\x20assigned\x20by\
+    \x20the\x20caller.\x20If\x20the\n\x20named\x20instance\x20already\x20exi\
+    sts,\x20`CreateInstance`\x20returns\n\x20`ALREADY_EXISTS`.\n\n\x20Immedi\
+    ately\x20upon\x20completion\x20of\x20this\x20request:\n\n\x20\x20\x20*\
+    \x20The\x20instance\x20is\x20readable\x20via\x20the\x20API,\x20with\x20a\
+    ll\x20requested\x20attributes\n\x20\x20\x20\x20\x20but\x20no\x20allocate\
+    d\x20resources.\x20Its\x20state\x20is\x20`CREATING`.\n\n\x20Until\x20com\
+    pletion\x20of\x20the\x20returned\x20operation:\n\n\x20\x20\x20*\x20Cance\
+    lling\x20the\x20operation\x20renders\x20the\x20instance\x20immediately\
+    \x20unreadable\n\x20\x20\x20\x20\x20via\x20the\x20API.\n\x20\x20\x20*\
+    \x20The\x20instance\x20can\x20be\x20deleted.\n\x20\x20\x20*\x20All\x20ot\
+    her\x20attempts\x20to\x20modify\x20the\x20instance\x20are\x20rejected.\n\
+    \n\x20Upon\x20completion\x20of\x20the\x20returned\x20operation:\n\n\x20\
+    \x20\x20*\x20Billing\x20for\x20all\x20successfully-allocated\x20resource\
+    s\x20begins\x20(some\x20types\n\x20\x20\x20\x20\x20may\x20have\x20lower\
+    \x20than\x20the\x20requested\x20levels).\n\x20\x20\x20*\x20Databases\x20\
+    can\x20be\x20created\x20in\x20the\x20instance.\n\x20\x20\x20*\x20The\x20\
+    instance's\x20allocated\x20resource\x20levels\x20are\x20readable\x20via\
+    \x20the\x20API.\n\x20\x20\x20*\x20The\x20instance's\x20state\x20becomes\
+    \x20`READY`.\n\n\x20The\x20returned\x20[long-running\x20operation][googl\
+    e.longrunning.Operation]\x20will\n\x20have\x20a\x20name\x20of\x20the\x20\
+    format\x20`<instance_name>/operations/<operation_id>`\x20and\n\x20can\
+    \x20be\x20used\x20to\x20track\x20creation\x20of\x20the\x20instance.\x20\
+    \x20The\n\x20[metadata][google.longrunning.Operation.metadata]\x20field\
+    \x20type\x20is\n\x20[CreateInstanceMetadata][google.spanner.admin.instan\
+    ce.v1.CreateInstanceMetadata].\n\x20The\x20[response][google.longrunning\
+    .Operation.response]\x20field\x20type\x20is\n\x20[Instance][google.spann\
+    er.admin.instance.v1.Instance],\x20if\x20successful.\n\n\r\n\x05\x06\0\
+    \x02\t\x01\x12\x04\xa0\x02\x06\x14\n\r\n\x05\x06\0\x02\t\x02\x12\x04\xa0\
+    \x02\x15*\n\r\n\x05\x06\0\x02\t\x03\x12\x04\xa1\x02\x0f+\n\x0f\n\x05\x06\
+    \0\x02\t\x04\x12\x06\xa2\x02\x04\xa5\x02\x06\n\x13\n\t\x06\0\x02\t\x04\
+    \xb0\xca\xbc\"\x12\x06\xa2\x02\x04\xa5\x02\x06\n\r\n\x05\x06\0\x02\t\x04\
+    \x12\x04\xa6\x02\x04I\n\x10\n\x08\x06\0\x02\t\x04\x9b\x08\0\x12\x04\xa6\
+    \x02\x04I\n\x0f\n\x05\x06\0\x02\t\x04\x12\x06\xa7\x02\x04\xaa\x02\x06\n\
+    \x11\n\x07\x06\0\x02\t\x04\x99\x08\x12\x06\xa7\x02\x04\xaa\x02\x06\n\xbc\
+    \x0f\n\x04\x06\0\x02\n\x12\x06\xd5\x02\x02\xe0\x02\x03\x1a\xab\x0f\x20Up\
+    dates\x20an\x20instance,\x20and\x20begins\x20allocating\x20or\x20releasi\
+    ng\x20resources\n\x20as\x20requested.\x20The\x20returned\x20[long-runnin\
+    g\n\x20operation][google.longrunning.Operation]\x20can\x20be\x20used\x20\
+    to\x20track\x20the\n\x20progress\x20of\x20updating\x20the\x20instance.\
     \x20If\x20the\x20named\x20instance\x20does\x20not\n\x20exist,\x20returns\
     \x20`NOT_FOUND`.\n\n\x20Immediately\x20upon\x20completion\x20of\x20this\
     \x20request:\n\n\x20\x20\x20*\x20For\x20resource\x20types\x20for\x20whic\
@@ -7327,642 +10856,1430 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     er.admin.instance.v1.Instance],\x20if\x20successful.\n\n\x20Authorizatio\
     n\x20requires\x20`spanner.instances.update`\x20permission\x20on\n\x20the\
     \x20resource\x20[name][google.spanner.admin.instance.v1.Instance.name].\
-    \n\n\r\n\x05\x06\0\x02\t\x01\x12\x04\xcc\x02\x06\x14\n\r\n\x05\x06\0\x02\
-    \t\x02\x12\x04\xcc\x02\x15*\n\r\n\x05\x06\0\x02\t\x03\x12\x04\xcd\x02\
-    \x0f+\n\x0f\n\x05\x06\0\x02\t\x04\x12\x06\xce\x02\x04\xd1\x02\x06\n\x13\
-    \n\t\x06\0\x02\t\x04\xb0\xca\xbc\"\x12\x06\xce\x02\x04\xd1\x02\x06\n\r\n\
-    \x05\x06\0\x02\t\x04\x12\x04\xd2\x02\x04A\n\x10\n\x08\x06\0\x02\t\x04\
-    \x9b\x08\0\x12\x04\xd2\x02\x04A\n\x0f\n\x05\x06\0\x02\t\x04\x12\x06\xd3\
-    \x02\x04\xd6\x02\x06\n\x11\n\x07\x06\0\x02\t\x04\x99\x08\x12\x06\xd3\x02\
-    \x04\xd6\x02\x06\n\xc8\x02\n\x04\x06\0\x02\n\x12\x06\xe4\x02\x02\xe9\x02\
-    \x03\x1a\xb7\x02\x20Deletes\x20an\x20instance.\n\n\x20Immediately\x20upo\
-    n\x20completion\x20of\x20the\x20request:\n\n\x20\x20\x20*\x20Billing\x20\
-    ceases\x20for\x20all\x20of\x20the\x20instance's\x20reserved\x20resources\
-    .\n\n\x20Soon\x20afterward:\n\n\x20\x20\x20*\x20The\x20instance\x20and\
-    \x20*all\x20of\x20its\x20databases*\x20immediately\x20and\n\x20\x20\x20\
-    \x20\x20irrevocably\x20disappear\x20from\x20the\x20API.\x20All\x20data\
-    \x20in\x20the\x20databases\n\x20\x20\x20\x20\x20is\x20permanently\x20del\
-    eted.\n\n\r\n\x05\x06\0\x02\n\x01\x12\x04\xe4\x02\x06\x14\n\r\n\x05\x06\
-    \0\x02\n\x02\x12\x04\xe4\x02\x15*\n\r\n\x05\x06\0\x02\n\x03\x12\x04\xe4\
-    \x025J\n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\xe5\x02\x04\xe7\x02\x06\n\x13\
-    \n\t\x06\0\x02\n\x04\xb0\xca\xbc\"\x12\x06\xe5\x02\x04\xe7\x02\x06\n\r\n\
-    \x05\x06\0\x02\n\x04\x12\x04\xe8\x02\x042\n\x10\n\x08\x06\0\x02\n\x04\
-    \x9b\x08\0\x12\x04\xe8\x02\x042\n\xdf\x01\n\x04\x06\0\x02\x0b\x12\x06\
-    \xf0\x02\x02\xf7\x02\x03\x1a\xce\x01\x20Sets\x20the\x20access\x20control\
-    \x20policy\x20on\x20an\x20instance\x20resource.\x20Replaces\x20any\n\x20\
-    existing\x20policy.\n\n\x20Authorization\x20requires\x20`spanner.instanc\
-    es.setIamPolicy`\x20on\n\x20[resource][google.iam.v1.SetIamPolicyRequest\
-    .resource].\n\n\r\n\x05\x06\0\x02\x0b\x01\x12\x04\xf0\x02\x06\x12\n\r\n\
-    \x05\x06\0\x02\x0b\x02\x12\x04\xf0\x02\x134\n\r\n\x05\x06\0\x02\x0b\x03\
-    \x12\x04\xf1\x02\x0f#\n\x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\xf2\x02\x04\
-    \xf5\x02\x06\n\x13\n\t\x06\0\x02\x0b\x04\xb0\xca\xbc\"\x12\x06\xf2\x02\
-    \x04\xf5\x02\x06\n\r\n\x05\x06\0\x02\x0b\x04\x12\x04\xf6\x02\x04=\n\x10\
-    \n\x08\x06\0\x02\x0b\x04\x9b\x08\0\x12\x04\xf6\x02\x04=\n\x90\x02\n\x04\
-    \x06\0\x02\x0c\x12\x06\xfe\x02\x02\x85\x03\x03\x1a\xff\x01\x20Gets\x20th\
-    e\x20access\x20control\x20policy\x20for\x20an\x20instance\x20resource.\
-    \x20Returns\x20an\x20empty\n\x20policy\x20if\x20an\x20instance\x20exists\
-    \x20but\x20does\x20not\x20have\x20a\x20policy\x20set.\n\n\x20Authorizati\
-    on\x20requires\x20`spanner.instances.getIamPolicy`\x20on\n\x20[resource]\
-    [google.iam.v1.GetIamPolicyRequest.resource].\n\n\r\n\x05\x06\0\x02\x0c\
-    \x01\x12\x04\xfe\x02\x06\x12\n\r\n\x05\x06\0\x02\x0c\x02\x12\x04\xfe\x02\
-    \x134\n\r\n\x05\x06\0\x02\x0c\x03\x12\x04\xff\x02\x0f#\n\x0f\n\x05\x06\0\
-    \x02\x0c\x04\x12\x06\x80\x03\x04\x83\x03\x06\n\x13\n\t\x06\0\x02\x0c\x04\
-    \xb0\xca\xbc\"\x12\x06\x80\x03\x04\x83\x03\x06\n\r\n\x05\x06\0\x02\x0c\
-    \x04\x12\x04\x84\x03\x046\n\x10\n\x08\x06\0\x02\x0c\x04\x9b\x08\0\x12\
-    \x04\x84\x03\x046\n\xd5\x02\n\x04\x06\0\x02\r\x12\x06\x8d\x03\x02\x94\
-    \x03\x03\x1a\xc4\x02\x20Returns\x20permissions\x20that\x20the\x20caller\
-    \x20has\x20on\x20the\x20specified\x20instance\x20resource.\n\n\x20Attemp\
-    ting\x20this\x20RPC\x20on\x20a\x20non-existent\x20Cloud\x20Spanner\x20in\
-    stance\x20resource\x20will\n\x20result\x20in\x20a\x20NOT_FOUND\x20error\
-    \x20if\x20the\x20user\x20has\x20`spanner.instances.list`\n\x20permission\
-    \x20on\x20the\x20containing\x20Google\x20Cloud\x20Project.\x20Otherwise\
-    \x20returns\x20an\n\x20empty\x20set\x20of\x20permissions.\n\n\r\n\x05\
-    \x06\0\x02\r\x01\x12\x04\x8d\x03\x06\x18\n\r\n\x05\x06\0\x02\r\x02\x12\
-    \x04\x8d\x03\x19@\n\r\n\x05\x06\0\x02\r\x03\x12\x04\x8e\x03\x0f7\n\x0f\n\
-    \x05\x06\0\x02\r\x04\x12\x06\x8f\x03\x04\x92\x03\x06\n\x13\n\t\x06\0\x02\
-    \r\x04\xb0\xca\xbc\"\x12\x06\x8f\x03\x04\x92\x03\x06\n\r\n\x05\x06\0\x02\
-    \r\x04\x12\x04\x93\x03\x04B\n\x10\n\x08\x06\0\x02\r\x04\x9b\x08\0\x12\
-    \x04\x93\x03\x04B\n\x0c\n\x02\x04\0\x12\x06\x97\x03\0\xc5\x03\x01\n\x0b\
-    \n\x03\x04\0\x01\x12\x04\x97\x03\x08\x13\n\xad\x01\n\x04\x04\0\x04\0\x12\
-    \x06\x9b\x03\x02\xb8\x03\x03\x1a\x9c\x01\x20Indicates\x20the\x20type\x20\
-    of\x20replica.\x20\x20See\x20the\x20[replica\x20types\n\x20documentation\
-    ](https://cloud.google.com/spanner/docs/replication#replica_types)\n\x20\
-    for\x20more\x20details.\n\n\r\n\x05\x04\0\x04\0\x01\x12\x04\x9b\x03\x07\
-    \x12\n\x20\n\x06\x04\0\x04\0\x02\0\x12\x04\x9d\x03\x04\x19\x1a\x10\x20No\
-    t\x20specified.\n\n\x0f\n\x07\x04\0\x04\0\x02\0\x01\x12\x04\x9d\x03\x04\
-    \x14\n\x0f\n\x07\x04\0\x04\0\x02\0\x02\x12\x04\x9d\x03\x17\x18\n\xfe\x01\
-    \n\x06\x04\0\x04\0\x02\x01\x12\x04\xa6\x03\x04\x13\x1a\xed\x01\x20Read-w\
-    rite\x20replicas\x20support\x20both\x20reads\x20and\x20writes.\x20These\
-    \x20replicas:\n\n\x20*\x20Maintain\x20a\x20full\x20copy\x20of\x20your\
-    \x20data.\n\x20*\x20Serve\x20reads.\n\x20*\x20Can\x20vote\x20whether\x20\
-    to\x20commit\x20a\x20write.\n\x20*\x20Participate\x20in\x20leadership\
-    \x20election.\n\x20*\x20Are\x20eligible\x20to\x20become\x20a\x20leader.\
-    \n\n\x0f\n\x07\x04\0\x04\0\x02\x01\x01\x12\x04\xa6\x03\x04\x0e\n\x0f\n\
-    \x07\x04\0\x04\0\x02\x01\x02\x12\x04\xa6\x03\x11\x12\n\xeb\x01\n\x06\x04\
-    \0\x04\0\x02\x02\x12\x04\xae\x03\x04\x12\x1a\xda\x01\x20Read-only\x20rep\
-    licas\x20only\x20support\x20reads\x20(not\x20writes).\x20Read-only\x20re\
-    plicas:\n\n\x20*\x20Maintain\x20a\x20full\x20copy\x20of\x20your\x20data.\
-    \n\x20*\x20Serve\x20reads.\n\x20*\x20Do\x20not\x20participate\x20in\x20v\
-    oting\x20to\x20commit\x20writes.\n\x20*\x20Are\x20not\x20eligible\x20to\
-    \x20become\x20a\x20leader.\n\n\x0f\n\x07\x04\0\x04\0\x02\x02\x01\x12\x04\
-    \xae\x03\x04\r\n\x0f\n\x07\x04\0\x04\0\x02\x02\x02\x12\x04\xae\x03\x10\
-    \x11\n\xa4\x02\n\x06\x04\0\x04\0\x02\x03\x12\x04\xb7\x03\x04\x10\x1a\x93\
-    \x02\x20Witness\x20replicas\x20don't\x20support\x20reads\x20but\x20do\
-    \x20participate\x20in\x20voting\x20to\n\x20commit\x20writes.\x20Witness\
-    \x20replicas:\n\n\x20*\x20Do\x20not\x20maintain\x20a\x20full\x20copy\x20\
-    of\x20data.\n\x20*\x20Do\x20not\x20serve\x20reads.\n\x20*\x20Vote\x20whe\
-    ther\x20to\x20commit\x20writes.\n\x20*\x20Participate\x20in\x20leader\
-    \x20election\x20but\x20are\x20not\x20eligible\x20to\x20become\x20leader.\
-    \n\n\x0f\n\x07\x04\0\x04\0\x02\x03\x01\x12\x04\xb7\x03\x04\x0b\n\x0f\n\
-    \x07\x04\0\x04\0\x02\x03\x02\x12\x04\xb7\x03\x0e\x0f\nJ\n\x04\x04\0\x02\
-    \0\x12\x04\xbb\x03\x02\x16\x1a<\x20The\x20location\x20of\x20the\x20servi\
-    ng\x20resources,\x20e.g.\x20\"us-central1\".\n\n\r\n\x05\x04\0\x02\0\x05\
-    \x12\x04\xbb\x03\x02\x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xbb\x03\t\x11\
-    \n\r\n\x05\x04\0\x02\0\x03\x12\x04\xbb\x03\x14\x15\n$\n\x04\x04\0\x02\
-    \x01\x12\x04\xbe\x03\x02\x17\x1a\x16\x20The\x20type\x20of\x20replica.\n\
-    \n\r\n\x05\x04\0\x02\x01\x06\x12\x04\xbe\x03\x02\r\n\r\n\x05\x04\0\x02\
-    \x01\x01\x12\x04\xbe\x03\x0e\x12\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\xbe\
-    \x03\x15\x16\n\xee\x01\n\x04\x04\0\x02\x02\x12\x04\xc4\x03\x02#\x1a\xdf\
-    \x01\x20If\x20true,\x20this\x20location\x20is\x20designated\x20as\x20the\
-    \x20default\x20leader\x20location\x20where\n\x20leader\x20replicas\x20ar\
-    e\x20placed.\x20See\x20the\x20[region\x20types\n\x20documentation](https\
-    ://cloud.google.com/spanner/docs/instances#region_types)\n\x20for\x20mor\
-    e\x20details.\n\n\r\n\x05\x04\0\x02\x02\x05\x12\x04\xc4\x03\x02\x06\n\r\
-    \n\x05\x04\0\x02\x02\x01\x12\x04\xc4\x03\x07\x1e\n\r\n\x05\x04\0\x02\x02\
-    \x03\x12\x04\xc4\x03!\"\n\x97\x01\n\x02\x04\x01\x12\x06\xc9\x03\0\xb2\
-    \x04\x01\x1a\x88\x01\x20A\x20possible\x20configuration\x20for\x20a\x20Cl\
-    oud\x20Spanner\x20instance.\x20Configurations\n\x20define\x20the\x20geog\
-    raphic\x20placement\x20of\x20nodes\x20and\x20their\x20replication.\n\n\
-    \x0b\n\x03\x04\x01\x01\x12\x04\xc9\x03\x08\x16\n\r\n\x03\x04\x01\x07\x12\
-    \x06\xca\x03\x02\xcd\x03\x04\n\x0f\n\x05\x04\x01\x07\x9d\x08\x12\x06\xca\
-    \x03\x02\xcd\x03\x04\n1\n\x04\x04\x01\x04\0\x12\x06\xd0\x03\x02\xd9\x03\
-    \x03\x1a!\x20The\x20type\x20of\x20this\x20configuration.\n\n\r\n\x05\x04\
-    \x01\x04\0\x01\x12\x04\xd0\x03\x07\x0b\n\x1e\n\x06\x04\x01\x04\0\x02\0\
-    \x12\x04\xd2\x03\x04\x19\x1a\x0e\x20Unspecified.\n\n\x0f\n\x07\x04\x01\
-    \x04\0\x02\0\x01\x12\x04\xd2\x03\x04\x14\n\x0f\n\x07\x04\x01\x04\0\x02\0\
-    \x02\x12\x04\xd2\x03\x17\x18\n/\n\x06\x04\x01\x04\0\x02\x01\x12\x04\xd5\
-    \x03\x04\x17\x1a\x1f\x20Google\x20managed\x20configuration.\n\n\x0f\n\
-    \x07\x04\x01\x04\0\x02\x01\x01\x12\x04\xd5\x03\x04\x12\n\x0f\n\x07\x04\
-    \x01\x04\0\x02\x01\x02\x12\x04\xd5\x03\x15\x16\n-\n\x06\x04\x01\x04\0\
-    \x02\x02\x12\x04\xd8\x03\x04\x15\x1a\x1d\x20User\x20managed\x20configura\
-    tion.\n\n\x0f\n\x07\x04\x01\x04\0\x02\x02\x01\x12\x04\xd8\x03\x04\x10\n\
-    \x0f\n\x07\x04\x01\x04\0\x02\x02\x02\x12\x04\xd8\x03\x13\x14\nE\n\x04\
-    \x04\x01\x04\x01\x12\x06\xdc\x03\x02\xe6\x03\x03\x1a5\x20Indicates\x20th\
-    e\x20current\x20state\x20of\x20the\x20instance\x20config.\n\n\r\n\x05\
-    \x04\x01\x04\x01\x01\x12\x04\xdc\x03\x07\x0c\n\x20\n\x06\x04\x01\x04\x01\
-    \x02\0\x12\x04\xde\x03\x04\x1a\x1a\x10\x20Not\x20specified.\n\n\x0f\n\
-    \x07\x04\x01\x04\x01\x02\0\x01\x12\x04\xde\x03\x04\x15\n\x0f\n\x07\x04\
-    \x01\x04\x01\x02\0\x02\x12\x04\xde\x03\x18\x19\n=\n\x06\x04\x01\x04\x01\
-    \x02\x01\x12\x04\xe1\x03\x04\x11\x1a-\x20The\x20instance\x20config\x20is\
-    \x20still\x20being\x20created.\n\n\x0f\n\x07\x04\x01\x04\x01\x02\x01\x01\
-    \x12\x04\xe1\x03\x04\x0c\n\x0f\n\x07\x04\x01\x04\x01\x02\x01\x02\x12\x04\
-    \xe1\x03\x0f\x10\na\n\x06\x04\x01\x04\x01\x02\x02\x12\x04\xe5\x03\x04\
-    \x0e\x1aQ\x20The\x20instance\x20config\x20is\x20fully\x20created\x20and\
-    \x20ready\x20to\x20be\x20used\x20to\x20create\n\x20instances.\n\n\x0f\n\
-    \x07\x04\x01\x04\x01\x02\x02\x01\x12\x04\xe5\x03\x04\t\n\x0f\n\x07\x04\
-    \x01\x04\x01\x02\x02\x02\x12\x04\xe5\x03\x0c\r\n\x94\x01\n\x04\x04\x01\
-    \x02\0\x12\x04\xeb\x03\x02\x12\x1a\x85\x01\x20A\x20unique\x20identifier\
-    \x20for\x20the\x20instance\x20configuration.\x20\x20Values\n\x20are\x20o\
-    f\x20the\x20form\n\x20`projects/<project>/instanceConfigs/[a-z][-a-z0-9]\
-    *`.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\xeb\x03\x02\x08\n\r\n\x05\x04\
-    \x01\x02\0\x01\x12\x04\xeb\x03\t\r\n\r\n\x05\x04\x01\x02\0\x03\x12\x04\
-    \xeb\x03\x10\x11\nM\n\x04\x04\x01\x02\x01\x12\x04\xee\x03\x02\x1a\x1a?\
-    \x20The\x20name\x20of\x20this\x20instance\x20configuration\x20as\x20it\
-    \x20appears\x20in\x20UIs.\n\n\r\n\x05\x04\x01\x02\x01\x05\x12\x04\xee\
-    \x03\x02\x08\n\r\n\x05\x04\x01\x02\x01\x01\x12\x04\xee\x03\t\x15\n\r\n\
-    \x05\x04\x01\x02\x01\x03\x12\x04\xee\x03\x18\x19\ne\n\x04\x04\x01\x02\
-    \x02\x12\x04\xf2\x03\x02C\x1aW\x20Output\x20only.\x20Whether\x20this\x20\
-    instance\x20config\x20is\x20a\x20Google\x20or\x20User\x20Managed\n\x20Co\
-    nfiguration.\n\n\r\n\x05\x04\x01\x02\x02\x06\x12\x04\xf2\x03\x02\x06\n\r\
-    \n\x05\x04\x01\x02\x02\x01\x12\x04\xf2\x03\x07\x12\n\r\n\x05\x04\x01\x02\
-    \x02\x03\x12\x04\xf2\x03\x15\x16\n\r\n\x05\x04\x01\x02\x02\x08\x12\x04\
-    \xf2\x03\x17B\n\x10\n\x08\x04\x01\x02\x02\x08\x9c\x08\0\x12\x04\xf2\x03\
-    \x18A\ns\n\x04\x04\x01\x02\x03\x12\x04\xf6\x03\x02$\x1ae\x20The\x20geogr\
-    aphic\x20placement\x20of\x20nodes\x20in\x20this\x20instance\x20configura\
-    tion\x20and\x20their\n\x20replication\x20properties.\n\n\r\n\x05\x04\x01\
-    \x02\x03\x04\x12\x04\xf6\x03\x02\n\n\r\n\x05\x04\x01\x02\x03\x06\x12\x04\
-    \xf6\x03\x0b\x16\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\xf6\x03\x17\x1f\n\
-    \r\n\x05\x04\x01\x02\x03\x03\x12\x04\xf6\x03\"#\n\x9d\x01\n\x04\x04\x01\
-    \x02\x04\x12\x06\xfa\x03\x02\xfb\x032\x1a\x8c\x01\x20Output\x20only.\x20\
-    The\x20available\x20optional\x20replicas\x20to\x20choose\x20from\x20for\
-    \x20user\n\x20managed\x20configurations.\x20Populated\x20for\x20Google\
-    \x20managed\x20configurations.\n\n\r\n\x05\x04\x01\x02\x04\x04\x12\x04\
-    \xfa\x03\x02\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\x04\xfa\x03\x0b\x16\n\r\
-    \n\x05\x04\x01\x02\x04\x01\x12\x04\xfa\x03\x17(\n\r\n\x05\x04\x01\x02\
-    \x04\x03\x12\x04\xfa\x03+,\n\r\n\x05\x04\x01\x02\x04\x08\x12\x04\xfb\x03\
-    \x061\n\x10\n\x08\x04\x01\x02\x04\x08\x9c\x08\0\x12\x04\xfb\x03\x070\n\
-    \xa7\x02\n\x04\x04\x01\x02\x05\x12\x06\x81\x04\x02\x83\x04\x05\x1a\x96\
-    \x02\x20Base\x20configuration\x20name,\x20e.g.\x20projects/<project_name\
-    >/instanceConfigs/nam3,\n\x20based\x20on\x20which\x20this\x20configurati\
-    on\x20is\x20created.\x20Only\x20set\x20for\x20user\x20managed\n\x20confi\
-    gurations.\x20`base_config`\x20must\x20refer\x20to\x20a\x20configuration\
-    \x20of\x20type\n\x20GOOGLE_MANAGED\x20in\x20the\x20same\x20project\x20as\
-    \x20this\x20configuration.\n\n\r\n\x05\x04\x01\x02\x05\x05\x12\x04\x81\
-    \x04\x02\x08\n\r\n\x05\x04\x01\x02\x05\x01\x12\x04\x81\x04\t\x14\n\r\n\
-    \x05\x04\x01\x02\x05\x03\x12\x04\x81\x04\x17\x18\n\x0f\n\x05\x04\x01\x02\
-    \x05\x08\x12\x06\x81\x04\x19\x83\x04\x04\n\x11\n\x07\x04\x01\x02\x05\x08\
-    \x9f\x08\x12\x06\x81\x04\x1a\x83\x04\x03\n\xd5\t\n\x04\x04\x01\x02\x06\
-    \x12\x04\x9a\x04\x02!\x1a\xc6\t\x20Cloud\x20Labels\x20are\x20a\x20flexib\
-    le\x20and\x20lightweight\x20mechanism\x20for\x20organizing\x20cloud\n\
-    \x20resources\x20into\x20groups\x20that\x20reflect\x20a\x20customer's\
-    \x20organizational\x20needs\x20and\n\x20deployment\x20strategies.\x20Clo\
-    ud\x20Labels\x20can\x20be\x20used\x20to\x20filter\x20collections\x20of\n\
-    \x20resources.\x20They\x20can\x20be\x20used\x20to\x20control\x20how\x20r\
-    esource\x20metrics\x20are\x20aggregated.\n\x20And\x20they\x20can\x20be\
-    \x20used\x20as\x20arguments\x20to\x20policy\x20management\x20rules\x20(e\
-    .g.\x20route,\n\x20firewall,\x20load\x20balancing,\x20etc.).\n\n\x20\x20\
-    *\x20Label\x20keys\x20must\x20be\x20between\x201\x20and\x2063\x20charact\
-    ers\x20long\x20and\x20must\x20conform\x20to\n\x20\x20\x20\x20the\x20foll\
-    owing\x20regular\x20expression:\x20`[a-z][a-z0-9_-]{0,62}`.\n\x20\x20*\
-    \x20Label\x20values\x20must\x20be\x20between\x200\x20and\x2063\x20charac\
-    ters\x20long\x20and\x20must\x20conform\n\x20\x20\x20\x20to\x20the\x20reg\
-    ular\x20expression\x20`[a-z0-9_-]{0,63}`.\n\x20\x20*\x20No\x20more\x20th\
-    an\x2064\x20labels\x20can\x20be\x20associated\x20with\x20a\x20given\x20r\
-    esource.\n\n\x20See\x20https://goo.gl/xmQnxf\x20for\x20more\x20informati\
-    on\x20on\x20and\x20examples\x20of\x20labels.\n\n\x20If\x20you\x20plan\
-    \x20to\x20use\x20labels\x20in\x20your\x20own\x20code,\x20please\x20note\
-    \x20that\x20additional\n\x20characters\x20may\x20be\x20allowed\x20in\x20\
-    the\x20future.\x20Therefore,\x20you\x20are\x20advised\x20to\x20use\n\x20\
-    an\x20internal\x20label\x20representation,\x20such\x20as\x20JSON,\x20whi\
-    ch\x20doesn't\x20rely\x20upon\n\x20specific\x20characters\x20being\x20di\
-    sallowed.\x20\x20For\x20example,\x20representing\x20labels\n\x20as\x20th\
-    e\x20string:\x20\x20name\x20+\x20\"_\"\x20+\x20value\x20\x20would\x20pro\
-    ve\x20problematic\x20if\x20we\x20were\x20to\n\x20allow\x20\"_\"\x20in\
-    \x20a\x20future\x20release.\n\n\r\n\x05\x04\x01\x02\x06\x06\x12\x04\x9a\
-    \x04\x02\x15\n\r\n\x05\x04\x01\x02\x06\x01\x12\x04\x9a\x04\x16\x1c\n\r\n\
-    \x05\x04\x01\x02\x06\x03\x12\x04\x9a\x04\x1f\x20\n\xb1\x05\n\x04\x04\x01\
-    \x02\x07\x12\x04\xa6\x04\x02\x12\x1a\xa2\x05\x20etag\x20is\x20used\x20fo\
-    r\x20optimistic\x20concurrency\x20control\x20as\x20a\x20way\n\x20to\x20h\
-    elp\x20prevent\x20simultaneous\x20updates\x20of\x20a\x20instance\x20conf\
-    ig\x20from\x20overwriting\n\x20each\x20other.\x20It\x20is\x20strongly\
-    \x20suggested\x20that\x20systems\x20make\x20use\x20of\x20the\x20etag\x20\
-    in\n\x20the\x20read-modify-write\x20cycle\x20to\x20perform\x20instance\
-    \x20config\x20updates\x20in\x20order\x20to\n\x20avoid\x20race\x20conditi\
-    ons:\x20An\x20etag\x20is\x20returned\x20in\x20the\x20response\x20which\
-    \x20contains\n\x20instance\x20configs,\x20and\x20systems\x20are\x20expec\
-    ted\x20to\x20put\x20that\x20etag\x20in\x20the\x20request\n\x20to\x20upda\
-    te\x20instance\x20config\x20to\x20ensure\x20that\x20their\x20change\x20w\
-    ill\x20be\x20applied\x20to\n\x20the\x20same\x20version\x20of\x20the\x20i\
-    nstance\x20config.\n\x20If\x20no\x20etag\x20is\x20provided\x20in\x20the\
-    \x20call\x20to\x20update\x20instance\x20config,\x20then\x20the\n\x20exis\
-    ting\x20instance\x20config\x20is\x20overwritten\x20blindly.\n\n\r\n\x05\
-    \x04\x01\x02\x07\x05\x12\x04\xa6\x04\x02\x08\n\r\n\x05\x04\x01\x02\x07\
-    \x01\x12\x04\xa6\x04\t\r\n\r\n\x05\x04\x01\x02\x07\x03\x12\x04\xa6\x04\
-    \x10\x11\n\x86\x01\n\x04\x04\x01\x02\x08\x12\x04\xaa\x04\x02%\x1ax\x20Al\
-    lowed\x20values\x20of\x20the\x20\"default_leader\"\x20schema\x20option\
-    \x20for\x20databases\x20in\n\x20instances\x20that\x20use\x20this\x20inst\
-    ance\x20configuration.\n\n\r\n\x05\x04\x01\x02\x08\x04\x12\x04\xaa\x04\
-    \x02\n\n\r\n\x05\x04\x01\x02\x08\x05\x12\x04\xaa\x04\x0b\x11\n\r\n\x05\
-    \x04\x01\x02\x08\x01\x12\x04\xaa\x04\x12\x20\n\r\n\x05\x04\x01\x02\x08\
-    \x03\x12\x04\xaa\x04#$\n\x9b\x01\n\x04\x04\x01\x02\t\x12\x04\xae\x04\x02\
-    D\x1a\x8c\x01\x20Output\x20only.\x20If\x20true,\x20the\x20instance\x20co\
-    nfig\x20is\x20being\x20created\x20or\x20updated.\x20If\n\x20false,\x20th\
-    ere\x20are\x20no\x20ongoing\x20operations\x20for\x20the\x20instance\x20c\
-    onfig.\n\n\r\n\x05\x04\x01\x02\t\x05\x12\x04\xae\x04\x02\x06\n\r\n\x05\
-    \x04\x01\x02\t\x01\x12\x04\xae\x04\x07\x12\n\r\n\x05\x04\x01\x02\t\x03\
-    \x12\x04\xae\x04\x15\x17\n\r\n\x05\x04\x01\x02\t\x08\x12\x04\xae\x04\x18\
-    C\n\x10\n\x08\x04\x01\x02\t\x08\x9c\x08\0\x12\x04\xae\x04\x19B\n?\n\x04\
-    \x04\x01\x02\n\x12\x04\xb1\x04\x02?\x1a1\x20Output\x20only.\x20The\x20cu\
-    rrent\x20instance\x20config\x20state.\n\n\r\n\x05\x04\x01\x02\n\x06\x12\
-    \x04\xb1\x04\x02\x07\n\r\n\x05\x04\x01\x02\n\x01\x12\x04\xb1\x04\x08\r\n\
-    \r\n\x05\x04\x01\x02\n\x03\x12\x04\xb1\x04\x10\x12\n\r\n\x05\x04\x01\x02\
-    \n\x08\x12\x04\xb1\x04\x13>\n\x10\n\x08\x04\x01\x02\n\x08\x9c\x08\0\x12\
-    \x04\xb1\x04\x14=\n3\n\x02\x04\x02\x12\x06\xb5\x04\0\xee\x04\x01\x1a%\
-    \x20Autoscaling\x20config\x20for\x20an\x20instance.\n\n\x0b\n\x03\x04\
-    \x02\x01\x12\x04\xb5\x04\x08\x19\n\xd6\x02\n\x04\x04\x02\x03\0\x12\x06\
-    \xbb\x04\x02\xd4\x04\x03\x1a\xc5\x02\x20The\x20autoscaling\x20limits\x20\
-    for\x20the\x20instance.\x20Users\x20can\x20define\x20the\x20minimum\x20a\
-    nd\n\x20maximum\x20compute\x20capacity\x20allocated\x20to\x20the\x20inst\
-    ance,\x20and\x20the\x20autoscaler\x20will\n\x20only\x20scale\x20within\
-    \x20that\x20range.\x20Users\x20can\x20either\x20use\x20nodes\x20or\x20pr\
-    ocessing\n\x20units\x20to\x20specify\x20the\x20limits,\x20but\x20should\
-    \x20use\x20the\x20same\x20unit\x20to\x20set\x20both\x20the\n\x20min_limi\
-    t\x20and\x20max_limit.\n\n\r\n\x05\x04\x02\x03\0\x01\x12\x04\xbb\x04\n\
-    \x1b\nB\n\x06\x04\x02\x03\0\x08\0\x12\x06\xbd\x04\x04\xc5\x04\x05\x1a0\
-    \x20The\x20minimum\x20compute\x20capacity\x20for\x20the\x20instance.\n\n\
-    \x0f\n\x07\x04\x02\x03\0\x08\0\x01\x12\x04\xbd\x04\n\x13\n\x7f\n\x06\x04\
-    \x02\x03\0\x02\0\x12\x04\xc0\x04\x06\x1a\x1ao\x20Minimum\x20number\x20of\
-    \x20nodes\x20allocated\x20to\x20the\x20instance.\x20If\x20set,\x20this\
-    \x20number\n\x20should\x20be\x20greater\x20than\x20or\x20equal\x20to\x20\
-    1.\n\n\x0f\n\x07\x04\x02\x03\0\x02\0\x05\x12\x04\xc0\x04\x06\x0b\n\x0f\n\
-    \x07\x04\x02\x03\0\x02\0\x01\x12\x04\xc0\x04\x0c\x15\n\x0f\n\x07\x04\x02\
-    \x03\0\x02\0\x03\x12\x04\xc0\x04\x18\x19\n\x81\x01\n\x06\x04\x02\x03\0\
-    \x02\x01\x12\x04\xc4\x04\x06%\x1aq\x20Minimum\x20number\x20of\x20process\
-    ing\x20units\x20allocated\x20to\x20the\x20instance.\x20If\x20set,\n\x20t\
-    his\x20number\x20should\x20be\x20multiples\x20of\x201000.\n\n\x0f\n\x07\
-    \x04\x02\x03\0\x02\x01\x05\x12\x04\xc4\x04\x06\x0b\n\x0f\n\x07\x04\x02\
-    \x03\0\x02\x01\x01\x12\x04\xc4\x04\x0c\x20\n\x0f\n\x07\x04\x02\x03\0\x02\
-    \x01\x03\x12\x04\xc4\x04#$\n\xa4\x01\n\x06\x04\x02\x03\0\x08\x01\x12\x06\
-    \xca\x04\x04\xd3\x04\x05\x1a\x91\x01\x20The\x20maximum\x20compute\x20cap\
-    acity\x20for\x20the\x20instance.\x20The\x20maximum\x20compute\n\x20capac\
-    ity\x20should\x20be\x20less\x20than\x20or\x20equal\x20to\x2010X\x20the\
-    \x20minimum\x20compute\n\x20capacity.\n\n\x0f\n\x07\x04\x02\x03\0\x08\
-    \x01\x01\x12\x04\xca\x04\n\x13\n\x87\x01\n\x06\x04\x02\x03\0\x02\x02\x12\
-    \x04\xcd\x04\x06\x1a\x1aw\x20Maximum\x20number\x20of\x20nodes\x20allocat\
-    ed\x20to\x20the\x20instance.\x20If\x20set,\x20this\x20number\n\x20should\
-    \x20be\x20greater\x20than\x20or\x20equal\x20to\x20min_nodes.\n\n\x0f\n\
-    \x07\x04\x02\x03\0\x02\x02\x05\x12\x04\xcd\x04\x06\x0b\n\x0f\n\x07\x04\
-    \x02\x03\0\x02\x02\x01\x12\x04\xcd\x04\x0c\x15\n\x0f\n\x07\x04\x02\x03\0\
-    \x02\x02\x03\x12\x04\xcd\x04\x18\x19\n\xb8\x01\n\x06\x04\x02\x03\0\x02\
-    \x03\x12\x04\xd2\x04\x06%\x1a\xa7\x01\x20Maximum\x20number\x20of\x20proc\
-    essing\x20units\x20allocated\x20to\x20the\x20instance.\x20If\x20set,\n\
-    \x20this\x20number\x20should\x20be\x20multiples\x20of\x201000\x20and\x20\
-    be\x20greater\x20than\x20or\x20equal\x20to\n\x20min_processing_units.\n\
-    \n\x0f\n\x07\x04\x02\x03\0\x02\x03\x05\x12\x04\xd2\x04\x06\x0b\n\x0f\n\
-    \x07\x04\x02\x03\0\x02\x03\x01\x12\x04\xd2\x04\x0c\x20\n\x0f\n\x07\x04\
-    \x02\x03\0\x02\x03\x03\x12\x04\xd2\x04#$\n:\n\x04\x04\x02\x03\x01\x12\
-    \x06\xd7\x04\x02\xe5\x04\x03\x1a*\x20The\x20autoscaling\x20targets\x20fo\
-    r\x20an\x20instance.\n\n\r\n\x05\x04\x02\x03\x01\x01\x12\x04\xd7\x04\n\
-    \x1c\n\x8b\x02\n\x06\x04\x02\x03\x01\x02\0\x12\x06\xdc\x04\x04\xdd\x041\
-    \x1a\xf8\x01\x20Required.\x20The\x20target\x20high\x20priority\x20cpu\
-    \x20utilization\x20percentage\x20that\x20the\n\x20autoscaler\x20should\
-    \x20be\x20trying\x20to\x20achieve\x20for\x20the\x20instance.\x20This\x20\
-    number\x20is\n\x20on\x20a\x20scale\x20from\x200\x20(no\x20utilization)\
-    \x20to\x20100\x20(full\x20utilization).\x20The\x20valid\n\x20range\x20is\
-    \x20[10,\x2090]\x20inclusive.\n\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x05\
-    \x12\x04\xdc\x04\x04\t\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x01\x12\x04\xdc\
-    \x04\n/\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x03\x12\x04\xdc\x0423\n\x0f\n\
-    \x07\x04\x02\x03\x01\x02\0\x08\x12\x04\xdd\x04\x080\n\x12\n\n\x04\x02\
-    \x03\x01\x02\0\x08\x9c\x08\0\x12\x04\xdd\x04\t/\n\x82\x02\n\x06\x04\x02\
-    \x03\x01\x02\x01\x12\x06\xe3\x04\x04\xe4\x041\x1a\xef\x01\x20Required.\
-    \x20The\x20target\x20storage\x20utilization\x20percentage\x20that\x20the\
-    \x20autoscaler\n\x20should\x20be\x20trying\x20to\x20achieve\x20for\x20th\
-    e\x20instance.\x20This\x20number\x20is\x20on\x20a\x20scale\n\x20from\x20\
-    0\x20(no\x20utilization)\x20to\x20100\x20(full\x20utilization).\x20The\
-    \x20valid\x20range\x20is\n\x20[10,\x20100]\x20inclusive.\n\n\x0f\n\x07\
-    \x04\x02\x03\x01\x02\x01\x05\x12\x04\xe3\x04\x04\t\n\x0f\n\x07\x04\x02\
-    \x03\x01\x02\x01\x01\x12\x04\xe3\x04\n%\n\x0f\n\x07\x04\x02\x03\x01\x02\
-    \x01\x03\x12\x04\xe3\x04()\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x08\x12\
-    \x04\xe4\x04\x080\n\x12\n\n\x04\x02\x03\x01\x02\x01\x08\x9c\x08\0\x12\
-    \x04\xe4\x04\t/\n?\n\x04\x04\x02\x02\0\x12\x06\xe8\x04\x02\xe9\x04/\x1a/\
-    \x20Required.\x20Autoscaling\x20limits\x20for\x20an\x20instance.\n\n\r\n\
-    \x05\x04\x02\x02\0\x06\x12\x04\xe8\x04\x02\x13\n\r\n\x05\x04\x02\x02\0\
-    \x01\x12\x04\xe8\x04\x14&\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xe8\x04)*\
-    \n\r\n\x05\x04\x02\x02\0\x08\x12\x04\xe9\x04\x06.\n\x10\n\x08\x04\x02\
-    \x02\0\x08\x9c\x08\0\x12\x04\xe9\x04\x07-\nD\n\x04\x04\x02\x02\x01\x12\
-    \x06\xec\x04\x02\xed\x04/\x1a4\x20Required.\x20The\x20autoscaling\x20tar\
-    gets\x20for\x20an\x20instance.\n\n\r\n\x05\x04\x02\x02\x01\x06\x12\x04\
-    \xec\x04\x02\x14\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\xec\x04\x15(\n\r\
-    \n\x05\x04\x02\x02\x01\x03\x12\x04\xec\x04+,\n\r\n\x05\x04\x02\x02\x01\
-    \x08\x12\x04\xed\x04\x06.\n\x10\n\x08\x04\x02\x02\x01\x08\x9c\x08\0\x12\
-    \x04\xed\x04\x07-\n\\\n\x02\x04\x03\x12\x06\xf1\x04\0\xe6\x05\x01\x1aN\
-    \x20An\x20isolated\x20set\x20of\x20Cloud\x20Spanner\x20resources\x20on\
-    \x20which\x20databases\x20can\x20be\x20hosted.\n\n\x0b\n\x03\x04\x03\x01\
-    \x12\x04\xf1\x04\x08\x10\n\r\n\x03\x04\x03\x07\x12\x06\xf2\x04\x02\xf5\
-    \x04\x04\n\x0f\n\x05\x04\x03\x07\x9d\x08\x12\x06\xf2\x04\x02\xf5\x04\x04\
-    \n>\n\x04\x04\x03\x04\0\x12\x06\xf8\x04\x02\x84\x05\x03\x1a.\x20Indicate\
-    s\x20the\x20current\x20state\x20of\x20the\x20instance.\n\n\r\n\x05\x04\
-    \x03\x04\0\x01\x12\x04\xf8\x04\x07\x0c\n\x20\n\x06\x04\x03\x04\0\x02\0\
-    \x12\x04\xfa\x04\x04\x1a\x1a\x10\x20Not\x20specified.\n\n\x0f\n\x07\x04\
-    \x03\x04\0\x02\0\x01\x12\x04\xfa\x04\x04\x15\n\x0f\n\x07\x04\x03\x04\0\
-    \x02\0\x02\x12\x04\xfa\x04\x18\x19\n\x94\x01\n\x06\x04\x03\x04\0\x02\x01\
-    \x12\x04\xff\x04\x04\x11\x1a\x83\x01\x20The\x20instance\x20is\x20still\
-    \x20being\x20created.\x20Resources\x20may\x20not\x20be\n\x20available\
-    \x20yet,\x20and\x20operations\x20such\x20as\x20database\x20creation\x20m\
-    ay\x20not\n\x20work.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x01\x12\x04\xff\
-    \x04\x04\x0c\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x02\x12\x04\xff\x04\x0f\
-    \x10\na\n\x06\x04\x03\x04\0\x02\x02\x12\x04\x83\x05\x04\x0e\x1aQ\x20The\
-    \x20instance\x20is\x20fully\x20created\x20and\x20ready\x20to\x20do\x20wo\
-    rk\x20such\x20as\n\x20creating\x20databases.\n\n\x0f\n\x07\x04\x03\x04\0\
-    \x02\x02\x01\x12\x04\x83\x05\x04\t\n\x0f\n\x07\x04\x03\x04\0\x02\x02\x02\
-    \x12\x04\x83\x05\x0c\r\n\x96\x02\n\x04\x04\x03\x02\0\x12\x04\x8a\x05\x02\
-    ;\x1a\x87\x02\x20Required.\x20A\x20unique\x20identifier\x20for\x20the\
-    \x20instance,\x20which\x20cannot\x20be\x20changed\n\x20after\x20the\x20i\
-    nstance\x20is\x20created.\x20Values\x20are\x20of\x20the\x20form\n\x20`pr\
-    ojects/<project>/instances/[a-z][-a-z0-9]*[a-z0-9]`.\x20The\x20final\n\
-    \x20segment\x20of\x20the\x20name\x20must\x20be\x20between\x202\x20and\
-    \x2064\x20characters\x20in\x20length.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\
-    \x04\x8a\x05\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\x8a\x05\t\r\n\r\
-    \n\x05\x04\x03\x02\0\x03\x12\x04\x8a\x05\x10\x11\n\r\n\x05\x04\x03\x02\0\
-    \x08\x12\x04\x8a\x05\x12:\n\x10\n\x08\x04\x03\x02\0\x08\x9c\x08\0\x12\
-    \x04\x8a\x05\x139\n\xc0\x02\n\x04\x04\x03\x02\x01\x12\x06\x90\x05\x02\
-    \x95\x05\x04\x1a\xaf\x02\x20Required.\x20The\x20name\x20of\x20the\x20ins\
-    tance's\x20configuration.\x20Values\x20are\x20of\x20the\x20form\n\x20`pr\
-    ojects/<project>/instanceConfigs/<configuration>`.\x20See\n\x20also\x20[\
-    InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig]\x20and\
-    \n\x20[ListInstanceConfigs][google.spanner.admin.instance.v1.InstanceAdm\
-    in.ListInstanceConfigs].\n\n\r\n\x05\x04\x03\x02\x01\x05\x12\x04\x90\x05\
-    \x02\x08\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\x90\x05\t\x0f\n\r\n\x05\
-    \x04\x03\x02\x01\x03\x12\x04\x90\x05\x12\x13\n\x0f\n\x05\x04\x03\x02\x01\
-    \x08\x12\x06\x90\x05\x14\x95\x05\x03\n\x10\n\x08\x04\x03\x02\x01\x08\x9c\
-    \x08\0\x12\x04\x91\x05\x04*\n\x11\n\x07\x04\x03\x02\x01\x08\x9f\x08\x12\
-    \x06\x92\x05\x04\x94\x05\x05\n\x9e\x01\n\x04\x04\x03\x02\x02\x12\x04\x99\
-    \x05\x02C\x1a\x8f\x01\x20Required.\x20The\x20descriptive\x20name\x20for\
-    \x20this\x20instance\x20as\x20it\x20appears\x20in\x20UIs.\n\x20Must\x20b\
-    e\x20unique\x20per\x20project\x20and\x20between\x204\x20and\x2030\x20cha\
-    racters\x20in\x20length.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\x99\x05\
-    \x02\x08\n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\x99\x05\t\x15\n\r\n\x05\
-    \x04\x03\x02\x02\x03\x12\x04\x99\x05\x18\x19\n\r\n\x05\x04\x03\x02\x02\
-    \x08\x12\x04\x99\x05\x1aB\n\x10\n\x08\x04\x03\x02\x02\x08\x9c\x08\0\x12\
-    \x04\x99\x05\x1bA\n\xe0\x03\n\x04\x04\x03\x02\x03\x12\x04\xa7\x05\x02\
-    \x17\x1a\xd1\x03\x20The\x20number\x20of\x20nodes\x20allocated\x20to\x20t\
-    his\x20instance.\x20At\x20most\x20one\x20of\x20either\n\x20node_count\
-    \x20or\x20processing_units\x20should\x20be\x20present\x20in\x20the\x20me\
-    ssage.\n\n\x20Users\x20can\x20set\x20the\x20node_count\x20field\x20to\
-    \x20specify\x20the\x20target\x20number\x20of\x20nodes\n\x20allocated\x20\
-    to\x20the\x20instance.\n\n\x20This\x20may\x20be\x20zero\x20in\x20API\x20\
-    responses\x20for\x20instances\x20that\x20are\x20not\x20yet\x20in\x20stat\
-    e\n\x20`READY`.\n\n\x20See\x20[the\n\x20documentation](https://cloud.goo\
-    gle.com/spanner/docs/compute-capacity)\n\x20for\x20more\x20information\
-    \x20about\x20nodes\x20and\x20processing\x20units.\n\n\r\n\x05\x04\x03\
-    \x02\x03\x05\x12\x04\xa7\x05\x02\x07\n\r\n\x05\x04\x03\x02\x03\x01\x12\
-    \x04\xa7\x05\x08\x12\n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\xa7\x05\x15\
-    \x16\n\xf5\x03\n\x04\x04\x03\x02\x04\x12\x04\xb5\x05\x02\x1d\x1a\xe6\x03\
-    \x20The\x20number\x20of\x20processing\x20units\x20allocated\x20to\x20thi\
-    s\x20instance.\x20At\x20most\x20one\x20of\n\x20processing_units\x20or\
-    \x20node_count\x20should\x20be\x20present\x20in\x20the\x20message.\n\n\
-    \x20Users\x20can\x20set\x20the\x20processing_units\x20field\x20to\x20spe\
-    cify\x20the\x20target\x20number\x20of\n\x20processing\x20units\x20alloca\
-    ted\x20to\x20the\x20instance.\n\n\x20This\x20may\x20be\x20zero\x20in\x20\
-    API\x20responses\x20for\x20instances\x20that\x20are\x20not\x20yet\x20in\
-    \x20state\n\x20`READY`.\n\n\x20See\x20[the\n\x20documentation](https://c\
-    loud.google.com/spanner/docs/compute-capacity)\n\x20for\x20more\x20infor\
-    mation\x20about\x20nodes\x20and\x20processing\x20units.\n\n\r\n\x05\x04\
-    \x03\x02\x04\x05\x12\x04\xb5\x05\x02\x07\n\r\n\x05\x04\x03\x02\x04\x01\
-    \x12\x04\xb5\x05\x08\x18\n\r\n\x05\x04\x03\x02\x04\x03\x12\x04\xb5\x05\
-    \x1b\x1c\n\x8e\x02\n\x04\x04\x03\x02\x05\x12\x06\xbb\x05\x02\xbc\x05/\
-    \x1a\xfd\x01\x20Optional.\x20The\x20autoscaling\x20configuration.\x20Aut\
-    oscaling\x20is\x20enabled\x20if\x20this\n\x20field\x20is\x20set.\x20When\
-    \x20autoscaling\x20is\x20enabled,\x20node_count\x20and\x20processing_uni\
-    ts\n\x20are\x20treated\x20as\x20OUTPUT_ONLY\x20fields\x20and\x20reflect\
-    \x20the\x20current\x20compute\x20capacity\n\x20allocated\x20to\x20the\
-    \x20instance.\n\n\r\n\x05\x04\x03\x02\x05\x06\x12\x04\xbb\x05\x02\x13\n\
-    \r\n\x05\x04\x03\x02\x05\x01\x12\x04\xbb\x05\x14&\n\r\n\x05\x04\x03\x02\
-    \x05\x03\x12\x04\xbb\x05)+\n\r\n\x05\x04\x03\x02\x05\x08\x12\x04\xbc\x05\
-    \x06.\n\x10\n\x08\x04\x03\x02\x05\x08\x9c\x08\0\x12\x04\xbc\x05\x07-\n\
-    \xd2\x02\n\x04\x04\x03\x02\x06\x12\x04\xc3\x05\x02>\x1a\xc3\x02\x20Outpu\
-    t\x20only.\x20The\x20current\x20instance\x20state.\x20For\n\x20[CreateIn\
-    stance][google.spanner.admin.instance.v1.InstanceAdmin.CreateInstance],\
-    \n\x20the\x20state\x20must\x20be\x20either\x20omitted\x20or\x20set\x20to\
-    \x20`CREATING`.\x20For\n\x20[UpdateInstance][google.spanner.admin.instan\
-    ce.v1.InstanceAdmin.UpdateInstance],\n\x20the\x20state\x20must\x20be\x20\
-    either\x20omitted\x20or\x20set\x20to\x20`READY`.\n\n\r\n\x05\x04\x03\x02\
-    \x06\x06\x12\x04\xc3\x05\x02\x07\n\r\n\x05\x04\x03\x02\x06\x01\x12\x04\
-    \xc3\x05\x08\r\n\r\n\x05\x04\x03\x02\x06\x03\x12\x04\xc3\x05\x10\x11\n\r\
-    \n\x05\x04\x03\x02\x06\x08\x12\x04\xc3\x05\x12=\n\x10\n\x08\x04\x03\x02\
-    \x06\x08\x9c\x08\0\x12\x04\xc3\x05\x13<\n\xd1\t\n\x04\x04\x03\x02\x07\
-    \x12\x04\xda\x05\x02!\x1a\xc2\t\x20Cloud\x20Labels\x20are\x20a\x20flexib\
-    le\x20and\x20lightweight\x20mechanism\x20for\x20organizing\x20cloud\n\
-    \x20resources\x20into\x20groups\x20that\x20reflect\x20a\x20customer's\
-    \x20organizational\x20needs\x20and\n\x20deployment\x20strategies.\x20Clo\
-    ud\x20Labels\x20can\x20be\x20used\x20to\x20filter\x20collections\x20of\n\
-    \x20resources.\x20They\x20can\x20be\x20used\x20to\x20control\x20how\x20r\
-    esource\x20metrics\x20are\x20aggregated.\n\x20And\x20they\x20can\x20be\
-    \x20used\x20as\x20arguments\x20to\x20policy\x20management\x20rules\x20(e\
-    .g.\x20route,\n\x20firewall,\x20load\x20balancing,\x20etc.).\n\n\x20\x20\
-    *\x20Label\x20keys\x20must\x20be\x20between\x201\x20and\x2063\x20charact\
-    ers\x20long\x20and\x20must\x20conform\x20to\n\x20\x20\x20\x20the\x20foll\
-    owing\x20regular\x20expression:\x20`[a-z][a-z0-9_-]{0,62}`.\n\x20\x20*\
-    \x20Label\x20values\x20must\x20be\x20between\x200\x20and\x2063\x20charac\
-    ters\x20long\x20and\x20must\x20conform\n\x20\x20\x20\x20to\x20the\x20reg\
-    ular\x20expression\x20`[a-z0-9_-]{0,63}`.\n\x20\x20*\x20No\x20more\x20th\
-    an\x2064\x20labels\x20can\x20be\x20associated\x20with\x20a\x20given\x20r\
-    esource.\n\n\x20See\x20https://goo.gl/xmQnxf\x20for\x20more\x20informati\
-    on\x20on\x20and\x20examples\x20of\x20labels.\n\n\x20If\x20you\x20plan\
-    \x20to\x20use\x20labels\x20in\x20your\x20own\x20code,\x20please\x20note\
-    \x20that\x20additional\n\x20characters\x20may\x20be\x20allowed\x20in\x20\
-    the\x20future.\x20And\x20so\x20you\x20are\x20advised\x20to\x20use\x20an\
-    \n\x20internal\x20label\x20representation,\x20such\x20as\x20JSON,\x20whi\
-    ch\x20doesn't\x20rely\x20upon\n\x20specific\x20characters\x20being\x20di\
-    sallowed.\x20\x20For\x20example,\x20representing\x20labels\n\x20as\x20th\
-    e\x20string:\x20\x20name\x20+\x20\"_\"\x20+\x20value\x20\x20would\x20pro\
-    ve\x20problematic\x20if\x20we\x20were\x20to\n\x20allow\x20\"_\"\x20in\
-    \x20a\x20future\x20release.\n\n\r\n\x05\x04\x03\x02\x07\x06\x12\x04\xda\
-    \x05\x02\x15\n\r\n\x05\x04\x03\x02\x07\x01\x12\x04\xda\x05\x16\x1c\n\r\n\
-    \x05\x04\x03\x02\x07\x03\x12\x04\xda\x05\x1f\x20\n8\n\x04\x04\x03\x02\
-    \x08\x12\x04\xdd\x05\x02$\x1a*\x20Deprecated.\x20This\x20field\x20is\x20\
-    not\x20populated.\n\n\r\n\x05\x04\x03\x02\x08\x04\x12\x04\xdd\x05\x02\n\
-    \n\r\n\x05\x04\x03\x02\x08\x05\x12\x04\xdd\x05\x0b\x11\n\r\n\x05\x04\x03\
-    \x02\x08\x01\x12\x04\xdd\x05\x12\x1f\n\r\n\x05\x04\x03\x02\x08\x03\x12\
-    \x04\xdd\x05\"#\nJ\n\x04\x04\x03\x02\t\x12\x06\xe0\x05\x02\xe1\x052\x1a:\
-    \x20Output\x20only.\x20The\x20time\x20at\x20which\x20the\x20instance\x20\
-    was\x20created.\n\n\r\n\x05\x04\x03\x02\t\x06\x12\x04\xe0\x05\x02\x1b\n\
-    \r\n\x05\x04\x03\x02\t\x01\x12\x04\xe0\x05\x1c'\n\r\n\x05\x04\x03\x02\t\
-    \x03\x12\x04\xe0\x05*,\n\r\n\x05\x04\x03\x02\t\x08\x12\x04\xe1\x05\x061\
-    \n\x10\n\x08\x04\x03\x02\t\x08\x9c\x08\0\x12\x04\xe1\x05\x070\nX\n\x04\
-    \x04\x03\x02\n\x12\x06\xe4\x05\x02\xe5\x052\x1aH\x20Output\x20only.\x20T\
-    he\x20time\x20at\x20which\x20the\x20instance\x20was\x20most\x20recently\
-    \x20updated.\n\n\r\n\x05\x04\x03\x02\n\x06\x12\x04\xe4\x05\x02\x1b\n\r\n\
-    \x05\x04\x03\x02\n\x01\x12\x04\xe4\x05\x1c'\n\r\n\x05\x04\x03\x02\n\x03\
-    \x12\x04\xe4\x05*,\n\r\n\x05\x04\x03\x02\n\x08\x12\x04\xe5\x05\x061\n\
-    \x10\n\x08\x04\x03\x02\n\x08\x9c\x08\0\x12\x04\xe5\x05\x070\n{\n\x02\x04\
-    \x04\x12\x06\xea\x05\0\xfe\x05\x01\x1am\x20The\x20request\x20for\n\x20[L\
-    istInstanceConfigs][google.spanner.admin.instance.v1.InstanceAdmin.ListI\
-    nstanceConfigs].\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xea\x05\x08\"\n\xa7\
-    \x01\n\x04\x04\x04\x02\0\x12\x06\xee\x05\x02\xf3\x05\x04\x1a\x96\x01\x20\
-    Required.\x20The\x20name\x20of\x20the\x20project\x20for\x20which\x20a\
-    \x20list\x20of\x20supported\x20instance\n\x20configurations\x20is\x20req\
-    uested.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>`.\
-    \n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\xee\x05\x02\x08\n\r\n\x05\x04\x04\
-    \x02\0\x01\x12\x04\xee\x05\t\x0f\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\xee\
-    \x05\x12\x13\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\xee\x05\x14\xf3\x05\
-    \x03\n\x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\x04\xef\x05\x04*\n\x11\
-    \n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x06\xf0\x05\x04\xf2\x05\x05\n\x95\
-    \x01\n\x04\x04\x04\x02\x01\x12\x04\xf7\x05\x02\x16\x1a\x86\x01\x20Number\
-    \x20of\x20instance\x20configurations\x20to\x20be\x20returned\x20in\x20th\
-    e\x20response.\x20If\x200\x20or\n\x20less,\x20defaults\x20to\x20the\x20s\
-    erver's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04\x04\x02\
-    \x01\x05\x12\x04\xf7\x05\x02\x07\n\r\n\x05\x04\x04\x02\x01\x01\x12\x04\
-    \xf7\x05\x08\x11\n\r\n\x05\x04\x04\x02\x01\x03\x12\x04\xf7\x05\x14\x15\n\
-    \x8c\x02\n\x04\x04\x04\x02\x02\x12\x04\xfd\x05\x02\x18\x1a\xfd\x01\x20If\
-    \x20non-empty,\x20`page_token`\x20should\x20contain\x20a\n\x20[next_page\
-    _token][google.spanner.admin.instance.v1.ListInstanceConfigsResponse.nex\
-    t_page_token]\n\x20from\x20a\x20previous\n\x20[ListInstanceConfigsRespon\
-    se][google.spanner.admin.instance.v1.ListInstanceConfigsResponse].\n\n\r\
-    \n\x05\x04\x04\x02\x02\x05\x12\x04\xfd\x05\x02\x08\n\r\n\x05\x04\x04\x02\
-    \x02\x01\x12\x04\xfd\x05\t\x13\n\r\n\x05\x04\x04\x02\x02\x03\x12\x04\xfd\
-    \x05\x16\x17\n|\n\x02\x04\x05\x12\x06\x82\x06\0\x8a\x06\x01\x1an\x20The\
-    \x20response\x20for\n\x20[ListInstanceConfigs][google.spanner.admin.inst\
-    ance.v1.InstanceAdmin.ListInstanceConfigs].\n\n\x0b\n\x03\x04\x05\x01\
-    \x12\x04\x82\x06\x08#\n>\n\x04\x04\x05\x02\0\x12\x04\x84\x06\x02/\x1a0\
-    \x20The\x20list\x20of\x20requested\x20instance\x20configurations.\n\n\r\
-    \n\x05\x04\x05\x02\0\x04\x12\x04\x84\x06\x02\n\n\r\n\x05\x04\x05\x02\0\
-    \x06\x12\x04\x84\x06\x0b\x19\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\x84\x06\
-    \x1a*\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\x84\x06-.\n\xd6\x01\n\x04\x04\
-    \x05\x02\x01\x12\x04\x89\x06\x02\x1d\x1a\xc7\x01\x20`next_page_token`\
-    \x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[ListInstanceConfigs\
-    ][google.spanner.admin.instance.v1.InstanceAdmin.ListInstanceConfigs]\n\
-    \x20call\x20to\x20fetch\x20more\x20of\x20the\x20matching\x20instance\x20\
-    configurations.\n\n\r\n\x05\x04\x05\x02\x01\x05\x12\x04\x89\x06\x02\x08\
-    \n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\x89\x06\t\x18\n\r\n\x05\x04\x05\
-    \x02\x01\x03\x12\x04\x89\x06\x1b\x1c\n~\n\x02\x04\x06\x12\x06\x8e\x06\0\
-    \x97\x06\x01\x1ap\x20The\x20request\x20for\n\x20[GetInstanceConfigReques\
-    t][google.spanner.admin.instance.v1.InstanceAdmin.GetInstanceConfig].\n\
-    \n\x0b\n\x03\x04\x06\x01\x12\x04\x8e\x06\x08\x20\n\x95\x01\n\x04\x04\x06\
-    \x02\0\x12\x06\x91\x06\x02\x96\x06\x04\x1a\x84\x01\x20Required.\x20The\
-    \x20name\x20of\x20the\x20requested\x20instance\x20configuration.\x20Valu\
-    es\x20are\x20of\n\x20the\x20form\x20`projects/<project>/instanceConfigs/\
-    <config>`.\n\n\r\n\x05\x04\x06\x02\0\x05\x12\x04\x91\x06\x02\x08\n\r\n\
-    \x05\x04\x06\x02\0\x01\x12\x04\x91\x06\t\r\n\r\n\x05\x04\x06\x02\0\x03\
-    \x12\x04\x91\x06\x10\x11\n\x0f\n\x05\x04\x06\x02\0\x08\x12\x06\x91\x06\
-    \x12\x96\x06\x03\n\x10\n\x08\x04\x06\x02\0\x08\x9c\x08\0\x12\x04\x92\x06\
-    \x04*\n\x11\n\x07\x04\x06\x02\0\x08\x9f\x08\x12\x06\x93\x06\x04\x95\x06\
-    \x05\nj\n\x02\x04\x07\x12\x06\x9b\x06\0\xb5\x06\x01\x1a\\\x20The\x20requ\
-    est\x20for\n\x20[CreateInstanceConfigRequest][InstanceAdmin.CreateInstan\
-    ceConfigRequest].\n\n\x0b\n\x03\x04\x07\x01\x12\x04\x9b\x06\x08#\n\x89\
-    \x01\n\x04\x04\x07\x02\0\x12\x06\x9e\x06\x02\xa3\x06\x04\x1ay\x20Require\
-    d.\x20The\x20name\x20of\x20the\x20project\x20in\x20which\x20to\x20create\
-    \x20the\x20instance\x20config.\n\x20Values\x20are\x20of\x20the\x20form\
-    \x20`projects/<project>`.\n\n\r\n\x05\x04\x07\x02\0\x05\x12\x04\x9e\x06\
-    \x02\x08\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\x9e\x06\t\x0f\n\r\n\x05\x04\
-    \x07\x02\0\x03\x12\x04\x9e\x06\x12\x13\n\x0f\n\x05\x04\x07\x02\0\x08\x12\
-    \x06\x9e\x06\x14\xa3\x06\x03\n\x10\n\x08\x04\x07\x02\0\x08\x9c\x08\0\x12\
-    \x04\x9f\x06\x04*\n\x11\n\x07\x04\x07\x02\0\x08\x9f\x08\x12\x06\xa0\x06\
-    \x04\xa2\x06\x05\n\x95\x02\n\x04\x04\x07\x02\x01\x12\x04\xa9\x06\x02I\
-    \x1a\x86\x02\x20Required.\x20The\x20ID\x20of\x20the\x20instance\x20confi\
-    g\x20to\x20create.\x20\x20Valid\x20identifiers\x20are\n\x20of\x20the\x20\
-    form\x20`custom-[-a-z0-9]*[a-z0-9]`\x20and\x20must\x20be\x20between\x202\
-    \x20and\x2064\n\x20characters\x20in\x20length.\x20The\x20`custom-`\x20pr\
-    efix\x20is\x20required\x20to\x20avoid\x20name\n\x20conflicts\x20with\x20\
-    Google\x20managed\x20configurations.\n\n\r\n\x05\x04\x07\x02\x01\x05\x12\
-    \x04\xa9\x06\x02\x08\n\r\n\x05\x04\x07\x02\x01\x01\x12\x04\xa9\x06\t\x1b\
-    \n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\xa9\x06\x1e\x1f\n\r\n\x05\x04\x07\
-    \x02\x01\x08\x12\x04\xa9\x06\x20H\n\x10\n\x08\x04\x07\x02\x01\x08\x9c\
-    \x08\0\x12\x04\xa9\x06!G\n\xb5\x02\n\x04\x04\x07\x02\x02\x12\x04\xb0\x06\
-    \x02N\x1a\xa6\x02\x20Required.\x20The\x20InstanceConfig\x20proto\x20of\
-    \x20the\x20configuration\x20to\x20create.\n\x20instance_config.name\x20m\
-    ust\x20be\n\x20`<parent>/instanceConfigs/<instance_config_id>`.\n\x20ins\
-    tance_config.base_config\x20must\x20be\x20a\x20Google\x20managed\x20conf\
-    iguration\x20name,\n\x20e.g.\x20<parent>/instanceConfigs/us-east1,\x20<p\
-    arent>/instanceConfigs/nam3.\n\n\r\n\x05\x04\x07\x02\x02\x06\x12\x04\xb0\
-    \x06\x02\x10\n\r\n\x05\x04\x07\x02\x02\x01\x12\x04\xb0\x06\x11\x20\n\r\n\
-    \x05\x04\x07\x02\x02\x03\x12\x04\xb0\x06#$\n\r\n\x05\x04\x07\x02\x02\x08\
-    \x12\x04\xb0\x06%M\n\x10\n\x08\x04\x07\x02\x02\x08\x9c\x08\0\x12\x04\xb0\
-    \x06&L\nk\n\x04\x04\x07\x02\x03\x12\x04\xb4\x06\x02\x19\x1a]\x20An\x20op\
-    tion\x20to\x20validate,\x20but\x20not\x20actually\x20execute,\x20a\x20re\
-    quest,\n\x20and\x20provide\x20the\x20same\x20response.\n\n\r\n\x05\x04\
-    \x07\x02\x03\x05\x12\x04\xb4\x06\x02\x06\n\r\n\x05\x04\x07\x02\x03\x01\
-    \x12\x04\xb4\x06\x07\x14\n\r\n\x05\x04\x07\x02\x03\x03\x12\x04\xb4\x06\
-    \x17\x18\nj\n\x02\x04\x08\x12\x06\xb9\x06\0\xce\x06\x01\x1a\\\x20The\x20\
-    request\x20for\n\x20[UpdateInstanceConfigRequest][InstanceAdmin.UpdateIn\
-    stanceConfigRequest].\n\n\x0b\n\x03\x04\x08\x01\x12\x04\xb9\x06\x08#\n\
-    \x82\x03\n\x04\x04\x08\x02\0\x12\x04\xc0\x06\x02N\x1a\xf3\x02\x20Require\
-    d.\x20The\x20user\x20instance\x20config\x20to\x20update,\x20which\x20mus\
-    t\x20always\x20include\x20the\n\x20instance\x20config\x20name.\x20Otherw\
-    ise,\x20only\x20fields\x20mentioned\x20in\n\x20[update_mask][google.span\
-    ner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]\n\x20need\
-    \x20be\x20included.\x20To\x20prevent\x20conflicts\x20of\x20concurrent\
-    \x20updates,\n\x20[etag][google.spanner.admin.instance.v1.InstanceConfig\
-    .reconciling]\x20can\n\x20be\x20used.\n\n\r\n\x05\x04\x08\x02\0\x06\x12\
-    \x04\xc0\x06\x02\x10\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\xc0\x06\x11\x20\
-    \n\r\n\x05\x04\x08\x02\0\x03\x12\x04\xc0\x06#$\n\r\n\x05\x04\x08\x02\0\
-    \x08\x12\x04\xc0\x06%M\n\x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\x04\
-    \xc0\x06&L\n\x9a\x03\n\x04\x04\x08\x02\x01\x12\x06\xc8\x06\x02\xc9\x06/\
-    \x1a\x89\x03\x20Required.\x20A\x20mask\x20specifying\x20which\x20fields\
-    \x20in\n\x20[InstanceConfig][google.spanner.admin.instance.v1.InstanceCo\
-    nfig]\x20should\x20be\n\x20updated.\x20The\x20field\x20mask\x20must\x20a\
-    lways\x20be\x20specified;\x20this\x20prevents\x20any\x20future\n\x20fiel\
-    ds\x20in\x20[InstanceConfig][google.spanner.admin.instance.v1.InstanceCo\
-    nfig]\n\x20from\x20being\x20erased\x20accidentally\x20by\x20clients\x20t\
-    hat\x20do\x20not\x20know\x20about\x20them.\x20Only\n\x20display_name\x20\
-    and\x20labels\x20can\x20be\x20updated.\n\n\r\n\x05\x04\x08\x02\x01\x06\
-    \x12\x04\xc8\x06\x02\x1b\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xc8\x06\
-    \x1c'\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xc8\x06*+\n\r\n\x05\x04\x08\
-    \x02\x01\x08\x12\x04\xc9\x06\x06.\n\x10\n\x08\x04\x08\x02\x01\x08\x9c\
-    \x08\0\x12\x04\xc9\x06\x07-\nk\n\x04\x04\x08\x02\x02\x12\x04\xcd\x06\x02\
-    \x19\x1a]\x20An\x20option\x20to\x20validate,\x20but\x20not\x20actually\
-    \x20execute,\x20a\x20request,\n\x20and\x20provide\x20the\x20same\x20resp\
-    onse.\n\n\r\n\x05\x04\x08\x02\x02\x05\x12\x04\xcd\x06\x02\x06\n\r\n\x05\
-    \x04\x08\x02\x02\x01\x12\x04\xcd\x06\x07\x14\n\r\n\x05\x04\x08\x02\x02\
-    \x03\x12\x04\xcd\x06\x17\x18\nj\n\x02\x04\t\x12\x06\xd2\x06\0\xe9\x06\
-    \x01\x1a\\\x20The\x20request\x20for\n\x20[DeleteInstanceConfigRequest][I\
-    nstanceAdmin.DeleteInstanceConfigRequest].\n\n\x0b\n\x03\x04\t\x01\x12\
-    \x04\xd2\x06\x08#\n\xa2\x01\n\x04\x04\t\x02\0\x12\x06\xd6\x06\x02\xdb\
-    \x06\x04\x1a\x91\x01\x20Required.\x20The\x20name\x20of\x20the\x20instanc\
-    e\x20configuration\x20to\x20be\x20deleted.\n\x20Values\x20are\x20of\x20t\
-    he\x20form\n\x20`projects/<project>/instanceConfigs/<instance_config>`\n\
-    \n\r\n\x05\x04\t\x02\0\x05\x12\x04\xd6\x06\x02\x08\n\r\n\x05\x04\t\x02\0\
-    \x01\x12\x04\xd6\x06\t\r\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xd6\x06\x10\
-    \x11\n\x0f\n\x05\x04\t\x02\0\x08\x12\x06\xd6\x06\x12\xdb\x06\x03\n\x10\n\
-    \x08\x04\t\x02\0\x08\x9c\x08\0\x12\x04\xd7\x06\x04*\n\x11\n\x07\x04\t\
-    \x02\0\x08\x9f\x08\x12\x06\xd8\x06\x04\xda\x06\x05\n\x97\x03\n\x04\x04\t\
-    \x02\x01\x12\x04\xe4\x06\x02\x12\x1a\x88\x03\x20Used\x20for\x20optimisti\
-    c\x20concurrency\x20control\x20as\x20a\x20way\x20to\x20help\x20prevent\n\
-    \x20simultaneous\x20deletes\x20of\x20an\x20instance\x20config\x20from\
-    \x20overwriting\x20each\n\x20other.\x20If\x20not\x20empty,\x20the\x20API\
-    \n\x20only\x20deletes\x20the\x20instance\x20config\x20when\x20the\x20eta\
-    g\x20provided\x20matches\x20the\x20current\n\x20status\x20of\x20the\x20r\
-    equested\x20instance\x20config.\x20Otherwise,\x20deletes\x20the\x20insta\
-    nce\n\x20config\x20without\x20checking\x20the\x20current\x20status\x20of\
-    \x20the\x20requested\x20instance\n\x20config.\n\n\r\n\x05\x04\t\x02\x01\
-    \x05\x12\x04\xe4\x06\x02\x08\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xe4\x06\
-    \t\r\n\r\n\x05\x04\t\x02\x01\x03\x12\x04\xe4\x06\x10\x11\nk\n\x04\x04\t\
-    \x02\x02\x12\x04\xe8\x06\x02\x19\x1a]\x20An\x20option\x20to\x20validate,\
+    \n\n\r\n\x05\x06\0\x02\n\x01\x12\x04\xd5\x02\x06\x14\n\r\n\x05\x06\0\x02\
+    \n\x02\x12\x04\xd5\x02\x15*\n\r\n\x05\x06\0\x02\n\x03\x12\x04\xd6\x02\
+    \x0f+\n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\xd7\x02\x04\xda\x02\x06\n\x13\
+    \n\t\x06\0\x02\n\x04\xb0\xca\xbc\"\x12\x06\xd7\x02\x04\xda\x02\x06\n\r\n\
+    \x05\x06\0\x02\n\x04\x12\x04\xdb\x02\x04A\n\x10\n\x08\x06\0\x02\n\x04\
+    \x9b\x08\0\x12\x04\xdb\x02\x04A\n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\xdc\
+    \x02\x04\xdf\x02\x06\n\x11\n\x07\x06\0\x02\n\x04\x99\x08\x12\x06\xdc\x02\
+    \x04\xdf\x02\x06\n\xc8\x02\n\x04\x06\0\x02\x0b\x12\x06\xed\x02\x02\xf2\
+    \x02\x03\x1a\xb7\x02\x20Deletes\x20an\x20instance.\n\n\x20Immediately\
+    \x20upon\x20completion\x20of\x20the\x20request:\n\n\x20\x20\x20*\x20Bill\
+    ing\x20ceases\x20for\x20all\x20of\x20the\x20instance's\x20reserved\x20re\
+    sources.\n\n\x20Soon\x20afterward:\n\n\x20\x20\x20*\x20The\x20instance\
+    \x20and\x20*all\x20of\x20its\x20databases*\x20immediately\x20and\n\x20\
+    \x20\x20\x20\x20irrevocably\x20disappear\x20from\x20the\x20API.\x20All\
+    \x20data\x20in\x20the\x20databases\n\x20\x20\x20\x20\x20is\x20permanentl\
+    y\x20deleted.\n\n\r\n\x05\x06\0\x02\x0b\x01\x12\x04\xed\x02\x06\x14\n\r\
+    \n\x05\x06\0\x02\x0b\x02\x12\x04\xed\x02\x15*\n\r\n\x05\x06\0\x02\x0b\
+    \x03\x12\x04\xed\x025J\n\x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\xee\x02\x04\
+    \xf0\x02\x06\n\x13\n\t\x06\0\x02\x0b\x04\xb0\xca\xbc\"\x12\x06\xee\x02\
+    \x04\xf0\x02\x06\n\r\n\x05\x06\0\x02\x0b\x04\x12\x04\xf1\x02\x042\n\x10\
+    \n\x08\x06\0\x02\x0b\x04\x9b\x08\0\x12\x04\xf1\x02\x042\n\xdf\x01\n\x04\
+    \x06\0\x02\x0c\x12\x06\xf9\x02\x02\x80\x03\x03\x1a\xce\x01\x20Sets\x20th\
+    e\x20access\x20control\x20policy\x20on\x20an\x20instance\x20resource.\
+    \x20Replaces\x20any\n\x20existing\x20policy.\n\n\x20Authorization\x20req\
+    uires\x20`spanner.instances.setIamPolicy`\x20on\n\x20[resource][google.i\
+    am.v1.SetIamPolicyRequest.resource].\n\n\r\n\x05\x06\0\x02\x0c\x01\x12\
+    \x04\xf9\x02\x06\x12\n\r\n\x05\x06\0\x02\x0c\x02\x12\x04\xf9\x02\x134\n\
+    \r\n\x05\x06\0\x02\x0c\x03\x12\x04\xfa\x02\x0f#\n\x0f\n\x05\x06\0\x02\
+    \x0c\x04\x12\x06\xfb\x02\x04\xfe\x02\x06\n\x13\n\t\x06\0\x02\x0c\x04\xb0\
+    \xca\xbc\"\x12\x06\xfb\x02\x04\xfe\x02\x06\n\r\n\x05\x06\0\x02\x0c\x04\
+    \x12\x04\xff\x02\x04=\n\x10\n\x08\x06\0\x02\x0c\x04\x9b\x08\0\x12\x04\
+    \xff\x02\x04=\n\x90\x02\n\x04\x06\0\x02\r\x12\x06\x87\x03\x02\x8e\x03\
+    \x03\x1a\xff\x01\x20Gets\x20the\x20access\x20control\x20policy\x20for\
+    \x20an\x20instance\x20resource.\x20Returns\x20an\x20empty\n\x20policy\
+    \x20if\x20an\x20instance\x20exists\x20but\x20does\x20not\x20have\x20a\
+    \x20policy\x20set.\n\n\x20Authorization\x20requires\x20`spanner.instance\
+    s.getIamPolicy`\x20on\n\x20[resource][google.iam.v1.GetIamPolicyRequest.\
+    resource].\n\n\r\n\x05\x06\0\x02\r\x01\x12\x04\x87\x03\x06\x12\n\r\n\x05\
+    \x06\0\x02\r\x02\x12\x04\x87\x03\x134\n\r\n\x05\x06\0\x02\r\x03\x12\x04\
+    \x88\x03\x0f#\n\x0f\n\x05\x06\0\x02\r\x04\x12\x06\x89\x03\x04\x8c\x03\
+    \x06\n\x13\n\t\x06\0\x02\r\x04\xb0\xca\xbc\"\x12\x06\x89\x03\x04\x8c\x03\
+    \x06\n\r\n\x05\x06\0\x02\r\x04\x12\x04\x8d\x03\x046\n\x10\n\x08\x06\0\
+    \x02\r\x04\x9b\x08\0\x12\x04\x8d\x03\x046\n\xd5\x02\n\x04\x06\0\x02\x0e\
+    \x12\x06\x96\x03\x02\x9d\x03\x03\x1a\xc4\x02\x20Returns\x20permissions\
+    \x20that\x20the\x20caller\x20has\x20on\x20the\x20specified\x20instance\
+    \x20resource.\n\n\x20Attempting\x20this\x20RPC\x20on\x20a\x20non-existen\
+    t\x20Cloud\x20Spanner\x20instance\x20resource\x20will\n\x20result\x20in\
+    \x20a\x20NOT_FOUND\x20error\x20if\x20the\x20user\x20has\x20`spanner.inst\
+    ances.list`\n\x20permission\x20on\x20the\x20containing\x20Google\x20Clou\
+    d\x20Project.\x20Otherwise\x20returns\x20an\n\x20empty\x20set\x20of\x20p\
+    ermissions.\n\n\r\n\x05\x06\0\x02\x0e\x01\x12\x04\x96\x03\x06\x18\n\r\n\
+    \x05\x06\0\x02\x0e\x02\x12\x04\x96\x03\x19@\n\r\n\x05\x06\0\x02\x0e\x03\
+    \x12\x04\x97\x03\x0f7\n\x0f\n\x05\x06\0\x02\x0e\x04\x12\x06\x98\x03\x04\
+    \x9b\x03\x06\n\x13\n\t\x06\0\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\x98\x03\
+    \x04\x9b\x03\x06\n\r\n\x05\x06\0\x02\x0e\x04\x12\x04\x9c\x03\x04B\n\x10\
+    \n\x08\x06\0\x02\x0e\x04\x9b\x08\0\x12\x04\x9c\x03\x04B\nI\n\x04\x06\0\
+    \x02\x0f\x12\x06\xa0\x03\x02\xa6\x03\x03\x1a9\x20Gets\x20information\x20\
+    about\x20a\x20particular\x20instance\x20partition.\n\n\r\n\x05\x06\0\x02\
+    \x0f\x01\x12\x04\xa0\x03\x06\x1a\n\r\n\x05\x06\0\x02\x0f\x02\x12\x04\xa0\
+    \x03\x1b6\n\r\n\x05\x06\0\x02\x0f\x03\x12\x04\xa1\x03\x0f\x20\n\x0f\n\
+    \x05\x06\0\x02\x0f\x04\x12\x06\xa2\x03\x04\xa4\x03\x06\n\x13\n\t\x06\0\
+    \x02\x0f\x04\xb0\xca\xbc\"\x12\x06\xa2\x03\x04\xa4\x03\x06\n\r\n\x05\x06\
+    \0\x02\x0f\x04\x12\x04\xa5\x03\x042\n\x10\n\x08\x06\0\x02\x0f\x04\x9b\
+    \x08\0\x12\x04\xa5\x03\x042\n\xd9\r\n\x04\x06\0\x02\x10\x12\x06\xcd\x03\
+    \x02\xd9\x03\x03\x1a\xc8\r\x20Creates\x20an\x20instance\x20partition\x20\
+    and\x20begins\x20preparing\x20it\x20to\x20be\x20used.\x20The\n\x20return\
+    ed\x20[long-running\x20operation][google.longrunning.Operation]\n\x20can\
+    \x20be\x20used\x20to\x20track\x20the\x20progress\x20of\x20preparing\x20t\
+    he\x20new\x20instance\x20partition.\n\x20The\x20instance\x20partition\
+    \x20name\x20is\x20assigned\x20by\x20the\x20caller.\x20If\x20the\x20named\
+    \n\x20instance\x20partition\x20already\x20exists,\x20`CreateInstancePart\
+    ition`\x20returns\n\x20`ALREADY_EXISTS`.\n\n\x20Immediately\x20upon\x20c\
+    ompletion\x20of\x20this\x20request:\n\n\x20\x20\x20*\x20The\x20instance\
+    \x20partition\x20is\x20readable\x20via\x20the\x20API,\x20with\x20all\x20\
+    requested\n\x20\x20\x20\x20\x20attributes\x20but\x20no\x20allocated\x20r\
+    esources.\x20Its\x20state\x20is\x20`CREATING`.\n\n\x20Until\x20completio\
+    n\x20of\x20the\x20returned\x20operation:\n\n\x20\x20\x20*\x20Cancelling\
+    \x20the\x20operation\x20renders\x20the\x20instance\x20partition\x20immed\
+    iately\n\x20\x20\x20\x20\x20unreadable\x20via\x20the\x20API.\n\x20\x20\
+    \x20*\x20The\x20instance\x20partition\x20can\x20be\x20deleted.\n\x20\x20\
+    \x20*\x20All\x20other\x20attempts\x20to\x20modify\x20the\x20instance\x20\
+    partition\x20are\x20rejected.\n\n\x20Upon\x20completion\x20of\x20the\x20\
+    returned\x20operation:\n\n\x20\x20\x20*\x20Billing\x20for\x20all\x20succ\
+    essfully-allocated\x20resources\x20begins\x20(some\x20types\n\x20\x20\
+    \x20\x20\x20may\x20have\x20lower\x20than\x20the\x20requested\x20levels).\
+    \n\x20\x20\x20*\x20Databases\x20can\x20start\x20using\x20this\x20instanc\
+    e\x20partition.\n\x20\x20\x20*\x20The\x20instance\x20partition's\x20allo\
+    cated\x20resource\x20levels\x20are\x20readable\x20via\x20the\n\x20\x20\
+    \x20\x20\x20API.\n\x20\x20\x20*\x20The\x20instance\x20partition's\x20sta\
+    te\x20becomes\x20`READY`.\n\n\x20The\x20returned\x20[long-running\x20ope\
+    ration][google.longrunning.Operation]\x20will\n\x20have\x20a\x20name\x20\
+    of\x20the\x20format\n\x20`<instance_partition_name>/operations/<operatio\
+    n_id>`\x20and\x20can\x20be\x20used\x20to\n\x20track\x20creation\x20of\
+    \x20the\x20instance\x20partition.\x20\x20The\n\x20[metadata][google.long\
+    running.Operation.metadata]\x20field\x20type\x20is\n\x20[CreateInstanceP\
+    artitionMetadata][google.spanner.admin.instance.v1.CreateInstancePartiti\
+    onMetadata].\n\x20The\x20[response][google.longrunning.Operation.respons\
+    e]\x20field\x20type\x20is\n\x20[InstancePartition][google.spanner.admin.\
+    instance.v1.InstancePartition],\x20if\n\x20successful.\n\n\r\n\x05\x06\0\
+    \x02\x10\x01\x12\x04\xcd\x03\x06\x1d\n\r\n\x05\x06\0\x02\x10\x02\x12\x04\
+    \xcd\x03\x1e<\n\r\n\x05\x06\0\x02\x10\x03\x12\x04\xce\x03\x0f+\n\x0f\n\
+    \x05\x06\0\x02\x10\x04\x12\x06\xcf\x03\x04\xd2\x03\x06\n\x13\n\t\x06\0\
+    \x02\x10\x04\xb0\xca\xbc\"\x12\x06\xcf\x03\x04\xd2\x03\x06\n\x0f\n\x05\
+    \x06\0\x02\x10\x04\x12\x06\xd3\x03\x04\xd4\x03:\n\x12\n\x08\x06\0\x02\
+    \x10\x04\x9b\x08\0\x12\x06\xd3\x03\x04\xd4\x03:\n\x0f\n\x05\x06\0\x02\
+    \x10\x04\x12\x06\xd5\x03\x04\xd8\x03\x06\n\x11\n\x07\x06\0\x02\x10\x04\
+    \x99\x08\x12\x06\xd5\x03\x04\xd8\x03\x06\n\xdc\x02\n\x04\x06\0\x02\x11\
+    \x12\x06\xe2\x03\x02\xe8\x03\x03\x1a\xcb\x02\x20Deletes\x20an\x20existin\
+    g\x20instance\x20partition.\x20Requires\x20that\x20the\n\x20instance\x20\
+    partition\x20is\x20not\x20used\x20by\x20any\x20database\x20or\x20backup\
+    \x20and\x20is\x20not\x20the\n\x20default\x20instance\x20partition\x20of\
+    \x20an\x20instance.\n\n\x20Authorization\x20requires\x20`spanner.instanc\
+    ePartitions.delete`\x20permission\x20on\n\x20the\x20resource\n\x20[name]\
+    [google.spanner.admin.instance.v1.InstancePartition.name].\n\n\r\n\x05\
+    \x06\0\x02\x11\x01\x12\x04\xe2\x03\x06\x1d\n\r\n\x05\x06\0\x02\x11\x02\
+    \x12\x04\xe2\x03\x1e<\n\r\n\x05\x06\0\x02\x11\x03\x12\x04\xe3\x03\x0f$\n\
+    \x0f\n\x05\x06\0\x02\x11\x04\x12\x06\xe4\x03\x04\xe6\x03\x06\n\x13\n\t\
+    \x06\0\x02\x11\x04\xb0\xca\xbc\"\x12\x06\xe4\x03\x04\xe6\x03\x06\n\r\n\
+    \x05\x06\0\x02\x11\x04\x12\x04\xe7\x03\x042\n\x10\n\x08\x06\0\x02\x11\
+    \x04\x9b\x08\0\x12\x04\xe7\x03\x042\n\xe2\x10\n\x04\x06\0\x02\x12\x12\
+    \x06\x96\x04\x02\xa1\x04\x03\x1a\xd1\x10\x20Updates\x20an\x20instance\
+    \x20partition,\x20and\x20begins\x20allocating\x20or\x20releasing\x20reso\
+    urces\n\x20as\x20requested.\x20The\x20returned\x20[long-running\n\x20ope\
+    ration][google.longrunning.Operation]\x20can\x20be\x20used\x20to\x20trac\
+    k\x20the\n\x20progress\x20of\x20updating\x20the\x20instance\x20partition\
+    .\x20If\x20the\x20named\x20instance\n\x20partition\x20does\x20not\x20exi\
+    st,\x20returns\x20`NOT_FOUND`.\n\n\x20Immediately\x20upon\x20completion\
+    \x20of\x20this\x20request:\n\n\x20\x20\x20*\x20For\x20resource\x20types\
+    \x20for\x20which\x20a\x20decrease\x20in\x20the\x20instance\x20partition'\
+    s\n\x20\x20\x20allocation\x20has\x20been\x20requested,\x20billing\x20is\
+    \x20based\x20on\x20the\x20newly-requested\n\x20\x20\x20level.\n\n\x20Unt\
+    il\x20completion\x20of\x20the\x20returned\x20operation:\n\n\x20\x20\x20*\
+    \x20Cancelling\x20the\x20operation\x20sets\x20its\x20metadata's\n\x20\
+    \x20\x20\x20\x20[cancel_time][google.spanner.admin.instance.v1.UpdateIns\
+    tancePartitionMetadata.cancel_time],\n\x20\x20\x20\x20\x20and\x20begins\
+    \x20restoring\x20resources\x20to\x20their\x20pre-request\x20values.\x20T\
+    he\n\x20\x20\x20\x20\x20operation\x20is\x20guaranteed\x20to\x20succeed\
+    \x20at\x20undoing\x20all\x20resource\x20changes,\n\x20\x20\x20\x20\x20af\
+    ter\x20which\x20point\x20it\x20terminates\x20with\x20a\x20`CANCELLED`\
+    \x20status.\n\x20\x20\x20*\x20All\x20other\x20attempts\x20to\x20modify\
+    \x20the\x20instance\x20partition\x20are\x20rejected.\n\x20\x20\x20*\x20R\
+    eading\x20the\x20instance\x20partition\x20via\x20the\x20API\x20continues\
+    \x20to\x20give\x20the\n\x20\x20\x20\x20\x20pre-request\x20resource\x20le\
+    vels.\n\n\x20Upon\x20completion\x20of\x20the\x20returned\x20operation:\n\
+    \n\x20\x20\x20*\x20Billing\x20begins\x20for\x20all\x20successfully-alloc\
+    ated\x20resources\x20(some\x20types\n\x20\x20\x20\x20\x20may\x20have\x20\
+    lower\x20than\x20the\x20requested\x20levels).\n\x20\x20\x20*\x20All\x20n\
+    ewly-reserved\x20resources\x20are\x20available\x20for\x20serving\x20the\
+    \x20instance\n\x20\x20\x20\x20\x20partition's\x20tables.\n\x20\x20\x20*\
+    \x20The\x20instance\x20partition's\x20new\x20resource\x20levels\x20are\
+    \x20readable\x20via\x20the\x20API.\n\n\x20The\x20returned\x20[long-runni\
+    ng\x20operation][google.longrunning.Operation]\x20will\n\x20have\x20a\
+    \x20name\x20of\x20the\x20format\n\x20`<instance_partition_name>/operatio\
+    ns/<operation_id>`\x20and\x20can\x20be\x20used\x20to\n\x20track\x20the\
+    \x20instance\x20partition\x20modification.\x20The\n\x20[metadata][google\
+    .longrunning.Operation.metadata]\x20field\x20type\x20is\n\x20[UpdateInst\
+    ancePartitionMetadata][google.spanner.admin.instance.v1.UpdateInstancePa\
+    rtitionMetadata].\n\x20The\x20[response][google.longrunning.Operation.re\
+    sponse]\x20field\x20type\x20is\n\x20[InstancePartition][google.spanner.a\
+    dmin.instance.v1.InstancePartition],\x20if\n\x20successful.\n\n\x20Autho\
+    rization\x20requires\x20`spanner.instancePartitions.update`\x20permissio\
+    n\x20on\n\x20the\x20resource\n\x20[name][google.spanner.admin.instance.v\
+    1.InstancePartition.name].\n\n\r\n\x05\x06\0\x02\x12\x01\x12\x04\x96\x04\
+    \x06\x1d\n\r\n\x05\x06\0\x02\x12\x02\x12\x04\x96\x04\x1e<\n\r\n\x05\x06\
+    \0\x02\x12\x03\x12\x04\x97\x04\x0f+\n\x0f\n\x05\x06\0\x02\x12\x04\x12\
+    \x06\x98\x04\x04\x9b\x04\x06\n\x13\n\t\x06\0\x02\x12\x04\xb0\xca\xbc\"\
+    \x12\x06\x98\x04\x04\x9b\x04\x06\n\r\n\x05\x06\0\x02\x12\x04\x12\x04\x9c\
+    \x04\x04K\n\x10\n\x08\x06\0\x02\x12\x04\x9b\x08\0\x12\x04\x9c\x04\x04K\n\
+    \x0f\n\x05\x06\0\x02\x12\x04\x12\x06\x9d\x04\x04\xa0\x04\x06\n\x11\n\x07\
+    \x06\0\x02\x12\x04\x99\x08\x12\x06\x9d\x04\x04\xa0\x04\x06\n\xf6\x06\n\
+    \x04\x06\0\x02\x13\x12\x06\xb2\x04\x02\xb8\x04\x03\x1a\xe5\x06\x20Lists\
+    \x20instance\x20partition\x20[long-running\n\x20operations][google.longr\
+    unning.Operation]\x20in\x20the\x20given\x20instance.\n\x20An\x20instance\
+    \x20partition\x20operation\x20has\x20a\x20name\x20of\x20the\x20form\n\
+    \x20`projects/<project>/instances/<instance>/instancePartitions/<instanc\
+    e_partition>/operations/<operation>`.\n\x20The\x20long-running\x20operat\
+    ion\n\x20[metadata][google.longrunning.Operation.metadata]\x20field\x20t\
+    ype\n\x20`metadata.type_url`\x20describes\x20the\x20type\x20of\x20the\
+    \x20metadata.\x20Operations\x20returned\n\x20include\x20those\x20that\
+    \x20have\x20completed/failed/canceled\x20within\x20the\x20last\x207\x20d\
+    ays,\n\x20and\x20pending\x20operations.\x20Operations\x20returned\x20are\
+    \x20ordered\x20by\n\x20`operation.metadata.value.start_time`\x20in\x20de\
+    scending\x20order\x20starting\x20from\x20the\n\x20most\x20recently\x20st\
+    arted\x20operation.\n\n\x20Authorization\x20requires\x20`spanner.instanc\
+    ePartitionOperations.list`\n\x20permission\x20on\x20the\x20resource\n\
+    \x20[parent][google.spanner.admin.instance.v1.ListInstancePartitionOpera\
+    tionsRequest.parent].\n\n\r\n\x05\x06\0\x02\x13\x01\x12\x04\xb2\x04\x06%\
+    \n\r\n\x05\x06\0\x02\x13\x02\x12\x04\xb2\x04&L\n\r\n\x05\x06\0\x02\x13\
+    \x03\x12\x04\xb3\x04\x0f6\n\x0f\n\x05\x06\0\x02\x13\x04\x12\x06\xb4\x04\
+    \x04\xb6\x04\x06\n\x13\n\t\x06\0\x02\x13\x04\xb0\xca\xbc\"\x12\x06\xb4\
+    \x04\x04\xb6\x04\x06\n\r\n\x05\x06\0\x02\x13\x04\x12\x04\xb7\x04\x044\n\
+    \x10\n\x08\x06\0\x02\x13\x04\x9b\x08\0\x12\x04\xb7\x04\x044\n\x0c\n\x02\
+    \x04\0\x12\x06\xbb\x04\0\xe9\x04\x01\n\x0b\n\x03\x04\0\x01\x12\x04\xbb\
+    \x04\x08\x13\n\xad\x01\n\x04\x04\0\x04\0\x12\x06\xbf\x04\x02\xdc\x04\x03\
+    \x1a\x9c\x01\x20Indicates\x20the\x20type\x20of\x20replica.\x20\x20See\
+    \x20the\x20[replica\x20types\n\x20documentation](https://cloud.google.co\
+    m/spanner/docs/replication#replica_types)\n\x20for\x20more\x20details.\n\
+    \n\r\n\x05\x04\0\x04\0\x01\x12\x04\xbf\x04\x07\x12\n\x20\n\x06\x04\0\x04\
+    \0\x02\0\x12\x04\xc1\x04\x04\x19\x1a\x10\x20Not\x20specified.\n\n\x0f\n\
+    \x07\x04\0\x04\0\x02\0\x01\x12\x04\xc1\x04\x04\x14\n\x0f\n\x07\x04\0\x04\
+    \0\x02\0\x02\x12\x04\xc1\x04\x17\x18\n\xfe\x01\n\x06\x04\0\x04\0\x02\x01\
+    \x12\x04\xca\x04\x04\x13\x1a\xed\x01\x20Read-write\x20replicas\x20suppor\
+    t\x20both\x20reads\x20and\x20writes.\x20These\x20replicas:\n\n\x20*\x20M\
+    aintain\x20a\x20full\x20copy\x20of\x20your\x20data.\n\x20*\x20Serve\x20r\
+    eads.\n\x20*\x20Can\x20vote\x20whether\x20to\x20commit\x20a\x20write.\n\
+    \x20*\x20Participate\x20in\x20leadership\x20election.\n\x20*\x20Are\x20e\
+    ligible\x20to\x20become\x20a\x20leader.\n\n\x0f\n\x07\x04\0\x04\0\x02\
+    \x01\x01\x12\x04\xca\x04\x04\x0e\n\x0f\n\x07\x04\0\x04\0\x02\x01\x02\x12\
+    \x04\xca\x04\x11\x12\n\xeb\x01\n\x06\x04\0\x04\0\x02\x02\x12\x04\xd2\x04\
+    \x04\x12\x1a\xda\x01\x20Read-only\x20replicas\x20only\x20support\x20read\
+    s\x20(not\x20writes).\x20Read-only\x20replicas:\n\n\x20*\x20Maintain\x20\
+    a\x20full\x20copy\x20of\x20your\x20data.\n\x20*\x20Serve\x20reads.\n\x20\
+    *\x20Do\x20not\x20participate\x20in\x20voting\x20to\x20commit\x20writes.\
+    \n\x20*\x20Are\x20not\x20eligible\x20to\x20become\x20a\x20leader.\n\n\
+    \x0f\n\x07\x04\0\x04\0\x02\x02\x01\x12\x04\xd2\x04\x04\r\n\x0f\n\x07\x04\
+    \0\x04\0\x02\x02\x02\x12\x04\xd2\x04\x10\x11\n\xa4\x02\n\x06\x04\0\x04\0\
+    \x02\x03\x12\x04\xdb\x04\x04\x10\x1a\x93\x02\x20Witness\x20replicas\x20d\
+    on't\x20support\x20reads\x20but\x20do\x20participate\x20in\x20voting\x20\
+    to\n\x20commit\x20writes.\x20Witness\x20replicas:\n\n\x20*\x20Do\x20not\
+    \x20maintain\x20a\x20full\x20copy\x20of\x20data.\n\x20*\x20Do\x20not\x20\
+    serve\x20reads.\n\x20*\x20Vote\x20whether\x20to\x20commit\x20writes.\n\
+    \x20*\x20Participate\x20in\x20leader\x20election\x20but\x20are\x20not\
+    \x20eligible\x20to\x20become\x20leader.\n\n\x0f\n\x07\x04\0\x04\0\x02\
+    \x03\x01\x12\x04\xdb\x04\x04\x0b\n\x0f\n\x07\x04\0\x04\0\x02\x03\x02\x12\
+    \x04\xdb\x04\x0e\x0f\nJ\n\x04\x04\0\x02\0\x12\x04\xdf\x04\x02\x16\x1a<\
+    \x20The\x20location\x20of\x20the\x20serving\x20resources,\x20e.g.\x20\"u\
+    s-central1\".\n\n\r\n\x05\x04\0\x02\0\x05\x12\x04\xdf\x04\x02\x08\n\r\n\
+    \x05\x04\0\x02\0\x01\x12\x04\xdf\x04\t\x11\n\r\n\x05\x04\0\x02\0\x03\x12\
+    \x04\xdf\x04\x14\x15\n$\n\x04\x04\0\x02\x01\x12\x04\xe2\x04\x02\x17\x1a\
+    \x16\x20The\x20type\x20of\x20replica.\n\n\r\n\x05\x04\0\x02\x01\x06\x12\
+    \x04\xe2\x04\x02\r\n\r\n\x05\x04\0\x02\x01\x01\x12\x04\xe2\x04\x0e\x12\n\
+    \r\n\x05\x04\0\x02\x01\x03\x12\x04\xe2\x04\x15\x16\n\xee\x01\n\x04\x04\0\
+    \x02\x02\x12\x04\xe8\x04\x02#\x1a\xdf\x01\x20If\x20true,\x20this\x20loca\
+    tion\x20is\x20designated\x20as\x20the\x20default\x20leader\x20location\
+    \x20where\n\x20leader\x20replicas\x20are\x20placed.\x20See\x20the\x20[re\
+    gion\x20types\n\x20documentation](https://cloud.google.com/spanner/docs/\
+    instances#region_types)\n\x20for\x20more\x20details.\n\n\r\n\x05\x04\0\
+    \x02\x02\x05\x12\x04\xe8\x04\x02\x06\n\r\n\x05\x04\0\x02\x02\x01\x12\x04\
+    \xe8\x04\x07\x1e\n\r\n\x05\x04\0\x02\x02\x03\x12\x04\xe8\x04!\"\n\x97\
+    \x01\n\x02\x04\x01\x12\x06\xed\x04\0\xd6\x05\x01\x1a\x88\x01\x20A\x20pos\
+    sible\x20configuration\x20for\x20a\x20Cloud\x20Spanner\x20instance.\x20C\
+    onfigurations\n\x20define\x20the\x20geographic\x20placement\x20of\x20nod\
+    es\x20and\x20their\x20replication.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\xed\
+    \x04\x08\x16\n\r\n\x03\x04\x01\x07\x12\x06\xee\x04\x02\xf1\x04\x04\n\x0f\
+    \n\x05\x04\x01\x07\x9d\x08\x12\x06\xee\x04\x02\xf1\x04\x04\n1\n\x04\x04\
+    \x01\x04\0\x12\x06\xf4\x04\x02\xfd\x04\x03\x1a!\x20The\x20type\x20of\x20\
+    this\x20configuration.\n\n\r\n\x05\x04\x01\x04\0\x01\x12\x04\xf4\x04\x07\
+    \x0b\n\x1e\n\x06\x04\x01\x04\0\x02\0\x12\x04\xf6\x04\x04\x19\x1a\x0e\x20\
+    Unspecified.\n\n\x0f\n\x07\x04\x01\x04\0\x02\0\x01\x12\x04\xf6\x04\x04\
+    \x14\n\x0f\n\x07\x04\x01\x04\0\x02\0\x02\x12\x04\xf6\x04\x17\x18\n/\n\
+    \x06\x04\x01\x04\0\x02\x01\x12\x04\xf9\x04\x04\x17\x1a\x1f\x20Google\x20\
+    managed\x20configuration.\n\n\x0f\n\x07\x04\x01\x04\0\x02\x01\x01\x12\
+    \x04\xf9\x04\x04\x12\n\x0f\n\x07\x04\x01\x04\0\x02\x01\x02\x12\x04\xf9\
+    \x04\x15\x16\n-\n\x06\x04\x01\x04\0\x02\x02\x12\x04\xfc\x04\x04\x15\x1a\
+    \x1d\x20User\x20managed\x20configuration.\n\n\x0f\n\x07\x04\x01\x04\0\
+    \x02\x02\x01\x12\x04\xfc\x04\x04\x10\n\x0f\n\x07\x04\x01\x04\0\x02\x02\
+    \x02\x12\x04\xfc\x04\x13\x14\nE\n\x04\x04\x01\x04\x01\x12\x06\x80\x05\
+    \x02\x8a\x05\x03\x1a5\x20Indicates\x20the\x20current\x20state\x20of\x20t\
+    he\x20instance\x20config.\n\n\r\n\x05\x04\x01\x04\x01\x01\x12\x04\x80\
+    \x05\x07\x0c\n\x20\n\x06\x04\x01\x04\x01\x02\0\x12\x04\x82\x05\x04\x1a\
+    \x1a\x10\x20Not\x20specified.\n\n\x0f\n\x07\x04\x01\x04\x01\x02\0\x01\
+    \x12\x04\x82\x05\x04\x15\n\x0f\n\x07\x04\x01\x04\x01\x02\0\x02\x12\x04\
+    \x82\x05\x18\x19\n=\n\x06\x04\x01\x04\x01\x02\x01\x12\x04\x85\x05\x04\
+    \x11\x1a-\x20The\x20instance\x20config\x20is\x20still\x20being\x20create\
+    d.\n\n\x0f\n\x07\x04\x01\x04\x01\x02\x01\x01\x12\x04\x85\x05\x04\x0c\n\
+    \x0f\n\x07\x04\x01\x04\x01\x02\x01\x02\x12\x04\x85\x05\x0f\x10\na\n\x06\
+    \x04\x01\x04\x01\x02\x02\x12\x04\x89\x05\x04\x0e\x1aQ\x20The\x20instance\
+    \x20config\x20is\x20fully\x20created\x20and\x20ready\x20to\x20be\x20used\
+    \x20to\x20create\n\x20instances.\n\n\x0f\n\x07\x04\x01\x04\x01\x02\x02\
+    \x01\x12\x04\x89\x05\x04\t\n\x0f\n\x07\x04\x01\x04\x01\x02\x02\x02\x12\
+    \x04\x89\x05\x0c\r\n\x94\x01\n\x04\x04\x01\x02\0\x12\x04\x8f\x05\x02\x12\
+    \x1a\x85\x01\x20A\x20unique\x20identifier\x20for\x20the\x20instance\x20c\
+    onfiguration.\x20\x20Values\n\x20are\x20of\x20the\x20form\n\x20`projects\
+    /<project>/instanceConfigs/[a-z][-a-z0-9]*`.\n\n\r\n\x05\x04\x01\x02\0\
+    \x05\x12\x04\x8f\x05\x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x8f\x05\
+    \t\r\n\r\n\x05\x04\x01\x02\0\x03\x12\x04\x8f\x05\x10\x11\nM\n\x04\x04\
+    \x01\x02\x01\x12\x04\x92\x05\x02\x1a\x1a?\x20The\x20name\x20of\x20this\
+    \x20instance\x20configuration\x20as\x20it\x20appears\x20in\x20UIs.\n\n\r\
+    \n\x05\x04\x01\x02\x01\x05\x12\x04\x92\x05\x02\x08\n\r\n\x05\x04\x01\x02\
+    \x01\x01\x12\x04\x92\x05\t\x15\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x92\
+    \x05\x18\x19\ne\n\x04\x04\x01\x02\x02\x12\x04\x96\x05\x02C\x1aW\x20Outpu\
+    t\x20only.\x20Whether\x20this\x20instance\x20config\x20is\x20a\x20Google\
+    \x20or\x20User\x20Managed\n\x20Configuration.\n\n\r\n\x05\x04\x01\x02\
+    \x02\x06\x12\x04\x96\x05\x02\x06\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\
+    \x96\x05\x07\x12\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\x96\x05\x15\x16\n\
+    \r\n\x05\x04\x01\x02\x02\x08\x12\x04\x96\x05\x17B\n\x10\n\x08\x04\x01\
+    \x02\x02\x08\x9c\x08\0\x12\x04\x96\x05\x18A\ns\n\x04\x04\x01\x02\x03\x12\
+    \x04\x9a\x05\x02$\x1ae\x20The\x20geographic\x20placement\x20of\x20nodes\
+    \x20in\x20this\x20instance\x20configuration\x20and\x20their\n\x20replica\
+    tion\x20properties.\n\n\r\n\x05\x04\x01\x02\x03\x04\x12\x04\x9a\x05\x02\
+    \n\n\r\n\x05\x04\x01\x02\x03\x06\x12\x04\x9a\x05\x0b\x16\n\r\n\x05\x04\
+    \x01\x02\x03\x01\x12\x04\x9a\x05\x17\x1f\n\r\n\x05\x04\x01\x02\x03\x03\
+    \x12\x04\x9a\x05\"#\n\x9d\x01\n\x04\x04\x01\x02\x04\x12\x06\x9e\x05\x02\
+    \x9f\x052\x1a\x8c\x01\x20Output\x20only.\x20The\x20available\x20optional\
+    \x20replicas\x20to\x20choose\x20from\x20for\x20user\n\x20managed\x20conf\
+    igurations.\x20Populated\x20for\x20Google\x20managed\x20configurations.\
+    \n\n\r\n\x05\x04\x01\x02\x04\x04\x12\x04\x9e\x05\x02\n\n\r\n\x05\x04\x01\
+    \x02\x04\x06\x12\x04\x9e\x05\x0b\x16\n\r\n\x05\x04\x01\x02\x04\x01\x12\
+    \x04\x9e\x05\x17(\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\x9e\x05+,\n\r\n\
+    \x05\x04\x01\x02\x04\x08\x12\x04\x9f\x05\x061\n\x10\n\x08\x04\x01\x02\
+    \x04\x08\x9c\x08\0\x12\x04\x9f\x05\x070\n\xa7\x02\n\x04\x04\x01\x02\x05\
+    \x12\x06\xa5\x05\x02\xa7\x05\x05\x1a\x96\x02\x20Base\x20configuration\
+    \x20name,\x20e.g.\x20projects/<project_name>/instanceConfigs/nam3,\n\x20\
+    based\x20on\x20which\x20this\x20configuration\x20is\x20created.\x20Only\
+    \x20set\x20for\x20user\x20managed\n\x20configurations.\x20`base_config`\
+    \x20must\x20refer\x20to\x20a\x20configuration\x20of\x20type\n\x20GOOGLE_\
+    MANAGED\x20in\x20the\x20same\x20project\x20as\x20this\x20configuration.\
+    \n\n\r\n\x05\x04\x01\x02\x05\x05\x12\x04\xa5\x05\x02\x08\n\r\n\x05\x04\
+    \x01\x02\x05\x01\x12\x04\xa5\x05\t\x14\n\r\n\x05\x04\x01\x02\x05\x03\x12\
+    \x04\xa5\x05\x17\x18\n\x0f\n\x05\x04\x01\x02\x05\x08\x12\x06\xa5\x05\x19\
+    \xa7\x05\x04\n\x11\n\x07\x04\x01\x02\x05\x08\x9f\x08\x12\x06\xa5\x05\x1a\
+    \xa7\x05\x03\n\xd5\t\n\x04\x04\x01\x02\x06\x12\x04\xbe\x05\x02!\x1a\xc6\
+    \t\x20Cloud\x20Labels\x20are\x20a\x20flexible\x20and\x20lightweight\x20m\
+    echanism\x20for\x20organizing\x20cloud\n\x20resources\x20into\x20groups\
+    \x20that\x20reflect\x20a\x20customer's\x20organizational\x20needs\x20and\
+    \n\x20deployment\x20strategies.\x20Cloud\x20Labels\x20can\x20be\x20used\
+    \x20to\x20filter\x20collections\x20of\n\x20resources.\x20They\x20can\x20\
+    be\x20used\x20to\x20control\x20how\x20resource\x20metrics\x20are\x20aggr\
+    egated.\n\x20And\x20they\x20can\x20be\x20used\x20as\x20arguments\x20to\
+    \x20policy\x20management\x20rules\x20(e.g.\x20route,\n\x20firewall,\x20l\
+    oad\x20balancing,\x20etc.).\n\n\x20\x20*\x20Label\x20keys\x20must\x20be\
+    \x20between\x201\x20and\x2063\x20characters\x20long\x20and\x20must\x20co\
+    nform\x20to\n\x20\x20\x20\x20the\x20following\x20regular\x20expression:\
+    \x20`[a-z][a-z0-9_-]{0,62}`.\n\x20\x20*\x20Label\x20values\x20must\x20be\
+    \x20between\x200\x20and\x2063\x20characters\x20long\x20and\x20must\x20co\
+    nform\n\x20\x20\x20\x20to\x20the\x20regular\x20expression\x20`[a-z0-9_-]\
+    {0,63}`.\n\x20\x20*\x20No\x20more\x20than\x2064\x20labels\x20can\x20be\
+    \x20associated\x20with\x20a\x20given\x20resource.\n\n\x20See\x20https://\
+    goo.gl/xmQnxf\x20for\x20more\x20information\x20on\x20and\x20examples\x20\
+    of\x20labels.\n\n\x20If\x20you\x20plan\x20to\x20use\x20labels\x20in\x20y\
+    our\x20own\x20code,\x20please\x20note\x20that\x20additional\n\x20charact\
+    ers\x20may\x20be\x20allowed\x20in\x20the\x20future.\x20Therefore,\x20you\
+    \x20are\x20advised\x20to\x20use\n\x20an\x20internal\x20label\x20represen\
+    tation,\x20such\x20as\x20JSON,\x20which\x20doesn't\x20rely\x20upon\n\x20\
+    specific\x20characters\x20being\x20disallowed.\x20\x20For\x20example,\
+    \x20representing\x20labels\n\x20as\x20the\x20string:\x20\x20name\x20+\
+    \x20\"_\"\x20+\x20value\x20\x20would\x20prove\x20problematic\x20if\x20we\
+    \x20were\x20to\n\x20allow\x20\"_\"\x20in\x20a\x20future\x20release.\n\n\
+    \r\n\x05\x04\x01\x02\x06\x06\x12\x04\xbe\x05\x02\x15\n\r\n\x05\x04\x01\
+    \x02\x06\x01\x12\x04\xbe\x05\x16\x1c\n\r\n\x05\x04\x01\x02\x06\x03\x12\
+    \x04\xbe\x05\x1f\x20\n\xb1\x05\n\x04\x04\x01\x02\x07\x12\x04\xca\x05\x02\
+    \x12\x1a\xa2\x05\x20etag\x20is\x20used\x20for\x20optimistic\x20concurren\
+    cy\x20control\x20as\x20a\x20way\n\x20to\x20help\x20prevent\x20simultaneo\
+    us\x20updates\x20of\x20a\x20instance\x20config\x20from\x20overwriting\n\
+    \x20each\x20other.\x20It\x20is\x20strongly\x20suggested\x20that\x20syste\
+    ms\x20make\x20use\x20of\x20the\x20etag\x20in\n\x20the\x20read-modify-wri\
+    te\x20cycle\x20to\x20perform\x20instance\x20config\x20updates\x20in\x20o\
+    rder\x20to\n\x20avoid\x20race\x20conditions:\x20An\x20etag\x20is\x20retu\
+    rned\x20in\x20the\x20response\x20which\x20contains\n\x20instance\x20conf\
+    igs,\x20and\x20systems\x20are\x20expected\x20to\x20put\x20that\x20etag\
+    \x20in\x20the\x20request\n\x20to\x20update\x20instance\x20config\x20to\
+    \x20ensure\x20that\x20their\x20change\x20will\x20be\x20applied\x20to\n\
+    \x20the\x20same\x20version\x20of\x20the\x20instance\x20config.\n\x20If\
+    \x20no\x20etag\x20is\x20provided\x20in\x20the\x20call\x20to\x20update\
+    \x20instance\x20config,\x20then\x20the\n\x20existing\x20instance\x20conf\
+    ig\x20is\x20overwritten\x20blindly.\n\n\r\n\x05\x04\x01\x02\x07\x05\x12\
+    \x04\xca\x05\x02\x08\n\r\n\x05\x04\x01\x02\x07\x01\x12\x04\xca\x05\t\r\n\
+    \r\n\x05\x04\x01\x02\x07\x03\x12\x04\xca\x05\x10\x11\n\x86\x01\n\x04\x04\
+    \x01\x02\x08\x12\x04\xce\x05\x02%\x1ax\x20Allowed\x20values\x20of\x20the\
+    \x20\"default_leader\"\x20schema\x20option\x20for\x20databases\x20in\n\
+    \x20instances\x20that\x20use\x20this\x20instance\x20configuration.\n\n\r\
+    \n\x05\x04\x01\x02\x08\x04\x12\x04\xce\x05\x02\n\n\r\n\x05\x04\x01\x02\
+    \x08\x05\x12\x04\xce\x05\x0b\x11\n\r\n\x05\x04\x01\x02\x08\x01\x12\x04\
+    \xce\x05\x12\x20\n\r\n\x05\x04\x01\x02\x08\x03\x12\x04\xce\x05#$\n\x9b\
+    \x01\n\x04\x04\x01\x02\t\x12\x04\xd2\x05\x02D\x1a\x8c\x01\x20Output\x20o\
+    nly.\x20If\x20true,\x20the\x20instance\x20config\x20is\x20being\x20creat\
+    ed\x20or\x20updated.\x20If\n\x20false,\x20there\x20are\x20no\x20ongoing\
+    \x20operations\x20for\x20the\x20instance\x20config.\n\n\r\n\x05\x04\x01\
+    \x02\t\x05\x12\x04\xd2\x05\x02\x06\n\r\n\x05\x04\x01\x02\t\x01\x12\x04\
+    \xd2\x05\x07\x12\n\r\n\x05\x04\x01\x02\t\x03\x12\x04\xd2\x05\x15\x17\n\r\
+    \n\x05\x04\x01\x02\t\x08\x12\x04\xd2\x05\x18C\n\x10\n\x08\x04\x01\x02\t\
+    \x08\x9c\x08\0\x12\x04\xd2\x05\x19B\n?\n\x04\x04\x01\x02\n\x12\x04\xd5\
+    \x05\x02?\x1a1\x20Output\x20only.\x20The\x20current\x20instance\x20confi\
+    g\x20state.\n\n\r\n\x05\x04\x01\x02\n\x06\x12\x04\xd5\x05\x02\x07\n\r\n\
+    \x05\x04\x01\x02\n\x01\x12\x04\xd5\x05\x08\r\n\r\n\x05\x04\x01\x02\n\x03\
+    \x12\x04\xd5\x05\x10\x12\n\r\n\x05\x04\x01\x02\n\x08\x12\x04\xd5\x05\x13\
+    >\n\x10\n\x08\x04\x01\x02\n\x08\x9c\x08\0\x12\x04\xd5\x05\x14=\n3\n\x02\
+    \x04\x02\x12\x06\xd9\x05\0\x92\x06\x01\x1a%\x20Autoscaling\x20config\x20\
+    for\x20an\x20instance.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xd9\x05\x08\x19\
+    \n\xd6\x02\n\x04\x04\x02\x03\0\x12\x06\xdf\x05\x02\xf8\x05\x03\x1a\xc5\
+    \x02\x20The\x20autoscaling\x20limits\x20for\x20the\x20instance.\x20Users\
+    \x20can\x20define\x20the\x20minimum\x20and\n\x20maximum\x20compute\x20ca\
+    pacity\x20allocated\x20to\x20the\x20instance,\x20and\x20the\x20autoscale\
+    r\x20will\n\x20only\x20scale\x20within\x20that\x20range.\x20Users\x20can\
+    \x20either\x20use\x20nodes\x20or\x20processing\n\x20units\x20to\x20speci\
+    fy\x20the\x20limits,\x20but\x20should\x20use\x20the\x20same\x20unit\x20t\
+    o\x20set\x20both\x20the\n\x20min_limit\x20and\x20max_limit.\n\n\r\n\x05\
+    \x04\x02\x03\0\x01\x12\x04\xdf\x05\n\x1b\nB\n\x06\x04\x02\x03\0\x08\0\
+    \x12\x06\xe1\x05\x04\xe9\x05\x05\x1a0\x20The\x20minimum\x20compute\x20ca\
+    pacity\x20for\x20the\x20instance.\n\n\x0f\n\x07\x04\x02\x03\0\x08\0\x01\
+    \x12\x04\xe1\x05\n\x13\n\x7f\n\x06\x04\x02\x03\0\x02\0\x12\x04\xe4\x05\
+    \x06\x1a\x1ao\x20Minimum\x20number\x20of\x20nodes\x20allocated\x20to\x20\
+    the\x20instance.\x20If\x20set,\x20this\x20number\n\x20should\x20be\x20gr\
+    eater\x20than\x20or\x20equal\x20to\x201.\n\n\x0f\n\x07\x04\x02\x03\0\x02\
+    \0\x05\x12\x04\xe4\x05\x06\x0b\n\x0f\n\x07\x04\x02\x03\0\x02\0\x01\x12\
+    \x04\xe4\x05\x0c\x15\n\x0f\n\x07\x04\x02\x03\0\x02\0\x03\x12\x04\xe4\x05\
+    \x18\x19\n\x81\x01\n\x06\x04\x02\x03\0\x02\x01\x12\x04\xe8\x05\x06%\x1aq\
+    \x20Minimum\x20number\x20of\x20processing\x20units\x20allocated\x20to\
+    \x20the\x20instance.\x20If\x20set,\n\x20this\x20number\x20should\x20be\
+    \x20multiples\x20of\x201000.\n\n\x0f\n\x07\x04\x02\x03\0\x02\x01\x05\x12\
+    \x04\xe8\x05\x06\x0b\n\x0f\n\x07\x04\x02\x03\0\x02\x01\x01\x12\x04\xe8\
+    \x05\x0c\x20\n\x0f\n\x07\x04\x02\x03\0\x02\x01\x03\x12\x04\xe8\x05#$\n\
+    \xa4\x01\n\x06\x04\x02\x03\0\x08\x01\x12\x06\xee\x05\x04\xf7\x05\x05\x1a\
+    \x91\x01\x20The\x20maximum\x20compute\x20capacity\x20for\x20the\x20insta\
+    nce.\x20The\x20maximum\x20compute\n\x20capacity\x20should\x20be\x20less\
+    \x20than\x20or\x20equal\x20to\x2010X\x20the\x20minimum\x20compute\n\x20c\
+    apacity.\n\n\x0f\n\x07\x04\x02\x03\0\x08\x01\x01\x12\x04\xee\x05\n\x13\n\
+    \x87\x01\n\x06\x04\x02\x03\0\x02\x02\x12\x04\xf1\x05\x06\x1a\x1aw\x20Max\
+    imum\x20number\x20of\x20nodes\x20allocated\x20to\x20the\x20instance.\x20\
+    If\x20set,\x20this\x20number\n\x20should\x20be\x20greater\x20than\x20or\
+    \x20equal\x20to\x20min_nodes.\n\n\x0f\n\x07\x04\x02\x03\0\x02\x02\x05\
+    \x12\x04\xf1\x05\x06\x0b\n\x0f\n\x07\x04\x02\x03\0\x02\x02\x01\x12\x04\
+    \xf1\x05\x0c\x15\n\x0f\n\x07\x04\x02\x03\0\x02\x02\x03\x12\x04\xf1\x05\
+    \x18\x19\n\xb8\x01\n\x06\x04\x02\x03\0\x02\x03\x12\x04\xf6\x05\x06%\x1a\
+    \xa7\x01\x20Maximum\x20number\x20of\x20processing\x20units\x20allocated\
+    \x20to\x20the\x20instance.\x20If\x20set,\n\x20this\x20number\x20should\
+    \x20be\x20multiples\x20of\x201000\x20and\x20be\x20greater\x20than\x20or\
+    \x20equal\x20to\n\x20min_processing_units.\n\n\x0f\n\x07\x04\x02\x03\0\
+    \x02\x03\x05\x12\x04\xf6\x05\x06\x0b\n\x0f\n\x07\x04\x02\x03\0\x02\x03\
+    \x01\x12\x04\xf6\x05\x0c\x20\n\x0f\n\x07\x04\x02\x03\0\x02\x03\x03\x12\
+    \x04\xf6\x05#$\n:\n\x04\x04\x02\x03\x01\x12\x06\xfb\x05\x02\x89\x06\x03\
+    \x1a*\x20The\x20autoscaling\x20targets\x20for\x20an\x20instance.\n\n\r\n\
+    \x05\x04\x02\x03\x01\x01\x12\x04\xfb\x05\n\x1c\n\x8b\x02\n\x06\x04\x02\
+    \x03\x01\x02\0\x12\x06\x80\x06\x04\x81\x061\x1a\xf8\x01\x20Required.\x20\
+    The\x20target\x20high\x20priority\x20cpu\x20utilization\x20percentage\
+    \x20that\x20the\n\x20autoscaler\x20should\x20be\x20trying\x20to\x20achie\
+    ve\x20for\x20the\x20instance.\x20This\x20number\x20is\n\x20on\x20a\x20sc\
+    ale\x20from\x200\x20(no\x20utilization)\x20to\x20100\x20(full\x20utiliza\
+    tion).\x20The\x20valid\n\x20range\x20is\x20[10,\x2090]\x20inclusive.\n\n\
+    \x0f\n\x07\x04\x02\x03\x01\x02\0\x05\x12\x04\x80\x06\x04\t\n\x0f\n\x07\
+    \x04\x02\x03\x01\x02\0\x01\x12\x04\x80\x06\n/\n\x0f\n\x07\x04\x02\x03\
+    \x01\x02\0\x03\x12\x04\x80\x0623\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x08\
+    \x12\x04\x81\x06\x080\n\x12\n\n\x04\x02\x03\x01\x02\0\x08\x9c\x08\0\x12\
+    \x04\x81\x06\t/\n\x82\x02\n\x06\x04\x02\x03\x01\x02\x01\x12\x06\x87\x06\
+    \x04\x88\x061\x1a\xef\x01\x20Required.\x20The\x20target\x20storage\x20ut\
+    ilization\x20percentage\x20that\x20the\x20autoscaler\n\x20should\x20be\
+    \x20trying\x20to\x20achieve\x20for\x20the\x20instance.\x20This\x20number\
+    \x20is\x20on\x20a\x20scale\n\x20from\x200\x20(no\x20utilization)\x20to\
+    \x20100\x20(full\x20utilization).\x20The\x20valid\x20range\x20is\n\x20[1\
+    0,\x20100]\x20inclusive.\n\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x05\x12\
+    \x04\x87\x06\x04\t\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x01\x12\x04\x87\
+    \x06\n%\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x03\x12\x04\x87\x06()\n\x0f\
+    \n\x07\x04\x02\x03\x01\x02\x01\x08\x12\x04\x88\x06\x080\n\x12\n\n\x04\
+    \x02\x03\x01\x02\x01\x08\x9c\x08\0\x12\x04\x88\x06\t/\n?\n\x04\x04\x02\
+    \x02\0\x12\x06\x8c\x06\x02\x8d\x06/\x1a/\x20Required.\x20Autoscaling\x20\
+    limits\x20for\x20an\x20instance.\n\n\r\n\x05\x04\x02\x02\0\x06\x12\x04\
+    \x8c\x06\x02\x13\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\x8c\x06\x14&\n\r\n\
+    \x05\x04\x02\x02\0\x03\x12\x04\x8c\x06)*\n\r\n\x05\x04\x02\x02\0\x08\x12\
+    \x04\x8d\x06\x06.\n\x10\n\x08\x04\x02\x02\0\x08\x9c\x08\0\x12\x04\x8d\
+    \x06\x07-\nD\n\x04\x04\x02\x02\x01\x12\x06\x90\x06\x02\x91\x06/\x1a4\x20\
+    Required.\x20The\x20autoscaling\x20targets\x20for\x20an\x20instance.\n\n\
+    \r\n\x05\x04\x02\x02\x01\x06\x12\x04\x90\x06\x02\x14\n\r\n\x05\x04\x02\
+    \x02\x01\x01\x12\x04\x90\x06\x15(\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\
+    \x90\x06+,\n\r\n\x05\x04\x02\x02\x01\x08\x12\x04\x91\x06\x06.\n\x10\n\
+    \x08\x04\x02\x02\x01\x08\x9c\x08\0\x12\x04\x91\x06\x07-\n\\\n\x02\x04\
+    \x03\x12\x06\x95\x06\0\x8a\x07\x01\x1aN\x20An\x20isolated\x20set\x20of\
+    \x20Cloud\x20Spanner\x20resources\x20on\x20which\x20databases\x20can\x20\
+    be\x20hosted.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\x95\x06\x08\x10\n\r\n\
+    \x03\x04\x03\x07\x12\x06\x96\x06\x02\x99\x06\x04\n\x0f\n\x05\x04\x03\x07\
+    \x9d\x08\x12\x06\x96\x06\x02\x99\x06\x04\n>\n\x04\x04\x03\x04\0\x12\x06\
+    \x9c\x06\x02\xa8\x06\x03\x1a.\x20Indicates\x20the\x20current\x20state\
+    \x20of\x20the\x20instance.\n\n\r\n\x05\x04\x03\x04\0\x01\x12\x04\x9c\x06\
+    \x07\x0c\n\x20\n\x06\x04\x03\x04\0\x02\0\x12\x04\x9e\x06\x04\x1a\x1a\x10\
+    \x20Not\x20specified.\n\n\x0f\n\x07\x04\x03\x04\0\x02\0\x01\x12\x04\x9e\
+    \x06\x04\x15\n\x0f\n\x07\x04\x03\x04\0\x02\0\x02\x12\x04\x9e\x06\x18\x19\
+    \n\x94\x01\n\x06\x04\x03\x04\0\x02\x01\x12\x04\xa3\x06\x04\x11\x1a\x83\
+    \x01\x20The\x20instance\x20is\x20still\x20being\x20created.\x20Resources\
+    \x20may\x20not\x20be\n\x20available\x20yet,\x20and\x20operations\x20such\
+    \x20as\x20database\x20creation\x20may\x20not\n\x20work.\n\n\x0f\n\x07\
+    \x04\x03\x04\0\x02\x01\x01\x12\x04\xa3\x06\x04\x0c\n\x0f\n\x07\x04\x03\
+    \x04\0\x02\x01\x02\x12\x04\xa3\x06\x0f\x10\na\n\x06\x04\x03\x04\0\x02\
+    \x02\x12\x04\xa7\x06\x04\x0e\x1aQ\x20The\x20instance\x20is\x20fully\x20c\
+    reated\x20and\x20ready\x20to\x20do\x20work\x20such\x20as\n\x20creating\
+    \x20databases.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x02\x01\x12\x04\xa7\x06\
+    \x04\t\n\x0f\n\x07\x04\x03\x04\0\x02\x02\x02\x12\x04\xa7\x06\x0c\r\n\x96\
+    \x02\n\x04\x04\x03\x02\0\x12\x04\xae\x06\x02;\x1a\x87\x02\x20Required.\
+    \x20A\x20unique\x20identifier\x20for\x20the\x20instance,\x20which\x20can\
+    not\x20be\x20changed\n\x20after\x20the\x20instance\x20is\x20created.\x20\
+    Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/[a\
+    -z][-a-z0-9]*[a-z0-9]`.\x20The\x20final\n\x20segment\x20of\x20the\x20nam\
+    e\x20must\x20be\x20between\x202\x20and\x2064\x20characters\x20in\x20leng\
+    th.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\xae\x06\x02\x08\n\r\n\x05\x04\
+    \x03\x02\0\x01\x12\x04\xae\x06\t\r\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\
+    \xae\x06\x10\x11\n\r\n\x05\x04\x03\x02\0\x08\x12\x04\xae\x06\x12:\n\x10\
+    \n\x08\x04\x03\x02\0\x08\x9c\x08\0\x12\x04\xae\x06\x139\n\xc0\x02\n\x04\
+    \x04\x03\x02\x01\x12\x06\xb4\x06\x02\xb9\x06\x04\x1a\xaf\x02\x20Required\
+    .\x20The\x20name\x20of\x20the\x20instance's\x20configuration.\x20Values\
+    \x20are\x20of\x20the\x20form\n\x20`projects/<project>/instanceConfigs/<c\
+    onfiguration>`.\x20See\n\x20also\x20[InstanceConfig][google.spanner.admi\
+    n.instance.v1.InstanceConfig]\x20and\n\x20[ListInstanceConfigs][google.s\
+    panner.admin.instance.v1.InstanceAdmin.ListInstanceConfigs].\n\n\r\n\x05\
+    \x04\x03\x02\x01\x05\x12\x04\xb4\x06\x02\x08\n\r\n\x05\x04\x03\x02\x01\
+    \x01\x12\x04\xb4\x06\t\x0f\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xb4\x06\
+    \x12\x13\n\x0f\n\x05\x04\x03\x02\x01\x08\x12\x06\xb4\x06\x14\xb9\x06\x03\
+    \n\x10\n\x08\x04\x03\x02\x01\x08\x9c\x08\0\x12\x04\xb5\x06\x04*\n\x11\n\
+    \x07\x04\x03\x02\x01\x08\x9f\x08\x12\x06\xb6\x06\x04\xb8\x06\x05\n\x9e\
+    \x01\n\x04\x04\x03\x02\x02\x12\x04\xbd\x06\x02C\x1a\x8f\x01\x20Required.\
+    \x20The\x20descriptive\x20name\x20for\x20this\x20instance\x20as\x20it\
+    \x20appears\x20in\x20UIs.\n\x20Must\x20be\x20unique\x20per\x20project\
+    \x20and\x20between\x204\x20and\x2030\x20characters\x20in\x20length.\n\n\
+    \r\n\x05\x04\x03\x02\x02\x05\x12\x04\xbd\x06\x02\x08\n\r\n\x05\x04\x03\
+    \x02\x02\x01\x12\x04\xbd\x06\t\x15\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\
+    \xbd\x06\x18\x19\n\r\n\x05\x04\x03\x02\x02\x08\x12\x04\xbd\x06\x1aB\n\
+    \x10\n\x08\x04\x03\x02\x02\x08\x9c\x08\0\x12\x04\xbd\x06\x1bA\n\xe0\x03\
+    \n\x04\x04\x03\x02\x03\x12\x04\xcb\x06\x02\x17\x1a\xd1\x03\x20The\x20num\
+    ber\x20of\x20nodes\x20allocated\x20to\x20this\x20instance.\x20At\x20most\
+    \x20one\x20of\x20either\n\x20node_count\x20or\x20processing_units\x20sho\
+    uld\x20be\x20present\x20in\x20the\x20message.\n\n\x20Users\x20can\x20set\
+    \x20the\x20node_count\x20field\x20to\x20specify\x20the\x20target\x20numb\
+    er\x20of\x20nodes\n\x20allocated\x20to\x20the\x20instance.\n\n\x20This\
+    \x20may\x20be\x20zero\x20in\x20API\x20responses\x20for\x20instances\x20t\
+    hat\x20are\x20not\x20yet\x20in\x20state\n\x20`READY`.\n\n\x20See\x20[the\
+    \n\x20documentation](https://cloud.google.com/spanner/docs/compute-capac\
+    ity)\n\x20for\x20more\x20information\x20about\x20nodes\x20and\x20process\
+    ing\x20units.\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\x04\xcb\x06\x02\x07\n\
+    \r\n\x05\x04\x03\x02\x03\x01\x12\x04\xcb\x06\x08\x12\n\r\n\x05\x04\x03\
+    \x02\x03\x03\x12\x04\xcb\x06\x15\x16\n\xf5\x03\n\x04\x04\x03\x02\x04\x12\
+    \x04\xd9\x06\x02\x1d\x1a\xe6\x03\x20The\x20number\x20of\x20processing\
+    \x20units\x20allocated\x20to\x20this\x20instance.\x20At\x20most\x20one\
+    \x20of\n\x20processing_units\x20or\x20node_count\x20should\x20be\x20pres\
+    ent\x20in\x20the\x20message.\n\n\x20Users\x20can\x20set\x20the\x20proces\
+    sing_units\x20field\x20to\x20specify\x20the\x20target\x20number\x20of\n\
+    \x20processing\x20units\x20allocated\x20to\x20the\x20instance.\n\n\x20Th\
+    is\x20may\x20be\x20zero\x20in\x20API\x20responses\x20for\x20instances\
+    \x20that\x20are\x20not\x20yet\x20in\x20state\n\x20`READY`.\n\n\x20See\
+    \x20[the\n\x20documentation](https://cloud.google.com/spanner/docs/compu\
+    te-capacity)\n\x20for\x20more\x20information\x20about\x20nodes\x20and\
+    \x20processing\x20units.\n\n\r\n\x05\x04\x03\x02\x04\x05\x12\x04\xd9\x06\
+    \x02\x07\n\r\n\x05\x04\x03\x02\x04\x01\x12\x04\xd9\x06\x08\x18\n\r\n\x05\
+    \x04\x03\x02\x04\x03\x12\x04\xd9\x06\x1b\x1c\n\x8e\x02\n\x04\x04\x03\x02\
+    \x05\x12\x06\xdf\x06\x02\xe0\x06/\x1a\xfd\x01\x20Optional.\x20The\x20aut\
+    oscaling\x20configuration.\x20Autoscaling\x20is\x20enabled\x20if\x20this\
+    \n\x20field\x20is\x20set.\x20When\x20autoscaling\x20is\x20enabled,\x20no\
+    de_count\x20and\x20processing_units\n\x20are\x20treated\x20as\x20OUTPUT_\
+    ONLY\x20fields\x20and\x20reflect\x20the\x20current\x20compute\x20capacit\
+    y\n\x20allocated\x20to\x20the\x20instance.\n\n\r\n\x05\x04\x03\x02\x05\
+    \x06\x12\x04\xdf\x06\x02\x13\n\r\n\x05\x04\x03\x02\x05\x01\x12\x04\xdf\
+    \x06\x14&\n\r\n\x05\x04\x03\x02\x05\x03\x12\x04\xdf\x06)+\n\r\n\x05\x04\
+    \x03\x02\x05\x08\x12\x04\xe0\x06\x06.\n\x10\n\x08\x04\x03\x02\x05\x08\
+    \x9c\x08\0\x12\x04\xe0\x06\x07-\n\xd2\x02\n\x04\x04\x03\x02\x06\x12\x04\
+    \xe7\x06\x02>\x1a\xc3\x02\x20Output\x20only.\x20The\x20current\x20instan\
+    ce\x20state.\x20For\n\x20[CreateInstance][google.spanner.admin.instance.\
+    v1.InstanceAdmin.CreateInstance],\n\x20the\x20state\x20must\x20be\x20eit\
+    her\x20omitted\x20or\x20set\x20to\x20`CREATING`.\x20For\n\x20[UpdateInst\
+    ance][google.spanner.admin.instance.v1.InstanceAdmin.UpdateInstance],\n\
+    \x20the\x20state\x20must\x20be\x20either\x20omitted\x20or\x20set\x20to\
+    \x20`READY`.\n\n\r\n\x05\x04\x03\x02\x06\x06\x12\x04\xe7\x06\x02\x07\n\r\
+    \n\x05\x04\x03\x02\x06\x01\x12\x04\xe7\x06\x08\r\n\r\n\x05\x04\x03\x02\
+    \x06\x03\x12\x04\xe7\x06\x10\x11\n\r\n\x05\x04\x03\x02\x06\x08\x12\x04\
+    \xe7\x06\x12=\n\x10\n\x08\x04\x03\x02\x06\x08\x9c\x08\0\x12\x04\xe7\x06\
+    \x13<\n\xd1\t\n\x04\x04\x03\x02\x07\x12\x04\xfe\x06\x02!\x1a\xc2\t\x20Cl\
+    oud\x20Labels\x20are\x20a\x20flexible\x20and\x20lightweight\x20mechanism\
+    \x20for\x20organizing\x20cloud\n\x20resources\x20into\x20groups\x20that\
+    \x20reflect\x20a\x20customer's\x20organizational\x20needs\x20and\n\x20de\
+    ployment\x20strategies.\x20Cloud\x20Labels\x20can\x20be\x20used\x20to\
+    \x20filter\x20collections\x20of\n\x20resources.\x20They\x20can\x20be\x20\
+    used\x20to\x20control\x20how\x20resource\x20metrics\x20are\x20aggregated\
+    .\n\x20And\x20they\x20can\x20be\x20used\x20as\x20arguments\x20to\x20poli\
+    cy\x20management\x20rules\x20(e.g.\x20route,\n\x20firewall,\x20load\x20b\
+    alancing,\x20etc.).\n\n\x20\x20*\x20Label\x20keys\x20must\x20be\x20betwe\
+    en\x201\x20and\x2063\x20characters\x20long\x20and\x20must\x20conform\x20\
+    to\n\x20\x20\x20\x20the\x20following\x20regular\x20expression:\x20`[a-z]\
+    [a-z0-9_-]{0,62}`.\n\x20\x20*\x20Label\x20values\x20must\x20be\x20betwee\
+    n\x200\x20and\x2063\x20characters\x20long\x20and\x20must\x20conform\n\
+    \x20\x20\x20\x20to\x20the\x20regular\x20expression\x20`[a-z0-9_-]{0,63}`\
+    .\n\x20\x20*\x20No\x20more\x20than\x2064\x20labels\x20can\x20be\x20assoc\
+    iated\x20with\x20a\x20given\x20resource.\n\n\x20See\x20https://goo.gl/xm\
+    Qnxf\x20for\x20more\x20information\x20on\x20and\x20examples\x20of\x20lab\
+    els.\n\n\x20If\x20you\x20plan\x20to\x20use\x20labels\x20in\x20your\x20ow\
+    n\x20code,\x20please\x20note\x20that\x20additional\n\x20characters\x20ma\
+    y\x20be\x20allowed\x20in\x20the\x20future.\x20And\x20so\x20you\x20are\
+    \x20advised\x20to\x20use\x20an\n\x20internal\x20label\x20representation,\
+    \x20such\x20as\x20JSON,\x20which\x20doesn't\x20rely\x20upon\n\x20specifi\
+    c\x20characters\x20being\x20disallowed.\x20\x20For\x20example,\x20repres\
+    enting\x20labels\n\x20as\x20the\x20string:\x20\x20name\x20+\x20\"_\"\x20\
+    +\x20value\x20\x20would\x20prove\x20problematic\x20if\x20we\x20were\x20t\
+    o\n\x20allow\x20\"_\"\x20in\x20a\x20future\x20release.\n\n\r\n\x05\x04\
+    \x03\x02\x07\x06\x12\x04\xfe\x06\x02\x15\n\r\n\x05\x04\x03\x02\x07\x01\
+    \x12\x04\xfe\x06\x16\x1c\n\r\n\x05\x04\x03\x02\x07\x03\x12\x04\xfe\x06\
+    \x1f\x20\n8\n\x04\x04\x03\x02\x08\x12\x04\x81\x07\x02$\x1a*\x20Deprecate\
+    d.\x20This\x20field\x20is\x20not\x20populated.\n\n\r\n\x05\x04\x03\x02\
+    \x08\x04\x12\x04\x81\x07\x02\n\n\r\n\x05\x04\x03\x02\x08\x05\x12\x04\x81\
+    \x07\x0b\x11\n\r\n\x05\x04\x03\x02\x08\x01\x12\x04\x81\x07\x12\x1f\n\r\n\
+    \x05\x04\x03\x02\x08\x03\x12\x04\x81\x07\"#\nJ\n\x04\x04\x03\x02\t\x12\
+    \x06\x84\x07\x02\x85\x072\x1a:\x20Output\x20only.\x20The\x20time\x20at\
+    \x20which\x20the\x20instance\x20was\x20created.\n\n\r\n\x05\x04\x03\x02\
+    \t\x06\x12\x04\x84\x07\x02\x1b\n\r\n\x05\x04\x03\x02\t\x01\x12\x04\x84\
+    \x07\x1c'\n\r\n\x05\x04\x03\x02\t\x03\x12\x04\x84\x07*,\n\r\n\x05\x04\
+    \x03\x02\t\x08\x12\x04\x85\x07\x061\n\x10\n\x08\x04\x03\x02\t\x08\x9c\
+    \x08\0\x12\x04\x85\x07\x070\nX\n\x04\x04\x03\x02\n\x12\x06\x88\x07\x02\
+    \x89\x072\x1aH\x20Output\x20only.\x20The\x20time\x20at\x20which\x20the\
+    \x20instance\x20was\x20most\x20recently\x20updated.\n\n\r\n\x05\x04\x03\
+    \x02\n\x06\x12\x04\x88\x07\x02\x1b\n\r\n\x05\x04\x03\x02\n\x01\x12\x04\
+    \x88\x07\x1c'\n\r\n\x05\x04\x03\x02\n\x03\x12\x04\x88\x07*,\n\r\n\x05\
+    \x04\x03\x02\n\x08\x12\x04\x89\x07\x061\n\x10\n\x08\x04\x03\x02\n\x08\
+    \x9c\x08\0\x12\x04\x89\x07\x070\n{\n\x02\x04\x04\x12\x06\x8e\x07\0\xa2\
+    \x07\x01\x1am\x20The\x20request\x20for\n\x20[ListInstanceConfigs][google\
+    .spanner.admin.instance.v1.InstanceAdmin.ListInstanceConfigs].\n\n\x0b\n\
+    \x03\x04\x04\x01\x12\x04\x8e\x07\x08\"\n\xa7\x01\n\x04\x04\x04\x02\0\x12\
+    \x06\x92\x07\x02\x97\x07\x04\x1a\x96\x01\x20Required.\x20The\x20name\x20\
+    of\x20the\x20project\x20for\x20which\x20a\x20list\x20of\x20supported\x20\
+    instance\n\x20configurations\x20is\x20requested.\x20Values\x20are\x20of\
+    \x20the\x20form\n\x20`projects/<project>`.\n\n\r\n\x05\x04\x04\x02\0\x05\
+    \x12\x04\x92\x07\x02\x08\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\x92\x07\t\
+    \x0f\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\x92\x07\x12\x13\n\x0f\n\x05\x04\
+    \x04\x02\0\x08\x12\x06\x92\x07\x14\x97\x07\x03\n\x10\n\x08\x04\x04\x02\0\
+    \x08\x9c\x08\0\x12\x04\x93\x07\x04*\n\x11\n\x07\x04\x04\x02\0\x08\x9f\
+    \x08\x12\x06\x94\x07\x04\x96\x07\x05\n\x95\x01\n\x04\x04\x04\x02\x01\x12\
+    \x04\x9b\x07\x02\x16\x1a\x86\x01\x20Number\x20of\x20instance\x20configur\
+    ations\x20to\x20be\x20returned\x20in\x20the\x20response.\x20If\x200\x20o\
+    r\n\x20less,\x20defaults\x20to\x20the\x20server's\x20maximum\x20allowed\
+    \x20page\x20size.\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\x9b\x07\x02\
+    \x07\n\r\n\x05\x04\x04\x02\x01\x01\x12\x04\x9b\x07\x08\x11\n\r\n\x05\x04\
+    \x04\x02\x01\x03\x12\x04\x9b\x07\x14\x15\n\x8c\x02\n\x04\x04\x04\x02\x02\
+    \x12\x04\xa1\x07\x02\x18\x1a\xfd\x01\x20If\x20non-empty,\x20`page_token`\
+    \x20should\x20contain\x20a\n\x20[next_page_token][google.spanner.admin.i\
+    nstance.v1.ListInstanceConfigsResponse.next_page_token]\n\x20from\x20a\
+    \x20previous\n\x20[ListInstanceConfigsResponse][google.spanner.admin.ins\
+    tance.v1.ListInstanceConfigsResponse].\n\n\r\n\x05\x04\x04\x02\x02\x05\
+    \x12\x04\xa1\x07\x02\x08\n\r\n\x05\x04\x04\x02\x02\x01\x12\x04\xa1\x07\t\
+    \x13\n\r\n\x05\x04\x04\x02\x02\x03\x12\x04\xa1\x07\x16\x17\n|\n\x02\x04\
+    \x05\x12\x06\xa6\x07\0\xae\x07\x01\x1an\x20The\x20response\x20for\n\x20[\
+    ListInstanceConfigs][google.spanner.admin.instance.v1.InstanceAdmin.List\
+    InstanceConfigs].\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xa6\x07\x08#\n>\n\
+    \x04\x04\x05\x02\0\x12\x04\xa8\x07\x02/\x1a0\x20The\x20list\x20of\x20req\
+    uested\x20instance\x20configurations.\n\n\r\n\x05\x04\x05\x02\0\x04\x12\
+    \x04\xa8\x07\x02\n\n\r\n\x05\x04\x05\x02\0\x06\x12\x04\xa8\x07\x0b\x19\n\
+    \r\n\x05\x04\x05\x02\0\x01\x12\x04\xa8\x07\x1a*\n\r\n\x05\x04\x05\x02\0\
+    \x03\x12\x04\xa8\x07-.\n\xd6\x01\n\x04\x04\x05\x02\x01\x12\x04\xad\x07\
+    \x02\x1d\x1a\xc7\x01\x20`next_page_token`\x20can\x20be\x20sent\x20in\x20\
+    a\x20subsequent\n\x20[ListInstanceConfigs][google.spanner.admin.instance\
+    .v1.InstanceAdmin.ListInstanceConfigs]\n\x20call\x20to\x20fetch\x20more\
+    \x20of\x20the\x20matching\x20instance\x20configurations.\n\n\r\n\x05\x04\
+    \x05\x02\x01\x05\x12\x04\xad\x07\x02\x08\n\r\n\x05\x04\x05\x02\x01\x01\
+    \x12\x04\xad\x07\t\x18\n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\xad\x07\x1b\
+    \x1c\n~\n\x02\x04\x06\x12\x06\xb2\x07\0\xbb\x07\x01\x1ap\x20The\x20reque\
+    st\x20for\n\x20[GetInstanceConfigRequest][google.spanner.admin.instance.\
+    v1.InstanceAdmin.GetInstanceConfig].\n\n\x0b\n\x03\x04\x06\x01\x12\x04\
+    \xb2\x07\x08\x20\n\x95\x01\n\x04\x04\x06\x02\0\x12\x06\xb5\x07\x02\xba\
+    \x07\x04\x1a\x84\x01\x20Required.\x20The\x20name\x20of\x20the\x20request\
+    ed\x20instance\x20configuration.\x20Values\x20are\x20of\n\x20the\x20form\
+    \x20`projects/<project>/instanceConfigs/<config>`.\n\n\r\n\x05\x04\x06\
+    \x02\0\x05\x12\x04\xb5\x07\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\x04\
+    \xb5\x07\t\r\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xb5\x07\x10\x11\n\x0f\n\
+    \x05\x04\x06\x02\0\x08\x12\x06\xb5\x07\x12\xba\x07\x03\n\x10\n\x08\x04\
+    \x06\x02\0\x08\x9c\x08\0\x12\x04\xb6\x07\x04*\n\x11\n\x07\x04\x06\x02\0\
+    \x08\x9f\x08\x12\x06\xb7\x07\x04\xb9\x07\x05\nj\n\x02\x04\x07\x12\x06\
+    \xbf\x07\0\xd9\x07\x01\x1a\\\x20The\x20request\x20for\n\x20[CreateInstan\
+    ceConfigRequest][InstanceAdmin.CreateInstanceConfigRequest].\n\n\x0b\n\
+    \x03\x04\x07\x01\x12\x04\xbf\x07\x08#\n\x89\x01\n\x04\x04\x07\x02\0\x12\
+    \x06\xc2\x07\x02\xc7\x07\x04\x1ay\x20Required.\x20The\x20name\x20of\x20t\
+    he\x20project\x20in\x20which\x20to\x20create\x20the\x20instance\x20confi\
+    g.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/<project>`.\n\n\
+    \r\n\x05\x04\x07\x02\0\x05\x12\x04\xc2\x07\x02\x08\n\r\n\x05\x04\x07\x02\
+    \0\x01\x12\x04\xc2\x07\t\x0f\n\r\n\x05\x04\x07\x02\0\x03\x12\x04\xc2\x07\
+    \x12\x13\n\x0f\n\x05\x04\x07\x02\0\x08\x12\x06\xc2\x07\x14\xc7\x07\x03\n\
+    \x10\n\x08\x04\x07\x02\0\x08\x9c\x08\0\x12\x04\xc3\x07\x04*\n\x11\n\x07\
+    \x04\x07\x02\0\x08\x9f\x08\x12\x06\xc4\x07\x04\xc6\x07\x05\n\x95\x02\n\
+    \x04\x04\x07\x02\x01\x12\x04\xcd\x07\x02I\x1a\x86\x02\x20Required.\x20Th\
+    e\x20ID\x20of\x20the\x20instance\x20config\x20to\x20create.\x20\x20Valid\
+    \x20identifiers\x20are\n\x20of\x20the\x20form\x20`custom-[-a-z0-9]*[a-z0\
+    -9]`\x20and\x20must\x20be\x20between\x202\x20and\x2064\n\x20characters\
+    \x20in\x20length.\x20The\x20`custom-`\x20prefix\x20is\x20required\x20to\
+    \x20avoid\x20name\n\x20conflicts\x20with\x20Google\x20managed\x20configu\
+    rations.\n\n\r\n\x05\x04\x07\x02\x01\x05\x12\x04\xcd\x07\x02\x08\n\r\n\
+    \x05\x04\x07\x02\x01\x01\x12\x04\xcd\x07\t\x1b\n\r\n\x05\x04\x07\x02\x01\
+    \x03\x12\x04\xcd\x07\x1e\x1f\n\r\n\x05\x04\x07\x02\x01\x08\x12\x04\xcd\
+    \x07\x20H\n\x10\n\x08\x04\x07\x02\x01\x08\x9c\x08\0\x12\x04\xcd\x07!G\n\
+    \xb5\x02\n\x04\x04\x07\x02\x02\x12\x04\xd4\x07\x02N\x1a\xa6\x02\x20Requi\
+    red.\x20The\x20InstanceConfig\x20proto\x20of\x20the\x20configuration\x20\
+    to\x20create.\n\x20instance_config.name\x20must\x20be\n\x20`<parent>/ins\
+    tanceConfigs/<instance_config_id>`.\n\x20instance_config.base_config\x20\
+    must\x20be\x20a\x20Google\x20managed\x20configuration\x20name,\n\x20e.g.\
+    \x20<parent>/instanceConfigs/us-east1,\x20<parent>/instanceConfigs/nam3.\
+    \n\n\r\n\x05\x04\x07\x02\x02\x06\x12\x04\xd4\x07\x02\x10\n\r\n\x05\x04\
+    \x07\x02\x02\x01\x12\x04\xd4\x07\x11\x20\n\r\n\x05\x04\x07\x02\x02\x03\
+    \x12\x04\xd4\x07#$\n\r\n\x05\x04\x07\x02\x02\x08\x12\x04\xd4\x07%M\n\x10\
+    \n\x08\x04\x07\x02\x02\x08\x9c\x08\0\x12\x04\xd4\x07&L\nk\n\x04\x04\x07\
+    \x02\x03\x12\x04\xd8\x07\x02\x19\x1a]\x20An\x20option\x20to\x20validate,\
     \x20but\x20not\x20actually\x20execute,\x20a\x20request,\n\x20and\x20prov\
-    ide\x20the\x20same\x20response.\n\n\r\n\x05\x04\t\x02\x02\x05\x12\x04\
-    \xe8\x06\x02\x06\n\r\n\x05\x04\t\x02\x02\x01\x12\x04\xe8\x06\x07\x14\n\r\
-    \n\x05\x04\t\x02\x02\x03\x12\x04\xe8\x06\x17\x18\n\x8d\x01\n\x02\x04\n\
-    \x12\x06\xed\x06\0\xae\x07\x01\x1a\x7f\x20The\x20request\x20for\n\x20[Li\
-    stInstanceConfigOperations][google.spanner.admin.instance.v1.InstanceAdm\
-    in.ListInstanceConfigOperations].\n\n\x0b\n\x03\x04\n\x01\x12\x04\xed\
-    \x06\x08+\nx\n\x04\x04\n\x02\0\x12\x06\xf0\x06\x02\xf5\x06\x04\x1ah\x20R\
-    equired.\x20The\x20project\x20of\x20the\x20instance\x20config\x20operati\
-    ons.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/<project>`.\n\
-    \n\r\n\x05\x04\n\x02\0\x05\x12\x04\xf0\x06\x02\x08\n\r\n\x05\x04\n\x02\0\
-    \x01\x12\x04\xf0\x06\t\x0f\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xf0\x06\x12\
-    \x13\n\x0f\n\x05\x04\n\x02\0\x08\x12\x06\xf0\x06\x14\xf5\x06\x03\n\x10\n\
-    \x08\x04\n\x02\0\x08\x9c\x08\0\x12\x04\xf1\x06\x04*\n\x11\n\x07\x04\n\
-    \x02\0\x08\x9f\x08\x12\x06\xf2\x06\x04\xf4\x06\x05\n\x9f\x10\n\x04\x04\n\
-    \x02\x01\x12\x04\xa2\x07\x02\x14\x1a\x90\x10\x20An\x20expression\x20that\
-    \x20filters\x20the\x20list\x20of\x20returned\x20operations.\n\n\x20A\x20\
-    filter\x20expression\x20consists\x20of\x20a\x20field\x20name,\x20a\n\x20\
-    comparison\x20operator,\x20and\x20a\x20value\x20for\x20filtering.\n\x20T\
-    he\x20value\x20must\x20be\x20a\x20string,\x20a\x20number,\x20or\x20a\x20\
-    boolean.\x20The\x20comparison\x20operator\n\x20must\x20be\x20one\x20of:\
-    \x20`<`,\x20`>`,\x20`<=`,\x20`>=`,\x20`!=`,\x20`=`,\x20or\x20`:`.\n\x20C\
-    olon\x20`:`\x20is\x20the\x20contains\x20operator.\x20Filter\x20rules\x20\
-    are\x20not\x20case\x20sensitive.\n\n\x20The\x20following\x20fields\x20in\
-    \x20the\x20[Operation][google.longrunning.Operation]\n\x20are\x20eligibl\
-    e\x20for\x20filtering:\n\n\x20\x20\x20*\x20`name`\x20-\x20The\x20name\
-    \x20of\x20the\x20long-running\x20operation\n\x20\x20\x20*\x20`done`\x20-\
-    \x20False\x20if\x20the\x20operation\x20is\x20in\x20progress,\x20else\x20\
-    true.\n\x20\x20\x20*\x20`metadata.@type`\x20-\x20the\x20type\x20of\x20me\
-    tadata.\x20For\x20example,\x20the\x20type\x20string\n\x20\x20\x20\x20\
-    \x20\x20for\n\x20\x20\x20\x20\x20\x20[CreateInstanceConfigMetadata][goog\
-    le.spanner.admin.instance.v1.CreateInstanceConfigMetadata]\n\x20\x20\x20\
-    \x20\x20\x20is\n\x20\x20\x20\x20\x20\x20`type.googleapis.com/google.span\
-    ner.admin.instance.v1.CreateInstanceConfigMetadata`.\n\x20\x20\x20*\x20`\
-    metadata.<field_name>`\x20-\x20any\x20field\x20in\x20metadata.value.\n\
+    ide\x20the\x20same\x20response.\n\n\r\n\x05\x04\x07\x02\x03\x05\x12\x04\
+    \xd8\x07\x02\x06\n\r\n\x05\x04\x07\x02\x03\x01\x12\x04\xd8\x07\x07\x14\n\
+    \r\n\x05\x04\x07\x02\x03\x03\x12\x04\xd8\x07\x17\x18\nj\n\x02\x04\x08\
+    \x12\x06\xdd\x07\0\xf2\x07\x01\x1a\\\x20The\x20request\x20for\n\x20[Upda\
+    teInstanceConfigRequest][InstanceAdmin.UpdateInstanceConfigRequest].\n\n\
+    \x0b\n\x03\x04\x08\x01\x12\x04\xdd\x07\x08#\n\x82\x03\n\x04\x04\x08\x02\
+    \0\x12\x04\xe4\x07\x02N\x1a\xf3\x02\x20Required.\x20The\x20user\x20insta\
+    nce\x20config\x20to\x20update,\x20which\x20must\x20always\x20include\x20\
+    the\n\x20instance\x20config\x20name.\x20Otherwise,\x20only\x20fields\x20\
+    mentioned\x20in\n\x20[update_mask][google.spanner.admin.instance.v1.Upda\
+    teInstanceConfigRequest.update_mask]\n\x20need\x20be\x20included.\x20To\
+    \x20prevent\x20conflicts\x20of\x20concurrent\x20updates,\n\x20[etag][goo\
+    gle.spanner.admin.instance.v1.InstanceConfig.reconciling]\x20can\n\x20be\
+    \x20used.\n\n\r\n\x05\x04\x08\x02\0\x06\x12\x04\xe4\x07\x02\x10\n\r\n\
+    \x05\x04\x08\x02\0\x01\x12\x04\xe4\x07\x11\x20\n\r\n\x05\x04\x08\x02\0\
+    \x03\x12\x04\xe4\x07#$\n\r\n\x05\x04\x08\x02\0\x08\x12\x04\xe4\x07%M\n\
+    \x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\x04\xe4\x07&L\n\x9a\x03\n\x04\
+    \x04\x08\x02\x01\x12\x06\xec\x07\x02\xed\x07/\x1a\x89\x03\x20Required.\
+    \x20A\x20mask\x20specifying\x20which\x20fields\x20in\n\x20[InstanceConfi\
+    g][google.spanner.admin.instance.v1.InstanceConfig]\x20should\x20be\n\
+    \x20updated.\x20The\x20field\x20mask\x20must\x20always\x20be\x20specifie\
+    d;\x20this\x20prevents\x20any\x20future\n\x20fields\x20in\x20[InstanceCo\
+    nfig][google.spanner.admin.instance.v1.InstanceConfig]\n\x20from\x20bein\
+    g\x20erased\x20accidentally\x20by\x20clients\x20that\x20do\x20not\x20kno\
+    w\x20about\x20them.\x20Only\n\x20display_name\x20and\x20labels\x20can\
+    \x20be\x20updated.\n\n\r\n\x05\x04\x08\x02\x01\x06\x12\x04\xec\x07\x02\
+    \x1b\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xec\x07\x1c'\n\r\n\x05\x04\
+    \x08\x02\x01\x03\x12\x04\xec\x07*+\n\r\n\x05\x04\x08\x02\x01\x08\x12\x04\
+    \xed\x07\x06.\n\x10\n\x08\x04\x08\x02\x01\x08\x9c\x08\0\x12\x04\xed\x07\
+    \x07-\nk\n\x04\x04\x08\x02\x02\x12\x04\xf1\x07\x02\x19\x1a]\x20An\x20opt\
+    ion\x20to\x20validate,\x20but\x20not\x20actually\x20execute,\x20a\x20req\
+    uest,\n\x20and\x20provide\x20the\x20same\x20response.\n\n\r\n\x05\x04\
+    \x08\x02\x02\x05\x12\x04\xf1\x07\x02\x06\n\r\n\x05\x04\x08\x02\x02\x01\
+    \x12\x04\xf1\x07\x07\x14\n\r\n\x05\x04\x08\x02\x02\x03\x12\x04\xf1\x07\
+    \x17\x18\nj\n\x02\x04\t\x12\x06\xf6\x07\0\x8d\x08\x01\x1a\\\x20The\x20re\
+    quest\x20for\n\x20[DeleteInstanceConfigRequest][InstanceAdmin.DeleteInst\
+    anceConfigRequest].\n\n\x0b\n\x03\x04\t\x01\x12\x04\xf6\x07\x08#\n\xa2\
+    \x01\n\x04\x04\t\x02\0\x12\x06\xfa\x07\x02\xff\x07\x04\x1a\x91\x01\x20Re\
+    quired.\x20The\x20name\x20of\x20the\x20instance\x20configuration\x20to\
+    \x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`project\
+    s/<project>/instanceConfigs/<instance_config>`\n\n\r\n\x05\x04\t\x02\0\
+    \x05\x12\x04\xfa\x07\x02\x08\n\r\n\x05\x04\t\x02\0\x01\x12\x04\xfa\x07\t\
+    \r\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xfa\x07\x10\x11\n\x0f\n\x05\x04\t\
+    \x02\0\x08\x12\x06\xfa\x07\x12\xff\x07\x03\n\x10\n\x08\x04\t\x02\0\x08\
+    \x9c\x08\0\x12\x04\xfb\x07\x04*\n\x11\n\x07\x04\t\x02\0\x08\x9f\x08\x12\
+    \x06\xfc\x07\x04\xfe\x07\x05\n\x97\x03\n\x04\x04\t\x02\x01\x12\x04\x88\
+    \x08\x02\x12\x1a\x88\x03\x20Used\x20for\x20optimistic\x20concurrency\x20\
+    control\x20as\x20a\x20way\x20to\x20help\x20prevent\n\x20simultaneous\x20\
+    deletes\x20of\x20an\x20instance\x20config\x20from\x20overwriting\x20each\
+    \n\x20other.\x20If\x20not\x20empty,\x20the\x20API\n\x20only\x20deletes\
+    \x20the\x20instance\x20config\x20when\x20the\x20etag\x20provided\x20matc\
+    hes\x20the\x20current\n\x20status\x20of\x20the\x20requested\x20instance\
+    \x20config.\x20Otherwise,\x20deletes\x20the\x20instance\n\x20config\x20w\
+    ithout\x20checking\x20the\x20current\x20status\x20of\x20the\x20requested\
+    \x20instance\n\x20config.\n\n\r\n\x05\x04\t\x02\x01\x05\x12\x04\x88\x08\
+    \x02\x08\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\x88\x08\t\r\n\r\n\x05\x04\t\
+    \x02\x01\x03\x12\x04\x88\x08\x10\x11\nk\n\x04\x04\t\x02\x02\x12\x04\x8c\
+    \x08\x02\x19\x1a]\x20An\x20option\x20to\x20validate,\x20but\x20not\x20ac\
+    tually\x20execute,\x20a\x20request,\n\x20and\x20provide\x20the\x20same\
+    \x20response.\n\n\r\n\x05\x04\t\x02\x02\x05\x12\x04\x8c\x08\x02\x06\n\r\
+    \n\x05\x04\t\x02\x02\x01\x12\x04\x8c\x08\x07\x14\n\r\n\x05\x04\t\x02\x02\
+    \x03\x12\x04\x8c\x08\x17\x18\n\x8d\x01\n\x02\x04\n\x12\x06\x91\x08\0\xd2\
+    \x08\x01\x1a\x7f\x20The\x20request\x20for\n\x20[ListInstanceConfigOperat\
+    ions][google.spanner.admin.instance.v1.InstanceAdmin.ListInstanceConfigO\
+    perations].\n\n\x0b\n\x03\x04\n\x01\x12\x04\x91\x08\x08+\nx\n\x04\x04\n\
+    \x02\0\x12\x06\x94\x08\x02\x99\x08\x04\x1ah\x20Required.\x20The\x20proje\
+    ct\x20of\x20the\x20instance\x20config\x20operations.\n\x20Values\x20are\
+    \x20of\x20the\x20form\x20`projects/<project>`.\n\n\r\n\x05\x04\n\x02\0\
+    \x05\x12\x04\x94\x08\x02\x08\n\r\n\x05\x04\n\x02\0\x01\x12\x04\x94\x08\t\
+    \x0f\n\r\n\x05\x04\n\x02\0\x03\x12\x04\x94\x08\x12\x13\n\x0f\n\x05\x04\n\
+    \x02\0\x08\x12\x06\x94\x08\x14\x99\x08\x03\n\x10\n\x08\x04\n\x02\0\x08\
+    \x9c\x08\0\x12\x04\x95\x08\x04*\n\x11\n\x07\x04\n\x02\0\x08\x9f\x08\x12\
+    \x06\x96\x08\x04\x98\x08\x05\n\x9f\x10\n\x04\x04\n\x02\x01\x12\x04\xc6\
+    \x08\x02\x14\x1a\x90\x10\x20An\x20expression\x20that\x20filters\x20the\
+    \x20list\x20of\x20returned\x20operations.\n\n\x20A\x20filter\x20expressi\
+    on\x20consists\x20of\x20a\x20field\x20name,\x20a\n\x20comparison\x20oper\
+    ator,\x20and\x20a\x20value\x20for\x20filtering.\n\x20The\x20value\x20mus\
+    t\x20be\x20a\x20string,\x20a\x20number,\x20or\x20a\x20boolean.\x20The\
+    \x20comparison\x20operator\n\x20must\x20be\x20one\x20of:\x20`<`,\x20`>`,\
+    \x20`<=`,\x20`>=`,\x20`!=`,\x20`=`,\x20or\x20`:`.\n\x20Colon\x20`:`\x20i\
+    s\x20the\x20contains\x20operator.\x20Filter\x20rules\x20are\x20not\x20ca\
+    se\x20sensitive.\n\n\x20The\x20following\x20fields\x20in\x20the\x20[Oper\
+    ation][google.longrunning.Operation]\n\x20are\x20eligible\x20for\x20filt\
+    ering:\n\n\x20\x20\x20*\x20`name`\x20-\x20The\x20name\x20of\x20the\x20lo\
+    ng-running\x20operation\n\x20\x20\x20*\x20`done`\x20-\x20False\x20if\x20\
+    the\x20operation\x20is\x20in\x20progress,\x20else\x20true.\n\x20\x20\x20\
+    *\x20`metadata.@type`\x20-\x20the\x20type\x20of\x20metadata.\x20For\x20e\
+    xample,\x20the\x20type\x20string\n\x20\x20\x20\x20\x20\x20for\n\x20\x20\
+    \x20\x20\x20\x20[CreateInstanceConfigMetadata][google.spanner.admin.inst\
+    ance.v1.CreateInstanceConfigMetadata]\n\x20\x20\x20\x20\x20\x20is\n\x20\
+    \x20\x20\x20\x20\x20`type.googleapis.com/google.spanner.admin.instance.v\
+    1.CreateInstanceConfigMetadata`.\n\x20\x20\x20*\x20`metadata.<field_name\
+    >`\x20-\x20any\x20field\x20in\x20metadata.value.\n\x20\x20\x20\x20\x20\
+    \x20`metadata.@type`\x20must\x20be\x20specified\x20first,\x20if\x20filte\
+    ring\x20on\x20metadata\n\x20\x20\x20\x20\x20\x20fields.\n\x20\x20\x20*\
+    \x20`error`\x20-\x20Error\x20associated\x20with\x20the\x20long-running\
+    \x20operation.\n\x20\x20\x20*\x20`response.@type`\x20-\x20the\x20type\
+    \x20of\x20response.\n\x20\x20\x20*\x20`response.<field_name>`\x20-\x20an\
+    y\x20field\x20in\x20response.value.\n\n\x20You\x20can\x20combine\x20mult\
+    iple\x20expressions\x20by\x20enclosing\x20each\x20expression\x20in\n\x20\
+    parentheses.\x20By\x20default,\x20expressions\x20are\x20combined\x20with\
+    \x20AND\x20logic.\x20However,\n\x20you\x20can\x20specify\x20AND,\x20OR,\
+    \x20and\x20NOT\x20logic\x20explicitly.\n\n\x20Here\x20are\x20a\x20few\
+    \x20examples:\n\n\x20\x20\x20*\x20`done:true`\x20-\x20The\x20operation\
+    \x20is\x20complete.\n\x20\x20\x20*\x20`(metadata.@type=`\x20\\\n\x20\x20\
+    \x20\x20\x20`type.googleapis.com/google.spanner.admin.instance.v1.Create\
+    InstanceConfigMetadata)\n\x20\x20\x20\x20\x20AND`\x20\\\n\x20\x20\x20\
+    \x20\x20`(metadata.instance_config.name:custom-config)\x20AND`\x20\\\n\
+    \x20\x20\x20\x20\x20`(metadata.progress.start_time\x20<\x20\\\"2021-03-2\
+    8T14:50:00Z\\\")\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(error:*)`\x20-\x20\
+    Return\x20operations\x20where:\n\x20\x20\x20\x20\x20*\x20The\x20operatio\
+    n's\x20metadata\x20type\x20is\n\x20\x20\x20\x20\x20[CreateInstanceConfig\
+    Metadata][google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]\
+    .\n\x20\x20\x20\x20\x20*\x20The\x20instance\x20config\x20name\x20contain\
+    s\x20\"custom-config\".\n\x20\x20\x20\x20\x20*\x20The\x20operation\x20st\
+    arted\x20before\x202021-03-28T14:50:00Z.\n\x20\x20\x20\x20\x20*\x20The\
+    \x20operation\x20resulted\x20in\x20an\x20error.\n\n\r\n\x05\x04\n\x02\
+    \x01\x05\x12\x04\xc6\x08\x02\x08\n\r\n\x05\x04\n\x02\x01\x01\x12\x04\xc6\
+    \x08\t\x0f\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xc6\x08\x12\x13\n\x87\x01\
+    \n\x04\x04\n\x02\x02\x12\x04\xca\x08\x02\x16\x1ay\x20Number\x20of\x20ope\
+    rations\x20to\x20be\x20returned\x20in\x20the\x20response.\x20If\x200\x20\
+    or\n\x20less,\x20defaults\x20to\x20the\x20server's\x20maximum\x20allowed\
+    \x20page\x20size.\n\n\r\n\x05\x04\n\x02\x02\x05\x12\x04\xca\x08\x02\x07\
+    \n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xca\x08\x08\x11\n\r\n\x05\x04\n\x02\
+    \x02\x03\x12\x04\xca\x08\x14\x15\n\xd8\x02\n\x04\x04\n\x02\x03\x12\x04\
+    \xd1\x08\x02\x18\x1a\xc9\x02\x20If\x20non-empty,\x20`page_token`\x20shou\
+    ld\x20contain\x20a\n\x20[next_page_token][google.spanner.admin.instance.\
+    v1.ListInstanceConfigOperationsResponse.next_page_token]\n\x20from\x20a\
+    \x20previous\n\x20[ListInstanceConfigOperationsResponse][google.spanner.\
+    admin.instance.v1.ListInstanceConfigOperationsResponse]\n\x20to\x20the\
+    \x20same\x20`parent`\x20and\x20with\x20the\x20same\x20`filter`.\n\n\r\n\
+    \x05\x04\n\x02\x03\x05\x12\x04\xd1\x08\x02\x08\n\r\n\x05\x04\n\x02\x03\
+    \x01\x12\x04\xd1\x08\t\x13\n\r\n\x05\x04\n\x02\x03\x03\x12\x04\xd1\x08\
+    \x16\x17\n\x8f\x01\n\x02\x04\x0b\x12\x06\xd6\x08\0\xe2\x08\x01\x1a\x80\
+    \x01\x20The\x20response\x20for\n\x20[ListInstanceConfigOperations][googl\
+    e.spanner.admin.instance.v1.InstanceAdmin.ListInstanceConfigOperations].\
+    \n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xd6\x08\x08,\n\xbd\x02\n\x04\x04\x0b\
+    \x02\0\x12\x04\xdc\x08\x027\x1a\xae\x02\x20The\x20list\x20of\x20matching\
+    \x20instance\x20config\x20[long-running\n\x20operations][google.longrunn\
+    ing.Operation].\x20Each\x20operation's\x20name\x20will\x20be\n\x20prefix\
+    ed\x20by\x20the\x20instance\x20config's\x20name.\x20The\x20operation's\n\
+    \x20[metadata][google.longrunning.Operation.metadata]\x20field\x20type\n\
+    \x20`metadata.type_url`\x20describes\x20the\x20type\x20of\x20the\x20meta\
+    data.\n\n\r\n\x05\x04\x0b\x02\0\x04\x12\x04\xdc\x08\x02\n\n\r\n\x05\x04\
+    \x0b\x02\0\x06\x12\x04\xdc\x08\x0b'\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\
+    \xdc\x08(2\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xdc\x0856\n\xd9\x01\n\x04\
+    \x04\x0b\x02\x01\x12\x04\xe1\x08\x02\x1d\x1a\xca\x01\x20`next_page_token\
+    `\x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[ListInstanceConfig\
+    Operations][google.spanner.admin.instance.v1.InstanceAdmin.ListInstanceC\
+    onfigOperations]\n\x20call\x20to\x20fetch\x20more\x20of\x20the\x20matchi\
+    ng\x20metadata.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\x04\xe1\x08\x02\x08\
+    \n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\xe1\x08\t\x18\n\r\n\x05\x04\x0b\
+    \x02\x01\x03\x12\x04\xe1\x08\x1b\x1c\nk\n\x02\x04\x0c\x12\x06\xe6\x08\0\
+    \xf5\x08\x01\x1a]\x20The\x20request\x20for\n\x20[GetInstance][google.spa\
+    nner.admin.instance.v1.InstanceAdmin.GetInstance].\n\n\x0b\n\x03\x04\x0c\
+    \x01\x12\x04\xe6\x08\x08\x1a\n\x82\x01\n\x04\x04\x0c\x02\0\x12\x06\xe9\
+    \x08\x02\xee\x08\x04\x1ar\x20Required.\x20The\x20name\x20of\x20the\x20re\
+    quested\x20instance.\x20Values\x20are\x20of\x20the\x20form\n\x20`project\
+    s/<project>/instances/<instance>`.\n\n\r\n\x05\x04\x0c\x02\0\x05\x12\x04\
+    \xe9\x08\x02\x08\n\r\n\x05\x04\x0c\x02\0\x01\x12\x04\xe9\x08\t\r\n\r\n\
+    \x05\x04\x0c\x02\0\x03\x12\x04\xe9\x08\x10\x11\n\x0f\n\x05\x04\x0c\x02\0\
+    \x08\x12\x06\xe9\x08\x12\xee\x08\x03\n\x10\n\x08\x04\x0c\x02\0\x08\x9c\
+    \x08\0\x12\x04\xea\x08\x04*\n\x11\n\x07\x04\x0c\x02\0\x08\x9f\x08\x12\
+    \x06\xeb\x08\x04\xed\x08\x05\n\xf5\x01\n\x04\x04\x0c\x02\x01\x12\x04\xf4\
+    \x08\x02+\x1a\xe6\x01\x20If\x20field_mask\x20is\x20present,\x20specifies\
+    \x20the\x20subset\x20of\n\x20[Instance][google.spanner.admin.instance.v1\
+    .Instance]\x20fields\x20that\x20should\x20be\n\x20returned.\x20If\x20abs\
+    ent,\x20all\n\x20[Instance][google.spanner.admin.instance.v1.Instance]\
+    \x20fields\x20are\x20returned.\n\n\r\n\x05\x04\x0c\x02\x01\x06\x12\x04\
+    \xf4\x08\x02\x1b\n\r\n\x05\x04\x0c\x02\x01\x01\x12\x04\xf4\x08\x1c&\n\r\
+    \n\x05\x04\x0c\x02\x01\x03\x12\x04\xf4\x08)*\nq\n\x02\x04\r\x12\x06\xf9\
+    \x08\0\x8b\t\x01\x1ac\x20The\x20request\x20for\n\x20[CreateInstance][goo\
+    gle.spanner.admin.instance.v1.InstanceAdmin.CreateInstance].\n\n\x0b\n\
+    \x03\x04\r\x01\x12\x04\xf9\x08\x08\x1d\n\x82\x01\n\x04\x04\r\x02\0\x12\
+    \x06\xfc\x08\x02\x81\t\x04\x1ar\x20Required.\x20The\x20name\x20of\x20the\
+    \x20project\x20in\x20which\x20to\x20create\x20the\x20instance.\x20Values\
+    \n\x20are\x20of\x20the\x20form\x20`projects/<project>`.\n\n\r\n\x05\x04\
+    \r\x02\0\x05\x12\x04\xfc\x08\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\
+    \xfc\x08\t\x0f\n\r\n\x05\x04\r\x02\0\x03\x12\x04\xfc\x08\x12\x13\n\x0f\n\
+    \x05\x04\r\x02\0\x08\x12\x06\xfc\x08\x14\x81\t\x03\n\x10\n\x08\x04\r\x02\
+    \0\x08\x9c\x08\0\x12\x04\xfd\x08\x04*\n\x11\n\x07\x04\r\x02\0\x08\x9f\
+    \x08\x12\x06\xfe\x08\x04\x80\t\x05\n\xae\x01\n\x04\x04\r\x02\x01\x12\x04\
+    \x86\t\x02B\x1a\x9f\x01\x20Required.\x20The\x20ID\x20of\x20the\x20instan\
+    ce\x20to\x20create.\x20\x20Valid\x20identifiers\x20are\x20of\x20the\n\
+    \x20form\x20`[a-z][-a-z0-9]*[a-z0-9]`\x20and\x20must\x20be\x20between\
+    \x202\x20and\x2064\x20characters\x20in\n\x20length.\n\n\r\n\x05\x04\r\
+    \x02\x01\x05\x12\x04\x86\t\x02\x08\n\r\n\x05\x04\r\x02\x01\x01\x12\x04\
+    \x86\t\t\x14\n\r\n\x05\x04\r\x02\x01\x03\x12\x04\x86\t\x17\x18\n\r\n\x05\
+    \x04\r\x02\x01\x08\x12\x04\x86\t\x19A\n\x10\n\x08\x04\r\x02\x01\x08\x9c\
+    \x08\0\x12\x04\x86\t\x1a@\n\x89\x01\n\x04\x04\r\x02\x02\x12\x04\x8a\t\
+    \x02A\x1a{\x20Required.\x20The\x20instance\x20to\x20create.\x20\x20The\
+    \x20name\x20may\x20be\x20omitted,\x20but\x20if\n\x20specified\x20must\
+    \x20be\x20`<parent>/instances/<instance_id>`.\n\n\r\n\x05\x04\r\x02\x02\
+    \x06\x12\x04\x8a\t\x02\n\n\r\n\x05\x04\r\x02\x02\x01\x12\x04\x8a\t\x0b\
+    \x13\n\r\n\x05\x04\r\x02\x02\x03\x12\x04\x8a\t\x16\x17\n\r\n\x05\x04\r\
+    \x02\x02\x08\x12\x04\x8a\t\x18@\n\x10\n\x08\x04\r\x02\x02\x08\x9c\x08\0\
+    \x12\x04\x8a\t\x19?\no\n\x02\x04\x0e\x12\x06\x8f\t\0\xbf\t\x01\x1aa\x20T\
+    he\x20request\x20for\n\x20[ListInstances][google.spanner.admin.instance.\
+    v1.InstanceAdmin.ListInstances].\n\n\x0b\n\x03\x04\x0e\x01\x12\x04\x8f\t\
+    \x08\x1c\n\x8d\x01\n\x04\x04\x0e\x02\0\x12\x06\x92\t\x02\x97\t\x04\x1a}\
+    \x20Required.\x20The\x20name\x20of\x20the\x20project\x20for\x20which\x20\
+    a\x20list\x20of\x20instances\x20is\n\x20requested.\x20Values\x20are\x20o\
+    f\x20the\x20form\x20`projects/<project>`.\n\n\r\n\x05\x04\x0e\x02\0\x05\
+    \x12\x04\x92\t\x02\x08\n\r\n\x05\x04\x0e\x02\0\x01\x12\x04\x92\t\t\x0f\n\
+    \r\n\x05\x04\x0e\x02\0\x03\x12\x04\x92\t\x12\x13\n\x0f\n\x05\x04\x0e\x02\
+    \0\x08\x12\x06\x92\t\x14\x97\t\x03\n\x10\n\x08\x04\x0e\x02\0\x08\x9c\x08\
+    \0\x12\x04\x93\t\x04*\n\x11\n\x07\x04\x0e\x02\0\x08\x9f\x08\x12\x06\x94\
+    \t\x04\x96\t\x05\n\x86\x01\n\x04\x04\x0e\x02\x01\x12\x04\x9b\t\x02\x16\
+    \x1ax\x20Number\x20of\x20instances\x20to\x20be\x20returned\x20in\x20the\
+    \x20response.\x20If\x200\x20or\x20less,\x20defaults\n\x20to\x20the\x20se\
+    rver's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04\x0e\x02\
+    \x01\x05\x12\x04\x9b\t\x02\x07\n\r\n\x05\x04\x0e\x02\x01\x01\x12\x04\x9b\
+    \t\x08\x11\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\x9b\t\x14\x15\n\xfa\x01\
+    \n\x04\x04\x0e\x02\x02\x12\x04\xa1\t\x02\x18\x1a\xeb\x01\x20If\x20non-em\
+    pty,\x20`page_token`\x20should\x20contain\x20a\n\x20[next_page_token][go\
+    ogle.spanner.admin.instance.v1.ListInstancesResponse.next_page_token]\n\
+    \x20from\x20a\x20previous\n\x20[ListInstancesResponse][google.spanner.ad\
+    min.instance.v1.ListInstancesResponse].\n\n\r\n\x05\x04\x0e\x02\x02\x05\
+    \x12\x04\xa1\t\x02\x08\n\r\n\x05\x04\x0e\x02\x02\x01\x12\x04\xa1\t\t\x13\
+    \n\r\n\x05\x04\x0e\x02\x02\x03\x12\x04\xa1\t\x16\x17\n\xdd\x06\n\x04\x04\
+    \x0e\x02\x03\x12\x04\xb6\t\x02\x14\x1a\xce\x06\x20An\x20expression\x20fo\
+    r\x20filtering\x20the\x20results\x20of\x20the\x20request.\x20Filter\x20r\
+    ules\x20are\n\x20case\x20insensitive.\x20The\x20fields\x20eligible\x20fo\
+    r\x20filtering\x20are:\n\n\x20\x20\x20*\x20`name`\n\x20\x20\x20*\x20`dis\
+    play_name`\n\x20\x20\x20*\x20`labels.key`\x20where\x20key\x20is\x20the\
+    \x20name\x20of\x20a\x20label\n\n\x20Some\x20examples\x20of\x20using\x20f\
+    ilters\x20are:\n\n\x20\x20\x20*\x20`name:*`\x20-->\x20The\x20instance\
+    \x20has\x20a\x20name.\n\x20\x20\x20*\x20`name:Howl`\x20-->\x20The\x20ins\
+    tance's\x20name\x20contains\x20the\x20string\x20\"howl\".\n\x20\x20\x20*\
+    \x20`name:HOWL`\x20-->\x20Equivalent\x20to\x20above.\n\x20\x20\x20*\x20`\
+    NAME:howl`\x20-->\x20Equivalent\x20to\x20above.\n\x20\x20\x20*\x20`label\
+    s.env:*`\x20-->\x20The\x20instance\x20has\x20the\x20label\x20\"env\".\n\
+    \x20\x20\x20*\x20`labels.env:dev`\x20-->\x20The\x20instance\x20has\x20th\
+    e\x20label\x20\"env\"\x20and\x20the\x20value\x20of\n\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20the\x20label\x20contains\x20the\x20string\x20\"dev\".\n\x20\x20\x20*\
+    \x20`name:howl\x20labels.env:dev`\x20-->\x20The\x20instance's\x20name\
+    \x20contains\x20\"howl\"\x20and\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20it\x20has\x20the\x20label\x20\"env\"\x20with\
+    \x20its\x20value\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20containing\x20\"dev\".\n\n\r\n\x05\x04\x0e\x02\x03\x05\x12\
+    \x04\xb6\t\x02\x08\n\r\n\x05\x04\x0e\x02\x03\x01\x12\x04\xb6\t\t\x0f\n\r\
+    \n\x05\x04\x0e\x02\x03\x03\x12\x04\xb6\t\x12\x13\n\xc5\x02\n\x04\x04\x0e\
+    \x02\x04\x12\x04\xbe\t\x022\x1a\xb6\x02\x20Deadline\x20used\x20while\x20\
+    retrieving\x20metadata\x20for\x20instances.\n\x20Instances\x20whose\x20m\
+    etadata\x20cannot\x20be\x20retrieved\x20within\x20this\x20deadline\x20wi\
+    ll\x20be\n\x20added\x20to\n\x20[unreachable][google.spanner.admin.instan\
+    ce.v1.ListInstancesResponse.unreachable]\n\x20in\n\x20[ListInstancesResp\
+    onse][google.spanner.admin.instance.v1.ListInstancesResponse].\n\n\r\n\
+    \x05\x04\x0e\x02\x04\x06\x12\x04\xbe\t\x02\x1b\n\r\n\x05\x04\x0e\x02\x04\
+    \x01\x12\x04\xbe\t\x1c-\n\r\n\x05\x04\x0e\x02\x04\x03\x12\x04\xbe\t01\np\
+    \n\x02\x04\x0f\x12\x06\xc3\t\0\xd1\t\x01\x1ab\x20The\x20response\x20for\
+    \n\x20[ListInstances][google.spanner.admin.instance.v1.InstanceAdmin.Lis\
+    tInstances].\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\xc3\t\x08\x1d\n0\n\x04\
+    \x04\x0f\x02\0\x12\x04\xc5\t\x02\"\x1a\"\x20The\x20list\x20of\x20request\
+    ed\x20instances.\n\n\r\n\x05\x04\x0f\x02\0\x04\x12\x04\xc5\t\x02\n\n\r\n\
+    \x05\x04\x0f\x02\0\x06\x12\x04\xc5\t\x0b\x13\n\r\n\x05\x04\x0f\x02\0\x01\
+    \x12\x04\xc5\t\x14\x1d\n\r\n\x05\x04\x0f\x02\0\x03\x12\x04\xc5\t\x20!\n\
+    \xbc\x01\n\x04\x04\x0f\x02\x01\x12\x04\xca\t\x02\x1d\x1a\xad\x01\x20`nex\
+    t_page_token`\x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[ListIn\
+    stances][google.spanner.admin.instance.v1.InstanceAdmin.ListInstances]\n\
+    \x20call\x20to\x20fetch\x20more\x20of\x20the\x20matching\x20instances.\n\
+    \n\r\n\x05\x04\x0f\x02\x01\x05\x12\x04\xca\t\x02\x08\n\r\n\x05\x04\x0f\
+    \x02\x01\x01\x12\x04\xca\t\t\x18\n\r\n\x05\x04\x0f\x02\x01\x03\x12\x04\
+    \xca\t\x1b\x1c\n\xe4\x01\n\x04\x04\x0f\x02\x02\x12\x04\xd0\t\x02\"\x1a\
+    \xd5\x01\x20The\x20list\x20of\x20unreachable\x20instances.\n\x20It\x20in\
+    cludes\x20the\x20names\x20of\x20instances\x20whose\x20metadata\x20could\
+    \x20not\x20be\x20retrieved\n\x20within\n\x20[instance_deadline][google.s\
+    panner.admin.instance.v1.ListInstancesRequest.instance_deadline].\n\n\r\
+    \n\x05\x04\x0f\x02\x02\x04\x12\x04\xd0\t\x02\n\n\r\n\x05\x04\x0f\x02\x02\
+    \x05\x12\x04\xd0\t\x0b\x11\n\r\n\x05\x04\x0f\x02\x02\x01\x12\x04\xd0\t\
+    \x12\x1d\n\r\n\x05\x04\x0f\x02\x02\x03\x12\x04\xd0\t\x20!\nq\n\x02\x04\
+    \x10\x12\x06\xd5\t\0\xe3\t\x01\x1ac\x20The\x20request\x20for\n\x20[Updat\
+    eInstance][google.spanner.admin.instance.v1.InstanceAdmin.UpdateInstance\
+    ].\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xd5\t\x08\x1d\n\xe9\x01\n\x04\x04\
+    \x10\x02\0\x12\x04\xda\t\x02A\x1a\xda\x01\x20Required.\x20The\x20instanc\
+    e\x20to\x20update,\x20which\x20must\x20always\x20include\x20the\x20insta\
+    nce\n\x20name.\x20\x20Otherwise,\x20only\x20fields\x20mentioned\x20in\n\
+    \x20[field_mask][google.spanner.admin.instance.v1.UpdateInstanceRequest.\
+    field_mask]\n\x20need\x20be\x20included.\n\n\r\n\x05\x04\x10\x02\0\x06\
+    \x12\x04\xda\t\x02\n\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\xda\t\x0b\x13\n\
+    \r\n\x05\x04\x10\x02\0\x03\x12\x04\xda\t\x16\x17\n\r\n\x05\x04\x10\x02\0\
+    \x08\x12\x04\xda\t\x18@\n\x10\n\x08\x04\x10\x02\0\x08\x9c\x08\0\x12\x04\
+    \xda\t\x19?\n\xd4\x02\n\x04\x04\x10\x02\x01\x12\x06\xe1\t\x02\xe2\t/\x1a\
+    \xc3\x02\x20Required.\x20A\x20mask\x20specifying\x20which\x20fields\x20i\
+    n\n\x20[Instance][google.spanner.admin.instance.v1.Instance]\x20should\
+    \x20be\x20updated.\n\x20The\x20field\x20mask\x20must\x20always\x20be\x20\
+    specified;\x20this\x20prevents\x20any\x20future\x20fields\x20in\n\x20[In\
+    stance][google.spanner.admin.instance.v1.Instance]\x20from\x20being\x20e\
+    rased\n\x20accidentally\x20by\x20clients\x20that\x20do\x20not\x20know\
+    \x20about\x20them.\n\n\r\n\x05\x04\x10\x02\x01\x06\x12\x04\xe1\t\x02\x1b\
+    \n\r\n\x05\x04\x10\x02\x01\x01\x12\x04\xe1\t\x1c&\n\r\n\x05\x04\x10\x02\
+    \x01\x03\x12\x04\xe1\t)*\n\r\n\x05\x04\x10\x02\x01\x08\x12\x04\xe2\t\x06\
+    .\n\x10\n\x08\x04\x10\x02\x01\x08\x9c\x08\0\x12\x04\xe2\t\x07-\nq\n\x02\
+    \x04\x11\x12\x06\xe7\t\0\xf0\t\x01\x1ac\x20The\x20request\x20for\n\x20[D\
+    eleteInstance][google.spanner.admin.instance.v1.InstanceAdmin.DeleteInst\
+    ance].\n\n\x0b\n\x03\x04\x11\x01\x12\x04\xe7\t\x08\x1d\n\x85\x01\n\x04\
+    \x04\x11\x02\0\x12\x06\xea\t\x02\xef\t\x04\x1au\x20Required.\x20The\x20n\
+    ame\x20of\x20the\x20instance\x20to\x20be\x20deleted.\x20Values\x20are\
+    \x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>`\n\n\
+    \r\n\x05\x04\x11\x02\0\x05\x12\x04\xea\t\x02\x08\n\r\n\x05\x04\x11\x02\0\
+    \x01\x12\x04\xea\t\t\r\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xea\t\x10\x11\
+    \n\x0f\n\x05\x04\x11\x02\0\x08\x12\x06\xea\t\x12\xef\t\x03\n\x10\n\x08\
+    \x04\x11\x02\0\x08\x9c\x08\0\x12\x04\xeb\t\x04*\n\x11\n\x07\x04\x11\x02\
+    \0\x08\x9f\x08\x12\x06\xec\t\x04\xee\t\x05\n\x8d\x01\n\x02\x04\x12\x12\
+    \x06\xf4\t\0\x84\n\x01\x1a\x7f\x20Metadata\x20type\x20for\x20the\x20oper\
+    ation\x20returned\x20by\n\x20[CreateInstance][google.spanner.admin.insta\
+    nce.v1.InstanceAdmin.CreateInstance].\n\n\x0b\n\x03\x04\x12\x01\x12\x04\
+    \xf4\t\x08\x1e\n+\n\x04\x04\x12\x02\0\x12\x04\xf6\t\x02\x18\x1a\x1d\x20T\
+    he\x20instance\x20being\x20created.\n\n\r\n\x05\x04\x12\x02\0\x06\x12\
+    \x04\xf6\t\x02\n\n\r\n\x05\x04\x12\x02\0\x01\x12\x04\xf6\t\x0b\x13\n\r\n\
+    \x05\x04\x12\x02\0\x03\x12\x04\xf6\t\x16\x17\n\x8d\x01\n\x04\x04\x12\x02\
+    \x01\x12\x04\xfb\t\x02+\x1a\x7f\x20The\x20time\x20at\x20which\x20the\n\
+    \x20[CreateInstance][google.spanner.admin.instance.v1.InstanceAdmin.Crea\
+    teInstance]\n\x20request\x20was\x20received.\n\n\r\n\x05\x04\x12\x02\x01\
+    \x06\x12\x04\xfb\t\x02\x1b\n\r\n\x05\x04\x12\x02\x01\x01\x12\x04\xfb\t\
+    \x1c&\n\r\n\x05\x04\x12\x02\x01\x03\x12\x04\xfb\t)*\n\xbd\x01\n\x04\x04\
+    \x12\x02\x02\x12\x04\x80\n\x02,\x1a\xae\x01\x20The\x20time\x20at\x20whic\
+    h\x20this\x20operation\x20was\x20cancelled.\x20If\x20set,\x20this\x20ope\
+    ration\x20is\n\x20in\x20the\x20process\x20of\x20undoing\x20itself\x20(wh\
+    ich\x20is\x20guaranteed\x20to\x20succeed)\x20and\n\x20cannot\x20be\x20ca\
+    ncelled\x20again.\n\n\r\n\x05\x04\x12\x02\x02\x06\x12\x04\x80\n\x02\x1b\
+    \n\r\n\x05\x04\x12\x02\x02\x01\x12\x04\x80\n\x1c'\n\r\n\x05\x04\x12\x02\
+    \x02\x03\x12\x04\x80\n*+\nV\n\x04\x04\x12\x02\x03\x12\x04\x83\n\x02)\x1a\
+    H\x20The\x20time\x20at\x20which\x20this\x20operation\x20failed\x20or\x20\
+    was\x20completed\x20successfully.\n\n\r\n\x05\x04\x12\x02\x03\x06\x12\
+    \x04\x83\n\x02\x1b\n\r\n\x05\x04\x12\x02\x03\x01\x12\x04\x83\n\x1c$\n\r\
+    \n\x05\x04\x12\x02\x03\x03\x12\x04\x83\n'(\n\x8d\x01\n\x02\x04\x13\x12\
+    \x06\x88\n\0\x98\n\x01\x1a\x7f\x20Metadata\x20type\x20for\x20the\x20oper\
+    ation\x20returned\x20by\n\x20[UpdateInstance][google.spanner.admin.insta\
+    nce.v1.InstanceAdmin.UpdateInstance].\n\n\x0b\n\x03\x04\x13\x01\x12\x04\
+    \x88\n\x08\x1e\n4\n\x04\x04\x13\x02\0\x12\x04\x8a\n\x02\x18\x1a&\x20The\
+    \x20desired\x20end\x20state\x20of\x20the\x20update.\n\n\r\n\x05\x04\x13\
+    \x02\0\x06\x12\x04\x8a\n\x02\n\n\r\n\x05\x04\x13\x02\0\x01\x12\x04\x8a\n\
+    \x0b\x13\n\r\n\x05\x04\x13\x02\0\x03\x12\x04\x8a\n\x16\x17\n\x89\x01\n\
+    \x04\x04\x13\x02\x01\x12\x04\x8f\n\x02+\x1a{\x20The\x20time\x20at\x20whi\
+    ch\n\x20[UpdateInstance][google.spanner.admin.instance.v1.InstanceAdmin.\
+    UpdateInstance]\n\x20request\x20was\x20received.\n\n\r\n\x05\x04\x13\x02\
+    \x01\x06\x12\x04\x8f\n\x02\x1b\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\x8f\
+    \n\x1c&\n\r\n\x05\x04\x13\x02\x01\x03\x12\x04\x8f\n)*\n\xbd\x01\n\x04\
+    \x04\x13\x02\x02\x12\x04\x94\n\x02,\x1a\xae\x01\x20The\x20time\x20at\x20\
+    which\x20this\x20operation\x20was\x20cancelled.\x20If\x20set,\x20this\
+    \x20operation\x20is\n\x20in\x20the\x20process\x20of\x20undoing\x20itself\
+    \x20(which\x20is\x20guaranteed\x20to\x20succeed)\x20and\n\x20cannot\x20b\
+    e\x20cancelled\x20again.\n\n\r\n\x05\x04\x13\x02\x02\x06\x12\x04\x94\n\
+    \x02\x1b\n\r\n\x05\x04\x13\x02\x02\x01\x12\x04\x94\n\x1c'\n\r\n\x05\x04\
+    \x13\x02\x02\x03\x12\x04\x94\n*+\nV\n\x04\x04\x13\x02\x03\x12\x04\x97\n\
+    \x02)\x1aH\x20The\x20time\x20at\x20which\x20this\x20operation\x20failed\
+    \x20or\x20was\x20completed\x20successfully.\n\n\r\n\x05\x04\x13\x02\x03\
+    \x06\x12\x04\x97\n\x02\x1b\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\x97\n\
+    \x1c$\n\r\n\x05\x04\x13\x02\x03\x03\x12\x04\x97\n'(\n\x9a\x01\n\x02\x04\
+    \x14\x12\x06\x9c\n\0\xa7\n\x01\x1a\x8b\x01\x20Metadata\x20type\x20for\
+    \x20the\x20operation\x20returned\x20by\n\x20[CreateInstanceConfig][googl\
+    e.spanner.admin.instance.v1.InstanceAdmin.CreateInstanceConfig].\n\n\x0b\
+    \n\x03\x04\x14\x01\x12\x04\x9c\n\x08$\n5\n\x04\x04\x14\x02\0\x12\x04\x9e\
+    \n\x02%\x1a'\x20The\x20target\x20instance\x20config\x20end\x20state.\n\n\
+    \r\n\x05\x04\x14\x02\0\x06\x12\x04\x9e\n\x02\x10\n\r\n\x05\x04\x14\x02\0\
+    \x01\x12\x04\x9e\n\x11\x20\n\r\n\x05\x04\x14\x02\0\x03\x12\x04\x9e\n#$\n\
+    \x8c\x01\n\x04\x04\x14\x02\x01\x12\x04\xa3\n\x02!\x1a~\x20The\x20progres\
+    s\x20of\x20the\n\x20[CreateInstanceConfig][google.spanner.admin.instance\
+    .v1.InstanceAdmin.CreateInstanceConfig]\n\x20operation.\n\n\r\n\x05\x04\
+    \x14\x02\x01\x06\x12\x04\xa3\n\x02\x13\n\r\n\x05\x04\x14\x02\x01\x01\x12\
+    \x04\xa3\n\x14\x1c\n\r\n\x05\x04\x14\x02\x01\x03\x12\x04\xa3\n\x1f\x20\n\
+    ?\n\x04\x04\x14\x02\x02\x12\x04\xa6\n\x02,\x1a1\x20The\x20time\x20at\x20\
+    which\x20this\x20operation\x20was\x20cancelled.\n\n\r\n\x05\x04\x14\x02\
+    \x02\x06\x12\x04\xa6\n\x02\x1b\n\r\n\x05\x04\x14\x02\x02\x01\x12\x04\xa6\
+    \n\x1c'\n\r\n\x05\x04\x14\x02\x02\x03\x12\x04\xa6\n*+\n\x9a\x01\n\x02\
+    \x04\x15\x12\x06\xab\n\0\xb6\n\x01\x1a\x8b\x01\x20Metadata\x20type\x20fo\
+    r\x20the\x20operation\x20returned\x20by\n\x20[UpdateInstanceConfig][goog\
+    le.spanner.admin.instance.v1.InstanceAdmin.UpdateInstanceConfig].\n\n\
+    \x0b\n\x03\x04\x15\x01\x12\x04\xab\n\x08$\n;\n\x04\x04\x15\x02\0\x12\x04\
+    \xad\n\x02%\x1a-\x20The\x20desired\x20instance\x20config\x20after\x20upd\
+    ating.\n\n\r\n\x05\x04\x15\x02\0\x06\x12\x04\xad\n\x02\x10\n\r\n\x05\x04\
+    \x15\x02\0\x01\x12\x04\xad\n\x11\x20\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\
+    \xad\n#$\n\x8c\x01\n\x04\x04\x15\x02\x01\x12\x04\xb2\n\x02!\x1a~\x20The\
+    \x20progress\x20of\x20the\n\x20[UpdateInstanceConfig][google.spanner.adm\
+    in.instance.v1.InstanceAdmin.UpdateInstanceConfig]\n\x20operation.\n\n\r\
+    \n\x05\x04\x15\x02\x01\x06\x12\x04\xb2\n\x02\x13\n\r\n\x05\x04\x15\x02\
+    \x01\x01\x12\x04\xb2\n\x14\x1c\n\r\n\x05\x04\x15\x02\x01\x03\x12\x04\xb2\
+    \n\x1f\x20\n?\n\x04\x04\x15\x02\x02\x12\x04\xb5\n\x02,\x1a1\x20The\x20ti\
+    me\x20at\x20which\x20this\x20operation\x20was\x20cancelled.\n\n\r\n\x05\
+    \x04\x15\x02\x02\x06\x12\x04\xb5\n\x02\x1b\n\r\n\x05\x04\x15\x02\x02\x01\
+    \x12\x04\xb5\n\x1c'\n\r\n\x05\x04\x15\x02\x02\x03\x12\x04\xb5\n*+\nd\n\
+    \x02\x04\x16\x12\x06\xba\n\0\xa4\x0b\x01\x1aV\x20An\x20isolated\x20set\
+    \x20of\x20Cloud\x20Spanner\x20resources\x20that\x20databases\x20can\x20d\
+    efine\n\x20placements\x20on.\n\n\x0b\n\x03\x04\x16\x01\x12\x04\xba\n\x08\
+    \x19\n\r\n\x03\x04\x16\x07\x12\x06\xbb\n\x02\xbe\n\x04\n\x0f\n\x05\x04\
+    \x16\x07\x9d\x08\x12\x06\xbb\n\x02\xbe\n\x04\nH\n\x04\x04\x16\x04\0\x12\
+    \x06\xc1\n\x02\xcd\n\x03\x1a8\x20Indicates\x20the\x20current\x20state\
+    \x20of\x20the\x20instance\x20partition.\n\n\r\n\x05\x04\x16\x04\0\x01\
+    \x12\x04\xc1\n\x07\x0c\n\x20\n\x06\x04\x16\x04\0\x02\0\x12\x04\xc3\n\x04\
+    \x1a\x1a\x10\x20Not\x20specified.\n\n\x0f\n\x07\x04\x16\x04\0\x02\0\x01\
+    \x12\x04\xc3\n\x04\x15\n\x0f\n\x07\x04\x16\x04\0\x02\0\x02\x12\x04\xc3\n\
+    \x18\x19\n\xbe\x01\n\x06\x04\x16\x04\0\x02\x01\x12\x04\xc8\n\x04\x11\x1a\
+    \xad\x01\x20The\x20instance\x20partition\x20is\x20still\x20being\x20crea\
+    ted.\x20Resources\x20may\x20not\x20be\n\x20available\x20yet,\x20and\x20o\
+    perations\x20such\x20as\x20creating\x20placements\x20using\x20this\n\x20\
+    instance\x20partition\x20may\x20not\x20work.\n\n\x0f\n\x07\x04\x16\x04\0\
+    \x02\x01\x01\x12\x04\xc8\n\x04\x0c\n\x0f\n\x07\x04\x16\x04\0\x02\x01\x02\
+    \x12\x04\xc8\n\x0f\x10\n\x83\x01\n\x06\x04\x16\x04\0\x02\x02\x12\x04\xcc\
+    \n\x04\x0e\x1as\x20The\x20instance\x20partition\x20is\x20fully\x20create\
+    d\x20and\x20ready\x20to\x20do\x20work\x20such\x20as\n\x20creating\x20pla\
+    cements\x20and\x20using\x20in\x20databases.\n\n\x0f\n\x07\x04\x16\x04\0\
+    \x02\x02\x01\x12\x04\xcc\n\x04\t\n\x0f\n\x07\x04\x16\x04\0\x02\x02\x02\
+    \x12\x04\xcc\n\x0c\r\n\xe1\x02\n\x04\x04\x16\x02\0\x12\x04\xd5\n\x02;\
+    \x1a\xd2\x02\x20Required.\x20A\x20unique\x20identifier\x20for\x20the\x20\
+    instance\x20partition.\x20Values\x20are\x20of\x20the\n\x20form\n\x20`pro\
+    jects/<project>/instances/<instance>/instancePartitions/[a-z][-a-z0-9]*[\
+    a-z0-9]`.\n\x20The\x20final\x20segment\x20of\x20the\x20name\x20must\x20b\
+    e\x20between\x202\x20and\x2064\x20characters\x20in\n\x20length.\x20An\
+    \x20instance\x20partition's\x20name\x20cannot\x20be\x20changed\x20after\
+    \x20the\x20instance\n\x20partition\x20is\x20created.\n\n\r\n\x05\x04\x16\
+    \x02\0\x05\x12\x04\xd5\n\x02\x08\n\r\n\x05\x04\x16\x02\0\x01\x12\x04\xd5\
+    \n\t\r\n\r\n\x05\x04\x16\x02\0\x03\x12\x04\xd5\n\x10\x11\n\r\n\x05\x04\
+    \x16\x02\0\x08\x12\x04\xd5\n\x12:\n\x10\n\x08\x04\x16\x02\0\x08\x9c\x08\
+    \0\x12\x04\xd5\n\x139\n\xca\x02\n\x04\x04\x16\x02\x01\x12\x06\xdb\n\x02\
+    \xe0\n\x04\x1a\xb9\x02\x20Required.\x20The\x20name\x20of\x20the\x20insta\
+    nce\x20partition's\x20configuration.\x20Values\x20are\x20of\n\x20the\x20\
+    form\x20`projects/<project>/instanceConfigs/<configuration>`.\x20See\x20\
+    also\n\x20[InstanceConfig][google.spanner.admin.instance.v1.InstanceConf\
+    ig]\x20and\n\x20[ListInstanceConfigs][google.spanner.admin.instance.v1.I\
+    nstanceAdmin.ListInstanceConfigs].\n\n\r\n\x05\x04\x16\x02\x01\x05\x12\
+    \x04\xdb\n\x02\x08\n\r\n\x05\x04\x16\x02\x01\x01\x12\x04\xdb\n\t\x0f\n\r\
+    \n\x05\x04\x16\x02\x01\x03\x12\x04\xdb\n\x12\x13\n\x0f\n\x05\x04\x16\x02\
+    \x01\x08\x12\x06\xdb\n\x14\xe0\n\x03\n\x10\n\x08\x04\x16\x02\x01\x08\x9c\
+    \x08\0\x12\x04\xdc\n\x04*\n\x11\n\x07\x04\x16\x02\x01\x08\x9f\x08\x12\
+    \x06\xdd\n\x04\xdf\n\x05\n\xa8\x01\n\x04\x04\x16\x02\x02\x12\x04\xe4\n\
+    \x02C\x1a\x99\x01\x20Required.\x20The\x20descriptive\x20name\x20for\x20t\
+    his\x20instance\x20partition\x20as\x20it\x20appears\x20in\n\x20UIs.\x20M\
+    ust\x20be\x20unique\x20per\x20project\x20and\x20between\x204\x20and\x203\
+    0\x20characters\x20in\x20length.\n\n\r\n\x05\x04\x16\x02\x02\x05\x12\x04\
+    \xe4\n\x02\x08\n\r\n\x05\x04\x16\x02\x02\x01\x12\x04\xe4\n\t\x15\n\r\n\
+    \x05\x04\x16\x02\x02\x03\x12\x04\xe4\n\x18\x19\n\r\n\x05\x04\x16\x02\x02\
+    \x08\x12\x04\xe4\n\x1aB\n\x10\n\x08\x04\x16\x02\x02\x08\x9c\x08\0\x12\
+    \x04\xe4\n\x1bA\n\xf2\x02\n\x04\x04\x16\x08\0\x12\x06\xeb\n\x02\xfd\n\
+    \x03\x1a\xe1\x02\x20Compute\x20capacity\x20defines\x20amount\x20of\x20se\
+    rver\x20and\x20storage\x20resources\x20that\x20are\n\x20available\x20to\
+    \x20the\x20databases\x20in\x20an\x20instance\x20partition.\x20At\x20most\
+    \x20one\x20of\x20either\n\x20node_count\x20or\x20processing_units\x20sho\
+    uld\x20be\x20present\x20in\x20the\x20message.\x20See\x20[the\n\x20docume\
+    ntation](https://cloud.google.com/spanner/docs/compute-capacity)\n\x20fo\
+    r\x20more\x20information\x20about\x20nodes\x20and\x20processing\x20units\
+    .\n\n\r\n\x05\x04\x16\x08\0\x01\x12\x04\xeb\n\x08\x18\n\x9b\x02\n\x04\
+    \x04\x16\x02\x03\x12\x04\xf3\n\x04\x19\x1a\x8c\x02\x20The\x20number\x20o\
+    f\x20nodes\x20allocated\x20to\x20this\x20instance\x20partition.\n\n\x20U\
+    sers\x20can\x20set\x20the\x20node_count\x20field\x20to\x20specify\x20the\
+    \x20target\x20number\x20of\x20nodes\n\x20allocated\x20to\x20the\x20insta\
+    nce\x20partition.\n\n\x20This\x20may\x20be\x20zero\x20in\x20API\x20respo\
+    nses\x20for\x20instance\x20partitions\x20that\x20are\x20not\n\x20yet\x20\
+    in\x20state\x20`READY`.\n\n\r\n\x05\x04\x16\x02\x03\x05\x12\x04\xf3\n\
+    \x04\t\n\r\n\x05\x04\x16\x02\x03\x01\x12\x04\xf3\n\n\x14\n\r\n\x05\x04\
+    \x16\x02\x03\x03\x12\x04\xf3\n\x17\x18\n\xb7\x02\n\x04\x04\x16\x02\x04\
+    \x12\x04\xfc\n\x04\x1f\x1a\xa8\x02\x20The\x20number\x20of\x20processing\
+    \x20units\x20allocated\x20to\x20this\x20instance\x20partition.\n\n\x20Us\
+    ers\x20can\x20set\x20the\x20processing_units\x20field\x20to\x20specify\
+    \x20the\x20target\x20number\x20of\n\x20processing\x20units\x20allocated\
+    \x20to\x20the\x20instance\x20partition.\n\n\x20This\x20may\x20be\x20zero\
+    \x20in\x20API\x20responses\x20for\x20instance\x20partitions\x20that\x20a\
+    re\x20not\n\x20yet\x20in\x20state\x20`READY`.\n\n\r\n\x05\x04\x16\x02\
+    \x04\x05\x12\x04\xfc\n\x04\t\n\r\n\x05\x04\x16\x02\x04\x01\x12\x04\xfc\n\
+    \n\x1a\n\r\n\x05\x04\x16\x02\x04\x03\x12\x04\xfc\n\x1d\x1e\nB\n\x04\x04\
+    \x16\x02\x05\x12\x04\x80\x0b\x02>\x1a4\x20Output\x20only.\x20The\x20curr\
+    ent\x20instance\x20partition\x20state.\n\n\r\n\x05\x04\x16\x02\x05\x06\
+    \x12\x04\x80\x0b\x02\x07\n\r\n\x05\x04\x16\x02\x05\x01\x12\x04\x80\x0b\
+    \x08\r\n\r\n\x05\x04\x16\x02\x05\x03\x12\x04\x80\x0b\x10\x11\n\r\n\x05\
+    \x04\x16\x02\x05\x08\x12\x04\x80\x0b\x12=\n\x10\n\x08\x04\x16\x02\x05\
+    \x08\x9c\x08\0\x12\x04\x80\x0b\x13<\nT\n\x04\x04\x16\x02\x06\x12\x06\x83\
+    \x0b\x02\x84\x0b2\x1aD\x20Output\x20only.\x20The\x20time\x20at\x20which\
+    \x20the\x20instance\x20partition\x20was\x20created.\n\n\r\n\x05\x04\x16\
+    \x02\x06\x06\x12\x04\x83\x0b\x02\x1b\n\r\n\x05\x04\x16\x02\x06\x01\x12\
+    \x04\x83\x0b\x1c'\n\r\n\x05\x04\x16\x02\x06\x03\x12\x04\x83\x0b*+\n\r\n\
+    \x05\x04\x16\x02\x06\x08\x12\x04\x84\x0b\x061\n\x10\n\x08\x04\x16\x02\
+    \x06\x08\x9c\x08\0\x12\x04\x84\x0b\x070\nc\n\x04\x04\x16\x02\x07\x12\x06\
+    \x88\x0b\x02\x89\x0b2\x1aS\x20Output\x20only.\x20The\x20time\x20at\x20wh\
+    ich\x20the\x20instance\x20partition\x20was\x20most\x20recently\n\x20upda\
+    ted.\n\n\r\n\x05\x04\x16\x02\x07\x06\x12\x04\x88\x0b\x02\x1b\n\r\n\x05\
+    \x04\x16\x02\x07\x01\x12\x04\x88\x0b\x1c'\n\r\n\x05\x04\x16\x02\x07\x03\
+    \x12\x04\x88\x0b*+\n\r\n\x05\x04\x16\x02\x07\x08\x12\x04\x89\x0b\x061\n\
+    \x10\n\x08\x04\x16\x02\x07\x08\x9c\x08\0\x12\x04\x89\x0b\x070\n\xfb\x01\
+    \n\x04\x04\x16\x02\x08\x12\x06\x8f\x0b\x02\x90\x0b2\x1a\xea\x01\x20Outpu\
+    t\x20only.\x20The\x20names\x20of\x20the\x20databases\x20that\x20referenc\
+    e\x20this\n\x20instance\x20partition.\x20Referencing\x20databases\x20sho\
+    uld\x20share\x20the\x20parent\x20instance.\n\x20The\x20existence\x20of\
+    \x20any\x20referencing\x20database\x20prevents\x20the\x20instance\x20par\
+    tition\n\x20from\x20being\x20deleted.\n\n\r\n\x05\x04\x16\x02\x08\x04\
+    \x12\x04\x8f\x0b\x02\n\n\r\n\x05\x04\x16\x02\x08\x05\x12\x04\x8f\x0b\x0b\
+    \x11\n\r\n\x05\x04\x16\x02\x08\x01\x12\x04\x8f\x0b\x12'\n\r\n\x05\x04\
+    \x16\x02\x08\x03\x12\x04\x8f\x0b*,\n\r\n\x05\x04\x16\x02\x08\x08\x12\x04\
+    \x90\x0b\x061\n\x10\n\x08\x04\x16\x02\x08\x08\x9c\x08\0\x12\x04\x90\x0b\
+    \x070\n\xf5\x01\n\x04\x04\x16\x02\t\x12\x06\x96\x0b\x02\x97\x0b2\x1a\xe4\
+    \x01\x20Output\x20only.\x20The\x20names\x20of\x20the\x20backups\x20that\
+    \x20reference\x20this\x20instance\n\x20partition.\x20Referencing\x20back\
+    ups\x20should\x20share\x20the\x20parent\x20instance.\x20The\n\x20existen\
+    ce\x20of\x20any\x20referencing\x20backup\x20prevents\x20the\x20instance\
+    \x20partition\x20from\n\x20being\x20deleted.\n\n\r\n\x05\x04\x16\x02\t\
+    \x04\x12\x04\x96\x0b\x02\n\n\r\n\x05\x04\x16\x02\t\x05\x12\x04\x96\x0b\
+    \x0b\x11\n\r\n\x05\x04\x16\x02\t\x01\x12\x04\x96\x0b\x12%\n\r\n\x05\x04\
+    \x16\x02\t\x03\x12\x04\x96\x0b(*\n\r\n\x05\x04\x16\x02\t\x08\x12\x04\x97\
+    \x0b\x061\n\x10\n\x08\x04\x16\x02\t\x08\x9c\x08\0\x12\x04\x97\x0b\x070\n\
+    \xbf\x05\n\x04\x04\x16\x02\n\x12\x04\xa3\x0b\x02\x13\x1a\xb0\x05\x20Used\
+    \x20for\x20optimistic\x20concurrency\x20control\x20as\x20a\x20way\n\x20t\
+    o\x20help\x20prevent\x20simultaneous\x20updates\x20of\x20a\x20instance\
+    \x20partition\x20from\n\x20overwriting\x20each\x20other.\x20It\x20is\x20\
+    strongly\x20suggested\x20that\x20systems\x20make\x20use\x20of\n\x20the\
+    \x20etag\x20in\x20the\x20read-modify-write\x20cycle\x20to\x20perform\x20\
+    instance\x20partition\n\x20updates\x20in\x20order\x20to\x20avoid\x20race\
+    \x20conditions:\x20An\x20etag\x20is\x20returned\x20in\x20the\n\x20respon\
+    se\x20which\x20contains\x20instance\x20partitions,\x20and\x20systems\x20\
+    are\x20expected\x20to\n\x20put\x20that\x20etag\x20in\x20the\x20request\
+    \x20to\x20update\x20instance\x20partitions\x20to\x20ensure\x20that\n\x20\
+    their\x20change\x20will\x20be\x20applied\x20to\x20the\x20same\x20version\
+    \x20of\x20the\x20instance\x20partition.\n\x20If\x20no\x20etag\x20is\x20p\
+    rovided\x20in\x20the\x20call\x20to\x20update\x20instance\x20partition,\
+    \x20then\x20the\n\x20existing\x20instance\x20partition\x20is\x20overwrit\
+    ten\x20blindly.\n\n\r\n\x05\x04\x16\x02\n\x05\x12\x04\xa3\x0b\x02\x08\n\
+    \r\n\x05\x04\x16\x02\n\x01\x12\x04\xa3\x0b\t\r\n\r\n\x05\x04\x16\x02\n\
+    \x03\x12\x04\xa3\x0b\x10\x12\n\xa0\x01\n\x02\x04\x17\x12\x06\xa8\x0b\0\
+    \xb8\x0b\x01\x1a\x91\x01\x20Metadata\x20type\x20for\x20the\x20operation\
+    \x20returned\x20by\n\x20[CreateInstancePartition][google.spanner.admin.i\
+    nstance.v1.InstanceAdmin.CreateInstancePartition].\n\n\x0b\n\x03\x04\x17\
+    \x01\x12\x04\xa8\x0b\x08'\n5\n\x04\x04\x17\x02\0\x12\x04\xaa\x0b\x02+\
+    \x1a'\x20The\x20instance\x20partition\x20being\x20created.\n\n\r\n\x05\
+    \x04\x17\x02\0\x06\x12\x04\xaa\x0b\x02\x13\n\r\n\x05\x04\x17\x02\0\x01\
+    \x12\x04\xaa\x0b\x14&\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xaa\x0b)*\n\
+    \xa0\x01\n\x04\x04\x17\x02\x01\x12\x04\xaf\x0b\x02+\x1a\x91\x01\x20The\
+    \x20time\x20at\x20which\x20the\n\x20[CreateInstancePartition][google.spa\
+    nner.admin.instance.v1.InstanceAdmin.CreateInstancePartition]\n\x20reque\
+    st\x20was\x20received.\n\n\r\n\x05\x04\x17\x02\x01\x06\x12\x04\xaf\x0b\
+    \x02\x1b\n\r\n\x05\x04\x17\x02\x01\x01\x12\x04\xaf\x0b\x1c&\n\r\n\x05\
+    \x04\x17\x02\x01\x03\x12\x04\xaf\x0b)*\n\xbd\x01\n\x04\x04\x17\x02\x02\
+    \x12\x04\xb4\x0b\x02,\x1a\xae\x01\x20The\x20time\x20at\x20which\x20this\
+    \x20operation\x20was\x20cancelled.\x20If\x20set,\x20this\x20operation\
+    \x20is\n\x20in\x20the\x20process\x20of\x20undoing\x20itself\x20(which\
+    \x20is\x20guaranteed\x20to\x20succeed)\x20and\n\x20cannot\x20be\x20cance\
+    lled\x20again.\n\n\r\n\x05\x04\x17\x02\x02\x06\x12\x04\xb4\x0b\x02\x1b\n\
+    \r\n\x05\x04\x17\x02\x02\x01\x12\x04\xb4\x0b\x1c'\n\r\n\x05\x04\x17\x02\
+    \x02\x03\x12\x04\xb4\x0b*+\nV\n\x04\x04\x17\x02\x03\x12\x04\xb7\x0b\x02)\
+    \x1aH\x20The\x20time\x20at\x20which\x20this\x20operation\x20failed\x20or\
+    \x20was\x20completed\x20successfully.\n\n\r\n\x05\x04\x17\x02\x03\x06\
+    \x12\x04\xb7\x0b\x02\x1b\n\r\n\x05\x04\x17\x02\x03\x01\x12\x04\xb7\x0b\
+    \x1c$\n\r\n\x05\x04\x17\x02\x03\x03\x12\x04\xb7\x0b'(\n\x83\x01\n\x02\
+    \x04\x18\x12\x06\xbc\x0b\0\xd1\x0b\x01\x1au\x20The\x20request\x20for\n\
+    \x20[CreateInstancePartition][google.spanner.admin.instance.v1.InstanceA\
+    dmin.CreateInstancePartition].\n\n\x0b\n\x03\x04\x18\x01\x12\x04\xbc\x0b\
+    \x08&\n\xa4\x01\n\x04\x04\x18\x02\0\x12\x06\xc0\x0b\x02\xc5\x0b\x04\x1a\
+    \x93\x01\x20Required.\x20The\x20name\x20of\x20the\x20instance\x20in\x20w\
+    hich\x20to\x20create\x20the\x20instance\n\x20partition.\x20Values\x20are\
+    \x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>`.\n\
+    \n\r\n\x05\x04\x18\x02\0\x05\x12\x04\xc0\x0b\x02\x08\n\r\n\x05\x04\x18\
+    \x02\0\x01\x12\x04\xc0\x0b\t\x0f\n\r\n\x05\x04\x18\x02\0\x03\x12\x04\xc0\
+    \x0b\x12\x13\n\x0f\n\x05\x04\x18\x02\0\x08\x12\x06\xc0\x0b\x14\xc5\x0b\
+    \x03\n\x10\n\x08\x04\x18\x02\0\x08\x9c\x08\0\x12\x04\xc1\x0b\x04*\n\x11\
+    \n\x07\x04\x18\x02\0\x08\x9f\x08\x12\x06\xc2\x0b\x04\xc4\x0b\x05\n\xb7\
+    \x01\n\x04\x04\x18\x02\x01\x12\x04\xca\x0b\x02L\x1a\xa8\x01\x20Required.\
+    \x20The\x20ID\x20of\x20the\x20instance\x20partition\x20to\x20create.\x20\
+    Valid\x20identifiers\x20are\n\x20of\x20the\x20form\x20`[a-z][-a-z0-9]*[a\
+    -z0-9]`\x20and\x20must\x20be\x20between\x202\x20and\x2064\n\x20character\
+    s\x20in\x20length.\n\n\r\n\x05\x04\x18\x02\x01\x05\x12\x04\xca\x0b\x02\
+    \x08\n\r\n\x05\x04\x18\x02\x01\x01\x12\x04\xca\x0b\t\x1e\n\r\n\x05\x04\
+    \x18\x02\x01\x03\x12\x04\xca\x0b!\"\n\r\n\x05\x04\x18\x02\x01\x08\x12\
+    \x04\xca\x0b#K\n\x10\n\x08\x04\x18\x02\x01\x08\x9c\x08\0\x12\x04\xca\x0b\
+    $J\n\xbc\x01\n\x04\x04\x18\x02\x02\x12\x06\xcf\x0b\x02\xd0\x0b/\x1a\xab\
+    \x01\x20Required.\x20The\x20instance\x20partition\x20to\x20create.\x20Th\
+    e\x20instance_partition.name\x20may\n\x20be\x20omitted,\x20but\x20if\x20\
+    specified\x20must\x20be\n\x20`<parent>/instancePartitions/<instance_part\
+    ition_id>`.\n\n\r\n\x05\x04\x18\x02\x02\x06\x12\x04\xcf\x0b\x02\x13\n\r\
+    \n\x05\x04\x18\x02\x02\x01\x12\x04\xcf\x0b\x14&\n\r\n\x05\x04\x18\x02\
+    \x02\x03\x12\x04\xcf\x0b)*\n\r\n\x05\x04\x18\x02\x02\x08\x12\x04\xd0\x0b\
+    \x06.\n\x10\n\x08\x04\x18\x02\x02\x08\x9c\x08\0\x12\x04\xd0\x0b\x07-\n\
+    \x83\x01\n\x02\x04\x19\x12\x06\xd5\x0b\0\xe5\x0b\x01\x1au\x20The\x20requ\
+    est\x20for\n\x20[DeleteInstancePartition][google.spanner.admin.instance.\
+    v1.InstanceAdmin.DeleteInstancePartition].\n\n\x0b\n\x03\x04\x19\x01\x12\
+    \x04\xd5\x0b\x08&\n\xb9\x01\n\x04\x04\x19\x02\0\x12\x06\xd9\x0b\x02\xde\
+    \x0b\x04\x1a\xa8\x01\x20Required.\x20The\x20name\x20of\x20the\x20instanc\
+    e\x20partition\x20to\x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\
+    \x20form\n\x20`projects/{project}/instances/{instance}/instancePartition\
+    s/{instance_partition}`\n\n\r\n\x05\x04\x19\x02\0\x05\x12\x04\xd9\x0b\
+    \x02\x08\n\r\n\x05\x04\x19\x02\0\x01\x12\x04\xd9\x0b\t\r\n\r\n\x05\x04\
+    \x19\x02\0\x03\x12\x04\xd9\x0b\x10\x11\n\x0f\n\x05\x04\x19\x02\0\x08\x12\
+    \x06\xd9\x0b\x12\xde\x0b\x03\n\x10\n\x08\x04\x19\x02\0\x08\x9c\x08\0\x12\
+    \x04\xda\x0b\x04*\n\x11\n\x07\x04\x19\x02\0\x08\x9f\x08\x12\x06\xdb\x0b\
+    \x04\xdd\x0b\x05\n\xa1\x02\n\x04\x04\x19\x02\x01\x12\x04\xe4\x0b\x02\x12\
+    \x1a\x92\x02\x20Optional.\x20If\x20not\x20empty,\x20the\x20API\x20only\
+    \x20deletes\x20the\x20instance\x20partition\x20when\n\x20the\x20etag\x20\
+    provided\x20matches\x20the\x20current\x20status\x20of\x20the\x20requeste\
+    d\x20instance\n\x20partition.\x20Otherwise,\x20deletes\x20the\x20instanc\
+    e\x20partition\x20without\x20checking\x20the\n\x20current\x20status\x20o\
+    f\x20the\x20requested\x20instance\x20partition.\n\n\r\n\x05\x04\x19\x02\
+    \x01\x05\x12\x04\xe4\x0b\x02\x08\n\r\n\x05\x04\x19\x02\x01\x01\x12\x04\
+    \xe4\x0b\t\r\n\r\n\x05\x04\x19\x02\x01\x03\x12\x04\xe4\x0b\x10\x11\n}\n\
+    \x02\x04\x1a\x12\x06\xe9\x0b\0\xf3\x0b\x01\x1ao\x20The\x20request\x20for\
+    \n\x20[GetInstancePartition][google.spanner.admin.instance.v1.InstanceAd\
+    min.GetInstancePartition].\n\n\x0b\n\x03\x04\x1a\x01\x12\x04\xe9\x0b\x08\
+    #\n\xb6\x01\n\x04\x04\x1a\x02\0\x12\x06\xed\x0b\x02\xf2\x0b\x04\x1a\xa5\
+    \x01\x20Required.\x20The\x20name\x20of\x20the\x20requested\x20instance\
+    \x20partition.\x20Values\x20are\x20of\n\x20the\x20form\n\x20`projects/{p\
+    roject}/instances/{instance}/instancePartitions/{instance_partition}`.\n\
+    \n\r\n\x05\x04\x1a\x02\0\x05\x12\x04\xed\x0b\x02\x08\n\r\n\x05\x04\x1a\
+    \x02\0\x01\x12\x04\xed\x0b\t\r\n\r\n\x05\x04\x1a\x02\0\x03\x12\x04\xed\
+    \x0b\x10\x11\n\x0f\n\x05\x04\x1a\x02\0\x08\x12\x06\xed\x0b\x12\xf2\x0b\
+    \x03\n\x10\n\x08\x04\x1a\x02\0\x08\x9c\x08\0\x12\x04\xee\x0b\x04*\n\x11\
+    \n\x07\x04\x1a\x02\0\x08\x9f\x08\x12\x06\xef\x0b\x04\xf1\x0b\x05\n\x83\
+    \x01\n\x02\x04\x1b\x12\x06\xf7\x0b\0\x87\x0c\x01\x1au\x20The\x20request\
+    \x20for\n\x20[UpdateInstancePartition][google.spanner.admin.instance.v1.\
+    InstanceAdmin.UpdateInstancePartition].\n\n\x0b\n\x03\x04\x1b\x01\x12\
+    \x04\xf7\x0b\x08&\n\x87\x02\n\x04\x04\x1b\x02\0\x12\x06\xfc\x0b\x02\xfd\
+    \x0b/\x1a\xf6\x01\x20Required.\x20The\x20instance\x20partition\x20to\x20\
+    update,\x20which\x20must\x20always\x20include\x20the\n\x20instance\x20pa\
+    rtition\x20name.\x20Otherwise,\x20only\x20fields\x20mentioned\x20in\n\
+    \x20[field_mask][google.spanner.admin.instance.v1.UpdateInstancePartitio\
+    nRequest.field_mask]\n\x20need\x20be\x20included.\n\n\r\n\x05\x04\x1b\
+    \x02\0\x06\x12\x04\xfc\x0b\x02\x13\n\r\n\x05\x04\x1b\x02\0\x01\x12\x04\
+    \xfc\x0b\x14&\n\r\n\x05\x04\x1b\x02\0\x03\x12\x04\xfc\x0b)*\n\r\n\x05\
+    \x04\x1b\x02\0\x08\x12\x04\xfd\x0b\x06.\n\x10\n\x08\x04\x1b\x02\0\x08\
+    \x9c\x08\0\x12\x04\xfd\x0b\x07-\n\xf9\x02\n\x04\x04\x1b\x02\x01\x12\x06\
+    \x85\x0c\x02\x86\x0c/\x1a\xe8\x02\x20Required.\x20A\x20mask\x20specifyin\
+    g\x20which\x20fields\x20in\n\x20[InstancePartition][google.spanner.admin\
+    .instance.v1.InstancePartition]\n\x20should\x20be\x20updated.\x20The\x20\
+    field\x20mask\x20must\x20always\x20be\x20specified;\x20this\x20prevents\
+    \n\x20any\x20future\x20fields\x20in\n\x20[InstancePartition][google.span\
+    ner.admin.instance.v1.InstancePartition]\n\x20from\x20being\x20erased\
+    \x20accidentally\x20by\x20clients\x20that\x20do\x20not\x20know\x20about\
+    \x20them.\n\n\r\n\x05\x04\x1b\x02\x01\x06\x12\x04\x85\x0c\x02\x1b\n\r\n\
+    \x05\x04\x1b\x02\x01\x01\x12\x04\x85\x0c\x1c&\n\r\n\x05\x04\x1b\x02\x01\
+    \x03\x12\x04\x85\x0c)*\n\r\n\x05\x04\x1b\x02\x01\x08\x12\x04\x86\x0c\x06\
+    .\n\x10\n\x08\x04\x1b\x02\x01\x08\x9c\x08\0\x12\x04\x86\x0c\x07-\n\xa0\
+    \x01\n\x02\x04\x1c\x12\x06\x8b\x0c\0\x9b\x0c\x01\x1a\x91\x01\x20Metadata\
+    \x20type\x20for\x20the\x20operation\x20returned\x20by\n\x20[UpdateInstan\
+    cePartition][google.spanner.admin.instance.v1.InstanceAdmin.UpdateInstan\
+    cePartition].\n\n\x0b\n\x03\x04\x1c\x01\x12\x04\x8b\x0c\x08'\n4\n\x04\
+    \x04\x1c\x02\0\x12\x04\x8d\x0c\x02+\x1a&\x20The\x20desired\x20end\x20sta\
+    te\x20of\x20the\x20update.\n\n\r\n\x05\x04\x1c\x02\0\x06\x12\x04\x8d\x0c\
+    \x02\x13\n\r\n\x05\x04\x1c\x02\0\x01\x12\x04\x8d\x0c\x14&\n\r\n\x05\x04\
+    \x1c\x02\0\x03\x12\x04\x8d\x0c)*\n\x9c\x01\n\x04\x04\x1c\x02\x01\x12\x04\
+    \x92\x0c\x02+\x1a\x8d\x01\x20The\x20time\x20at\x20which\n\x20[UpdateInst\
+    ancePartition][google.spanner.admin.instance.v1.InstanceAdmin.UpdateInst\
+    ancePartition]\n\x20request\x20was\x20received.\n\n\r\n\x05\x04\x1c\x02\
+    \x01\x06\x12\x04\x92\x0c\x02\x1b\n\r\n\x05\x04\x1c\x02\x01\x01\x12\x04\
+    \x92\x0c\x1c&\n\r\n\x05\x04\x1c\x02\x01\x03\x12\x04\x92\x0c)*\n\xbd\x01\
+    \n\x04\x04\x1c\x02\x02\x12\x04\x97\x0c\x02,\x1a\xae\x01\x20The\x20time\
+    \x20at\x20which\x20this\x20operation\x20was\x20cancelled.\x20If\x20set,\
+    \x20this\x20operation\x20is\n\x20in\x20the\x20process\x20of\x20undoing\
+    \x20itself\x20(which\x20is\x20guaranteed\x20to\x20succeed)\x20and\n\x20c\
+    annot\x20be\x20cancelled\x20again.\n\n\r\n\x05\x04\x1c\x02\x02\x06\x12\
+    \x04\x97\x0c\x02\x1b\n\r\n\x05\x04\x1c\x02\x02\x01\x12\x04\x97\x0c\x1c'\
+    \n\r\n\x05\x04\x1c\x02\x02\x03\x12\x04\x97\x0c*+\nV\n\x04\x04\x1c\x02\
+    \x03\x12\x04\x9a\x0c\x02)\x1aH\x20The\x20time\x20at\x20which\x20this\x20\
+    operation\x20failed\x20or\x20was\x20completed\x20successfully.\n\n\r\n\
+    \x05\x04\x1c\x02\x03\x06\x12\x04\x9a\x0c\x02\x1b\n\r\n\x05\x04\x1c\x02\
+    \x03\x01\x12\x04\x9a\x0c\x1c$\n\r\n\x05\x04\x1c\x02\x03\x03\x12\x04\x9a\
+    \x0c'(\n\x81\x01\n\x02\x04\x1d\x12\x06\x9f\x0c\0\xbb\x0c\x01\x1as\x20The\
+    \x20request\x20for\n\x20[ListInstancePartitions][google.spanner.admin.in\
+    stance.v1.InstanceAdmin.ListInstancePartitions].\n\n\x0b\n\x03\x04\x1d\
+    \x01\x12\x04\x9f\x0c\x08%\n\x98\x01\n\x04\x04\x1d\x02\0\x12\x06\xa2\x0c\
+    \x02\xa7\x0c\x04\x1a\x87\x01\x20Required.\x20The\x20instance\x20whose\
+    \x20instance\x20partitions\x20should\x20be\x20listed.\x20Values\n\x20are\
+    \x20of\x20the\x20form\x20`projects/<project>/instances/<instance>`.\n\n\
+    \r\n\x05\x04\x1d\x02\0\x05\x12\x04\xa2\x0c\x02\x08\n\r\n\x05\x04\x1d\x02\
+    \0\x01\x12\x04\xa2\x0c\t\x0f\n\r\n\x05\x04\x1d\x02\0\x03\x12\x04\xa2\x0c\
+    \x12\x13\n\x0f\n\x05\x04\x1d\x02\0\x08\x12\x06\xa2\x0c\x14\xa7\x0c\x03\n\
+    \x10\n\x08\x04\x1d\x02\0\x08\x9c\x08\0\x12\x04\xa3\x0c\x04*\n\x11\n\x07\
+    \x04\x1d\x02\0\x08\x9f\x08\x12\x06\xa4\x0c\x04\xa6\x0c\x05\n\x91\x01\n\
+    \x04\x04\x1d\x02\x01\x12\x04\xab\x0c\x02\x16\x1a\x82\x01\x20Number\x20of\
+    \x20instance\x20partitions\x20to\x20be\x20returned\x20in\x20the\x20respo\
+    nse.\x20If\x200\x20or\x20less,\n\x20defaults\x20to\x20the\x20server's\
+    \x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04\x1d\x02\x01\x05\
+    \x12\x04\xab\x0c\x02\x07\n\r\n\x05\x04\x1d\x02\x01\x01\x12\x04\xab\x0c\
+    \x08\x11\n\r\n\x05\x04\x1d\x02\x01\x03\x12\x04\xab\x0c\x14\x15\n\x95\x02\
+    \n\x04\x04\x1d\x02\x02\x12\x04\xb1\x0c\x02\x18\x1a\x86\x02\x20If\x20non-\
+    empty,\x20`page_token`\x20should\x20contain\x20a\n\x20[next_page_token][\
+    google.spanner.admin.instance.v1.ListInstancePartitionsResponse.next_pag\
+    e_token]\n\x20from\x20a\x20previous\n\x20[ListInstancePartitionsResponse\
+    ][google.spanner.admin.instance.v1.ListInstancePartitionsResponse].\n\n\
+    \r\n\x05\x04\x1d\x02\x02\x05\x12\x04\xb1\x0c\x02\x08\n\r\n\x05\x04\x1d\
+    \x02\x02\x01\x12\x04\xb1\x0c\t\x13\n\r\n\x05\x04\x1d\x02\x02\x03\x12\x04\
+    \xb1\x0c\x16\x17\n\x80\x03\n\x04\x04\x1d\x02\x03\x12\x06\xb9\x0c\x02\xba\
+    \x0c/\x1a\xef\x02\x20Optional.\x20Deadline\x20used\x20while\x20retrievin\
+    g\x20metadata\x20for\x20instance\x20partitions.\n\x20Instance\x20partiti\
+    ons\x20whose\x20metadata\x20cannot\x20be\x20retrieved\x20within\x20this\
+    \x20deadline\n\x20will\x20be\x20added\x20to\n\x20[unreachable][google.sp\
+    anner.admin.instance.v1.ListInstancePartitionsResponse.unreachable]\n\
+    \x20in\n\x20[ListInstancePartitionsResponse][google.spanner.admin.instan\
+    ce.v1.ListInstancePartitionsResponse].\n\n\r\n\x05\x04\x1d\x02\x03\x06\
+    \x12\x04\xb9\x0c\x02\x1b\n\r\n\x05\x04\x1d\x02\x03\x01\x12\x04\xb9\x0c\
+    \x1c7\n\r\n\x05\x04\x1d\x02\x03\x03\x12\x04\xb9\x0c:;\n\r\n\x05\x04\x1d\
+    \x02\x03\x08\x12\x04\xba\x0c\x06.\n\x10\n\x08\x04\x1d\x02\x03\x08\x9c\
+    \x08\0\x12\x04\xba\x0c\x07-\n\x82\x01\n\x02\x04\x1e\x12\x06\xbf\x0c\0\
+    \xcd\x0c\x01\x1at\x20The\x20response\x20for\n\x20[ListInstancePartitions\
+    ][google.spanner.admin.instance.v1.InstanceAdmin.ListInstancePartitions]\
+    .\n\n\x0b\n\x03\x04\x1e\x01\x12\x04\xbf\x0c\x08&\n9\n\x04\x04\x1e\x02\0\
+    \x12\x04\xc1\x0c\x025\x1a+\x20The\x20list\x20of\x20requested\x20instance\
+    Partitions.\n\n\r\n\x05\x04\x1e\x02\0\x04\x12\x04\xc1\x0c\x02\n\n\r\n\
+    \x05\x04\x1e\x02\0\x06\x12\x04\xc1\x0c\x0b\x1c\n\r\n\x05\x04\x1e\x02\0\
+    \x01\x12\x04\xc1\x0c\x1d0\n\r\n\x05\x04\x1e\x02\0\x03\x12\x04\xc1\x0c34\
+    \n\xd8\x01\n\x04\x04\x1e\x02\x01\x12\x04\xc6\x0c\x02\x1d\x1a\xc9\x01\x20\
+    `next_page_token`\x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[Li\
+    stInstancePartitions][google.spanner.admin.instance.v1.InstanceAdmin.Lis\
+    tInstancePartitions]\n\x20call\x20to\x20fetch\x20more\x20of\x20the\x20ma\
+    tching\x20instance\x20partitions.\n\n\r\n\x05\x04\x1e\x02\x01\x05\x12\
+    \x04\xc6\x0c\x02\x08\n\r\n\x05\x04\x1e\x02\x01\x01\x12\x04\xc6\x0c\t\x18\
+    \n\r\n\x05\x04\x1e\x02\x01\x03\x12\x04\xc6\x0c\x1b\x1c\n\x95\x02\n\x04\
+    \x04\x1e\x02\x02\x12\x04\xcc\x0c\x02\"\x1a\x86\x02\x20The\x20list\x20of\
+    \x20unreachable\x20instance\x20partitions.\n\x20It\x20includes\x20the\
+    \x20names\x20of\x20instance\x20partitions\x20whose\x20metadata\x20could\
+    \n\x20not\x20be\x20retrieved\x20within\n\x20[instance_partition_deadline\
+    ][google.spanner.admin.instance.v1.ListInstancePartitionsRequest.instanc\
+    e_partition_deadline].\n\n\r\n\x05\x04\x1e\x02\x02\x04\x12\x04\xcc\x0c\
+    \x02\n\n\r\n\x05\x04\x1e\x02\x02\x05\x12\x04\xcc\x0c\x0b\x11\n\r\n\x05\
+    \x04\x1e\x02\x02\x01\x12\x04\xcc\x0c\x12\x1d\n\r\n\x05\x04\x1e\x02\x02\
+    \x03\x12\x04\xcc\x0c\x20!\n\x94\x01\n\x02\x04\x1f\x12\x06\xd1\x0c\0\x9a\
+    \r\x01\x1a\x85\x01\x20The\x20request\x20for\n\x20[ListInstancePartitionO\
+    perations][google.spanner.admin.instance.v1.InstanceAdmin.ListInstancePa\
+    rtitionOperations].\n\n\x0b\n\x03\x04\x1f\x01\x12\x04\xd1\x0c\x08.\n\x99\
+    \x01\n\x04\x04\x1f\x02\0\x12\x06\xd4\x0c\x02\xd9\x0c\x04\x1a\x88\x01\x20\
+    Required.\x20The\x20parent\x20instance\x20of\x20the\x20instance\x20parti\
+    tion\x20operations.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects\
+    /<project>/instances/<instance>`.\n\n\r\n\x05\x04\x1f\x02\0\x05\x12\x04\
+    \xd4\x0c\x02\x08\n\r\n\x05\x04\x1f\x02\0\x01\x12\x04\xd4\x0c\t\x0f\n\r\n\
+    \x05\x04\x1f\x02\0\x03\x12\x04\xd4\x0c\x12\x13\n\x0f\n\x05\x04\x1f\x02\0\
+    \x08\x12\x06\xd4\x0c\x14\xd9\x0c\x03\n\x10\n\x08\x04\x1f\x02\0\x08\x9c\
+    \x08\0\x12\x04\xd5\x0c\x04*\n\x11\n\x07\x04\x1f\x02\0\x08\x9f\x08\x12\
+    \x06\xd6\x0c\x04\xd8\x0c\x05\n\xd0\x10\n\x04\x04\x1f\x02\x01\x12\x04\x86\
+    \r\x02=\x1a\xc1\x10\x20Optional.\x20An\x20expression\x20that\x20filters\
+    \x20the\x20list\x20of\x20returned\x20operations.\n\n\x20A\x20filter\x20e\
+    xpression\x20consists\x20of\x20a\x20field\x20name,\x20a\n\x20comparison\
+    \x20operator,\x20and\x20a\x20value\x20for\x20filtering.\n\x20The\x20valu\
+    e\x20must\x20be\x20a\x20string,\x20a\x20number,\x20or\x20a\x20boolean.\
+    \x20The\x20comparison\x20operator\n\x20must\x20be\x20one\x20of:\x20`<`,\
+    \x20`>`,\x20`<=`,\x20`>=`,\x20`!=`,\x20`=`,\x20or\x20`:`.\n\x20Colon\x20\
+    `:`\x20is\x20the\x20contains\x20operator.\x20Filter\x20rules\x20are\x20n\
+    ot\x20case\x20sensitive.\n\n\x20The\x20following\x20fields\x20in\x20the\
+    \x20[Operation][google.longrunning.Operation]\n\x20are\x20eligible\x20fo\
+    r\x20filtering:\n\n\x20\x20\x20*\x20`name`\x20-\x20The\x20name\x20of\x20\
+    the\x20long-running\x20operation\n\x20\x20\x20*\x20`done`\x20-\x20False\
+    \x20if\x20the\x20operation\x20is\x20in\x20progress,\x20else\x20true.\n\
+    \x20\x20\x20*\x20`metadata.@type`\x20-\x20the\x20type\x20of\x20metadata.\
+    \x20For\x20example,\x20the\x20type\x20string\n\x20\x20\x20\x20\x20\x20fo\
+    r\n\x20\x20\x20\x20\x20\x20[CreateInstancePartitionMetadata][google.span\
+    ner.admin.instance.v1.CreateInstancePartitionMetadata]\n\x20\x20\x20\x20\
+    \x20\x20is\n\x20\x20\x20\x20\x20\x20`type.googleapis.com/google.spanner.\
+    admin.instance.v1.CreateInstancePartitionMetadata`.\n\x20\x20\x20*\x20`m\
+    etadata.<field_name>`\x20-\x20any\x20field\x20in\x20metadata.value.\n\
     \x20\x20\x20\x20\x20\x20`metadata.@type`\x20must\x20be\x20specified\x20f\
     irst,\x20if\x20filtering\x20on\x20metadata\n\x20\x20\x20\x20\x20\x20fiel\
     ds.\n\x20\x20\x20*\x20`error`\x20-\x20Error\x20associated\x20with\x20the\
@@ -7976,275 +12293,79 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20a\x20few\x20examples:\n\n\x20\x20\x20*\x20`done:true`\x20-\x20The\
     \x20operation\x20is\x20complete.\n\x20\x20\x20*\x20`(metadata.@type=`\
     \x20\\\n\x20\x20\x20\x20\x20`type.googleapis.com/google.spanner.admin.in\
-    stance.v1.CreateInstanceConfigMetadata)\n\x20\x20\x20\x20\x20AND`\x20\\\
-    \n\x20\x20\x20\x20\x20`(metadata.instance_config.name:custom-config)\x20\
-    AND`\x20\\\n\x20\x20\x20\x20\x20`(metadata.progress.start_time\x20<\x20\
-    \\\"2021-03-28T14:50:00Z\\\")\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(error\
-    :*)`\x20-\x20Return\x20operations\x20where:\n\x20\x20\x20\x20\x20*\x20Th\
-    e\x20operation's\x20metadata\x20type\x20is\n\x20\x20\x20\x20\x20[CreateI\
-    nstanceConfigMetadata][google.spanner.admin.instance.v1.CreateInstanceCo\
-    nfigMetadata].\n\x20\x20\x20\x20\x20*\x20The\x20instance\x20config\x20na\
-    me\x20contains\x20\"custom-config\".\n\x20\x20\x20\x20\x20*\x20The\x20op\
-    eration\x20started\x20before\x202021-03-28T14:50:00Z.\n\x20\x20\x20\x20\
-    \x20*\x20The\x20operation\x20resulted\x20in\x20an\x20error.\n\n\r\n\x05\
-    \x04\n\x02\x01\x05\x12\x04\xa2\x07\x02\x08\n\r\n\x05\x04\n\x02\x01\x01\
-    \x12\x04\xa2\x07\t\x0f\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xa2\x07\x12\
-    \x13\n\x87\x01\n\x04\x04\n\x02\x02\x12\x04\xa6\x07\x02\x16\x1ay\x20Numbe\
-    r\x20of\x20operations\x20to\x20be\x20returned\x20in\x20the\x20response.\
-    \x20If\x200\x20or\n\x20less,\x20defaults\x20to\x20the\x20server's\x20max\
-    imum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04\n\x02\x02\x05\x12\x04\
-    \xa6\x07\x02\x07\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xa6\x07\x08\x11\n\r\
-    \n\x05\x04\n\x02\x02\x03\x12\x04\xa6\x07\x14\x15\n\xd8\x02\n\x04\x04\n\
-    \x02\x03\x12\x04\xad\x07\x02\x18\x1a\xc9\x02\x20If\x20non-empty,\x20`pag\
-    e_token`\x20should\x20contain\x20a\n\x20[next_page_token][google.spanner\
-    .admin.instance.v1.ListInstanceConfigOperationsResponse.next_page_token]\
-    \n\x20from\x20a\x20previous\n\x20[ListInstanceConfigOperationsResponse][\
-    google.spanner.admin.instance.v1.ListInstanceConfigOperationsResponse]\n\
-    \x20to\x20the\x20same\x20`parent`\x20and\x20with\x20the\x20same\x20`filt\
-    er`.\n\n\r\n\x05\x04\n\x02\x03\x05\x12\x04\xad\x07\x02\x08\n\r\n\x05\x04\
-    \n\x02\x03\x01\x12\x04\xad\x07\t\x13\n\r\n\x05\x04\n\x02\x03\x03\x12\x04\
-    \xad\x07\x16\x17\n\x8f\x01\n\x02\x04\x0b\x12\x06\xb2\x07\0\xbe\x07\x01\
-    \x1a\x80\x01\x20The\x20response\x20for\n\x20[ListInstanceConfigOperation\
-    s][google.spanner.admin.instance.v1.InstanceAdmin.ListInstanceConfigOper\
-    ations].\n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xb2\x07\x08,\n\xbd\x02\n\x04\
-    \x04\x0b\x02\0\x12\x04\xb8\x07\x027\x1a\xae\x02\x20The\x20list\x20of\x20\
-    matching\x20instance\x20config\x20[long-running\n\x20operations][google.\
-    longrunning.Operation].\x20Each\x20operation's\x20name\x20will\x20be\n\
-    \x20prefixed\x20by\x20the\x20instance\x20config's\x20name.\x20The\x20ope\
-    ration's\n\x20[metadata][google.longrunning.Operation.metadata]\x20field\
-    \x20type\n\x20`metadata.type_url`\x20describes\x20the\x20type\x20of\x20t\
-    he\x20metadata.\n\n\r\n\x05\x04\x0b\x02\0\x04\x12\x04\xb8\x07\x02\n\n\r\
-    \n\x05\x04\x0b\x02\0\x06\x12\x04\xb8\x07\x0b'\n\r\n\x05\x04\x0b\x02\0\
-    \x01\x12\x04\xb8\x07(2\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xb8\x0756\n\
-    \xd9\x01\n\x04\x04\x0b\x02\x01\x12\x04\xbd\x07\x02\x1d\x1a\xca\x01\x20`n\
-    ext_page_token`\x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[List\
-    InstanceConfigOperations][google.spanner.admin.instance.v1.InstanceAdmin\
-    .ListInstanceConfigOperations]\n\x20call\x20to\x20fetch\x20more\x20of\
-    \x20the\x20matching\x20metadata.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\x04\
-    \xbd\x07\x02\x08\n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\xbd\x07\t\x18\n\r\
-    \n\x05\x04\x0b\x02\x01\x03\x12\x04\xbd\x07\x1b\x1c\nk\n\x02\x04\x0c\x12\
-    \x06\xc2\x07\0\xd1\x07\x01\x1a]\x20The\x20request\x20for\n\x20[GetInstan\
-    ce][google.spanner.admin.instance.v1.InstanceAdmin.GetInstance].\n\n\x0b\
-    \n\x03\x04\x0c\x01\x12\x04\xc2\x07\x08\x1a\n\x82\x01\n\x04\x04\x0c\x02\0\
-    \x12\x06\xc5\x07\x02\xca\x07\x04\x1ar\x20Required.\x20The\x20name\x20of\
-    \x20the\x20requested\x20instance.\x20Values\x20are\x20of\x20the\x20form\
-    \n\x20`projects/<project>/instances/<instance>`.\n\n\r\n\x05\x04\x0c\x02\
-    \0\x05\x12\x04\xc5\x07\x02\x08\n\r\n\x05\x04\x0c\x02\0\x01\x12\x04\xc5\
-    \x07\t\r\n\r\n\x05\x04\x0c\x02\0\x03\x12\x04\xc5\x07\x10\x11\n\x0f\n\x05\
-    \x04\x0c\x02\0\x08\x12\x06\xc5\x07\x12\xca\x07\x03\n\x10\n\x08\x04\x0c\
-    \x02\0\x08\x9c\x08\0\x12\x04\xc6\x07\x04*\n\x11\n\x07\x04\x0c\x02\0\x08\
-    \x9f\x08\x12\x06\xc7\x07\x04\xc9\x07\x05\n\xf5\x01\n\x04\x04\x0c\x02\x01\
-    \x12\x04\xd0\x07\x02+\x1a\xe6\x01\x20If\x20field_mask\x20is\x20present,\
-    \x20specifies\x20the\x20subset\x20of\n\x20[Instance][google.spanner.admi\
-    n.instance.v1.Instance]\x20fields\x20that\x20should\x20be\n\x20returned.\
-    \x20If\x20absent,\x20all\n\x20[Instance][google.spanner.admin.instance.v\
-    1.Instance]\x20fields\x20are\x20returned.\n\n\r\n\x05\x04\x0c\x02\x01\
-    \x06\x12\x04\xd0\x07\x02\x1b\n\r\n\x05\x04\x0c\x02\x01\x01\x12\x04\xd0\
-    \x07\x1c&\n\r\n\x05\x04\x0c\x02\x01\x03\x12\x04\xd0\x07)*\nq\n\x02\x04\r\
-    \x12\x06\xd5\x07\0\xe7\x07\x01\x1ac\x20The\x20request\x20for\n\x20[Creat\
-    eInstance][google.spanner.admin.instance.v1.InstanceAdmin.CreateInstance\
-    ].\n\n\x0b\n\x03\x04\r\x01\x12\x04\xd5\x07\x08\x1d\n\x82\x01\n\x04\x04\r\
-    \x02\0\x12\x06\xd8\x07\x02\xdd\x07\x04\x1ar\x20Required.\x20The\x20name\
-    \x20of\x20the\x20project\x20in\x20which\x20to\x20create\x20the\x20instan\
-    ce.\x20Values\n\x20are\x20of\x20the\x20form\x20`projects/<project>`.\n\n\
-    \r\n\x05\x04\r\x02\0\x05\x12\x04\xd8\x07\x02\x08\n\r\n\x05\x04\r\x02\0\
-    \x01\x12\x04\xd8\x07\t\x0f\n\r\n\x05\x04\r\x02\0\x03\x12\x04\xd8\x07\x12\
-    \x13\n\x0f\n\x05\x04\r\x02\0\x08\x12\x06\xd8\x07\x14\xdd\x07\x03\n\x10\n\
-    \x08\x04\r\x02\0\x08\x9c\x08\0\x12\x04\xd9\x07\x04*\n\x11\n\x07\x04\r\
-    \x02\0\x08\x9f\x08\x12\x06\xda\x07\x04\xdc\x07\x05\n\xae\x01\n\x04\x04\r\
-    \x02\x01\x12\x04\xe2\x07\x02B\x1a\x9f\x01\x20Required.\x20The\x20ID\x20o\
-    f\x20the\x20instance\x20to\x20create.\x20\x20Valid\x20identifiers\x20are\
-    \x20of\x20the\n\x20form\x20`[a-z][-a-z0-9]*[a-z0-9]`\x20and\x20must\x20b\
-    e\x20between\x202\x20and\x2064\x20characters\x20in\n\x20length.\n\n\r\n\
-    \x05\x04\r\x02\x01\x05\x12\x04\xe2\x07\x02\x08\n\r\n\x05\x04\r\x02\x01\
-    \x01\x12\x04\xe2\x07\t\x14\n\r\n\x05\x04\r\x02\x01\x03\x12\x04\xe2\x07\
-    \x17\x18\n\r\n\x05\x04\r\x02\x01\x08\x12\x04\xe2\x07\x19A\n\x10\n\x08\
-    \x04\r\x02\x01\x08\x9c\x08\0\x12\x04\xe2\x07\x1a@\n\x89\x01\n\x04\x04\r\
-    \x02\x02\x12\x04\xe6\x07\x02A\x1a{\x20Required.\x20The\x20instance\x20to\
-    \x20create.\x20\x20The\x20name\x20may\x20be\x20omitted,\x20but\x20if\n\
-    \x20specified\x20must\x20be\x20`<parent>/instances/<instance_id>`.\n\n\r\
-    \n\x05\x04\r\x02\x02\x06\x12\x04\xe6\x07\x02\n\n\r\n\x05\x04\r\x02\x02\
-    \x01\x12\x04\xe6\x07\x0b\x13\n\r\n\x05\x04\r\x02\x02\x03\x12\x04\xe6\x07\
-    \x16\x17\n\r\n\x05\x04\r\x02\x02\x08\x12\x04\xe6\x07\x18@\n\x10\n\x08\
-    \x04\r\x02\x02\x08\x9c\x08\0\x12\x04\xe6\x07\x19?\no\n\x02\x04\x0e\x12\
-    \x06\xeb\x07\0\x93\x08\x01\x1aa\x20The\x20request\x20for\n\x20[ListInsta\
-    nces][google.spanner.admin.instance.v1.InstanceAdmin.ListInstances].\n\n\
-    \x0b\n\x03\x04\x0e\x01\x12\x04\xeb\x07\x08\x1c\n\x8d\x01\n\x04\x04\x0e\
-    \x02\0\x12\x06\xee\x07\x02\xf3\x07\x04\x1a}\x20Required.\x20The\x20name\
-    \x20of\x20the\x20project\x20for\x20which\x20a\x20list\x20of\x20instances\
-    \x20is\n\x20requested.\x20Values\x20are\x20of\x20the\x20form\x20`project\
-    s/<project>`.\n\n\r\n\x05\x04\x0e\x02\0\x05\x12\x04\xee\x07\x02\x08\n\r\
-    \n\x05\x04\x0e\x02\0\x01\x12\x04\xee\x07\t\x0f\n\r\n\x05\x04\x0e\x02\0\
-    \x03\x12\x04\xee\x07\x12\x13\n\x0f\n\x05\x04\x0e\x02\0\x08\x12\x06\xee\
-    \x07\x14\xf3\x07\x03\n\x10\n\x08\x04\x0e\x02\0\x08\x9c\x08\0\x12\x04\xef\
-    \x07\x04*\n\x11\n\x07\x04\x0e\x02\0\x08\x9f\x08\x12\x06\xf0\x07\x04\xf2\
-    \x07\x05\n\x86\x01\n\x04\x04\x0e\x02\x01\x12\x04\xf7\x07\x02\x16\x1ax\
-    \x20Number\x20of\x20instances\x20to\x20be\x20returned\x20in\x20the\x20re\
-    sponse.\x20If\x200\x20or\x20less,\x20defaults\n\x20to\x20the\x20server's\
-    \x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04\x0e\x02\x01\x05\
-    \x12\x04\xf7\x07\x02\x07\n\r\n\x05\x04\x0e\x02\x01\x01\x12\x04\xf7\x07\
-    \x08\x11\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\xf7\x07\x14\x15\n\xfa\x01\
-    \n\x04\x04\x0e\x02\x02\x12\x04\xfd\x07\x02\x18\x1a\xeb\x01\x20If\x20non-\
-    empty,\x20`page_token`\x20should\x20contain\x20a\n\x20[next_page_token][\
-    google.spanner.admin.instance.v1.ListInstancesResponse.next_page_token]\
-    \n\x20from\x20a\x20previous\n\x20[ListInstancesResponse][google.spanner.\
-    admin.instance.v1.ListInstancesResponse].\n\n\r\n\x05\x04\x0e\x02\x02\
-    \x05\x12\x04\xfd\x07\x02\x08\n\r\n\x05\x04\x0e\x02\x02\x01\x12\x04\xfd\
-    \x07\t\x13\n\r\n\x05\x04\x0e\x02\x02\x03\x12\x04\xfd\x07\x16\x17\n\xdd\
-    \x06\n\x04\x04\x0e\x02\x03\x12\x04\x92\x08\x02\x14\x1a\xce\x06\x20An\x20\
-    expression\x20for\x20filtering\x20the\x20results\x20of\x20the\x20request\
-    .\x20Filter\x20rules\x20are\n\x20case\x20insensitive.\x20The\x20fields\
-    \x20eligible\x20for\x20filtering\x20are:\n\n\x20\x20\x20*\x20`name`\n\
-    \x20\x20\x20*\x20`display_name`\n\x20\x20\x20*\x20`labels.key`\x20where\
-    \x20key\x20is\x20the\x20name\x20of\x20a\x20label\n\n\x20Some\x20examples\
-    \x20of\x20using\x20filters\x20are:\n\n\x20\x20\x20*\x20`name:*`\x20-->\
-    \x20The\x20instance\x20has\x20a\x20name.\n\x20\x20\x20*\x20`name:Howl`\
-    \x20-->\x20The\x20instance's\x20name\x20contains\x20the\x20string\x20\"h\
-    owl\".\n\x20\x20\x20*\x20`name:HOWL`\x20-->\x20Equivalent\x20to\x20above\
-    .\n\x20\x20\x20*\x20`NAME:howl`\x20-->\x20Equivalent\x20to\x20above.\n\
-    \x20\x20\x20*\x20`labels.env:*`\x20-->\x20The\x20instance\x20has\x20the\
-    \x20label\x20\"env\".\n\x20\x20\x20*\x20`labels.env:dev`\x20-->\x20The\
-    \x20instance\x20has\x20the\x20label\x20\"env\"\x20and\x20the\x20value\
-    \x20of\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20the\x20label\x20contains\x20the\x20strin\
-    g\x20\"dev\".\n\x20\x20\x20*\x20`name:howl\x20labels.env:dev`\x20-->\x20\
-    The\x20instance's\x20name\x20contains\x20\"howl\"\x20and\n\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20it\x20has\x20the\x20\
-    label\x20\"env\"\x20with\x20its\x20value\n\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20containing\x20\"dev\".\n\n\r\n\x05\
-    \x04\x0e\x02\x03\x05\x12\x04\x92\x08\x02\x08\n\r\n\x05\x04\x0e\x02\x03\
-    \x01\x12\x04\x92\x08\t\x0f\n\r\n\x05\x04\x0e\x02\x03\x03\x12\x04\x92\x08\
-    \x12\x13\np\n\x02\x04\x0f\x12\x06\x97\x08\0\x9f\x08\x01\x1ab\x20The\x20r\
-    esponse\x20for\n\x20[ListInstances][google.spanner.admin.instance.v1.Ins\
-    tanceAdmin.ListInstances].\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\x97\x08\x08\
-    \x1d\n0\n\x04\x04\x0f\x02\0\x12\x04\x99\x08\x02\"\x1a\"\x20The\x20list\
-    \x20of\x20requested\x20instances.\n\n\r\n\x05\x04\x0f\x02\0\x04\x12\x04\
-    \x99\x08\x02\n\n\r\n\x05\x04\x0f\x02\0\x06\x12\x04\x99\x08\x0b\x13\n\r\n\
-    \x05\x04\x0f\x02\0\x01\x12\x04\x99\x08\x14\x1d\n\r\n\x05\x04\x0f\x02\0\
-    \x03\x12\x04\x99\x08\x20!\n\xbc\x01\n\x04\x04\x0f\x02\x01\x12\x04\x9e\
-    \x08\x02\x1d\x1a\xad\x01\x20`next_page_token`\x20can\x20be\x20sent\x20in\
-    \x20a\x20subsequent\n\x20[ListInstances][google.spanner.admin.instance.v\
-    1.InstanceAdmin.ListInstances]\n\x20call\x20to\x20fetch\x20more\x20of\
-    \x20the\x20matching\x20instances.\n\n\r\n\x05\x04\x0f\x02\x01\x05\x12\
-    \x04\x9e\x08\x02\x08\n\r\n\x05\x04\x0f\x02\x01\x01\x12\x04\x9e\x08\t\x18\
-    \n\r\n\x05\x04\x0f\x02\x01\x03\x12\x04\x9e\x08\x1b\x1c\nq\n\x02\x04\x10\
-    \x12\x06\xa3\x08\0\xb1\x08\x01\x1ac\x20The\x20request\x20for\n\x20[Updat\
-    eInstance][google.spanner.admin.instance.v1.InstanceAdmin.UpdateInstance\
-    ].\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xa3\x08\x08\x1d\n\xe9\x01\n\x04\x04\
-    \x10\x02\0\x12\x04\xa8\x08\x02A\x1a\xda\x01\x20Required.\x20The\x20insta\
-    nce\x20to\x20update,\x20which\x20must\x20always\x20include\x20the\x20ins\
-    tance\n\x20name.\x20\x20Otherwise,\x20only\x20fields\x20mentioned\x20in\
-    \n\x20[field_mask][google.spanner.admin.instance.v1.UpdateInstanceReques\
-    t.field_mask]\n\x20need\x20be\x20included.\n\n\r\n\x05\x04\x10\x02\0\x06\
-    \x12\x04\xa8\x08\x02\n\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\xa8\x08\x0b\
-    \x13\n\r\n\x05\x04\x10\x02\0\x03\x12\x04\xa8\x08\x16\x17\n\r\n\x05\x04\
-    \x10\x02\0\x08\x12\x04\xa8\x08\x18@\n\x10\n\x08\x04\x10\x02\0\x08\x9c\
-    \x08\0\x12\x04\xa8\x08\x19?\n\xd4\x02\n\x04\x04\x10\x02\x01\x12\x06\xaf\
-    \x08\x02\xb0\x08/\x1a\xc3\x02\x20Required.\x20A\x20mask\x20specifying\
-    \x20which\x20fields\x20in\n\x20[Instance][google.spanner.admin.instance.\
-    v1.Instance]\x20should\x20be\x20updated.\n\x20The\x20field\x20mask\x20mu\
-    st\x20always\x20be\x20specified;\x20this\x20prevents\x20any\x20future\
-    \x20fields\x20in\n\x20[Instance][google.spanner.admin.instance.v1.Instan\
-    ce]\x20from\x20being\x20erased\n\x20accidentally\x20by\x20clients\x20tha\
-    t\x20do\x20not\x20know\x20about\x20them.\n\n\r\n\x05\x04\x10\x02\x01\x06\
-    \x12\x04\xaf\x08\x02\x1b\n\r\n\x05\x04\x10\x02\x01\x01\x12\x04\xaf\x08\
-    \x1c&\n\r\n\x05\x04\x10\x02\x01\x03\x12\x04\xaf\x08)*\n\r\n\x05\x04\x10\
-    \x02\x01\x08\x12\x04\xb0\x08\x06.\n\x10\n\x08\x04\x10\x02\x01\x08\x9c\
-    \x08\0\x12\x04\xb0\x08\x07-\nq\n\x02\x04\x11\x12\x06\xb5\x08\0\xbe\x08\
-    \x01\x1ac\x20The\x20request\x20for\n\x20[DeleteInstance][google.spanner.\
-    admin.instance.v1.InstanceAdmin.DeleteInstance].\n\n\x0b\n\x03\x04\x11\
-    \x01\x12\x04\xb5\x08\x08\x1d\n\x85\x01\n\x04\x04\x11\x02\0\x12\x06\xb8\
-    \x08\x02\xbd\x08\x04\x1au\x20Required.\x20The\x20name\x20of\x20the\x20in\
-    stance\x20to\x20be\x20deleted.\x20Values\x20are\x20of\x20the\x20form\n\
-    \x20`projects/<project>/instances/<instance>`\n\n\r\n\x05\x04\x11\x02\0\
-    \x05\x12\x04\xb8\x08\x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\xb8\x08\
-    \t\r\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xb8\x08\x10\x11\n\x0f\n\x05\x04\
-    \x11\x02\0\x08\x12\x06\xb8\x08\x12\xbd\x08\x03\n\x10\n\x08\x04\x11\x02\0\
-    \x08\x9c\x08\0\x12\x04\xb9\x08\x04*\n\x11\n\x07\x04\x11\x02\0\x08\x9f\
-    \x08\x12\x06\xba\x08\x04\xbc\x08\x05\n\x8d\x01\n\x02\x04\x12\x12\x06\xc2\
-    \x08\0\xd2\x08\x01\x1a\x7f\x20Metadata\x20type\x20for\x20the\x20operatio\
-    n\x20returned\x20by\n\x20[CreateInstance][google.spanner.admin.instance.\
-    v1.InstanceAdmin.CreateInstance].\n\n\x0b\n\x03\x04\x12\x01\x12\x04\xc2\
-    \x08\x08\x1e\n+\n\x04\x04\x12\x02\0\x12\x04\xc4\x08\x02\x18\x1a\x1d\x20T\
-    he\x20instance\x20being\x20created.\n\n\r\n\x05\x04\x12\x02\0\x06\x12\
-    \x04\xc4\x08\x02\n\n\r\n\x05\x04\x12\x02\0\x01\x12\x04\xc4\x08\x0b\x13\n\
-    \r\n\x05\x04\x12\x02\0\x03\x12\x04\xc4\x08\x16\x17\n\x8d\x01\n\x04\x04\
-    \x12\x02\x01\x12\x04\xc9\x08\x02+\x1a\x7f\x20The\x20time\x20at\x20which\
-    \x20the\n\x20[CreateInstance][google.spanner.admin.instance.v1.InstanceA\
-    dmin.CreateInstance]\n\x20request\x20was\x20received.\n\n\r\n\x05\x04\
-    \x12\x02\x01\x06\x12\x04\xc9\x08\x02\x1b\n\r\n\x05\x04\x12\x02\x01\x01\
-    \x12\x04\xc9\x08\x1c&\n\r\n\x05\x04\x12\x02\x01\x03\x12\x04\xc9\x08)*\n\
-    \xbd\x01\n\x04\x04\x12\x02\x02\x12\x04\xce\x08\x02,\x1a\xae\x01\x20The\
-    \x20time\x20at\x20which\x20this\x20operation\x20was\x20cancelled.\x20If\
-    \x20set,\x20this\x20operation\x20is\n\x20in\x20the\x20process\x20of\x20u\
-    ndoing\x20itself\x20(which\x20is\x20guaranteed\x20to\x20succeed)\x20and\
-    \n\x20cannot\x20be\x20cancelled\x20again.\n\n\r\n\x05\x04\x12\x02\x02\
-    \x06\x12\x04\xce\x08\x02\x1b\n\r\n\x05\x04\x12\x02\x02\x01\x12\x04\xce\
-    \x08\x1c'\n\r\n\x05\x04\x12\x02\x02\x03\x12\x04\xce\x08*+\nV\n\x04\x04\
-    \x12\x02\x03\x12\x04\xd1\x08\x02)\x1aH\x20The\x20time\x20at\x20which\x20\
-    this\x20operation\x20failed\x20or\x20was\x20completed\x20successfully.\n\
-    \n\r\n\x05\x04\x12\x02\x03\x06\x12\x04\xd1\x08\x02\x1b\n\r\n\x05\x04\x12\
-    \x02\x03\x01\x12\x04\xd1\x08\x1c$\n\r\n\x05\x04\x12\x02\x03\x03\x12\x04\
-    \xd1\x08'(\n\x8d\x01\n\x02\x04\x13\x12\x06\xd6\x08\0\xe6\x08\x01\x1a\x7f\
-    \x20Metadata\x20type\x20for\x20the\x20operation\x20returned\x20by\n\x20[\
-    UpdateInstance][google.spanner.admin.instance.v1.InstanceAdmin.UpdateIns\
-    tance].\n\n\x0b\n\x03\x04\x13\x01\x12\x04\xd6\x08\x08\x1e\n4\n\x04\x04\
-    \x13\x02\0\x12\x04\xd8\x08\x02\x18\x1a&\x20The\x20desired\x20end\x20stat\
-    e\x20of\x20the\x20update.\n\n\r\n\x05\x04\x13\x02\0\x06\x12\x04\xd8\x08\
-    \x02\n\n\r\n\x05\x04\x13\x02\0\x01\x12\x04\xd8\x08\x0b\x13\n\r\n\x05\x04\
-    \x13\x02\0\x03\x12\x04\xd8\x08\x16\x17\n\x89\x01\n\x04\x04\x13\x02\x01\
-    \x12\x04\xdd\x08\x02+\x1a{\x20The\x20time\x20at\x20which\n\x20[UpdateIns\
-    tance][google.spanner.admin.instance.v1.InstanceAdmin.UpdateInstance]\n\
-    \x20request\x20was\x20received.\n\n\r\n\x05\x04\x13\x02\x01\x06\x12\x04\
-    \xdd\x08\x02\x1b\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\xdd\x08\x1c&\n\r\
-    \n\x05\x04\x13\x02\x01\x03\x12\x04\xdd\x08)*\n\xbd\x01\n\x04\x04\x13\x02\
-    \x02\x12\x04\xe2\x08\x02,\x1a\xae\x01\x20The\x20time\x20at\x20which\x20t\
-    his\x20operation\x20was\x20cancelled.\x20If\x20set,\x20this\x20operation\
-    \x20is\n\x20in\x20the\x20process\x20of\x20undoing\x20itself\x20(which\
-    \x20is\x20guaranteed\x20to\x20succeed)\x20and\n\x20cannot\x20be\x20cance\
-    lled\x20again.\n\n\r\n\x05\x04\x13\x02\x02\x06\x12\x04\xe2\x08\x02\x1b\n\
-    \r\n\x05\x04\x13\x02\x02\x01\x12\x04\xe2\x08\x1c'\n\r\n\x05\x04\x13\x02\
-    \x02\x03\x12\x04\xe2\x08*+\nV\n\x04\x04\x13\x02\x03\x12\x04\xe5\x08\x02)\
-    \x1aH\x20The\x20time\x20at\x20which\x20this\x20operation\x20failed\x20or\
-    \x20was\x20completed\x20successfully.\n\n\r\n\x05\x04\x13\x02\x03\x06\
-    \x12\x04\xe5\x08\x02\x1b\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\xe5\x08\
-    \x1c$\n\r\n\x05\x04\x13\x02\x03\x03\x12\x04\xe5\x08'(\n\x9a\x01\n\x02\
-    \x04\x14\x12\x06\xea\x08\0\xf5\x08\x01\x1a\x8b\x01\x20Metadata\x20type\
-    \x20for\x20the\x20operation\x20returned\x20by\n\x20[CreateInstanceConfig\
-    ][google.spanner.admin.instance.v1.InstanceAdmin.CreateInstanceConfig].\
-    \n\n\x0b\n\x03\x04\x14\x01\x12\x04\xea\x08\x08$\n5\n\x04\x04\x14\x02\0\
-    \x12\x04\xec\x08\x02%\x1a'\x20The\x20target\x20instance\x20config\x20end\
-    \x20state.\n\n\r\n\x05\x04\x14\x02\0\x06\x12\x04\xec\x08\x02\x10\n\r\n\
-    \x05\x04\x14\x02\0\x01\x12\x04\xec\x08\x11\x20\n\r\n\x05\x04\x14\x02\0\
-    \x03\x12\x04\xec\x08#$\n\x8c\x01\n\x04\x04\x14\x02\x01\x12\x04\xf1\x08\
-    \x02!\x1a~\x20The\x20progress\x20of\x20the\n\x20[CreateInstanceConfig][g\
-    oogle.spanner.admin.instance.v1.InstanceAdmin.CreateInstanceConfig]\n\
-    \x20operation.\n\n\r\n\x05\x04\x14\x02\x01\x06\x12\x04\xf1\x08\x02\x13\n\
-    \r\n\x05\x04\x14\x02\x01\x01\x12\x04\xf1\x08\x14\x1c\n\r\n\x05\x04\x14\
-    \x02\x01\x03\x12\x04\xf1\x08\x1f\x20\n?\n\x04\x04\x14\x02\x02\x12\x04\
-    \xf4\x08\x02,\x1a1\x20The\x20time\x20at\x20which\x20this\x20operation\
-    \x20was\x20cancelled.\n\n\r\n\x05\x04\x14\x02\x02\x06\x12\x04\xf4\x08\
-    \x02\x1b\n\r\n\x05\x04\x14\x02\x02\x01\x12\x04\xf4\x08\x1c'\n\r\n\x05\
-    \x04\x14\x02\x02\x03\x12\x04\xf4\x08*+\n\x9a\x01\n\x02\x04\x15\x12\x06\
-    \xf9\x08\0\x84\t\x01\x1a\x8b\x01\x20Metadata\x20type\x20for\x20the\x20op\
-    eration\x20returned\x20by\n\x20[UpdateInstanceConfig][google.spanner.adm\
-    in.instance.v1.InstanceAdmin.UpdateInstanceConfig].\n\n\x0b\n\x03\x04\
-    \x15\x01\x12\x04\xf9\x08\x08$\n;\n\x04\x04\x15\x02\0\x12\x04\xfb\x08\x02\
-    %\x1a-\x20The\x20desired\x20instance\x20config\x20after\x20updating.\n\n\
-    \r\n\x05\x04\x15\x02\0\x06\x12\x04\xfb\x08\x02\x10\n\r\n\x05\x04\x15\x02\
-    \0\x01\x12\x04\xfb\x08\x11\x20\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\xfb\
-    \x08#$\n\x8c\x01\n\x04\x04\x15\x02\x01\x12\x04\x80\t\x02!\x1a~\x20The\
-    \x20progress\x20of\x20the\n\x20[UpdateInstanceConfig][google.spanner.adm\
-    in.instance.v1.InstanceAdmin.UpdateInstanceConfig]\n\x20operation.\n\n\r\
-    \n\x05\x04\x15\x02\x01\x06\x12\x04\x80\t\x02\x13\n\r\n\x05\x04\x15\x02\
-    \x01\x01\x12\x04\x80\t\x14\x1c\n\r\n\x05\x04\x15\x02\x01\x03\x12\x04\x80\
-    \t\x1f\x20\n?\n\x04\x04\x15\x02\x02\x12\x04\x83\t\x02,\x1a1\x20The\x20ti\
-    me\x20at\x20which\x20this\x20operation\x20was\x20cancelled.\n\n\r\n\x05\
-    \x04\x15\x02\x02\x06\x12\x04\x83\t\x02\x1b\n\r\n\x05\x04\x15\x02\x02\x01\
-    \x12\x04\x83\t\x1c'\n\r\n\x05\x04\x15\x02\x02\x03\x12\x04\x83\t*+b\x06pr\
-    oto3\
+    stance.v1.CreateInstancePartitionMetadata)\n\x20\x20\x20\x20\x20AND`\x20\
+    \\\n\x20\x20\x20\x20\x20`(metadata.instance_partition.name:custom-instan\
+    ce-partition)\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(metadata.start_time\
+    \x20<\x20\\\"2021-03-28T14:50:00Z\\\")\x20AND`\x20\\\n\x20\x20\x20\x20\
+    \x20`(error:*)`\x20-\x20Return\x20operations\x20where:\n\x20\x20\x20\x20\
+    \x20*\x20The\x20operation's\x20metadata\x20type\x20is\n\x20\x20\x20\x20\
+    \x20[CreateInstancePartitionMetadata][google.spanner.admin.instance.v1.C\
+    reateInstancePartitionMetadata].\n\x20\x20\x20\x20\x20*\x20The\x20instan\
+    ce\x20partition\x20name\x20contains\x20\"custom-instance-partition\".\n\
+    \x20\x20\x20\x20\x20*\x20The\x20operation\x20started\x20before\x202021-0\
+    3-28T14:50:00Z.\n\x20\x20\x20\x20\x20*\x20The\x20operation\x20resulted\
+    \x20in\x20an\x20error.\n\n\r\n\x05\x04\x1f\x02\x01\x05\x12\x04\x86\r\x02\
+    \x08\n\r\n\x05\x04\x1f\x02\x01\x01\x12\x04\x86\r\t\x0f\n\r\n\x05\x04\x1f\
+    \x02\x01\x03\x12\x04\x86\r\x12\x13\n\r\n\x05\x04\x1f\x02\x01\x08\x12\x04\
+    \x86\r\x14<\n\x10\n\x08\x04\x1f\x02\x01\x08\x9c\x08\0\x12\x04\x86\r\x15;\
+    \n\x92\x01\n\x04\x04\x1f\x02\x02\x12\x04\x8a\r\x02?\x1a\x83\x01\x20Optio\
+    nal.\x20Number\x20of\x20operations\x20to\x20be\x20returned\x20in\x20the\
+    \x20response.\x20If\x200\x20or\n\x20less,\x20defaults\x20to\x20the\x20se\
+    rver's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04\x1f\x02\
+    \x02\x05\x12\x04\x8a\r\x02\x07\n\r\n\x05\x04\x1f\x02\x02\x01\x12\x04\x8a\
+    \r\x08\x11\n\r\n\x05\x04\x1f\x02\x02\x03\x12\x04\x8a\r\x14\x15\n\r\n\x05\
+    \x04\x1f\x02\x02\x08\x12\x04\x8a\r\x16>\n\x10\n\x08\x04\x1f\x02\x02\x08\
+    \x9c\x08\0\x12\x04\x8a\r\x17=\n\xeb\x02\n\x04\x04\x1f\x02\x03\x12\x04\
+    \x91\r\x02A\x1a\xdc\x02\x20Optional.\x20If\x20non-empty,\x20`page_token`\
+    \x20should\x20contain\x20a\n\x20[next_page_token][google.spanner.admin.i\
+    nstance.v1.ListInstancePartitionOperationsResponse.next_page_token]\n\
+    \x20from\x20a\x20previous\n\x20[ListInstancePartitionOperationsResponse]\
+    [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRespons\
+    e]\n\x20to\x20the\x20same\x20`parent`\x20and\x20with\x20the\x20same\x20`\
+    filter`.\n\n\r\n\x05\x04\x1f\x02\x03\x05\x12\x04\x91\r\x02\x08\n\r\n\x05\
+    \x04\x1f\x02\x03\x01\x12\x04\x91\r\t\x13\n\r\n\x05\x04\x1f\x02\x03\x03\
+    \x12\x04\x91\r\x16\x17\n\r\n\x05\x04\x1f\x02\x03\x08\x12\x04\x91\r\x18@\
+    \n\x10\n\x08\x04\x1f\x02\x03\x08\x9c\x08\0\x12\x04\x91\r\x19?\n\x8d\x03\
+    \n\x04\x04\x1f\x02\x04\x12\x06\x98\r\x02\x99\r/\x1a\xfc\x02\x20Optional.\
+    \x20Deadline\x20used\x20while\x20retrieving\x20metadata\x20for\x20instan\
+    ce\x20partition\n\x20operations.\x20Instance\x20partitions\x20whose\x20o\
+    peration\x20metadata\x20cannot\x20be\n\x20retrieved\x20within\x20this\
+    \x20deadline\x20will\x20be\x20added\x20to\n\x20[unreachable][ListInstanc\
+    ePartitionOperationsResponse.unreachable]\x20in\n\x20[ListInstancePartit\
+    ionOperationsResponse][google.spanner.admin.instance.v1.ListInstancePart\
+    itionOperationsResponse].\n\n\r\n\x05\x04\x1f\x02\x04\x06\x12\x04\x98\r\
+    \x02\x1b\n\r\n\x05\x04\x1f\x02\x04\x01\x12\x04\x98\r\x1c7\n\r\n\x05\x04\
+    \x1f\x02\x04\x03\x12\x04\x98\r:;\n\r\n\x05\x04\x1f\x02\x04\x08\x12\x04\
+    \x99\r\x06.\n\x10\n\x08\x04\x1f\x02\x04\x08\x9c\x08\0\x12\x04\x99\r\x07-\
+    \n\x95\x01\n\x02\x04\x20\x12\x06\x9e\r\0\xb0\r\x01\x1a\x86\x01\x20The\
+    \x20response\x20for\n\x20[ListInstancePartitionOperations][google.spanne\
+    r.admin.instance.v1.InstanceAdmin.ListInstancePartitionOperations].\n\n\
+    \x0b\n\x03\x04\x20\x01\x12\x04\x9e\r\x08/\n\xc3\x02\n\x04\x04\x20\x02\0\
+    \x12\x04\xa4\r\x027\x1a\xb4\x02\x20The\x20list\x20of\x20matching\x20inst\
+    ance\x20partition\x20[long-running\n\x20operations][google.longrunning.O\
+    peration].\x20Each\x20operation's\x20name\x20will\x20be\n\x20prefixed\
+    \x20by\x20the\x20instance\x20partition's\x20name.\x20The\x20operation's\
+    \n\x20[metadata][google.longrunning.Operation.metadata]\x20field\x20type\
+    \n\x20`metadata.type_url`\x20describes\x20the\x20type\x20of\x20the\x20me\
+    tadata.\n\n\r\n\x05\x04\x20\x02\0\x04\x12\x04\xa4\r\x02\n\n\r\n\x05\x04\
+    \x20\x02\0\x06\x12\x04\xa4\r\x0b'\n\r\n\x05\x04\x20\x02\0\x01\x12\x04\
+    \xa4\r(2\n\r\n\x05\x04\x20\x02\0\x03\x12\x04\xa4\r56\n\xdf\x01\n\x04\x04\
+    \x20\x02\x01\x12\x04\xa9\r\x02\x1d\x1a\xd0\x01\x20`next_page_token`\x20c\
+    an\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[ListInstancePartitionOpe\
+    rations][google.spanner.admin.instance.v1.InstanceAdmin.ListInstancePart\
+    itionOperations]\n\x20call\x20to\x20fetch\x20more\x20of\x20the\x20matchi\
+    ng\x20metadata.\n\n\r\n\x05\x04\x20\x02\x01\x05\x12\x04\xa9\r\x02\x08\n\
+    \r\n\x05\x04\x20\x02\x01\x01\x12\x04\xa9\r\t\x18\n\r\n\x05\x04\x20\x02\
+    \x01\x03\x12\x04\xa9\r\x1b\x1c\n\xa8\x02\n\x04\x04\x20\x02\x02\x12\x04\
+    \xaf\r\x026\x1a\x99\x02\x20The\x20list\x20of\x20unreachable\x20instance\
+    \x20partitions.\n\x20It\x20includes\x20the\x20names\x20of\x20instance\
+    \x20partitions\x20whose\x20operation\x20metadata\x20could\n\x20not\x20be\
+    \x20retrieved\x20within\n\x20[instance_partition_deadline][google.spanne\
+    r.admin.instance.v1.ListInstancePartitionOperationsRequest.instance_part\
+    ition_deadline].\n\n\r\n\x05\x04\x20\x02\x02\x04\x12\x04\xaf\r\x02\n\n\r\
+    \n\x05\x04\x20\x02\x02\x05\x12\x04\xaf\r\x0b\x11\n\r\n\x05\x04\x20\x02\
+    \x02\x01\x12\x04\xaf\r\x121\n\r\n\x05\x04\x20\x02\x02\x03\x12\x04\xaf\r4\
+    5b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -32,7 +32,6 @@ pub mod api;
 #[cfg(feature = "bigtable")]
 pub mod bigtable;
 pub mod cloud;
-#[cfg(any(feature = "bigtable", feature = "pubsub", feature = "spanner"))]
 pub mod empty;
 pub mod identity;
 pub mod logging;

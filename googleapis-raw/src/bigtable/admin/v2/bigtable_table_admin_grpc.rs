@@ -65,6 +65,41 @@ const METHOD_BIGTABLE_TABLE_ADMIN_UNDELETE_TABLE: ::grpcio::Method<super::bigtab
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_BIGTABLE_TABLE_ADMIN_CREATE_AUTHORIZED_VIEW: ::grpcio::Method<super::bigtable_table_admin::CreateAuthorizedViewRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/CreateAuthorizedView",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_LIST_AUTHORIZED_VIEWS: ::grpcio::Method<super::bigtable_table_admin::ListAuthorizedViewsRequest, super::bigtable_table_admin::ListAuthorizedViewsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/ListAuthorizedViews",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_GET_AUTHORIZED_VIEW: ::grpcio::Method<super::bigtable_table_admin::GetAuthorizedViewRequest, super::table::AuthorizedView> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/GetAuthorizedView",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_AUTHORIZED_VIEW: ::grpcio::Method<super::bigtable_table_admin::UpdateAuthorizedViewRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/UpdateAuthorizedView",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_TABLE_ADMIN_DELETE_AUTHORIZED_VIEW: ::grpcio::Method<super::bigtable_table_admin::DeleteAuthorizedViewRequest, super::empty::Empty> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.bigtable.admin.v2.BigtableTableAdmin/DeleteAuthorizedView",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_BIGTABLE_TABLE_ADMIN_MODIFY_COLUMN_FAMILIES: ::grpcio::Method<super::bigtable_table_admin::ModifyColumnFamiliesRequest, super::table::Table> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.bigtable.admin.v2.BigtableTableAdmin/ModifyColumnFamilies",
@@ -313,6 +348,86 @@ impl BigtableTableAdminClient {
 
     pub fn undelete_table_async(&self, req: &super::bigtable_table_admin::UndeleteTableRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
         self.undelete_table_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_authorized_view_opt(&self, req: &super::bigtable_table_admin::CreateAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_CREATE_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn create_authorized_view(&self, req: &super::bigtable_table_admin::CreateAuthorizedViewRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.create_authorized_view_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_authorized_view_async_opt(&self, req: &super::bigtable_table_admin::CreateAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_CREATE_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn create_authorized_view_async(&self, req: &super::bigtable_table_admin::CreateAuthorizedViewRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.create_authorized_view_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_authorized_views_opt(&self, req: &super::bigtable_table_admin::ListAuthorizedViewsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::bigtable_table_admin::ListAuthorizedViewsResponse> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_AUTHORIZED_VIEWS, req, opt)
+    }
+
+    pub fn list_authorized_views(&self, req: &super::bigtable_table_admin::ListAuthorizedViewsRequest) -> ::grpcio::Result<super::bigtable_table_admin::ListAuthorizedViewsResponse> {
+        self.list_authorized_views_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_authorized_views_async_opt(&self, req: &super::bigtable_table_admin::ListAuthorizedViewsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable_table_admin::ListAuthorizedViewsResponse>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_AUTHORIZED_VIEWS, req, opt)
+    }
+
+    pub fn list_authorized_views_async(&self, req: &super::bigtable_table_admin::ListAuthorizedViewsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::bigtable_table_admin::ListAuthorizedViewsResponse>> {
+        self.list_authorized_views_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_authorized_view_opt(&self, req: &super::bigtable_table_admin::GetAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::table::AuthorizedView> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_GET_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn get_authorized_view(&self, req: &super::bigtable_table_admin::GetAuthorizedViewRequest) -> ::grpcio::Result<super::table::AuthorizedView> {
+        self.get_authorized_view_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_authorized_view_async_opt(&self, req: &super::bigtable_table_admin::GetAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::table::AuthorizedView>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_GET_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn get_authorized_view_async(&self, req: &super::bigtable_table_admin::GetAuthorizedViewRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::table::AuthorizedView>> {
+        self.get_authorized_view_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_authorized_view_opt(&self, req: &super::bigtable_table_admin::UpdateAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn update_authorized_view(&self, req: &super::bigtable_table_admin::UpdateAuthorizedViewRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.update_authorized_view_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_authorized_view_async_opt(&self, req: &super::bigtable_table_admin::UpdateAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn update_authorized_view_async(&self, req: &super::bigtable_table_admin::UpdateAuthorizedViewRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.update_authorized_view_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_authorized_view_opt(&self, req: &super::bigtable_table_admin::DeleteAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
+        self.client.unary_call(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn delete_authorized_view(&self, req: &super::bigtable_table_admin::DeleteAuthorizedViewRequest) -> ::grpcio::Result<super::empty::Empty> {
+        self.delete_authorized_view_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_authorized_view_async_opt(&self, req: &super::bigtable_table_admin::DeleteAuthorizedViewRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client.unary_call_async(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_AUTHORIZED_VIEW, req, opt)
+    }
+
+    pub fn delete_authorized_view_async(&self, req: &super::bigtable_table_admin::DeleteAuthorizedViewRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.delete_authorized_view_async_opt(req, ::grpcio::CallOption::default())
     }
 
     pub fn modify_column_families_opt(&self, req: &super::bigtable_table_admin::ModifyColumnFamiliesRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::table::Table> {
@@ -629,6 +744,21 @@ pub trait BigtableTableAdmin {
     fn undelete_table(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::UndeleteTableRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
+    fn create_authorized_view(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::CreateAuthorizedViewRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn list_authorized_views(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::ListAuthorizedViewsRequest, sink: ::grpcio::UnarySink<super::bigtable_table_admin::ListAuthorizedViewsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_authorized_view(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::GetAuthorizedViewRequest, sink: ::grpcio::UnarySink<super::table::AuthorizedView>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update_authorized_view(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::UpdateAuthorizedViewRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn delete_authorized_view(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::DeleteAuthorizedViewRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
     fn modify_column_families(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable_table_admin::ModifyColumnFamiliesRequest, sink: ::grpcio::UnarySink<super::table::Table>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
@@ -714,6 +844,26 @@ pub fn create_bigtable_table_admin<S: BigtableTableAdmin + Send + Clone + 'stati
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_UNDELETE_TABLE, move |ctx, req, resp| {
         instance.undelete_table(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_CREATE_AUTHORIZED_VIEW, move |ctx, req, resp| {
+        instance.create_authorized_view(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_LIST_AUTHORIZED_VIEWS, move |ctx, req, resp| {
+        instance.list_authorized_views(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_GET_AUTHORIZED_VIEW, move |ctx, req, resp| {
+        instance.get_authorized_view(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_UPDATE_AUTHORIZED_VIEW, move |ctx, req, resp| {
+        instance.update_authorized_view(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_DELETE_AUTHORIZED_VIEW, move |ctx, req, resp| {
+        instance.delete_authorized_view(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BIGTABLE_TABLE_ADMIN_MODIFY_COLUMN_FAMILIES, move |ctx, req, resp| {
