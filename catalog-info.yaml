@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: google-cloud-rust
+  description: Wrapper container for the Google Cloud Platform GRPC generated rust library
+  namespace: default
+spec:
+  type: library
+  lifecycle: production
+  owner: jr+src@mozilla.com

@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: google-cloud-rust/googleapis-raw
+  description: The GRPC generated Rust API for Google Cloud Platform
+  namespace: gcp
+spec:
+  type: library
+  lifecycle: production
+  owner: jr+src@mozilla.com
+  subcomponentOf: google-cloud-rust
+  providesApis:
+    - gcp-spanner
+    - gcp-bigtable
+    - gcp-pubsub
