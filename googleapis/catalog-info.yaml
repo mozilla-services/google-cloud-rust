@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: googleapis_examples
+  namespace: googleapis
+  description: A set of example uses for the GoogleAPIS-Raw functions
+spec:
+  type: library
+  lifecycle: development
+  owner: ownedBy/google-cloud-rust
+  dependsOn:
+    - google-cloud-rust/googleapis-raw

@@ -5,11 +5,10 @@ metadata:
   description: The GRPC generated Rust API for Google Cloud Platform
   namespace: gcp
 spec:
-  type: library
+  type: url
   lifecycle: production
-  owner: jr+src@mozilla.com
-  subcomponentOf: google-cloud-rust
-  providesApis:
+  owner: ownedBy/google-cloud-rust
+  targets:
     - gcp-spanner
     - gcp-bigtable
     - gcp-pubsub
