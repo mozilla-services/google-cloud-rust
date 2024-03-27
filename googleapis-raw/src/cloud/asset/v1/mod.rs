@@ -1,5 +1,5 @@
 // @generated
-pub(crate) use crate::{
+use crate::{
     api::{annotations, client, field_behavior, resource},
     iam::v1::policy,
     longrunning::operations,

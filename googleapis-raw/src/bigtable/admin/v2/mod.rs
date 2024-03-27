@@ -1,5 +1,5 @@
 // @generated
-pub(crate) use crate::{
+use crate::{
     api::annotations,
     empty,
     iam::v1::{iam_policy, policy},

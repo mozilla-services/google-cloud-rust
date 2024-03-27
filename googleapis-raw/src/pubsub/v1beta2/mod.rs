@@ -1,5 +1,5 @@
 // @generated
-pub(crate) use crate::empty;
+use crate::empty;
 
 pub mod pubsub;
 pub mod pubsub_grpc;
