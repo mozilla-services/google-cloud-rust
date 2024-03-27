@@ -30,34 +30,6 @@ const METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG: ::grpcio::Method<super::spanner
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::CreateInstanceConfigRequest, super::operations::Operation> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::Unary,
-    name: "/google.spanner.admin.instance.v1.InstanceAdmin/CreateInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
-const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::UpdateInstanceConfigRequest, super::operations::Operation> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::Unary,
-    name: "/google.spanner.admin.instance.v1.InstanceAdmin/UpdateInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
-const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::DeleteInstanceConfigRequest, super::empty::Empty> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::Unary,
-    name: "/google.spanner.admin.instance.v1.InstanceAdmin/DeleteInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
-const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS: ::grpcio::Method<super::spanner_instance_admin::ListInstanceConfigOperationsRequest, super::spanner_instance_admin::ListInstanceConfigOperationsResponse> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::Unary,
-    name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstanceConfigOperations",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
 const METHOD_INSTANCE_ADMIN_LIST_INSTANCES: ::grpcio::Method<super::spanner_instance_admin::ListInstancesRequest, super::spanner_instance_admin::ListInstancesResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstances",
@@ -156,70 +128,6 @@ impl InstanceAdminClient {
 
     pub fn get_instance_config_async(&self, req: &super::spanner_instance_admin::GetInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstanceConfig>> {
         self.get_instance_config_async_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn create_instance_config_opt(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, req, opt)
-    }
-
-    pub fn create_instance_config(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest) -> ::grpcio::Result<super::operations::Operation> {
-        self.create_instance_config_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn create_instance_config_async_opt(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, req, opt)
-    }
-
-    pub fn create_instance_config_async(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.create_instance_config_async_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn update_instance_config_opt(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, req, opt)
-    }
-
-    pub fn update_instance_config(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest) -> ::grpcio::Result<super::operations::Operation> {
-        self.update_instance_config_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn update_instance_config_async_opt(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, req, opt)
-    }
-
-    pub fn update_instance_config_async(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.update_instance_config_async_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn delete_instance_config_opt(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, req, opt)
-    }
-
-    pub fn delete_instance_config(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest) -> ::grpcio::Result<super::empty::Empty> {
-        self.delete_instance_config_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn delete_instance_config_async_opt(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, req, opt)
-    }
-
-    pub fn delete_instance_config_async(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
-        self.delete_instance_config_async_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn list_instance_config_operations_opt(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigOperationsResponse> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS, req, opt)
-    }
-
-    pub fn list_instance_config_operations(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigOperationsResponse> {
-        self.list_instance_config_operations_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn list_instance_config_operations_async_opt(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigOperationsResponse>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS, req, opt)
-    }
-
-    pub fn list_instance_config_operations_async(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigOperationsResponse>> {
-        self.list_instance_config_operations_async_opt(req, ::grpcio::CallOption::default())
     }
 
     pub fn list_instances_opt(&self, req: &super::spanner_instance_admin::ListInstancesRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancesResponse> {
@@ -361,18 +269,6 @@ pub trait InstanceAdmin {
     fn get_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::GetInstanceConfigRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::InstanceConfig>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn create_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::CreateInstanceConfigRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
-        grpcio::unimplemented_call!(ctx, sink)
-    }
-    fn update_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::UpdateInstanceConfigRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
-        grpcio::unimplemented_call!(ctx, sink)
-    }
-    fn delete_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::DeleteInstanceConfigRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
-        grpcio::unimplemented_call!(ctx, sink)
-    }
-    fn list_instance_config_operations(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstanceConfigOperationsRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstanceConfigOperationsResponse>) {
-        grpcio::unimplemented_call!(ctx, sink)
-    }
     fn list_instances(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstancesRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancesResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
@@ -408,22 +304,6 @@ pub fn create_instance_admin<S: InstanceAdmin + Send + Clone + 'static>(s: S) ->
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG, move |ctx, req, resp| {
         instance.get_instance_config(ctx, req, resp)
-    });
-    let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.create_instance_config(ctx, req, resp)
-    });
-    let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.update_instance_config(ctx, req, resp)
-    });
-    let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.delete_instance_config(ctx, req, resp)
-    });
-    let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS, move |ctx, req, resp| {
-        instance.list_instance_config_operations(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCES, move |ctx, req, resp| {

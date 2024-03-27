@@ -107,6 +107,20 @@ const METHOD_SERVICE_MANAGER_GENERATE_CONFIG_REPORT: ::grpcio::Method<super::ser
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_SERVICE_MANAGER_ENABLE_SERVICE: ::grpcio::Method<super::servicemanager::EnableServiceRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.api.servicemanagement.v1.ServiceManager/EnableService",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_SERVICE_MANAGER_DISABLE_SERVICE: ::grpcio::Method<super::servicemanager::DisableServiceRequest, super::operations::Operation> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.api.servicemanagement.v1.ServiceManager/DisableService",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct ServiceManagerClient {
     pub client: ::grpcio::Client,
@@ -326,6 +340,38 @@ impl ServiceManagerClient {
     pub fn generate_config_report_async(&self, req: &super::servicemanager::GenerateConfigReportRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::servicemanager::GenerateConfigReportResponse>> {
         self.generate_config_report_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn enable_service_opt(&self, req: &super::servicemanager::EnableServiceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_SERVICE_MANAGER_ENABLE_SERVICE, req, opt)
+    }
+
+    pub fn enable_service(&self, req: &super::servicemanager::EnableServiceRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.enable_service_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn enable_service_async_opt(&self, req: &super::servicemanager::EnableServiceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_SERVICE_MANAGER_ENABLE_SERVICE, req, opt)
+    }
+
+    pub fn enable_service_async(&self, req: &super::servicemanager::EnableServiceRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.enable_service_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn disable_service_opt(&self, req: &super::servicemanager::DisableServiceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
+        self.client.unary_call(&METHOD_SERVICE_MANAGER_DISABLE_SERVICE, req, opt)
+    }
+
+    pub fn disable_service(&self, req: &super::servicemanager::DisableServiceRequest) -> ::grpcio::Result<super::operations::Operation> {
+        self.disable_service_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn disable_service_async_opt(&self, req: &super::servicemanager::DisableServiceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client.unary_call_async(&METHOD_SERVICE_MANAGER_DISABLE_SERVICE, req, opt)
+    }
+
+    pub fn disable_service_async(&self, req: &super::servicemanager::DisableServiceRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.disable_service_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -369,6 +415,12 @@ pub trait ServiceManager {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn generate_config_report(&mut self, ctx: ::grpcio::RpcContext, _req: super::servicemanager::GenerateConfigReportRequest, sink: ::grpcio::UnarySink<super::servicemanager::GenerateConfigReportResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn enable_service(&mut self, ctx: ::grpcio::RpcContext, _req: super::servicemanager::EnableServiceRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn disable_service(&mut self, ctx: ::grpcio::RpcContext, _req: super::servicemanager::DisableServiceRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -423,9 +475,17 @@ pub fn create_service_manager<S: ServiceManager + Send + Clone + 'static>(s: S) 
     builder = builder.add_unary_handler(&METHOD_SERVICE_MANAGER_CREATE_SERVICE_ROLLOUT, move |ctx, req, resp| {
         instance.create_service_rollout(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_SERVICE_MANAGER_GENERATE_CONFIG_REPORT, move |ctx, req, resp| {
         instance.generate_config_report(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_SERVICE_MANAGER_ENABLE_SERVICE, move |ctx, req, resp| {
+        instance.enable_service(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_SERVICE_MANAGER_DISABLE_SERVICE, move |ctx, req, resp| {
+        instance.disable_service(ctx, req, resp)
     });
     builder.build()
 }

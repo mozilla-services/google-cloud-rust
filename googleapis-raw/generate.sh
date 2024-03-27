@@ -32,7 +32,8 @@ echo "Updating cargo..."
 cargo update
 echo "Updating plugin..."
 # Lock on 2.28.0 until grpcio supports 3+
-cargo install protobuf-codegen --version 2.28.0
+#cargo install protobuf-codegen --version 2.28.0
+cargo install protobuf-codegen
 
 if ! [[ -x "$(command -v grpc_rust_plugin)" ]]; then
     echo "Error: grpc_rust_plugin was not found"

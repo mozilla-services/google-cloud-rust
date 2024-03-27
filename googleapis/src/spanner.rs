@@ -56,8 +56,10 @@ impl Client {
             .connect(&endpoint);
         let client = SpannerClient::new(chan);
 
-        let mut req = CreateSessionRequest::new();
-        req.set_database(database.to_string());
+        let req = CreateSessionRequest {
+            database: database.clone(),
+            ..Default::default()
+        };
         let mut meta = MetadataBuilder::new();
         meta.add_str("google-cloud-resource-prefix", &database)?;
         meta.add_str("x-goog-api-client", "googleapis-rs")?;
