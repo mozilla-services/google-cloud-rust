@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -27,18 +27,17 @@ const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 
 ///  A collection of Bigtable [Tables][google.bigtable.admin.v2.Table] and
 ///  the resources that serve them.
-///  All tables in an instance are served from a single
-///  [Cluster][google.bigtable.admin.v2.Cluster].
+///  All tables in an instance are served from all
+///  [Clusters][google.bigtable.admin.v2.Cluster] in the instance.
 // @@protoc_insertion_point(message:google.bigtable.admin.v2.Instance)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Instance {
     // message fields
-    ///  (`OutputOnly`)
     ///  The unique name of the instance. Values are of the form
-    ///  `projects/<project>/instances/[a-z][a-z0-9\\-]+[a-z0-9]`.
+    ///  `projects/{project}/instances/[a-z][a-z0-9\\-]+[a-z0-9]`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Instance.name)
     pub name: ::std::string::String,
-    ///  The descriptive name for this instance as it appears in UIs.
+    ///  Required. The descriptive name for this instance as it appears in UIs.
     ///  Can be changed at any time, but should be kept globally unique
     ///  to avoid confusion.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Instance.display_name)
@@ -63,6 +62,14 @@ pub struct Instance {
     ///  * Keys and values must both be under 128 bytes.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Instance.labels)
     pub labels: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    ///  Output only. A server-assigned timestamp representing when this Instance
+    ///  was created. For instances created before this field was added (August
+    ///  2021), this value is `seconds: 0, nanos: 1`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Instance.create_time)
+    pub create_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. Reserved for future use.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Instance.satisfies_pzs)
+    pub satisfies_pzs: ::std::option::Option<bool>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Instance.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -80,7 +87,7 @@ impl Instance {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut fields = ::std::vec::Vec::with_capacity(7);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -106,6 +113,16 @@ impl Instance {
             "labels",
             |m: &Instance| { &m.labels },
             |m: &mut Instance| { &mut m.labels },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "create_time",
+            |m: &Instance| { &m.create_time },
+            |m: &mut Instance| { &mut m.create_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "satisfies_pzs",
+            |m: &Instance| { &m.satisfies_pzs },
+            |m: &mut Instance| { &mut m.satisfies_pzs },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Instance>(
             "Instance",
@@ -152,6 +169,12 @@ impl ::protobuf::Message for Instance {
                     is.pop_limit(old_limit);
                     self.labels.insert(key, value);
                 },
+                58 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.create_time)?;
+                },
+                64 => {
+                    self.satisfies_pzs = ::std::option::Option::Some(is.read_bool()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -182,6 +205,13 @@ impl ::protobuf::Message for Instance {
             entry_size += ::protobuf::rt::string_size(2, &v);
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
         };
+        if let Some(v) = self.create_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.satisfies_pzs {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -209,6 +239,12 @@ impl ::protobuf::Message for Instance {
             os.write_string(1, &k)?;
             os.write_string(2, &v)?;
         };
+        if let Some(v) = self.create_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+        }
+        if let Some(v) = self.satisfies_pzs {
+            os.write_bool(8, v)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -231,6 +267,8 @@ impl ::protobuf::Message for Instance {
         self.state = ::protobuf::EnumOrUnknown::new(instance::State::STATE_NOT_KNOWN);
         self.type_ = ::protobuf::EnumOrUnknown::new(instance::Type::TYPE_UNSPECIFIED);
         self.labels.clear();
+        self.create_time.clear();
+        self.satisfies_pzs = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -396,6 +434,300 @@ pub mod instance {
     }
 }
 
+///  The Autoscaling targets for a Cluster. These determine the recommended nodes.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.AutoscalingTargets)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct AutoscalingTargets {
+    // message fields
+    ///  The cpu utilization that the Autoscaler should be trying to achieve.
+    ///  This number is on a scale from 0 (no utilization) to
+    ///  100 (total utilization), and is limited between 10 and 80, otherwise it
+    ///  will return INVALID_ARGUMENT error.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AutoscalingTargets.cpu_utilization_percent)
+    pub cpu_utilization_percent: i32,
+    ///  The storage utilization that the Autoscaler should be trying to achieve.
+    ///  This number is limited between 2560 (2.5TiB) and 5120 (5TiB) for a SSD
+    ///  cluster and between 8192 (8TiB) and 16384 (16TiB) for an HDD cluster,
+    ///  otherwise it will return INVALID_ARGUMENT error. If this value is set to 0,
+    ///  it will be treated as if it were set to the default value: 2560 for SSD,
+    ///  8192 for HDD.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AutoscalingTargets.storage_utilization_gib_per_node)
+    pub storage_utilization_gib_per_node: i32,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AutoscalingTargets.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AutoscalingTargets {
+    fn default() -> &'a AutoscalingTargets {
+        <AutoscalingTargets as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AutoscalingTargets {
+    pub fn new() -> AutoscalingTargets {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "cpu_utilization_percent",
+            |m: &AutoscalingTargets| { &m.cpu_utilization_percent },
+            |m: &mut AutoscalingTargets| { &mut m.cpu_utilization_percent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "storage_utilization_gib_per_node",
+            |m: &AutoscalingTargets| { &m.storage_utilization_gib_per_node },
+            |m: &mut AutoscalingTargets| { &mut m.storage_utilization_gib_per_node },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AutoscalingTargets>(
+            "AutoscalingTargets",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AutoscalingTargets {
+    const NAME: &'static str = "AutoscalingTargets";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                16 => {
+                    self.cpu_utilization_percent = is.read_int32()?;
+                },
+                24 => {
+                    self.storage_utilization_gib_per_node = is.read_int32()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.cpu_utilization_percent != 0 {
+            my_size += ::protobuf::rt::int32_size(2, self.cpu_utilization_percent);
+        }
+        if self.storage_utilization_gib_per_node != 0 {
+            my_size += ::protobuf::rt::int32_size(3, self.storage_utilization_gib_per_node);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.cpu_utilization_percent != 0 {
+            os.write_int32(2, self.cpu_utilization_percent)?;
+        }
+        if self.storage_utilization_gib_per_node != 0 {
+            os.write_int32(3, self.storage_utilization_gib_per_node)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AutoscalingTargets {
+        AutoscalingTargets::new()
+    }
+
+    fn clear(&mut self) {
+        self.cpu_utilization_percent = 0;
+        self.storage_utilization_gib_per_node = 0;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AutoscalingTargets {
+        static instance: AutoscalingTargets = AutoscalingTargets {
+            cpu_utilization_percent: 0,
+            storage_utilization_gib_per_node: 0,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AutoscalingTargets {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AutoscalingTargets").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AutoscalingTargets {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AutoscalingTargets {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Limits for the number of nodes a Cluster can autoscale up/down to.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.AutoscalingLimits)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct AutoscalingLimits {
+    // message fields
+    ///  Required. Minimum number of nodes to scale down to.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AutoscalingLimits.min_serve_nodes)
+    pub min_serve_nodes: i32,
+    ///  Required. Maximum number of nodes to scale up to.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AutoscalingLimits.max_serve_nodes)
+    pub max_serve_nodes: i32,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AutoscalingLimits.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AutoscalingLimits {
+    fn default() -> &'a AutoscalingLimits {
+        <AutoscalingLimits as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AutoscalingLimits {
+    pub fn new() -> AutoscalingLimits {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "min_serve_nodes",
+            |m: &AutoscalingLimits| { &m.min_serve_nodes },
+            |m: &mut AutoscalingLimits| { &mut m.min_serve_nodes },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "max_serve_nodes",
+            |m: &AutoscalingLimits| { &m.max_serve_nodes },
+            |m: &mut AutoscalingLimits| { &mut m.max_serve_nodes },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AutoscalingLimits>(
+            "AutoscalingLimits",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AutoscalingLimits {
+    const NAME: &'static str = "AutoscalingLimits";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.min_serve_nodes = is.read_int32()?;
+                },
+                16 => {
+                    self.max_serve_nodes = is.read_int32()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.min_serve_nodes != 0 {
+            my_size += ::protobuf::rt::int32_size(1, self.min_serve_nodes);
+        }
+        if self.max_serve_nodes != 0 {
+            my_size += ::protobuf::rt::int32_size(2, self.max_serve_nodes);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.min_serve_nodes != 0 {
+            os.write_int32(1, self.min_serve_nodes)?;
+        }
+        if self.max_serve_nodes != 0 {
+            os.write_int32(2, self.max_serve_nodes)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AutoscalingLimits {
+        AutoscalingLimits::new()
+    }
+
+    fn clear(&mut self) {
+        self.min_serve_nodes = 0;
+        self.max_serve_nodes = 0;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AutoscalingLimits {
+        static instance: AutoscalingLimits = AutoscalingLimits {
+            min_serve_nodes: 0,
+            max_serve_nodes: 0,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AutoscalingLimits {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AutoscalingLimits").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AutoscalingLimits {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AutoscalingLimits {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  A resizable group of nodes in a particular cloud location, capable
 ///  of serving all [Tables][google.bigtable.admin.v2.Table] in the parent
 ///  [Instance][google.bigtable.admin.v2.Instance].
@@ -403,31 +735,35 @@ pub mod instance {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Cluster {
     // message fields
-    ///  (`OutputOnly`)
     ///  The unique name of the cluster. Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/[a-z][-a-z0-9]*`.
+    ///  `projects/{project}/instances/{instance}/clusters/[a-z][-a-z0-9]*`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.name)
     pub name: ::std::string::String,
-    ///  (`CreationOnly`)
-    ///  The location where this cluster's nodes and storage reside. For best
-    ///  performance, clients should be located as close as possible to this
+    ///  Immutable. The location where this cluster's nodes and storage reside. For
+    ///  best performance, clients should be located as close as possible to this
     ///  cluster. Currently only zones are supported, so values should be of the
-    ///  form `projects/<project>/locations/<zone>`.
+    ///  form `projects/{project}/locations/{zone}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.location)
     pub location: ::std::string::String,
-    ///  (`OutputOnly`)
-    ///  The current state of the cluster.
+    ///  Output only. The current state of the cluster.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.state)
     pub state: ::protobuf::EnumOrUnknown<cluster::State>,
     ///  The number of nodes allocated to this cluster. More nodes enable higher
     ///  throughput and more consistent performance.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.serve_nodes)
     pub serve_nodes: i32,
-    ///  (`CreationOnly`)
-    ///  The type of storage used by this cluster to serve its
+    ///  Immutable. The node scaling factor of this cluster.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.node_scaling_factor)
+    pub node_scaling_factor: ::protobuf::EnumOrUnknown<cluster::NodeScalingFactor>,
+    ///  Immutable. The type of storage used by this cluster to serve its
     ///  parent instance's tables, unless explicitly overridden.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.default_storage_type)
     pub default_storage_type: ::protobuf::EnumOrUnknown<super::common::StorageType>,
+    ///  Immutable. The encryption configuration for CMEK-protected clusters.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.encryption_config)
+    pub encryption_config: ::protobuf::MessageField<cluster::EncryptionConfig>,
+    // message oneof groups
+    pub config: ::std::option::Option<cluster::Config>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Cluster.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -444,9 +780,58 @@ impl Cluster {
         ::std::default::Default::default()
     }
 
+    // .google.bigtable.admin.v2.Cluster.ClusterConfig cluster_config = 7;
+
+    pub fn cluster_config(&self) -> &cluster::ClusterConfig {
+        match self.config {
+            ::std::option::Option::Some(cluster::Config::ClusterConfig(ref v)) => v,
+            _ => <cluster::ClusterConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_cluster_config(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_cluster_config(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(cluster::Config::ClusterConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cluster_config(&mut self, v: cluster::ClusterConfig) {
+        self.config = ::std::option::Option::Some(cluster::Config::ClusterConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cluster_config(&mut self) -> &mut cluster::ClusterConfig {
+        if let ::std::option::Option::Some(cluster::Config::ClusterConfig(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(cluster::Config::ClusterConfig(cluster::ClusterConfig::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(cluster::Config::ClusterConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_cluster_config(&mut self) -> cluster::ClusterConfig {
+        if self.has_cluster_config() {
+            match self.config.take() {
+                ::std::option::Option::Some(cluster::Config::ClusterConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            cluster::ClusterConfig::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(8);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
             |m: &Cluster| { &m.name },
@@ -468,10 +853,28 @@ impl Cluster {
             |m: &mut Cluster| { &mut m.serve_nodes },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "node_scaling_factor",
+            |m: &Cluster| { &m.node_scaling_factor },
+            |m: &mut Cluster| { &mut m.node_scaling_factor },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, cluster::ClusterConfig>(
+            "cluster_config",
+            Cluster::has_cluster_config,
+            Cluster::cluster_config,
+            Cluster::mut_cluster_config,
+            Cluster::set_cluster_config,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "default_storage_type",
             |m: &Cluster| { &m.default_storage_type },
             |m: &mut Cluster| { &mut m.default_storage_type },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, cluster::EncryptionConfig>(
+            "encryption_config",
+            |m: &Cluster| { &m.encryption_config },
+            |m: &mut Cluster| { &mut m.encryption_config },
+        ));
+        oneofs.push(cluster::Config::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Cluster>(
             "Cluster",
             fields,
@@ -502,8 +905,17 @@ impl ::protobuf::Message for Cluster {
                 32 => {
                     self.serve_nodes = is.read_int32()?;
                 },
+                72 => {
+                    self.node_scaling_factor = is.read_enum_or_unknown()?;
+                },
+                58 => {
+                    self.config = ::std::option::Option::Some(cluster::Config::ClusterConfig(is.read_message()?));
+                },
                 40 => {
                     self.default_storage_type = is.read_enum_or_unknown()?;
+                },
+                50 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.encryption_config)?;
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -529,8 +941,23 @@ impl ::protobuf::Message for Cluster {
         if self.serve_nodes != 0 {
             my_size += ::protobuf::rt::int32_size(4, self.serve_nodes);
         }
+        if self.node_scaling_factor != ::protobuf::EnumOrUnknown::new(cluster::NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(9, self.node_scaling_factor.value());
+        }
         if self.default_storage_type != ::protobuf::EnumOrUnknown::new(super::common::StorageType::STORAGE_TYPE_UNSPECIFIED) {
             my_size += ::protobuf::rt::int32_size(5, self.default_storage_type.value());
+        }
+        if let Some(v) = self.encryption_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &cluster::Config::ClusterConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -550,8 +977,21 @@ impl ::protobuf::Message for Cluster {
         if self.serve_nodes != 0 {
             os.write_int32(4, self.serve_nodes)?;
         }
+        if self.node_scaling_factor != ::protobuf::EnumOrUnknown::new(cluster::NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED) {
+            os.write_enum(9, ::protobuf::EnumOrUnknown::value(&self.node_scaling_factor))?;
+        }
         if self.default_storage_type != ::protobuf::EnumOrUnknown::new(super::common::StorageType::STORAGE_TYPE_UNSPECIFIED) {
             os.write_enum(5, ::protobuf::EnumOrUnknown::value(&self.default_storage_type))?;
+        }
+        if let Some(v) = self.encryption_config.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &cluster::Config::ClusterConfig(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -574,7 +1014,10 @@ impl ::protobuf::Message for Cluster {
         self.location.clear();
         self.state = ::protobuf::EnumOrUnknown::new(cluster::State::STATE_NOT_KNOWN);
         self.serve_nodes = 0;
+        self.node_scaling_factor = ::protobuf::EnumOrUnknown::new(cluster::NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED);
+        self.config = ::std::option::Option::None;
         self.default_storage_type = ::protobuf::EnumOrUnknown::new(super::common::StorageType::STORAGE_TYPE_UNSPECIFIED);
+        self.encryption_config.clear();
         self.special_fields.clear();
     }
 
@@ -584,7 +1027,10 @@ impl ::protobuf::Message for Cluster {
             location: ::std::string::String::new(),
             state: ::protobuf::EnumOrUnknown::from_i32(0),
             serve_nodes: 0,
+            node_scaling_factor: ::protobuf::EnumOrUnknown::from_i32(0),
             default_storage_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            encryption_config: ::protobuf::MessageField::none(),
+            config: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -610,6 +1056,434 @@ impl ::protobuf::reflect::ProtobufValue for Cluster {
 
 /// Nested message and enums of message `Cluster`
 pub mod cluster {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.Cluster.config)
+    pub enum Config {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.Cluster.cluster_config)
+        ClusterConfig(ClusterConfig),
+    }
+
+    impl ::protobuf::Oneof for Config {
+    }
+
+    impl ::protobuf::OneofFull for Config {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::Cluster as ::protobuf::MessageFull>::descriptor().oneof_by_name("config").unwrap()).clone()
+        }
+    }
+
+    impl Config {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Config>("config")
+        }
+    }
+    ///  Autoscaling config for a cluster.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.Cluster.ClusterAutoscalingConfig)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct ClusterAutoscalingConfig {
+        // message fields
+        ///  Required. Autoscaling limits for this cluster.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.ClusterAutoscalingConfig.autoscaling_limits)
+        pub autoscaling_limits: ::protobuf::MessageField<super::AutoscalingLimits>,
+        ///  Required. Autoscaling targets for this cluster.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.ClusterAutoscalingConfig.autoscaling_targets)
+        pub autoscaling_targets: ::protobuf::MessageField<super::AutoscalingTargets>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Cluster.ClusterAutoscalingConfig.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a ClusterAutoscalingConfig {
+        fn default() -> &'a ClusterAutoscalingConfig {
+            <ClusterAutoscalingConfig as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl ClusterAutoscalingConfig {
+        pub fn new() -> ClusterAutoscalingConfig {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::AutoscalingLimits>(
+                "autoscaling_limits",
+                |m: &ClusterAutoscalingConfig| { &m.autoscaling_limits },
+                |m: &mut ClusterAutoscalingConfig| { &mut m.autoscaling_limits },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::AutoscalingTargets>(
+                "autoscaling_targets",
+                |m: &ClusterAutoscalingConfig| { &m.autoscaling_targets },
+                |m: &mut ClusterAutoscalingConfig| { &mut m.autoscaling_targets },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ClusterAutoscalingConfig>(
+                "Cluster.ClusterAutoscalingConfig",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for ClusterAutoscalingConfig {
+        const NAME: &'static str = "ClusterAutoscalingConfig";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.autoscaling_limits)?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.autoscaling_targets)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.autoscaling_limits.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.autoscaling_targets.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.autoscaling_limits.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            if let Some(v) = self.autoscaling_targets.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> ClusterAutoscalingConfig {
+            ClusterAutoscalingConfig::new()
+        }
+
+        fn clear(&mut self) {
+            self.autoscaling_limits.clear();
+            self.autoscaling_targets.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static ClusterAutoscalingConfig {
+            static instance: ClusterAutoscalingConfig = ClusterAutoscalingConfig {
+                autoscaling_limits: ::protobuf::MessageField::none(),
+                autoscaling_targets: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for ClusterAutoscalingConfig {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Cluster.ClusterAutoscalingConfig").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for ClusterAutoscalingConfig {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for ClusterAutoscalingConfig {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  Configuration for a cluster.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.Cluster.ClusterConfig)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct ClusterConfig {
+        // message fields
+        ///  Autoscaling configuration for this cluster.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.ClusterConfig.cluster_autoscaling_config)
+        pub cluster_autoscaling_config: ::protobuf::MessageField<ClusterAutoscalingConfig>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Cluster.ClusterConfig.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a ClusterConfig {
+        fn default() -> &'a ClusterConfig {
+            <ClusterConfig as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl ClusterConfig {
+        pub fn new() -> ClusterConfig {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ClusterAutoscalingConfig>(
+                "cluster_autoscaling_config",
+                |m: &ClusterConfig| { &m.cluster_autoscaling_config },
+                |m: &mut ClusterConfig| { &mut m.cluster_autoscaling_config },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ClusterConfig>(
+                "Cluster.ClusterConfig",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for ClusterConfig {
+        const NAME: &'static str = "ClusterConfig";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.cluster_autoscaling_config)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.cluster_autoscaling_config.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.cluster_autoscaling_config.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> ClusterConfig {
+            ClusterConfig::new()
+        }
+
+        fn clear(&mut self) {
+            self.cluster_autoscaling_config.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static ClusterConfig {
+            static instance: ClusterConfig = ClusterConfig {
+                cluster_autoscaling_config: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for ClusterConfig {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Cluster.ClusterConfig").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for ClusterConfig {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for ClusterConfig {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  Cloud Key Management Service (Cloud KMS) settings for a CMEK-protected
+    ///  cluster.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.Cluster.EncryptionConfig)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct EncryptionConfig {
+        // message fields
+        ///  Describes the Cloud KMS encryption key that will be used to protect the
+        ///  destination Bigtable cluster. The requirements for this key are:
+        ///   1) The Cloud Bigtable service account associated with the project that
+        ///   contains this cluster must be granted the
+        ///   `cloudkms.cryptoKeyEncrypterDecrypter` role on the CMEK key.
+        ///   2) Only regional keys can be used and the region of the CMEK key must
+        ///   match the region of the cluster.
+        ///   3) All clusters within an instance must use the same CMEK key.
+        ///  Values are of the form
+        ///  `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Cluster.EncryptionConfig.kms_key_name)
+        pub kms_key_name: ::std::string::String,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Cluster.EncryptionConfig.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a EncryptionConfig {
+        fn default() -> &'a EncryptionConfig {
+            <EncryptionConfig as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl EncryptionConfig {
+        pub fn new() -> EncryptionConfig {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "kms_key_name",
+                |m: &EncryptionConfig| { &m.kms_key_name },
+                |m: &mut EncryptionConfig| { &mut m.kms_key_name },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EncryptionConfig>(
+                "Cluster.EncryptionConfig",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for EncryptionConfig {
+        const NAME: &'static str = "EncryptionConfig";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.kms_key_name = is.read_string()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.kms_key_name.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.kms_key_name);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.kms_key_name.is_empty() {
+                os.write_string(1, &self.kms_key_name)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> EncryptionConfig {
+            EncryptionConfig::new()
+        }
+
+        fn clear(&mut self) {
+            self.kms_key_name.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static EncryptionConfig {
+            static instance: EncryptionConfig = EncryptionConfig {
+                kms_key_name: ::std::string::String::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for EncryptionConfig {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Cluster.EncryptionConfig").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for EncryptionConfig {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for EncryptionConfig {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
     ///  Possible states of a cluster.
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:google.bigtable.admin.v2.Cluster.State)
@@ -687,6 +1561,75 @@ pub mod cluster {
             ::protobuf::reflect::GeneratedEnumDescriptorData::new::<State>("Cluster.State")
         }
     }
+
+    ///  Possible node scaling factors of the clusters. Node scaling delivers better
+    ///  latency and more throughput by removing node boundaries.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.admin.v2.Cluster.NodeScalingFactor)
+    pub enum NodeScalingFactor {
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Cluster.NodeScalingFactor.NODE_SCALING_FACTOR_UNSPECIFIED)
+        NODE_SCALING_FACTOR_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Cluster.NodeScalingFactor.NODE_SCALING_FACTOR_1X)
+        NODE_SCALING_FACTOR_1X = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Cluster.NodeScalingFactor.NODE_SCALING_FACTOR_2X)
+        NODE_SCALING_FACTOR_2X = 2,
+    }
+
+    impl ::protobuf::Enum for NodeScalingFactor {
+        const NAME: &'static str = "NodeScalingFactor";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<NodeScalingFactor> {
+            match value {
+                0 => ::std::option::Option::Some(NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED),
+                1 => ::std::option::Option::Some(NodeScalingFactor::NODE_SCALING_FACTOR_1X),
+                2 => ::std::option::Option::Some(NodeScalingFactor::NODE_SCALING_FACTOR_2X),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<NodeScalingFactor> {
+            match str {
+                "NODE_SCALING_FACTOR_UNSPECIFIED" => ::std::option::Option::Some(NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED),
+                "NODE_SCALING_FACTOR_1X" => ::std::option::Option::Some(NodeScalingFactor::NODE_SCALING_FACTOR_1X),
+                "NODE_SCALING_FACTOR_2X" => ::std::option::Option::Some(NodeScalingFactor::NODE_SCALING_FACTOR_2X),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [NodeScalingFactor] = &[
+            NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED,
+            NodeScalingFactor::NODE_SCALING_FACTOR_1X,
+            NodeScalingFactor::NODE_SCALING_FACTOR_2X,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for NodeScalingFactor {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("Cluster.NodeScalingFactor").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for NodeScalingFactor {
+        fn default() -> Self {
+            NodeScalingFactor::NODE_SCALING_FACTOR_UNSPECIFIED
+        }
+    }
+
+    impl NodeScalingFactor {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<NodeScalingFactor>("Cluster.NodeScalingFactor")
+        }
+    }
 }
 
 ///  A configuration object describing how Cloud Bigtable should treat traffic
@@ -695,9 +1638,8 @@ pub mod cluster {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct AppProfile {
     // message fields
-    ///  (`OutputOnly`)
     ///  The unique name of the app profile. Values are of the form
-    ///  `projects/<project>/instances/<instance>/appProfiles/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.
+    ///  `projects/{project}/instances/{instance}/appProfiles/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.AppProfile.name)
     pub name: ::std::string::String,
     ///  Strongly validated etag for optimistic concurrency control. Preserve the
@@ -710,11 +1652,12 @@ pub struct AppProfile {
     ///  details.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.AppProfile.etag)
     pub etag: ::std::string::String,
-    ///  Optional long form description of the use case for this AppProfile.
+    ///  Long form description of the use case for this AppProfile.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.AppProfile.description)
     pub description: ::std::string::String,
     // message oneof groups
     pub routing_policy: ::std::option::Option<app_profile::Routing_policy>,
+    pub isolation: ::std::option::Option<app_profile::Isolation>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AppProfile.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -829,9 +1772,132 @@ impl AppProfile {
         }
     }
 
+    // .google.bigtable.admin.v2.AppProfile.Priority priority = 7;
+
+    pub fn priority(&self) -> app_profile::Priority {
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::Priority(v)) => ::protobuf::EnumOrUnknown::enum_value_or_default(&v),
+            _ => app_profile::Priority::PRIORITY_UNSPECIFIED,
+        }
+    }
+
+    pub fn clear_priority(&mut self) {
+        self.isolation = ::std::option::Option::None;
+    }
+
+    pub fn has_priority(&self) -> bool {
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::Priority(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_priority(&mut self, v: app_profile::Priority) {
+        self.isolation = ::std::option::Option::Some(app_profile::Isolation::Priority(::protobuf::EnumOrUnknown::new(v)))
+    }
+
+    // .google.bigtable.admin.v2.AppProfile.StandardIsolation standard_isolation = 11;
+
+    pub fn standard_isolation(&self) -> &app_profile::StandardIsolation {
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(ref v)) => v,
+            _ => <app_profile::StandardIsolation as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_standard_isolation(&mut self) {
+        self.isolation = ::std::option::Option::None;
+    }
+
+    pub fn has_standard_isolation(&self) -> bool {
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_standard_isolation(&mut self, v: app_profile::StandardIsolation) {
+        self.isolation = ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_standard_isolation(&mut self) -> &mut app_profile::StandardIsolation {
+        if let ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(_)) = self.isolation {
+        } else {
+            self.isolation = ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(app_profile::StandardIsolation::new()));
+        }
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_standard_isolation(&mut self) -> app_profile::StandardIsolation {
+        if self.has_standard_isolation() {
+            match self.isolation.take() {
+                ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            app_profile::StandardIsolation::new()
+        }
+    }
+
+    // .google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly data_boost_isolation_read_only = 10;
+
+    pub fn data_boost_isolation_read_only(&self) -> &app_profile::DataBoostIsolationReadOnly {
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(ref v)) => v,
+            _ => <app_profile::DataBoostIsolationReadOnly as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_data_boost_isolation_read_only(&mut self) {
+        self.isolation = ::std::option::Option::None;
+    }
+
+    pub fn has_data_boost_isolation_read_only(&self) -> bool {
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_data_boost_isolation_read_only(&mut self, v: app_profile::DataBoostIsolationReadOnly) {
+        self.isolation = ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_data_boost_isolation_read_only(&mut self) -> &mut app_profile::DataBoostIsolationReadOnly {
+        if let ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(_)) = self.isolation {
+        } else {
+            self.isolation = ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(app_profile::DataBoostIsolationReadOnly::new()));
+        }
+        match self.isolation {
+            ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_data_boost_isolation_read_only(&mut self) -> app_profile::DataBoostIsolationReadOnly {
+        if self.has_data_boost_isolation_read_only() {
+            match self.isolation.take() {
+                ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            app_profile::DataBoostIsolationReadOnly::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
-        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(8);
+        let mut oneofs = ::std::vec::Vec::with_capacity(2);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
             |m: &AppProfile| { &m.name },
@@ -861,7 +1927,33 @@ impl AppProfile {
             AppProfile::mut_single_cluster_routing,
             AppProfile::set_single_cluster_routing,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_enum_accessors::<_, _>(
+            "priority",
+            |message: &AppProfile| match &message.isolation {
+                ::std::option::Option::Some(app_profile::Isolation::Priority(e)) => ::std::option::Option::Some(*e),
+                _ => ::std::option::Option::None,
+            },
+            |message: &mut AppProfile, e: ::protobuf::EnumOrUnknown<app_profile::Priority>| {
+                message.isolation = ::std::option::Option::Some(app_profile::Isolation::Priority(e));
+            },
+            app_profile::Priority::PRIORITY_UNSPECIFIED,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, app_profile::StandardIsolation>(
+            "standard_isolation",
+            AppProfile::has_standard_isolation,
+            AppProfile::standard_isolation,
+            AppProfile::mut_standard_isolation,
+            AppProfile::set_standard_isolation,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, app_profile::DataBoostIsolationReadOnly>(
+            "data_boost_isolation_read_only",
+            AppProfile::has_data_boost_isolation_read_only,
+            AppProfile::data_boost_isolation_read_only,
+            AppProfile::mut_data_boost_isolation_read_only,
+            AppProfile::set_data_boost_isolation_read_only,
+        ));
         oneofs.push(app_profile::Routing_policy::generated_oneof_descriptor_data());
+        oneofs.push(app_profile::Isolation::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AppProfile>(
             "AppProfile",
             fields,
@@ -894,6 +1986,15 @@ impl ::protobuf::Message for AppProfile {
                 },
                 50 => {
                     self.routing_policy = ::std::option::Option::Some(app_profile::Routing_policy::SingleClusterRouting(is.read_message()?));
+                },
+                56 => {
+                    self.isolation = ::std::option::Option::Some(app_profile::Isolation::Priority(is.read_enum_or_unknown()?));
+                },
+                90 => {
+                    self.isolation = ::std::option::Option::Some(app_profile::Isolation::StandardIsolation(is.read_message()?));
+                },
+                82 => {
+                    self.isolation = ::std::option::Option::Some(app_profile::Isolation::DataBoostIsolationReadOnly(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -928,6 +2029,21 @@ impl ::protobuf::Message for AppProfile {
                 },
             };
         }
+        if let ::std::option::Option::Some(ref v) = self.isolation {
+            match v {
+                &app_profile::Isolation::Priority(v) => {
+                    my_size += ::protobuf::rt::int32_size(7, v.value());
+                },
+                &app_profile::Isolation::StandardIsolation(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &app_profile::Isolation::DataBoostIsolationReadOnly(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -953,6 +2069,19 @@ impl ::protobuf::Message for AppProfile {
                 },
             };
         }
+        if let ::std::option::Option::Some(ref v) = self.isolation {
+            match v {
+                &app_profile::Isolation::Priority(v) => {
+                    os.write_enum(7, ::protobuf::EnumOrUnknown::value(&v))?;
+                },
+                &app_profile::Isolation::StandardIsolation(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(11, v, os)?;
+                },
+                &app_profile::Isolation::DataBoostIsolationReadOnly(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(10, v, os)?;
+                },
+            };
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -975,6 +2104,9 @@ impl ::protobuf::Message for AppProfile {
         self.description.clear();
         self.routing_policy = ::std::option::Option::None;
         self.routing_policy = ::std::option::Option::None;
+        self.isolation = ::std::option::Option::None;
+        self.isolation = ::std::option::Option::None;
+        self.isolation = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -984,6 +2116,7 @@ impl ::protobuf::Message for AppProfile {
             etag: ::std::string::String::new(),
             description: ::std::string::String::new(),
             routing_policy: ::std::option::Option::None,
+            isolation: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1035,13 +2168,49 @@ pub mod app_profile {
             ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Routing_policy>("routing_policy")
         }
     }
-    ///  Read/write requests may be routed to any cluster in the instance, and will
-    ///  fail over to another cluster in the event of transient errors or delays.
-    ///  Choosing this option sacrifices read-your-writes consistency to improve
-    ///  availability.
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.AppProfile.isolation)
+    pub enum Isolation {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.AppProfile.priority)
+        Priority(::protobuf::EnumOrUnknown<Priority>),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.AppProfile.standard_isolation)
+        StandardIsolation(StandardIsolation),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.AppProfile.data_boost_isolation_read_only)
+        DataBoostIsolationReadOnly(DataBoostIsolationReadOnly),
+    }
+
+    impl ::protobuf::Oneof for Isolation {
+    }
+
+    impl ::protobuf::OneofFull for Isolation {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::AppProfile as ::protobuf::MessageFull>::descriptor().oneof_by_name("isolation").unwrap()).clone()
+        }
+    }
+
+    impl Isolation {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Isolation>("isolation")
+        }
+    }
+    ///  Read/write requests are routed to the nearest cluster in the instance, and
+    ///  will fail over to the nearest cluster that is available in the event of
+    ///  transient errors or delays. Clusters in a region are considered
+    ///  equidistant. Choosing this option sacrifices read-your-writes consistency
+    ///  to improve availability.
     // @@protoc_insertion_point(message:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny)
     #[derive(PartialEq,Clone,Default,Debug)]
     pub struct MultiClusterRoutingUseAny {
+        // message fields
+        ///  The set of clusters to route to. The order is ignored; clusters will be
+        ///  tried in order of distance. If left empty, all clusters are eligible.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.cluster_ids)
+        pub cluster_ids: ::std::vec::Vec<::std::string::String>,
+        // message oneof groups
+        pub affinity: ::std::option::Option<multi_cluster_routing_use_any::Affinity>,
         // special fields
         // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -1058,9 +2227,71 @@ pub mod app_profile {
             ::std::default::Default::default()
         }
 
+        // .google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.RowAffinity row_affinity = 3;
+
+        pub fn row_affinity(&self) -> &multi_cluster_routing_use_any::RowAffinity {
+            match self.affinity {
+                ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(ref v)) => v,
+                _ => <multi_cluster_routing_use_any::RowAffinity as ::protobuf::Message>::default_instance(),
+            }
+        }
+
+        pub fn clear_row_affinity(&mut self) {
+            self.affinity = ::std::option::Option::None;
+        }
+
+        pub fn has_row_affinity(&self) -> bool {
+            match self.affinity {
+                ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_row_affinity(&mut self, v: multi_cluster_routing_use_any::RowAffinity) {
+            self.affinity = ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_row_affinity(&mut self) -> &mut multi_cluster_routing_use_any::RowAffinity {
+            if let ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(_)) = self.affinity {
+            } else {
+                self.affinity = ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(multi_cluster_routing_use_any::RowAffinity::new()));
+            }
+            match self.affinity {
+                ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_row_affinity(&mut self) -> multi_cluster_routing_use_any::RowAffinity {
+            if self.has_row_affinity() {
+                match self.affinity.take() {
+                    ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                multi_cluster_routing_use_any::RowAffinity::new()
+            }
+        }
+
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(0);
-            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(1);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "cluster_ids",
+                |m: &MultiClusterRoutingUseAny| { &m.cluster_ids },
+                |m: &mut MultiClusterRoutingUseAny| { &mut m.cluster_ids },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, multi_cluster_routing_use_any::RowAffinity>(
+                "row_affinity",
+                MultiClusterRoutingUseAny::has_row_affinity,
+                MultiClusterRoutingUseAny::row_affinity,
+                MultiClusterRoutingUseAny::mut_row_affinity,
+                MultiClusterRoutingUseAny::set_row_affinity,
+            ));
+            oneofs.push(multi_cluster_routing_use_any::Affinity::generated_oneof_descriptor_data());
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MultiClusterRoutingUseAny>(
                 "AppProfile.MultiClusterRoutingUseAny",
                 fields,
@@ -1079,6 +2310,12 @@ pub mod app_profile {
         fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
             while let Some(tag) = is.read_raw_tag_or_eof()? {
                 match tag {
+                    10 => {
+                        self.cluster_ids.push(is.read_string()?);
+                    },
+                    26 => {
+                        self.affinity = ::std::option::Option::Some(multi_cluster_routing_use_any::Affinity::RowAffinity(is.read_message()?));
+                    },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                     },
@@ -1091,12 +2328,33 @@ pub mod app_profile {
         #[allow(unused_variables)]
         fn compute_size(&self) -> u64 {
             let mut my_size = 0;
+            for value in &self.cluster_ids {
+                my_size += ::protobuf::rt::string_size(1, &value);
+            };
+            if let ::std::option::Option::Some(ref v) = self.affinity {
+                match v {
+                    &multi_cluster_routing_use_any::Affinity::RowAffinity(ref v) => {
+                        let len = v.compute_size();
+                        my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                    },
+                };
+            }
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
             self.special_fields.cached_size().set(my_size as u32);
             my_size
         }
 
         fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.cluster_ids {
+                os.write_string(1, &v)?;
+            };
+            if let ::std::option::Option::Some(ref v) = self.affinity {
+                match v {
+                    &multi_cluster_routing_use_any::Affinity::RowAffinity(ref v) => {
+                        ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+                    },
+                };
+            }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
         }
@@ -1114,11 +2372,15 @@ pub mod app_profile {
         }
 
         fn clear(&mut self) {
+            self.cluster_ids.clear();
+            self.affinity = ::std::option::Option::None;
             self.special_fields.clear();
         }
 
         fn default_instance() -> &'static MultiClusterRoutingUseAny {
             static instance: MultiClusterRoutingUseAny = MultiClusterRoutingUseAny {
+                cluster_ids: ::std::vec::Vec::new(),
+                affinity: ::std::option::Option::None,
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
@@ -1142,8 +2404,147 @@ pub mod app_profile {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 
+    /// Nested message and enums of message `MultiClusterRoutingUseAny`
+    pub mod multi_cluster_routing_use_any {
+
+        #[derive(Clone,PartialEq,Debug)]
+        #[non_exhaustive]
+        // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.affinity)
+        pub enum Affinity {
+            // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.row_affinity)
+            RowAffinity(RowAffinity),
+        }
+
+        impl ::protobuf::Oneof for Affinity {
+        }
+
+        impl ::protobuf::OneofFull for Affinity {
+            fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| <super::MultiClusterRoutingUseAny as ::protobuf::MessageFull>::descriptor().oneof_by_name("affinity").unwrap()).clone()
+            }
+        }
+
+        impl Affinity {
+            pub(in super::super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+                ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Affinity>("affinity")
+            }
+        }
+        ///  If enabled, Bigtable will route the request based on the row key of the
+        ///  request, rather than randomly. Instead, each row key will be assigned
+        ///  to a cluster, and will stick to that cluster. If clusters are added or
+        ///  removed, then this may affect which row keys stick to which clusters.
+        ///  To avoid this, users can use a cluster group to specify which clusters
+        ///  are to be used. In this case, new clusters that are not a part of the
+        ///  cluster group will not be routed to, and routing will be unaffected by
+        ///  the new cluster. Moreover, clusters specified in the cluster group cannot
+        ///  be deleted unless removed from the cluster group.
+        // @@protoc_insertion_point(message:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.RowAffinity)
+        #[derive(PartialEq,Clone,Default,Debug)]
+        pub struct RowAffinity {
+            // special fields
+            // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.RowAffinity.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a RowAffinity {
+            fn default() -> &'a RowAffinity {
+                <RowAffinity as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl RowAffinity {
+            pub fn new() -> RowAffinity {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(0);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RowAffinity>(
+                    "AppProfile.MultiClusterRoutingUseAny.RowAffinity",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for RowAffinity {
+            const NAME: &'static str = "RowAffinity";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> RowAffinity {
+                RowAffinity::new()
+            }
+
+            fn clear(&mut self) {
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static RowAffinity {
+                static instance: RowAffinity = RowAffinity {
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for RowAffinity {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("AppProfile.MultiClusterRoutingUseAny.RowAffinity").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for RowAffinity {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for RowAffinity {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+    }
+
     ///  Unconditionally routes all read/write requests to a specific cluster.
-    ///  This option preserves read-your-writes consistency, but does not improve
+    ///  This option preserves read-your-writes consistency but does not improve
     ///  availability.
     // @@protoc_insertion_point(message:google.bigtable.admin.v2.AppProfile.SingleClusterRouting)
     #[derive(PartialEq,Clone,Default,Debug)]
@@ -1288,264 +2689,1291 @@ pub mod app_profile {
     impl ::protobuf::reflect::ProtobufValue for SingleClusterRouting {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
+
+    ///  Standard options for isolating this app profile's traffic from other use
+    ///  cases.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.AppProfile.StandardIsolation)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct StandardIsolation {
+        // message fields
+        ///  The priority of requests sent using this app profile.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AppProfile.StandardIsolation.priority)
+        pub priority: ::protobuf::EnumOrUnknown<Priority>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AppProfile.StandardIsolation.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a StandardIsolation {
+        fn default() -> &'a StandardIsolation {
+            <StandardIsolation as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl StandardIsolation {
+        pub fn new() -> StandardIsolation {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "priority",
+                |m: &StandardIsolation| { &m.priority },
+                |m: &mut StandardIsolation| { &mut m.priority },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StandardIsolation>(
+                "AppProfile.StandardIsolation",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for StandardIsolation {
+        const NAME: &'static str = "StandardIsolation";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.priority = is.read_enum_or_unknown()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.priority != ::protobuf::EnumOrUnknown::new(Priority::PRIORITY_UNSPECIFIED) {
+                my_size += ::protobuf::rt::int32_size(1, self.priority.value());
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.priority != ::protobuf::EnumOrUnknown::new(Priority::PRIORITY_UNSPECIFIED) {
+                os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.priority))?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> StandardIsolation {
+            StandardIsolation::new()
+        }
+
+        fn clear(&mut self) {
+            self.priority = ::protobuf::EnumOrUnknown::new(Priority::PRIORITY_UNSPECIFIED);
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static StandardIsolation {
+            static instance: StandardIsolation = StandardIsolation {
+                priority: ::protobuf::EnumOrUnknown::from_i32(0),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for StandardIsolation {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("AppProfile.StandardIsolation").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for StandardIsolation {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for StandardIsolation {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  Data Boost is a serverless compute capability that lets you run
+    ///  high-throughput read jobs on your Bigtable data, without impacting the
+    ///  performance of the clusters that handle your application traffic.
+    ///  Currently, Data Boost exclusively supports read-only use-cases with
+    ///  single-cluster routing.
+    ///
+    ///  Data Boost reads are only guaranteed to see the results of writes that
+    ///  were written at least 30 minutes ago. This means newly written values may
+    ///  not become visible for up to 30m, and also means that old values may
+    ///  remain visible for up to 30m after being deleted or overwritten. To
+    ///  mitigate the staleness of the data, users may either wait 30m, or use
+    ///  CheckConsistency.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct DataBoostIsolationReadOnly {
+        // message fields
+        ///  The Compute Billing Owner for this Data Boost App Profile.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly.compute_billing_owner)
+        pub compute_billing_owner: ::std::option::Option<::protobuf::EnumOrUnknown<data_boost_isolation_read_only::ComputeBillingOwner>>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a DataBoostIsolationReadOnly {
+        fn default() -> &'a DataBoostIsolationReadOnly {
+            <DataBoostIsolationReadOnly as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl DataBoostIsolationReadOnly {
+        pub fn new() -> DataBoostIsolationReadOnly {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "compute_billing_owner",
+                |m: &DataBoostIsolationReadOnly| { &m.compute_billing_owner },
+                |m: &mut DataBoostIsolationReadOnly| { &mut m.compute_billing_owner },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DataBoostIsolationReadOnly>(
+                "AppProfile.DataBoostIsolationReadOnly",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for DataBoostIsolationReadOnly {
+        const NAME: &'static str = "DataBoostIsolationReadOnly";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.compute_billing_owner = ::std::option::Option::Some(is.read_enum_or_unknown()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.compute_billing_owner {
+                my_size += ::protobuf::rt::int32_size(1, v.value());
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.compute_billing_owner {
+                os.write_enum(1, ::protobuf::EnumOrUnknown::value(&v))?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> DataBoostIsolationReadOnly {
+            DataBoostIsolationReadOnly::new()
+        }
+
+        fn clear(&mut self) {
+            self.compute_billing_owner = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static DataBoostIsolationReadOnly {
+            static instance: DataBoostIsolationReadOnly = DataBoostIsolationReadOnly {
+                compute_billing_owner: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for DataBoostIsolationReadOnly {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("AppProfile.DataBoostIsolationReadOnly").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for DataBoostIsolationReadOnly {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for DataBoostIsolationReadOnly {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `DataBoostIsolationReadOnly`
+    pub mod data_boost_isolation_read_only {
+        ///  Compute Billing Owner specifies how usage should be accounted when using
+        ///  Data Boost. Compute Billing Owner also configures which Cloud Project is
+        ///  charged for relevant quota.
+        #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+        // @@protoc_insertion_point(enum:google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly.ComputeBillingOwner)
+        pub enum ComputeBillingOwner {
+            // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly.ComputeBillingOwner.COMPUTE_BILLING_OWNER_UNSPECIFIED)
+            COMPUTE_BILLING_OWNER_UNSPECIFIED = 0,
+            // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AppProfile.DataBoostIsolationReadOnly.ComputeBillingOwner.HOST_PAYS)
+            HOST_PAYS = 1,
+        }
+
+        impl ::protobuf::Enum for ComputeBillingOwner {
+            const NAME: &'static str = "ComputeBillingOwner";
+
+            fn value(&self) -> i32 {
+                *self as i32
+            }
+
+            fn from_i32(value: i32) -> ::std::option::Option<ComputeBillingOwner> {
+                match value {
+                    0 => ::std::option::Option::Some(ComputeBillingOwner::COMPUTE_BILLING_OWNER_UNSPECIFIED),
+                    1 => ::std::option::Option::Some(ComputeBillingOwner::HOST_PAYS),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            fn from_str(str: &str) -> ::std::option::Option<ComputeBillingOwner> {
+                match str {
+                    "COMPUTE_BILLING_OWNER_UNSPECIFIED" => ::std::option::Option::Some(ComputeBillingOwner::COMPUTE_BILLING_OWNER_UNSPECIFIED),
+                    "HOST_PAYS" => ::std::option::Option::Some(ComputeBillingOwner::HOST_PAYS),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            const VALUES: &'static [ComputeBillingOwner] = &[
+                ComputeBillingOwner::COMPUTE_BILLING_OWNER_UNSPECIFIED,
+                ComputeBillingOwner::HOST_PAYS,
+            ];
+        }
+
+        impl ::protobuf::EnumFull for ComputeBillingOwner {
+            fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().enum_by_package_relative_name("AppProfile.DataBoostIsolationReadOnly.ComputeBillingOwner").unwrap()).clone()
+            }
+
+            fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+                let index = *self as usize;
+                Self::enum_descriptor().value_by_index(index)
+            }
+        }
+
+        impl ::std::default::Default for ComputeBillingOwner {
+            fn default() -> Self {
+                ComputeBillingOwner::COMPUTE_BILLING_OWNER_UNSPECIFIED
+            }
+        }
+
+        impl ComputeBillingOwner {
+            pub(in super::super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+                ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ComputeBillingOwner>("AppProfile.DataBoostIsolationReadOnly.ComputeBillingOwner")
+            }
+        }
+    }
+
+    ///  Possible priorities for an app profile. Note that higher priority writes
+    ///  can sometimes queue behind lower priority writes to the same tablet, as
+    ///  writes must be strictly sequenced in the durability log.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.admin.v2.AppProfile.Priority)
+    pub enum Priority {
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AppProfile.Priority.PRIORITY_UNSPECIFIED)
+        PRIORITY_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AppProfile.Priority.PRIORITY_LOW)
+        PRIORITY_LOW = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AppProfile.Priority.PRIORITY_MEDIUM)
+        PRIORITY_MEDIUM = 2,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AppProfile.Priority.PRIORITY_HIGH)
+        PRIORITY_HIGH = 3,
+    }
+
+    impl ::protobuf::Enum for Priority {
+        const NAME: &'static str = "Priority";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<Priority> {
+            match value {
+                0 => ::std::option::Option::Some(Priority::PRIORITY_UNSPECIFIED),
+                1 => ::std::option::Option::Some(Priority::PRIORITY_LOW),
+                2 => ::std::option::Option::Some(Priority::PRIORITY_MEDIUM),
+                3 => ::std::option::Option::Some(Priority::PRIORITY_HIGH),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<Priority> {
+            match str {
+                "PRIORITY_UNSPECIFIED" => ::std::option::Option::Some(Priority::PRIORITY_UNSPECIFIED),
+                "PRIORITY_LOW" => ::std::option::Option::Some(Priority::PRIORITY_LOW),
+                "PRIORITY_MEDIUM" => ::std::option::Option::Some(Priority::PRIORITY_MEDIUM),
+                "PRIORITY_HIGH" => ::std::option::Option::Some(Priority::PRIORITY_HIGH),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [Priority] = &[
+            Priority::PRIORITY_UNSPECIFIED,
+            Priority::PRIORITY_LOW,
+            Priority::PRIORITY_MEDIUM,
+            Priority::PRIORITY_HIGH,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for Priority {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("AppProfile.Priority").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for Priority {
+        fn default() -> Self {
+            Priority::PRIORITY_UNSPECIFIED
+        }
+    }
+
+    impl Priority {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<Priority>("AppProfile.Priority")
+        }
+    }
+}
+
+///  A tablet is a defined by a start and end key and is explained in
+///  https://cloud.google.com/bigtable/docs/overview#architecture and
+///  https://cloud.google.com/bigtable/docs/performance#optimization.
+///  A Hot tablet is a tablet that exhibits high average cpu usage during the time
+///  interval from start time to end time.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.HotTablet)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct HotTablet {
+    // message fields
+    ///  The unique name of the hot tablet. Values are of the form
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/hotTablets/[a-zA-Z0-9_-]*`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.name)
+    pub name: ::std::string::String,
+    ///  Name of the table that contains the tablet. Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.table_name)
+    pub table_name: ::std::string::String,
+    ///  Output only. The start time of the hot tablet.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. The end time of the hot tablet.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Tablet Start Key (inclusive).
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.start_key)
+    pub start_key: ::std::string::String,
+    ///  Tablet End Key (inclusive).
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.end_key)
+    pub end_key: ::std::string::String,
+    ///  Output only. The average CPU usage spent by a node on this tablet over the
+    ///  start_time to end_time time range. The percentage is the amount of CPU used
+    ///  by the node to serve the tablet, from 0% (tablet was not interacted with)
+    ///  to 100% (the node spent all cycles serving the hot tablet).
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.HotTablet.node_cpu_usage_percent)
+    pub node_cpu_usage_percent: f32,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.HotTablet.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a HotTablet {
+    fn default() -> &'a HotTablet {
+        <HotTablet as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl HotTablet {
+    pub fn new() -> HotTablet {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &HotTablet| { &m.name },
+            |m: &mut HotTablet| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "table_name",
+            |m: &HotTablet| { &m.table_name },
+            |m: &mut HotTablet| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &HotTablet| { &m.start_time },
+            |m: &mut HotTablet| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &HotTablet| { &m.end_time },
+            |m: &mut HotTablet| { &mut m.end_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "start_key",
+            |m: &HotTablet| { &m.start_key },
+            |m: &mut HotTablet| { &mut m.start_key },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "end_key",
+            |m: &HotTablet| { &m.end_key },
+            |m: &mut HotTablet| { &mut m.end_key },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "node_cpu_usage_percent",
+            |m: &HotTablet| { &m.node_cpu_usage_percent },
+            |m: &mut HotTablet| { &mut m.node_cpu_usage_percent },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<HotTablet>(
+            "HotTablet",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for HotTablet {
+    const NAME: &'static str = "HotTablet";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.table_name = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                42 => {
+                    self.start_key = is.read_string()?;
+                },
+                50 => {
+                    self.end_key = is.read_string()?;
+                },
+                61 => {
+                    self.node_cpu_usage_percent = is.read_float()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.table_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.table_name);
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.start_key);
+        }
+        if !self.end_key.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.end_key);
+        }
+        if self.node_cpu_usage_percent != 0. {
+            my_size += 1 + 4;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.table_name.is_empty() {
+            os.write_string(2, &self.table_name)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if !self.start_key.is_empty() {
+            os.write_string(5, &self.start_key)?;
+        }
+        if !self.end_key.is_empty() {
+            os.write_string(6, &self.end_key)?;
+        }
+        if self.node_cpu_usage_percent != 0. {
+            os.write_float(7, self.node_cpu_usage_percent)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> HotTablet {
+        HotTablet::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.table_name.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.start_key.clear();
+        self.end_key.clear();
+        self.node_cpu_usage_percent = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static HotTablet {
+        static instance: HotTablet = HotTablet {
+            name: ::std::string::String::new(),
+            table_name: ::std::string::String::new(),
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            start_key: ::std::string::String::new(),
+            end_key: ::std::string::String::new(),
+            node_cpu_usage_percent: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for HotTablet {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("HotTablet").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for HotTablet {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for HotTablet {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n'google/bigtable/admin/v2/instance.proto\x12\x18google.bigtable.admin.\
-    v2\x1a\x1cgoogle/api/annotations.proto\x1a%google/bigtable/admin/v2/comm\
-    on.proto\"\xb7\x03\n\x08Instance\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12!\n\x0cdisplay_name\x18\x02\x20\x01(\tR\x0bdisplayName\x12>\
-    \n\x05state\x18\x03\x20\x01(\x0e2(.google.bigtable.admin.v2.Instance.Sta\
-    teR\x05state\x12;\n\x04type\x18\x04\x20\x01(\x0e2'.google.bigtable.admin\
-    .v2.Instance.TypeR\x04type\x12F\n\x06labels\x18\x05\x20\x03(\x0b2..googl\
-    e.bigtable.admin.v2.Instance.LabelsEntryR\x06labels\x1a9\n\x0bLabelsEntr\
-    y\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\tR\x05value:\x028\x01\"5\n\x05State\x12\x13\n\x0fSTATE_NOT_KNO\
-    WN\x10\0\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08CREATING\x10\x02\"=\n\x04\
-    Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\0\x12\x0e\n\nPRODUCTION\x10\x01\
-    \x12\x0f\n\x0bDEVELOPMENT\x10\x02\"\xc5\x02\n\x07Cluster\x12\x12\n\x04na\
-    me\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08location\x18\x02\x20\x01(\tR\
-    \x08location\x12=\n\x05state\x18\x03\x20\x01(\x0e2'.google.bigtable.admi\
-    n.v2.Cluster.StateR\x05state\x12\x1f\n\x0bserve_nodes\x18\x04\x20\x01(\
-    \x05R\nserveNodes\x12W\n\x14default_storage_type\x18\x05\x20\x01(\x0e2%.\
-    google.bigtable.admin.v2.StorageTypeR\x12defaultStorageType\"Q\n\x05Stat\
-    e\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\t\n\x05READY\x10\x01\x12\x0c\n\
-    \x08CREATING\x10\x02\x12\x0c\n\x08RESIZING\x10\x03\x12\x0c\n\x08DISABLED\
-    \x10\x04\"\xf2\x03\n\nAppProfile\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x12\n\x04etag\x18\x02\x20\x01(\tR\x04etag\x12\x20\n\x0bdesc\
-    ription\x18\x03\x20\x01(\tR\x0bdescription\x12\x82\x01\n\x1dmulti_cluste\
-    r_routing_use_any\x18\x05\x20\x01(\x0b2>.google.bigtable.admin.v2.AppPro\
-    file.MultiClusterRoutingUseAnyH\0R\x19multiClusterRoutingUseAny\x12q\n\
-    \x16single_cluster_routing\x18\x06\x20\x01(\x0b29.google.bigtable.admin.\
-    v2.AppProfile.SingleClusterRoutingH\0R\x14singleClusterRouting\x1a\x1b\n\
-    \x19MultiClusterRoutingUseAny\x1as\n\x14SingleClusterRouting\x12\x1d\n\n\
-    cluster_id\x18\x01\x20\x01(\tR\tclusterId\x12<\n\x1aallow_transactional_\
-    writes\x18\x02\x20\x01(\x08R\x18allowTransactionalWritesB\x10\n\x0erouti\
-    ng_policyB\xb0\x01\n\x1ccom.google.bigtable.admin.v2B\rInstanceProtoP\
-    \x01Z=google.golang.org/genproto/googleapis/bigtable/admin/v2;admin\xaa\
-    \x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\Cloud\\Bigtabl\
-    e\\Admin\\V2J\xc5?\n\x07\x12\x05\x0f\0\xcc\x01\x01\n\xbe\x04\n\x01\x0c\
-    \x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202018\x20Google\x20LLC.\n\n\
-    \x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20\
-    (the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20e\
-    xcept\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20\
-    obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\
-    \x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\
-    \x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20s\
-    oftware\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\
-    \x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\
-    \x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20impli\
-    ed.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20\
-    governing\x20permissions\x20and\n\x20limitations\x20under\x20the\x20Lice\
-    nse.\n\n\n\x08\n\x01\x02\x12\x03\x11\0!\n\t\n\x02\x03\0\x12\x03\x13\0&\n\
-    \t\n\x02\x03\x01\x12\x03\x14\0/\n\x08\n\x01\x08\x12\x03\x16\0;\n\t\n\x02\
-    \x08%\x12\x03\x16\0;\n\x08\n\x01\x08\x12\x03\x17\0T\n\t\n\x02\x08\x0b\
-    \x12\x03\x17\0T\n\x08\n\x01\x08\x12\x03\x18\0\"\n\t\n\x02\x08\n\x12\x03\
-    \x18\0\"\n\x08\n\x01\x08\x12\x03\x19\0.\n\t\n\x02\x08\x08\x12\x03\x19\0.\
-    \n\x08\n\x01\x08\x12\x03\x1a\05\n\t\n\x02\x08\x01\x12\x03\x1a\05\n\x08\n\
-    \x01\x08\x12\x03\x1b\0<\n\t\n\x02\x08)\x12\x03\x1b\0<\n\xd6\x01\n\x02\
-    \x04\0\x12\x04!\0b\x01\x1a\xc9\x01\x20A\x20collection\x20of\x20Bigtable\
-    \x20[Tables][google.bigtable.admin.v2.Table]\x20and\n\x20the\x20resource\
-    s\x20that\x20serve\x20them.\n\x20All\x20tables\x20in\x20an\x20instance\
-    \x20are\x20served\x20from\x20a\x20single\n\x20[Cluster][google.bigtable.\
-    admin.v2.Cluster].\n\n\n\n\x03\x04\0\x01\x12\x03!\x08\x10\n/\n\x04\x04\0\
-    \x04\0\x12\x04#\x02.\x03\x1a!\x20Possible\x20states\x20of\x20an\x20insta\
-    nce.\n\n\x0c\n\x05\x04\0\x04\0\x01\x12\x03#\x07\x0c\nC\n\x06\x04\0\x04\0\
-    \x02\0\x12\x03%\x04\x18\x1a4\x20The\x20state\x20of\x20the\x20instance\
+    v2\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.pro\
+    to\x1a%google/bigtable/admin/v2/common.proto\x1a\x1fgoogle/protobuf/time\
+    stamp.proto\"\x94\x05\n\x08Instance\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12&\n\x0cdisplay_name\x18\x02\x20\x01(\tR\x0bdisplayNameB\x03\
+    \xe0A\x02\x12>\n\x05state\x18\x03\x20\x01(\x0e2(.google.bigtable.admin.v\
+    2.Instance.StateR\x05state\x12;\n\x04type\x18\x04\x20\x01(\x0e2'.google.\
+    bigtable.admin.v2.Instance.TypeR\x04type\x12F\n\x06labels\x18\x05\x20\
+    \x03(\x0b2..google.bigtable.admin.v2.Instance.LabelsEntryR\x06labels\x12\
+    @\n\x0bcreate_time\x18\x07\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
+    \ncreateTimeB\x03\xe0A\x03\x12-\n\rsatisfies_pzs\x18\x08\x20\x01(\x08H\0\
+    R\x0csatisfiesPzsB\x03\xe0A\x03\x88\x01\x01\x1a9\n\x0bLabelsEntry\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\
+    \x01(\tR\x05value:\x028\x01\"5\n\x05State\x12\x13\n\x0fSTATE_NOT_KNOWN\
+    \x10\0\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08CREATING\x10\x02\"=\n\x04Ty\
+    pe\x12\x14\n\x10TYPE_UNSPECIFIED\x10\0\x12\x0e\n\nPRODUCTION\x10\x01\x12\
+    \x0f\n\x0bDEVELOPMENT\x10\x02B\x10\n\x0e_satisfies_pzs:S\xeaAP\n%bigtabl\
+    eadmin.googleapis.com/Instance\x12'projects/{project}/instances/{instanc\
+    e}\"\x94\x01\n\x12AutoscalingTargets\x126\n\x17cpu_utilization_percent\
+    \x18\x02\x20\x01(\x05R\x15cpuUtilizationPercent\x12F\n\x20storage_utiliz\
+    ation_gib_per_node\x18\x03\x20\x01(\x05R\x1cstorageUtilizationGibPerNode\
+    \"m\n\x11AutoscalingLimits\x12+\n\x0fmin_serve_nodes\x18\x01\x20\x01(\
+    \x05R\rminServeNodesB\x03\xe0A\x02\x12+\n\x0fmax_serve_nodes\x18\x02\x20\
+    \x01(\x05R\rmaxServeNodesB\x03\xe0A\x02\"\xd3\n\n\x07Cluster\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12E\n\x08location\x18\x02\x20\x01(\
+    \tR\x08locationB)\xfaA#\n!locations.googleapis.com/Location\xe0A\x05\x12\
+    B\n\x05state\x18\x03\x20\x01(\x0e2'.google.bigtable.admin.v2.Cluster.Sta\
+    teR\x05stateB\x03\xe0A\x03\x12\x1f\n\x0bserve_nodes\x18\x04\x20\x01(\x05\
+    R\nserveNodes\x12h\n\x13node_scaling_factor\x18\t\x20\x01(\x0e23.google.\
+    bigtable.admin.v2.Cluster.NodeScalingFactorR\x11nodeScalingFactorB\x03\
+    \xe0A\x05\x12X\n\x0ecluster_config\x18\x07\x20\x01(\x0b2/.google.bigtabl\
+    e.admin.v2.Cluster.ClusterConfigH\0R\rclusterConfig\x12\\\n\x14default_s\
+    torage_type\x18\x05\x20\x01(\x0e2%.google.bigtable.admin.v2.StorageTypeR\
+    \x12defaultStorageTypeB\x03\xe0A\x05\x12d\n\x11encryption_config\x18\x06\
+    \x20\x01(\x0b22.google.bigtable.admin.v2.Cluster.EncryptionConfigR\x10en\
+    cryptionConfigB\x03\xe0A\x05\x1a\xdf\x01\n\x18ClusterAutoscalingConfig\
+    \x12_\n\x12autoscaling_limits\x18\x01\x20\x01(\x0b2+.google.bigtable.adm\
+    in.v2.AutoscalingLimitsR\x11autoscalingLimitsB\x03\xe0A\x02\x12b\n\x13au\
+    toscaling_targets\x18\x02\x20\x01(\x0b2,.google.bigtable.admin.v2.Autosc\
+    alingTargetsR\x12autoscalingTargetsB\x03\xe0A\x02\x1a\x89\x01\n\rCluster\
+    Config\x12x\n\x1acluster_autoscaling_config\x18\x01\x20\x01(\x0b2:.googl\
+    e.bigtable.admin.v2.Cluster.ClusterAutoscalingConfigR\x18clusterAutoscal\
+    ingConfig\x1a\\\n\x10EncryptionConfig\x12H\n\x0ckms_key_name\x18\x01\x20\
+    \x01(\tR\nkmsKeyNameB&\xfaA#\n!cloudkms.googleapis.com/CryptoKey\"Q\n\
+    \x05State\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\t\n\x05READY\x10\x01\
+    \x12\x0c\n\x08CREATING\x10\x02\x12\x0c\n\x08RESIZING\x10\x03\x12\x0c\n\
+    \x08DISABLED\x10\x04\"p\n\x11NodeScalingFactor\x12#\n\x1fNODE_SCALING_FA\
+    CTOR_UNSPECIFIED\x10\0\x12\x1a\n\x16NODE_SCALING_FACTOR_1X\x10\x01\x12\
+    \x1a\n\x16NODE_SCALING_FACTOR_2X\x10\x02B\x08\n\x06config:e\xeaAb\n$bigt\
+    ableadmin.googleapis.com/Cluster\x12:projects/{project}/instances/{insta\
+    nce}/clusters/{cluster}\"\xb5\x0c\n\nAppProfile\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12\x12\n\x04etag\x18\x02\x20\x01(\tR\x04etag\
+    \x12\x20\n\x0bdescription\x18\x03\x20\x01(\tR\x0bdescription\x12\x82\x01\
+    \n\x1dmulti_cluster_routing_use_any\x18\x05\x20\x01(\x0b2>.google.bigtab\
+    le.admin.v2.AppProfile.MultiClusterRoutingUseAnyH\0R\x19multiClusterRout\
+    ingUseAny\x12q\n\x16single_cluster_routing\x18\x06\x20\x01(\x0b29.google\
+    .bigtable.admin.v2.AppProfile.SingleClusterRoutingH\0R\x14singleClusterR\
+    outing\x12O\n\x08priority\x18\x07\x20\x01(\x0e2-.google.bigtable.admin.v\
+    2.AppProfile.PriorityH\x01R\x08priorityB\x02\x18\x01\x12g\n\x12standard_\
+    isolation\x18\x0b\x20\x01(\x0b26.google.bigtable.admin.v2.AppProfile.Sta\
+    ndardIsolationH\x01R\x11standardIsolation\x12\x85\x01\n\x1edata_boost_is\
+    olation_read_only\x18\n\x20\x01(\x0b2?.google.bigtable.admin.v2.AppProfi\
+    le.DataBoostIsolationReadOnlyH\x01R\x1adataBoostIsolationReadOnly\x1a\
+    \xc8\x01\n\x19MultiClusterRoutingUseAny\x12\x1f\n\x0bcluster_ids\x18\x01\
+    \x20\x03(\tR\nclusterIds\x12o\n\x0crow_affinity\x18\x03\x20\x01(\x0b2J.g\
+    oogle.bigtable.admin.v2.AppProfile.MultiClusterRoutingUseAny.RowAffinity\
+    H\0R\x0browAffinity\x1a\r\n\x0bRowAffinityB\n\n\x08affinity\x1as\n\x14Si\
+    ngleClusterRouting\x12\x1d\n\ncluster_id\x18\x01\x20\x01(\tR\tclusterId\
+    \x12<\n\x1aallow_transactional_writes\x18\x02\x20\x01(\x08R\x18allowTran\
+    sactionalWrites\x1a^\n\x11StandardIsolation\x12I\n\x08priority\x18\x01\
+    \x20\x01(\x0e2-.google.bigtable.admin.v2.AppProfile.PriorityR\x08priorit\
+    y\x1a\x92\x02\n\x1aDataBoostIsolationReadOnly\x12\x8c\x01\n\x15compute_b\
+    illing_owner\x18\x01\x20\x01(\x0e2S.google.bigtable.admin.v2.AppProfile.\
+    DataBoostIsolationReadOnly.ComputeBillingOwnerH\0R\x13computeBillingOwne\
+    r\x88\x01\x01\"K\n\x13ComputeBillingOwner\x12%\n!COMPUTE_BILLING_OWNER_U\
+    NSPECIFIED\x10\0\x12\r\n\tHOST_PAYS\x10\x01B\x18\n\x16_compute_billing_o\
+    wner\"^\n\x08Priority\x12\x18\n\x14PRIORITY_UNSPECIFIED\x10\0\x12\x10\n\
+    \x0cPRIORITY_LOW\x10\x01\x12\x13\n\x0fPRIORITY_MEDIUM\x10\x02\x12\x11\n\
+    \rPRIORITY_HIGH\x10\x03B\x10\n\x0erouting_policyB\x0b\n\tisolation:o\xea\
+    Al\n'bigtableadmin.googleapis.com/AppProfile\x12Aprojects/{project}/inst\
+    ances/{instance}/appProfiles/{app_profile}\"\xd4\x03\n\tHotTablet\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12F\n\ntable_name\x18\x02\
+    \x20\x01(\tR\ttableNameB'\xfaA$\n\"bigtableadmin.googleapis.com/Table\
+    \x12>\n\nstart_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
+    \tstartTimeB\x03\xe0A\x03\x12:\n\x08end_time\x18\x04\x20\x01(\x0b2\x1a.g\
+    oogle.protobuf.TimestampR\x07endTimeB\x03\xe0A\x03\x12\x1b\n\tstart_key\
+    \x18\x05\x20\x01(\tR\x08startKey\x12\x17\n\x07end_key\x18\x06\x20\x01(\t\
+    R\x06endKey\x128\n\x16node_cpu_usage_percent\x18\x07\x20\x01(\x02R\x13no\
+    deCpuUsagePercentB\x03\xe0A\x03:\x7f\xeaA|\n&bigtableadmin.googleapis.co\
+    m/HotTablet\x12Rprojects/{project}/instances/{instance}/clusters/{cluste\
+    r}/hotTablets/{hot_tablet}B\xcb\x02\n\x1ccom.google.bigtable.admin.v2B\r\
+    InstanceProtoP\x01Z8cloud.google.com/go/bigtable/admin/apiv2/adminpb;adm\
+    inpb\xaa\x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\Cloud\
+    \\Bigtable\\Admin\\V2\xea\x02\"Google::Cloud::Bigtable::Admin::V2\xeaAx\
+    \n!cloudkms.googleapis.com/CryptoKey\x12Sprojects/{project}/locations/{l\
+    ocation}/keyRings/{key_ring}/cryptoKeys/{crypto_key}J\xf4\x8e\x01\n\x07\
+    \x12\x05\x0e\0\xc9\x03\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\
+    \x04\x20Copyright\x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\x20t\
+    he\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\
+    \x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20complian\
+    ce\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20\
+    of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/\
+    licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20la\
+    w\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
+    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
+    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
+    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
+    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
+    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\
+    \x12\x03\x10\0!\n\t\n\x02\x03\0\x12\x03\x12\0)\n\t\n\x02\x03\x01\x12\x03\
+    \x13\0#\n\t\n\x02\x03\x02\x12\x03\x14\0/\n\t\n\x02\x03\x03\x12\x03\x15\0\
+    )\n\x08\n\x01\x08\x12\x03\x17\0;\n\t\n\x02\x08%\x12\x03\x17\0;\n\x08\n\
+    \x01\x08\x12\x03\x18\0O\n\t\n\x02\x08\x0b\x12\x03\x18\0O\n\x08\n\x01\x08\
+    \x12\x03\x19\0\"\n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\x01\x08\x12\x03\
+    \x1a\0.\n\t\n\x02\x08\x08\x12\x03\x1a\0.\n\x08\n\x01\x08\x12\x03\x1b\05\
+    \n\t\n\x02\x08\x01\x12\x03\x1b\05\n\x08\n\x01\x08\x12\x03\x1c\0<\n\t\n\
+    \x02\x08)\x12\x03\x1c\0<\n\x08\n\x01\x08\x12\x03\x1d\0;\n\t\n\x02\x08-\
+    \x12\x03\x1d\0;\n\t\n\x01\x08\x12\x04\x1e\0!\x02\n\x0c\n\x04\x08\x9d\x08\
+    \0\x12\x04\x1e\0!\x02\n\xe2\x01\n\x02\x04\0\x12\x04'\0p\x01\x1a\xd5\x01\
+    \x20A\x20collection\x20of\x20Bigtable\x20[Tables][google.bigtable.admin.\
+    v2.Table]\x20and\n\x20the\x20resources\x20that\x20serve\x20them.\n\x20Al\
+    l\x20tables\x20in\x20an\x20instance\x20are\x20served\x20from\x20all\n\
+    \x20[Clusters][google.bigtable.admin.v2.Cluster]\x20in\x20the\x20instanc\
+    e.\n\n\n\n\x03\x04\0\x01\x12\x03'\x08\x10\n\x0b\n\x03\x04\0\x07\x12\x04(\
+    \x02+\x04\n\r\n\x05\x04\0\x07\x9d\x08\x12\x04(\x02+\x04\n/\n\x04\x04\0\
+    \x04\0\x12\x04.\x029\x03\x1a!\x20Possible\x20states\x20of\x20an\x20insta\
+    nce.\n\n\x0c\n\x05\x04\0\x04\0\x01\x12\x03.\x07\x0c\nC\n\x06\x04\0\x04\0\
+    \x02\0\x12\x030\x04\x18\x1a4\x20The\x20state\x20of\x20the\x20instance\
     \x20could\x20not\x20be\x20determined.\n\n\x0e\n\x07\x04\0\x04\0\x02\0\
-    \x01\x12\x03%\x04\x13\n\x0e\n\x07\x04\0\x04\0\x02\0\x02\x12\x03%\x16\x17\
-    \nb\n\x06\x04\0\x04\0\x02\x01\x12\x03)\x04\x0e\x1aS\x20The\x20instance\
+    \x01\x12\x030\x04\x13\n\x0e\n\x07\x04\0\x04\0\x02\0\x02\x12\x030\x16\x17\
+    \nb\n\x06\x04\0\x04\0\x02\x01\x12\x034\x04\x0e\x1aS\x20The\x20instance\
     \x20has\x20been\x20successfully\x20created\x20and\x20can\x20serve\x20req\
     uests\n\x20to\x20its\x20tables.\n\n\x0e\n\x07\x04\0\x04\0\x02\x01\x01\
-    \x12\x03)\x04\t\n\x0e\n\x07\x04\0\x04\0\x02\x01\x02\x12\x03)\x0c\r\n|\n\
-    \x06\x04\0\x04\0\x02\x02\x12\x03-\x04\x11\x1am\x20The\x20instance\x20is\
+    \x12\x034\x04\t\n\x0e\n\x07\x04\0\x04\0\x02\x01\x02\x12\x034\x0c\r\n|\n\
+    \x06\x04\0\x04\0\x02\x02\x12\x038\x04\x11\x1am\x20The\x20instance\x20is\
     \x20currently\x20being\x20created,\x20and\x20may\x20be\x20destroyed\n\
     \x20if\x20the\x20creation\x20process\x20encounters\x20an\x20error.\n\n\
-    \x0e\n\x07\x04\0\x04\0\x02\x02\x01\x12\x03-\x04\x0c\n\x0e\n\x07\x04\0\
-    \x04\0\x02\x02\x02\x12\x03-\x0f\x10\n)\n\x04\x04\0\x04\x01\x12\x041\x02C\
+    \x0e\n\x07\x04\0\x04\0\x02\x02\x01\x12\x038\x04\x0c\n\x0e\n\x07\x04\0\
+    \x04\0\x02\x02\x02\x12\x038\x0f\x10\n)\n\x04\x04\0\x04\x01\x12\x04<\x02I\
     \x03\x1a\x1b\x20The\x20type\x20of\x20the\x20instance.\n\n\x0c\n\x05\x04\
-    \0\x04\x01\x01\x12\x031\x07\x0b\n\xca\x01\n\x06\x04\0\x04\x01\x02\0\x12\
-    \x035\x04\x19\x1a\xba\x01\x20The\x20type\x20of\x20the\x20instance\x20is\
+    \0\x04\x01\x01\x12\x03<\x07\x0b\n\xca\x01\n\x06\x04\0\x04\x01\x02\0\x12\
+    \x03@\x04\x19\x1a\xba\x01\x20The\x20type\x20of\x20the\x20instance\x20is\
     \x20unspecified.\x20If\x20set\x20when\x20creating\x20an\n\x20instance,\
     \x20a\x20`PRODUCTION`\x20instance\x20will\x20be\x20created.\x20If\x20set\
     \x20when\x20updating\n\x20an\x20instance,\x20the\x20type\x20will\x20be\
-    \x20left\x20unchanged.\n\n\x0e\n\x07\x04\0\x04\x01\x02\0\x01\x12\x035\
-    \x04\x14\n\x0e\n\x07\x04\0\x04\x01\x02\0\x02\x12\x035\x17\x18\na\n\x06\
-    \x04\0\x04\x01\x02\x01\x12\x039\x04\x13\x1aR\x20An\x20instance\x20meant\
+    \x20left\x20unchanged.\n\n\x0e\n\x07\x04\0\x04\x01\x02\0\x01\x12\x03@\
+    \x04\x14\n\x0e\n\x07\x04\0\x04\x01\x02\0\x02\x12\x03@\x17\x18\na\n\x06\
+    \x04\0\x04\x01\x02\x01\x12\x03D\x04\x13\x1aR\x20An\x20instance\x20meant\
     \x20for\x20production\x20use.\x20`serve_nodes`\x20must\x20be\x20set\n\
     \x20on\x20the\x20cluster.\n\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x01\x12\
-    \x039\x04\x0e\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x02\x12\x039\x11\x12\n\
-    \xb7\x03\n\x06\x04\0\x04\x01\x02\x02\x12\x03B\x04\x14\x1a\xa7\x03\x20The\
-    \x20instance\x20is\x20meant\x20for\x20development\x20and\x20testing\x20p\
-    urposes\x20only;\x20it\x20has\n\x20no\x20performance\x20or\x20uptime\x20\
-    guarantees\x20and\x20is\x20not\x20covered\x20by\x20SLA.\n\x20After\x20a\
-    \x20development\x20instance\x20is\x20created,\x20it\x20can\x20be\x20upgr\
-    aded\x20by\n\x20updating\x20the\x20instance\x20to\x20type\x20`PRODUCTION\
-    `.\x20An\x20instance\x20created\n\x20as\x20a\x20production\x20instance\
-    \x20cannot\x20be\x20changed\x20to\x20a\x20development\x20instance.\n\x20\
-    When\x20creating\x20a\x20development\x20instance,\x20`serve_nodes`\x20on\
-    \x20the\x20cluster\x20must\n\x20not\x20be\x20set.\n\n\x0e\n\x07\x04\0\
-    \x04\x01\x02\x02\x01\x12\x03B\x04\x0f\n\x0e\n\x07\x04\0\x04\x01\x02\x02\
-    \x02\x12\x03B\x12\x13\n\x92\x01\n\x04\x04\0\x02\0\x12\x03H\x02\x12\x1a\
-    \x84\x01\x20(`OutputOnly`)\n\x20The\x20unique\x20name\x20of\x20the\x20in\
-    stance.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/i\
-    nstances/[a-z][a-z0-9\\\\-]+[a-z0-9]`.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\
-    \x03H\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03H\t\r\n\x0c\n\x05\x04\0\
-    \x02\0\x03\x12\x03H\x10\x11\n\xa1\x01\n\x04\x04\0\x02\x01\x12\x03M\x02\
-    \x1a\x1a\x93\x01\x20The\x20descriptive\x20name\x20for\x20this\x20instanc\
-    e\x20as\x20it\x20appears\x20in\x20UIs.\n\x20Can\x20be\x20changed\x20at\
-    \x20any\x20time,\x20but\x20should\x20be\x20kept\x20globally\x20unique\n\
-    \x20to\x20avoid\x20confusion.\n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03M\
-    \x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03M\t\x15\n\x0c\n\x05\x04\0\
-    \x02\x01\x03\x12\x03M\x18\x19\nA\n\x04\x04\0\x02\x02\x12\x03Q\x02\x12\
-    \x1a4\x20(`OutputOnly`)\n\x20The\x20current\x20state\x20of\x20the\x20ins\
-    tance.\n\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03Q\x02\x07\n\x0c\n\x05\x04\
-    \0\x02\x02\x01\x12\x03Q\x08\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03Q\x10\
-    \x11\nB\n\x04\x04\0\x02\x03\x12\x03T\x02\x10\x1a5\x20The\x20type\x20of\
-    \x20the\x20instance.\x20Defaults\x20to\x20`PRODUCTION`.\n\n\x0c\n\x05\
-    \x04\0\x02\x03\x06\x12\x03T\x02\x06\n\x0c\n\x05\x04\0\x02\x03\x01\x12\
-    \x03T\x07\x0b\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03T\x0e\x0f\n\x82\x05\n\
-    \x04\x04\0\x02\x04\x12\x03a\x02!\x1a\xf4\x04\x20Labels\x20are\x20a\x20fl\
-    exible\x20and\x20lightweight\x20mechanism\x20for\x20organizing\x20cloud\
-    \n\x20resources\x20into\x20groups\x20that\x20reflect\x20a\x20customer's\
-    \x20organizational\x20needs\x20and\n\x20deployment\x20strategies.\x20The\
-    y\x20can\x20be\x20used\x20to\x20filter\x20resources\x20and\x20aggregate\
-    \n\x20metrics.\n\n\x20*\x20Label\x20keys\x20must\x20be\x20between\x201\
-    \x20and\x2063\x20characters\x20long\x20and\x20must\x20conform\x20to\n\
-    \x20\x20\x20the\x20regular\x20expression:\x20`[\\p{Ll}\\p{Lo}][\\p{Ll}\\\
-    p{Lo}\\p{N}_-]{0,62}`.\n\x20*\x20Label\x20values\x20must\x20be\x20betwee\
-    n\x200\x20and\x2063\x20characters\x20long\x20and\x20must\x20conform\x20t\
-    o\n\x20\x20\x20the\x20regular\x20expression:\x20`[\\p{Ll}\\p{Lo}\\p{N}_-\
-    ]{0,63}`.\n\x20*\x20No\x20more\x20than\x2064\x20labels\x20can\x20be\x20a\
-    ssociated\x20with\x20a\x20given\x20resource.\n\x20*\x20Keys\x20and\x20va\
-    lues\x20must\x20both\x20be\x20under\x20128\x20bytes.\n\n\x0c\n\x05\x04\0\
-    \x02\x04\x06\x12\x03a\x02\x15\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03a\x16\
-    \x1c\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03a\x1f\x20\n\xc9\x01\n\x02\x04\
-    \x01\x12\x05g\0\x99\x01\x01\x1a\xbb\x01\x20A\x20resizable\x20group\x20of\
-    \x20nodes\x20in\x20a\x20particular\x20cloud\x20location,\x20capable\n\
-    \x20of\x20serving\x20all\x20[Tables][google.bigtable.admin.v2.Table]\x20\
-    in\x20the\x20parent\n\x20[Instance][google.bigtable.admin.v2.Instance].\
-    \n\n\n\n\x03\x04\x01\x01\x12\x03g\x08\x0f\n-\n\x04\x04\x01\x04\0\x12\x04\
-    i\x02\x7f\x03\x1a\x1f\x20Possible\x20states\x20of\x20a\x20cluster.\n\n\
-    \x0c\n\x05\x04\x01\x04\0\x01\x12\x03i\x07\x0c\nB\n\x06\x04\x01\x04\0\x02\
-    \0\x12\x03k\x04\x18\x1a3\x20The\x20state\x20of\x20the\x20cluster\x20coul\
-    d\x20not\x20be\x20determined.\n\n\x0e\n\x07\x04\x01\x04\0\x02\0\x01\x12\
-    \x03k\x04\x13\n\x0e\n\x07\x04\x01\x04\0\x02\0\x02\x12\x03k\x16\x17\nZ\n\
-    \x06\x04\x01\x04\0\x02\x01\x12\x03n\x04\x0e\x1aK\x20The\x20cluster\x20ha\
-    s\x20been\x20successfully\x20created\x20and\x20is\x20ready\x20to\x20serv\
-    e\x20requests.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x01\x01\x12\x03n\x04\t\n\
-    \x0e\n\x07\x04\x01\x04\0\x02\x01\x02\x12\x03n\x0c\r\n\xbe\x01\n\x06\x04\
-    \x01\x04\0\x02\x02\x12\x03s\x04\x11\x1a\xae\x01\x20The\x20cluster\x20is\
-    \x20currently\x20being\x20created,\x20and\x20may\x20be\x20destroyed\n\
-    \x20if\x20the\x20creation\x20process\x20encounters\x20an\x20error.\n\x20\
-    A\x20cluster\x20may\x20not\x20be\x20able\x20to\x20serve\x20requests\x20w\
-    hile\x20being\x20created.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x01\x12\
-    \x03s\x04\x0c\n\x0e\n\x07\x04\x01\x04\0\x02\x02\x02\x12\x03s\x0f\x10\n\
-    \xbd\x02\n\x06\x04\x01\x04\0\x02\x03\x12\x03z\x04\x11\x1a\xad\x02\x20The\
-    \x20cluster\x20is\x20currently\x20being\x20resized,\x20and\x20may\x20rev\
-    ert\x20to\x20its\x20previous\n\x20node\x20count\x20if\x20the\x20process\
-    \x20encounters\x20an\x20error.\n\x20A\x20cluster\x20is\x20still\x20capab\
-    le\x20of\x20serving\x20requests\x20while\x20being\x20resized,\n\x20but\
-    \x20may\x20exhibit\x20performance\x20as\x20if\x20its\x20number\x20of\x20\
-    allocated\x20nodes\x20is\n\x20between\x20the\x20starting\x20and\x20reque\
-    sted\x20states.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x03\x01\x12\x03z\x04\x0c\
-    \n\x0e\n\x07\x04\x01\x04\0\x02\x03\x02\x12\x03z\x0f\x10\n\x85\x01\n\x06\
-    \x04\x01\x04\0\x02\x04\x12\x03~\x04\x11\x1av\x20The\x20cluster\x20has\
-    \x20no\x20backing\x20nodes.\x20The\x20data\x20(tables)\x20still\n\x20exi\
-    st,\x20but\x20no\x20operations\x20can\x20be\x20performed\x20on\x20the\
-    \x20cluster.\n\n\x0e\n\x07\x04\x01\x04\0\x02\x04\x01\x12\x03~\x04\x0c\n\
-    \x0e\n\x07\x04\x01\x04\0\x02\x04\x02\x12\x03~\x0f\x10\n\x9c\x01\n\x04\
-    \x04\x01\x02\0\x12\x04\x84\x01\x02\x12\x1a\x8d\x01\x20(`OutputOnly`)\n\
-    \x20The\x20unique\x20name\x20of\x20the\x20cluster.\x20Values\x20are\x20o\
-    f\x20the\x20form\n\x20`projects/<project>/instances/<instance>/clusters/\
-    [a-z][-a-z0-9]*`.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\x84\x01\x02\x08\
-    \n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x84\x01\t\r\n\r\n\x05\x04\x01\x02\0\
-    \x03\x12\x04\x84\x01\x10\x11\n\xa2\x02\n\x04\x04\x01\x02\x01\x12\x04\x8b\
-    \x01\x02\x16\x1a\x93\x02\x20(`CreationOnly`)\n\x20The\x20location\x20whe\
-    re\x20this\x20cluster's\x20nodes\x20and\x20storage\x20reside.\x20For\x20\
-    best\n\x20performance,\x20clients\x20should\x20be\x20located\x20as\x20cl\
-    ose\x20as\x20possible\x20to\x20this\n\x20cluster.\x20Currently\x20only\
-    \x20zones\x20are\x20supported,\x20so\x20values\x20should\x20be\x20of\x20\
-    the\n\x20form\x20`projects/<project>/locations/<zone>`.\n\n\r\n\x05\x04\
-    \x01\x02\x01\x05\x12\x04\x8b\x01\x02\x08\n\r\n\x05\x04\x01\x02\x01\x01\
-    \x12\x04\x8b\x01\t\x11\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x8b\x01\x14\
-    \x15\nA\n\x04\x04\x01\x02\x02\x12\x04\x8f\x01\x02\x12\x1a3\x20(`OutputOn\
-    ly`)\n\x20The\x20current\x20state\x20of\x20the\x20cluster.\n\n\r\n\x05\
-    \x04\x01\x02\x02\x06\x12\x04\x8f\x01\x02\x07\n\r\n\x05\x04\x01\x02\x02\
-    \x01\x12\x04\x8f\x01\x08\r\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\x8f\x01\
-    \x10\x11\n\x84\x01\n\x04\x04\x01\x02\x03\x12\x04\x93\x01\x02\x18\x1av\
-    \x20The\x20number\x20of\x20nodes\x20allocated\x20to\x20this\x20cluster.\
-    \x20More\x20nodes\x20enable\x20higher\n\x20throughput\x20and\x20more\x20\
-    consistent\x20performance.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\x93\
-    \x01\x02\x07\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\x93\x01\x08\x13\n\r\n\
-    \x05\x04\x01\x02\x03\x03\x12\x04\x93\x01\x16\x17\n\x91\x01\n\x04\x04\x01\
-    \x02\x04\x12\x04\x98\x01\x02'\x1a\x82\x01\x20(`CreationOnly`)\n\x20The\
-    \x20type\x20of\x20storage\x20used\x20by\x20this\x20cluster\x20to\x20serv\
-    e\x20its\n\x20parent\x20instance's\x20tables,\x20unless\x20explicitly\
-    \x20overridden.\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\x04\x98\x01\x02\r\n\
-    \r\n\x05\x04\x01\x02\x04\x01\x12\x04\x98\x01\x0e\"\n\r\n\x05\x04\x01\x02\
-    \x04\x03\x12\x04\x98\x01%&\n\x82\x01\n\x02\x04\x02\x12\x06\x9d\x01\0\xcc\
-    \x01\x01\x1at\x20A\x20configuration\x20object\x20describing\x20how\x20Cl\
-    oud\x20Bigtable\x20should\x20treat\x20traffic\n\x20from\x20a\x20particul\
-    ar\x20end\x20user\x20application.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\x9d\
-    \x01\x08\x12\n\xfd\x01\n\x04\x04\x02\x03\0\x12\x04\xa2\x01\x02&\x1a\xee\
-    \x01\x20Read/write\x20requests\x20may\x20be\x20routed\x20to\x20any\x20cl\
-    uster\x20in\x20the\x20instance,\x20and\x20will\n\x20fail\x20over\x20to\
-    \x20another\x20cluster\x20in\x20the\x20event\x20of\x20transient\x20error\
-    s\x20or\x20delays.\n\x20Choosing\x20this\x20option\x20sacrifices\x20read\
-    -your-writes\x20consistency\x20to\x20improve\n\x20availability.\n\n\r\n\
-    \x05\x04\x02\x03\0\x01\x12\x04\xa2\x01\n#\n\xb1\x01\n\x04\x04\x02\x03\
-    \x01\x12\x06\xa7\x01\x02\xaf\x01\x03\x1a\xa0\x01\x20Unconditionally\x20r\
-    outes\x20all\x20read/write\x20requests\x20to\x20a\x20specific\x20cluster\
-    .\n\x20This\x20option\x20preserves\x20read-your-writes\x20consistency,\
-    \x20but\x20does\x20not\x20improve\n\x20availability.\n\n\r\n\x05\x04\x02\
-    \x03\x01\x01\x12\x04\xa7\x01\n\x1e\nL\n\x06\x04\x02\x03\x01\x02\0\x12\
-    \x04\xa9\x01\x04\x1a\x1a<\x20The\x20cluster\x20to\x20which\x20read/write\
-    \x20requests\x20should\x20be\x20routed.\n\n\x0f\n\x07\x04\x02\x03\x01\
-    \x02\0\x05\x12\x04\xa9\x01\x04\n\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x01\
-    \x12\x04\xa9\x01\x0b\x15\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x03\x12\x04\
-    \xa9\x01\x18\x19\n\xd1\x01\n\x06\x04\x02\x03\x01\x02\x01\x12\x04\xae\x01\
-    \x04(\x1a\xc0\x01\x20Whether\x20or\x20not\x20`CheckAndMutateRow`\x20and\
-    \x20`ReadModifyWriteRow`\x20requests\x20are\n\x20allowed\x20by\x20this\
-    \x20app\x20profile.\x20It\x20is\x20unsafe\x20to\x20send\x20these\x20requ\
-    ests\x20to\n\x20the\x20same\x20table/row/column\x20in\x20multiple\x20clu\
-    sters.\n\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x05\x12\x04\xae\x01\x04\x08\
-    \n\x0f\n\x07\x04\x02\x03\x01\x02\x01\x01\x12\x04\xae\x01\t#\n\x0f\n\x07\
-    \x04\x02\x03\x01\x02\x01\x03\x12\x04\xae\x01&'\n\xaf\x01\n\x04\x04\x02\
-    \x02\0\x12\x04\xb4\x01\x02\x12\x1a\xa0\x01\x20(`OutputOnly`)\n\x20The\
-    \x20unique\x20name\x20of\x20the\x20app\x20profile.\x20Values\x20are\x20o\
-    f\x20the\x20form\n\x20`projects/<project>/instances/<instance>/appProfil\
-    es/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\
-    \xb4\x01\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xb4\x01\t\r\n\r\n\
-    \x05\x04\x02\x02\0\x03\x12\x04\xb4\x01\x10\x11\n\xcd\x03\n\x04\x04\x02\
-    \x02\x01\x12\x04\xbe\x01\x02\x12\x1a\xbe\x03\x20Strongly\x20validated\
-    \x20etag\x20for\x20optimistic\x20concurrency\x20control.\x20Preserve\x20\
-    the\n\x20value\x20returned\x20from\x20`GetAppProfile`\x20when\x20calling\
-    \x20`UpdateAppProfile`\x20to\n\x20fail\x20the\x20request\x20if\x20there\
-    \x20has\x20been\x20a\x20modification\x20in\x20the\x20mean\x20time.\x20Th\
-    e\n\x20`update_mask`\x20of\x20the\x20request\x20need\x20not\x20include\
-    \x20`etag`\x20for\x20this\x20protection\n\x20to\x20apply.\n\x20See\x20[W\
-    ikipedia](https://en.wikipedia.org/wiki/HTTP_ETag)\x20and\n\x20[RFC\x207\
-    232](https://tools.ietf.org/html/rfc7232#section-2.3)\x20for\x20more\n\
-    \x20details.\n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\xbe\x01\x02\x08\n\r\
-    \n\x05\x04\x02\x02\x01\x01\x12\x04\xbe\x01\t\r\n\r\n\x05\x04\x02\x02\x01\
-    \x03\x12\x04\xbe\x01\x10\x11\nS\n\x04\x04\x02\x02\x02\x12\x04\xc1\x01\
-    \x02\x19\x1aE\x20Optional\x20long\x20form\x20description\x20of\x20the\
-    \x20use\x20case\x20for\x20this\x20AppProfile.\n\n\r\n\x05\x04\x02\x02\
-    \x02\x05\x12\x04\xc1\x01\x02\x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\
-    \xc1\x01\t\x14\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xc1\x01\x17\x18\n}\
-    \n\x04\x04\x02\x08\0\x12\x06\xc5\x01\x02\xcb\x01\x03\x1am\x20The\x20rout\
-    ing\x20policy\x20for\x20all\x20read/write\x20requests\x20which\x20use\
-    \x20this\x20app\x20profile.\n\x20A\x20value\x20must\x20be\x20explicitly\
-    \x20set.\n\n\r\n\x05\x04\x02\x08\0\x01\x12\x04\xc5\x01\x08\x16\nM\n\x04\
-    \x04\x02\x02\x03\x12\x04\xc7\x01\x04@\x1a?\x20Use\x20a\x20multi-cluster\
-    \x20routing\x20policy\x20that\x20may\x20pick\x20any\x20cluster.\n\n\r\n\
-    \x05\x04\x02\x02\x03\x06\x12\x04\xc7\x01\x04\x1d\n\r\n\x05\x04\x02\x02\
-    \x03\x01\x12\x04\xc7\x01\x1e;\n\r\n\x05\x04\x02\x02\x03\x03\x12\x04\xc7\
-    \x01>?\n4\n\x04\x04\x02\x02\x04\x12\x04\xca\x01\x044\x1a&\x20Use\x20a\
-    \x20single-cluster\x20routing\x20policy.\n\n\r\n\x05\x04\x02\x02\x04\x06\
-    \x12\x04\xca\x01\x04\x18\n\r\n\x05\x04\x02\x02\x04\x01\x12\x04\xca\x01\
-    \x19/\n\r\n\x05\x04\x02\x02\x04\x03\x12\x04\xca\x0123b\x06proto3\
+    \x03D\x04\x0e\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x02\x12\x03D\x11\x12\n\
+    \x89\x01\n\x06\x04\0\x04\x01\x02\x02\x12\x03H\x04\x14\x1az\x20DEPRECATED\
+    :\x20Prefer\x20PRODUCTION\x20for\x20all\x20use\x20cases,\x20as\x20it\x20\
+    no\x20longer\x20enforces\n\x20a\x20higher\x20minimum\x20node\x20count\
+    \x20than\x20DEVELOPMENT.\n\n\x0e\n\x07\x04\0\x04\x01\x02\x02\x01\x12\x03\
+    H\x04\x0f\n\x0e\n\x07\x04\0\x04\x01\x02\x02\x02\x12\x03H\x12\x13\n\x81\
+    \x01\n\x04\x04\0\x02\0\x12\x03M\x02\x12\x1at\x20The\x20unique\x20name\
+    \x20of\x20the\x20instance.\x20Values\x20are\x20of\x20the\x20form\n\x20`p\
+    rojects/{project}/instances/[a-z][a-z0-9\\\\-]+[a-z0-9]`.\n\n\x0c\n\x05\
+    \x04\0\x02\0\x05\x12\x03M\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03M\t\
+    \r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03M\x10\x11\n\xab\x01\n\x04\x04\0\
+    \x02\x01\x12\x03R\x02C\x1a\x9d\x01\x20Required.\x20The\x20descriptive\
+    \x20name\x20for\x20this\x20instance\x20as\x20it\x20appears\x20in\x20UIs.\
+    \n\x20Can\x20be\x20changed\x20at\x20any\x20time,\x20but\x20should\x20be\
+    \x20kept\x20globally\x20unique\n\x20to\x20avoid\x20confusion.\n\n\x0c\n\
+    \x05\x04\0\x02\x01\x05\x12\x03R\x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\
+    \x12\x03R\t\x15\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03R\x18\x19\n\x0c\n\
+    \x05\x04\0\x02\x01\x08\x12\x03R\x1aB\n\x0f\n\x08\x04\0\x02\x01\x08\x9c\
+    \x08\0\x12\x03R\x1bA\nA\n\x04\x04\0\x02\x02\x12\x03V\x02\x12\x1a4\x20(`O\
+    utputOnly`)\n\x20The\x20current\x20state\x20of\x20the\x20instance.\n\n\
+    \x0c\n\x05\x04\0\x02\x02\x06\x12\x03V\x02\x07\n\x0c\n\x05\x04\0\x02\x02\
+    \x01\x12\x03V\x08\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03V\x10\x11\nB\n\
+    \x04\x04\0\x02\x03\x12\x03Y\x02\x10\x1a5\x20The\x20type\x20of\x20the\x20\
+    instance.\x20Defaults\x20to\x20`PRODUCTION`.\n\n\x0c\n\x05\x04\0\x02\x03\
+    \x06\x12\x03Y\x02\x06\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03Y\x07\x0b\n\
+    \x0c\n\x05\x04\0\x02\x03\x03\x12\x03Y\x0e\x0f\n\x82\x05\n\x04\x04\0\x02\
+    \x04\x12\x03f\x02!\x1a\xf4\x04\x20Labels\x20are\x20a\x20flexible\x20and\
+    \x20lightweight\x20mechanism\x20for\x20organizing\x20cloud\n\x20resource\
+    s\x20into\x20groups\x20that\x20reflect\x20a\x20customer's\x20organizatio\
+    nal\x20needs\x20and\n\x20deployment\x20strategies.\x20They\x20can\x20be\
+    \x20used\x20to\x20filter\x20resources\x20and\x20aggregate\n\x20metrics.\
+    \n\n\x20*\x20Label\x20keys\x20must\x20be\x20between\x201\x20and\x2063\
+    \x20characters\x20long\x20and\x20must\x20conform\x20to\n\x20\x20\x20the\
+    \x20regular\x20expression:\x20`[\\p{Ll}\\p{Lo}][\\p{Ll}\\p{Lo}\\p{N}_-]{\
+    0,62}`.\n\x20*\x20Label\x20values\x20must\x20be\x20between\x200\x20and\
+    \x2063\x20characters\x20long\x20and\x20must\x20conform\x20to\n\x20\x20\
+    \x20the\x20regular\x20expression:\x20`[\\p{Ll}\\p{Lo}\\p{N}_-]{0,63}`.\n\
+    \x20*\x20No\x20more\x20than\x2064\x20labels\x20can\x20be\x20associated\
+    \x20with\x20a\x20given\x20resource.\n\x20*\x20Keys\x20and\x20values\x20m\
+    ust\x20both\x20be\x20under\x20128\x20bytes.\n\n\x0c\n\x05\x04\0\x02\x04\
+    \x06\x12\x03f\x02\x15\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x03f\x16\x1c\n\
+    \x0c\n\x05\x04\0\x02\x04\x03\x12\x03f\x1f\x20\n\xcf\x01\n\x04\x04\0\x02\
+    \x05\x12\x04k\x02l2\x1a\xc0\x01\x20Output\x20only.\x20A\x20server-assign\
+    ed\x20timestamp\x20representing\x20when\x20this\x20Instance\n\x20was\x20\
+    created.\x20For\x20instances\x20created\x20before\x20this\x20field\x20wa\
+    s\x20added\x20(August\n\x202021),\x20this\x20value\x20is\x20`seconds:\
+    \x200,\x20nanos:\x201`.\n\n\x0c\n\x05\x04\0\x02\x05\x06\x12\x03k\x02\x1b\
+    \n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03k\x1c'\n\x0c\n\x05\x04\0\x02\x05\
+    \x03\x12\x03k*+\n\x0c\n\x05\x04\0\x02\x05\x08\x12\x03l\x061\n\x0f\n\x08\
+    \x04\0\x02\x05\x08\x9c\x08\0\x12\x03l\x070\n4\n\x04\x04\0\x02\x06\x12\
+    \x03o\x02N\x1a'\x20Output\x20only.\x20Reserved\x20for\x20future\x20use.\
+    \n\n\x0c\n\x05\x04\0\x02\x06\x04\x12\x03o\x02\n\n\x0c\n\x05\x04\0\x02\
+    \x06\x05\x12\x03o\x0b\x0f\n\x0c\n\x05\x04\0\x02\x06\x01\x12\x03o\x10\x1d\
+    \n\x0c\n\x05\x04\0\x02\x06\x03\x12\x03o\x20!\n\x0c\n\x05\x04\0\x02\x06\
+    \x08\x12\x03o\"M\n\x0f\n\x08\x04\0\x02\x06\x08\x9c\x08\0\x12\x03o#L\n\\\
+    \n\x02\x04\x01\x12\x05s\0\x81\x01\x01\x1aO\x20The\x20Autoscaling\x20targ\
+    ets\x20for\x20a\x20Cluster.\x20These\x20determine\x20the\x20recommended\
+    \x20nodes.\n\n\n\n\x03\x04\x01\x01\x12\x03s\x08\x1a\n\xf8\x01\n\x04\x04\
+    \x01\x02\0\x12\x03x\x02$\x1a\xea\x01\x20The\x20cpu\x20utilization\x20tha\
+    t\x20the\x20Autoscaler\x20should\x20be\x20trying\x20to\x20achieve.\n\x20\
+    This\x20number\x20is\x20on\x20a\x20scale\x20from\x200\x20(no\x20utilizat\
+    ion)\x20to\n\x20100\x20(total\x20utilization),\x20and\x20is\x20limited\
+    \x20between\x2010\x20and\x2080,\x20otherwise\x20it\n\x20will\x20return\
+    \x20INVALID_ARGUMENT\x20error.\n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03x\
+    \x02\x07\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03x\x08\x1f\n\x0c\n\x05\x04\
+    \x01\x02\0\x03\x12\x03x\"#\n\x8e\x03\n\x04\x04\x01\x02\x01\x12\x04\x80\
+    \x01\x02-\x1a\xff\x02\x20The\x20storage\x20utilization\x20that\x20the\
+    \x20Autoscaler\x20should\x20be\x20trying\x20to\x20achieve.\n\x20This\x20\
+    number\x20is\x20limited\x20between\x202560\x20(2.5TiB)\x20and\x205120\
+    \x20(5TiB)\x20for\x20a\x20SSD\n\x20cluster\x20and\x20between\x208192\x20\
+    (8TiB)\x20and\x2016384\x20(16TiB)\x20for\x20an\x20HDD\x20cluster,\n\x20o\
+    therwise\x20it\x20will\x20return\x20INVALID_ARGUMENT\x20error.\x20If\x20\
+    this\x20value\x20is\x20set\x20to\x200,\n\x20it\x20will\x20be\x20treated\
+    \x20as\x20if\x20it\x20were\x20set\x20to\x20the\x20default\x20value:\x202\
+    560\x20for\x20SSD,\n\x208192\x20for\x20HDD.\n\n\r\n\x05\x04\x01\x02\x01\
+    \x05\x12\x04\x80\x01\x02\x07\n\r\n\x05\x04\x01\x02\x01\x01\x12\x04\x80\
+    \x01\x08(\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x80\x01+,\nR\n\x02\x04\
+    \x02\x12\x06\x84\x01\0\x8a\x01\x01\x1aD\x20Limits\x20for\x20the\x20numbe\
+    r\x20of\x20nodes\x20a\x20Cluster\x20can\x20autoscale\x20up/down\x20to.\n\
+    \n\x0b\n\x03\x04\x02\x01\x12\x04\x84\x01\x08\x19\nC\n\x04\x04\x02\x02\0\
+    \x12\x04\x86\x01\x02E\x1a5\x20Required.\x20Minimum\x20number\x20of\x20no\
+    des\x20to\x20scale\x20down\x20to.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\
+    \x86\x01\x02\x07\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\x86\x01\x08\x17\n\r\
+    \n\x05\x04\x02\x02\0\x03\x12\x04\x86\x01\x1a\x1b\n\r\n\x05\x04\x02\x02\0\
+    \x08\x12\x04\x86\x01\x1cD\n\x10\n\x08\x04\x02\x02\0\x08\x9c\x08\0\x12\
+    \x04\x86\x01\x1dC\nA\n\x04\x04\x02\x02\x01\x12\x04\x89\x01\x02E\x1a3\x20\
+    Required.\x20Maximum\x20number\x20of\x20nodes\x20to\x20scale\x20up\x20to\
+    .\n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\x89\x01\x02\x07\n\r\n\x05\x04\
+    \x02\x02\x01\x01\x12\x04\x89\x01\x08\x17\n\r\n\x05\x04\x02\x02\x01\x03\
+    \x12\x04\x89\x01\x1a\x1b\n\r\n\x05\x04\x02\x02\x01\x08\x12\x04\x89\x01\
+    \x1cD\n\x10\n\x08\x04\x02\x02\x01\x08\x9c\x08\0\x12\x04\x89\x01\x1dC\n\
+    \xca\x01\n\x02\x04\x03\x12\x06\x8f\x01\0\x87\x02\x01\x1a\xbb\x01\x20A\
+    \x20resizable\x20group\x20of\x20nodes\x20in\x20a\x20particular\x20cloud\
+    \x20location,\x20capable\n\x20of\x20serving\x20all\x20[Tables][google.bi\
+    gtable.admin.v2.Table]\x20in\x20the\x20parent\n\x20[Instance][google.big\
+    table.admin.v2.Instance].\n\n\x0b\n\x03\x04\x03\x01\x12\x04\x8f\x01\x08\
+    \x0f\n\r\n\x03\x04\x03\x07\x12\x06\x90\x01\x02\x93\x01\x04\n\x0f\n\x05\
+    \x04\x03\x07\x9d\x08\x12\x06\x90\x01\x02\x93\x01\x04\n/\n\x04\x04\x03\
+    \x04\0\x12\x06\x96\x01\x02\xac\x01\x03\x1a\x1f\x20Possible\x20states\x20\
+    of\x20a\x20cluster.\n\n\r\n\x05\x04\x03\x04\0\x01\x12\x04\x96\x01\x07\
+    \x0c\nC\n\x06\x04\x03\x04\0\x02\0\x12\x04\x98\x01\x04\x18\x1a3\x20The\
+    \x20state\x20of\x20the\x20cluster\x20could\x20not\x20be\x20determined.\n\
+    \n\x0f\n\x07\x04\x03\x04\0\x02\0\x01\x12\x04\x98\x01\x04\x13\n\x0f\n\x07\
+    \x04\x03\x04\0\x02\0\x02\x12\x04\x98\x01\x16\x17\n[\n\x06\x04\x03\x04\0\
+    \x02\x01\x12\x04\x9b\x01\x04\x0e\x1aK\x20The\x20cluster\x20has\x20been\
+    \x20successfully\x20created\x20and\x20is\x20ready\x20to\x20serve\x20requ\
+    ests.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x01\x12\x04\x9b\x01\x04\t\n\
+    \x0f\n\x07\x04\x03\x04\0\x02\x01\x02\x12\x04\x9b\x01\x0c\r\n\xbf\x01\n\
+    \x06\x04\x03\x04\0\x02\x02\x12\x04\xa0\x01\x04\x11\x1a\xae\x01\x20The\
+    \x20cluster\x20is\x20currently\x20being\x20created,\x20and\x20may\x20be\
+    \x20destroyed\n\x20if\x20the\x20creation\x20process\x20encounters\x20an\
+    \x20error.\n\x20A\x20cluster\x20may\x20not\x20be\x20able\x20to\x20serve\
+    \x20requests\x20while\x20being\x20created.\n\n\x0f\n\x07\x04\x03\x04\0\
+    \x02\x02\x01\x12\x04\xa0\x01\x04\x0c\n\x0f\n\x07\x04\x03\x04\0\x02\x02\
+    \x02\x12\x04\xa0\x01\x0f\x10\n\xbe\x02\n\x06\x04\x03\x04\0\x02\x03\x12\
+    \x04\xa7\x01\x04\x11\x1a\xad\x02\x20The\x20cluster\x20is\x20currently\
+    \x20being\x20resized,\x20and\x20may\x20revert\x20to\x20its\x20previous\n\
+    \x20node\x20count\x20if\x20the\x20process\x20encounters\x20an\x20error.\
+    \n\x20A\x20cluster\x20is\x20still\x20capable\x20of\x20serving\x20request\
+    s\x20while\x20being\x20resized,\n\x20but\x20may\x20exhibit\x20performanc\
+    e\x20as\x20if\x20its\x20number\x20of\x20allocated\x20nodes\x20is\n\x20be\
+    tween\x20the\x20starting\x20and\x20requested\x20states.\n\n\x0f\n\x07\
+    \x04\x03\x04\0\x02\x03\x01\x12\x04\xa7\x01\x04\x0c\n\x0f\n\x07\x04\x03\
+    \x04\0\x02\x03\x02\x12\x04\xa7\x01\x0f\x10\n\x86\x01\n\x06\x04\x03\x04\0\
+    \x02\x04\x12\x04\xab\x01\x04\x11\x1av\x20The\x20cluster\x20has\x20no\x20\
+    backing\x20nodes.\x20The\x20data\x20(tables)\x20still\n\x20exist,\x20but\
+    \x20no\x20operations\x20can\x20be\x20performed\x20on\x20the\x20cluster.\
+    \n\n\x0f\n\x07\x04\x03\x04\0\x02\x04\x01\x12\x04\xab\x01\x04\x0c\n\x0f\n\
+    \x07\x04\x03\x04\0\x02\x04\x02\x12\x04\xab\x01\x0f\x10\n\x98\x01\n\x04\
+    \x04\x03\x04\x01\x12\x06\xb0\x01\x02\xbb\x01\x03\x1a\x87\x01\x20Possible\
+    \x20node\x20scaling\x20factors\x20of\x20the\x20clusters.\x20Node\x20scal\
+    ing\x20delivers\x20better\n\x20latency\x20and\x20more\x20throughput\x20b\
+    y\x20removing\x20node\x20boundaries.\n\n\r\n\x05\x04\x03\x04\x01\x01\x12\
+    \x04\xb0\x01\x07\x18\nP\n\x06\x04\x03\x04\x01\x02\0\x12\x04\xb2\x01\x04(\
+    \x1a@\x20No\x20node\x20scaling\x20specified.\x20Defaults\x20to\x20NODE_S\
+    CALING_FACTOR_1X.\n\n\x0f\n\x07\x04\x03\x04\x01\x02\0\x01\x12\x04\xb2\
+    \x01\x04#\n\x0f\n\x07\x04\x03\x04\x01\x02\0\x02\x12\x04\xb2\x01&'\nD\n\
+    \x06\x04\x03\x04\x01\x02\x01\x12\x04\xb5\x01\x04\x1f\x1a4\x20The\x20clus\
+    ter\x20is\x20running\x20with\x20a\x20scaling\x20factor\x20of\x201.\n\n\
+    \x0f\n\x07\x04\x03\x04\x01\x02\x01\x01\x12\x04\xb5\x01\x04\x1a\n\x0f\n\
+    \x07\x04\x03\x04\x01\x02\x01\x02\x12\x04\xb5\x01\x1d\x1e\n\xd0\x01\n\x06\
+    \x04\x03\x04\x01\x02\x02\x12\x04\xba\x01\x04\x1f\x1a\xbf\x01\x20The\x20c\
+    luster\x20is\x20running\x20with\x20a\x20scaling\x20factor\x20of\x202.\n\
+    \x20All\x20node\x20count\x20values\x20must\x20be\x20in\x20increments\x20\
+    of\x202\x20with\x20this\x20scaling\x20factor\n\x20enabled,\x20otherwise\
+    \x20an\x20INVALID_ARGUMENT\x20error\x20will\x20be\x20returned.\n\n\x0f\n\
+    \x07\x04\x03\x04\x01\x02\x02\x01\x12\x04\xba\x01\x04\x1a\n\x0f\n\x07\x04\
+    \x03\x04\x01\x02\x02\x02\x12\x04\xba\x01\x1d\x1e\n3\n\x04\x04\x03\x03\0\
+    \x12\x06\xbe\x01\x02\xc6\x01\x03\x1a#\x20Autoscaling\x20config\x20for\
+    \x20a\x20cluster.\n\n\r\n\x05\x04\x03\x03\0\x01\x12\x04\xbe\x01\n\"\nB\n\
+    \x06\x04\x03\x03\0\x02\0\x12\x06\xc0\x01\x04\xc1\x011\x1a0\x20Required.\
+    \x20Autoscaling\x20limits\x20for\x20this\x20cluster.\n\n\x0f\n\x07\x04\
+    \x03\x03\0\x02\0\x06\x12\x04\xc0\x01\x04\x15\n\x0f\n\x07\x04\x03\x03\0\
+    \x02\0\x01\x12\x04\xc0\x01\x16(\n\x0f\n\x07\x04\x03\x03\0\x02\0\x03\x12\
+    \x04\xc0\x01+,\n\x0f\n\x07\x04\x03\x03\0\x02\0\x08\x12\x04\xc1\x01\x080\
+    \n\x12\n\n\x04\x03\x03\0\x02\0\x08\x9c\x08\0\x12\x04\xc1\x01\t/\nC\n\x06\
+    \x04\x03\x03\0\x02\x01\x12\x06\xc4\x01\x04\xc5\x011\x1a1\x20Required.\
+    \x20Autoscaling\x20targets\x20for\x20this\x20cluster.\n\n\x0f\n\x07\x04\
+    \x03\x03\0\x02\x01\x06\x12\x04\xc4\x01\x04\x16\n\x0f\n\x07\x04\x03\x03\0\
+    \x02\x01\x01\x12\x04\xc4\x01\x17*\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x03\
+    \x12\x04\xc4\x01-.\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x08\x12\x04\xc5\x01\
+    \x080\n\x12\n\n\x04\x03\x03\0\x02\x01\x08\x9c\x08\0\x12\x04\xc5\x01\t/\n\
+    .\n\x04\x04\x03\x03\x01\x12\x06\xc9\x01\x02\xcc\x01\x03\x1a\x1e\x20Confi\
+    guration\x20for\x20a\x20cluster.\n\n\r\n\x05\x04\x03\x03\x01\x01\x12\x04\
+    \xc9\x01\n\x17\n=\n\x06\x04\x03\x03\x01\x02\0\x12\x04\xcb\x01\x04<\x1a-\
+    \x20Autoscaling\x20configuration\x20for\x20this\x20cluster.\n\n\x0f\n\
+    \x07\x04\x03\x03\x01\x02\0\x06\x12\x04\xcb\x01\x04\x1c\n\x0f\n\x07\x04\
+    \x03\x03\x01\x02\0\x01\x12\x04\xcb\x01\x1d7\n\x0f\n\x07\x04\x03\x03\x01\
+    \x02\0\x03\x12\x04\xcb\x01:;\nb\n\x04\x04\x03\x03\x02\x12\x06\xd0\x01\
+    \x02\xde\x01\x03\x1aR\x20Cloud\x20Key\x20Management\x20Service\x20(Cloud\
+    \x20KMS)\x20settings\x20for\x20a\x20CMEK-protected\n\x20cluster.\n\n\r\n\
+    \x05\x04\x03\x03\x02\x01\x12\x04\xd0\x01\n\x1a\n\xe5\x04\n\x06\x04\x03\
+    \x03\x02\x02\0\x12\x06\xdb\x01\x04\xdd\x01\x07\x1a\xd2\x04\x20Describes\
+    \x20the\x20Cloud\x20KMS\x20encryption\x20key\x20that\x20will\x20be\x20us\
+    ed\x20to\x20protect\x20the\n\x20destination\x20Bigtable\x20cluster.\x20T\
+    he\x20requirements\x20for\x20this\x20key\x20are:\n\x20\x201)\x20The\x20C\
+    loud\x20Bigtable\x20service\x20account\x20associated\x20with\x20the\x20p\
+    roject\x20that\n\x20\x20contains\x20this\x20cluster\x20must\x20be\x20gra\
+    nted\x20the\n\x20\x20`cloudkms.cryptoKeyEncrypterDecrypter`\x20role\x20o\
+    n\x20the\x20CMEK\x20key.\n\x20\x202)\x20Only\x20regional\x20keys\x20can\
+    \x20be\x20used\x20and\x20the\x20region\x20of\x20the\x20CMEK\x20key\x20mu\
+    st\n\x20\x20match\x20the\x20region\x20of\x20the\x20cluster.\n\x20\x203)\
+    \x20All\x20clusters\x20within\x20an\x20instance\x20must\x20use\x20the\
+    \x20same\x20CMEK\x20key.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`p\
+    rojects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{ke\
+    y}`\n\n\x0f\n\x07\x04\x03\x03\x02\x02\0\x05\x12\x04\xdb\x01\x04\n\n\x0f\
+    \n\x07\x04\x03\x03\x02\x02\0\x01\x12\x04\xdb\x01\x0b\x17\n\x0f\n\x07\x04\
+    \x03\x03\x02\x02\0\x03\x12\x04\xdb\x01\x1a\x1b\n\x11\n\x07\x04\x03\x03\
+    \x02\x02\0\x08\x12\x06\xdb\x01\x1c\xdd\x01\x06\n\x13\n\t\x04\x03\x03\x02\
+    \x02\0\x08\x9f\x08\x12\x06\xdb\x01\x1d\xdd\x01\x05\n\x8b\x01\n\x04\x04\
+    \x03\x02\0\x12\x04\xe2\x01\x02\x12\x1a}\x20The\x20unique\x20name\x20of\
+    \x20the\x20cluster.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects\
+    /{project}/instances/{instance}/clusters/[a-z][-a-z0-9]*`.\n\n\r\n\x05\
+    \x04\x03\x02\0\x05\x12\x04\xe2\x01\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\
+    \x12\x04\xe2\x01\t\r\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xe2\x01\x10\x11\
+    \n\x9d\x02\n\x04\x04\x03\x02\x01\x12\x06\xe8\x01\x02\xed\x01\x04\x1a\x8c\
+    \x02\x20Immutable.\x20The\x20location\x20where\x20this\x20cluster's\x20n\
+    odes\x20and\x20storage\x20reside.\x20For\n\x20best\x20performance,\x20cl\
+    ients\x20should\x20be\x20located\x20as\x20close\x20as\x20possible\x20to\
+    \x20this\n\x20cluster.\x20Currently\x20only\x20zones\x20are\x20supported\
+    ,\x20so\x20values\x20should\x20be\x20of\x20the\n\x20form\x20`projects/{p\
+    roject}/locations/{zone}`.\n\n\r\n\x05\x04\x03\x02\x01\x05\x12\x04\xe8\
+    \x01\x02\x08\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\xe8\x01\t\x11\n\r\n\
+    \x05\x04\x03\x02\x01\x03\x12\x04\xe8\x01\x14\x15\n\x0f\n\x05\x04\x03\x02\
+    \x01\x08\x12\x06\xe8\x01\x16\xed\x01\x03\n\x10\n\x08\x04\x03\x02\x01\x08\
+    \x9c\x08\0\x12\x04\xe9\x01\x04+\n\x11\n\x07\x04\x03\x02\x01\x08\x9f\x08\
+    \x12\x06\xea\x01\x04\xec\x01\x05\n>\n\x04\x04\x03\x02\x02\x12\x04\xf0\
+    \x01\x02>\x1a0\x20Output\x20only.\x20The\x20current\x20state\x20of\x20th\
+    e\x20cluster.\n\n\r\n\x05\x04\x03\x02\x02\x06\x12\x04\xf0\x01\x02\x07\n\
+    \r\n\x05\x04\x03\x02\x02\x01\x12\x04\xf0\x01\x08\r\n\r\n\x05\x04\x03\x02\
+    \x02\x03\x12\x04\xf0\x01\x10\x11\n\r\n\x05\x04\x03\x02\x02\x08\x12\x04\
+    \xf0\x01\x12=\n\x10\n\x08\x04\x03\x02\x02\x08\x9c\x08\0\x12\x04\xf0\x01\
+    \x13<\n\x84\x01\n\x04\x04\x03\x02\x03\x12\x04\xf4\x01\x02\x18\x1av\x20Th\
+    e\x20number\x20of\x20nodes\x20allocated\x20to\x20this\x20cluster.\x20Mor\
+    e\x20nodes\x20enable\x20higher\n\x20throughput\x20and\x20more\x20consist\
+    ent\x20performance.\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\x04\xf4\x01\x02\
+    \x07\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xf4\x01\x08\x13\n\r\n\x05\x04\
+    \x03\x02\x03\x03\x12\x04\xf4\x01\x16\x17\nE\n\x04\x04\x03\x02\x04\x12\
+    \x06\xf7\x01\x02\xf8\x010\x1a5\x20Immutable.\x20The\x20node\x20scaling\
+    \x20factor\x20of\x20this\x20cluster.\n\n\r\n\x05\x04\x03\x02\x04\x06\x12\
+    \x04\xf7\x01\x02\x13\n\r\n\x05\x04\x03\x02\x04\x01\x12\x04\xf7\x01\x14'\
+    \n\r\n\x05\x04\x03\x02\x04\x03\x12\x04\xf7\x01*+\n\r\n\x05\x04\x03\x02\
+    \x04\x08\x12\x04\xf8\x01\x06/\n\x10\n\x08\x04\x03\x02\x04\x08\x9c\x08\0\
+    \x12\x04\xf8\x01\x07.\n\x0e\n\x04\x04\x03\x08\0\x12\x06\xfa\x01\x02\xfd\
+    \x01\x03\n\r\n\x05\x04\x03\x08\0\x01\x12\x04\xfa\x01\x08\x0e\n/\n\x04\
+    \x04\x03\x02\x05\x12\x04\xfc\x01\x04%\x1a!\x20Configuration\x20for\x20th\
+    is\x20cluster.\n\n\r\n\x05\x04\x03\x02\x05\x06\x12\x04\xfc\x01\x04\x11\n\
+    \r\n\x05\x04\x03\x02\x05\x01\x12\x04\xfc\x01\x12\x20\n\r\n\x05\x04\x03\
+    \x02\x05\x03\x12\x04\xfc\x01#$\n\x8b\x01\n\x04\x04\x03\x02\x06\x12\x06\
+    \x81\x02\x02\x82\x020\x1a{\x20Immutable.\x20The\x20type\x20of\x20storage\
+    \x20used\x20by\x20this\x20cluster\x20to\x20serve\x20its\n\x20parent\x20i\
+    nstance's\x20tables,\x20unless\x20explicitly\x20overridden.\n\n\r\n\x05\
+    \x04\x03\x02\x06\x06\x12\x04\x81\x02\x02\r\n\r\n\x05\x04\x03\x02\x06\x01\
+    \x12\x04\x81\x02\x0e\"\n\r\n\x05\x04\x03\x02\x06\x03\x12\x04\x81\x02%&\n\
+    \r\n\x05\x04\x03\x02\x06\x08\x12\x04\x82\x02\x06/\n\x10\n\x08\x04\x03\
+    \x02\x06\x08\x9c\x08\0\x12\x04\x82\x02\x07.\nV\n\x04\x04\x03\x02\x07\x12\
+    \x06\x85\x02\x02\x86\x020\x1aF\x20Immutable.\x20The\x20encryption\x20con\
+    figuration\x20for\x20CMEK-protected\x20clusters.\n\n\r\n\x05\x04\x03\x02\
+    \x07\x06\x12\x04\x85\x02\x02\x12\n\r\n\x05\x04\x03\x02\x07\x01\x12\x04\
+    \x85\x02\x13$\n\r\n\x05\x04\x03\x02\x07\x03\x12\x04\x85\x02'(\n\r\n\x05\
+    \x04\x03\x02\x07\x08\x12\x04\x86\x02\x06/\n\x10\n\x08\x04\x03\x02\x07\
+    \x08\x9c\x08\0\x12\x04\x86\x02\x07.\n\x82\x01\n\x02\x04\x04\x12\x06\x8b\
+    \x02\0\x9f\x03\x01\x1at\x20A\x20configuration\x20object\x20describing\
+    \x20how\x20Cloud\x20Bigtable\x20should\x20treat\x20traffic\n\x20from\x20\
+    a\x20particular\x20end\x20user\x20application.\n\n\x0b\n\x03\x04\x04\x01\
+    \x12\x04\x8b\x02\x08\x12\n\r\n\x03\x04\x04\x07\x12\x06\x8c\x02\x02\x8f\
+    \x02\x04\n\x0f\n\x05\x04\x04\x07\x9d\x08\x12\x06\x8c\x02\x02\x8f\x02\x04\
+    \n\xcc\x02\n\x04\x04\x04\x03\0\x12\x06\x96\x02\x02\xb3\x02\x03\x1a\xbb\
+    \x02\x20Read/write\x20requests\x20are\x20routed\x20to\x20the\x20nearest\
+    \x20cluster\x20in\x20the\x20instance,\x20and\n\x20will\x20fail\x20over\
+    \x20to\x20the\x20nearest\x20cluster\x20that\x20is\x20available\x20in\x20\
+    the\x20event\x20of\n\x20transient\x20errors\x20or\x20delays.\x20Clusters\
+    \x20in\x20a\x20region\x20are\x20considered\n\x20equidistant.\x20Choosing\
+    \x20this\x20option\x20sacrifices\x20read-your-writes\x20consistency\n\
+    \x20to\x20improve\x20availability.\n\n\r\n\x05\x04\x04\x03\0\x01\x12\x04\
+    \x96\x02\n#\n\x85\x05\n\x06\x04\x04\x03\0\x03\0\x12\x04\xa0\x02\x04\x1a\
+    \x1a\xf4\x04\x20If\x20enabled,\x20Bigtable\x20will\x20route\x20the\x20re\
+    quest\x20based\x20on\x20the\x20row\x20key\x20of\x20the\n\x20request,\x20\
+    rather\x20than\x20randomly.\x20Instead,\x20each\x20row\x20key\x20will\
+    \x20be\x20assigned\n\x20to\x20a\x20cluster,\x20and\x20will\x20stick\x20t\
+    o\x20that\x20cluster.\x20If\x20clusters\x20are\x20added\x20or\n\x20remov\
+    ed,\x20then\x20this\x20may\x20affect\x20which\x20row\x20keys\x20stick\
+    \x20to\x20which\x20clusters.\n\x20To\x20avoid\x20this,\x20users\x20can\
+    \x20use\x20a\x20cluster\x20group\x20to\x20specify\x20which\x20clusters\n\
+    \x20are\x20to\x20be\x20used.\x20In\x20this\x20case,\x20new\x20clusters\
+    \x20that\x20are\x20not\x20a\x20part\x20of\x20the\n\x20cluster\x20group\
+    \x20will\x20not\x20be\x20routed\x20to,\x20and\x20routing\x20will\x20be\
+    \x20unaffected\x20by\n\x20the\x20new\x20cluster.\x20Moreover,\x20cluster\
+    s\x20specified\x20in\x20the\x20cluster\x20group\x20cannot\n\x20be\x20del\
+    eted\x20unless\x20removed\x20from\x20the\x20cluster\x20group.\n\n\x0f\n\
+    \x07\x04\x04\x03\0\x03\0\x01\x12\x04\xa0\x02\x0c\x17\n\xa1\x01\n\x06\x04\
+    \x04\x03\0\x02\0\x12\x04\xa4\x02\x04$\x1a\x90\x01\x20The\x20set\x20of\
+    \x20clusters\x20to\x20route\x20to.\x20The\x20order\x20is\x20ignored;\x20\
+    clusters\x20will\x20be\n\x20tried\x20in\x20order\x20of\x20distance.\x20I\
+    f\x20left\x20empty,\x20all\x20clusters\x20are\x20eligible.\n\n\x0f\n\x07\
+    \x04\x04\x03\0\x02\0\x04\x12\x04\xa4\x02\x04\x0c\n\x0f\n\x07\x04\x04\x03\
+    \0\x02\0\x05\x12\x04\xa4\x02\r\x13\n\x0f\n\x07\x04\x04\x03\0\x02\0\x01\
+    \x12\x04\xa4\x02\x14\x1f\n\x0f\n\x07\x04\x04\x03\0\x02\0\x03\x12\x04\xa4\
+    \x02\"#\n\xb5\x03\n\x06\x04\x04\x03\0\x08\0\x12\x06\xae\x02\x04\xb2\x02\
+    \x05\x1a\xa2\x03\x20Possible\x20algorithms\x20for\x20routing\x20affinity\
+    .\x20If\x20enabled,\x20Bigtable\x20will\n\x20route\x20between\x20equidis\
+    tant\x20clusters\x20in\x20a\x20deterministic\x20order\x20rather\x20than\
+    \n\x20choosing\x20randomly.\n\n\x20This\x20mechanism\x20gives\x20read-yo\
+    ur-writes\x20consistency\x20for\x20*most*\x20requests\n\x20under\x20*mos\
+    t*\x20circumstances,\x20without\x20sacrificing\x20availability.\x20Consi\
+    stency\n\x20is\x20*not*\x20guaranteed,\x20as\x20requests\x20might\x20sti\
+    ll\x20fail\x20over\x20between\x20clusters\n\x20in\x20the\x20event\x20of\
+    \x20errors\x20or\x20latency.\n\n\x0f\n\x07\x04\x04\x03\0\x08\0\x01\x12\
+    \x04\xae\x02\n\x12\n\x97\x01\n\x06\x04\x04\x03\0\x02\x01\x12\x04\xb1\x02\
+    \x06#\x1a\x86\x01\x20Row\x20affinity\x20sticky\x20routing\x20based\x20on\
+    \x20the\x20row\x20key\x20of\x20the\x20request.\n\x20Requests\x20that\x20\
+    span\x20multiple\x20rows\x20are\x20routed\x20non-deterministically.\n\n\
+    \x0f\n\x07\x04\x04\x03\0\x02\x01\x06\x12\x04\xb1\x02\x06\x11\n\x0f\n\x07\
+    \x04\x04\x03\0\x02\x01\x01\x12\x04\xb1\x02\x12\x1e\n\x0f\n\x07\x04\x04\
+    \x03\0\x02\x01\x03\x12\x04\xb1\x02!\"\n\xb0\x01\n\x04\x04\x04\x03\x01\
+    \x12\x06\xb8\x02\x02\xc0\x02\x03\x1a\x9f\x01\x20Unconditionally\x20route\
+    s\x20all\x20read/write\x20requests\x20to\x20a\x20specific\x20cluster.\n\
+    \x20This\x20option\x20preserves\x20read-your-writes\x20consistency\x20bu\
+    t\x20does\x20not\x20improve\n\x20availability.\n\n\r\n\x05\x04\x04\x03\
+    \x01\x01\x12\x04\xb8\x02\n\x1e\nL\n\x06\x04\x04\x03\x01\x02\0\x12\x04\
+    \xba\x02\x04\x1a\x1a<\x20The\x20cluster\x20to\x20which\x20read/write\x20\
+    requests\x20should\x20be\x20routed.\n\n\x0f\n\x07\x04\x04\x03\x01\x02\0\
+    \x05\x12\x04\xba\x02\x04\n\n\x0f\n\x07\x04\x04\x03\x01\x02\0\x01\x12\x04\
+    \xba\x02\x0b\x15\n\x0f\n\x07\x04\x04\x03\x01\x02\0\x03\x12\x04\xba\x02\
+    \x18\x19\n\xd1\x01\n\x06\x04\x04\x03\x01\x02\x01\x12\x04\xbf\x02\x04(\
+    \x1a\xc0\x01\x20Whether\x20or\x20not\x20`CheckAndMutateRow`\x20and\x20`R\
+    eadModifyWriteRow`\x20requests\x20are\n\x20allowed\x20by\x20this\x20app\
+    \x20profile.\x20It\x20is\x20unsafe\x20to\x20send\x20these\x20requests\
+    \x20to\n\x20the\x20same\x20table/row/column\x20in\x20multiple\x20cluster\
+    s.\n\n\x0f\n\x07\x04\x04\x03\x01\x02\x01\x05\x12\x04\xbf\x02\x04\x08\n\
+    \x0f\n\x07\x04\x04\x03\x01\x02\x01\x01\x12\x04\xbf\x02\t#\n\x0f\n\x07\
+    \x04\x04\x03\x01\x02\x01\x03\x12\x04\xbf\x02&'\n\xde\x01\n\x04\x04\x04\
+    \x04\0\x12\x06\xc5\x02\x02\xce\x02\x03\x1a\xcd\x01\x20Possible\x20priori\
+    ties\x20for\x20an\x20app\x20profile.\x20Note\x20that\x20higher\x20priori\
+    ty\x20writes\n\x20can\x20sometimes\x20queue\x20behind\x20lower\x20priori\
+    ty\x20writes\x20to\x20the\x20same\x20tablet,\x20as\n\x20writes\x20must\
+    \x20be\x20strictly\x20sequenced\x20in\x20the\x20durability\x20log.\n\n\r\
+    \n\x05\x04\x04\x04\0\x01\x12\x04\xc5\x02\x07\x0f\n[\n\x06\x04\x04\x04\0\
+    \x02\0\x12\x04\xc7\x02\x04\x1d\x1aK\x20Default\x20value.\x20Mapped\x20to\
+    \x20PRIORITY_HIGH\x20(the\x20legacy\x20behavior)\x20on\x20creation.\n\n\
+    \x0f\n\x07\x04\x04\x04\0\x02\0\x01\x12\x04\xc7\x02\x04\x18\n\x0f\n\x07\
+    \x04\x04\x04\0\x02\0\x02\x12\x04\xc7\x02\x1b\x1c\n\x0e\n\x06\x04\x04\x04\
+    \0\x02\x01\x12\x04\xc9\x02\x04\x15\n\x0f\n\x07\x04\x04\x04\0\x02\x01\x01\
+    \x12\x04\xc9\x02\x04\x10\n\x0f\n\x07\x04\x04\x04\0\x02\x01\x02\x12\x04\
+    \xc9\x02\x13\x14\n\x0e\n\x06\x04\x04\x04\0\x02\x02\x12\x04\xcb\x02\x04\
+    \x18\n\x0f\n\x07\x04\x04\x04\0\x02\x02\x01\x12\x04\xcb\x02\x04\x13\n\x0f\
+    \n\x07\x04\x04\x04\0\x02\x02\x02\x12\x04\xcb\x02\x16\x17\n\x0e\n\x06\x04\
+    \x04\x04\0\x02\x03\x12\x04\xcd\x02\x04\x16\n\x0f\n\x07\x04\x04\x04\0\x02\
+    \x03\x01\x12\x04\xcd\x02\x04\x11\n\x0f\n\x07\x04\x04\x04\0\x02\x03\x02\
+    \x12\x04\xcd\x02\x14\x15\nb\n\x04\x04\x04\x03\x02\x12\x06\xd2\x02\x02\
+    \xd5\x02\x03\x1aR\x20Standard\x20options\x20for\x20isolating\x20this\x20\
+    app\x20profile's\x20traffic\x20from\x20other\x20use\n\x20cases.\n\n\r\n\
+    \x05\x04\x04\x03\x02\x01\x12\x04\xd2\x02\n\x1b\nG\n\x06\x04\x04\x03\x02\
+    \x02\0\x12\x04\xd4\x02\x04\x1a\x1a7\x20The\x20priority\x20of\x20requests\
+    \x20sent\x20using\x20this\x20app\x20profile.\n\n\x0f\n\x07\x04\x04\x03\
+    \x02\x02\0\x06\x12\x04\xd4\x02\x04\x0c\n\x0f\n\x07\x04\x04\x03\x02\x02\0\
+    \x01\x12\x04\xd4\x02\r\x15\n\x0f\n\x07\x04\x04\x03\x02\x02\0\x03\x12\x04\
+    \xd4\x02\x18\x19\n\xb4\x05\n\x04\x04\x04\x03\x03\x12\x06\xe3\x02\x02\xf2\
+    \x02\x03\x1a\xa3\x05\x20Data\x20Boost\x20is\x20a\x20serverless\x20comput\
+    e\x20capability\x20that\x20lets\x20you\x20run\n\x20high-throughput\x20re\
+    ad\x20jobs\x20on\x20your\x20Bigtable\x20data,\x20without\x20impacting\
+    \x20the\n\x20performance\x20of\x20the\x20clusters\x20that\x20handle\x20y\
+    our\x20application\x20traffic.\n\x20Currently,\x20Data\x20Boost\x20exclu\
+    sively\x20supports\x20read-only\x20use-cases\x20with\n\x20single-cluster\
+    \x20routing.\n\n\x20Data\x20Boost\x20reads\x20are\x20only\x20guaranteed\
+    \x20to\x20see\x20the\x20results\x20of\x20writes\x20that\n\x20were\x20wri\
+    tten\x20at\x20least\x2030\x20minutes\x20ago.\x20This\x20means\x20newly\
+    \x20written\x20values\x20may\n\x20not\x20become\x20visible\x20for\x20up\
+    \x20to\x2030m,\x20and\x20also\x20means\x20that\x20old\x20values\x20may\n\
+    \x20remain\x20visible\x20for\x20up\x20to\x2030m\x20after\x20being\x20del\
+    eted\x20or\x20overwritten.\x20To\n\x20mitigate\x20the\x20staleness\x20of\
+    \x20the\x20data,\x20users\x20may\x20either\x20wait\x2030m,\x20or\x20use\
+    \n\x20CheckConsistency.\n\n\r\n\x05\x04\x04\x03\x03\x01\x12\x04\xe3\x02\
+    \n$\n\xc4\x01\n\x06\x04\x04\x03\x03\x04\0\x12\x06\xe7\x02\x04\xee\x02\
+    \x05\x1a\xb1\x01\x20Compute\x20Billing\x20Owner\x20specifies\x20how\x20u\
+    sage\x20should\x20be\x20accounted\x20when\x20using\n\x20Data\x20Boost.\
+    \x20Compute\x20Billing\x20Owner\x20also\x20configures\x20which\x20Cloud\
+    \x20Project\x20is\n\x20charged\x20for\x20relevant\x20quota.\n\n\x0f\n\
+    \x07\x04\x04\x03\x03\x04\0\x01\x12\x04\xe7\x02\t\x1c\n&\n\x08\x04\x04\
+    \x03\x03\x04\0\x02\0\x12\x04\xe9\x02\x06,\x1a\x14\x20Unspecified\x20valu\
+    e.\n\n\x11\n\t\x04\x04\x03\x03\x04\0\x02\0\x01\x12\x04\xe9\x02\x06'\n\
+    \x11\n\t\x04\x04\x03\x03\x04\0\x02\0\x02\x12\x04\xe9\x02*+\no\n\x08\x04\
+    \x04\x03\x03\x04\0\x02\x01\x12\x04\xed\x02\x06\x14\x1a]\x20The\x20host\
+    \x20Cloud\x20Project\x20containing\x20the\x20targeted\x20Bigtable\x20Ins\
+    tance\x20/\n\x20Table\x20pays\x20for\x20compute.\n\n\x11\n\t\x04\x04\x03\
+    \x03\x04\0\x02\x01\x01\x12\x04\xed\x02\x06\x0f\n\x11\n\t\x04\x04\x03\x03\
+    \x04\0\x02\x01\x02\x12\x04\xed\x02\x12\x13\nL\n\x06\x04\x04\x03\x03\x02\
+    \0\x12\x04\xf1\x02\x04;\x1a<\x20The\x20Compute\x20Billing\x20Owner\x20fo\
+    r\x20this\x20Data\x20Boost\x20App\x20Profile.\n\n\x0f\n\x07\x04\x04\x03\
+    \x03\x02\0\x04\x12\x04\xf1\x02\x04\x0c\n\x0f\n\x07\x04\x04\x03\x03\x02\0\
+    \x06\x12\x04\xf1\x02\r\x20\n\x0f\n\x07\x04\x04\x03\x03\x02\0\x01\x12\x04\
+    \xf1\x02!6\n\x0f\n\x07\x04\x04\x03\x03\x02\0\x03\x12\x04\xf1\x029:\n\x9f\
+    \x01\n\x04\x04\x04\x02\0\x12\x04\xf6\x02\x02\x12\x1a\x90\x01\x20The\x20u\
+    nique\x20name\x20of\x20the\x20app\x20profile.\x20Values\x20are\x20of\x20\
+    the\x20form\n\x20`projects/{project}/instances/{instance}/appProfiles/[_\
+    a-zA-Z0-9][-_.a-zA-Z0-9]*`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\xf6\
+    \x02\x02\x08\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\xf6\x02\t\r\n\r\n\x05\
+    \x04\x04\x02\0\x03\x12\x04\xf6\x02\x10\x11\n\xcd\x03\n\x04\x04\x04\x02\
+    \x01\x12\x04\x80\x03\x02\x12\x1a\xbe\x03\x20Strongly\x20validated\x20eta\
+    g\x20for\x20optimistic\x20concurrency\x20control.\x20Preserve\x20the\n\
+    \x20value\x20returned\x20from\x20`GetAppProfile`\x20when\x20calling\x20`\
+    UpdateAppProfile`\x20to\n\x20fail\x20the\x20request\x20if\x20there\x20ha\
+    s\x20been\x20a\x20modification\x20in\x20the\x20mean\x20time.\x20The\n\
+    \x20`update_mask`\x20of\x20the\x20request\x20need\x20not\x20include\x20`\
+    etag`\x20for\x20this\x20protection\n\x20to\x20apply.\n\x20See\x20[Wikipe\
+    dia](https://en.wikipedia.org/wiki/HTTP_ETag)\x20and\n\x20[RFC\x207232](\
+    https://tools.ietf.org/html/rfc7232#section-2.3)\x20for\x20more\n\x20det\
+    ails.\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\x80\x03\x02\x08\n\r\n\x05\
+    \x04\x04\x02\x01\x01\x12\x04\x80\x03\t\r\n\r\n\x05\x04\x04\x02\x01\x03\
+    \x12\x04\x80\x03\x10\x11\nJ\n\x04\x04\x04\x02\x02\x12\x04\x83\x03\x02\
+    \x19\x1a<\x20Long\x20form\x20description\x20of\x20the\x20use\x20case\x20\
+    for\x20this\x20AppProfile.\n\n\r\n\x05\x04\x04\x02\x02\x05\x12\x04\x83\
+    \x03\x02\x08\n\r\n\x05\x04\x04\x02\x02\x01\x12\x04\x83\x03\t\x14\n\r\n\
+    \x05\x04\x04\x02\x02\x03\x12\x04\x83\x03\x17\x18\n|\n\x04\x04\x04\x08\0\
+    \x12\x06\x87\x03\x02\x8d\x03\x03\x1al\x20The\x20routing\x20policy\x20for\
+    \x20all\x20read/write\x20requests\x20that\x20use\x20this\x20app\x20profi\
+    le.\n\x20A\x20value\x20must\x20be\x20explicitly\x20set.\n\n\r\n\x05\x04\
+    \x04\x08\0\x01\x12\x04\x87\x03\x08\x16\n3\n\x04\x04\x04\x02\x03\x12\x04\
+    \x89\x03\x04@\x1a%\x20Use\x20a\x20multi-cluster\x20routing\x20policy.\n\
+    \n\r\n\x05\x04\x04\x02\x03\x06\x12\x04\x89\x03\x04\x1d\n\r\n\x05\x04\x04\
+    \x02\x03\x01\x12\x04\x89\x03\x1e;\n\r\n\x05\x04\x04\x02\x03\x03\x12\x04\
+    \x89\x03>?\n4\n\x04\x04\x04\x02\x04\x12\x04\x8c\x03\x044\x1a&\x20Use\x20\
+    a\x20single-cluster\x20routing\x20policy.\n\n\r\n\x05\x04\x04\x02\x04\
+    \x06\x12\x04\x8c\x03\x04\x18\n\r\n\x05\x04\x04\x02\x04\x01\x12\x04\x8c\
+    \x03\x19/\n\r\n\x05\x04\x04\x02\x04\x03\x12\x04\x8c\x0323\nX\n\x04\x04\
+    \x04\x08\x01\x12\x06\x90\x03\x02\x9e\x03\x03\x1aH\x20Options\x20for\x20i\
+    solating\x20this\x20app\x20profile's\x20traffic\x20from\x20other\x20use\
+    \x20cases.\n\n\r\n\x05\x04\x04\x08\x01\x01\x12\x04\x90\x03\x08\x11\n\xdd\
+    \x01\n\x04\x04\x04\x02\x05\x12\x04\x95\x03\x04.\x1a\xce\x01\x20This\x20f\
+    ield\x20has\x20been\x20deprecated\x20in\x20favor\x20of\x20`standard_isol\
+    ation.priority`.\n\x20If\x20you\x20set\x20this\x20field,\x20`standard_is\
+    olation.priority`\x20will\x20be\x20set\x20instead.\n\n\x20The\x20priorit\
+    y\x20of\x20requests\x20sent\x20using\x20this\x20app\x20profile.\n\n\r\n\
+    \x05\x04\x04\x02\x05\x06\x12\x04\x95\x03\x04\x0c\n\r\n\x05\x04\x04\x02\
+    \x05\x01\x12\x04\x95\x03\r\x15\n\r\n\x05\x04\x04\x02\x05\x03\x12\x04\x95\
+    \x03\x18\x19\n\r\n\x05\x04\x04\x02\x05\x08\x12\x04\x95\x03\x1a-\n\x0e\n\
+    \x06\x04\x04\x02\x05\x08\x03\x12\x04\x95\x03\x1b,\ni\n\x04\x04\x04\x02\
+    \x06\x12\x04\x99\x03\x04.\x1a[\x20The\x20standard\x20options\x20used\x20\
+    for\x20isolating\x20this\x20app\x20profile's\x20traffic\x20from\n\x20oth\
+    er\x20use\x20cases.\n\n\r\n\x05\x04\x04\x02\x06\x06\x12\x04\x99\x03\x04\
+    \x15\n\r\n\x05\x04\x04\x02\x06\x01\x12\x04\x99\x03\x16(\n\r\n\x05\x04\
+    \x04\x02\x06\x03\x12\x04\x99\x03+-\nl\n\x04\x04\x04\x02\x07\x12\x04\x9d\
+    \x03\x04C\x1a^\x20Specifies\x20that\x20this\x20app\x20profile\x20is\x20i\
+    ntended\x20for\x20read-only\x20usage\x20via\x20the\n\x20Data\x20Boost\
+    \x20feature.\n\n\r\n\x05\x04\x04\x02\x07\x06\x12\x04\x9d\x03\x04\x1e\n\r\
+    \n\x05\x04\x04\x02\x07\x01\x12\x04\x9d\x03\x1f=\n\r\n\x05\x04\x04\x02\
+    \x07\x03\x12\x04\x9d\x03@B\n\xcb\x02\n\x02\x04\x05\x12\x06\xa6\x03\0\xc9\
+    \x03\x01\x1a\xbc\x02\x20A\x20tablet\x20is\x20a\x20defined\x20by\x20a\x20\
+    start\x20and\x20end\x20key\x20and\x20is\x20explained\x20in\n\x20https://\
+    cloud.google.com/bigtable/docs/overview#architecture\x20and\n\x20https:/\
+    /cloud.google.com/bigtable/docs/performance#optimization.\n\x20A\x20Hot\
+    \x20tablet\x20is\x20a\x20tablet\x20that\x20exhibits\x20high\x20average\
+    \x20cpu\x20usage\x20during\x20the\x20time\n\x20interval\x20from\x20start\
+    \x20time\x20to\x20end\x20time.\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xa6\x03\
+    \x08\x11\n\r\n\x03\x04\x05\x07\x12\x06\xa7\x03\x02\xaa\x03\x04\n\x0f\n\
+    \x05\x04\x05\x07\x9d\x08\x12\x06\xa7\x03\x02\xaa\x03\x04\n\xa3\x01\n\x04\
+    \x04\x05\x02\0\x12\x04\xae\x03\x02\x12\x1a\x94\x01\x20The\x20unique\x20n\
+    ame\x20of\x20the\x20hot\x20tablet.\x20Values\x20are\x20of\x20the\x20form\
+    \n\x20`projects/{project}/instances/{instance}/clusters/{cluster}/hotTab\
+    lets/[a-zA-Z0-9_-]*`.\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\xae\x03\x02\
+    \x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xae\x03\t\r\n\r\n\x05\x04\x05\
+    \x02\0\x03\x12\x04\xae\x03\x10\x11\n\xa4\x01\n\x04\x04\x05\x02\x01\x12\
+    \x06\xb2\x03\x02\xb4\x03\x05\x1a\x93\x01\x20Name\x20of\x20the\x20table\
+    \x20that\x20contains\x20the\x20tablet.\x20Values\x20are\x20of\x20the\x20\
+    form\n\x20`projects/{project}/instances/{instance}/tables/[_a-zA-Z0-9][-\
+    _.a-zA-Z0-9]*`.\n\n\r\n\x05\x04\x05\x02\x01\x05\x12\x04\xb2\x03\x02\x08\
+    \n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\xb2\x03\t\x13\n\r\n\x05\x04\x05\
+    \x02\x01\x03\x12\x04\xb2\x03\x16\x17\n\x0f\n\x05\x04\x05\x02\x01\x08\x12\
+    \x06\xb2\x03\x18\xb4\x03\x04\n\x11\n\x07\x04\x05\x02\x01\x08\x9f\x08\x12\
+    \x06\xb2\x03\x19\xb4\x03\x03\n@\n\x04\x04\x05\x02\x02\x12\x06\xb7\x03\
+    \x02\xb8\x032\x1a0\x20Output\x20only.\x20The\x20start\x20time\x20of\x20t\
+    he\x20hot\x20tablet.\n\n\r\n\x05\x04\x05\x02\x02\x06\x12\x04\xb7\x03\x02\
+    \x1b\n\r\n\x05\x04\x05\x02\x02\x01\x12\x04\xb7\x03\x1c&\n\r\n\x05\x04\
+    \x05\x02\x02\x03\x12\x04\xb7\x03)*\n\r\n\x05\x04\x05\x02\x02\x08\x12\x04\
+    \xb8\x03\x061\n\x10\n\x08\x04\x05\x02\x02\x08\x9c\x08\0\x12\x04\xb8\x03\
+    \x070\n>\n\x04\x04\x05\x02\x03\x12\x06\xbb\x03\x02\xbc\x032\x1a.\x20Outp\
+    ut\x20only.\x20The\x20end\x20time\x20of\x20the\x20hot\x20tablet.\n\n\r\n\
+    \x05\x04\x05\x02\x03\x06\x12\x04\xbb\x03\x02\x1b\n\r\n\x05\x04\x05\x02\
+    \x03\x01\x12\x04\xbb\x03\x1c$\n\r\n\x05\x04\x05\x02\x03\x03\x12\x04\xbb\
+    \x03'(\n\r\n\x05\x04\x05\x02\x03\x08\x12\x04\xbc\x03\x061\n\x10\n\x08\
+    \x04\x05\x02\x03\x08\x9c\x08\0\x12\x04\xbc\x03\x070\n-\n\x04\x04\x05\x02\
+    \x04\x12\x04\xbf\x03\x02\x17\x1a\x1f\x20Tablet\x20Start\x20Key\x20(inclu\
+    sive).\n\n\r\n\x05\x04\x05\x02\x04\x05\x12\x04\xbf\x03\x02\x08\n\r\n\x05\
+    \x04\x05\x02\x04\x01\x12\x04\xbf\x03\t\x12\n\r\n\x05\x04\x05\x02\x04\x03\
+    \x12\x04\xbf\x03\x15\x16\n+\n\x04\x04\x05\x02\x05\x12\x04\xc2\x03\x02\
+    \x15\x1a\x1d\x20Tablet\x20End\x20Key\x20(inclusive).\n\n\r\n\x05\x04\x05\
+    \x02\x05\x05\x12\x04\xc2\x03\x02\x08\n\r\n\x05\x04\x05\x02\x05\x01\x12\
+    \x04\xc2\x03\t\x10\n\r\n\x05\x04\x05\x02\x05\x03\x12\x04\xc2\x03\x13\x14\
+    \n\xb0\x02\n\x04\x04\x05\x02\x06\x12\x04\xc8\x03\x02O\x1a\xa1\x02\x20Out\
+    put\x20only.\x20The\x20average\x20CPU\x20usage\x20spent\x20by\x20a\x20no\
+    de\x20on\x20this\x20tablet\x20over\x20the\n\x20start_time\x20to\x20end_t\
+    ime\x20time\x20range.\x20The\x20percentage\x20is\x20the\x20amount\x20of\
+    \x20CPU\x20used\n\x20by\x20the\x20node\x20to\x20serve\x20the\x20tablet,\
+    \x20from\x200%\x20(tablet\x20was\x20not\x20interacted\x20with)\n\x20to\
+    \x20100%\x20(the\x20node\x20spent\x20all\x20cycles\x20serving\x20the\x20\
+    hot\x20tablet).\n\n\r\n\x05\x04\x05\x02\x06\x05\x12\x04\xc8\x03\x02\x07\
+    \n\r\n\x05\x04\x05\x02\x06\x01\x12\x04\xc8\x03\x08\x1e\n\r\n\x05\x04\x05\
+    \x02\x06\x03\x12\x04\xc8\x03!\"\n\r\n\x05\x04\x05\x02\x06\x08\x12\x04\
+    \xc8\x03#N\n\x10\n\x08\x04\x05\x02\x06\x08\x9c\x08\0\x12\x04\xc8\x03$Mb\
+    \x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1562,19 +3990,33 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(2);
-            deps.push(super::annotations::file_descriptor().clone());
+            let mut deps = ::std::vec::Vec::with_capacity(4);
+            deps.push(super::field_behavior::file_descriptor().clone());
+            deps.push(super::resource::file_descriptor().clone());
             deps.push(super::common::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(5);
+            deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(14);
             messages.push(Instance::generated_message_descriptor_data());
+            messages.push(AutoscalingTargets::generated_message_descriptor_data());
+            messages.push(AutoscalingLimits::generated_message_descriptor_data());
             messages.push(Cluster::generated_message_descriptor_data());
             messages.push(AppProfile::generated_message_descriptor_data());
+            messages.push(HotTablet::generated_message_descriptor_data());
+            messages.push(cluster::ClusterAutoscalingConfig::generated_message_descriptor_data());
+            messages.push(cluster::ClusterConfig::generated_message_descriptor_data());
+            messages.push(cluster::EncryptionConfig::generated_message_descriptor_data());
             messages.push(app_profile::MultiClusterRoutingUseAny::generated_message_descriptor_data());
             messages.push(app_profile::SingleClusterRouting::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(3);
+            messages.push(app_profile::StandardIsolation::generated_message_descriptor_data());
+            messages.push(app_profile::DataBoostIsolationReadOnly::generated_message_descriptor_data());
+            messages.push(app_profile::multi_cluster_routing_use_any::RowAffinity::generated_message_descriptor_data());
+            let mut enums = ::std::vec::Vec::with_capacity(6);
             enums.push(instance::State::generated_enum_descriptor_data());
             enums.push(instance::Type::generated_enum_descriptor_data());
             enums.push(cluster::State::generated_enum_descriptor_data());
+            enums.push(cluster::NodeScalingFactor::generated_enum_descriptor_data());
+            enums.push(app_profile::Priority::generated_enum_descriptor_data());
+            enums.push(app_profile::data_boost_isolation_read_only::ComputeBillingOwner::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

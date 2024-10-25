@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -24,6 +24,237 @@
 /// Generated files are compatible only with the same version
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
+
+///  Information about the database restore.
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.RestoreInfo)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreInfo {
+    // message fields
+    ///  The type of the restore source.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreInfo.source_type)
+    pub source_type: ::protobuf::EnumOrUnknown<RestoreSourceType>,
+    // message oneof groups
+    pub source_info: ::std::option::Option<restore_info::Source_info>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.RestoreInfo.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreInfo {
+    fn default() -> &'a RestoreInfo {
+        <RestoreInfo as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreInfo {
+    pub fn new() -> RestoreInfo {
+        ::std::default::Default::default()
+    }
+
+    // .google.spanner.admin.database.v1.BackupInfo backup_info = 2;
+
+    pub fn backup_info(&self) -> &super::backup::BackupInfo {
+        match self.source_info {
+            ::std::option::Option::Some(restore_info::Source_info::BackupInfo(ref v)) => v,
+            _ => <super::backup::BackupInfo as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_backup_info(&mut self) {
+        self.source_info = ::std::option::Option::None;
+    }
+
+    pub fn has_backup_info(&self) -> bool {
+        match self.source_info {
+            ::std::option::Option::Some(restore_info::Source_info::BackupInfo(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backup_info(&mut self, v: super::backup::BackupInfo) {
+        self.source_info = ::std::option::Option::Some(restore_info::Source_info::BackupInfo(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_backup_info(&mut self) -> &mut super::backup::BackupInfo {
+        if let ::std::option::Option::Some(restore_info::Source_info::BackupInfo(_)) = self.source_info {
+        } else {
+            self.source_info = ::std::option::Option::Some(restore_info::Source_info::BackupInfo(super::backup::BackupInfo::new()));
+        }
+        match self.source_info {
+            ::std::option::Option::Some(restore_info::Source_info::BackupInfo(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_backup_info(&mut self) -> super::backup::BackupInfo {
+        if self.has_backup_info() {
+            match self.source_info.take() {
+                ::std::option::Option::Some(restore_info::Source_info::BackupInfo(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::backup::BackupInfo::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_type",
+            |m: &RestoreInfo| { &m.source_type },
+            |m: &mut RestoreInfo| { &mut m.source_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::backup::BackupInfo>(
+            "backup_info",
+            RestoreInfo::has_backup_info,
+            RestoreInfo::backup_info,
+            RestoreInfo::mut_backup_info,
+            RestoreInfo::set_backup_info,
+        ));
+        oneofs.push(restore_info::Source_info::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreInfo>(
+            "RestoreInfo",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreInfo {
+    const NAME: &'static str = "RestoreInfo";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.source_type = is.read_enum_or_unknown()?;
+                },
+                18 => {
+                    self.source_info = ::std::option::Option::Some(restore_info::Source_info::BackupInfo(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.source_type != ::protobuf::EnumOrUnknown::new(RestoreSourceType::TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(1, self.source_type.value());
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_info::Source_info::BackupInfo(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.source_type != ::protobuf::EnumOrUnknown::new(RestoreSourceType::TYPE_UNSPECIFIED) {
+            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.source_type))?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_info::Source_info::BackupInfo(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreInfo {
+        RestoreInfo::new()
+    }
+
+    fn clear(&mut self) {
+        self.source_type = ::protobuf::EnumOrUnknown::new(RestoreSourceType::TYPE_UNSPECIFIED);
+        self.source_info = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreInfo {
+        static instance: RestoreInfo = RestoreInfo {
+            source_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            source_info: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreInfo {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreInfo").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreInfo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreInfo {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreInfo`
+pub mod restore_info {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.spanner.admin.database.v1.RestoreInfo.source_info)
+    pub enum Source_info {
+        // @@protoc_insertion_point(oneof_field:google.spanner.admin.database.v1.RestoreInfo.backup_info)
+        BackupInfo(super::super::backup::BackupInfo),
+    }
+
+    impl ::protobuf::Oneof for Source_info {
+    }
+
+    impl ::protobuf::OneofFull for Source_info {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::RestoreInfo as ::protobuf::MessageFull>::descriptor().oneof_by_name("source_info").unwrap()).clone()
+        }
+    }
+
+    impl Source_info {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Source_info>("source_info")
+        }
+    }
+}
 
 ///  A Cloud Spanner database.
 // @@protoc_insertion_point(message:google.spanner.admin.database.v1.Database)
@@ -40,6 +271,66 @@ pub struct Database {
     ///  Output only. The current database state.
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.state)
     pub state: ::protobuf::EnumOrUnknown<database::State>,
+    ///  Output only. If exists, the time at which the database creation started.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.create_time)
+    pub create_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. Applicable only for restored databases. Contains information
+    ///  about the restore source.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.restore_info)
+    pub restore_info: ::protobuf::MessageField<RestoreInfo>,
+    ///  Output only. For databases that are using customer managed encryption, this
+    ///  field contains the encryption configuration for the database.
+    ///  For databases that are using Google default or other types of encryption,
+    ///  this field is empty.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.encryption_config)
+    pub encryption_config: ::protobuf::MessageField<super::common::EncryptionConfig>,
+    ///  Output only. For databases that are using customer managed encryption, this
+    ///  field contains the encryption information for the database, such as
+    ///  all Cloud KMS key versions that are in use. The `encryption_status' field
+    ///  inside of each `EncryptionInfo` is not populated.
+    ///
+    ///  For databases that are using Google default or other types of encryption,
+    ///  this field is empty.
+    ///
+    ///  This field is propagated lazily from the backend. There might be a delay
+    ///  from when a key version is being used and when it appears in this field.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.encryption_info)
+    pub encryption_info: ::std::vec::Vec<super::common::EncryptionInfo>,
+    ///  Output only. The period in which Cloud Spanner retains all versions of data
+    ///  for the database. This is the same as the value of version_retention_period
+    ///  database option set using
+    ///  [UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].
+    ///  Defaults to 1 hour, if not set.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.version_retention_period)
+    pub version_retention_period: ::std::string::String,
+    ///  Output only. Earliest timestamp at which older versions of the data can be
+    ///  read. This value is continuously updated by Cloud Spanner and becomes stale
+    ///  the moment it is queried. If you are using this value to recover data, make
+    ///  sure to account for the time from the moment when the value is queried to
+    ///  the moment when you initiate the recovery.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.earliest_version_time)
+    pub earliest_version_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. The read-write region which contains the database's leader
+    ///  replicas.
+    ///
+    ///  This is the same as the value of default_leader
+    ///  database option set using DatabaseAdmin.CreateDatabase or
+    ///  DatabaseAdmin.UpdateDatabaseDdl. If not explicitly set, this is empty.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.default_leader)
+    pub default_leader: ::std::string::String,
+    ///  Output only. The dialect of the Cloud Spanner Database.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.database_dialect)
+    pub database_dialect: ::protobuf::EnumOrUnknown<super::common::DatabaseDialect>,
+    ///  Whether drop protection is enabled for this database. Defaults to false,
+    ///  if not set. For more details, please see how to [prevent accidental
+    ///  database
+    ///  deletion](https://cloud.google.com/spanner/docs/prevent-database-deletion).
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.enable_drop_protection)
+    pub enable_drop_protection: bool,
+    ///  Output only. If true, the database is being updated. If false, there are no
+    ///  ongoing update operations for the database.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.Database.reconciling)
+    pub reconciling: bool,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.Database.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -57,7 +348,7 @@ impl Database {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(12);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -68,6 +359,56 @@ impl Database {
             "state",
             |m: &Database| { &m.state },
             |m: &mut Database| { &mut m.state },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "create_time",
+            |m: &Database| { &m.create_time },
+            |m: &mut Database| { &mut m.create_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RestoreInfo>(
+            "restore_info",
+            |m: &Database| { &m.restore_info },
+            |m: &mut Database| { &mut m.restore_info },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::EncryptionConfig>(
+            "encryption_config",
+            |m: &Database| { &m.encryption_config },
+            |m: &mut Database| { &mut m.encryption_config },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "encryption_info",
+            |m: &Database| { &m.encryption_info },
+            |m: &mut Database| { &mut m.encryption_info },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "version_retention_period",
+            |m: &Database| { &m.version_retention_period },
+            |m: &mut Database| { &mut m.version_retention_period },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "earliest_version_time",
+            |m: &Database| { &m.earliest_version_time },
+            |m: &mut Database| { &mut m.earliest_version_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "default_leader",
+            |m: &Database| { &m.default_leader },
+            |m: &mut Database| { &mut m.default_leader },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "database_dialect",
+            |m: &Database| { &m.database_dialect },
+            |m: &mut Database| { &mut m.database_dialect },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "enable_drop_protection",
+            |m: &Database| { &m.enable_drop_protection },
+            |m: &mut Database| { &mut m.enable_drop_protection },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "reconciling",
+            |m: &Database| { &m.reconciling },
+            |m: &mut Database| { &mut m.reconciling },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Database>(
             "Database",
@@ -93,6 +434,36 @@ impl ::protobuf::Message for Database {
                 16 => {
                     self.state = is.read_enum_or_unknown()?;
                 },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.create_time)?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.restore_info)?;
+                },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.encryption_config)?;
+                },
+                66 => {
+                    self.encryption_info.push(is.read_message()?);
+                },
+                50 => {
+                    self.version_retention_period = is.read_string()?;
+                },
+                58 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.earliest_version_time)?;
+                },
+                74 => {
+                    self.default_leader = is.read_string()?;
+                },
+                80 => {
+                    self.database_dialect = is.read_enum_or_unknown()?;
+                },
+                88 => {
+                    self.enable_drop_protection = is.read_bool()?;
+                },
+                96 => {
+                    self.reconciling = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -111,6 +482,41 @@ impl ::protobuf::Message for Database {
         if self.state != ::protobuf::EnumOrUnknown::new(database::State::STATE_UNSPECIFIED) {
             my_size += ::protobuf::rt::int32_size(2, self.state.value());
         }
+        if let Some(v) = self.create_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.restore_info.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.encryption_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        for value in &self.encryption_info {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if !self.version_retention_period.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.version_retention_period);
+        }
+        if let Some(v) = self.earliest_version_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.default_leader.is_empty() {
+            my_size += ::protobuf::rt::string_size(9, &self.default_leader);
+        }
+        if self.database_dialect != ::protobuf::EnumOrUnknown::new(super::common::DatabaseDialect::DATABASE_DIALECT_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(10, self.database_dialect.value());
+        }
+        if self.enable_drop_protection != false {
+            my_size += 1 + 1;
+        }
+        if self.reconciling != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -122,6 +528,36 @@ impl ::protobuf::Message for Database {
         }
         if self.state != ::protobuf::EnumOrUnknown::new(database::State::STATE_UNSPECIFIED) {
             os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.state))?;
+        }
+        if let Some(v) = self.create_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.restore_info.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if let Some(v) = self.encryption_config.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        }
+        for v in &self.encryption_info {
+            ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
+        };
+        if !self.version_retention_period.is_empty() {
+            os.write_string(6, &self.version_retention_period)?;
+        }
+        if let Some(v) = self.earliest_version_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+        }
+        if !self.default_leader.is_empty() {
+            os.write_string(9, &self.default_leader)?;
+        }
+        if self.database_dialect != ::protobuf::EnumOrUnknown::new(super::common::DatabaseDialect::DATABASE_DIALECT_UNSPECIFIED) {
+            os.write_enum(10, ::protobuf::EnumOrUnknown::value(&self.database_dialect))?;
+        }
+        if self.enable_drop_protection != false {
+            os.write_bool(11, self.enable_drop_protection)?;
+        }
+        if self.reconciling != false {
+            os.write_bool(12, self.reconciling)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -142,6 +578,16 @@ impl ::protobuf::Message for Database {
     fn clear(&mut self) {
         self.name.clear();
         self.state = ::protobuf::EnumOrUnknown::new(database::State::STATE_UNSPECIFIED);
+        self.create_time.clear();
+        self.restore_info.clear();
+        self.encryption_config.clear();
+        self.encryption_info.clear();
+        self.version_retention_period.clear();
+        self.earliest_version_time.clear();
+        self.default_leader.clear();
+        self.database_dialect = ::protobuf::EnumOrUnknown::new(super::common::DatabaseDialect::DATABASE_DIALECT_UNSPECIFIED);
+        self.enable_drop_protection = false;
+        self.reconciling = false;
         self.special_fields.clear();
     }
 
@@ -149,6 +595,16 @@ impl ::protobuf::Message for Database {
         static instance: Database = Database {
             name: ::std::string::String::new(),
             state: ::protobuf::EnumOrUnknown::from_i32(0),
+            create_time: ::protobuf::MessageField::none(),
+            restore_info: ::protobuf::MessageField::none(),
+            encryption_config: ::protobuf::MessageField::none(),
+            encryption_info: ::std::vec::Vec::new(),
+            version_retention_period: ::std::string::String::new(),
+            earliest_version_time: ::protobuf::MessageField::none(),
+            default_leader: ::std::string::String::new(),
+            database_dialect: ::protobuf::EnumOrUnknown::from_i32(0),
+            enable_drop_protection: false,
+            reconciling: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -184,6 +640,8 @@ pub mod database {
         CREATING = 1,
         // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.Database.State.READY)
         READY = 2,
+        // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.Database.State.READY_OPTIMIZING)
+        READY_OPTIMIZING = 3,
     }
 
     impl ::protobuf::Enum for State {
@@ -198,6 +656,7 @@ pub mod database {
                 0 => ::std::option::Option::Some(State::STATE_UNSPECIFIED),
                 1 => ::std::option::Option::Some(State::CREATING),
                 2 => ::std::option::Option::Some(State::READY),
+                3 => ::std::option::Option::Some(State::READY_OPTIMIZING),
                 _ => ::std::option::Option::None
             }
         }
@@ -207,6 +666,7 @@ pub mod database {
                 "STATE_UNSPECIFIED" => ::std::option::Option::Some(State::STATE_UNSPECIFIED),
                 "CREATING" => ::std::option::Option::Some(State::CREATING),
                 "READY" => ::std::option::Option::Some(State::READY),
+                "READY_OPTIMIZING" => ::std::option::Option::Some(State::READY_OPTIMIZING),
                 _ => ::std::option::Option::None
             }
         }
@@ -215,6 +675,7 @@ pub mod database {
             State::STATE_UNSPECIFIED,
             State::CREATING,
             State::READY,
+            State::READY_OPTIMIZING,
         ];
     }
 
@@ -575,12 +1036,22 @@ pub struct CreateDatabaseRequest {
     ///  database ID must be enclosed in backticks (`` ` ``).
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.CreateDatabaseRequest.create_statement)
     pub create_statement: ::std::string::String,
-    ///  An optional list of DDL statements to run inside the newly created
+    ///  Optional. A list of DDL statements to run inside the newly created
     ///  database. Statements can create tables, indexes, etc. These
     ///  statements execute atomically with the creation of the database:
     ///  if there is an error in any statement, the database is not created.
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.CreateDatabaseRequest.extra_statements)
     pub extra_statements: ::std::vec::Vec<::std::string::String>,
+    ///  Optional. The encryption configuration for the database. If this field is
+    ///  not specified, Cloud Spanner will encrypt/decrypt all data at rest using
+    ///  Google default encryption.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.CreateDatabaseRequest.encryption_config)
+    pub encryption_config: ::protobuf::MessageField<super::common::EncryptionConfig>,
+    ///  Optional. The dialect of the Cloud Spanner Database.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.CreateDatabaseRequest.database_dialect)
+    pub database_dialect: ::protobuf::EnumOrUnknown<super::common::DatabaseDialect>,
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.CreateDatabaseRequest.proto_descriptors)
+    pub proto_descriptors: ::std::vec::Vec<u8>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.CreateDatabaseRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -598,7 +1069,7 @@ impl CreateDatabaseRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "parent",
@@ -614,6 +1085,21 @@ impl CreateDatabaseRequest {
             "extra_statements",
             |m: &CreateDatabaseRequest| { &m.extra_statements },
             |m: &mut CreateDatabaseRequest| { &mut m.extra_statements },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::EncryptionConfig>(
+            "encryption_config",
+            |m: &CreateDatabaseRequest| { &m.encryption_config },
+            |m: &mut CreateDatabaseRequest| { &mut m.encryption_config },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "database_dialect",
+            |m: &CreateDatabaseRequest| { &m.database_dialect },
+            |m: &mut CreateDatabaseRequest| { &mut m.database_dialect },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "proto_descriptors",
+            |m: &CreateDatabaseRequest| { &m.proto_descriptors },
+            |m: &mut CreateDatabaseRequest| { &mut m.proto_descriptors },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CreateDatabaseRequest>(
             "CreateDatabaseRequest",
@@ -642,6 +1128,15 @@ impl ::protobuf::Message for CreateDatabaseRequest {
                 26 => {
                     self.extra_statements.push(is.read_string()?);
                 },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.encryption_config)?;
+                },
+                40 => {
+                    self.database_dialect = is.read_enum_or_unknown()?;
+                },
+                50 => {
+                    self.proto_descriptors = is.read_bytes()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -663,6 +1158,16 @@ impl ::protobuf::Message for CreateDatabaseRequest {
         for value in &self.extra_statements {
             my_size += ::protobuf::rt::string_size(3, &value);
         };
+        if let Some(v) = self.encryption_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.database_dialect != ::protobuf::EnumOrUnknown::new(super::common::DatabaseDialect::DATABASE_DIALECT_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(5, self.database_dialect.value());
+        }
+        if !self.proto_descriptors.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(6, &self.proto_descriptors);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -678,6 +1183,15 @@ impl ::protobuf::Message for CreateDatabaseRequest {
         for v in &self.extra_statements {
             os.write_string(3, &v)?;
         };
+        if let Some(v) = self.encryption_config.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if self.database_dialect != ::protobuf::EnumOrUnknown::new(super::common::DatabaseDialect::DATABASE_DIALECT_UNSPECIFIED) {
+            os.write_enum(5, ::protobuf::EnumOrUnknown::value(&self.database_dialect))?;
+        }
+        if !self.proto_descriptors.is_empty() {
+            os.write_bytes(6, &self.proto_descriptors)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -698,6 +1212,9 @@ impl ::protobuf::Message for CreateDatabaseRequest {
         self.parent.clear();
         self.create_statement.clear();
         self.extra_statements.clear();
+        self.encryption_config.clear();
+        self.database_dialect = ::protobuf::EnumOrUnknown::new(super::common::DatabaseDialect::DATABASE_DIALECT_UNSPECIFIED);
+        self.proto_descriptors.clear();
         self.special_fields.clear();
     }
 
@@ -706,6 +1223,9 @@ impl ::protobuf::Message for CreateDatabaseRequest {
             parent: ::std::string::String::new(),
             create_statement: ::std::string::String::new(),
             extra_statements: ::std::vec::Vec::new(),
+            encryption_config: ::protobuf::MessageField::none(),
+            database_dialect: ::protobuf::EnumOrUnknown::from_i32(0),
+            proto_descriptors: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -980,6 +1500,325 @@ impl ::protobuf::reflect::ProtobufValue for GetDatabaseRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  The request for
+///  [UpdateDatabase][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabase].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.UpdateDatabaseRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateDatabaseRequest {
+    // message fields
+    ///  Required. The database to update.
+    ///  The `name` field of the database is of the form
+    ///  `projects/<project>/instances/<instance>/databases/<database>`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseRequest.database)
+    pub database: ::protobuf::MessageField<Database>,
+    ///  Required. The list of fields to update. Currently, only
+    ///  `enable_drop_protection` field can be updated.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseRequest.update_mask)
+    pub update_mask: ::protobuf::MessageField<::protobuf::well_known_types::field_mask::FieldMask>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.UpdateDatabaseRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateDatabaseRequest {
+    fn default() -> &'a UpdateDatabaseRequest {
+        <UpdateDatabaseRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateDatabaseRequest {
+    pub fn new() -> UpdateDatabaseRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, Database>(
+            "database",
+            |m: &UpdateDatabaseRequest| { &m.database },
+            |m: &mut UpdateDatabaseRequest| { &mut m.database },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::field_mask::FieldMask>(
+            "update_mask",
+            |m: &UpdateDatabaseRequest| { &m.update_mask },
+            |m: &mut UpdateDatabaseRequest| { &mut m.update_mask },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateDatabaseRequest>(
+            "UpdateDatabaseRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateDatabaseRequest {
+    const NAME: &'static str = "UpdateDatabaseRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.database)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_mask)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.database.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.database.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateDatabaseRequest {
+        UpdateDatabaseRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.database.clear();
+        self.update_mask.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateDatabaseRequest {
+        static instance: UpdateDatabaseRequest = UpdateDatabaseRequest {
+            database: ::protobuf::MessageField::none(),
+            update_mask: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateDatabaseRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateDatabaseRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateDatabaseRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateDatabaseRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Metadata type for the operation returned by
+///  [UpdateDatabase][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabase].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.UpdateDatabaseMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateDatabaseMetadata {
+    // message fields
+    ///  The request for
+    ///  [UpdateDatabase][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabase].
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseMetadata.request)
+    pub request: ::protobuf::MessageField<UpdateDatabaseRequest>,
+    ///  The progress of the
+    ///  [UpdateDatabase][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabase]
+    ///  operation.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseMetadata.progress)
+    pub progress: ::protobuf::MessageField<super::common::OperationProgress>,
+    ///  The time at which this operation was cancelled. If set, this operation is
+    ///  in the process of undoing itself (which is best-effort).
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseMetadata.cancel_time)
+    pub cancel_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.UpdateDatabaseMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateDatabaseMetadata {
+    fn default() -> &'a UpdateDatabaseMetadata {
+        <UpdateDatabaseMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateDatabaseMetadata {
+    pub fn new() -> UpdateDatabaseMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, UpdateDatabaseRequest>(
+            "request",
+            |m: &UpdateDatabaseMetadata| { &m.request },
+            |m: &mut UpdateDatabaseMetadata| { &mut m.request },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::OperationProgress>(
+            "progress",
+            |m: &UpdateDatabaseMetadata| { &m.progress },
+            |m: &mut UpdateDatabaseMetadata| { &mut m.progress },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "cancel_time",
+            |m: &UpdateDatabaseMetadata| { &m.cancel_time },
+            |m: &mut UpdateDatabaseMetadata| { &mut m.cancel_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateDatabaseMetadata>(
+            "UpdateDatabaseMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateDatabaseMetadata {
+    const NAME: &'static str = "UpdateDatabaseMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.request)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.progress)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.cancel_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.request.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.cancel_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.request.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.cancel_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateDatabaseMetadata {
+        UpdateDatabaseMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.request.clear();
+        self.progress.clear();
+        self.cancel_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateDatabaseMetadata {
+        static instance: UpdateDatabaseMetadata = UpdateDatabaseMetadata {
+            request: ::protobuf::MessageField::none(),
+            progress: ::protobuf::MessageField::none(),
+            cancel_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateDatabaseMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateDatabaseMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateDatabaseMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateDatabaseMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  Enqueues the given DDL statements to be applied, in order but not
 ///  necessarily all at once, to the database schema at some point (or
 ///  points) in the future. The server checks that the statements
@@ -1029,6 +1868,8 @@ pub struct UpdateDatabaseDdlRequest {
     ///  returns `ALREADY_EXISTS`.
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.operation_id)
     pub operation_id: ::std::string::String,
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.proto_descriptors)
+    pub proto_descriptors: ::std::vec::Vec<u8>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1046,7 +1887,7 @@ impl UpdateDatabaseDdlRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "database",
@@ -1062,6 +1903,11 @@ impl UpdateDatabaseDdlRequest {
             "operation_id",
             |m: &UpdateDatabaseDdlRequest| { &m.operation_id },
             |m: &mut UpdateDatabaseDdlRequest| { &mut m.operation_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "proto_descriptors",
+            |m: &UpdateDatabaseDdlRequest| { &m.proto_descriptors },
+            |m: &mut UpdateDatabaseDdlRequest| { &mut m.proto_descriptors },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateDatabaseDdlRequest>(
             "UpdateDatabaseDdlRequest",
@@ -1090,6 +1936,9 @@ impl ::protobuf::Message for UpdateDatabaseDdlRequest {
                 26 => {
                     self.operation_id = is.read_string()?;
                 },
+                34 => {
+                    self.proto_descriptors = is.read_bytes()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1111,6 +1960,9 @@ impl ::protobuf::Message for UpdateDatabaseDdlRequest {
         if !self.operation_id.is_empty() {
             my_size += ::protobuf::rt::string_size(3, &self.operation_id);
         }
+        if !self.proto_descriptors.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(4, &self.proto_descriptors);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1125,6 +1977,9 @@ impl ::protobuf::Message for UpdateDatabaseDdlRequest {
         };
         if !self.operation_id.is_empty() {
             os.write_string(3, &self.operation_id)?;
+        }
+        if !self.proto_descriptors.is_empty() {
+            os.write_bytes(4, &self.proto_descriptors)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1146,6 +2001,7 @@ impl ::protobuf::Message for UpdateDatabaseDdlRequest {
         self.database.clear();
         self.statements.clear();
         self.operation_id.clear();
+        self.proto_descriptors.clear();
         self.special_fields.clear();
     }
 
@@ -1154,6 +2010,7 @@ impl ::protobuf::Message for UpdateDatabaseDdlRequest {
             database: ::std::string::String::new(),
             statements: ::std::vec::Vec::new(),
             operation_id: ::std::string::String::new(),
+            proto_descriptors: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1177,6 +2034,177 @@ impl ::protobuf::reflect::ProtobufValue for UpdateDatabaseDdlRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  Action information extracted from a DDL statement. This proto is used to
+///  display the brief info of the DDL statement for the operation
+///  [UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.DdlStatementActionInfo)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct DdlStatementActionInfo {
+    // message fields
+    ///  The action for the DDL statement, e.g. CREATE, ALTER, DROP, GRANT, etc.
+    ///  This field is a non-empty string.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.DdlStatementActionInfo.action)
+    pub action: ::std::string::String,
+    ///  The entity type for the DDL statement, e.g. TABLE, INDEX, VIEW, etc.
+    ///  This field can be empty string for some DDL statement,
+    ///  e.g. for statement "ANALYZE", `entity_type` = "".
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.DdlStatementActionInfo.entity_type)
+    pub entity_type: ::std::string::String,
+    ///  The entity name(s) being operated on the DDL statement.
+    ///  E.g.
+    ///  1. For statement "CREATE TABLE t1(...)", `entity_names` = ["t1"].
+    ///  2. For statement "GRANT ROLE r1, r2 ...", `entity_names` = ["r1", "r2"].
+    ///  3. For statement "ANALYZE", `entity_names` = [].
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.DdlStatementActionInfo.entity_names)
+    pub entity_names: ::std::vec::Vec<::std::string::String>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.DdlStatementActionInfo.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a DdlStatementActionInfo {
+    fn default() -> &'a DdlStatementActionInfo {
+        <DdlStatementActionInfo as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DdlStatementActionInfo {
+    pub fn new() -> DdlStatementActionInfo {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "action",
+            |m: &DdlStatementActionInfo| { &m.action },
+            |m: &mut DdlStatementActionInfo| { &mut m.action },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "entity_type",
+            |m: &DdlStatementActionInfo| { &m.entity_type },
+            |m: &mut DdlStatementActionInfo| { &mut m.entity_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "entity_names",
+            |m: &DdlStatementActionInfo| { &m.entity_names },
+            |m: &mut DdlStatementActionInfo| { &mut m.entity_names },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DdlStatementActionInfo>(
+            "DdlStatementActionInfo",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for DdlStatementActionInfo {
+    const NAME: &'static str = "DdlStatementActionInfo";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.action = is.read_string()?;
+                },
+                18 => {
+                    self.entity_type = is.read_string()?;
+                },
+                26 => {
+                    self.entity_names.push(is.read_string()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.action.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.action);
+        }
+        if !self.entity_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.entity_type);
+        }
+        for value in &self.entity_names {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.action.is_empty() {
+            os.write_string(1, &self.action)?;
+        }
+        if !self.entity_type.is_empty() {
+            os.write_string(2, &self.entity_type)?;
+        }
+        for v in &self.entity_names {
+            os.write_string(3, &v)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> DdlStatementActionInfo {
+        DdlStatementActionInfo::new()
+    }
+
+    fn clear(&mut self) {
+        self.action.clear();
+        self.entity_type.clear();
+        self.entity_names.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static DdlStatementActionInfo {
+        static instance: DdlStatementActionInfo = DdlStatementActionInfo {
+            action: ::std::string::String::new(),
+            entity_type: ::std::string::String::new(),
+            entity_names: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for DdlStatementActionInfo {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("DdlStatementActionInfo").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for DdlStatementActionInfo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DdlStatementActionInfo {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  Metadata type for the operation returned by
 ///  [UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].
 // @@protoc_insertion_point(message:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata)
@@ -1195,6 +2223,24 @@ pub struct UpdateDatabaseDdlMetadata {
     ///  timestamp for the statement `statements[i]`.
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata.commit_timestamps)
     pub commit_timestamps: ::std::vec::Vec<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. When true, indicates that the operation is throttled e.g.
+    ///  due to resource constraints. When resources become available the operation
+    ///  will resume and this field will be false again.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata.throttled)
+    pub throttled: bool,
+    ///  The progress of the
+    ///  [UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]
+    ///  operations. All DDL statements will have continuously updating progress,
+    ///  and `progress[i]` is the operation progress for `statements[i]`. Also,
+    ///  `progress[i]` will have start time and end time populated with commit
+    ///  timestamp of operation, as well as a progress of 100% once the operation
+    ///  has completed.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata.progress)
+    pub progress: ::std::vec::Vec<super::common::OperationProgress>,
+    ///  The brief action info for the DDL statements.
+    ///  `actions[i]` is the brief info for `statements[i]`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata.actions)
+    pub actions: ::std::vec::Vec<DdlStatementActionInfo>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1212,7 +2258,7 @@ impl UpdateDatabaseDdlMetadata {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "database",
@@ -1228,6 +2274,21 @@ impl UpdateDatabaseDdlMetadata {
             "commit_timestamps",
             |m: &UpdateDatabaseDdlMetadata| { &m.commit_timestamps },
             |m: &mut UpdateDatabaseDdlMetadata| { &mut m.commit_timestamps },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "throttled",
+            |m: &UpdateDatabaseDdlMetadata| { &m.throttled },
+            |m: &mut UpdateDatabaseDdlMetadata| { &mut m.throttled },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "progress",
+            |m: &UpdateDatabaseDdlMetadata| { &m.progress },
+            |m: &mut UpdateDatabaseDdlMetadata| { &mut m.progress },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "actions",
+            |m: &UpdateDatabaseDdlMetadata| { &m.actions },
+            |m: &mut UpdateDatabaseDdlMetadata| { &mut m.actions },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateDatabaseDdlMetadata>(
             "UpdateDatabaseDdlMetadata",
@@ -1256,6 +2317,15 @@ impl ::protobuf::Message for UpdateDatabaseDdlMetadata {
                 26 => {
                     self.commit_timestamps.push(is.read_message()?);
                 },
+                32 => {
+                    self.throttled = is.read_bool()?;
+                },
+                42 => {
+                    self.progress.push(is.read_message()?);
+                },
+                50 => {
+                    self.actions.push(is.read_message()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1278,6 +2348,17 @@ impl ::protobuf::Message for UpdateDatabaseDdlMetadata {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
+        if self.throttled != false {
+            my_size += 1 + 1;
+        }
+        for value in &self.progress {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        for value in &self.actions {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1292,6 +2373,15 @@ impl ::protobuf::Message for UpdateDatabaseDdlMetadata {
         };
         for v in &self.commit_timestamps {
             ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        };
+        if self.throttled != false {
+            os.write_bool(4, self.throttled)?;
+        }
+        for v in &self.progress {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        };
+        for v in &self.actions {
+            ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
         };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1313,6 +2403,9 @@ impl ::protobuf::Message for UpdateDatabaseDdlMetadata {
         self.database.clear();
         self.statements.clear();
         self.commit_timestamps.clear();
+        self.throttled = false;
+        self.progress.clear();
+        self.actions.clear();
         self.special_fields.clear();
     }
 
@@ -1321,6 +2414,9 @@ impl ::protobuf::Message for UpdateDatabaseDdlMetadata {
             database: ::std::string::String::new(),
             statements: ::std::vec::Vec::new(),
             commit_timestamps: ::std::vec::Vec::new(),
+            throttled: false,
+            progress: ::std::vec::Vec::new(),
+            actions: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1476,6 +2572,8 @@ impl ::protobuf::reflect::ProtobufValue for DropDatabaseRequest {
 pub struct GetDatabaseDdlRequest {
     // message fields
     ///  Required. The database whose schema we wish to get.
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/databases/<database>`
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.GetDatabaseDdlRequest.database)
     pub database: ::std::string::String,
     // special fields
@@ -1604,6 +2702,13 @@ pub struct GetDatabaseDdlResponse {
     ///  specified in the request.
     // @@protoc_insertion_point(field:google.spanner.admin.database.v1.GetDatabaseDdlResponse.statements)
     pub statements: ::std::vec::Vec<::std::string::String>,
+    ///  Proto descriptors stored in the database.
+    ///  Contains a protobuf-serialized
+    ///  [google.protobuf.FileDescriptorSet](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
+    ///  For more details, see protobuffer [self
+    ///  description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.GetDatabaseDdlResponse.proto_descriptors)
+    pub proto_descriptors: ::std::vec::Vec<u8>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.GetDatabaseDdlResponse.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1621,12 +2726,17 @@ impl GetDatabaseDdlResponse {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "statements",
             |m: &GetDatabaseDdlResponse| { &m.statements },
             |m: &mut GetDatabaseDdlResponse| { &mut m.statements },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "proto_descriptors",
+            |m: &GetDatabaseDdlResponse| { &m.proto_descriptors },
+            |m: &mut GetDatabaseDdlResponse| { &mut m.proto_descriptors },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GetDatabaseDdlResponse>(
             "GetDatabaseDdlResponse",
@@ -1649,6 +2759,9 @@ impl ::protobuf::Message for GetDatabaseDdlResponse {
                 10 => {
                     self.statements.push(is.read_string()?);
                 },
+                18 => {
+                    self.proto_descriptors = is.read_bytes()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1664,6 +2777,9 @@ impl ::protobuf::Message for GetDatabaseDdlResponse {
         for value in &self.statements {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
+        if !self.proto_descriptors.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.proto_descriptors);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1673,6 +2789,9 @@ impl ::protobuf::Message for GetDatabaseDdlResponse {
         for v in &self.statements {
             os.write_string(1, &v)?;
         };
+        if !self.proto_descriptors.is_empty() {
+            os.write_bytes(2, &self.proto_descriptors)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1691,12 +2810,14 @@ impl ::protobuf::Message for GetDatabaseDdlResponse {
 
     fn clear(&mut self) {
         self.statements.clear();
+        self.proto_descriptors.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static GetDatabaseDdlResponse {
         static instance: GetDatabaseDdlResponse = GetDatabaseDdlResponse {
             statements: ::std::vec::Vec::new(),
+            proto_descriptors: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1720,153 +2841,2215 @@ impl ::protobuf::reflect::ProtobufValue for GetDatabaseDdlResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  The request for
+///  [ListDatabaseOperations][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabaseOperations].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.ListDatabaseOperationsRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListDatabaseOperationsRequest {
+    // message fields
+    ///  Required. The instance of the database operations.
+    ///  Values are of the form `projects/<project>/instances/<instance>`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseOperationsRequest.parent)
+    pub parent: ::std::string::String,
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseOperationsRequest.filter)
+    pub filter: ::std::string::String,
+    ///  Number of operations to be returned in the response. If 0 or
+    ///  less, defaults to the server's maximum allowed page size.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseOperationsRequest.page_size)
+    pub page_size: i32,
+    ///  If non-empty, `page_token` should contain a
+    ///  [next_page_token][google.spanner.admin.database.v1.ListDatabaseOperationsResponse.next_page_token]
+    ///  from a previous
+    ///  [ListDatabaseOperationsResponse][google.spanner.admin.database.v1.ListDatabaseOperationsResponse]
+    ///  to the same `parent` and with the same `filter`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseOperationsRequest.page_token)
+    pub page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.ListDatabaseOperationsRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListDatabaseOperationsRequest {
+    fn default() -> &'a ListDatabaseOperationsRequest {
+        <ListDatabaseOperationsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListDatabaseOperationsRequest {
+    pub fn new() -> ListDatabaseOperationsRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &ListDatabaseOperationsRequest| { &m.parent },
+            |m: &mut ListDatabaseOperationsRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "filter",
+            |m: &ListDatabaseOperationsRequest| { &m.filter },
+            |m: &mut ListDatabaseOperationsRequest| { &mut m.filter },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_size",
+            |m: &ListDatabaseOperationsRequest| { &m.page_size },
+            |m: &mut ListDatabaseOperationsRequest| { &mut m.page_size },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_token",
+            |m: &ListDatabaseOperationsRequest| { &m.page_token },
+            |m: &mut ListDatabaseOperationsRequest| { &mut m.page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListDatabaseOperationsRequest>(
+            "ListDatabaseOperationsRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListDatabaseOperationsRequest {
+    const NAME: &'static str = "ListDatabaseOperationsRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.filter = is.read_string()?;
+                },
+                24 => {
+                    self.page_size = is.read_int32()?;
+                },
+                34 => {
+                    self.page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.filter.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.filter);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::int32_size(3, self.page_size);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.filter.is_empty() {
+            os.write_string(2, &self.filter)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(3, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(4, &self.page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListDatabaseOperationsRequest {
+        ListDatabaseOperationsRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.filter.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListDatabaseOperationsRequest {
+        static instance: ListDatabaseOperationsRequest = ListDatabaseOperationsRequest {
+            parent: ::std::string::String::new(),
+            filter: ::std::string::String::new(),
+            page_size: 0,
+            page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListDatabaseOperationsRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListDatabaseOperationsRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListDatabaseOperationsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListDatabaseOperationsRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The response for
+///  [ListDatabaseOperations][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabaseOperations].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.ListDatabaseOperationsResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListDatabaseOperationsResponse {
+    // message fields
+    ///  The list of matching database [long-running
+    ///  operations][google.longrunning.Operation]. Each operation's name will be
+    ///  prefixed by the database's name. The operation's
+    ///  [metadata][google.longrunning.Operation.metadata] field type
+    ///  `metadata.type_url` describes the type of the metadata.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseOperationsResponse.operations)
+    pub operations: ::std::vec::Vec<super::operations::Operation>,
+    ///  `next_page_token` can be sent in a subsequent
+    ///  [ListDatabaseOperations][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabaseOperations]
+    ///  call to fetch more of the matching metadata.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseOperationsResponse.next_page_token)
+    pub next_page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.ListDatabaseOperationsResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListDatabaseOperationsResponse {
+    fn default() -> &'a ListDatabaseOperationsResponse {
+        <ListDatabaseOperationsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListDatabaseOperationsResponse {
+    pub fn new() -> ListDatabaseOperationsResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "operations",
+            |m: &ListDatabaseOperationsResponse| { &m.operations },
+            |m: &mut ListDatabaseOperationsResponse| { &mut m.operations },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "next_page_token",
+            |m: &ListDatabaseOperationsResponse| { &m.next_page_token },
+            |m: &mut ListDatabaseOperationsResponse| { &mut m.next_page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListDatabaseOperationsResponse>(
+            "ListDatabaseOperationsResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListDatabaseOperationsResponse {
+    const NAME: &'static str = "ListDatabaseOperationsResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.operations.push(is.read_message()?);
+                },
+                18 => {
+                    self.next_page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.operations {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.operations {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListDatabaseOperationsResponse {
+        ListDatabaseOperationsResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.operations.clear();
+        self.next_page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListDatabaseOperationsResponse {
+        static instance: ListDatabaseOperationsResponse = ListDatabaseOperationsResponse {
+            operations: ::std::vec::Vec::new(),
+            next_page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListDatabaseOperationsResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListDatabaseOperationsResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListDatabaseOperationsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListDatabaseOperationsResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [RestoreDatabase][google.spanner.admin.database.v1.DatabaseAdmin.RestoreDatabase].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.RestoreDatabaseRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreDatabaseRequest {
+    // message fields
+    ///  Required. The name of the instance in which to create the
+    ///  restored database. This instance must be in the same project and
+    ///  have the same instance configuration as the instance containing
+    ///  the source backup. Values are of the form
+    ///  `projects/<project>/instances/<instance>`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Required. The id of the database to create and restore to. This
+    ///  database must not already exist. The `database_id` appended to
+    ///  `parent` forms the full database name of the form
+    ///  `projects/<project>/instances/<instance>/databases/<database_id>`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseRequest.database_id)
+    pub database_id: ::std::string::String,
+    ///  Optional. An encryption configuration describing the encryption type and
+    ///  key resources in Cloud KMS used to encrypt/decrypt the database to restore
+    ///  to. If this field is not specified, the restored database will use the same
+    ///  encryption configuration as the backup by default, namely
+    ///  [encryption_type][google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.encryption_type]
+    ///  = `USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseRequest.encryption_config)
+    pub encryption_config: ::protobuf::MessageField<RestoreDatabaseEncryptionConfig>,
+    // message oneof groups
+    pub source: ::std::option::Option<restore_database_request::Source>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.RestoreDatabaseRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreDatabaseRequest {
+    fn default() -> &'a RestoreDatabaseRequest {
+        <RestoreDatabaseRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreDatabaseRequest {
+    pub fn new() -> RestoreDatabaseRequest {
+        ::std::default::Default::default()
+    }
+
+    // string backup = 3;
+
+    pub fn backup(&self) -> &str {
+        match self.source {
+            ::std::option::Option::Some(restore_database_request::Source::Backup(ref v)) => v,
+            _ => "",
+        }
+    }
+
+    pub fn clear_backup(&mut self) {
+        self.source = ::std::option::Option::None;
+    }
+
+    pub fn has_backup(&self) -> bool {
+        match self.source {
+            ::std::option::Option::Some(restore_database_request::Source::Backup(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backup(&mut self, v: ::std::string::String) {
+        self.source = ::std::option::Option::Some(restore_database_request::Source::Backup(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_backup(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(restore_database_request::Source::Backup(_)) = self.source {
+        } else {
+            self.source = ::std::option::Option::Some(restore_database_request::Source::Backup(::std::string::String::new()));
+        }
+        match self.source {
+            ::std::option::Option::Some(restore_database_request::Source::Backup(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_backup(&mut self) -> ::std::string::String {
+        if self.has_backup() {
+            match self.source.take() {
+                ::std::option::Option::Some(restore_database_request::Source::Backup(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &RestoreDatabaseRequest| { &m.parent },
+            |m: &mut RestoreDatabaseRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "database_id",
+            |m: &RestoreDatabaseRequest| { &m.database_id },
+            |m: &mut RestoreDatabaseRequest| { &mut m.database_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+            "backup",
+            RestoreDatabaseRequest::has_backup,
+            RestoreDatabaseRequest::backup,
+            RestoreDatabaseRequest::set_backup,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RestoreDatabaseEncryptionConfig>(
+            "encryption_config",
+            |m: &RestoreDatabaseRequest| { &m.encryption_config },
+            |m: &mut RestoreDatabaseRequest| { &mut m.encryption_config },
+        ));
+        oneofs.push(restore_database_request::Source::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreDatabaseRequest>(
+            "RestoreDatabaseRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreDatabaseRequest {
+    const NAME: &'static str = "RestoreDatabaseRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.database_id = is.read_string()?;
+                },
+                26 => {
+                    self.source = ::std::option::Option::Some(restore_database_request::Source::Backup(is.read_string()?));
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.encryption_config)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.database_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.database_id);
+        }
+        if let Some(v) = self.encryption_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source {
+            match v {
+                &restore_database_request::Source::Backup(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.database_id.is_empty() {
+            os.write_string(2, &self.database_id)?;
+        }
+        if let Some(v) = self.encryption_config.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source {
+            match v {
+                &restore_database_request::Source::Backup(ref v) => {
+                    os.write_string(3, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreDatabaseRequest {
+        RestoreDatabaseRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.database_id.clear();
+        self.source = ::std::option::Option::None;
+        self.encryption_config.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreDatabaseRequest {
+        static instance: RestoreDatabaseRequest = RestoreDatabaseRequest {
+            parent: ::std::string::String::new(),
+            database_id: ::std::string::String::new(),
+            encryption_config: ::protobuf::MessageField::none(),
+            source: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreDatabaseRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreDatabaseRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreDatabaseRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreDatabaseRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreDatabaseRequest`
+pub mod restore_database_request {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.spanner.admin.database.v1.RestoreDatabaseRequest.source)
+    pub enum Source {
+        // @@protoc_insertion_point(oneof_field:google.spanner.admin.database.v1.RestoreDatabaseRequest.backup)
+        Backup(::std::string::String),
+    }
+
+    impl ::protobuf::Oneof for Source {
+    }
+
+    impl ::protobuf::OneofFull for Source {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::RestoreDatabaseRequest as ::protobuf::MessageFull>::descriptor().oneof_by_name("source").unwrap()).clone()
+        }
+    }
+
+    impl Source {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Source>("source")
+        }
+    }
+}
+
+///  Encryption configuration for the restored database.
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreDatabaseEncryptionConfig {
+    // message fields
+    ///  Required. The encryption type of the restored database.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.encryption_type)
+    pub encryption_type: ::protobuf::EnumOrUnknown<restore_database_encryption_config::EncryptionType>,
+    ///  Optional. The Cloud KMS key that will be used to encrypt/decrypt the
+    ///  restored database. This field should be set only when
+    ///  [encryption_type][google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.encryption_type]
+    ///  is `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
+    ///  `projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<kms_key_name>`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.kms_key_name)
+    pub kms_key_name: ::std::string::String,
+    ///  Optional. Specifies the KMS configuration for the one or more keys used to
+    ///  encrypt the database. Values are of the form
+    ///  `projects/<project>/locations/<location>/keyRings/<key_ring>/cryptoKeys/<kms_key_name>`.
+    ///
+    ///  The keys referenced by kms_key_names must fully cover all
+    ///  regions of the database instance configuration. Some examples:
+    ///  * For single region database instance configs, specify a single regional
+    ///  location KMS key.
+    ///  * For multi-regional database instance configs of type GOOGLE_MANAGED,
+    ///  either specify a multi-regional location KMS key or multiple regional
+    ///  location KMS keys that cover all regions in the instance config.
+    ///  * For a database instance config of type USER_MANAGED, please specify only
+    ///  regional location KMS keys to cover each region in the instance config.
+    ///  Multi-regional location KMS keys are not supported for USER_MANAGED
+    ///  instance configs.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.kms_key_names)
+    pub kms_key_names: ::std::vec::Vec<::std::string::String>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreDatabaseEncryptionConfig {
+    fn default() -> &'a RestoreDatabaseEncryptionConfig {
+        <RestoreDatabaseEncryptionConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreDatabaseEncryptionConfig {
+    pub fn new() -> RestoreDatabaseEncryptionConfig {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "encryption_type",
+            |m: &RestoreDatabaseEncryptionConfig| { &m.encryption_type },
+            |m: &mut RestoreDatabaseEncryptionConfig| { &mut m.encryption_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "kms_key_name",
+            |m: &RestoreDatabaseEncryptionConfig| { &m.kms_key_name },
+            |m: &mut RestoreDatabaseEncryptionConfig| { &mut m.kms_key_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "kms_key_names",
+            |m: &RestoreDatabaseEncryptionConfig| { &m.kms_key_names },
+            |m: &mut RestoreDatabaseEncryptionConfig| { &mut m.kms_key_names },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreDatabaseEncryptionConfig>(
+            "RestoreDatabaseEncryptionConfig",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreDatabaseEncryptionConfig {
+    const NAME: &'static str = "RestoreDatabaseEncryptionConfig";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.encryption_type = is.read_enum_or_unknown()?;
+                },
+                18 => {
+                    self.kms_key_name = is.read_string()?;
+                },
+                26 => {
+                    self.kms_key_names.push(is.read_string()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.encryption_type != ::protobuf::EnumOrUnknown::new(restore_database_encryption_config::EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(1, self.encryption_type.value());
+        }
+        if !self.kms_key_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.kms_key_name);
+        }
+        for value in &self.kms_key_names {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.encryption_type != ::protobuf::EnumOrUnknown::new(restore_database_encryption_config::EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED) {
+            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.encryption_type))?;
+        }
+        if !self.kms_key_name.is_empty() {
+            os.write_string(2, &self.kms_key_name)?;
+        }
+        for v in &self.kms_key_names {
+            os.write_string(3, &v)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreDatabaseEncryptionConfig {
+        RestoreDatabaseEncryptionConfig::new()
+    }
+
+    fn clear(&mut self) {
+        self.encryption_type = ::protobuf::EnumOrUnknown::new(restore_database_encryption_config::EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED);
+        self.kms_key_name.clear();
+        self.kms_key_names.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreDatabaseEncryptionConfig {
+        static instance: RestoreDatabaseEncryptionConfig = RestoreDatabaseEncryptionConfig {
+            encryption_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            kms_key_name: ::std::string::String::new(),
+            kms_key_names: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreDatabaseEncryptionConfig {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreDatabaseEncryptionConfig").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreDatabaseEncryptionConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreDatabaseEncryptionConfig {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreDatabaseEncryptionConfig`
+pub mod restore_database_encryption_config {
+    ///  Encryption types for the database to be restored.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.EncryptionType)
+    pub enum EncryptionType {
+        // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.EncryptionType.ENCRYPTION_TYPE_UNSPECIFIED)
+        ENCRYPTION_TYPE_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.EncryptionType.USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION)
+        USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION = 1,
+        // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.EncryptionType.GOOGLE_DEFAULT_ENCRYPTION)
+        GOOGLE_DEFAULT_ENCRYPTION = 2,
+        // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig.EncryptionType.CUSTOMER_MANAGED_ENCRYPTION)
+        CUSTOMER_MANAGED_ENCRYPTION = 3,
+    }
+
+    impl ::protobuf::Enum for EncryptionType {
+        const NAME: &'static str = "EncryptionType";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<EncryptionType> {
+            match value {
+                0 => ::std::option::Option::Some(EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED),
+                1 => ::std::option::Option::Some(EncryptionType::USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION),
+                2 => ::std::option::Option::Some(EncryptionType::GOOGLE_DEFAULT_ENCRYPTION),
+                3 => ::std::option::Option::Some(EncryptionType::CUSTOMER_MANAGED_ENCRYPTION),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<EncryptionType> {
+            match str {
+                "ENCRYPTION_TYPE_UNSPECIFIED" => ::std::option::Option::Some(EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED),
+                "USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION" => ::std::option::Option::Some(EncryptionType::USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION),
+                "GOOGLE_DEFAULT_ENCRYPTION" => ::std::option::Option::Some(EncryptionType::GOOGLE_DEFAULT_ENCRYPTION),
+                "CUSTOMER_MANAGED_ENCRYPTION" => ::std::option::Option::Some(EncryptionType::CUSTOMER_MANAGED_ENCRYPTION),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [EncryptionType] = &[
+            EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED,
+            EncryptionType::USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION,
+            EncryptionType::GOOGLE_DEFAULT_ENCRYPTION,
+            EncryptionType::CUSTOMER_MANAGED_ENCRYPTION,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for EncryptionType {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("RestoreDatabaseEncryptionConfig.EncryptionType").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for EncryptionType {
+        fn default() -> Self {
+            EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED
+        }
+    }
+
+    impl EncryptionType {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<EncryptionType>("RestoreDatabaseEncryptionConfig.EncryptionType")
+        }
+    }
+}
+
+///  Metadata type for the long-running operation returned by
+///  [RestoreDatabase][google.spanner.admin.database.v1.DatabaseAdmin.RestoreDatabase].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.RestoreDatabaseMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreDatabaseMetadata {
+    // message fields
+    ///  Name of the database being created and restored to.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.name)
+    pub name: ::std::string::String,
+    ///  The type of the restore source.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.source_type)
+    pub source_type: ::protobuf::EnumOrUnknown<RestoreSourceType>,
+    ///  The progress of the
+    ///  [RestoreDatabase][google.spanner.admin.database.v1.DatabaseAdmin.RestoreDatabase]
+    ///  operation.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.progress)
+    pub progress: ::protobuf::MessageField<super::common::OperationProgress>,
+    ///  The time at which cancellation of this operation was received.
+    ///  [Operations.CancelOperation][google.longrunning.Operations.CancelOperation]
+    ///  starts asynchronous cancellation on a long-running operation. The server
+    ///  makes a best effort to cancel the operation, but success is not guaranteed.
+    ///  Clients can use
+    ///  [Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+    ///  other methods to check whether the cancellation succeeded or whether the
+    ///  operation completed despite cancellation. On successful cancellation,
+    ///  the operation is not deleted; instead, it becomes an operation with
+    ///  an [Operation.error][google.longrunning.Operation.error] value with a
+    ///  [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to
+    ///  `Code.CANCELLED`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.cancel_time)
+    pub cancel_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  If exists, the name of the long-running operation that will be used to
+    ///  track the post-restore optimization process to optimize the performance of
+    ///  the restored database, and remove the dependency on the restore source.
+    ///  The name is of the form
+    ///  `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`
+    ///  where the <database> is the name of database being created and restored to.
+    ///  The metadata type of the  long-running operation is
+    ///  [OptimizeRestoredDatabaseMetadata][google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata].
+    ///  This long-running operation will be automatically created by the system
+    ///  after the RestoreDatabase long-running operation completes successfully.
+    ///  This operation will not be created if the restore was not successful.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.optimize_database_operation_name)
+    pub optimize_database_operation_name: ::std::string::String,
+    // message oneof groups
+    pub source_info: ::std::option::Option<restore_database_metadata::Source_info>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreDatabaseMetadata {
+    fn default() -> &'a RestoreDatabaseMetadata {
+        <RestoreDatabaseMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreDatabaseMetadata {
+    pub fn new() -> RestoreDatabaseMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.spanner.admin.database.v1.BackupInfo backup_info = 3;
+
+    pub fn backup_info(&self) -> &super::backup::BackupInfo {
+        match self.source_info {
+            ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(ref v)) => v,
+            _ => <super::backup::BackupInfo as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_backup_info(&mut self) {
+        self.source_info = ::std::option::Option::None;
+    }
+
+    pub fn has_backup_info(&self) -> bool {
+        match self.source_info {
+            ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backup_info(&mut self, v: super::backup::BackupInfo) {
+        self.source_info = ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_backup_info(&mut self) -> &mut super::backup::BackupInfo {
+        if let ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(_)) = self.source_info {
+        } else {
+            self.source_info = ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(super::backup::BackupInfo::new()));
+        }
+        match self.source_info {
+            ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_backup_info(&mut self) -> super::backup::BackupInfo {
+        if self.has_backup_info() {
+            match self.source_info.take() {
+                ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::backup::BackupInfo::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &RestoreDatabaseMetadata| { &m.name },
+            |m: &mut RestoreDatabaseMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_type",
+            |m: &RestoreDatabaseMetadata| { &m.source_type },
+            |m: &mut RestoreDatabaseMetadata| { &mut m.source_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::backup::BackupInfo>(
+            "backup_info",
+            RestoreDatabaseMetadata::has_backup_info,
+            RestoreDatabaseMetadata::backup_info,
+            RestoreDatabaseMetadata::mut_backup_info,
+            RestoreDatabaseMetadata::set_backup_info,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::OperationProgress>(
+            "progress",
+            |m: &RestoreDatabaseMetadata| { &m.progress },
+            |m: &mut RestoreDatabaseMetadata| { &mut m.progress },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "cancel_time",
+            |m: &RestoreDatabaseMetadata| { &m.cancel_time },
+            |m: &mut RestoreDatabaseMetadata| { &mut m.cancel_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "optimize_database_operation_name",
+            |m: &RestoreDatabaseMetadata| { &m.optimize_database_operation_name },
+            |m: &mut RestoreDatabaseMetadata| { &mut m.optimize_database_operation_name },
+        ));
+        oneofs.push(restore_database_metadata::Source_info::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreDatabaseMetadata>(
+            "RestoreDatabaseMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreDatabaseMetadata {
+    const NAME: &'static str = "RestoreDatabaseMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                16 => {
+                    self.source_type = is.read_enum_or_unknown()?;
+                },
+                26 => {
+                    self.source_info = ::std::option::Option::Some(restore_database_metadata::Source_info::BackupInfo(is.read_message()?));
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.progress)?;
+                },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.cancel_time)?;
+                },
+                50 => {
+                    self.optimize_database_operation_name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.source_type != ::protobuf::EnumOrUnknown::new(RestoreSourceType::TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(2, self.source_type.value());
+        }
+        if let Some(v) = self.progress.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.cancel_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.optimize_database_operation_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.optimize_database_operation_name);
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_database_metadata::Source_info::BackupInfo(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.source_type != ::protobuf::EnumOrUnknown::new(RestoreSourceType::TYPE_UNSPECIFIED) {
+            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.source_type))?;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if let Some(v) = self.cancel_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        }
+        if !self.optimize_database_operation_name.is_empty() {
+            os.write_string(6, &self.optimize_database_operation_name)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_database_metadata::Source_info::BackupInfo(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreDatabaseMetadata {
+        RestoreDatabaseMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.source_type = ::protobuf::EnumOrUnknown::new(RestoreSourceType::TYPE_UNSPECIFIED);
+        self.source_info = ::std::option::Option::None;
+        self.progress.clear();
+        self.cancel_time.clear();
+        self.optimize_database_operation_name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreDatabaseMetadata {
+        static instance: RestoreDatabaseMetadata = RestoreDatabaseMetadata {
+            name: ::std::string::String::new(),
+            source_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            progress: ::protobuf::MessageField::none(),
+            cancel_time: ::protobuf::MessageField::none(),
+            optimize_database_operation_name: ::std::string::String::new(),
+            source_info: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreDatabaseMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreDatabaseMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreDatabaseMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreDatabaseMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreDatabaseMetadata`
+pub mod restore_database_metadata {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.spanner.admin.database.v1.RestoreDatabaseMetadata.source_info)
+    pub enum Source_info {
+        // @@protoc_insertion_point(oneof_field:google.spanner.admin.database.v1.RestoreDatabaseMetadata.backup_info)
+        BackupInfo(super::super::backup::BackupInfo),
+    }
+
+    impl ::protobuf::Oneof for Source_info {
+    }
+
+    impl ::protobuf::OneofFull for Source_info {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::RestoreDatabaseMetadata as ::protobuf::MessageFull>::descriptor().oneof_by_name("source_info").unwrap()).clone()
+        }
+    }
+
+    impl Source_info {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Source_info>("source_info")
+        }
+    }
+}
+
+///  Metadata type for the long-running operation used to track the progress
+///  of optimizations performed on a newly restored database. This long-running
+///  operation is automatically created by the system after the successful
+///  completion of a database restore, and cannot be cancelled.
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct OptimizeRestoredDatabaseMetadata {
+    // message fields
+    ///  Name of the restored database being optimized.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata.name)
+    pub name: ::std::string::String,
+    ///  The progress of the post-restore optimizations.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata.progress)
+    pub progress: ::protobuf::MessageField<super::common::OperationProgress>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a OptimizeRestoredDatabaseMetadata {
+    fn default() -> &'a OptimizeRestoredDatabaseMetadata {
+        <OptimizeRestoredDatabaseMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl OptimizeRestoredDatabaseMetadata {
+    pub fn new() -> OptimizeRestoredDatabaseMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &OptimizeRestoredDatabaseMetadata| { &m.name },
+            |m: &mut OptimizeRestoredDatabaseMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::OperationProgress>(
+            "progress",
+            |m: &OptimizeRestoredDatabaseMetadata| { &m.progress },
+            |m: &mut OptimizeRestoredDatabaseMetadata| { &mut m.progress },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OptimizeRestoredDatabaseMetadata>(
+            "OptimizeRestoredDatabaseMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for OptimizeRestoredDatabaseMetadata {
+    const NAME: &'static str = "OptimizeRestoredDatabaseMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.progress)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if let Some(v) = self.progress.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> OptimizeRestoredDatabaseMetadata {
+        OptimizeRestoredDatabaseMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.progress.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static OptimizeRestoredDatabaseMetadata {
+        static instance: OptimizeRestoredDatabaseMetadata = OptimizeRestoredDatabaseMetadata {
+            name: ::std::string::String::new(),
+            progress: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for OptimizeRestoredDatabaseMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("OptimizeRestoredDatabaseMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for OptimizeRestoredDatabaseMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for OptimizeRestoredDatabaseMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  A Cloud Spanner database role.
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.DatabaseRole)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct DatabaseRole {
+    // message fields
+    ///  Required. The name of the database role. Values are of the form
+    ///  `projects/<project>/instances/<instance>/databases/<database>/databaseRoles/<role>`
+    ///  where `<role>` is as specified in the `CREATE ROLE` DDL statement.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.DatabaseRole.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.DatabaseRole.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a DatabaseRole {
+    fn default() -> &'a DatabaseRole {
+        <DatabaseRole as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DatabaseRole {
+    pub fn new() -> DatabaseRole {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &DatabaseRole| { &m.name },
+            |m: &mut DatabaseRole| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DatabaseRole>(
+            "DatabaseRole",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for DatabaseRole {
+    const NAME: &'static str = "DatabaseRole";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> DatabaseRole {
+        DatabaseRole::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static DatabaseRole {
+        static instance: DatabaseRole = DatabaseRole {
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for DatabaseRole {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("DatabaseRole").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for DatabaseRole {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DatabaseRole {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [ListDatabaseRoles][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabaseRoles].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.ListDatabaseRolesRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListDatabaseRolesRequest {
+    // message fields
+    ///  Required. The database whose roles should be listed.
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/databases/<database>`.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseRolesRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Number of database roles to be returned in the response. If 0 or less,
+    ///  defaults to the server's maximum allowed page size.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseRolesRequest.page_size)
+    pub page_size: i32,
+    ///  If non-empty, `page_token` should contain a
+    ///  [next_page_token][google.spanner.admin.database.v1.ListDatabaseRolesResponse.next_page_token]
+    ///  from a previous
+    ///  [ListDatabaseRolesResponse][google.spanner.admin.database.v1.ListDatabaseRolesResponse].
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseRolesRequest.page_token)
+    pub page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.ListDatabaseRolesRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListDatabaseRolesRequest {
+    fn default() -> &'a ListDatabaseRolesRequest {
+        <ListDatabaseRolesRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListDatabaseRolesRequest {
+    pub fn new() -> ListDatabaseRolesRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &ListDatabaseRolesRequest| { &m.parent },
+            |m: &mut ListDatabaseRolesRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_size",
+            |m: &ListDatabaseRolesRequest| { &m.page_size },
+            |m: &mut ListDatabaseRolesRequest| { &mut m.page_size },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_token",
+            |m: &ListDatabaseRolesRequest| { &m.page_token },
+            |m: &mut ListDatabaseRolesRequest| { &mut m.page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListDatabaseRolesRequest>(
+            "ListDatabaseRolesRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListDatabaseRolesRequest {
+    const NAME: &'static str = "ListDatabaseRolesRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                16 => {
+                    self.page_size = is.read_int32()?;
+                },
+                26 => {
+                    self.page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::int32_size(2, self.page_size);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(2, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(3, &self.page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListDatabaseRolesRequest {
+        ListDatabaseRolesRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListDatabaseRolesRequest {
+        static instance: ListDatabaseRolesRequest = ListDatabaseRolesRequest {
+            parent: ::std::string::String::new(),
+            page_size: 0,
+            page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListDatabaseRolesRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListDatabaseRolesRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListDatabaseRolesRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListDatabaseRolesRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The response for
+///  [ListDatabaseRoles][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabaseRoles].
+// @@protoc_insertion_point(message:google.spanner.admin.database.v1.ListDatabaseRolesResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListDatabaseRolesResponse {
+    // message fields
+    ///  Database roles that matched the request.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseRolesResponse.database_roles)
+    pub database_roles: ::std::vec::Vec<DatabaseRole>,
+    ///  `next_page_token` can be sent in a subsequent
+    ///  [ListDatabaseRoles][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabaseRoles]
+    ///  call to fetch more of the matching roles.
+    // @@protoc_insertion_point(field:google.spanner.admin.database.v1.ListDatabaseRolesResponse.next_page_token)
+    pub next_page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.admin.database.v1.ListDatabaseRolesResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListDatabaseRolesResponse {
+    fn default() -> &'a ListDatabaseRolesResponse {
+        <ListDatabaseRolesResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListDatabaseRolesResponse {
+    pub fn new() -> ListDatabaseRolesResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "database_roles",
+            |m: &ListDatabaseRolesResponse| { &m.database_roles },
+            |m: &mut ListDatabaseRolesResponse| { &mut m.database_roles },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "next_page_token",
+            |m: &ListDatabaseRolesResponse| { &m.next_page_token },
+            |m: &mut ListDatabaseRolesResponse| { &mut m.next_page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListDatabaseRolesResponse>(
+            "ListDatabaseRolesResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListDatabaseRolesResponse {
+    const NAME: &'static str = "ListDatabaseRolesResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.database_roles.push(is.read_message()?);
+                },
+                18 => {
+                    self.next_page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.database_roles {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.database_roles {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListDatabaseRolesResponse {
+        ListDatabaseRolesResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.database_roles.clear();
+        self.next_page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListDatabaseRolesResponse {
+        static instance: ListDatabaseRolesResponse = ListDatabaseRolesResponse {
+            database_roles: ::std::vec::Vec::new(),
+            next_page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListDatabaseRolesResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListDatabaseRolesResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListDatabaseRolesResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListDatabaseRolesResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Indicates the type of the restore source.
+#[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+// @@protoc_insertion_point(enum:google.spanner.admin.database.v1.RestoreSourceType)
+pub enum RestoreSourceType {
+    // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.RestoreSourceType.TYPE_UNSPECIFIED)
+    TYPE_UNSPECIFIED = 0,
+    // @@protoc_insertion_point(enum_value:google.spanner.admin.database.v1.RestoreSourceType.BACKUP)
+    BACKUP = 1,
+}
+
+impl ::protobuf::Enum for RestoreSourceType {
+    const NAME: &'static str = "RestoreSourceType";
+
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<RestoreSourceType> {
+        match value {
+            0 => ::std::option::Option::Some(RestoreSourceType::TYPE_UNSPECIFIED),
+            1 => ::std::option::Option::Some(RestoreSourceType::BACKUP),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn from_str(str: &str) -> ::std::option::Option<RestoreSourceType> {
+        match str {
+            "TYPE_UNSPECIFIED" => ::std::option::Option::Some(RestoreSourceType::TYPE_UNSPECIFIED),
+            "BACKUP" => ::std::option::Option::Some(RestoreSourceType::BACKUP),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    const VALUES: &'static [RestoreSourceType] = &[
+        RestoreSourceType::TYPE_UNSPECIFIED,
+        RestoreSourceType::BACKUP,
+    ];
+}
+
+impl ::protobuf::EnumFull for RestoreSourceType {
+    fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().enum_by_package_relative_name("RestoreSourceType").unwrap()).clone()
+    }
+
+    fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+        let index = *self as usize;
+        Self::enum_descriptor().value_by_index(index)
+    }
+}
+
+impl ::std::default::Default for RestoreSourceType {
+    fn default() -> Self {
+        RestoreSourceType::TYPE_UNSPECIFIED
+    }
+}
+
+impl RestoreSourceType {
+    fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+        ::protobuf::reflect::GeneratedEnumDescriptorData::new::<RestoreSourceType>("RestoreSourceType")
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n=google/spanner/admin/database/v1/spanner_database_admin.proto\x12\x20\
     google.spanner.admin.database.v1\x1a\x1cgoogle/api/annotations.proto\x1a\
     \x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\
     \x19google/api/resource.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\
     \x1agoogle/iam/v1/policy.proto\x1a#google/longrunning/operations.proto\
-    \x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.pro\
-    to\"\x83\x02\n\x08Database\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12F\n\x05state\x18\x02\x20\x01(\x0e20.google.spanner.admin.database.v1\
-    .Database.StateR\x05state\"7\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\
-    \x10\0\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02:b\xeaA_\n\
-    \x1fspanner.googleapis.com/Database\x12<projects/{project}/instances/{in\
-    stance}/databases/{database}\"\x93\x01\n\x14ListDatabasesRequest\x12?\n\
+    \x1a\x1bgoogle/protobuf/empty.proto\x1a\x20google/protobuf/field_mask.pr\
+    oto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a-google/spanner/admin/data\
+    base/v1/backup.proto\x1a6google/spanner/admin/database/v1/backup_schedul\
+    e.proto\x1a-google/spanner/admin/database/v1/common.proto\"\xc3\x01\n\
+    \x0bRestoreInfo\x12T\n\x0bsource_type\x18\x01\x20\x01(\x0e23.google.span\
+    ner.admin.database.v1.RestoreSourceTypeR\nsourceType\x12O\n\x0bbackup_in\
+    fo\x18\x02\x20\x01(\x0b2,.google.spanner.admin.database.v1.BackupInfoH\0\
+    R\nbackupInfoB\r\n\x0bsource_info\"\x82\x08\n\x08Database\x12\x17\n\x04n\
+    ame\x18\x01\x20\x01(\tR\x04nameB\x03\xe0A\x02\x12K\n\x05state\x18\x02\
+    \x20\x01(\x0e20.google.spanner.admin.database.v1.Database.StateR\x05stat\
+    eB\x03\xe0A\x03\x12@\n\x0bcreate_time\x18\x03\x20\x01(\x0b2\x1a.google.p\
+    rotobuf.TimestampR\ncreateTimeB\x03\xe0A\x03\x12U\n\x0crestore_info\x18\
+    \x04\x20\x01(\x0b2-.google.spanner.admin.database.v1.RestoreInfoR\x0bres\
+    toreInfoB\x03\xe0A\x03\x12d\n\x11encryption_config\x18\x05\x20\x01(\x0b2\
+    2.google.spanner.admin.database.v1.EncryptionConfigR\x10encryptionConfig\
+    B\x03\xe0A\x03\x12^\n\x0fencryption_info\x18\x08\x20\x03(\x0b20.google.s\
+    panner.admin.database.v1.EncryptionInfoR\x0eencryptionInfoB\x03\xe0A\x03\
+    \x12=\n\x18version_retention_period\x18\x06\x20\x01(\tR\x16versionRetent\
+    ionPeriodB\x03\xe0A\x03\x12S\n\x15earliest_version_time\x18\x07\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\x13earliestVersionTimeB\x03\xe0A\
+    \x03\x12*\n\x0edefault_leader\x18\t\x20\x01(\tR\rdefaultLeaderB\x03\xe0A\
+    \x03\x12a\n\x10database_dialect\x18\n\x20\x01(\x0e21.google.spanner.admi\
+    n.database.v1.DatabaseDialectR\x0fdatabaseDialectB\x03\xe0A\x03\x124\n\
+    \x16enable_drop_protection\x18\x0b\x20\x01(\x08R\x14enableDropProtection\
+    \x12%\n\x0breconciling\x18\x0c\x20\x01(\x08R\x0breconcilingB\x03\xe0A\
+    \x03\"M\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\0\x12\x0c\n\x08CRE\
+    ATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x14\n\x10READY_OPTIMIZING\x10\
+    \x03:b\xeaA_\n\x1fspanner.googleapis.com/Database\x12<projects/{project}\
+    /instances/{instance}/databases/{database}\"\x93\x01\n\x14ListDatabasesR\
+    equest\x12?\n\x06parent\x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspann\
+    er.googleapis.com/Instance\xe0A\x02\x12\x1b\n\tpage_size\x18\x03\x20\x01\
+    (\x05R\x08pageSize\x12\x1d\n\npage_token\x18\x04\x20\x01(\tR\tpageToken\
+    \"\x89\x01\n\x15ListDatabasesResponse\x12H\n\tdatabases\x18\x01\x20\x03(\
+    \x0b2*.google.spanner.admin.database.v1.DatabaseR\tdatabases\x12&\n\x0fn\
+    ext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"\xb3\x03\n\x15CreateD\
+    atabaseRequest\x12?\n\x06parent\x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\
+    \x1fspanner.googleapis.com/Instance\xe0A\x02\x12.\n\x10create_statement\
+    \x18\x02\x20\x01(\tR\x0fcreateStatementB\x03\xe0A\x02\x12.\n\x10extra_st\
+    atements\x18\x03\x20\x03(\tR\x0fextraStatementsB\x03\xe0A\x01\x12d\n\x11\
+    encryption_config\x18\x04\x20\x01(\x0b22.google.spanner.admin.database.v\
+    1.EncryptionConfigR\x10encryptionConfigB\x03\xe0A\x01\x12a\n\x10database\
+    _dialect\x18\x05\x20\x01(\x0e21.google.spanner.admin.database.v1.Databas\
+    eDialectR\x0fdatabaseDialectB\x03\xe0A\x01\x120\n\x11proto_descriptors\
+    \x18\x06\x20\x01(\x0cR\x10protoDescriptorsB\x03\xe0A\x01\"Z\n\x16CreateD\
+    atabaseMetadata\x12@\n\x08database\x18\x01\x20\x01(\tR\x08databaseB$\xfa\
+    A!\n\x1fspanner.googleapis.com/Database\"Q\n\x12GetDatabaseRequest\x12;\
+    \n\x04name\x18\x01\x20\x01(\tR\x04nameB'\xfaA!\n\x1fspanner.googleapis.c\
+    om/Database\xe0A\x02\"\xa6\x01\n\x15UpdateDatabaseRequest\x12K\n\x08data\
+    base\x18\x01\x20\x01(\x0b2*.google.spanner.admin.database.v1.DatabaseR\
+    \x08databaseB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\
+    \x1a.google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x02\"\xf9\x01\n\
+    \x16UpdateDatabaseMetadata\x12Q\n\x07request\x18\x01\x20\x01(\x0b27.goog\
+    le.spanner.admin.database.v1.UpdateDatabaseRequestR\x07request\x12O\n\
+    \x08progress\x18\x02\x20\x01(\x0b23.google.spanner.admin.database.v1.Ope\
+    rationProgressR\x08progress\x12;\n\x0bcancel_time\x18\x03\x20\x01(\x0b2\
+    \x1a.google.protobuf.TimestampR\ncancelTime\"\xd9\x01\n\x18UpdateDatabas\
+    eDdlRequest\x12C\n\x08database\x18\x01\x20\x01(\tR\x08databaseB'\xfaA!\n\
+    \x1fspanner.googleapis.com/Database\xe0A\x02\x12#\n\nstatements\x18\x02\
+    \x20\x03(\tR\nstatementsB\x03\xe0A\x02\x12!\n\x0coperation_id\x18\x03\
+    \x20\x01(\tR\x0boperationId\x120\n\x11proto_descriptors\x18\x04\x20\x01(\
+    \x0cR\x10protoDescriptorsB\x03\xe0A\x01\"t\n\x16DdlStatementActionInfo\
+    \x12\x16\n\x06action\x18\x01\x20\x01(\tR\x06action\x12\x1f\n\x0bentity_t\
+    ype\x18\x02\x20\x01(\tR\nentityType\x12!\n\x0centity_names\x18\x03\x20\
+    \x03(\tR\x0bentityNames\"\x8e\x03\n\x19UpdateDatabaseDdlMetadata\x12@\n\
+    \x08database\x18\x01\x20\x01(\tR\x08databaseB$\xfaA!\n\x1fspanner.google\
+    apis.com/Database\x12\x1e\n\nstatements\x18\x02\x20\x03(\tR\nstatements\
+    \x12G\n\x11commit_timestamps\x18\x03\x20\x03(\x0b2\x1a.google.protobuf.T\
+    imestampR\x10commitTimestamps\x12!\n\tthrottled\x18\x04\x20\x01(\x08R\tt\
+    hrottledB\x03\xe0A\x03\x12O\n\x08progress\x18\x05\x20\x03(\x0b23.google.\
+    spanner.admin.database.v1.OperationProgressR\x08progress\x12R\n\x07actio\
+    ns\x18\x06\x20\x03(\x0b28.google.spanner.admin.database.v1.DdlStatementA\
+    ctionInfoR\x07actions\"Z\n\x13DropDatabaseRequest\x12C\n\x08database\x18\
+    \x01\x20\x01(\tR\x08databaseB'\xfaA!\n\x1fspanner.googleapis.com/Databas\
+    e\xe0A\x02\"\\\n\x15GetDatabaseDdlRequest\x12C\n\x08database\x18\x01\x20\
+    \x01(\tR\x08databaseB'\xfaA!\n\x1fspanner.googleapis.com/Database\xe0A\
+    \x02\"e\n\x16GetDatabaseDdlResponse\x12\x1e\n\nstatements\x18\x01\x20\
+    \x03(\tR\nstatements\x12+\n\x11proto_descriptors\x18\x02\x20\x01(\x0cR\
+    \x10protoDescriptors\"\xb4\x01\n\x1dListDatabaseOperationsRequest\x12?\n\
     \x06parent\x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspanner.googleapis\
-    .com/Instance\xe0A\x02\x12\x1b\n\tpage_size\x18\x03\x20\x01(\x05R\x08pag\
-    eSize\x12\x1d\n\npage_token\x18\x04\x20\x01(\tR\tpageToken\"\x89\x01\n\
-    \x15ListDatabasesResponse\x12H\n\tdatabases\x18\x01\x20\x03(\x0b2*.googl\
-    e.spanner.admin.database.v1.DatabaseR\tdatabases\x12&\n\x0fnext_page_tok\
-    en\x18\x02\x20\x01(\tR\rnextPageToken\"\xb3\x01\n\x15CreateDatabaseReque\
-    st\x12?\n\x06parent\x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspanner.g\
-    oogleapis.com/Instance\xe0A\x02\x12.\n\x10create_statement\x18\x02\x20\
-    \x01(\tR\x0fcreateStatementB\x03\xe0A\x02\x12)\n\x10extra_statements\x18\
-    \x03\x20\x03(\tR\x0fextraStatements\"Z\n\x16CreateDatabaseMetadata\x12@\
-    \n\x08database\x18\x01\x20\x01(\tR\x08databaseB$\xfaA!\n\x1fspanner.goog\
-    leapis.com/Database\"Q\n\x12GetDatabaseRequest\x12;\n\x04name\x18\x01\
-    \x20\x01(\tR\x04nameB'\xfaA!\n\x1fspanner.googleapis.com/Database\xe0A\
-    \x02\"\xa7\x01\n\x18UpdateDatabaseDdlRequest\x12C\n\x08database\x18\x01\
-    \x20\x01(\tR\x08databaseB'\xfaA!\n\x1fspanner.googleapis.com/Database\
-    \xe0A\x02\x12#\n\nstatements\x18\x02\x20\x03(\tR\nstatementsB\x03\xe0A\
-    \x02\x12!\n\x0coperation_id\x18\x03\x20\x01(\tR\x0boperationId\"\xc6\x01\
-    \n\x19UpdateDatabaseDdlMetadata\x12@\n\x08database\x18\x01\x20\x01(\tR\
-    \x08databaseB$\xfaA!\n\x1fspanner.googleapis.com/Database\x12\x1e\n\nsta\
-    tements\x18\x02\x20\x03(\tR\nstatements\x12G\n\x11commit_timestamps\x18\
-    \x03\x20\x03(\x0b2\x1a.google.protobuf.TimestampR\x10commitTimestamps\"Z\
-    \n\x13DropDatabaseRequest\x12C\n\x08database\x18\x01\x20\x01(\tR\x08data\
-    baseB'\xfaA!\n\x1fspanner.googleapis.com/Database\xe0A\x02\"\\\n\x15GetD\
-    atabaseDdlRequest\x12C\n\x08database\x18\x01\x20\x01(\tR\x08databaseB'\
-    \xfaA!\n\x1fspanner.googleapis.com/Database\xe0A\x02\"8\n\x16GetDatabase\
-    DdlResponse\x12\x1e\n\nstatements\x18\x01\x20\x03(\tR\nstatements2\xad\
-    \x11\n\rDatabaseAdmin\x12\xc0\x01\n\rListDatabases\x126.google.spanner.a\
-    dmin.database.v1.ListDatabasesRequest\x1a7.google.spanner.admin.database\
-    .v1.ListDatabasesResponse\">\x82\xd3\xe4\x93\x02/\x12-/v1/{parent=projec\
-    ts/*/instances/*}/databases\xdaA\x06parent\x12\xa4\x02\n\x0eCreateDataba\
-    se\x127.google.spanner.admin.database.v1.CreateDatabaseRequest\x1a\x1d.g\
-    oogle.longrunning.Operation\"\xb9\x01\xcaAd\n)google.spanner.admin.datab\
-    ase.v1.Database\x127google.spanner.admin.database.v1.CreateDatabaseMetad\
-    ata\x82\xd3\xe4\x93\x022\"-/v1/{parent=projects/*/instances/*}/databases\
-    :\x01*\xdaA\x17parent,create_statement\x12\xad\x01\n\x0bGetDatabase\x124\
-    .google.spanner.admin.database.v1.GetDatabaseRequest\x1a*.google.spanner\
-    .admin.database.v1.Database\"<\x82\xd3\xe4\x93\x02/\x12-/v1/{name=projec\
-    ts/*/instances/*/databases/*}\xdaA\x04name\x12\x9d\x02\n\x11UpdateDataba\
-    seDdl\x12:.google.spanner.admin.database.v1.UpdateDatabaseDdlRequest\x1a\
-    \x1d.google.longrunning.Operation\"\xac\x01\xcaAS\n\x15google.protobuf.E\
-    mpty\x12:google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata\x82\
-    \xd3\xe4\x93\x02:25/v1/{database=projects/*/instances/*/databases/*}/ddl\
-    :\x01*\xdaA\x13database,statements\x12\xa3\x01\n\x0cDropDatabase\x125.go\
-    ogle.spanner.admin.database.v1.DropDatabaseRequest\x1a\x16.google.protob\
-    uf.Empty\"D\x82\xd3\xe4\x93\x023*1/v1/{database=projects/*/instances/*/d\
-    atabases/*}\xdaA\x08database\x12\xcd\x01\n\x0eGetDatabaseDdl\x127.google\
-    .spanner.admin.database.v1.GetDatabaseDdlRequest\x1a8.google.spanner.adm\
-    in.database.v1.GetDatabaseDdlResponse\"H\x82\xd3\xe4\x93\x027\x125/v1/{d\
-    atabase=projects/*/instances/*/databases/*}/ddl\xdaA\x08database\x12\xeb\
-    \x01\n\x0cSetIamPolicy\x12\".google.iam.v1.SetIamPolicyRequest\x1a\x15.g\
-    oogle.iam.v1.Policy\"\x9f\x01\x82\xd3\xe4\x93\x02\x86\x01\">/v1/{resourc\
-    e=projects/*/instances/*/databases/*}:setIamPolicy:\x01*ZA\"</v1/{resour\
-    ce=projects/*/instances/*/backups/*}:setIamPolicy:\x01*\xdaA\x0fresource\
-    ,policy\x12\xe4\x01\n\x0cGetIamPolicy\x12\".google.iam.v1.GetIamPolicyRe\
-    quest\x1a\x15.google.iam.v1.Policy\"\x98\x01\x82\xd3\xe4\x93\x02\x86\x01\
-    \">/v1/{resource=projects/*/instances/*/databases/*}:getIamPolicy:\x01*Z\
-    A\"</v1/{resource=projects/*/instances/*/backups/*}:getIamPolicy:\x01*\
-    \xdaA\x08resource\x12\x9c\x02\n\x12TestIamPermissions\x12(.google.iam.v1\
-    .TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse\
-    \"\xb0\x01\x82\xd3\xe4\x93\x02\x92\x01\"D/v1/{resource=projects/*/instan\
-    ces/*/databases/*}:testIamPermissions:\x01*ZG\"B/v1/{resource=projects/*\
-    /instances/*/backups/*}:testIamPermissions:\x01*\xdaA\x14resource,permis\
-    sions\x1ax\xd2A\\https://www.googleapis.com/auth/cloud-platform,https://\
-    www.googleapis.com/auth/spanner.admin\xcaA\x16spanner.googleapis.comB\
-    \xac\x02\n$com.google.spanner.admin.database.v1B\x19SpannerDatabaseAdmin\
-    ProtoP\x01ZHgoogle.golang.org/genproto/googleapis/spanner/admin/database\
-    /v1;database\xaa\x02&Google.Cloud.Spanner.Admin.Database.V1\xca\x02&Goog\
-    le\\Cloud\\Spanner\\Admin\\Database\\V1\xeaAJ\n\x1fspanner.googleapis.co\
-    m/Instance\x12'projects/{project}/instances/{instance}J\xced\n\x07\x12\
-    \x05\x0f\0\x92\x03\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\
-    \x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Licensed\x20under\x20the\
-    \x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20y\
-    ou\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\
-    \x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\
-    \x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/li\
-    censes/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\
-    \x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
-    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
-    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
-    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
-    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
-    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\n\x08\n\x01\x02\
-    \x12\x03\x11\0)\n\t\n\x02\x03\0\x12\x03\x13\0&\n\t\n\x02\x03\x01\x12\x03\
-    \x14\0!\n\t\n\x02\x03\x02\x12\x03\x15\0)\n\t\n\x02\x03\x03\x12\x03\x16\0\
-    #\n\t\n\x02\x03\x04\x12\x03\x17\0(\n\t\n\x02\x03\x05\x12\x03\x18\0$\n\t\
-    \n\x02\x03\x06\x12\x03\x19\0-\n\t\n\x02\x03\x07\x12\x03\x1a\0%\n\t\n\x02\
-    \x03\x08\x12\x03\x1b\0)\n\x08\n\x01\x08\x12\x03\x1d\0C\n\t\n\x02\x08%\
-    \x12\x03\x1d\0C\n\x08\n\x01\x08\x12\x03\x1e\0_\n\t\n\x02\x08\x0b\x12\x03\
-    \x1e\0_\n\x08\n\x01\x08\x12\x03\x1f\0\"\n\t\n\x02\x08\n\x12\x03\x1f\0\"\
-    \n\x08\n\x01\x08\x12\x03\x20\0:\n\t\n\x02\x08\x08\x12\x03\x20\0:\n\x08\n\
-    \x01\x08\x12\x03!\0=\n\t\n\x02\x08\x01\x12\x03!\0=\n\x08\n\x01\x08\x12\
-    \x03\"\0E\n\t\n\x02\x08)\x12\x03\"\0E\n\t\n\x01\x08\x12\x04'\0*\x02\n\
-    \xc1\x01\n\x04\x08\x9d\x08\0\x12\x04'\0*\x02\x1a\xb2\x01\x20The\x20Insta\
-    nce\x20resource\x20is\x20defined\x20in\x20`google.spanner.admin.instance\
-    .v1`.\n\x20Because\x20this\x20is\x20a\x20separate,\x20independent\x20API\
-    \x20(technically),\x20we\x20redefine\n\x20the\x20resource\x20name\x20pat\
-    tern\x20here.\n\n\xc9\x01\n\x02\x06\0\x12\x051\0\xba\x01\x01\x1a\xbb\x01\
-    \x20Cloud\x20Spanner\x20Database\x20Admin\x20API\n\n\x20The\x20Cloud\x20\
-    Spanner\x20Database\x20Admin\x20API\x20can\x20be\x20used\x20to\x20create\
-    ,\x20drop,\x20and\n\x20list\x20databases.\x20It\x20also\x20enables\x20up\
-    dating\x20the\x20schema\x20of\x20pre-existing\n\x20databases.\n\n\n\n\
-    \x03\x06\0\x01\x12\x031\x08\x15\n\n\n\x03\x06\0\x03\x12\x032\x02>\n\x0c\
-    \n\x05\x06\0\x03\x99\x08\x12\x032\x02>\n\x0b\n\x03\x06\0\x03\x12\x043\
-    \x0256\n\r\n\x05\x06\0\x03\x9a\x08\x12\x043\x0256\n.\n\x04\x06\0\x02\0\
-    \x12\x048\x02=\x03\x1a\x20\x20Lists\x20Cloud\x20Spanner\x20databases.\n\
-    \n\x0c\n\x05\x06\0\x02\0\x01\x12\x038\x06\x13\n\x0c\n\x05\x06\0\x02\0\
-    \x02\x12\x038\x14(\n\x0c\n\x05\x06\0\x02\0\x03\x12\x0383H\n\r\n\x05\x06\
-    \0\x02\0\x04\x12\x049\x04;\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\xbc\"\
-    \x12\x049\x04;\x06\n\x0c\n\x05\x06\0\x02\0\x04\x12\x03<\x044\n\x0f\n\x08\
-    \x06\0\x02\0\x04\x9b\x08\0\x12\x03<\x044\n\xc8\x04\n\x04\x06\0\x02\x01\
-    \x12\x04G\x02R\x03\x1a\xb9\x04\x20Creates\x20a\x20new\x20Cloud\x20Spanne\
-    r\x20database\x20and\x20starts\x20to\x20prepare\x20it\x20for\x20serving.\
-    \n\x20The\x20returned\x20[long-running\x20operation][google.longrunning.\
-    Operation]\x20will\n\x20have\x20a\x20name\x20of\x20the\x20format\x20`<da\
-    tabase_name>/operations/<operation_id>`\x20and\n\x20can\x20be\x20used\
-    \x20to\x20track\x20preparation\x20of\x20the\x20database.\x20The\n\x20[me\
-    tadata][google.longrunning.Operation.metadata]\x20field\x20type\x20is\n\
+    .com/Instance\xe0A\x02\x12\x16\n\x06filter\x18\x02\x20\x01(\tR\x06filter\
+    \x12\x1b\n\tpage_size\x18\x03\x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_\
+    token\x18\x04\x20\x01(\tR\tpageToken\"\x87\x01\n\x1eListDatabaseOperatio\
+    nsResponse\x12=\n\noperations\x18\x01\x20\x03(\x0b2\x1d.google.longrunni\
+    ng.OperationR\noperations\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\
+    \rnextPageToken\"\xbc\x02\n\x16RestoreDatabaseRequest\x12?\n\x06parent\
+    \x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspanner.googleapis.com/Insta\
+    nce\xe0A\x02\x12$\n\x0bdatabase_id\x18\x02\x20\x01(\tR\ndatabaseIdB\x03\
+    \xe0A\x02\x12<\n\x06backup\x18\x03\x20\x01(\tH\0R\x06backupB\"\xfaA\x1f\
+    \n\x1dspanner.googleapis.com/Backup\x12s\n\x11encryption_config\x18\x04\
+    \x20\x01(\x0b2A.google.spanner.admin.database.v1.RestoreDatabaseEncrypti\
+    onConfigR\x10encryptionConfigB\x03\xe0A\x01B\x08\n\x06source\"\xde\x03\n\
+    \x1fRestoreDatabaseEncryptionConfig\x12~\n\x0fencryption_type\x18\x01\
+    \x20\x01(\x0e2P.google.spanner.admin.database.v1.RestoreDatabaseEncrypti\
+    onConfig.EncryptionTypeR\x0eencryptionTypeB\x03\xe0A\x02\x12K\n\x0ckms_k\
+    ey_name\x18\x02\x20\x01(\tR\nkmsKeyNameB)\xfaA#\n!cloudkms.googleapis.co\
+    m/CryptoKey\xe0A\x01\x12M\n\rkms_key_names\x18\x03\x20\x03(\tR\x0bkmsKey\
+    NamesB)\xfaA#\n!cloudkms.googleapis.com/CryptoKey\xe0A\x01\"\x9e\x01\n\
+    \x0eEncryptionType\x12\x1f\n\x1bENCRYPTION_TYPE_UNSPECIFIED\x10\0\x12+\n\
+    'USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION\x10\x01\x12\x1d\n\x19GOOGLE_DEF\
+    AULT_ENCRYPTION\x10\x02\x12\x1f\n\x1bCUSTOMER_MANAGED_ENCRYPTION\x10\x03\
+    \"\xe0\x03\n\x17RestoreDatabaseMetadata\x128\n\x04name\x18\x01\x20\x01(\
+    \tR\x04nameB$\xfaA!\n\x1fspanner.googleapis.com/Database\x12T\n\x0bsourc\
+    e_type\x18\x02\x20\x01(\x0e23.google.spanner.admin.database.v1.RestoreSo\
+    urceTypeR\nsourceType\x12O\n\x0bbackup_info\x18\x03\x20\x01(\x0b2,.googl\
+    e.spanner.admin.database.v1.BackupInfoH\0R\nbackupInfo\x12O\n\x08progres\
+    s\x18\x04\x20\x01(\x0b23.google.spanner.admin.database.v1.OperationProgr\
+    essR\x08progress\x12;\n\x0bcancel_time\x18\x05\x20\x01(\x0b2\x1a.google.\
+    protobuf.TimestampR\ncancelTime\x12G\n\x20optimize_database_operation_na\
+    me\x18\x06\x20\x01(\tR\x1doptimizeDatabaseOperationNameB\r\n\x0bsource_i\
+    nfo\"\xad\x01\n\x20OptimizeRestoredDatabaseMetadata\x128\n\x04name\x18\
+    \x01\x20\x01(\tR\x04nameB$\xfaA!\n\x1fspanner.googleapis.com/Database\
+    \x12O\n\x08progress\x18\x02\x20\x01(\x0b23.google.spanner.admin.database\
+    .v1.OperationProgressR\x08progress\"\xa4\x01\n\x0cDatabaseRole\x12\x17\n\
+    \x04name\x18\x01\x20\x01(\tR\x04nameB\x03\xe0A\x02:{\xeaAx\n#spanner.goo\
+    gleapis.com/DatabaseRole\x12Qprojects/{project}/instances/{instance}/dat\
+    abases/{database}/databaseRoles/{role}\"\x97\x01\n\x18ListDatabaseRolesR\
+    equest\x12?\n\x06parent\x18\x01\x20\x01(\tR\x06parentB'\xfaA!\n\x1fspann\
+    er.googleapis.com/Database\xe0A\x02\x12\x1b\n\tpage_size\x18\x02\x20\x01\
+    (\x05R\x08pageSize\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\
+    \"\x9a\x01\n\x19ListDatabaseRolesResponse\x12U\n\x0edatabase_roles\x18\
+    \x01\x20\x03(\x0b2..google.spanner.admin.database.v1.DatabaseRoleR\rdata\
+    baseRoles\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken*5\
+    \n\x11RestoreSourceType\x12\x14\n\x10TYPE_UNSPECIFIED\x10\0\x12\n\n\x06B\
+    ACKUP\x10\x012\x981\n\rDatabaseAdmin\x12\xc0\x01\n\rListDatabases\x126.g\
+    oogle.spanner.admin.database.v1.ListDatabasesRequest\x1a7.google.spanner\
+    .admin.database.v1.ListDatabasesResponse\">\x82\xd3\xe4\x93\x02/\x12-/v1\
+    /{parent=projects/*/instances/*}/databases\xdaA\x06parent\x12\xa4\x02\n\
+    \x0eCreateDatabase\x127.google.spanner.admin.database.v1.CreateDatabaseR\
+    equest\x1a\x1d.google.longrunning.Operation\"\xb9\x01\xcaAd\n)google.spa\
+    nner.admin.database.v1.Database\x127google.spanner.admin.database.v1.Cre\
+    ateDatabaseMetadata\x82\xd3\xe4\x93\x022\"-/v1/{parent=projects/*/instan\
+    ces/*}/databases:\x01*\xdaA\x17parent,create_statement\x12\xad\x01\n\x0b\
+    GetDatabase\x124.google.spanner.admin.database.v1.GetDatabaseRequest\x1a\
+    *.google.spanner.admin.database.v1.Database\"<\x82\xd3\xe4\x93\x02/\x12-\
+    /v1/{name=projects/*/instances/*/databases/*}\xdaA\x04name\x12\xef\x01\n\
+    \x0eUpdateDatabase\x127.google.spanner.admin.database.v1.UpdateDatabaseR\
+    equest\x1a\x1d.google.longrunning.Operation\"\x84\x01\xcaA\"\n\x08Databa\
+    se\x12\x16UpdateDatabaseMetadata\x82\xd3\xe4\x93\x02B26/v1/{database.nam\
+    e=projects/*/instances/*/databases/*}:\x08database\xdaA\x14database,upda\
+    te_mask\x12\x9d\x02\n\x11UpdateDatabaseDdl\x12:.google.spanner.admin.dat\
+    abase.v1.UpdateDatabaseDdlRequest\x1a\x1d.google.longrunning.Operation\"\
+    \xac\x01\xcaAS\n\x15google.protobuf.Empty\x12:google.spanner.admin.datab\
+    ase.v1.UpdateDatabaseDdlMetadata\x82\xd3\xe4\x93\x02:25/v1/{database=pro\
+    jects/*/instances/*/databases/*}/ddl:\x01*\xdaA\x13database,statements\
+    \x12\xa3\x01\n\x0cDropDatabase\x125.google.spanner.admin.database.v1.Dro\
+    pDatabaseRequest\x1a\x16.google.protobuf.Empty\"D\x82\xd3\xe4\x93\x023*1\
+    /v1/{database=projects/*/instances/*/databases/*}\xdaA\x08database\x12\
+    \xcd\x01\n\x0eGetDatabaseDdl\x127.google.spanner.admin.database.v1.GetDa\
+    tabaseDdlRequest\x1a8.google.spanner.admin.database.v1.GetDatabaseDdlRes\
+    ponse\"H\x82\xd3\xe4\x93\x027\x125/v1/{database=projects/*/instances/*/d\
+    atabases/*}/ddl\xdaA\x08database\x12\xc2\x02\n\x0cSetIamPolicy\x12\".goo\
+    gle.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\xf6\x01\
+    \x82\xd3\xe4\x93\x02\xdd\x01\">/v1/{resource=projects/*/instances/*/data\
+    bases/*}:setIamPolicy:\x01*ZA\"</v1/{resource=projects/*/instances/*/bac\
+    kups/*}:setIamPolicy:\x01*ZU\"P/v1/{resource=projects/*/instances/*/data\
+    bases/*/backupSchedules/*}:setIamPolicy:\x01*\xdaA\x0fresource,policy\
+    \x12\xbb\x02\n\x0cGetIamPolicy\x12\".google.iam.v1.GetIamPolicyRequest\
+    \x1a\x15.google.iam.v1.Policy\"\xef\x01\x82\xd3\xe4\x93\x02\xdd\x01\">/v\
+    1/{resource=projects/*/instances/*/databases/*}:getIamPolicy:\x01*ZA\"</\
+    v1/{resource=projects/*/instances/*/backups/*}:getIamPolicy:\x01*ZU\"P/v\
+    1/{resource=projects/*/instances/*/databases/*/backupSchedules/*}:getIam\
+    Policy:\x01*\xdaA\x08resource\x12\xd4\x03\n\x12TestIamPermissions\x12(.g\
+    oogle.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermiss\
+    ionsResponse\"\xe8\x02\x82\xd3\xe4\x93\x02\xca\x02\"D/v1/{resource=proje\
+    cts/*/instances/*/databases/*}:testIamPermissions:\x01*ZG\"B/v1/{resourc\
+    e=projects/*/instances/*/backups/*}:testIamPermissions:\x01*Z[\"V/v1/{re\
+    source=projects/*/instances/*/databases/*/backupSchedules/*}:testIamPerm\
+    issions:\x01*ZY\"T/v1/{resource=projects/*/instances/*/databases/*/datab\
+    aseRoles/*}:testIamPermissions:\x01*\xdaA\x14resource,permissions\x12\
+    \x9f\x02\n\x0cCreateBackup\x125.google.spanner.admin.database.v1.CreateB\
+    ackupRequest\x1a\x1d.google.longrunning.Operation\"\xb8\x01\xcaA`\n'goog\
+    le.spanner.admin.database.v1.Backup\x125google.spanner.admin.database.v1\
+    .CreateBackupMetadata\x82\xd3\xe4\x93\x025\"+/v1/{parent=projects/*/inst\
+    ances/*}/backups:\x06backup\xdaA\x17parent,backup,backup_id\x12\xac\x02\
+    \n\nCopyBackup\x123.google.spanner.admin.database.v1.CopyBackupRequest\
+    \x1a\x1d.google.longrunning.Operation\"\xc9\x01\xcaA^\n'google.spanner.a\
+    dmin.database.v1.Backup\x123google.spanner.admin.database.v1.CopyBackupM\
+    etadata\x82\xd3\xe4\x93\x025\"0/v1/{parent=projects/*/instances/*}/backu\
+    ps:copy:\x01*\xdaA*parent,backup_id,source_backup,expire_time\x12\xa5\
+    \x01\n\tGetBackup\x122.google.spanner.admin.database.v1.GetBackupRequest\
+    \x1a(.google.spanner.admin.database.v1.Backup\":\x82\xd3\xe4\x93\x02-\
+    \x12+/v1/{name=projects/*/instances/*/backups/*}\xdaA\x04name\x12\xc8\
+    \x01\n\x0cUpdateBackup\x125.google.spanner.admin.database.v1.UpdateBacku\
+    pRequest\x1a(.google.spanner.admin.database.v1.Backup\"W\x82\xd3\xe4\x93\
+    \x02<22/v1/{backup.name=projects/*/instances/*/backups/*}:\x06backup\xda\
+    A\x12backup,update_mask\x12\x99\x01\n\x0cDeleteBackup\x125.google.spanne\
+    r.admin.database.v1.DeleteBackupRequest\x1a\x16.google.protobuf.Empty\":\
+    \x82\xd3\xe4\x93\x02-*+/v1/{name=projects/*/instances/*/backups/*}\xdaA\
+    \x04name\x12\xb8\x01\n\x0bListBackups\x124.google.spanner.admin.database\
+    .v1.ListBackupsRequest\x1a5.google.spanner.admin.database.v1.ListBackups\
+    Response\"<\x82\xd3\xe4\x93\x02-\x12+/v1/{parent=projects/*/instances/*}\
+    /backups\xdaA\x06parent\x12\xb1\x02\n\x0fRestoreDatabase\x128.google.spa\
+    nner.admin.database.v1.RestoreDatabaseRequest\x1a\x1d.google.longrunning\
+    .Operation\"\xc4\x01\xcaAe\n)google.spanner.admin.database.v1.Database\
+    \x128google.spanner.admin.database.v1.RestoreDatabaseMetadata\x82\xd3\
+    \xe4\x93\x02:\"5/v1/{parent=projects/*/instances/*}/databases:restore:\
+    \x01*\xdaA\x19parent,database_id,backup\x12\xe4\x01\n\x16ListDatabaseOpe\
+    rations\x12?.google.spanner.admin.database.v1.ListDatabaseOperationsRequ\
+    est\x1a@.google.spanner.admin.database.v1.ListDatabaseOperationsResponse\
+    \"G\x82\xd3\xe4\x93\x028\x126/v1/{parent=projects/*/instances/*}/databas\
+    eOperations\xdaA\x06parent\x12\xdc\x01\n\x14ListBackupOperations\x12=.go\
+    ogle.spanner.admin.database.v1.ListBackupOperationsRequest\x1a>.google.s\
+    panner.admin.database.v1.ListBackupOperationsResponse\"E\x82\xd3\xe4\x93\
+    \x026\x124/v1/{parent=projects/*/instances/*}/backupOperations\xdaA\x06p\
+    arent\x12\xdc\x01\n\x11ListDatabaseRoles\x12:.google.spanner.admin.datab\
+    ase.v1.ListDatabaseRolesRequest\x1a;.google.spanner.admin.database.v1.Li\
+    stDatabaseRolesResponse\"N\x82\xd3\xe4\x93\x02?\x12=/v1/{parent=projects\
+    /*/instances/*/databases/*}/databaseRoles\xdaA\x06parent\x12\x8e\x02\n\
+    \x14CreateBackupSchedule\x12=.google.spanner.admin.database.v1.CreateBac\
+    kupScheduleRequest\x1a0.google.spanner.admin.database.v1.BackupSchedule\
+    \"\x84\x01\x82\xd3\xe4\x93\x02R\"?/v1/{parent=projects/*/instances/*/dat\
+    abases/*}/backupSchedules:\x0fbackup_schedule\xdaA)parent,backup_schedul\
+    e,backup_schedule_id\x12\xd1\x01\n\x11GetBackupSchedule\x12:.google.span\
+    ner.admin.database.v1.GetBackupScheduleRequest\x1a0.google.spanner.admin\
+    .database.v1.BackupSchedule\"N\x82\xd3\xe4\x93\x02A\x12?/v1/{name=projec\
+    ts/*/instances/*/databases/*/backupSchedules/*}\xdaA\x04name\x12\x90\x02\
+    \n\x14UpdateBackupSchedule\x12=.google.spanner.admin.database.v1.UpdateB\
+    ackupScheduleRequest\x1a0.google.spanner.admin.database.v1.BackupSchedul\
+    e\"\x86\x01\x82\xd3\xe4\x93\x02b2O/v1/{backup_schedule.name=projects/*/i\
+    nstances/*/databases/*/backupSchedules/*}:\x0fbackup_schedule\xdaA\x1bba\
+    ckup_schedule,update_mask\x12\xbd\x01\n\x14DeleteBackupSchedule\x12=.goo\
+    gle.spanner.admin.database.v1.DeleteBackupScheduleRequest\x1a\x16.google\
+    .protobuf.Empty\"N\x82\xd3\xe4\x93\x02A*?/v1/{name=projects/*/instances/\
+    */databases/*/backupSchedules/*}\xdaA\x04name\x12\xe4\x01\n\x13ListBacku\
+    pSchedules\x12<.google.spanner.admin.database.v1.ListBackupSchedulesRequ\
+    est\x1a=.google.spanner.admin.database.v1.ListBackupSchedulesResponse\"P\
+    \x82\xd3\xe4\x93\x02A\x12?/v1/{parent=projects/*/instances/*/databases/*\
+    }/backupSchedules\xdaA\x06parent\x1ax\xd2A\\https://www.googleapis.com/a\
+    uth/cloud-platform,https://www.googleapis.com/auth/spanner.admin\xcaA\
+    \x16spanner.googleapis.comB\xd8\x02\n$com.google.spanner.admin.database.\
+    v1B\x19SpannerDatabaseAdminProtoP\x01ZFcloud.google.com/go/spanner/admin\
+    /database/apiv1/databasepb;databasepb\xaa\x02&Google.Cloud.Spanner.Admin\
+    .Database.V1\xca\x02&Google\\Cloud\\Spanner\\Admin\\Database\\V1\xea\x02\
+    +Google::Cloud::Spanner::Admin::Database::V1\xeaAJ\n\x1fspanner.googleap\
+    is.com/Instance\x12'projects/{project}/instances/{instance}J\xff\xe0\x02\
+    \n\x07\x12\x05\x0e\0\xb8\t\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\
+    \xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\
+    \x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\
+    \n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compli\
+    ance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\
+    \x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.\
+    org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\
+    \x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distrib\
+    uted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\
+    \x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
+    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
+    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
+    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\
+    \x02\x12\x03\x10\0)\n\t\n\x02\x03\0\x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\
+    \x03\x13\0!\n\t\n\x02\x03\x02\x12\x03\x14\0)\n\t\n\x02\x03\x03\x12\x03\
+    \x15\0#\n\t\n\x02\x03\x04\x12\x03\x16\0(\n\t\n\x02\x03\x05\x12\x03\x17\0\
+    $\n\t\n\x02\x03\x06\x12\x03\x18\0-\n\t\n\x02\x03\x07\x12\x03\x19\0%\n\t\
+    \n\x02\x03\x08\x12\x03\x1a\0*\n\t\n\x02\x03\t\x12\x03\x1b\0)\n\t\n\x02\
+    \x03\n\x12\x03\x1c\07\n\t\n\x02\x03\x0b\x12\x03\x1d\0@\n\t\n\x02\x03\x0c\
+    \x12\x03\x1e\07\n\x08\n\x01\x08\x12\x03\x20\0C\n\t\n\x02\x08%\x12\x03\
+    \x20\0C\n\x08\n\x01\x08\x12\x03!\0]\n\t\n\x02\x08\x0b\x12\x03!\0]\n\x08\
+    \n\x01\x08\x12\x03\"\0\"\n\t\n\x02\x08\n\x12\x03\"\0\"\n\x08\n\x01\x08\
+    \x12\x03#\0:\n\t\n\x02\x08\x08\x12\x03#\0:\n\x08\n\x01\x08\x12\x03$\0=\n\
+    \t\n\x02\x08\x01\x12\x03$\0=\n\x08\n\x01\x08\x12\x03%\0E\n\t\n\x02\x08)\
+    \x12\x03%\0E\n\x08\n\x01\x08\x12\x03&\0D\n\t\n\x02\x08-\x12\x03&\0D\n\t\
+    \n\x01\x08\x12\x04'\0*\x02\n\x0c\n\x04\x08\x9d\x08\0\x12\x04'\0*\x02\n\
+    \xa8\x02\n\x02\x06\0\x12\x053\0\xd9\x03\x01\x1a\x9a\x02\x20Cloud\x20Span\
+    ner\x20Database\x20Admin\x20API\n\n\x20The\x20Cloud\x20Spanner\x20Databa\
+    se\x20Admin\x20API\x20can\x20be\x20used\x20to:\n\x20\x20\x20*\x20create,\
+    \x20drop,\x20and\x20list\x20databases\n\x20\x20\x20*\x20update\x20the\
+    \x20schema\x20of\x20pre-existing\x20databases\n\x20\x20\x20*\x20create,\
+    \x20delete,\x20copy\x20and\x20list\x20backups\x20for\x20a\x20database\n\
+    \x20\x20\x20*\x20restore\x20a\x20database\x20from\x20an\x20existing\x20b\
+    ackup\n\n\n\n\x03\x06\0\x01\x12\x033\x08\x15\n\n\n\x03\x06\0\x03\x12\x03\
+    4\x02>\n\x0c\n\x05\x06\0\x03\x99\x08\x12\x034\x02>\n\x0b\n\x03\x06\0\x03\
+    \x12\x045\x0276\n\r\n\x05\x06\0\x03\x9a\x08\x12\x045\x0276\n.\n\x04\x06\
+    \0\x02\0\x12\x04:\x02?\x03\x1a\x20\x20Lists\x20Cloud\x20Spanner\x20datab\
+    ases.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03:\x06\x13\n\x0c\n\x05\x06\0\
+    \x02\0\x02\x12\x03:\x14(\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03:3H\n\r\n\
+    \x05\x06\0\x02\0\x04\x12\x04;\x04=\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\
+    \xbc\"\x12\x04;\x04=\x06\n\x0c\n\x05\x06\0\x02\0\x04\x12\x03>\x044\n\x0f\
+    \n\x08\x06\0\x02\0\x04\x9b\x08\0\x12\x03>\x044\n\xc8\x04\n\x04\x06\0\x02\
+    \x01\x12\x04I\x02T\x03\x1a\xb9\x04\x20Creates\x20a\x20new\x20Cloud\x20Sp\
+    anner\x20database\x20and\x20starts\x20to\x20prepare\x20it\x20for\x20serv\
+    ing.\n\x20The\x20returned\x20[long-running\x20operation][google.longrunn\
+    ing.Operation]\x20will\n\x20have\x20a\x20name\x20of\x20the\x20format\x20\
+    `<database_name>/operations/<operation_id>`\x20and\n\x20can\x20be\x20use\
+    d\x20to\x20track\x20preparation\x20of\x20the\x20database.\x20The\n\x20[m\
+    etadata][google.longrunning.Operation.metadata]\x20field\x20type\x20is\n\
     \x20[CreateDatabaseMetadata][google.spanner.admin.database.v1.CreateData\
     baseMetadata].\n\x20The\x20[response][google.longrunning.Operation.respo\
     nse]\x20field\x20type\x20is\n\x20[Database][google.spanner.admin.databas\
     e.v1.Database],\x20if\x20successful.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\
-    \x03G\x06\x14\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x03G\x15*\n\x0c\n\x05\
-    \x06\0\x02\x01\x03\x12\x03H\x0f+\n\r\n\x05\x06\0\x02\x01\x04\x12\x04I\
-    \x04L\x06\n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x04I\x04L\x06\n\
-    \x0c\n\x05\x06\0\x02\x01\x04\x12\x03M\x04E\n\x0f\n\x08\x06\0\x02\x01\x04\
-    \x9b\x08\0\x12\x03M\x04E\n\r\n\x05\x06\0\x02\x01\x04\x12\x04N\x04Q\x06\n\
-    \x0f\n\x07\x06\0\x02\x01\x04\x99\x08\x12\x04N\x04Q\x06\n;\n\x04\x06\0\
-    \x02\x02\x12\x04U\x02Z\x03\x1a-\x20Gets\x20the\x20state\x20of\x20a\x20Cl\
-    oud\x20Spanner\x20database.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03U\x06\
-    \x11\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03U\x12$\n\x0c\n\x05\x06\0\x02\
-    \x02\x03\x12\x03U/7\n\r\n\x05\x06\0\x02\x02\x04\x12\x04V\x04X\x06\n\x11\
-    \n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x04V\x04X\x06\n\x0c\n\x05\x06\0\
-    \x02\x02\x04\x12\x03Y\x042\n\x0f\n\x08\x06\0\x02\x02\x04\x9b\x08\0\x12\
-    \x03Y\x042\n\x8a\x04\n\x04\x06\0\x02\x03\x12\x04d\x02o\x03\x1a\xfb\x03\
+    \x03I\x06\x14\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x03I\x15*\n\x0c\n\x05\
+    \x06\0\x02\x01\x03\x12\x03J\x0f+\n\r\n\x05\x06\0\x02\x01\x04\x12\x04K\
+    \x04N\x06\n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x04K\x04N\x06\n\
+    \x0c\n\x05\x06\0\x02\x01\x04\x12\x03O\x04E\n\x0f\n\x08\x06\0\x02\x01\x04\
+    \x9b\x08\0\x12\x03O\x04E\n\r\n\x05\x06\0\x02\x01\x04\x12\x04P\x04S\x06\n\
+    \x0f\n\x07\x06\0\x02\x01\x04\x99\x08\x12\x04P\x04S\x06\n;\n\x04\x06\0\
+    \x02\x02\x12\x04W\x02\\\x03\x1a-\x20Gets\x20the\x20state\x20of\x20a\x20C\
+    loud\x20Spanner\x20database.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03W\
+    \x06\x11\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03W\x12$\n\x0c\n\x05\x06\0\
+    \x02\x02\x03\x12\x03W/7\n\r\n\x05\x06\0\x02\x02\x04\x12\x04X\x04Z\x06\n\
+    \x11\n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x04X\x04Z\x06\n\x0c\n\x05\
+    \x06\0\x02\x02\x04\x12\x03[\x042\n\x0f\n\x08\x06\0\x02\x02\x04\x9b\x08\0\
+    \x12\x03[\x042\n\xa4\r\n\x04\x06\0\x02\x03\x12\x06\x82\x01\x02\x8d\x01\
+    \x03\x1a\x93\r\x20Updates\x20a\x20Cloud\x20Spanner\x20database.\x20The\
+    \x20returned\n\x20[long-running\x20operation][google.longrunning.Operati\
+    on]\x20can\x20be\x20used\x20to\x20track\n\x20the\x20progress\x20of\x20up\
+    dating\x20the\x20database.\x20If\x20the\x20named\x20database\x20does\x20\
+    not\n\x20exist,\x20returns\x20`NOT_FOUND`.\n\n\x20While\x20the\x20operat\
+    ion\x20is\x20pending:\n\n\x20\x20\x20*\x20The\x20database's\n\x20\x20\
+    \x20\x20\x20[reconciling][google.spanner.admin.database.v1.Database.reco\
+    nciling]\n\x20\x20\x20\x20\x20field\x20is\x20set\x20to\x20true.\n\x20\
+    \x20\x20*\x20Cancelling\x20the\x20operation\x20is\x20best-effort.\x20If\
+    \x20the\x20cancellation\x20succeeds,\n\x20\x20\x20\x20\x20the\x20operati\
+    on\x20metadata's\n\x20\x20\x20\x20\x20[cancel_time][google.spanner.admin\
+    .database.v1.UpdateDatabaseMetadata.cancel_time]\n\x20\x20\x20\x20\x20is\
+    \x20set,\x20the\x20updates\x20are\x20reverted,\x20and\x20the\x20operatio\
+    n\x20terminates\x20with\x20a\n\x20\x20\x20\x20\x20`CANCELLED`\x20status.\
+    \n\x20\x20\x20*\x20New\x20UpdateDatabase\x20requests\x20will\x20return\
+    \x20a\x20`FAILED_PRECONDITION`\x20error\n\x20\x20\x20\x20\x20until\x20th\
+    e\x20pending\x20operation\x20is\x20done\x20(returns\x20successfully\x20o\
+    r\x20with\n\x20\x20\x20\x20\x20error).\n\x20\x20\x20*\x20Reading\x20the\
+    \x20database\x20via\x20the\x20API\x20continues\x20to\x20give\x20the\x20p\
+    re-request\n\x20\x20\x20\x20\x20values.\n\n\x20Upon\x20completion\x20of\
+    \x20the\x20returned\x20operation:\n\n\x20\x20\x20*\x20The\x20new\x20valu\
+    es\x20are\x20in\x20effect\x20and\x20readable\x20via\x20the\x20API.\n\x20\
+    \x20\x20*\x20The\x20database's\n\x20\x20\x20\x20\x20[reconciling][google\
+    .spanner.admin.database.v1.Database.reconciling]\n\x20\x20\x20\x20\x20fi\
+    eld\x20becomes\x20false.\n\n\x20The\x20returned\x20[long-running\x20oper\
+    ation][google.longrunning.Operation]\x20will\n\x20have\x20a\x20name\x20o\
+    f\x20the\x20format\n\x20`projects/<project>/instances/<instance>/databas\
+    es/<database>/operations/<operation_id>`\n\x20and\x20can\x20be\x20used\
+    \x20to\x20track\x20the\x20database\x20modification.\x20The\n\x20[metadat\
+    a][google.longrunning.Operation.metadata]\x20field\x20type\x20is\n\x20[U\
+    pdateDatabaseMetadata][google.spanner.admin.database.v1.UpdateDatabaseMe\
+    tadata].\n\x20The\x20[response][google.longrunning.Operation.response]\
+    \x20field\x20type\x20is\n\x20[Database][google.spanner.admin.database.v1\
+    .Database],\x20if\x20successful.\n\n\r\n\x05\x06\0\x02\x03\x01\x12\x04\
+    \x82\x01\x06\x14\n\r\n\x05\x06\0\x02\x03\x02\x12\x04\x82\x01\x15*\n\r\n\
+    \x05\x06\0\x02\x03\x03\x12\x04\x83\x01\x0f+\n\x0f\n\x05\x06\0\x02\x03\
+    \x04\x12\x06\x84\x01\x04\x87\x01\x06\n\x13\n\t\x06\0\x02\x03\x04\xb0\xca\
+    \xbc\"\x12\x06\x84\x01\x04\x87\x01\x06\n\r\n\x05\x06\0\x02\x03\x04\x12\
+    \x04\x88\x01\x04B\n\x10\n\x08\x06\0\x02\x03\x04\x9b\x08\0\x12\x04\x88\
+    \x01\x04B\n\x0f\n\x05\x06\0\x02\x03\x04\x12\x06\x89\x01\x04\x8c\x01\x06\
+    \n\x11\n\x07\x06\0\x02\x03\x04\x99\x08\x12\x06\x89\x01\x04\x8c\x01\x06\n\
+    \x8c\x04\n\x04\x06\0\x02\x04\x12\x06\x97\x01\x02\xa2\x01\x03\x1a\xfb\x03\
     \x20Updates\x20the\x20schema\x20of\x20a\x20Cloud\x20Spanner\x20database\
     \x20by\n\x20creating/altering/dropping\x20tables,\x20columns,\x20indexes\
     ,\x20etc.\x20The\x20returned\n\x20[long-running\x20operation][google.lon\
@@ -1876,293 +5059,1108 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20The\n\x20[metadata][google.longrunning.Operation.metadata]\x20field\
     \x20type\x20is\n\x20[UpdateDatabaseDdlMetadata][google.spanner.admin.dat\
     abase.v1.UpdateDatabaseDdlMetadata].\n\x20The\x20operation\x20has\x20no\
-    \x20response.\n\n\x0c\n\x05\x06\0\x02\x03\x01\x12\x03d\x06\x17\n\x0c\n\
-    \x05\x06\0\x02\x03\x02\x12\x03d\x180\n\x0c\n\x05\x06\0\x02\x03\x03\x12\
-    \x03e\x0f+\n\r\n\x05\x06\0\x02\x03\x04\x12\x04f\x04i\x06\n\x11\n\t\x06\0\
-    \x02\x03\x04\xb0\xca\xbc\"\x12\x04f\x04i\x06\n\x0c\n\x05\x06\0\x02\x03\
-    \x04\x12\x03j\x04A\n\x0f\n\x08\x06\0\x02\x03\x04\x9b\x08\0\x12\x03j\x04A\
-    \n\r\n\x05\x06\0\x02\x03\x04\x12\x04k\x04n\x06\n\x0f\n\x07\x06\0\x02\x03\
-    \x04\x99\x08\x12\x04k\x04n\x06\n=\n\x04\x06\0\x02\x04\x12\x04r\x02w\x03\
-    \x1a/\x20Drops\x20(aka\x20deletes)\x20a\x20Cloud\x20Spanner\x20database.\
-    \n\n\x0c\n\x05\x06\0\x02\x04\x01\x12\x03r\x06\x12\n\x0c\n\x05\x06\0\x02\
-    \x04\x02\x12\x03r\x13&\n\x0c\n\x05\x06\0\x02\x04\x03\x12\x03r1F\n\r\n\
-    \x05\x06\0\x02\x04\x04\x12\x04s\x04u\x06\n\x11\n\t\x06\0\x02\x04\x04\xb0\
-    \xca\xbc\"\x12\x04s\x04u\x06\n\x0c\n\x05\x06\0\x02\x04\x04\x12\x03v\x046\
-    \n\x0f\n\x08\x06\0\x02\x04\x04\x9b\x08\0\x12\x03v\x046\n\xeb\x01\n\x04\
-    \x06\0\x02\x05\x12\x05|\x02\x81\x01\x03\x1a\xdb\x01\x20Returns\x20the\
-    \x20schema\x20of\x20a\x20Cloud\x20Spanner\x20database\x20as\x20a\x20list\
-    \x20of\x20formatted\n\x20DDL\x20statements.\x20This\x20method\x20does\
-    \x20not\x20show\x20pending\x20schema\x20updates,\x20those\x20may\n\x20be\
-    \x20queried\x20using\x20the\x20[Operations][google.longrunning.Operation\
-    s]\x20API.\n\n\x0c\n\x05\x06\0\x02\x05\x01\x12\x03|\x06\x14\n\x0c\n\x05\
-    \x06\0\x02\x05\x02\x12\x03|\x15*\n\x0c\n\x05\x06\0\x02\x05\x03\x12\x03|5\
-    K\n\r\n\x05\x06\0\x02\x05\x04\x12\x04}\x04\x7f\x06\n\x11\n\t\x06\0\x02\
-    \x05\x04\xb0\xca\xbc\"\x12\x04}\x04\x7f\x06\n\r\n\x05\x06\0\x02\x05\x04\
-    \x12\x04\x80\x01\x046\n\x10\n\x08\x06\0\x02\x05\x04\x9b\x08\0\x12\x04\
-    \x80\x01\x046\n\xe9\x01\n\x04\x06\0\x02\x06\x12\x06\x88\x01\x02\x93\x01\
-    \x03\x1a\xd8\x01\x20Sets\x20the\x20access\x20control\x20policy\x20on\x20\
-    a\x20database\x20resource.\n\x20Replaces\x20any\x20existing\x20policy.\n\
-    \n\x20Authorization\x20requires\x20`spanner.databases.setIamPolicy`\n\
-    \x20permission\x20on\x20[resource][google.iam.v1.SetIamPolicyRequest.res\
-    ource].\n\n\r\n\x05\x06\0\x02\x06\x01\x12\x04\x88\x01\x06\x12\n\r\n\x05\
-    \x06\0\x02\x06\x02\x12\x04\x88\x01\x134\n\r\n\x05\x06\0\x02\x06\x03\x12\
-    \x04\x89\x01\x0f#\n\x0f\n\x05\x06\0\x02\x06\x04\x12\x06\x8a\x01\x04\x91\
-    \x01\x06\n\x13\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\x06\x8a\x01\x04\
-    \x91\x01\x06\n\r\n\x05\x06\0\x02\x06\x04\x12\x04\x92\x01\x04=\n\x10\n\
-    \x08\x06\0\x02\x06\x04\x9b\x08\0\x12\x04\x92\x01\x04=\n\x9a\x02\n\x04\
-    \x06\0\x02\x07\x12\x06\x9b\x01\x02\xa6\x01\x03\x1a\x89\x02\x20Gets\x20th\
-    e\x20access\x20control\x20policy\x20for\x20a\x20database\x20resource.\n\
-    \x20Returns\x20an\x20empty\x20policy\x20if\x20a\x20database\x20exists\
-    \x20but\x20does\n\x20not\x20have\x20a\x20policy\x20set.\n\n\x20Authoriza\
-    tion\x20requires\x20`spanner.databases.getIamPolicy`\x20permission\x20on\
-    \n\x20[resource][google.iam.v1.GetIamPolicyRequest.resource].\n\n\r\n\
-    \x05\x06\0\x02\x07\x01\x12\x04\x9b\x01\x06\x12\n\r\n\x05\x06\0\x02\x07\
-    \x02\x12\x04\x9b\x01\x134\n\r\n\x05\x06\0\x02\x07\x03\x12\x04\x9c\x01\
-    \x0f#\n\x0f\n\x05\x06\0\x02\x07\x04\x12\x06\x9d\x01\x04\xa4\x01\x06\n\
-    \x13\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\x06\x9d\x01\x04\xa4\x01\x06\
-    \n\r\n\x05\x06\0\x02\x07\x04\x12\x04\xa5\x01\x046\n\x10\n\x08\x06\0\x02\
-    \x07\x04\x9b\x08\0\x12\x04\xa5\x01\x046\n\xce\x02\n\x04\x06\0\x02\x08\
-    \x12\x06\xae\x01\x02\xb9\x01\x03\x1a\xbd\x02\x20Returns\x20permissions\
-    \x20that\x20the\x20caller\x20has\x20on\x20the\x20specified\x20database\
-    \x20resource.\n\n\x20Attempting\x20this\x20RPC\x20on\x20a\x20non-existen\
-    t\x20Cloud\x20Spanner\x20database\x20will\n\x20result\x20in\x20a\x20NOT_\
-    FOUND\x20error\x20if\x20the\x20user\x20has\n\x20`spanner.databases.list`\
-    \x20permission\x20on\x20the\x20containing\x20Cloud\n\x20Spanner\x20insta\
-    nce.\x20Otherwise\x20returns\x20an\x20empty\x20set\x20of\x20permissions.\
-    \n\n\r\n\x05\x06\0\x02\x08\x01\x12\x04\xae\x01\x06\x18\n\r\n\x05\x06\0\
-    \x02\x08\x02\x12\x04\xae\x01\x19@\n\r\n\x05\x06\0\x02\x08\x03\x12\x04\
-    \xaf\x01\x0f7\n\x0f\n\x05\x06\0\x02\x08\x04\x12\x06\xb0\x01\x04\xb7\x01\
-    \x06\n\x13\n\t\x06\0\x02\x08\x04\xb0\xca\xbc\"\x12\x06\xb0\x01\x04\xb7\
-    \x01\x06\n\r\n\x05\x06\0\x02\x08\x04\x12\x04\xb8\x01\x04B\n\x10\n\x08\
-    \x06\0\x02\x08\x04\x9b\x08\0\x12\x04\xb8\x01\x04B\n)\n\x02\x04\0\x12\x06\
-    \xbd\x01\0\xd9\x01\x01\x1a\x1b\x20A\x20Cloud\x20Spanner\x20database.\n\n\
-    \x0b\n\x03\x04\0\x01\x12\x04\xbd\x01\x08\x10\n\r\n\x03\x04\0\x07\x12\x06\
-    \xbe\x01\x02\xc1\x01\x04\n\x0f\n\x05\x04\0\x07\x9d\x08\x12\x06\xbe\x01\
-    \x02\xc1\x01\x04\n>\n\x04\x04\0\x04\0\x12\x06\xc4\x01\x02\xce\x01\x03\
-    \x1a.\x20Indicates\x20the\x20current\x20state\x20of\x20the\x20database.\
-    \n\n\r\n\x05\x04\0\x04\0\x01\x12\x04\xc4\x01\x07\x0c\n\x20\n\x06\x04\0\
-    \x04\0\x02\0\x12\x04\xc6\x01\x04\x1a\x1a\x10\x20Not\x20specified.\n\n\
-    \x0f\n\x07\x04\0\x04\0\x02\0\x01\x12\x04\xc6\x01\x04\x15\n\x0f\n\x07\x04\
-    \0\x04\0\x02\0\x02\x12\x04\xc6\x01\x18\x19\n\x85\x01\n\x06\x04\0\x04\0\
-    \x02\x01\x12\x04\xca\x01\x04\x11\x1au\x20The\x20database\x20is\x20still\
-    \x20being\x20created.\x20Operations\x20on\x20the\x20database\x20may\x20f\
-    ail\n\x20with\x20`FAILED_PRECONDITION`\x20in\x20this\x20state.\n\n\x0f\n\
-    \x07\x04\0\x04\0\x02\x01\x01\x12\x04\xca\x01\x04\x0c\n\x0f\n\x07\x04\0\
-    \x04\0\x02\x01\x02\x12\x04\xca\x01\x0f\x10\nB\n\x06\x04\0\x04\0\x02\x02\
-    \x12\x04\xcd\x01\x04\x0e\x1a2\x20The\x20database\x20is\x20fully\x20creat\
-    ed\x20and\x20ready\x20for\x20use.\n\n\x0f\n\x07\x04\0\x04\0\x02\x02\x01\
-    \x12\x04\xcd\x01\x04\t\n\x0f\n\x07\x04\0\x04\0\x02\x02\x02\x12\x04\xcd\
-    \x01\x0c\r\n\x9d\x02\n\x04\x04\0\x02\0\x12\x04\xd5\x01\x02\x12\x1a\x8e\
-    \x02\x20Required.\x20The\x20name\x20of\x20the\x20database.\x20Values\x20\
-    are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>/d\
-    atabases/<database>`,\n\x20where\x20`<database>`\x20is\x20as\x20specifie\
-    d\x20in\x20the\x20`CREATE\x20DATABASE`\n\x20statement.\x20This\x20name\
-    \x20can\x20be\x20passed\x20to\x20other\x20API\x20methods\x20to\n\x20iden\
-    tify\x20the\x20database.\n\n\r\n\x05\x04\0\x02\0\x05\x12\x04\xd5\x01\x02\
-    \x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xd5\x01\t\r\n\r\n\x05\x04\0\x02\0\
-    \x03\x12\x04\xd5\x01\x10\x11\n8\n\x04\x04\0\x02\x01\x12\x04\xd8\x01\x02\
-    \x12\x1a*\x20Output\x20only.\x20The\x20current\x20database\x20state.\n\n\
-    \r\n\x05\x04\0\x02\x01\x06\x12\x04\xd8\x01\x02\x07\n\r\n\x05\x04\0\x02\
-    \x01\x01\x12\x04\xd8\x01\x08\r\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\xd8\
-    \x01\x10\x11\no\n\x02\x04\x01\x12\x06\xdd\x01\0\xf0\x01\x01\x1aa\x20The\
-    \x20request\x20for\n\x20[ListDatabases][google.spanner.admin.database.v1\
-    .DatabaseAdmin.ListDatabases].\n\n\x0b\n\x03\x04\x01\x01\x12\x04\xdd\x01\
-    \x08\x1c\n\x8d\x01\n\x04\x04\x01\x02\0\x12\x06\xe0\x01\x02\xe5\x01\x04\
-    \x1a}\x20Required.\x20The\x20instance\x20whose\x20databases\x20should\
-    \x20be\x20listed.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/<\
-    project>/instances/<instance>`.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\
-    \xe0\x01\x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\xe0\x01\t\x0f\n\r\n\
-    \x05\x04\x01\x02\0\x03\x12\x04\xe0\x01\x12\x13\n\x0f\n\x05\x04\x01\x02\0\
-    \x08\x12\x06\xe0\x01\x14\xe5\x01\x03\n\x10\n\x08\x04\x01\x02\0\x08\x9c\
-    \x08\0\x12\x04\xe1\x01\x04*\n\x11\n\x07\x04\x01\x02\0\x08\x9f\x08\x12\
-    \x06\xe2\x01\x04\xe4\x01\x05\n\x86\x01\n\x04\x04\x01\x02\x01\x12\x04\xe9\
-    \x01\x02\x16\x1ax\x20Number\x20of\x20databases\x20to\x20be\x20returned\
-    \x20in\x20the\x20response.\x20If\x200\x20or\x20less,\n\x20defaults\x20to\
-    \x20the\x20server's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\
-    \x04\x01\x02\x01\x05\x12\x04\xe9\x01\x02\x07\n\r\n\x05\x04\x01\x02\x01\
-    \x01\x12\x04\xe9\x01\x08\x11\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\xe9\
-    \x01\x14\x15\n\xfa\x01\n\x04\x04\x01\x02\x02\x12\x04\xef\x01\x02\x18\x1a\
-    \xeb\x01\x20If\x20non-empty,\x20`page_token`\x20should\x20contain\x20a\n\
-    \x20[next_page_token][google.spanner.admin.database.v1.ListDatabasesResp\
-    onse.next_page_token]\n\x20from\x20a\x20previous\n\x20[ListDatabasesResp\
-    onse][google.spanner.admin.database.v1.ListDatabasesResponse].\n\n\r\n\
-    \x05\x04\x01\x02\x02\x05\x12\x04\xef\x01\x02\x08\n\r\n\x05\x04\x01\x02\
-    \x02\x01\x12\x04\xef\x01\t\x13\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\xef\
-    \x01\x16\x17\np\n\x02\x04\x02\x12\x06\xf4\x01\0\xfc\x01\x01\x1ab\x20The\
-    \x20response\x20for\n\x20[ListDatabases][google.spanner.admin.database.v\
-    1.DatabaseAdmin.ListDatabases].\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xf4\
-    \x01\x08\x1d\n3\n\x04\x04\x02\x02\0\x12\x04\xf6\x01\x02\"\x1a%\x20Databa\
-    ses\x20that\x20matched\x20the\x20request.\n\n\r\n\x05\x04\x02\x02\0\x04\
-    \x12\x04\xf6\x01\x02\n\n\r\n\x05\x04\x02\x02\0\x06\x12\x04\xf6\x01\x0b\
-    \x13\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xf6\x01\x14\x1d\n\r\n\x05\x04\
-    \x02\x02\0\x03\x12\x04\xf6\x01\x20!\n\xbc\x01\n\x04\x04\x02\x02\x01\x12\
-    \x04\xfb\x01\x02\x1d\x1a\xad\x01\x20`next_page_token`\x20can\x20be\x20se\
-    nt\x20in\x20a\x20subsequent\n\x20[ListDatabases][google.spanner.admin.da\
-    tabase.v1.DatabaseAdmin.ListDatabases]\n\x20call\x20to\x20fetch\x20more\
-    \x20of\x20the\x20matching\x20databases.\n\n\r\n\x05\x04\x02\x02\x01\x05\
-    \x12\x04\xfb\x01\x02\x08\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\xfb\x01\t\
-    \x18\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xfb\x01\x1b\x1c\nq\n\x02\x04\
-    \x03\x12\x06\x80\x02\0\x96\x02\x01\x1ac\x20The\x20request\x20for\n\x20[C\
-    reateDatabase][google.spanner.admin.database.v1.DatabaseAdmin.CreateData\
-    base].\n\n\x0b\n\x03\x04\x03\x01\x12\x04\x80\x02\x08\x1d\n\x9a\x01\n\x04\
-    \x04\x03\x02\0\x12\x06\x83\x02\x02\x88\x02\x04\x1a\x89\x01\x20Required.\
-    \x20The\x20name\x20of\x20the\x20instance\x20that\x20will\x20serve\x20the\
-    \x20new\x20database.\n\x20Values\x20are\x20of\x20the\x20form\x20`project\
-    s/<project>/instances/<instance>`.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\
-    \x83\x02\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\x83\x02\t\x0f\n\r\n\
-    \x05\x04\x03\x02\0\x03\x12\x04\x83\x02\x12\x13\n\x0f\n\x05\x04\x03\x02\0\
-    \x08\x12\x06\x83\x02\x14\x88\x02\x03\n\x10\n\x08\x04\x03\x02\0\x08\x9c\
-    \x08\0\x12\x04\x84\x02\x04*\n\x11\n\x07\x04\x03\x02\0\x08\x9f\x08\x12\
-    \x06\x85\x02\x04\x87\x02\x05\n\xe6\x02\n\x04\x04\x03\x02\x01\x12\x04\x8f\
-    \x02\x02G\x1a\xd7\x02\x20Required.\x20A\x20`CREATE\x20DATABASE`\x20state\
-    ment,\x20which\x20specifies\x20the\x20ID\x20of\x20the\n\x20new\x20databa\
-    se.\x20\x20The\x20database\x20ID\x20must\x20conform\x20to\x20the\x20regu\
-    lar\x20expression\n\x20`[a-z][a-z0-9_\\-]*[a-z0-9]`\x20and\x20be\x20betw\
-    een\x202\x20and\x2030\x20characters\x20in\x20length.\n\x20If\x20the\x20d\
-    atabase\x20ID\x20is\x20a\x20reserved\x20word\x20or\x20if\x20it\x20contai\
-    ns\x20a\x20hyphen,\x20the\n\x20database\x20ID\x20must\x20be\x20enclosed\
-    \x20in\x20backticks\x20(``\x20`\x20``).\n\n\r\n\x05\x04\x03\x02\x01\x05\
-    \x12\x04\x8f\x02\x02\x08\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\x8f\x02\t\
-    \x19\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\x8f\x02\x1c\x1d\n\r\n\x05\x04\
-    \x03\x02\x01\x08\x12\x04\x8f\x02\x1eF\n\x10\n\x08\x04\x03\x02\x01\x08\
-    \x9c\x08\0\x12\x04\x8f\x02\x1fE\n\x97\x02\n\x04\x04\x03\x02\x02\x12\x04\
-    \x95\x02\x02'\x1a\x88\x02\x20An\x20optional\x20list\x20of\x20DDL\x20stat\
-    ements\x20to\x20run\x20inside\x20the\x20newly\x20created\n\x20database.\
-    \x20Statements\x20can\x20create\x20tables,\x20indexes,\x20etc.\x20These\
-    \n\x20statements\x20execute\x20atomically\x20with\x20the\x20creation\x20\
-    of\x20the\x20database:\n\x20if\x20there\x20is\x20an\x20error\x20in\x20an\
-    y\x20statement,\x20the\x20database\x20is\x20not\x20created.\n\n\r\n\x05\
-    \x04\x03\x02\x02\x04\x12\x04\x95\x02\x02\n\n\r\n\x05\x04\x03\x02\x02\x05\
-    \x12\x04\x95\x02\x0b\x11\n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\x95\x02\
-    \x12\"\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\x95\x02%&\n\x8d\x01\n\x02\
-    \x04\x04\x12\x06\x9a\x02\0\x9f\x02\x01\x1a\x7f\x20Metadata\x20type\x20fo\
-    r\x20the\x20operation\x20returned\x20by\n\x20[CreateDatabase][google.spa\
-    nner.admin.database.v1.DatabaseAdmin.CreateDatabase].\n\n\x0b\n\x03\x04\
-    \x04\x01\x12\x04\x9a\x02\x08\x1e\n-\n\x04\x04\x04\x02\0\x12\x06\x9c\x02\
-    \x02\x9e\x02\x05\x1a\x1d\x20The\x20database\x20being\x20created.\n\n\r\n\
-    \x05\x04\x04\x02\0\x05\x12\x04\x9c\x02\x02\x08\n\r\n\x05\x04\x04\x02\0\
-    \x01\x12\x04\x9c\x02\t\x11\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\x9c\x02\
-    \x14\x15\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\x9c\x02\x16\x9e\x02\x04\n\
-    \x11\n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x06\x9c\x02\x17\x9e\x02\x03\nk\
-    \n\x02\x04\x05\x12\x06\xa3\x02\0\xac\x02\x01\x1a]\x20The\x20request\x20f\
-    or\n\x20[GetDatabase][google.spanner.admin.database.v1.DatabaseAdmin.Get\
-    Database].\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xa3\x02\x08\x1a\n\x98\x01\n\
-    \x04\x04\x05\x02\0\x12\x06\xa6\x02\x02\xab\x02\x04\x1a\x87\x01\x20Requir\
-    ed.\x20The\x20name\x20of\x20the\x20requested\x20database.\x20Values\x20a\
-    re\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>/da\
-    tabases/<database>`.\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\xa6\x02\x02\
-    \x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xa6\x02\t\r\n\r\n\x05\x04\x05\
-    \x02\0\x03\x12\x04\xa6\x02\x10\x11\n\x0f\n\x05\x04\x05\x02\0\x08\x12\x06\
-    \xa6\x02\x12\xab\x02\x03\n\x10\n\x08\x04\x05\x02\0\x08\x9c\x08\0\x12\x04\
-    \xa7\x02\x04*\n\x11\n\x07\x04\x05\x02\0\x08\x9f\x08\x12\x06\xa8\x02\x04\
-    \xaa\x02\x05\n\x99\x07\n\x02\x04\x06\x12\x06\xbe\x02\0\xe0\x02\x01\x1a\
-    \x8a\x07\x20Enqueues\x20the\x20given\x20DDL\x20statements\x20to\x20be\
-    \x20applied,\x20in\x20order\x20but\x20not\n\x20necessarily\x20all\x20at\
-    \x20once,\x20to\x20the\x20database\x20schema\x20at\x20some\x20point\x20(\
-    or\n\x20points)\x20in\x20the\x20future.\x20The\x20server\x20checks\x20th\
-    at\x20the\x20statements\n\x20are\x20executable\x20(syntactically\x20vali\
-    d,\x20name\x20tables\x20that\x20exist,\x20etc.)\n\x20before\x20enqueuein\
-    g\x20them,\x20but\x20they\x20may\x20still\x20fail\x20upon\n\x20later\x20\
-    execution\x20(e.g.,\x20if\x20a\x20statement\x20from\x20another\x20batch\
-    \x20of\n\x20statements\x20is\x20applied\x20first\x20and\x20it\x20conflic\
-    ts\x20in\x20some\x20way,\x20or\x20if\n\x20there\x20is\x20some\x20data-re\
-    lated\x20problem\x20like\x20a\x20`NULL`\x20value\x20in\x20a\x20column\
-    \x20to\n\x20which\x20`NOT\x20NULL`\x20would\x20be\x20added).\x20If\x20a\
-    \x20statement\x20fails,\x20all\n\x20subsequent\x20statements\x20in\x20th\
-    e\x20batch\x20are\x20automatically\x20cancelled.\n\n\x20Each\x20batch\
-    \x20of\x20statements\x20is\x20assigned\x20a\x20name\x20which\x20can\x20b\
-    e\x20used\x20with\n\x20the\x20[Operations][google.longrunning.Operations\
-    ]\x20API\x20to\x20monitor\n\x20progress.\x20See\x20the\n\x20[operation_i\
-    d][google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.operation_i\
-    d]\n\x20field\x20for\x20more\x20details.\n\n\x0b\n\x03\x04\x06\x01\x12\
-    \x04\xbe\x02\x08\x20\n3\n\x04\x04\x06\x02\0\x12\x06\xc0\x02\x02\xc5\x02\
-    \x04\x1a#\x20Required.\x20The\x20database\x20to\x20update.\n\n\r\n\x05\
-    \x04\x06\x02\0\x05\x12\x04\xc0\x02\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\
-    \x12\x04\xc0\x02\t\x11\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xc0\x02\x14\
-    \x15\n\x0f\n\x05\x04\x06\x02\0\x08\x12\x06\xc0\x02\x16\xc5\x02\x03\n\x10\
-    \n\x08\x04\x06\x02\0\x08\x9c\x08\0\x12\x04\xc1\x02\x04*\n\x11\n\x07\x04\
-    \x06\x02\0\x08\x9f\x08\x12\x06\xc2\x02\x04\xc4\x02\x05\nG\n\x04\x04\x06\
-    \x02\x01\x12\x04\xc8\x02\x02J\x1a9\x20Required.\x20DDL\x20statements\x20\
-    to\x20be\x20applied\x20to\x20the\x20database.\n\n\r\n\x05\x04\x06\x02\
-    \x01\x04\x12\x04\xc8\x02\x02\n\n\r\n\x05\x04\x06\x02\x01\x05\x12\x04\xc8\
-    \x02\x0b\x11\n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xc8\x02\x12\x1c\n\r\n\
-    \x05\x04\x06\x02\x01\x03\x12\x04\xc8\x02\x1f\x20\n\r\n\x05\x04\x06\x02\
-    \x01\x08\x12\x04\xc8\x02!I\n\x10\n\x08\x04\x06\x02\x01\x08\x9c\x08\0\x12\
-    \x04\xc8\x02\"H\n\xe6\x08\n\x04\x04\x06\x02\x02\x12\x04\xdf\x02\x02\x1a\
-    \x1a\xd7\x08\x20If\x20empty,\x20the\x20new\x20update\x20request\x20is\
-    \x20assigned\x20an\n\x20automatically-generated\x20operation\x20ID.\x20O\
-    therwise,\x20`operation_id`\n\x20is\x20used\x20to\x20construct\x20the\
-    \x20name\x20of\x20the\x20resulting\n\x20[Operation][google.longrunning.O\
-    peration].\n\n\x20Specifying\x20an\x20explicit\x20operation\x20ID\x20sim\
-    plifies\x20determining\n\x20whether\x20the\x20statements\x20were\x20exec\
-    uted\x20in\x20the\x20event\x20that\x20the\n\x20[UpdateDatabaseDdl][googl\
-    e.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]\n\x20call\
-    \x20is\x20replayed,\x20or\x20the\x20return\x20value\x20is\x20otherwise\
-    \x20lost:\x20the\n\x20[database][google.spanner.admin.database.v1.Update\
-    DatabaseDdlRequest.database]\n\x20and\x20`operation_id`\x20fields\x20can\
-    \x20be\x20combined\x20to\x20form\x20the\n\x20[name][google.longrunning.O\
-    peration.name]\x20of\x20the\x20resulting\n\x20[longrunning.Operation][go\
-    ogle.longrunning.Operation]:\n\x20`<database>/operations/<operation_id>`\
-    .\n\n\x20`operation_id`\x20should\x20be\x20unique\x20within\x20the\x20da\
-    tabase,\x20and\x20must\x20be\n\x20a\x20valid\x20identifier:\x20`[a-z][a-\
-    z0-9_]*`.\x20Note\x20that\n\x20automatically-generated\x20operation\x20I\
-    Ds\x20always\x20begin\x20with\x20an\n\x20underscore.\x20If\x20the\x20nam\
-    ed\x20operation\x20already\x20exists,\n\x20[UpdateDatabaseDdl][google.sp\
-    anner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]\n\x20returns\
-    \x20`ALREADY_EXISTS`.\n\n\r\n\x05\x04\x06\x02\x02\x05\x12\x04\xdf\x02\
-    \x02\x08\n\r\n\x05\x04\x06\x02\x02\x01\x12\x04\xdf\x02\t\x15\n\r\n\x05\
-    \x04\x06\x02\x02\x03\x12\x04\xdf\x02\x18\x19\n\x94\x01\n\x02\x04\x07\x12\
-    \x06\xe4\x02\0\xf2\x02\x01\x1a\x85\x01\x20Metadata\x20type\x20for\x20the\
-    \x20operation\x20returned\x20by\n\x20[UpdateDatabaseDdl][google.spanner.\
-    admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].\n\n\x0b\n\x03\x04\
-    \x07\x01\x12\x04\xe4\x02\x08!\n.\n\x04\x04\x07\x02\0\x12\x06\xe6\x02\x02\
-    \xe8\x02\x05\x1a\x1e\x20The\x20database\x20being\x20modified.\n\n\r\n\
-    \x05\x04\x07\x02\0\x05\x12\x04\xe6\x02\x02\x08\n\r\n\x05\x04\x07\x02\0\
-    \x01\x12\x04\xe6\x02\t\x11\n\r\n\x05\x04\x07\x02\0\x03\x12\x04\xe6\x02\
-    \x14\x15\n\x0f\n\x05\x04\x07\x02\0\x08\x12\x06\xe6\x02\x16\xe8\x02\x04\n\
-    \x11\n\x07\x04\x07\x02\0\x08\x9f\x08\x12\x06\xe6\x02\x17\xe8\x02\x03\n\
-    \x8a\x01\n\x04\x04\x07\x02\x01\x12\x04\xec\x02\x02!\x1a|\x20For\x20an\
+    \x20response.\n\n\r\n\x05\x06\0\x02\x04\x01\x12\x04\x97\x01\x06\x17\n\r\
+    \n\x05\x06\0\x02\x04\x02\x12\x04\x97\x01\x180\n\r\n\x05\x06\0\x02\x04\
+    \x03\x12\x04\x98\x01\x0f+\n\x0f\n\x05\x06\0\x02\x04\x04\x12\x06\x99\x01\
+    \x04\x9c\x01\x06\n\x13\n\t\x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\x06\x99\
+    \x01\x04\x9c\x01\x06\n\r\n\x05\x06\0\x02\x04\x04\x12\x04\x9d\x01\x04A\n\
+    \x10\n\x08\x06\0\x02\x04\x04\x9b\x08\0\x12\x04\x9d\x01\x04A\n\x0f\n\x05\
+    \x06\0\x02\x04\x04\x12\x06\x9e\x01\x04\xa1\x01\x06\n\x11\n\x07\x06\0\x02\
+    \x04\x04\x99\x08\x12\x06\x9e\x01\x04\xa1\x01\x06\n\x87\x02\n\x04\x06\0\
+    \x02\x05\x12\x06\xa9\x01\x02\xae\x01\x03\x1a\xf6\x01\x20Drops\x20(aka\
+    \x20deletes)\x20a\x20Cloud\x20Spanner\x20database.\n\x20Completed\x20bac\
+    kups\x20for\x20the\x20database\x20will\x20be\x20retained\x20according\
+    \x20to\x20their\n\x20`expire_time`.\n\x20Note:\x20Cloud\x20Spanner\x20mi\
+    ght\x20continue\x20to\x20accept\x20requests\x20for\x20a\x20few\x20second\
+    s\n\x20after\x20the\x20database\x20has\x20been\x20deleted.\n\n\r\n\x05\
+    \x06\0\x02\x05\x01\x12\x04\xa9\x01\x06\x12\n\r\n\x05\x06\0\x02\x05\x02\
+    \x12\x04\xa9\x01\x13&\n\r\n\x05\x06\0\x02\x05\x03\x12\x04\xa9\x011F\n\
+    \x0f\n\x05\x06\0\x02\x05\x04\x12\x06\xaa\x01\x04\xac\x01\x06\n\x13\n\t\
+    \x06\0\x02\x05\x04\xb0\xca\xbc\"\x12\x06\xaa\x01\x04\xac\x01\x06\n\r\n\
+    \x05\x06\0\x02\x05\x04\x12\x04\xad\x01\x046\n\x10\n\x08\x06\0\x02\x05\
+    \x04\x9b\x08\0\x12\x04\xad\x01\x046\n\xec\x01\n\x04\x06\0\x02\x06\x12\
+    \x06\xb3\x01\x02\xb8\x01\x03\x1a\xdb\x01\x20Returns\x20the\x20schema\x20\
+    of\x20a\x20Cloud\x20Spanner\x20database\x20as\x20a\x20list\x20of\x20form\
+    atted\n\x20DDL\x20statements.\x20This\x20method\x20does\x20not\x20show\
+    \x20pending\x20schema\x20updates,\x20those\x20may\n\x20be\x20queried\x20\
+    using\x20the\x20[Operations][google.longrunning.Operations]\x20API.\n\n\
+    \r\n\x05\x06\0\x02\x06\x01\x12\x04\xb3\x01\x06\x14\n\r\n\x05\x06\0\x02\
+    \x06\x02\x12\x04\xb3\x01\x15*\n\r\n\x05\x06\0\x02\x06\x03\x12\x04\xb3\
+    \x015K\n\x0f\n\x05\x06\0\x02\x06\x04\x12\x06\xb4\x01\x04\xb6\x01\x06\n\
+    \x13\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\x06\xb4\x01\x04\xb6\x01\x06\
+    \n\r\n\x05\x06\0\x02\x06\x04\x12\x04\xb7\x01\x046\n\x10\n\x08\x06\0\x02\
+    \x06\x04\x9b\x08\0\x12\x04\xb7\x01\x046\n\xfe\x02\n\x04\x06\0\x02\x07\
+    \x12\x06\xc1\x01\x02\xd0\x01\x03\x1a\xed\x02\x20Sets\x20the\x20access\
+    \x20control\x20policy\x20on\x20a\x20database\x20or\x20backup\x20resource\
+    .\n\x20Replaces\x20any\x20existing\x20policy.\n\n\x20Authorization\x20re\
+    quires\x20`spanner.databases.setIamPolicy`\n\x20permission\x20on\x20[res\
+    ource][google.iam.v1.SetIamPolicyRequest.resource].\n\x20For\x20backups,\
+    \x20authorization\x20requires\x20`spanner.backups.setIamPolicy`\n\x20per\
+    mission\x20on\x20[resource][google.iam.v1.SetIamPolicyRequest.resource].\
+    \n\n\r\n\x05\x06\0\x02\x07\x01\x12\x04\xc1\x01\x06\x12\n\r\n\x05\x06\0\
+    \x02\x07\x02\x12\x04\xc1\x01\x134\n\r\n\x05\x06\0\x02\x07\x03\x12\x04\
+    \xc2\x01\x0f#\n\x0f\n\x05\x06\0\x02\x07\x04\x12\x06\xc3\x01\x04\xce\x01\
+    \x06\n\x13\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\x06\xc3\x01\x04\xce\
+    \x01\x06\n\r\n\x05\x06\0\x02\x07\x04\x12\x04\xcf\x01\x04=\n\x10\n\x08\
+    \x06\0\x02\x07\x04\x9b\x08\0\x12\x04\xcf\x01\x04=\n\xb9\x03\n\x04\x06\0\
+    \x02\x08\x12\x06\xda\x01\x02\xe9\x01\x03\x1a\xa8\x03\x20Gets\x20the\x20a\
+    ccess\x20control\x20policy\x20for\x20a\x20database\x20or\x20backup\x20re\
+    source.\n\x20Returns\x20an\x20empty\x20policy\x20if\x20a\x20database\x20\
+    or\x20backup\x20exists\x20but\x20does\x20not\x20have\x20a\n\x20policy\
+    \x20set.\n\n\x20Authorization\x20requires\x20`spanner.databases.getIamPo\
+    licy`\x20permission\x20on\n\x20[resource][google.iam.v1.GetIamPolicyRequ\
+    est.resource].\n\x20For\x20backups,\x20authorization\x20requires\x20`spa\
+    nner.backups.getIamPolicy`\n\x20permission\x20on\x20[resource][google.ia\
+    m.v1.GetIamPolicyRequest.resource].\n\n\r\n\x05\x06\0\x02\x08\x01\x12\
+    \x04\xda\x01\x06\x12\n\r\n\x05\x06\0\x02\x08\x02\x12\x04\xda\x01\x134\n\
+    \r\n\x05\x06\0\x02\x08\x03\x12\x04\xdb\x01\x0f#\n\x0f\n\x05\x06\0\x02\
+    \x08\x04\x12\x06\xdc\x01\x04\xe7\x01\x06\n\x13\n\t\x06\0\x02\x08\x04\xb0\
+    \xca\xbc\"\x12\x06\xdc\x01\x04\xe7\x01\x06\n\r\n\x05\x06\0\x02\x08\x04\
+    \x12\x04\xe8\x01\x046\n\x10\n\x08\x06\0\x02\x08\x04\x9b\x08\0\x12\x04\
+    \xe8\x01\x046\n\xff\x03\n\x04\x06\0\x02\t\x12\x06\xf5\x01\x02\x88\x02\
+    \x03\x1a\xee\x03\x20Returns\x20permissions\x20that\x20the\x20caller\x20h\
+    as\x20on\x20the\x20specified\x20database\x20or\x20backup\n\x20resource.\
+    \n\n\x20Attempting\x20this\x20RPC\x20on\x20a\x20non-existent\x20Cloud\
+    \x20Spanner\x20database\x20will\n\x20result\x20in\x20a\x20NOT_FOUND\x20e\
+    rror\x20if\x20the\x20user\x20has\n\x20`spanner.databases.list`\x20permis\
+    sion\x20on\x20the\x20containing\x20Cloud\n\x20Spanner\x20instance.\x20Ot\
+    herwise\x20returns\x20an\x20empty\x20set\x20of\x20permissions.\n\x20Call\
+    ing\x20this\x20method\x20on\x20a\x20backup\x20that\x20does\x20not\x20exi\
+    st\x20will\n\x20result\x20in\x20a\x20NOT_FOUND\x20error\x20if\x20the\x20\
+    user\x20has\n\x20`spanner.backups.list`\x20permission\x20on\x20the\x20co\
+    ntaining\x20instance.\n\n\r\n\x05\x06\0\x02\t\x01\x12\x04\xf5\x01\x06\
+    \x18\n\r\n\x05\x06\0\x02\t\x02\x12\x04\xf5\x01\x19@\n\r\n\x05\x06\0\x02\
+    \t\x03\x12\x04\xf6\x01\x0f7\n\x0f\n\x05\x06\0\x02\t\x04\x12\x06\xf7\x01\
+    \x04\x86\x02\x06\n\x13\n\t\x06\0\x02\t\x04\xb0\xca\xbc\"\x12\x06\xf7\x01\
+    \x04\x86\x02\x06\n\r\n\x05\x06\0\x02\t\x04\x12\x04\x87\x02\x04B\n\x10\n\
+    \x08\x06\0\x02\t\x04\x9b\x08\0\x12\x04\x87\x02\x04B\n\x9b\x06\n\x04\x06\
+    \0\x02\n\x12\x06\x96\x02\x02\xa0\x02\x03\x1a\x8a\x06\x20Starts\x20creati\
+    ng\x20a\x20new\x20Cloud\x20Spanner\x20Backup.\n\x20The\x20returned\x20ba\
+    ckup\x20[long-running\x20operation][google.longrunning.Operation]\n\x20w\
+    ill\x20have\x20a\x20name\x20of\x20the\x20format\n\x20`projects/<project>\
+    /instances/<instance>/backups/<backup>/operations/<operation_id>`\n\x20a\
+    nd\x20can\x20be\x20used\x20to\x20track\x20creation\x20of\x20the\x20backu\
+    p.\x20The\n\x20[metadata][google.longrunning.Operation.metadata]\x20fiel\
+    d\x20type\x20is\n\x20[CreateBackupMetadata][google.spanner.admin.databas\
+    e.v1.CreateBackupMetadata].\n\x20The\x20[response][google.longrunning.Op\
+    eration.response]\x20field\x20type\x20is\n\x20[Backup][google.spanner.ad\
+    min.database.v1.Backup],\x20if\x20successful.\n\x20Cancelling\x20the\x20\
+    returned\x20operation\x20will\x20stop\x20the\x20creation\x20and\x20delet\
+    e\x20the\n\x20backup.\x20There\x20can\x20be\x20only\x20one\x20pending\
+    \x20backup\x20creation\x20per\x20database.\x20Backup\n\x20creation\x20of\
+    \x20different\x20databases\x20can\x20run\x20concurrently.\n\n\r\n\x05\
+    \x06\0\x02\n\x01\x12\x04\x96\x02\x06\x12\n\r\n\x05\x06\0\x02\n\x02\x12\
+    \x04\x96\x02\x13&\n\r\n\x05\x06\0\x02\n\x03\x12\x04\x96\x021M\n\x0f\n\
+    \x05\x06\0\x02\n\x04\x12\x06\x97\x02\x04\x9a\x02\x06\n\x13\n\t\x06\0\x02\
+    \n\x04\xb0\xca\xbc\"\x12\x06\x97\x02\x04\x9a\x02\x06\n\r\n\x05\x06\0\x02\
+    \n\x04\x12\x04\x9b\x02\x04E\n\x10\n\x08\x06\0\x02\n\x04\x9b\x08\0\x12\
+    \x04\x9b\x02\x04E\n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\x9c\x02\x04\x9f\
+    \x02\x06\n\x11\n\x07\x06\0\x02\n\x04\x99\x08\x12\x06\x9c\x02\x04\x9f\x02\
+    \x06\n\x9f\x06\n\x04\x06\0\x02\x0b\x12\x06\xaf\x02\x02\xba\x02\x03\x1a\
+    \x8e\x06\x20Starts\x20copying\x20a\x20Cloud\x20Spanner\x20Backup.\n\x20T\
+    he\x20returned\x20backup\x20[long-running\x20operation][google.longrunni\
+    ng.Operation]\n\x20will\x20have\x20a\x20name\x20of\x20the\x20format\n\
+    \x20`projects/<project>/instances/<instance>/backups/<backup>/operations\
+    /<operation_id>`\n\x20and\x20can\x20be\x20used\x20to\x20track\x20copying\
+    \x20of\x20the\x20backup.\x20The\x20operation\x20is\x20associated\n\x20wi\
+    th\x20the\x20destination\x20backup.\n\x20The\x20[metadata][google.longru\
+    nning.Operation.metadata]\x20field\x20type\x20is\n\x20[CopyBackupMetadat\
+    a][google.spanner.admin.database.v1.CopyBackupMetadata].\n\x20The\x20[re\
+    sponse][google.longrunning.Operation.response]\x20field\x20type\x20is\n\
+    \x20[Backup][google.spanner.admin.database.v1.Backup],\x20if\x20successf\
+    ul.\n\x20Cancelling\x20the\x20returned\x20operation\x20will\x20stop\x20t\
+    he\x20copying\x20and\x20delete\x20the\n\x20destination\x20backup.\x20Con\
+    current\x20CopyBackup\x20requests\x20can\x20run\x20on\x20the\x20same\n\
+    \x20source\x20backup.\n\n\r\n\x05\x06\0\x02\x0b\x01\x12\x04\xaf\x02\x06\
+    \x10\n\r\n\x05\x06\0\x02\x0b\x02\x12\x04\xaf\x02\x11\"\n\r\n\x05\x06\0\
+    \x02\x0b\x03\x12\x04\xaf\x02-I\n\x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\xb0\
+    \x02\x04\xb3\x02\x06\n\x13\n\t\x06\0\x02\x0b\x04\xb0\xca\xbc\"\x12\x06\
+    \xb0\x02\x04\xb3\x02\x06\n\x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\xb4\x02\
+    \x04\xb5\x025\n\x12\n\x08\x06\0\x02\x0b\x04\x9b\x08\0\x12\x06\xb4\x02\
+    \x04\xb5\x025\n\x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\xb6\x02\x04\xb9\x02\
+    \x06\n\x11\n\x07\x06\0\x02\x0b\x04\x99\x08\x12\x06\xb6\x02\x04\xb9\x02\
+    \x06\nm\n\x04\x06\0\x02\x0c\x12\x06\xbe\x02\x02\xc3\x02\x03\x1a]\x20Gets\
+    \x20metadata\x20on\x20a\x20pending\x20or\x20completed\n\x20[Backup][goog\
+    le.spanner.admin.database.v1.Backup].\n\n\r\n\x05\x06\0\x02\x0c\x01\x12\
+    \x04\xbe\x02\x06\x0f\n\r\n\x05\x06\0\x02\x0c\x02\x12\x04\xbe\x02\x10\x20\
+    \n\r\n\x05\x06\0\x02\x0c\x03\x12\x04\xbe\x02+1\n\x0f\n\x05\x06\0\x02\x0c\
+    \x04\x12\x06\xbf\x02\x04\xc1\x02\x06\n\x13\n\t\x06\0\x02\x0c\x04\xb0\xca\
+    \xbc\"\x12\x06\xbf\x02\x04\xc1\x02\x06\n\r\n\x05\x06\0\x02\x0c\x04\x12\
+    \x04\xc2\x02\x042\n\x10\n\x08\x06\0\x02\x0c\x04\x9b\x08\0\x12\x04\xc2\
+    \x02\x042\nd\n\x04\x06\0\x02\r\x12\x06\xc7\x02\x02\xcd\x02\x03\x1aT\x20U\
+    pdates\x20a\x20pending\x20or\x20completed\n\x20[Backup][google.spanner.a\
+    dmin.database.v1.Backup].\n\n\r\n\x05\x06\0\x02\r\x01\x12\x04\xc7\x02\
+    \x06\x12\n\r\n\x05\x06\0\x02\r\x02\x12\x04\xc7\x02\x13&\n\r\n\x05\x06\0\
+    \x02\r\x03\x12\x04\xc7\x0217\n\x0f\n\x05\x06\0\x02\r\x04\x12\x06\xc8\x02\
+    \x04\xcb\x02\x06\n\x13\n\t\x06\0\x02\r\x04\xb0\xca\xbc\"\x12\x06\xc8\x02\
+    \x04\xcb\x02\x06\n\r\n\x05\x06\0\x02\r\x04\x12\x04\xcc\x02\x04@\n\x10\n\
+    \x08\x06\0\x02\r\x04\x9b\x08\0\x12\x04\xcc\x02\x04@\nd\n\x04\x06\0\x02\
+    \x0e\x12\x06\xd1\x02\x02\xd6\x02\x03\x1aT\x20Deletes\x20a\x20pending\x20\
+    or\x20completed\n\x20[Backup][google.spanner.admin.database.v1.Backup].\
+    \n\n\r\n\x05\x06\0\x02\x0e\x01\x12\x04\xd1\x02\x06\x12\n\r\n\x05\x06\0\
+    \x02\x0e\x02\x12\x04\xd1\x02\x13&\n\r\n\x05\x06\0\x02\x0e\x03\x12\x04\
+    \xd1\x021F\n\x0f\n\x05\x06\0\x02\x0e\x04\x12\x06\xd2\x02\x04\xd4\x02\x06\
+    \n\x13\n\t\x06\0\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\xd2\x02\x04\xd4\x02\
+    \x06\n\r\n\x05\x06\0\x02\x0e\x04\x12\x04\xd5\x02\x042\n\x10\n\x08\x06\0\
+    \x02\x0e\x04\x9b\x08\0\x12\x04\xd5\x02\x042\n\xa9\x01\n\x04\x06\0\x02\
+    \x0f\x12\x06\xdb\x02\x02\xe0\x02\x03\x1a\x98\x01\x20Lists\x20completed\
+    \x20and\x20pending\x20backups.\n\x20Backups\x20returned\x20are\x20ordere\
+    d\x20by\x20`create_time`\x20in\x20descending\x20order,\n\x20starting\x20\
+    from\x20the\x20most\x20recent\x20`create_time`.\n\n\r\n\x05\x06\0\x02\
+    \x0f\x01\x12\x04\xdb\x02\x06\x11\n\r\n\x05\x06\0\x02\x0f\x02\x12\x04\xdb\
+    \x02\x12$\n\r\n\x05\x06\0\x02\x0f\x03\x12\x04\xdb\x02/B\n\x0f\n\x05\x06\
+    \0\x02\x0f\x04\x12\x06\xdc\x02\x04\xde\x02\x06\n\x13\n\t\x06\0\x02\x0f\
+    \x04\xb0\xca\xbc\"\x12\x06\xdc\x02\x04\xde\x02\x06\n\r\n\x05\x06\0\x02\
+    \x0f\x04\x12\x04\xdf\x02\x044\n\x10\n\x08\x06\0\x02\x0f\x04\x9b\x08\0\
+    \x12\x04\xdf\x02\x044\n\xd6\x08\n\x04\x06\0\x02\x10\x12\x06\xf3\x02\x02\
+    \xfe\x02\x03\x1a\xc5\x08\x20Create\x20a\x20new\x20database\x20by\x20rest\
+    oring\x20from\x20a\x20completed\x20backup.\x20The\x20new\n\x20database\
+    \x20must\x20be\x20in\x20the\x20same\x20project\x20and\x20in\x20an\x20ins\
+    tance\x20with\x20the\x20same\n\x20instance\x20configuration\x20as\x20the\
+    \x20instance\x20containing\n\x20the\x20backup.\x20The\x20returned\x20dat\
+    abase\x20[long-running\n\x20operation][google.longrunning.Operation]\x20\
+    has\x20a\x20name\x20of\x20the\x20format\n\x20`projects/<project>/instanc\
+    es/<instance>/databases/<database>/operations/<operation_id>`,\n\x20and\
+    \x20can\x20be\x20used\x20to\x20track\x20the\x20progress\x20of\x20the\x20\
+    operation,\x20and\x20to\x20cancel\x20it.\n\x20The\x20[metadata][google.l\
+    ongrunning.Operation.metadata]\x20field\x20type\x20is\n\x20[RestoreDatab\
+    aseMetadata][google.spanner.admin.database.v1.RestoreDatabaseMetadata].\
+    \n\x20The\x20[response][google.longrunning.Operation.response]\x20type\n\
+    \x20is\x20[Database][google.spanner.admin.database.v1.Database],\x20if\n\
+    \x20successful.\x20Cancelling\x20the\x20returned\x20operation\x20will\
+    \x20stop\x20the\x20restore\x20and\n\x20delete\x20the\x20database.\n\x20T\
+    here\x20can\x20be\x20only\x20one\x20database\x20being\x20restored\x20int\
+    o\x20an\x20instance\x20at\x20a\x20time.\n\x20Once\x20the\x20restore\x20o\
+    peration\x20completes,\x20a\x20new\x20restore\x20operation\x20can\x20be\
+    \n\x20initiated,\x20without\x20waiting\x20for\x20the\x20optimize\x20oper\
+    ation\x20associated\x20with\x20the\n\x20first\x20restore\x20to\x20comple\
+    te.\n\n\r\n\x05\x06\0\x02\x10\x01\x12\x04\xf3\x02\x06\x15\n\r\n\x05\x06\
+    \0\x02\x10\x02\x12\x04\xf3\x02\x16,\n\r\n\x05\x06\0\x02\x10\x03\x12\x04\
+    \xf4\x02\x0f+\n\x0f\n\x05\x06\0\x02\x10\x04\x12\x06\xf5\x02\x04\xf8\x02\
+    \x06\n\x13\n\t\x06\0\x02\x10\x04\xb0\xca\xbc\"\x12\x06\xf5\x02\x04\xf8\
+    \x02\x06\n\r\n\x05\x06\0\x02\x10\x04\x12\x04\xf9\x02\x04G\n\x10\n\x08\
+    \x06\0\x02\x10\x04\x9b\x08\0\x12\x04\xf9\x02\x04G\n\x0f\n\x05\x06\0\x02\
+    \x10\x04\x12\x06\xfa\x02\x04\xfd\x02\x06\n\x11\n\x07\x06\0\x02\x10\x04\
+    \x99\x08\x12\x06\xfa\x02\x04\xfd\x02\x06\n\xe9\x03\n\x04\x06\0\x02\x11\
+    \x12\x06\x88\x03\x02\x8e\x03\x03\x1a\xd8\x03\x20Lists\x20database\x20[lo\
+    ngrunning-operations][google.longrunning.Operation].\n\x20A\x20database\
+    \x20operation\x20has\x20a\x20name\x20of\x20the\x20form\n\x20`projects/<p\
+    roject>/instances/<instance>/databases/<database>/operations/<operation>\
+    `.\n\x20The\x20long-running\x20operation\n\x20[metadata][google.longrunn\
+    ing.Operation.metadata]\x20field\x20type\n\x20`metadata.type_url`\x20des\
+    cribes\x20the\x20type\x20of\x20the\x20metadata.\x20Operations\x20returne\
+    d\n\x20include\x20those\x20that\x20have\x20completed/failed/canceled\x20\
+    within\x20the\x20last\x207\x20days,\n\x20and\x20pending\x20operations.\n\
+    \n\r\n\x05\x06\0\x02\x11\x01\x12\x04\x88\x03\x06\x1c\n\r\n\x05\x06\0\x02\
+    \x11\x02\x12\x04\x88\x03\x1d:\n\r\n\x05\x06\0\x02\x11\x03\x12\x04\x89\
+    \x03\x0f-\n\x0f\n\x05\x06\0\x02\x11\x04\x12\x06\x8a\x03\x04\x8c\x03\x06\
+    \n\x13\n\t\x06\0\x02\x11\x04\xb0\xca\xbc\"\x12\x06\x8a\x03\x04\x8c\x03\
+    \x06\n\r\n\x05\x06\0\x02\x11\x04\x12\x04\x8d\x03\x044\n\x10\n\x08\x06\0\
+    \x02\x11\x04\x9b\x08\0\x12\x04\x8d\x03\x044\n\x97\x05\n\x04\x06\0\x02\
+    \x12\x12\x06\x9a\x03\x02\xa0\x03\x03\x1a\x86\x05\x20Lists\x20the\x20back\
+    up\x20[long-running\x20operations][google.longrunning.Operation]\x20in\n\
+    \x20the\x20given\x20instance.\x20A\x20backup\x20operation\x20has\x20a\
+    \x20name\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instan\
+    ce>/backups/<backup>/operations/<operation>`.\n\x20The\x20long-running\
+    \x20operation\n\x20[metadata][google.longrunning.Operation.metadata]\x20\
+    field\x20type\n\x20`metadata.type_url`\x20describes\x20the\x20type\x20of\
+    \x20the\x20metadata.\x20Operations\x20returned\n\x20include\x20those\x20\
+    that\x20have\x20completed/failed/canceled\x20within\x20the\x20last\x207\
+    \x20days,\n\x20and\x20pending\x20operations.\x20Operations\x20returned\
+    \x20are\x20ordered\x20by\n\x20`operation.metadata.value.progress.start_t\
+    ime`\x20in\x20descending\x20order\x20starting\n\x20from\x20the\x20most\
+    \x20recently\x20started\x20operation.\n\n\r\n\x05\x06\0\x02\x12\x01\x12\
+    \x04\x9a\x03\x06\x1a\n\r\n\x05\x06\0\x02\x12\x02\x12\x04\x9a\x03\x1b6\n\
+    \r\n\x05\x06\0\x02\x12\x03\x12\x04\x9b\x03\x0f+\n\x0f\n\x05\x06\0\x02\
+    \x12\x04\x12\x06\x9c\x03\x04\x9e\x03\x06\n\x13\n\t\x06\0\x02\x12\x04\xb0\
+    \xca\xbc\"\x12\x06\x9c\x03\x04\x9e\x03\x06\n\r\n\x05\x06\0\x02\x12\x04\
+    \x12\x04\x9f\x03\x044\n\x10\n\x08\x06\0\x02\x12\x04\x9b\x08\0\x12\x04\
+    \x9f\x03\x044\n5\n\x04\x06\0\x02\x13\x12\x06\xa3\x03\x02\xa9\x03\x03\x1a\
+    %\x20Lists\x20Cloud\x20Spanner\x20database\x20roles.\n\n\r\n\x05\x06\0\
+    \x02\x13\x01\x12\x04\xa3\x03\x06\x17\n\r\n\x05\x06\0\x02\x13\x02\x12\x04\
+    \xa3\x03\x180\n\r\n\x05\x06\0\x02\x13\x03\x12\x04\xa4\x03\x0f(\n\x0f\n\
+    \x05\x06\0\x02\x13\x04\x12\x06\xa5\x03\x04\xa7\x03\x06\n\x13\n\t\x06\0\
+    \x02\x13\x04\xb0\xca\xbc\"\x12\x06\xa5\x03\x04\xa7\x03\x06\n\r\n\x05\x06\
+    \0\x02\x13\x04\x12\x04\xa8\x03\x044\n\x10\n\x08\x06\0\x02\x13\x04\x9b\
+    \x08\0\x12\x04\xa8\x03\x044\n0\n\x04\x06\0\x02\x14\x12\x06\xac\x03\x02\
+    \xb4\x03\x03\x1a\x20\x20Creates\x20a\x20new\x20backup\x20schedule.\n\n\r\
+    \n\x05\x06\0\x02\x14\x01\x12\x04\xac\x03\x06\x1a\n\r\n\x05\x06\0\x02\x14\
+    \x02\x12\x04\xac\x03\x1b6\n\r\n\x05\x06\0\x02\x14\x03\x12\x04\xad\x03\
+    \x0f\x1d\n\x0f\n\x05\x06\0\x02\x14\x04\x12\x06\xae\x03\x04\xb1\x03\x06\n\
+    \x13\n\t\x06\0\x02\x14\x04\xb0\xca\xbc\"\x12\x06\xae\x03\x04\xb1\x03\x06\
+    \n\x0f\n\x05\x06\0\x02\x14\x04\x12\x06\xb2\x03\x04\xb3\x034\n\x12\n\x08\
+    \x06\0\x02\x14\x04\x9b\x08\0\x12\x06\xb2\x03\x04\xb3\x034\nC\n\x04\x06\0\
+    \x02\x15\x12\x06\xb7\x03\x02\xbc\x03\x03\x1a3\x20Gets\x20backup\x20sched\
+    ule\x20for\x20the\x20input\x20schedule\x20name.\n\n\r\n\x05\x06\0\x02\
+    \x15\x01\x12\x04\xb7\x03\x06\x17\n\r\n\x05\x06\0\x02\x15\x02\x12\x04\xb7\
+    \x03\x180\n\r\n\x05\x06\0\x02\x15\x03\x12\x04\xb7\x03;I\n\x0f\n\x05\x06\
+    \0\x02\x15\x04\x12\x06\xb8\x03\x04\xba\x03\x06\n\x13\n\t\x06\0\x02\x15\
+    \x04\xb0\xca\xbc\"\x12\x06\xb8\x03\x04\xba\x03\x06\n\r\n\x05\x06\0\x02\
+    \x15\x04\x12\x04\xbb\x03\x042\n\x10\n\x08\x06\0\x02\x15\x04\x9b\x08\0\
+    \x12\x04\xbb\x03\x042\n,\n\x04\x06\0\x02\x16\x12\x06\xbf\x03\x02\xc6\x03\
+    \x03\x1a\x1c\x20Updates\x20a\x20backup\x20schedule.\n\n\r\n\x05\x06\0\
+    \x02\x16\x01\x12\x04\xbf\x03\x06\x1a\n\r\n\x05\x06\0\x02\x16\x02\x12\x04\
+    \xbf\x03\x1b6\n\r\n\x05\x06\0\x02\x16\x03\x12\x04\xc0\x03\x0f\x1d\n\x0f\
+    \n\x05\x06\0\x02\x16\x04\x12\x06\xc1\x03\x04\xc4\x03\x06\n\x13\n\t\x06\0\
+    \x02\x16\x04\xb0\xca\xbc\"\x12\x06\xc1\x03\x04\xc4\x03\x06\n\r\n\x05\x06\
+    \0\x02\x16\x04\x12\x04\xc5\x03\x04I\n\x10\n\x08\x06\0\x02\x16\x04\x9b\
+    \x08\0\x12\x04\xc5\x03\x04I\n,\n\x04\x06\0\x02\x17\x12\x06\xc9\x03\x02\
+    \xcf\x03\x03\x1a\x1c\x20Deletes\x20a\x20backup\x20schedule.\n\n\r\n\x05\
+    \x06\0\x02\x17\x01\x12\x04\xc9\x03\x06\x1a\n\r\n\x05\x06\0\x02\x17\x02\
+    \x12\x04\xc9\x03\x1b6\n\r\n\x05\x06\0\x02\x17\x03\x12\x04\xca\x03\x0f$\n\
+    \x0f\n\x05\x06\0\x02\x17\x04\x12\x06\xcb\x03\x04\xcd\x03\x06\n\x13\n\t\
+    \x06\0\x02\x17\x04\xb0\xca\xbc\"\x12\x06\xcb\x03\x04\xcd\x03\x06\n\r\n\
+    \x05\x06\0\x02\x17\x04\x12\x04\xce\x03\x042\n\x10\n\x08\x06\0\x02\x17\
+    \x04\x9b\x08\0\x12\x04\xce\x03\x042\nB\n\x04\x06\0\x02\x18\x12\x06\xd2\
+    \x03\x02\xd8\x03\x03\x1a2\x20Lists\x20all\x20the\x20backup\x20schedules\
+    \x20for\x20the\x20database.\n\n\r\n\x05\x06\0\x02\x18\x01\x12\x04\xd2\
+    \x03\x06\x19\n\r\n\x05\x06\0\x02\x18\x02\x12\x04\xd2\x03\x1a4\n\r\n\x05\
+    \x06\0\x02\x18\x03\x12\x04\xd3\x03\x0f*\n\x0f\n\x05\x06\0\x02\x18\x04\
+    \x12\x06\xd4\x03\x04\xd6\x03\x06\n\x13\n\t\x06\0\x02\x18\x04\xb0\xca\xbc\
+    \"\x12\x06\xd4\x03\x04\xd6\x03\x06\n\r\n\x05\x06\0\x02\x18\x04\x12\x04\
+    \xd7\x03\x044\n\x10\n\x08\x06\0\x02\x18\x04\x9b\x08\0\x12\x04\xd7\x03\
+    \x044\n7\n\x02\x04\0\x12\x06\xdc\x03\0\xe6\x03\x01\x1a)\x20Information\
+    \x20about\x20the\x20database\x20restore.\n\n\x0b\n\x03\x04\0\x01\x12\x04\
+    \xdc\x03\x08\x13\n/\n\x04\x04\0\x02\0\x12\x04\xde\x03\x02$\x1a!\x20The\
+    \x20type\x20of\x20the\x20restore\x20source.\n\n\r\n\x05\x04\0\x02\0\x06\
+    \x12\x04\xde\x03\x02\x13\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xde\x03\x14\
+    \x1f\n\r\n\x05\x04\0\x02\0\x03\x12\x04\xde\x03\"#\nL\n\x04\x04\0\x08\0\
+    \x12\x06\xe1\x03\x02\xe5\x03\x03\x1a<\x20Information\x20about\x20the\x20\
+    source\x20used\x20to\x20restore\x20the\x20database.\n\n\r\n\x05\x04\0\
+    \x08\0\x01\x12\x04\xe1\x03\x08\x13\nk\n\x04\x04\0\x02\x01\x12\x04\xe4\
+    \x03\x04\x1f\x1a]\x20Information\x20about\x20the\x20backup\x20used\x20to\
+    \x20restore\x20the\x20database.\x20The\x20backup\n\x20may\x20no\x20longe\
+    r\x20exist.\n\n\r\n\x05\x04\0\x02\x01\x06\x12\x04\xe4\x03\x04\x0e\n\r\n\
+    \x05\x04\0\x02\x01\x01\x12\x04\xe4\x03\x0f\x1a\n\r\n\x05\x04\0\x02\x01\
+    \x03\x12\x04\xe4\x03\x1d\x1e\n)\n\x02\x04\x01\x12\x06\xe9\x03\0\xd1\x04\
+    \x01\x1a\x1b\x20A\x20Cloud\x20Spanner\x20database.\n\n\x0b\n\x03\x04\x01\
+    \x01\x12\x04\xe9\x03\x08\x10\n\r\n\x03\x04\x01\x07\x12\x06\xea\x03\x02\
+    \xed\x03\x04\n\x0f\n\x05\x04\x01\x07\x9d\x08\x12\x06\xea\x03\x02\xed\x03\
+    \x04\n>\n\x04\x04\x01\x04\0\x12\x06\xf0\x03\x02\x84\x04\x03\x1a.\x20Indi\
+    cates\x20the\x20current\x20state\x20of\x20the\x20database.\n\n\r\n\x05\
+    \x04\x01\x04\0\x01\x12\x04\xf0\x03\x07\x0c\n\x20\n\x06\x04\x01\x04\0\x02\
+    \0\x12\x04\xf2\x03\x04\x1a\x1a\x10\x20Not\x20specified.\n\n\x0f\n\x07\
+    \x04\x01\x04\0\x02\0\x01\x12\x04\xf2\x03\x04\x15\n\x0f\n\x07\x04\x01\x04\
+    \0\x02\0\x02\x12\x04\xf2\x03\x18\x19\n\x85\x01\n\x06\x04\x01\x04\0\x02\
+    \x01\x12\x04\xf6\x03\x04\x11\x1au\x20The\x20database\x20is\x20still\x20b\
+    eing\x20created.\x20Operations\x20on\x20the\x20database\x20may\x20fail\n\
+    \x20with\x20`FAILED_PRECONDITION`\x20in\x20this\x20state.\n\n\x0f\n\x07\
+    \x04\x01\x04\0\x02\x01\x01\x12\x04\xf6\x03\x04\x0c\n\x0f\n\x07\x04\x01\
+    \x04\0\x02\x01\x02\x12\x04\xf6\x03\x0f\x10\nB\n\x06\x04\x01\x04\0\x02\
+    \x02\x12\x04\xf9\x03\x04\x0e\x1a2\x20The\x20database\x20is\x20fully\x20c\
+    reated\x20and\x20ready\x20for\x20use.\n\n\x0f\n\x07\x04\x01\x04\0\x02\
+    \x02\x01\x12\x04\xf9\x03\x04\t\n\x0f\n\x07\x04\x01\x04\0\x02\x02\x02\x12\
+    \x04\xf9\x03\x0c\r\n\x96\x03\n\x06\x04\x01\x04\0\x02\x03\x12\x04\x83\x04\
+    \x04\x19\x1a\x85\x03\x20The\x20database\x20is\x20fully\x20created\x20and\
+    \x20ready\x20for\x20use,\x20but\x20is\x20still\n\x20being\x20optimized\
+    \x20for\x20performance\x20and\x20cannot\x20handle\x20full\x20load.\n\n\
+    \x20In\x20this\x20state,\x20the\x20database\x20still\x20references\x20th\
+    e\x20backup\n\x20it\x20was\x20restore\x20from,\x20preventing\x20the\x20b\
+    ackup\n\x20from\x20being\x20deleted.\x20When\x20optimizations\x20are\x20\
+    complete,\x20the\x20full\x20performance\n\x20of\x20the\x20database\x20wi\
+    ll\x20be\x20restored,\x20and\x20the\x20database\x20will\x20transition\
+    \x20to\n\x20`READY`\x20state.\n\n\x0f\n\x07\x04\x01\x04\0\x02\x03\x01\
+    \x12\x04\x83\x04\x04\x14\n\x0f\n\x07\x04\x01\x04\0\x02\x03\x02\x12\x04\
+    \x83\x04\x17\x18\n\x9d\x02\n\x04\x04\x01\x02\0\x12\x04\x8b\x04\x02;\x1a\
+    \x8e\x02\x20Required.\x20The\x20name\x20of\x20the\x20database.\x20Values\
+    \x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instanc\
+    e>/databases/<database>`,\n\x20where\x20`<database>`\x20is\x20as\x20spec\
+    ified\x20in\x20the\x20`CREATE\x20DATABASE`\n\x20statement.\x20This\x20na\
+    me\x20can\x20be\x20passed\x20to\x20other\x20API\x20methods\x20to\n\x20id\
+    entify\x20the\x20database.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\x8b\x04\
+    \x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x8b\x04\t\r\n\r\n\x05\x04\
+    \x01\x02\0\x03\x12\x04\x8b\x04\x10\x11\n\r\n\x05\x04\x01\x02\0\x08\x12\
+    \x04\x8b\x04\x12:\n\x10\n\x08\x04\x01\x02\0\x08\x9c\x08\0\x12\x04\x8b\
+    \x04\x139\n8\n\x04\x04\x01\x02\x01\x12\x04\x8e\x04\x02>\x1a*\x20Output\
+    \x20only.\x20The\x20current\x20database\x20state.\n\n\r\n\x05\x04\x01\
+    \x02\x01\x06\x12\x04\x8e\x04\x02\x07\n\r\n\x05\x04\x01\x02\x01\x01\x12\
+    \x04\x8e\x04\x08\r\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x8e\x04\x10\x11\
+    \n\r\n\x05\x04\x01\x02\x01\x08\x12\x04\x8e\x04\x12=\n\x10\n\x08\x04\x01\
+    \x02\x01\x08\x9c\x08\0\x12\x04\x8e\x04\x13<\nZ\n\x04\x04\x01\x02\x02\x12\
+    \x06\x91\x04\x02\x92\x042\x1aJ\x20Output\x20only.\x20If\x20exists,\x20th\
+    e\x20time\x20at\x20which\x20the\x20database\x20creation\x20started.\n\n\
+    \r\n\x05\x04\x01\x02\x02\x06\x12\x04\x91\x04\x02\x1b\n\r\n\x05\x04\x01\
+    \x02\x02\x01\x12\x04\x91\x04\x1c'\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\
+    \x91\x04*+\n\r\n\x05\x04\x01\x02\x02\x08\x12\x04\x92\x04\x061\n\x10\n\
+    \x08\x04\x01\x02\x02\x08\x9c\x08\0\x12\x04\x92\x04\x070\nt\n\x04\x04\x01\
+    \x02\x03\x12\x04\x96\x04\x02K\x1af\x20Output\x20only.\x20Applicable\x20o\
+    nly\x20for\x20restored\x20databases.\x20Contains\x20information\n\x20abo\
+    ut\x20the\x20restore\x20source.\n\n\r\n\x05\x04\x01\x02\x03\x06\x12\x04\
+    \x96\x04\x02\r\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\x96\x04\x0e\x1a\n\r\
+    \n\x05\x04\x01\x02\x03\x03\x12\x04\x96\x04\x1d\x1e\n\r\n\x05\x04\x01\x02\
+    \x03\x08\x12\x04\x96\x04\x1fJ\n\x10\n\x08\x04\x01\x02\x03\x08\x9c\x08\0\
+    \x12\x04\x96\x04\x20I\n\xfe\x01\n\x04\x04\x01\x02\x04\x12\x06\x9c\x04\
+    \x02\x9d\x042\x1a\xed\x01\x20Output\x20only.\x20For\x20databases\x20that\
+    \x20are\x20using\x20customer\x20managed\x20encryption,\x20this\n\x20fiel\
+    d\x20contains\x20the\x20encryption\x20configuration\x20for\x20the\x20dat\
+    abase.\n\x20For\x20databases\x20that\x20are\x20using\x20Google\x20defaul\
+    t\x20or\x20other\x20types\x20of\x20encryption,\n\x20this\x20field\x20is\
+    \x20empty.\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\x04\x9c\x04\x02\x12\n\r\n\
+    \x05\x04\x01\x02\x04\x01\x12\x04\x9c\x04\x13$\n\r\n\x05\x04\x01\x02\x04\
+    \x03\x12\x04\x9c\x04'(\n\r\n\x05\x04\x01\x02\x04\x08\x12\x04\x9d\x04\x06\
+    1\n\x10\n\x08\x04\x01\x02\x04\x08\x9c\x08\0\x12\x04\x9d\x04\x070\n\x98\
+    \x04\n\x04\x04\x01\x02\x05\x12\x06\xa9\x04\x02\xaa\x042\x1a\x87\x04\x20O\
+    utput\x20only.\x20For\x20databases\x20that\x20are\x20using\x20customer\
+    \x20managed\x20encryption,\x20this\n\x20field\x20contains\x20the\x20encr\
+    yption\x20information\x20for\x20the\x20database,\x20such\x20as\n\x20all\
+    \x20Cloud\x20KMS\x20key\x20versions\x20that\x20are\x20in\x20use.\x20The\
+    \x20`encryption_status'\x20field\n\x20inside\x20of\x20each\x20`Encryptio\
+    nInfo`\x20is\x20not\x20populated.\n\n\x20For\x20databases\x20that\x20are\
+    \x20using\x20Google\x20default\x20or\x20other\x20types\x20of\x20encrypti\
+    on,\n\x20this\x20field\x20is\x20empty.\n\n\x20This\x20field\x20is\x20pro\
+    pagated\x20lazily\x20from\x20the\x20backend.\x20There\x20might\x20be\x20\
+    a\x20delay\n\x20from\x20when\x20a\x20key\x20version\x20is\x20being\x20us\
+    ed\x20and\x20when\x20it\x20appears\x20in\x20this\x20field.\n\n\r\n\x05\
+    \x04\x01\x02\x05\x04\x12\x04\xa9\x04\x02\n\n\r\n\x05\x04\x01\x02\x05\x06\
+    \x12\x04\xa9\x04\x0b\x19\n\r\n\x05\x04\x01\x02\x05\x01\x12\x04\xa9\x04\
+    \x1a)\n\r\n\x05\x04\x01\x02\x05\x03\x12\x04\xa9\x04,-\n\r\n\x05\x04\x01\
+    \x02\x05\x08\x12\x04\xaa\x04\x061\n\x10\n\x08\x04\x01\x02\x05\x08\x9c\
+    \x08\0\x12\x04\xaa\x04\x070\n\xbf\x02\n\x04\x04\x01\x02\x06\x12\x06\xb1\
+    \x04\x02\xb2\x042\x1a\xae\x02\x20Output\x20only.\x20The\x20period\x20in\
+    \x20which\x20Cloud\x20Spanner\x20retains\x20all\x20versions\x20of\x20dat\
+    a\n\x20for\x20the\x20database.\x20This\x20is\x20the\x20same\x20as\x20the\
+    \x20value\x20of\x20version_retention_period\n\x20database\x20option\x20s\
+    et\x20using\n\x20[UpdateDatabaseDdl][google.spanner.admin.database.v1.Da\
+    tabaseAdmin.UpdateDatabaseDdl].\n\x20Defaults\x20to\x201\x20hour,\x20if\
+    \x20not\x20set.\n\n\r\n\x05\x04\x01\x02\x06\x05\x12\x04\xb1\x04\x02\x08\
+    \n\r\n\x05\x04\x01\x02\x06\x01\x12\x04\xb1\x04\t!\n\r\n\x05\x04\x01\x02\
+    \x06\x03\x12\x04\xb1\x04$%\n\r\n\x05\x04\x01\x02\x06\x08\x12\x04\xb2\x04\
+    \x061\n\x10\n\x08\x04\x01\x02\x06\x08\x9c\x08\0\x12\x04\xb2\x04\x070\n\
+    \xee\x02\n\x04\x04\x01\x02\x07\x12\x06\xb9\x04\x02\xba\x042\x1a\xdd\x02\
+    \x20Output\x20only.\x20Earliest\x20timestamp\x20at\x20which\x20older\x20\
+    versions\x20of\x20the\x20data\x20can\x20be\n\x20read.\x20This\x20value\
+    \x20is\x20continuously\x20updated\x20by\x20Cloud\x20Spanner\x20and\x20be\
+    comes\x20stale\n\x20the\x20moment\x20it\x20is\x20queried.\x20If\x20you\
+    \x20are\x20using\x20this\x20value\x20to\x20recover\x20data,\x20make\n\
+    \x20sure\x20to\x20account\x20for\x20the\x20time\x20from\x20the\x20moment\
+    \x20when\x20the\x20value\x20is\x20queried\x20to\n\x20the\x20moment\x20wh\
+    en\x20you\x20initiate\x20the\x20recovery.\n\n\r\n\x05\x04\x01\x02\x07\
+    \x06\x12\x04\xb9\x04\x02\x1b\n\r\n\x05\x04\x01\x02\x07\x01\x12\x04\xb9\
+    \x04\x1c1\n\r\n\x05\x04\x01\x02\x07\x03\x12\x04\xb9\x0445\n\r\n\x05\x04\
+    \x01\x02\x07\x08\x12\x04\xba\x04\x061\n\x10\n\x08\x04\x01\x02\x07\x08\
+    \x9c\x08\0\x12\x04\xba\x04\x070\n\x98\x02\n\x04\x04\x01\x02\x08\x12\x04\
+    \xc2\x04\x02H\x1a\x89\x02\x20Output\x20only.\x20The\x20read-write\x20reg\
+    ion\x20which\x20contains\x20the\x20database's\x20leader\n\x20replicas.\n\
+    \n\x20This\x20is\x20the\x20same\x20as\x20the\x20value\x20of\x20default_l\
+    eader\n\x20database\x20option\x20set\x20using\x20DatabaseAdmin.CreateDat\
+    abase\x20or\n\x20DatabaseAdmin.UpdateDatabaseDdl.\x20If\x20not\x20explic\
+    itly\x20set,\x20this\x20is\x20empty.\n\n\r\n\x05\x04\x01\x02\x08\x05\x12\
+    \x04\xc2\x04\x02\x08\n\r\n\x05\x04\x01\x02\x08\x01\x12\x04\xc2\x04\t\x17\
+    \n\r\n\x05\x04\x01\x02\x08\x03\x12\x04\xc2\x04\x1a\x1b\n\r\n\x05\x04\x01\
+    \x02\x08\x08\x12\x04\xc2\x04\x1cG\n\x10\n\x08\x04\x01\x02\x08\x08\x9c\
+    \x08\0\x12\x04\xc2\x04\x1dF\nI\n\x04\x04\x01\x02\t\x12\x06\xc5\x04\x02\
+    \xc6\x042\x1a9\x20Output\x20only.\x20The\x20dialect\x20of\x20the\x20Clou\
+    d\x20Spanner\x20Database.\n\n\r\n\x05\x04\x01\x02\t\x06\x12\x04\xc5\x04\
+    \x02\x11\n\r\n\x05\x04\x01\x02\t\x01\x12\x04\xc5\x04\x12\"\n\r\n\x05\x04\
+    \x01\x02\t\x03\x12\x04\xc5\x04%'\n\r\n\x05\x04\x01\x02\t\x08\x12\x04\xc6\
+    \x04\x061\n\x10\n\x08\x04\x01\x02\t\x08\x9c\x08\0\x12\x04\xc6\x04\x070\n\
+    \xf5\x01\n\x04\x04\x01\x02\n\x12\x04\xcc\x04\x02#\x1a\xe6\x01\x20Whether\
+    \x20drop\x20protection\x20is\x20enabled\x20for\x20this\x20database.\x20D\
+    efaults\x20to\x20false,\n\x20if\x20not\x20set.\x20For\x20more\x20details\
+    ,\x20please\x20see\x20how\x20to\x20[prevent\x20accidental\n\x20database\
+    \n\x20deletion](https://cloud.google.com/spanner/docs/prevent-database-d\
+    eletion).\n\n\r\n\x05\x04\x01\x02\n\x05\x12\x04\xcc\x04\x02\x06\n\r\n\
+    \x05\x04\x01\x02\n\x01\x12\x04\xcc\x04\x07\x1d\n\r\n\x05\x04\x01\x02\n\
+    \x03\x12\x04\xcc\x04\x20\"\n\x88\x01\n\x04\x04\x01\x02\x0b\x12\x04\xd0\
+    \x04\x02D\x1az\x20Output\x20only.\x20If\x20true,\x20the\x20database\x20i\
+    s\x20being\x20updated.\x20If\x20false,\x20there\x20are\x20no\n\x20ongoin\
+    g\x20update\x20operations\x20for\x20the\x20database.\n\n\r\n\x05\x04\x01\
+    \x02\x0b\x05\x12\x04\xd0\x04\x02\x06\n\r\n\x05\x04\x01\x02\x0b\x01\x12\
+    \x04\xd0\x04\x07\x12\n\r\n\x05\x04\x01\x02\x0b\x03\x12\x04\xd0\x04\x15\
+    \x17\n\r\n\x05\x04\x01\x02\x0b\x08\x12\x04\xd0\x04\x18C\n\x10\n\x08\x04\
+    \x01\x02\x0b\x08\x9c\x08\0\x12\x04\xd0\x04\x19B\no\n\x02\x04\x02\x12\x06\
+    \xd5\x04\0\xe8\x04\x01\x1aa\x20The\x20request\x20for\n\x20[ListDatabases\
+    ][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabases].\n\n\x0b\
+    \n\x03\x04\x02\x01\x12\x04\xd5\x04\x08\x1c\n\x8d\x01\n\x04\x04\x02\x02\0\
+    \x12\x06\xd8\x04\x02\xdd\x04\x04\x1a}\x20Required.\x20The\x20instance\
+    \x20whose\x20databases\x20should\x20be\x20listed.\n\x20Values\x20are\x20\
+    of\x20the\x20form\x20`projects/<project>/instances/<instance>`.\n\n\r\n\
+    \x05\x04\x02\x02\0\x05\x12\x04\xd8\x04\x02\x08\n\r\n\x05\x04\x02\x02\0\
+    \x01\x12\x04\xd8\x04\t\x0f\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xd8\x04\
+    \x12\x13\n\x0f\n\x05\x04\x02\x02\0\x08\x12\x06\xd8\x04\x14\xdd\x04\x03\n\
+    \x10\n\x08\x04\x02\x02\0\x08\x9c\x08\0\x12\x04\xd9\x04\x04*\n\x11\n\x07\
+    \x04\x02\x02\0\x08\x9f\x08\x12\x06\xda\x04\x04\xdc\x04\x05\n\x86\x01\n\
+    \x04\x04\x02\x02\x01\x12\x04\xe1\x04\x02\x16\x1ax\x20Number\x20of\x20dat\
+    abases\x20to\x20be\x20returned\x20in\x20the\x20response.\x20If\x200\x20o\
+    r\x20less,\n\x20defaults\x20to\x20the\x20server's\x20maximum\x20allowed\
+    \x20page\x20size.\n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\xe1\x04\x02\
+    \x07\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\xe1\x04\x08\x11\n\r\n\x05\x04\
+    \x02\x02\x01\x03\x12\x04\xe1\x04\x14\x15\n\xfa\x01\n\x04\x04\x02\x02\x02\
+    \x12\x04\xe7\x04\x02\x18\x1a\xeb\x01\x20If\x20non-empty,\x20`page_token`\
+    \x20should\x20contain\x20a\n\x20[next_page_token][google.spanner.admin.d\
+    atabase.v1.ListDatabasesResponse.next_page_token]\n\x20from\x20a\x20prev\
+    ious\n\x20[ListDatabasesResponse][google.spanner.admin.database.v1.ListD\
+    atabasesResponse].\n\n\r\n\x05\x04\x02\x02\x02\x05\x12\x04\xe7\x04\x02\
+    \x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\xe7\x04\t\x13\n\r\n\x05\x04\
+    \x02\x02\x02\x03\x12\x04\xe7\x04\x16\x17\np\n\x02\x04\x03\x12\x06\xec\
+    \x04\0\xf4\x04\x01\x1ab\x20The\x20response\x20for\n\x20[ListDatabases][g\
+    oogle.spanner.admin.database.v1.DatabaseAdmin.ListDatabases].\n\n\x0b\n\
+    \x03\x04\x03\x01\x12\x04\xec\x04\x08\x1d\n3\n\x04\x04\x03\x02\0\x12\x04\
+    \xee\x04\x02\"\x1a%\x20Databases\x20that\x20matched\x20the\x20request.\n\
+    \n\r\n\x05\x04\x03\x02\0\x04\x12\x04\xee\x04\x02\n\n\r\n\x05\x04\x03\x02\
+    \0\x06\x12\x04\xee\x04\x0b\x13\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xee\
+    \x04\x14\x1d\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xee\x04\x20!\n\xbc\x01\
+    \n\x04\x04\x03\x02\x01\x12\x04\xf3\x04\x02\x1d\x1a\xad\x01\x20`next_page\
+    _token`\x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[ListDatabase\
+    s][google.spanner.admin.database.v1.DatabaseAdmin.ListDatabases]\n\x20ca\
+    ll\x20to\x20fetch\x20more\x20of\x20the\x20matching\x20databases.\n\n\r\n\
+    \x05\x04\x03\x02\x01\x05\x12\x04\xf3\x04\x02\x08\n\r\n\x05\x04\x03\x02\
+    \x01\x01\x12\x04\xf3\x04\t\x18\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xf3\
+    \x04\x1b\x1c\nq\n\x02\x04\x04\x12\x06\xf8\x04\0\xa8\x05\x01\x1ac\x20The\
+    \x20request\x20for\n\x20[CreateDatabase][google.spanner.admin.database.v\
+    1.DatabaseAdmin.CreateDatabase].\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xf8\
+    \x04\x08\x1d\n\x9a\x01\n\x04\x04\x04\x02\0\x12\x06\xfb\x04\x02\x80\x05\
+    \x04\x1a\x89\x01\x20Required.\x20The\x20name\x20of\x20the\x20instance\
+    \x20that\x20will\x20serve\x20the\x20new\x20database.\n\x20Values\x20are\
+    \x20of\x20the\x20form\x20`projects/<project>/instances/<instance>`.\n\n\
+    \r\n\x05\x04\x04\x02\0\x05\x12\x04\xfb\x04\x02\x08\n\r\n\x05\x04\x04\x02\
+    \0\x01\x12\x04\xfb\x04\t\x0f\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\xfb\x04\
+    \x12\x13\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\xfb\x04\x14\x80\x05\x03\n\
+    \x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\x04\xfc\x04\x04*\n\x11\n\x07\
+    \x04\x04\x02\0\x08\x9f\x08\x12\x06\xfd\x04\x04\xff\x04\x05\n\xe6\x02\n\
+    \x04\x04\x04\x02\x01\x12\x04\x87\x05\x02G\x1a\xd7\x02\x20Required.\x20A\
+    \x20`CREATE\x20DATABASE`\x20statement,\x20which\x20specifies\x20the\x20I\
+    D\x20of\x20the\n\x20new\x20database.\x20\x20The\x20database\x20ID\x20mus\
+    t\x20conform\x20to\x20the\x20regular\x20expression\n\x20`[a-z][a-z0-9_\\\
+    -]*[a-z0-9]`\x20and\x20be\x20between\x202\x20and\x2030\x20characters\x20\
+    in\x20length.\n\x20If\x20the\x20database\x20ID\x20is\x20a\x20reserved\
+    \x20word\x20or\x20if\x20it\x20contains\x20a\x20hyphen,\x20the\n\x20datab\
+    ase\x20ID\x20must\x20be\x20enclosed\x20in\x20backticks\x20(``\x20`\x20``\
+    ).\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\x87\x05\x02\x08\n\r\n\x05\x04\
+    \x04\x02\x01\x01\x12\x04\x87\x05\t\x19\n\r\n\x05\x04\x04\x02\x01\x03\x12\
+    \x04\x87\x05\x1c\x1d\n\r\n\x05\x04\x04\x02\x01\x08\x12\x04\x87\x05\x1eF\
+    \n\x10\n\x08\x04\x04\x02\x01\x08\x9c\x08\0\x12\x04\x87\x05\x1fE\n\x97\
+    \x02\n\x04\x04\x04\x02\x02\x12\x04\x8d\x05\x02P\x1a\x88\x02\x20Optional.\
+    \x20A\x20list\x20of\x20DDL\x20statements\x20to\x20run\x20inside\x20the\
+    \x20newly\x20created\n\x20database.\x20Statements\x20can\x20create\x20ta\
+    bles,\x20indexes,\x20etc.\x20These\n\x20statements\x20execute\x20atomica\
+    lly\x20with\x20the\x20creation\x20of\x20the\x20database:\n\x20if\x20ther\
+    e\x20is\x20an\x20error\x20in\x20any\x20statement,\x20the\x20database\x20\
+    is\x20not\x20created.\n\n\r\n\x05\x04\x04\x02\x02\x04\x12\x04\x8d\x05\
+    \x02\n\n\r\n\x05\x04\x04\x02\x02\x05\x12\x04\x8d\x05\x0b\x11\n\r\n\x05\
+    \x04\x04\x02\x02\x01\x12\x04\x8d\x05\x12\"\n\r\n\x05\x04\x04\x02\x02\x03\
+    \x12\x04\x8d\x05%&\n\r\n\x05\x04\x04\x02\x02\x08\x12\x04\x8d\x05'O\n\x10\
+    \n\x08\x04\x04\x02\x02\x08\x9c\x08\0\x12\x04\x8d\x05(N\n\xc2\x01\n\x04\
+    \x04\x04\x02\x03\x12\x06\x92\x05\x02\x93\x05/\x1a\xb1\x01\x20Optional.\
+    \x20The\x20encryption\x20configuration\x20for\x20the\x20database.\x20If\
+    \x20this\x20field\x20is\n\x20not\x20specified,\x20Cloud\x20Spanner\x20wi\
+    ll\x20encrypt/decrypt\x20all\x20data\x20at\x20rest\x20using\n\x20Google\
+    \x20default\x20encryption.\n\n\r\n\x05\x04\x04\x02\x03\x06\x12\x04\x92\
+    \x05\x02\x12\n\r\n\x05\x04\x04\x02\x03\x01\x12\x04\x92\x05\x13$\n\r\n\
+    \x05\x04\x04\x02\x03\x03\x12\x04\x92\x05'(\n\r\n\x05\x04\x04\x02\x03\x08\
+    \x12\x04\x93\x05\x06.\n\x10\n\x08\x04\x04\x02\x03\x08\x9c\x08\0\x12\x04\
+    \x93\x05\x07-\nD\n\x04\x04\x04\x02\x04\x12\x04\x96\x05\x02P\x1a6\x20Opti\
+    onal.\x20The\x20dialect\x20of\x20the\x20Cloud\x20Spanner\x20Database.\n\
+    \n\r\n\x05\x04\x04\x02\x04\x06\x12\x04\x96\x05\x02\x11\n\r\n\x05\x04\x04\
+    \x02\x04\x01\x12\x04\x96\x05\x12\"\n\r\n\x05\x04\x04\x02\x04\x03\x12\x04\
+    \x96\x05%&\n\r\n\x05\x04\x04\x02\x04\x08\x12\x04\x96\x05'O\n\x10\n\x08\
+    \x04\x04\x02\x04\x08\x9c\x08\0\x12\x04\x96\x05(N\n\x94\x06\n\x04\x04\x04\
+    \x02\x05\x12\x04\xa7\x05\x02G\x1a\x85\x06\x20Optional.\x20Proto\x20descr\
+    iptors\x20used\x20by\x20CREATE/ALTER\x20PROTO\x20BUNDLE\x20statements\
+    \x20in\n\x20'extra_statements'\x20above.\n\x20Contains\x20a\x20protobuf-\
+    serialized\n\x20[google.protobuf.FileDescriptorSet](https://github.com/p\
+    rotocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).\
+    \n\x20To\x20generate\x20it,\x20[install](https://grpc.io/docs/protoc-ins\
+    tallation/)\x20and\n\x20run\x20`protoc`\x20with\x20--include_imports\x20\
+    and\x20--descriptor_set_out.\x20For\x20example,\n\x20to\x20generate\x20f\
+    or\x20moon/shot/app.proto,\x20run\n\x20```\n\x20$protoc\x20\x20--proto_p\
+    ath=/app_path\x20--proto_path=/lib_path\x20\\\n\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20--include_imports\x20\\\n\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20--descriptor_set_out=descriptors.data\x20\\\n\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20moon/shot/app.proto\n\x20```\n\x20For\x20mor\
+    e\x20details,\x20see\x20protobuffer\x20[self\n\x20description](https://d\
+    evelopers.google.com/protocol-buffers/docs/techniques#self-description).\
+    \n\n\r\n\x05\x04\x04\x02\x05\x05\x12\x04\xa7\x05\x02\x07\n\r\n\x05\x04\
+    \x04\x02\x05\x01\x12\x04\xa7\x05\x08\x19\n\r\n\x05\x04\x04\x02\x05\x03\
+    \x12\x04\xa7\x05\x1c\x1d\n\r\n\x05\x04\x04\x02\x05\x08\x12\x04\xa7\x05\
+    \x1eF\n\x10\n\x08\x04\x04\x02\x05\x08\x9c\x08\0\x12\x04\xa7\x05\x1fE\n\
+    \x8d\x01\n\x02\x04\x05\x12\x06\xac\x05\0\xb1\x05\x01\x1a\x7f\x20Metadata\
+    \x20type\x20for\x20the\x20operation\x20returned\x20by\n\x20[CreateDataba\
+    se][google.spanner.admin.database.v1.DatabaseAdmin.CreateDatabase].\n\n\
+    \x0b\n\x03\x04\x05\x01\x12\x04\xac\x05\x08\x1e\n-\n\x04\x04\x05\x02\0\
+    \x12\x06\xae\x05\x02\xb0\x05\x05\x1a\x1d\x20The\x20database\x20being\x20\
+    created.\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\xae\x05\x02\x08\n\r\n\x05\
+    \x04\x05\x02\0\x01\x12\x04\xae\x05\t\x11\n\r\n\x05\x04\x05\x02\0\x03\x12\
+    \x04\xae\x05\x14\x15\n\x0f\n\x05\x04\x05\x02\0\x08\x12\x06\xae\x05\x16\
+    \xb0\x05\x04\n\x11\n\x07\x04\x05\x02\0\x08\x9f\x08\x12\x06\xae\x05\x17\
+    \xb0\x05\x03\nk\n\x02\x04\x06\x12\x06\xb5\x05\0\xbe\x05\x01\x1a]\x20The\
+    \x20request\x20for\n\x20[GetDatabase][google.spanner.admin.database.v1.D\
+    atabaseAdmin.GetDatabase].\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xb5\x05\x08\
+    \x1a\n\x98\x01\n\x04\x04\x06\x02\0\x12\x06\xb8\x05\x02\xbd\x05\x04\x1a\
+    \x87\x01\x20Required.\x20The\x20name\x20of\x20the\x20requested\x20databa\
+    se.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/insta\
+    nces/<instance>/databases/<database>`.\n\n\r\n\x05\x04\x06\x02\0\x05\x12\
+    \x04\xb8\x05\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\x04\xb8\x05\t\r\n\r\
+    \n\x05\x04\x06\x02\0\x03\x12\x04\xb8\x05\x10\x11\n\x0f\n\x05\x04\x06\x02\
+    \0\x08\x12\x06\xb8\x05\x12\xbd\x05\x03\n\x10\n\x08\x04\x06\x02\0\x08\x9c\
+    \x08\0\x12\x04\xb9\x05\x04*\n\x11\n\x07\x04\x06\x02\0\x08\x9f\x08\x12\
+    \x06\xba\x05\x04\xbc\x05\x05\nq\n\x02\x04\x07\x12\x06\xc2\x05\0\xcc\x05\
+    \x01\x1ac\x20The\x20request\x20for\n\x20[UpdateDatabase][google.spanner.\
+    admin.database.v1.DatabaseAdmin.UpdateDatabase].\n\n\x0b\n\x03\x04\x07\
+    \x01\x12\x04\xc2\x05\x08\x1d\n\xa4\x01\n\x04\x04\x07\x02\0\x12\x04\xc6\
+    \x05\x02A\x1a\x95\x01\x20Required.\x20The\x20database\x20to\x20update.\n\
+    \x20The\x20`name`\x20field\x20of\x20the\x20database\x20is\x20of\x20the\
+    \x20form\n\x20`projects/<project>/instances/<instance>/databases/<databa\
+    se>`.\n\n\r\n\x05\x04\x07\x02\0\x06\x12\x04\xc6\x05\x02\n\n\r\n\x05\x04\
+    \x07\x02\0\x01\x12\x04\xc6\x05\x0b\x13\n\r\n\x05\x04\x07\x02\0\x03\x12\
+    \x04\xc6\x05\x16\x17\n\r\n\x05\x04\x07\x02\0\x08\x12\x04\xc6\x05\x18@\n\
+    \x10\n\x08\x04\x07\x02\0\x08\x9c\x08\0\x12\x04\xc6\x05\x19?\ny\n\x04\x04\
+    \x07\x02\x01\x12\x06\xca\x05\x02\xcb\x05/\x1ai\x20Required.\x20The\x20li\
+    st\x20of\x20fields\x20to\x20update.\x20Currently,\x20only\n\x20`enable_d\
+    rop_protection`\x20field\x20can\x20be\x20updated.\n\n\r\n\x05\x04\x07\
+    \x02\x01\x06\x12\x04\xca\x05\x02\x1b\n\r\n\x05\x04\x07\x02\x01\x01\x12\
+    \x04\xca\x05\x1c'\n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\xca\x05*+\n\r\n\
+    \x05\x04\x07\x02\x01\x08\x12\x04\xcb\x05\x06.\n\x10\n\x08\x04\x07\x02\
+    \x01\x08\x9c\x08\0\x12\x04\xcb\x05\x07-\n\x8d\x01\n\x02\x04\x08\x12\x06\
+    \xd0\x05\0\xdd\x05\x01\x1a\x7f\x20Metadata\x20type\x20for\x20the\x20oper\
+    ation\x20returned\x20by\n\x20[UpdateDatabase][google.spanner.admin.datab\
+    ase.v1.DatabaseAdmin.UpdateDatabase].\n\n\x0b\n\x03\x04\x08\x01\x12\x04\
+    \xd0\x05\x08\x1e\nq\n\x04\x04\x08\x02\0\x12\x04\xd3\x05\x02$\x1ac\x20The\
+    \x20request\x20for\n\x20[UpdateDatabase][google.spanner.admin.database.v\
+    1.DatabaseAdmin.UpdateDatabase].\n\n\r\n\x05\x04\x08\x02\0\x06\x12\x04\
+    \xd3\x05\x02\x17\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\xd3\x05\x18\x1f\n\r\
+    \n\x05\x04\x08\x02\0\x03\x12\x04\xd3\x05\"#\n\x80\x01\n\x04\x04\x08\x02\
+    \x01\x12\x04\xd8\x05\x02!\x1ar\x20The\x20progress\x20of\x20the\n\x20[Upd\
+    ateDatabase][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDataba\
+    se]\n\x20operation.\n\n\r\n\x05\x04\x08\x02\x01\x06\x12\x04\xd8\x05\x02\
+    \x13\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xd8\x05\x14\x1c\n\r\n\x05\x04\
+    \x08\x02\x01\x03\x12\x04\xd8\x05\x1f\x20\n\x94\x01\n\x04\x04\x08\x02\x02\
+    \x12\x04\xdc\x05\x02,\x1a\x85\x01\x20The\x20time\x20at\x20which\x20this\
+    \x20operation\x20was\x20cancelled.\x20If\x20set,\x20this\x20operation\
+    \x20is\n\x20in\x20the\x20process\x20of\x20undoing\x20itself\x20(which\
+    \x20is\x20best-effort).\n\n\r\n\x05\x04\x08\x02\x02\x06\x12\x04\xdc\x05\
+    \x02\x1b\n\r\n\x05\x04\x08\x02\x02\x01\x12\x04\xdc\x05\x1c'\n\r\n\x05\
+    \x04\x08\x02\x02\x03\x12\x04\xdc\x05*+\n\x99\x07\n\x02\x04\t\x12\x06\xef\
+    \x05\0\xa1\x06\x01\x1a\x8a\x07\x20Enqueues\x20the\x20given\x20DDL\x20sta\
+    tements\x20to\x20be\x20applied,\x20in\x20order\x20but\x20not\n\x20necess\
+    arily\x20all\x20at\x20once,\x20to\x20the\x20database\x20schema\x20at\x20\
+    some\x20point\x20(or\n\x20points)\x20in\x20the\x20future.\x20The\x20serv\
+    er\x20checks\x20that\x20the\x20statements\n\x20are\x20executable\x20(syn\
+    tactically\x20valid,\x20name\x20tables\x20that\x20exist,\x20etc.)\n\x20b\
+    efore\x20enqueueing\x20them,\x20but\x20they\x20may\x20still\x20fail\x20u\
+    pon\n\x20later\x20execution\x20(e.g.,\x20if\x20a\x20statement\x20from\
+    \x20another\x20batch\x20of\n\x20statements\x20is\x20applied\x20first\x20\
+    and\x20it\x20conflicts\x20in\x20some\x20way,\x20or\x20if\n\x20there\x20i\
+    s\x20some\x20data-related\x20problem\x20like\x20a\x20`NULL`\x20value\x20\
+    in\x20a\x20column\x20to\n\x20which\x20`NOT\x20NULL`\x20would\x20be\x20ad\
+    ded).\x20If\x20a\x20statement\x20fails,\x20all\n\x20subsequent\x20statem\
+    ents\x20in\x20the\x20batch\x20are\x20automatically\x20cancelled.\n\n\x20\
+    Each\x20batch\x20of\x20statements\x20is\x20assigned\x20a\x20name\x20whic\
+    h\x20can\x20be\x20used\x20with\n\x20the\x20[Operations][google.longrunni\
+    ng.Operations]\x20API\x20to\x20monitor\n\x20progress.\x20See\x20the\n\
+    \x20[operation_id][google.spanner.admin.database.v1.UpdateDatabaseDdlReq\
+    uest.operation_id]\n\x20field\x20for\x20more\x20details.\n\n\x0b\n\x03\
+    \x04\t\x01\x12\x04\xef\x05\x08\x20\n3\n\x04\x04\t\x02\0\x12\x06\xf1\x05\
+    \x02\xf6\x05\x04\x1a#\x20Required.\x20The\x20database\x20to\x20update.\n\
+    \n\r\n\x05\x04\t\x02\0\x05\x12\x04\xf1\x05\x02\x08\n\r\n\x05\x04\t\x02\0\
+    \x01\x12\x04\xf1\x05\t\x11\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xf1\x05\x14\
+    \x15\n\x0f\n\x05\x04\t\x02\0\x08\x12\x06\xf1\x05\x16\xf6\x05\x03\n\x10\n\
+    \x08\x04\t\x02\0\x08\x9c\x08\0\x12\x04\xf2\x05\x04*\n\x11\n\x07\x04\t\
+    \x02\0\x08\x9f\x08\x12\x06\xf3\x05\x04\xf5\x05\x05\nG\n\x04\x04\t\x02\
+    \x01\x12\x04\xf9\x05\x02J\x1a9\x20Required.\x20DDL\x20statements\x20to\
+    \x20be\x20applied\x20to\x20the\x20database.\n\n\r\n\x05\x04\t\x02\x01\
+    \x04\x12\x04\xf9\x05\x02\n\n\r\n\x05\x04\t\x02\x01\x05\x12\x04\xf9\x05\
+    \x0b\x11\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xf9\x05\x12\x1c\n\r\n\x05\
+    \x04\t\x02\x01\x03\x12\x04\xf9\x05\x1f\x20\n\r\n\x05\x04\t\x02\x01\x08\
+    \x12\x04\xf9\x05!I\n\x10\n\x08\x04\t\x02\x01\x08\x9c\x08\0\x12\x04\xf9\
+    \x05\"H\n\xe6\x08\n\x04\x04\t\x02\x02\x12\x04\x90\x06\x02\x1a\x1a\xd7\
+    \x08\x20If\x20empty,\x20the\x20new\x20update\x20request\x20is\x20assigne\
+    d\x20an\n\x20automatically-generated\x20operation\x20ID.\x20Otherwise,\
+    \x20`operation_id`\n\x20is\x20used\x20to\x20construct\x20the\x20name\x20\
+    of\x20the\x20resulting\n\x20[Operation][google.longrunning.Operation].\n\
+    \n\x20Specifying\x20an\x20explicit\x20operation\x20ID\x20simplifies\x20d\
+    etermining\n\x20whether\x20the\x20statements\x20were\x20executed\x20in\
+    \x20the\x20event\x20that\x20the\n\x20[UpdateDatabaseDdl][google.spanner.\
+    admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]\n\x20call\x20is\x20re\
+    played,\x20or\x20the\x20return\x20value\x20is\x20otherwise\x20lost:\x20t\
+    he\n\x20[database][google.spanner.admin.database.v1.UpdateDatabaseDdlReq\
+    uest.database]\n\x20and\x20`operation_id`\x20fields\x20can\x20be\x20comb\
+    ined\x20to\x20form\x20the\n\x20[name][google.longrunning.Operation.name]\
+    \x20of\x20the\x20resulting\n\x20[longrunning.Operation][google.longrunni\
+    ng.Operation]:\n\x20`<database>/operations/<operation_id>`.\n\n\x20`oper\
+    ation_id`\x20should\x20be\x20unique\x20within\x20the\x20database,\x20and\
+    \x20must\x20be\n\x20a\x20valid\x20identifier:\x20`[a-z][a-z0-9_]*`.\x20N\
+    ote\x20that\n\x20automatically-generated\x20operation\x20IDs\x20always\
+    \x20begin\x20with\x20an\n\x20underscore.\x20If\x20the\x20named\x20operat\
+    ion\x20already\x20exists,\n\x20[UpdateDatabaseDdl][google.spanner.admin.\
+    database.v1.DatabaseAdmin.UpdateDatabaseDdl]\n\x20returns\x20`ALREADY_EX\
+    ISTS`.\n\n\r\n\x05\x04\t\x02\x02\x05\x12\x04\x90\x06\x02\x08\n\r\n\x05\
+    \x04\t\x02\x02\x01\x12\x04\x90\x06\t\x15\n\r\n\x05\x04\t\x02\x02\x03\x12\
+    \x04\x90\x06\x18\x19\n\xf7\x05\n\x04\x04\t\x02\x03\x12\x04\xa0\x06\x02G\
+    \x1a\xe8\x05\x20Optional.\x20Proto\x20descriptors\x20used\x20by\x20CREAT\
+    E/ALTER\x20PROTO\x20BUNDLE\x20statements.\n\x20Contains\x20a\x20protobuf\
+    -serialized\n\x20[google.protobuf.FileDescriptorSet](https://github.com/\
+    protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto)\
+    .\n\x20To\x20generate\x20it,\x20[install](https://grpc.io/docs/protoc-in\
+    stallation/)\x20and\n\x20run\x20`protoc`\x20with\x20--include_imports\
+    \x20and\x20--descriptor_set_out.\x20For\x20example,\n\x20to\x20generate\
+    \x20for\x20moon/shot/app.proto,\x20run\n\x20```\n\x20$protoc\x20\x20--pr\
+    oto_path=/app_path\x20--proto_path=/lib_path\x20\\\n\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20--include_imports\x20\\\n\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20--descriptor_set_out=descriptors.data\x20\\\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20moon/shot/app.proto\n\x20```\n\x20For\
+    \x20more\x20details,\x20see\x20protobuffer\x20[self\n\x20description](ht\
+    tps://developers.google.com/protocol-buffers/docs/techniques#self-descri\
+    ption).\n\n\r\n\x05\x04\t\x02\x03\x05\x12\x04\xa0\x06\x02\x07\n\r\n\x05\
+    \x04\t\x02\x03\x01\x12\x04\xa0\x06\x08\x19\n\r\n\x05\x04\t\x02\x03\x03\
+    \x12\x04\xa0\x06\x1c\x1d\n\r\n\x05\x04\t\x02\x03\x08\x12\x04\xa0\x06\x1e\
+    F\n\x10\n\x08\x04\t\x02\x03\x08\x9c\x08\0\x12\x04\xa0\x06\x1fE\n\xf0\x01\
+    \n\x02\x04\n\x12\x06\xa6\x06\0\xb6\x06\x01\x1a\xe1\x01\x20Action\x20info\
+    rmation\x20extracted\x20from\x20a\x20DDL\x20statement.\x20This\x20proto\
+    \x20is\x20used\x20to\n\x20display\x20the\x20brief\x20info\x20of\x20the\
+    \x20DDL\x20statement\x20for\x20the\x20operation\n\x20[UpdateDatabaseDdl]\
+    [google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].\n\n\
+    \x0b\n\x03\x04\n\x01\x12\x04\xa6\x06\x08\x1e\nz\n\x04\x04\n\x02\0\x12\
+    \x04\xa9\x06\x02\x14\x1al\x20The\x20action\x20for\x20the\x20DDL\x20state\
+    ment,\x20e.g.\x20CREATE,\x20ALTER,\x20DROP,\x20GRANT,\x20etc.\n\x20This\
+    \x20field\x20is\x20a\x20non-empty\x20string.\n\n\r\n\x05\x04\n\x02\0\x05\
+    \x12\x04\xa9\x06\x02\x08\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xa9\x06\t\x0f\
+    \n\r\n\x05\x04\n\x02\0\x03\x12\x04\xa9\x06\x12\x13\n\xc0\x01\n\x04\x04\n\
+    \x02\x01\x12\x04\xae\x06\x02\x19\x1a\xb1\x01\x20The\x20entity\x20type\
+    \x20for\x20the\x20DDL\x20statement,\x20e.g.\x20TABLE,\x20INDEX,\x20VIEW,\
+    \x20etc.\n\x20This\x20field\x20can\x20be\x20empty\x20string\x20for\x20so\
+    me\x20DDL\x20statement,\n\x20e.g.\x20for\x20statement\x20\"ANALYZE\",\
+    \x20`entity_type`\x20=\x20\"\".\n\n\r\n\x05\x04\n\x02\x01\x05\x12\x04\
+    \xae\x06\x02\x08\n\r\n\x05\x04\n\x02\x01\x01\x12\x04\xae\x06\t\x14\n\r\n\
+    \x05\x04\n\x02\x01\x03\x12\x04\xae\x06\x17\x18\n\x8d\x02\n\x04\x04\n\x02\
+    \x02\x12\x04\xb5\x06\x02#\x1a\xfe\x01\x20The\x20entity\x20name(s)\x20bei\
+    ng\x20operated\x20on\x20the\x20DDL\x20statement.\n\x20E.g.\n\x201.\x20Fo\
+    r\x20statement\x20\"CREATE\x20TABLE\x20t1(...)\",\x20`entity_names`\x20=\
+    \x20[\"t1\"].\n\x202.\x20For\x20statement\x20\"GRANT\x20ROLE\x20r1,\x20r\
+    2\x20...\",\x20`entity_names`\x20=\x20[\"r1\",\x20\"r2\"].\n\x203.\x20Fo\
+    r\x20statement\x20\"ANALYZE\",\x20`entity_names`\x20=\x20[].\n\n\r\n\x05\
+    \x04\n\x02\x02\x04\x12\x04\xb5\x06\x02\n\n\r\n\x05\x04\n\x02\x02\x05\x12\
+    \x04\xb5\x06\x0b\x11\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xb5\x06\x12\x1e\
+    \n\r\n\x05\x04\n\x02\x02\x03\x12\x04\xb5\x06!\"\n\x94\x01\n\x02\x04\x0b\
+    \x12\x06\xba\x06\0\xda\x06\x01\x1a\x85\x01\x20Metadata\x20type\x20for\
+    \x20the\x20operation\x20returned\x20by\n\x20[UpdateDatabaseDdl][google.s\
+    panner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].\n\n\x0b\n\x03\
+    \x04\x0b\x01\x12\x04\xba\x06\x08!\n.\n\x04\x04\x0b\x02\0\x12\x06\xbc\x06\
+    \x02\xbe\x06\x05\x1a\x1e\x20The\x20database\x20being\x20modified.\n\n\r\
+    \n\x05\x04\x0b\x02\0\x05\x12\x04\xbc\x06\x02\x08\n\r\n\x05\x04\x0b\x02\0\
+    \x01\x12\x04\xbc\x06\t\x11\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xbc\x06\
+    \x14\x15\n\x0f\n\x05\x04\x0b\x02\0\x08\x12\x06\xbc\x06\x16\xbe\x06\x04\n\
+    \x11\n\x07\x04\x0b\x02\0\x08\x9f\x08\x12\x06\xbc\x06\x17\xbe\x06\x03\n\
+    \x8a\x01\n\x04\x04\x0b\x02\x01\x12\x04\xc2\x06\x02!\x1a|\x20For\x20an\
     \x20update\x20this\x20list\x20contains\x20all\x20the\x20statements.\x20F\
     or\x20an\n\x20individual\x20statement,\x20this\x20list\x20contains\x20on\
-    ly\x20that\x20statement.\n\n\r\n\x05\x04\x07\x02\x01\x04\x12\x04\xec\x02\
-    \x02\n\n\r\n\x05\x04\x07\x02\x01\x05\x12\x04\xec\x02\x0b\x11\n\r\n\x05\
-    \x04\x07\x02\x01\x01\x12\x04\xec\x02\x12\x1c\n\r\n\x05\x04\x07\x02\x01\
-    \x03\x12\x04\xec\x02\x1f\x20\n\xb6\x01\n\x04\x04\x07\x02\x02\x12\x04\xf1\
-    \x02\x02;\x1a\xa7\x01\x20Reports\x20the\x20commit\x20timestamps\x20of\
+    ly\x20that\x20statement.\n\n\r\n\x05\x04\x0b\x02\x01\x04\x12\x04\xc2\x06\
+    \x02\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\x04\xc2\x06\x0b\x11\n\r\n\x05\
+    \x04\x0b\x02\x01\x01\x12\x04\xc2\x06\x12\x1c\n\r\n\x05\x04\x0b\x02\x01\
+    \x03\x12\x04\xc2\x06\x1f\x20\n\xb6\x01\n\x04\x04\x0b\x02\x02\x12\x04\xc7\
+    \x06\x02;\x1a\xa7\x01\x20Reports\x20the\x20commit\x20timestamps\x20of\
     \x20all\x20statements\x20that\x20have\n\x20succeeded\x20so\x20far,\x20wh\
     ere\x20`commit_timestamps[i]`\x20is\x20the\x20commit\n\x20timestamp\x20f\
-    or\x20the\x20statement\x20`statements[i]`.\n\n\r\n\x05\x04\x07\x02\x02\
-    \x04\x12\x04\xf1\x02\x02\n\n\r\n\x05\x04\x07\x02\x02\x06\x12\x04\xf1\x02\
-    \x0b$\n\r\n\x05\x04\x07\x02\x02\x01\x12\x04\xf1\x02%6\n\r\n\x05\x04\x07\
-    \x02\x02\x03\x12\x04\xf1\x029:\nm\n\x02\x04\x08\x12\x06\xf6\x02\0\xfe\
-    \x02\x01\x1a_\x20The\x20request\x20for\n\x20[DropDatabase][google.spanne\
-    r.admin.database.v1.DatabaseAdmin.DropDatabase].\n\n\x0b\n\x03\x04\x08\
-    \x01\x12\x04\xf6\x02\x08\x1b\n7\n\x04\x04\x08\x02\0\x12\x06\xf8\x02\x02\
-    \xfd\x02\x04\x1a'\x20Required.\x20The\x20database\x20to\x20be\x20dropped\
-    .\n\n\r\n\x05\x04\x08\x02\0\x05\x12\x04\xf8\x02\x02\x08\n\r\n\x05\x04\
-    \x08\x02\0\x01\x12\x04\xf8\x02\t\x11\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\
-    \xf8\x02\x14\x15\n\x0f\n\x05\x04\x08\x02\0\x08\x12\x06\xf8\x02\x16\xfd\
-    \x02\x03\n\x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\x04\xf9\x02\x04*\n\
-    \x11\n\x07\x04\x08\x02\0\x08\x9f\x08\x12\x06\xfa\x02\x04\xfc\x02\x05\nq\
-    \n\x02\x04\t\x12\x06\x82\x03\0\x8a\x03\x01\x1ac\x20The\x20request\x20for\
-    \n\x20[GetDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.Ge\
-    tDatabaseDdl].\n\n\x0b\n\x03\x04\t\x01\x12\x04\x82\x03\x08\x1d\nE\n\x04\
-    \x04\t\x02\0\x12\x06\x84\x03\x02\x89\x03\x04\x1a5\x20Required.\x20The\
-    \x20database\x20whose\x20schema\x20we\x20wish\x20to\x20get.\n\n\r\n\x05\
-    \x04\t\x02\0\x05\x12\x04\x84\x03\x02\x08\n\r\n\x05\x04\t\x02\0\x01\x12\
-    \x04\x84\x03\t\x11\n\r\n\x05\x04\t\x02\0\x03\x12\x04\x84\x03\x14\x15\n\
-    \x0f\n\x05\x04\t\x02\0\x08\x12\x06\x84\x03\x16\x89\x03\x03\n\x10\n\x08\
-    \x04\t\x02\0\x08\x9c\x08\0\x12\x04\x85\x03\x04*\n\x11\n\x07\x04\t\x02\0\
-    \x08\x9f\x08\x12\x06\x86\x03\x04\x88\x03\x05\nr\n\x02\x04\n\x12\x06\x8e\
-    \x03\0\x92\x03\x01\x1ad\x20The\x20response\x20for\n\x20[GetDatabaseDdl][\
-    google.spanner.admin.database.v1.DatabaseAdmin.GetDatabaseDdl].\n\n\x0b\
-    \n\x03\x04\n\x01\x12\x04\x8e\x03\x08\x1e\nq\n\x04\x04\n\x02\0\x12\x04\
-    \x91\x03\x02!\x1ac\x20A\x20list\x20of\x20formatted\x20DDL\x20statements\
-    \x20defining\x20the\x20schema\x20of\x20the\x20database\n\x20specified\
-    \x20in\x20the\x20request.\n\n\r\n\x05\x04\n\x02\0\x04\x12\x04\x91\x03\
-    \x02\n\n\r\n\x05\x04\n\x02\0\x05\x12\x04\x91\x03\x0b\x11\n\r\n\x05\x04\n\
-    \x02\0\x01\x12\x04\x91\x03\x12\x1c\n\r\n\x05\x04\n\x02\0\x03\x12\x04\x91\
-    \x03\x1f\x20b\x06proto3\
+    or\x20the\x20statement\x20`statements[i]`.\n\n\r\n\x05\x04\x0b\x02\x02\
+    \x04\x12\x04\xc7\x06\x02\n\n\r\n\x05\x04\x0b\x02\x02\x06\x12\x04\xc7\x06\
+    \x0b$\n\r\n\x05\x04\x0b\x02\x02\x01\x12\x04\xc7\x06%6\n\r\n\x05\x04\x0b\
+    \x02\x02\x03\x12\x04\xc7\x069:\n\xd4\x01\n\x04\x04\x0b\x02\x03\x12\x04\
+    \xcc\x06\x02A\x1a\xc5\x01\x20Output\x20only.\x20When\x20true,\x20indicat\
+    es\x20that\x20the\x20operation\x20is\x20throttled\x20e.g.\n\x20due\x20to\
+    \x20resource\x20constraints.\x20When\x20resources\x20become\x20available\
+    \x20the\x20operation\n\x20will\x20resume\x20and\x20this\x20field\x20will\
+    \x20be\x20false\x20again.\n\n\r\n\x05\x04\x0b\x02\x03\x05\x12\x04\xcc\
+    \x06\x02\x06\n\r\n\x05\x04\x0b\x02\x03\x01\x12\x04\xcc\x06\x07\x10\n\r\n\
+    \x05\x04\x0b\x02\x03\x03\x12\x04\xcc\x06\x13\x14\n\r\n\x05\x04\x0b\x02\
+    \x03\x08\x12\x04\xcc\x06\x15@\n\x10\n\x08\x04\x0b\x02\x03\x08\x9c\x08\0\
+    \x12\x04\xcc\x06\x16?\n\xae\x03\n\x04\x04\x0b\x02\x04\x12\x04\xd5\x06\
+    \x02*\x1a\x9f\x03\x20The\x20progress\x20of\x20the\n\x20[UpdateDatabaseDd\
+    l][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]\n\
+    \x20operations.\x20All\x20DDL\x20statements\x20will\x20have\x20continuou\
+    sly\x20updating\x20progress,\n\x20and\x20`progress[i]`\x20is\x20the\x20o\
+    peration\x20progress\x20for\x20`statements[i]`.\x20Also,\n\x20`progress[\
+    i]`\x20will\x20have\x20start\x20time\x20and\x20end\x20time\x20populated\
+    \x20with\x20commit\n\x20timestamp\x20of\x20operation,\x20as\x20well\x20a\
+    s\x20a\x20progress\x20of\x20100%\x20once\x20the\x20operation\n\x20has\
+    \x20completed.\n\n\r\n\x05\x04\x0b\x02\x04\x04\x12\x04\xd5\x06\x02\n\n\r\
+    \n\x05\x04\x0b\x02\x04\x06\x12\x04\xd5\x06\x0b\x1c\n\r\n\x05\x04\x0b\x02\
+    \x04\x01\x12\x04\xd5\x06\x1d%\n\r\n\x05\x04\x0b\x02\x04\x03\x12\x04\xd5\
+    \x06()\nr\n\x04\x04\x0b\x02\x05\x12\x04\xd9\x06\x02.\x1ad\x20The\x20brie\
+    f\x20action\x20info\x20for\x20the\x20DDL\x20statements.\n\x20`actions[i]\
+    `\x20is\x20the\x20brief\x20info\x20for\x20`statements[i]`.\n\n\r\n\x05\
+    \x04\x0b\x02\x05\x04\x12\x04\xd9\x06\x02\n\n\r\n\x05\x04\x0b\x02\x05\x06\
+    \x12\x04\xd9\x06\x0b!\n\r\n\x05\x04\x0b\x02\x05\x01\x12\x04\xd9\x06\")\n\
+    \r\n\x05\x04\x0b\x02\x05\x03\x12\x04\xd9\x06,-\nm\n\x02\x04\x0c\x12\x06\
+    \xde\x06\0\xe6\x06\x01\x1a_\x20The\x20request\x20for\n\x20[DropDatabase]\
+    [google.spanner.admin.database.v1.DatabaseAdmin.DropDatabase].\n\n\x0b\n\
+    \x03\x04\x0c\x01\x12\x04\xde\x06\x08\x1b\n7\n\x04\x04\x0c\x02\0\x12\x06\
+    \xe0\x06\x02\xe5\x06\x04\x1a'\x20Required.\x20The\x20database\x20to\x20b\
+    e\x20dropped.\n\n\r\n\x05\x04\x0c\x02\0\x05\x12\x04\xe0\x06\x02\x08\n\r\
+    \n\x05\x04\x0c\x02\0\x01\x12\x04\xe0\x06\t\x11\n\r\n\x05\x04\x0c\x02\0\
+    \x03\x12\x04\xe0\x06\x14\x15\n\x0f\n\x05\x04\x0c\x02\0\x08\x12\x06\xe0\
+    \x06\x16\xe5\x06\x03\n\x10\n\x08\x04\x0c\x02\0\x08\x9c\x08\0\x12\x04\xe1\
+    \x06\x04*\n\x11\n\x07\x04\x0c\x02\0\x08\x9f\x08\x12\x06\xe2\x06\x04\xe4\
+    \x06\x05\nq\n\x02\x04\r\x12\x06\xea\x06\0\xf4\x06\x01\x1ac\x20The\x20req\
+    uest\x20for\n\x20[GetDatabaseDdl][google.spanner.admin.database.v1.Datab\
+    aseAdmin.GetDatabaseDdl].\n\n\x0b\n\x03\x04\r\x01\x12\x04\xea\x06\x08\
+    \x1d\n\x9e\x01\n\x04\x04\r\x02\0\x12\x06\xee\x06\x02\xf3\x06\x04\x1a\x8d\
+    \x01\x20Required.\x20The\x20database\x20whose\x20schema\x20we\x20wish\
+    \x20to\x20get.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<p\
+    roject>/instances/<instance>/databases/<database>`\n\n\r\n\x05\x04\r\x02\
+    \0\x05\x12\x04\xee\x06\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xee\x06\
+    \t\x11\n\r\n\x05\x04\r\x02\0\x03\x12\x04\xee\x06\x14\x15\n\x0f\n\x05\x04\
+    \r\x02\0\x08\x12\x06\xee\x06\x16\xf3\x06\x03\n\x10\n\x08\x04\r\x02\0\x08\
+    \x9c\x08\0\x12\x04\xef\x06\x04*\n\x11\n\x07\x04\r\x02\0\x08\x9f\x08\x12\
+    \x06\xf0\x06\x04\xf2\x06\x05\nr\n\x02\x04\x0e\x12\x06\xf8\x06\0\x83\x07\
+    \x01\x1ad\x20The\x20response\x20for\n\x20[GetDatabaseDdl][google.spanner\
+    .admin.database.v1.DatabaseAdmin.GetDatabaseDdl].\n\n\x0b\n\x03\x04\x0e\
+    \x01\x12\x04\xf8\x06\x08\x1e\nq\n\x04\x04\x0e\x02\0\x12\x04\xfb\x06\x02!\
+    \x1ac\x20A\x20list\x20of\x20formatted\x20DDL\x20statements\x20defining\
+    \x20the\x20schema\x20of\x20the\x20database\n\x20specified\x20in\x20the\
+    \x20request.\n\n\r\n\x05\x04\x0e\x02\0\x04\x12\x04\xfb\x06\x02\n\n\r\n\
+    \x05\x04\x0e\x02\0\x05\x12\x04\xfb\x06\x0b\x11\n\r\n\x05\x04\x0e\x02\0\
+    \x01\x12\x04\xfb\x06\x12\x1c\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\xfb\x06\
+    \x1f\x20\n\xe5\x02\n\x04\x04\x0e\x02\x01\x12\x04\x82\x07\x02\x1e\x1a\xd6\
+    \x02\x20Proto\x20descriptors\x20stored\x20in\x20the\x20database.\n\x20Co\
+    ntains\x20a\x20protobuf-serialized\n\x20[google.protobuf.FileDescriptorS\
+    et](https://github.com/protocolbuffers/protobuf/blob/main/src/google/pro\
+    tobuf/descriptor.proto).\n\x20For\x20more\x20details,\x20see\x20protobuf\
+    fer\x20[self\n\x20description](https://developers.google.com/protocol-bu\
+    ffers/docs/techniques#self-description).\n\n\r\n\x05\x04\x0e\x02\x01\x05\
+    \x12\x04\x82\x07\x02\x07\n\r\n\x05\x04\x0e\x02\x01\x01\x12\x04\x82\x07\
+    \x08\x19\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\x82\x07\x1c\x1d\n\x81\x01\
+    \n\x02\x04\x0f\x12\x06\x87\x07\0\xca\x07\x01\x1as\x20The\x20request\x20f\
+    or\n\x20[ListDatabaseOperations][google.spanner.admin.database.v1.Databa\
+    seAdmin.ListDatabaseOperations].\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\x87\
+    \x07\x08%\n\x87\x01\n\x04\x04\x0f\x02\0\x12\x06\x8a\x07\x02\x8f\x07\x04\
+    \x1aw\x20Required.\x20The\x20instance\x20of\x20the\x20database\x20operat\
+    ions.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/<project>/ins\
+    tances/<instance>`.\n\n\r\n\x05\x04\x0f\x02\0\x05\x12\x04\x8a\x07\x02\
+    \x08\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\x8a\x07\t\x0f\n\r\n\x05\x04\x0f\
+    \x02\0\x03\x12\x04\x8a\x07\x12\x13\n\x0f\n\x05\x04\x0f\x02\0\x08\x12\x06\
+    \x8a\x07\x14\x8f\x07\x03\n\x10\n\x08\x04\x0f\x02\0\x08\x9c\x08\0\x12\x04\
+    \x8b\x07\x04*\n\x11\n\x07\x04\x0f\x02\0\x08\x9f\x08\x12\x06\x8c\x07\x04\
+    \x8e\x07\x05\n\xa6\x11\n\x04\x04\x0f\x02\x01\x12\x04\xbe\x07\x02\x14\x1a\
+    \x97\x11\x20An\x20expression\x20that\x20filters\x20the\x20list\x20of\x20\
+    returned\x20operations.\n\n\x20A\x20filter\x20expression\x20consists\x20\
+    of\x20a\x20field\x20name,\x20a\n\x20comparison\x20operator,\x20and\x20a\
+    \x20value\x20for\x20filtering.\n\x20The\x20value\x20must\x20be\x20a\x20s\
+    tring,\x20a\x20number,\x20or\x20a\x20boolean.\x20The\x20comparison\x20op\
+    erator\n\x20must\x20be\x20one\x20of:\x20`<`,\x20`>`,\x20`<=`,\x20`>=`,\
+    \x20`!=`,\x20`=`,\x20or\x20`:`.\n\x20Colon\x20`:`\x20is\x20the\x20contai\
+    ns\x20operator.\x20Filter\x20rules\x20are\x20not\x20case\x20sensitive.\n\
+    \n\x20The\x20following\x20fields\x20in\x20the\x20[Operation][google.long\
+    running.Operation]\n\x20are\x20eligible\x20for\x20filtering:\n\n\x20\x20\
+    \x20*\x20`name`\x20-\x20The\x20name\x20of\x20the\x20long-running\x20oper\
+    ation\n\x20\x20\x20*\x20`done`\x20-\x20False\x20if\x20the\x20operation\
+    \x20is\x20in\x20progress,\x20else\x20true.\n\x20\x20\x20*\x20`metadata.@\
+    type`\x20-\x20the\x20type\x20of\x20metadata.\x20For\x20example,\x20the\
+    \x20type\x20string\n\x20\x20\x20\x20\x20\x20for\n\x20\x20\x20\x20\x20\
+    \x20[RestoreDatabaseMetadata][google.spanner.admin.database.v1.RestoreDa\
+    tabaseMetadata]\n\x20\x20\x20\x20\x20\x20is\n\x20\x20\x20\x20\x20\x20`ty\
+    pe.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetada\
+    ta`.\n\x20\x20\x20*\x20`metadata.<field_name>`\x20-\x20any\x20field\x20i\
+    n\x20metadata.value.\n\x20\x20\x20\x20\x20\x20`metadata.@type`\x20must\
+    \x20be\x20specified\x20first,\x20if\x20filtering\x20on\x20metadata\n\x20\
+    \x20\x20\x20\x20\x20fields.\n\x20\x20\x20*\x20`error`\x20-\x20Error\x20a\
+    ssociated\x20with\x20the\x20long-running\x20operation.\n\x20\x20\x20*\
+    \x20`response.@type`\x20-\x20the\x20type\x20of\x20response.\n\x20\x20\
+    \x20*\x20`response.<field_name>`\x20-\x20any\x20field\x20in\x20response.\
+    value.\n\n\x20You\x20can\x20combine\x20multiple\x20expressions\x20by\x20\
+    enclosing\x20each\x20expression\x20in\n\x20parentheses.\x20By\x20default\
+    ,\x20expressions\x20are\x20combined\x20with\x20AND\x20logic.\x20However,\
+    \n\x20you\x20can\x20specify\x20AND,\x20OR,\x20and\x20NOT\x20logic\x20exp\
+    licitly.\n\n\x20Here\x20are\x20a\x20few\x20examples:\n\n\x20\x20\x20*\
+    \x20`done:true`\x20-\x20The\x20operation\x20is\x20complete.\n\x20\x20\
+    \x20*\x20`(metadata.@type=type.googleapis.com/google.spanner.admin.datab\
+    ase.v1.RestoreDatabaseMetadata)\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(met\
+    adata.source_type:BACKUP)\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(metadata.\
+    backup_info.backup:backup_howl)\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(met\
+    adata.name:restored_howl)\x20AND`\x20\\\n\x20\x20\x20\x20\x20`(metadata.\
+    progress.start_time\x20<\x20\\\"2018-03-28T14:50:00Z\\\")\x20AND`\x20\\\
+    \n\x20\x20\x20\x20\x20`(error:*)`\x20-\x20Return\x20operations\x20where:\
+    \n\x20\x20\x20\x20\x20*\x20The\x20operation's\x20metadata\x20type\x20is\
+    \n\x20\x20\x20\x20\x20[RestoreDatabaseMetadata][google.spanner.admin.dat\
+    abase.v1.RestoreDatabaseMetadata].\n\x20\x20\x20\x20\x20*\x20The\x20data\
+    base\x20is\x20restored\x20from\x20a\x20backup.\n\x20\x20\x20\x20\x20*\
+    \x20The\x20backup\x20name\x20contains\x20\"backup_howl\".\n\x20\x20\x20\
+    \x20\x20*\x20The\x20restored\x20database's\x20name\x20contains\x20\"rest\
+    ored_howl\".\n\x20\x20\x20\x20\x20*\x20The\x20operation\x20started\x20be\
+    fore\x202018-03-28T14:50:00Z.\n\x20\x20\x20\x20\x20*\x20The\x20operation\
+    \x20resulted\x20in\x20an\x20error.\n\n\r\n\x05\x04\x0f\x02\x01\x05\x12\
+    \x04\xbe\x07\x02\x08\n\r\n\x05\x04\x0f\x02\x01\x01\x12\x04\xbe\x07\t\x0f\
+    \n\r\n\x05\x04\x0f\x02\x01\x03\x12\x04\xbe\x07\x12\x13\n\x87\x01\n\x04\
+    \x04\x0f\x02\x02\x12\x04\xc2\x07\x02\x16\x1ay\x20Number\x20of\x20operati\
+    ons\x20to\x20be\x20returned\x20in\x20the\x20response.\x20If\x200\x20or\n\
+    \x20less,\x20defaults\x20to\x20the\x20server's\x20maximum\x20allowed\x20\
+    page\x20size.\n\n\r\n\x05\x04\x0f\x02\x02\x05\x12\x04\xc2\x07\x02\x07\n\
+    \r\n\x05\x04\x0f\x02\x02\x01\x12\x04\xc2\x07\x08\x11\n\r\n\x05\x04\x0f\
+    \x02\x02\x03\x12\x04\xc2\x07\x14\x15\n\xc6\x02\n\x04\x04\x0f\x02\x03\x12\
+    \x04\xc9\x07\x02\x18\x1a\xb7\x02\x20If\x20non-empty,\x20`page_token`\x20\
+    should\x20contain\x20a\n\x20[next_page_token][google.spanner.admin.datab\
+    ase.v1.ListDatabaseOperationsResponse.next_page_token]\n\x20from\x20a\
+    \x20previous\n\x20[ListDatabaseOperationsResponse][google.spanner.admin.\
+    database.v1.ListDatabaseOperationsResponse]\n\x20to\x20the\x20same\x20`p\
+    arent`\x20and\x20with\x20the\x20same\x20`filter`.\n\n\r\n\x05\x04\x0f\
+    \x02\x03\x05\x12\x04\xc9\x07\x02\x08\n\r\n\x05\x04\x0f\x02\x03\x01\x12\
+    \x04\xc9\x07\t\x13\n\r\n\x05\x04\x0f\x02\x03\x03\x12\x04\xc9\x07\x16\x17\
+    \n\x82\x01\n\x02\x04\x10\x12\x06\xce\x07\0\xda\x07\x01\x1at\x20The\x20re\
+    sponse\x20for\n\x20[ListDatabaseOperations][google.spanner.admin.databas\
+    e.v1.DatabaseAdmin.ListDatabaseOperations].\n\n\x0b\n\x03\x04\x10\x01\
+    \x12\x04\xce\x07\x08&\n\xaf\x02\n\x04\x04\x10\x02\0\x12\x04\xd4\x07\x027\
+    \x1a\xa0\x02\x20The\x20list\x20of\x20matching\x20database\x20[long-runni\
+    ng\n\x20operations][google.longrunning.Operation].\x20Each\x20operation'\
+    s\x20name\x20will\x20be\n\x20prefixed\x20by\x20the\x20database's\x20name\
+    .\x20The\x20operation's\n\x20[metadata][google.longrunning.Operation.met\
+    adata]\x20field\x20type\n\x20`metadata.type_url`\x20describes\x20the\x20\
+    type\x20of\x20the\x20metadata.\n\n\r\n\x05\x04\x10\x02\0\x04\x12\x04\xd4\
+    \x07\x02\n\n\r\n\x05\x04\x10\x02\0\x06\x12\x04\xd4\x07\x0b'\n\r\n\x05\
+    \x04\x10\x02\0\x01\x12\x04\xd4\x07(2\n\r\n\x05\x04\x10\x02\0\x03\x12\x04\
+    \xd4\x0756\n\xcd\x01\n\x04\x04\x10\x02\x01\x12\x04\xd9\x07\x02\x1d\x1a\
+    \xbe\x01\x20`next_page_token`\x20can\x20be\x20sent\x20in\x20a\x20subsequ\
+    ent\n\x20[ListDatabaseOperations][google.spanner.admin.database.v1.Datab\
+    aseAdmin.ListDatabaseOperations]\n\x20call\x20to\x20fetch\x20more\x20of\
+    \x20the\x20matching\x20metadata.\n\n\r\n\x05\x04\x10\x02\x01\x05\x12\x04\
+    \xd9\x07\x02\x08\n\r\n\x05\x04\x10\x02\x01\x01\x12\x04\xd9\x07\t\x18\n\r\
+    \n\x05\x04\x10\x02\x01\x03\x12\x04\xd9\x07\x1b\x1c\ns\n\x02\x04\x11\x12\
+    \x06\xde\x07\0\x82\x08\x01\x1ae\x20The\x20request\x20for\n\x20[RestoreDa\
+    tabase][google.spanner.admin.database.v1.DatabaseAdmin.RestoreDatabase].\
+    \n\n\x0b\n\x03\x04\x11\x01\x12\x04\xde\x07\x08\x1e\n\xa6\x02\n\x04\x04\
+    \x11\x02\0\x12\x06\xe4\x07\x02\xe9\x07\x04\x1a\x95\x02\x20Required.\x20T\
+    he\x20name\x20of\x20the\x20instance\x20in\x20which\x20to\x20create\x20th\
+    e\n\x20restored\x20database.\x20This\x20instance\x20must\x20be\x20in\x20\
+    the\x20same\x20project\x20and\n\x20have\x20the\x20same\x20instance\x20co\
+    nfiguration\x20as\x20the\x20instance\x20containing\n\x20the\x20source\
+    \x20backup.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<projec\
+    t>/instances/<instance>`.\n\n\r\n\x05\x04\x11\x02\0\x05\x12\x04\xe4\x07\
+    \x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\xe4\x07\t\x0f\n\r\n\x05\x04\
+    \x11\x02\0\x03\x12\x04\xe4\x07\x12\x13\n\x0f\n\x05\x04\x11\x02\0\x08\x12\
+    \x06\xe4\x07\x14\xe9\x07\x03\n\x10\n\x08\x04\x11\x02\0\x08\x9c\x08\0\x12\
+    \x04\xe5\x07\x04*\n\x11\n\x07\x04\x11\x02\0\x08\x9f\x08\x12\x06\xe6\x07\
+    \x04\xe8\x07\x05\n\x87\x02\n\x04\x04\x11\x02\x01\x12\x04\xef\x07\x02B\
+    \x1a\xf8\x01\x20Required.\x20The\x20id\x20of\x20the\x20database\x20to\
+    \x20create\x20and\x20restore\x20to.\x20This\n\x20database\x20must\x20not\
+    \x20already\x20exist.\x20The\x20`database_id`\x20appended\x20to\n\x20`pa\
+    rent`\x20forms\x20the\x20full\x20database\x20name\x20of\x20the\x20form\n\
+    \x20`projects/<project>/instances/<instance>/databases/<database_id>`.\n\
+    \n\r\n\x05\x04\x11\x02\x01\x05\x12\x04\xef\x07\x02\x08\n\r\n\x05\x04\x11\
+    \x02\x01\x01\x12\x04\xef\x07\t\x14\n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\
+    \xef\x07\x17\x18\n\r\n\x05\x04\x11\x02\x01\x08\x12\x04\xef\x07\x19A\n\
+    \x10\n\x08\x04\x11\x02\x01\x08\x9c\x08\0\x12\x04\xef\x07\x1a@\n=\n\x04\
+    \x04\x11\x08\0\x12\x06\xf2\x07\x02\xf8\x07\x03\x1a-\x20Required.\x20The\
+    \x20source\x20from\x20which\x20to\x20restore.\n\n\r\n\x05\x04\x11\x08\0\
+    \x01\x12\x04\xf2\x07\x08\x0e\n\x91\x01\n\x04\x04\x11\x02\x02\x12\x06\xf5\
+    \x07\x04\xf7\x07\x07\x1a\x80\x01\x20Name\x20of\x20the\x20backup\x20from\
+    \x20which\x20to\x20restore.\x20\x20Values\x20are\x20of\x20the\x20form\n\
+    \x20`projects/<project>/instances/<instance>/backups/<backup>`.\n\n\r\n\
+    \x05\x04\x11\x02\x02\x05\x12\x04\xf5\x07\x04\n\n\r\n\x05\x04\x11\x02\x02\
+    \x01\x12\x04\xf5\x07\x0b\x11\n\r\n\x05\x04\x11\x02\x02\x03\x12\x04\xf5\
+    \x07\x14\x15\n\x0f\n\x05\x04\x11\x02\x02\x08\x12\x06\xf5\x07\x16\xf7\x07\
+    \x06\n\x11\n\x07\x04\x11\x02\x02\x08\x9f\x08\x12\x06\xf5\x07\x17\xf7\x07\
+    \x05\n\xc2\x03\n\x04\x04\x11\x02\x03\x12\x06\x80\x08\x02\x81\x08/\x1a\
+    \xb1\x03\x20Optional.\x20An\x20encryption\x20configuration\x20describing\
+    \x20the\x20encryption\x20type\x20and\n\x20key\x20resources\x20in\x20Clou\
+    d\x20KMS\x20used\x20to\x20encrypt/decrypt\x20the\x20database\x20to\x20re\
+    store\n\x20to.\x20If\x20this\x20field\x20is\x20not\x20specified,\x20the\
+    \x20restored\x20database\x20will\x20use\x20the\x20same\n\x20encryption\
+    \x20configuration\x20as\x20the\x20backup\x20by\x20default,\x20namely\n\
+    \x20[encryption_type][google.spanner.admin.database.v1.RestoreDatabaseEn\
+    cryptionConfig.encryption_type]\n\x20=\x20`USE_CONFIG_DEFAULT_OR_BACKUP_\
+    ENCRYPTION`.\n\n\r\n\x05\x04\x11\x02\x03\x06\x12\x04\x80\x08\x02!\n\r\n\
+    \x05\x04\x11\x02\x03\x01\x12\x04\x80\x08\"3\n\r\n\x05\x04\x11\x02\x03\
+    \x03\x12\x04\x80\x0867\n\r\n\x05\x04\x11\x02\x03\x08\x12\x04\x81\x08\x06\
+    .\n\x10\n\x08\x04\x11\x02\x03\x08\x9c\x08\0\x12\x04\x81\x08\x07-\nC\n\
+    \x02\x04\x12\x12\x06\x85\x08\0\xbc\x08\x01\x1a5\x20Encryption\x20configu\
+    ration\x20for\x20the\x20restored\x20database.\n\n\x0b\n\x03\x04\x12\x01\
+    \x12\x04\x85\x08\x08'\nC\n\x04\x04\x12\x04\0\x12\x06\x87\x08\x02\x96\x08\
+    \x03\x1a3\x20Encryption\x20types\x20for\x20the\x20database\x20to\x20be\
+    \x20restored.\n\n\r\n\x05\x04\x12\x04\0\x01\x12\x04\x87\x08\x07\x15\n*\n\
+    \x06\x04\x12\x04\0\x02\0\x12\x04\x89\x08\x04$\x1a\x1a\x20Unspecified.\
+    \x20Do\x20not\x20use.\n\n\x0f\n\x07\x04\x12\x04\0\x02\0\x01\x12\x04\x89\
+    \x08\x04\x1f\n\x0f\n\x07\x04\x12\x04\0\x02\0\x02\x12\x04\x89\x08\"#\n\
+    \x9c\x01\n\x06\x04\x12\x04\0\x02\x01\x12\x04\x8e\x08\x040\x1a\x8b\x01\
+    \x20This\x20is\x20the\x20default\x20option\x20when\n\x20[encryption_conf\
+    ig][google.spanner.admin.database.v1.RestoreDatabaseEncryptionConfig]\n\
+    \x20is\x20not\x20specified.\n\n\x0f\n\x07\x04\x12\x04\0\x02\x01\x01\x12\
+    \x04\x8e\x08\x04+\n\x0f\n\x07\x04\x12\x04\0\x02\x01\x02\x12\x04\x8e\x08.\
+    /\n0\n\x06\x04\x12\x04\0\x02\x02\x12\x04\x91\x08\x04\"\x1a\x20\x20Use\
+    \x20Google\x20default\x20encryption.\n\n\x0f\n\x07\x04\x12\x04\0\x02\x02\
+    \x01\x12\x04\x91\x08\x04\x1d\n\x0f\n\x07\x04\x12\x04\0\x02\x02\x02\x12\
+    \x04\x91\x08\x20!\ny\n\x06\x04\x12\x04\0\x02\x03\x12\x04\x95\x08\x04$\
+    \x1ai\x20Use\x20customer\x20managed\x20encryption.\x20If\x20specified,\
+    \x20`kms_key_name`\x20must\n\x20must\x20contain\x20a\x20valid\x20Cloud\
+    \x20KMS\x20key.\n\n\x0f\n\x07\x04\x12\x04\0\x02\x03\x01\x12\x04\x95\x08\
+    \x04\x1f\n\x0f\n\x07\x04\x12\x04\0\x02\x03\x02\x12\x04\x95\x08\"#\nG\n\
+    \x04\x04\x12\x02\0\x12\x04\x99\x08\x02N\x1a9\x20Required.\x20The\x20encr\
+    yption\x20type\x20of\x20the\x20restored\x20database.\n\n\r\n\x05\x04\x12\
+    \x02\0\x06\x12\x04\x99\x08\x02\x10\n\r\n\x05\x04\x12\x02\0\x01\x12\x04\
+    \x99\x08\x11\x20\n\r\n\x05\x04\x12\x02\0\x03\x12\x04\x99\x08#$\n\r\n\x05\
+    \x04\x12\x02\0\x08\x12\x04\x99\x08%M\n\x10\n\x08\x04\x12\x02\0\x08\x9c\
+    \x08\0\x12\x04\x99\x08&L\n\x87\x03\n\x04\x04\x12\x02\x01\x12\x06\xa0\x08\
+    \x02\xa5\x08\x04\x1a\xf6\x02\x20Optional.\x20The\x20Cloud\x20KMS\x20key\
+    \x20that\x20will\x20be\x20used\x20to\x20encrypt/decrypt\x20the\n\x20rest\
+    ored\x20database.\x20This\x20field\x20should\x20be\x20set\x20only\x20whe\
+    n\n\x20[encryption_type][google.spanner.admin.database.v1.RestoreDatabas\
+    eEncryptionConfig.encryption_type]\n\x20is\x20`CUSTOMER_MANAGED_ENCRYPTI\
+    ON`.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/loca\
+    tions/<location>/keyRings/<key_ring>/cryptoKeys/<kms_key_name>`.\n\n\r\n\
+    \x05\x04\x12\x02\x01\x05\x12\x04\xa0\x08\x02\x08\n\r\n\x05\x04\x12\x02\
+    \x01\x01\x12\x04\xa0\x08\t\x15\n\r\n\x05\x04\x12\x02\x01\x03\x12\x04\xa0\
+    \x08\x18\x19\n\x0f\n\x05\x04\x12\x02\x01\x08\x12\x06\xa0\x08\x1a\xa5\x08\
+    \x03\n\x10\n\x08\x04\x12\x02\x01\x08\x9c\x08\0\x12\x04\xa1\x08\x04*\n\
+    \x11\n\x07\x04\x12\x02\x01\x08\x9f\x08\x12\x06\xa2\x08\x04\xa4\x08\x05\n\
+    \xfc\x06\n\x04\x04\x12\x02\x02\x12\x06\xb6\x08\x02\xbb\x08\x04\x1a\xeb\
+    \x06\x20Optional.\x20Specifies\x20the\x20KMS\x20configuration\x20for\x20\
+    the\x20one\x20or\x20more\x20keys\x20used\x20to\n\x20encrypt\x20the\x20da\
+    tabase.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/l\
+    ocations/<location>/keyRings/<key_ring>/cryptoKeys/<kms_key_name>`.\n\n\
+    \x20The\x20keys\x20referenced\x20by\x20kms_key_names\x20must\x20fully\
+    \x20cover\x20all\n\x20regions\x20of\x20the\x20database\x20instance\x20co\
+    nfiguration.\x20Some\x20examples:\n\x20*\x20For\x20single\x20region\x20d\
+    atabase\x20instance\x20configs,\x20specify\x20a\x20single\x20regional\n\
+    \x20location\x20KMS\x20key.\n\x20*\x20For\x20multi-regional\x20database\
+    \x20instance\x20configs\x20of\x20type\x20GOOGLE_MANAGED,\n\x20either\x20\
+    specify\x20a\x20multi-regional\x20location\x20KMS\x20key\x20or\x20multip\
+    le\x20regional\n\x20location\x20KMS\x20keys\x20that\x20cover\x20all\x20r\
+    egions\x20in\x20the\x20instance\x20config.\n\x20*\x20For\x20a\x20databas\
+    e\x20instance\x20config\x20of\x20type\x20USER_MANAGED,\x20please\x20spec\
+    ify\x20only\n\x20regional\x20location\x20KMS\x20keys\x20to\x20cover\x20e\
+    ach\x20region\x20in\x20the\x20instance\x20config.\n\x20Multi-regional\
+    \x20location\x20KMS\x20keys\x20are\x20not\x20supported\x20for\x20USER_MA\
+    NAGED\n\x20instance\x20configs.\n\n\r\n\x05\x04\x12\x02\x02\x04\x12\x04\
+    \xb6\x08\x02\n\n\r\n\x05\x04\x12\x02\x02\x05\x12\x04\xb6\x08\x0b\x11\n\r\
+    \n\x05\x04\x12\x02\x02\x01\x12\x04\xb6\x08\x12\x1f\n\r\n\x05\x04\x12\x02\
+    \x02\x03\x12\x04\xb6\x08\"#\n\x0f\n\x05\x04\x12\x02\x02\x08\x12\x06\xb6\
+    \x08$\xbb\x08\x03\n\x10\n\x08\x04\x12\x02\x02\x08\x9c\x08\0\x12\x04\xb7\
+    \x08\x04*\n\x11\n\x07\x04\x12\x02\x02\x08\x9f\x08\x12\x06\xb8\x08\x04\
+    \xba\x08\x05\n\x9d\x01\n\x02\x04\x13\x12\x06\xc0\x08\0\xf0\x08\x01\x1a\
+    \x8e\x01\x20Metadata\x20type\x20for\x20the\x20long-running\x20operation\
+    \x20returned\x20by\n\x20[RestoreDatabase][google.spanner.admin.database.\
+    v1.DatabaseAdmin.RestoreDatabase].\n\n\x0b\n\x03\x04\x13\x01\x12\x04\xc0\
+    \x08\x08\x1f\nE\n\x04\x04\x13\x02\0\x12\x06\xc2\x08\x02\xc4\x08\x05\x1a5\
+    \x20Name\x20of\x20the\x20database\x20being\x20created\x20and\x20restored\
+    \x20to.\n\n\r\n\x05\x04\x13\x02\0\x05\x12\x04\xc2\x08\x02\x08\n\r\n\x05\
+    \x04\x13\x02\0\x01\x12\x04\xc2\x08\t\r\n\r\n\x05\x04\x13\x02\0\x03\x12\
+    \x04\xc2\x08\x10\x11\n\x0f\n\x05\x04\x13\x02\0\x08\x12\x06\xc2\x08\x12\
+    \xc4\x08\x04\n\x11\n\x07\x04\x13\x02\0\x08\x9f\x08\x12\x06\xc2\x08\x13\
+    \xc4\x08\x03\n/\n\x04\x04\x13\x02\x01\x12\x04\xc7\x08\x02$\x1a!\x20The\
+    \x20type\x20of\x20the\x20restore\x20source.\n\n\r\n\x05\x04\x13\x02\x01\
+    \x06\x12\x04\xc7\x08\x02\x13\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\xc7\
+    \x08\x14\x1f\n\r\n\x05\x04\x13\x02\x01\x03\x12\x04\xc7\x08\"#\n\xbe\x01\
+    \n\x04\x04\x13\x08\0\x12\x06\xcc\x08\x02\xcf\x08\x03\x1a\xad\x01\x20Info\
+    rmation\x20about\x20the\x20source\x20used\x20to\x20restore\x20the\x20dat\
+    abase,\x20as\x20specified\x20by\n\x20`source`\x20in\n\x20[RestoreDatabas\
+    eRequest][google.spanner.admin.database.v1.RestoreDatabaseRequest].\n\n\
+    \r\n\x05\x04\x13\x08\0\x01\x12\x04\xcc\x08\x08\x13\nJ\n\x04\x04\x13\x02\
+    \x02\x12\x04\xce\x08\x04\x1f\x1a<\x20Information\x20about\x20the\x20back\
+    up\x20used\x20to\x20restore\x20the\x20database.\n\n\r\n\x05\x04\x13\x02\
+    \x02\x06\x12\x04\xce\x08\x04\x0e\n\r\n\x05\x04\x13\x02\x02\x01\x12\x04\
+    \xce\x08\x0f\x1a\n\r\n\x05\x04\x13\x02\x02\x03\x12\x04\xce\x08\x1d\x1e\n\
+    \x82\x01\n\x04\x04\x13\x02\x03\x12\x04\xd4\x08\x02!\x1at\x20The\x20progr\
+    ess\x20of\x20the\n\x20[RestoreDatabase][google.spanner.admin.database.v1\
+    .DatabaseAdmin.RestoreDatabase]\n\x20operation.\n\n\r\n\x05\x04\x13\x02\
+    \x03\x06\x12\x04\xd4\x08\x02\x13\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\
+    \xd4\x08\x14\x1c\n\r\n\x05\x04\x13\x02\x03\x03\x12\x04\xd4\x08\x1f\x20\n\
+    \x87\x06\n\x04\x04\x13\x02\x04\x12\x04\xe2\x08\x02,\x1a\xf8\x05\x20The\
+    \x20time\x20at\x20which\x20cancellation\x20of\x20this\x20operation\x20wa\
+    s\x20received.\n\x20[Operations.CancelOperation][google.longrunning.Oper\
+    ations.CancelOperation]\n\x20starts\x20asynchronous\x20cancellation\x20o\
+    n\x20a\x20long-running\x20operation.\x20The\x20server\n\x20makes\x20a\
+    \x20best\x20effort\x20to\x20cancel\x20the\x20operation,\x20but\x20succes\
+    s\x20is\x20not\x20guaranteed.\n\x20Clients\x20can\x20use\n\x20[Operation\
+    s.GetOperation][google.longrunning.Operations.GetOperation]\x20or\n\x20o\
+    ther\x20methods\x20to\x20check\x20whether\x20the\x20cancellation\x20succ\
+    eeded\x20or\x20whether\x20the\n\x20operation\x20completed\x20despite\x20\
+    cancellation.\x20On\x20successful\x20cancellation,\n\x20the\x20operation\
+    \x20is\x20not\x20deleted;\x20instead,\x20it\x20becomes\x20an\x20operatio\
+    n\x20with\n\x20an\x20[Operation.error][google.longrunning.Operation.erro\
+    r]\x20value\x20with\x20a\n\x20[google.rpc.Status.code][google.rpc.Status\
+    .code]\x20of\x201,\x20corresponding\x20to\n\x20`Code.CANCELLED`.\n\n\r\n\
+    \x05\x04\x13\x02\x04\x06\x12\x04\xe2\x08\x02\x1b\n\r\n\x05\x04\x13\x02\
+    \x04\x01\x12\x04\xe2\x08\x1c'\n\r\n\x05\x04\x13\x02\x04\x03\x12\x04\xe2\
+    \x08*+\n\xa0\x06\n\x04\x04\x13\x02\x05\x12\x04\xef\x08\x02.\x1a\x91\x06\
+    \x20If\x20exists,\x20the\x20name\x20of\x20the\x20long-running\x20operati\
+    on\x20that\x20will\x20be\x20used\x20to\n\x20track\x20the\x20post-restore\
+    \x20optimization\x20process\x20to\x20optimize\x20the\x20performance\x20o\
+    f\n\x20the\x20restored\x20database,\x20and\x20remove\x20the\x20dependenc\
+    y\x20on\x20the\x20restore\x20source.\n\x20The\x20name\x20is\x20of\x20the\
+    \x20form\n\x20`projects/<project>/instances/<instance>/databases/<databa\
+    se>/operations/<operation>`\n\x20where\x20the\x20<database>\x20is\x20the\
+    \x20name\x20of\x20database\x20being\x20created\x20and\x20restored\x20to.\
+    \n\x20The\x20metadata\x20type\x20of\x20the\x20\x20long-running\x20operat\
+    ion\x20is\n\x20[OptimizeRestoredDatabaseMetadata][google.spanner.admin.d\
+    atabase.v1.OptimizeRestoredDatabaseMetadata].\n\x20This\x20long-running\
+    \x20operation\x20will\x20be\x20automatically\x20created\x20by\x20the\x20\
+    system\n\x20after\x20the\x20RestoreDatabase\x20long-running\x20operation\
+    \x20completes\x20successfully.\n\x20This\x20operation\x20will\x20not\x20\
+    be\x20created\x20if\x20the\x20restore\x20was\x20not\x20successful.\n\n\r\
+    \n\x05\x04\x13\x02\x05\x05\x12\x04\xef\x08\x02\x08\n\r\n\x05\x04\x13\x02\
+    \x05\x01\x12\x04\xef\x08\t)\n\r\n\x05\x04\x13\x02\x05\x03\x12\x04\xef\
+    \x08,-\n\xa7\x02\n\x02\x04\x14\x12\x06\xf6\x08\0\xfe\x08\x01\x1a\x98\x02\
+    \x20Metadata\x20type\x20for\x20the\x20long-running\x20operation\x20used\
+    \x20to\x20track\x20the\x20progress\n\x20of\x20optimizations\x20performed\
+    \x20on\x20a\x20newly\x20restored\x20database.\x20This\x20long-running\n\
+    \x20operation\x20is\x20automatically\x20created\x20by\x20the\x20system\
+    \x20after\x20the\x20successful\n\x20completion\x20of\x20a\x20database\
+    \x20restore,\x20and\x20cannot\x20be\x20cancelled.\n\n\x0b\n\x03\x04\x14\
+    \x01\x12\x04\xf6\x08\x08(\n@\n\x04\x04\x14\x02\0\x12\x06\xf8\x08\x02\xfa\
+    \x08\x05\x1a0\x20Name\x20of\x20the\x20restored\x20database\x20being\x20o\
+    ptimized.\n\n\r\n\x05\x04\x14\x02\0\x05\x12\x04\xf8\x08\x02\x08\n\r\n\
+    \x05\x04\x14\x02\0\x01\x12\x04\xf8\x08\t\r\n\r\n\x05\x04\x14\x02\0\x03\
+    \x12\x04\xf8\x08\x10\x11\n\x0f\n\x05\x04\x14\x02\0\x08\x12\x06\xf8\x08\
+    \x12\xfa\x08\x04\n\x11\n\x07\x04\x14\x02\0\x08\x9f\x08\x12\x06\xf8\x08\
+    \x13\xfa\x08\x03\n?\n\x04\x04\x14\x02\x01\x12\x04\xfd\x08\x02!\x1a1\x20T\
+    he\x20progress\x20of\x20the\x20post-restore\x20optimizations.\n\n\r\n\
+    \x05\x04\x14\x02\x01\x06\x12\x04\xfd\x08\x02\x13\n\r\n\x05\x04\x14\x02\
+    \x01\x01\x12\x04\xfd\x08\x14\x1c\n\r\n\x05\x04\x14\x02\x01\x03\x12\x04\
+    \xfd\x08\x1f\x20\n9\n\x02\x05\0\x12\x06\x81\t\0\x87\t\x01\x1a+\x20Indica\
+    tes\x20the\x20type\x20of\x20the\x20restore\x20source.\n\n\x0b\n\x03\x05\
+    \0\x01\x12\x04\x81\t\x05\x16\n&\n\x04\x05\0\x02\0\x12\x04\x83\t\x02\x17\
+    \x1a\x18\x20No\x20restore\x20associated.\n\n\r\n\x05\x05\0\x02\0\x01\x12\
+    \x04\x83\t\x02\x12\n\r\n\x05\x05\0\x02\0\x02\x12\x04\x83\t\x15\x16\n?\n\
+    \x04\x05\0\x02\x01\x12\x04\x86\t\x02\r\x1a1\x20A\x20backup\x20was\x20use\
+    d\x20as\x20the\x20source\x20of\x20the\x20restore.\n\n\r\n\x05\x05\0\x02\
+    \x01\x01\x12\x04\x86\t\x02\x08\n\r\n\x05\x05\0\x02\x01\x02\x12\x04\x86\t\
+    \x0b\x0c\n.\n\x02\x04\x15\x12\x06\x8a\t\0\x94\t\x01\x1a\x20\x20A\x20Clou\
+    d\x20Spanner\x20database\x20role.\n\n\x0b\n\x03\x04\x15\x01\x12\x04\x8a\
+    \t\x08\x14\n\r\n\x03\x04\x15\x07\x12\x06\x8b\t\x02\x8e\t\x04\n\x0f\n\x05\
+    \x04\x15\x07\x9d\x08\x12\x06\x8b\t\x02\x8e\t\x04\n\xe9\x01\n\x04\x04\x15\
+    \x02\0\x12\x04\x93\t\x02;\x1a\xda\x01\x20Required.\x20The\x20name\x20of\
+    \x20the\x20database\x20role.\x20Values\x20are\x20of\x20the\x20form\n\x20\
+    `projects/<project>/instances/<instance>/databases/<database>/databaseRo\
+    les/<role>`\n\x20where\x20`<role>`\x20is\x20as\x20specified\x20in\x20the\
+    \x20`CREATE\x20ROLE`\x20DDL\x20statement.\n\n\r\n\x05\x04\x15\x02\0\x05\
+    \x12\x04\x93\t\x02\x08\n\r\n\x05\x04\x15\x02\0\x01\x12\x04\x93\t\t\r\n\r\
+    \n\x05\x04\x15\x02\0\x03\x12\x04\x93\t\x10\x11\n\r\n\x05\x04\x15\x02\0\
+    \x08\x12\x04\x93\t\x12:\n\x10\n\x08\x04\x15\x02\0\x08\x9c\x08\0\x12\x04\
+    \x93\t\x139\nw\n\x02\x04\x16\x12\x06\x98\t\0\xac\t\x01\x1ai\x20The\x20re\
+    quest\x20for\n\x20[ListDatabaseRoles][google.spanner.admin.database.v1.D\
+    atabaseAdmin.ListDatabaseRoles].\n\n\x0b\n\x03\x04\x16\x01\x12\x04\x98\t\
+    \x08\x20\n\xa0\x01\n\x04\x04\x16\x02\0\x12\x06\x9c\t\x02\xa1\t\x04\x1a\
+    \x8f\x01\x20Required.\x20The\x20database\x20whose\x20roles\x20should\x20\
+    be\x20listed.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<pr\
+    oject>/instances/<instance>/databases/<database>`.\n\n\r\n\x05\x04\x16\
+    \x02\0\x05\x12\x04\x9c\t\x02\x08\n\r\n\x05\x04\x16\x02\0\x01\x12\x04\x9c\
+    \t\t\x0f\n\r\n\x05\x04\x16\x02\0\x03\x12\x04\x9c\t\x12\x13\n\x0f\n\x05\
+    \x04\x16\x02\0\x08\x12\x06\x9c\t\x14\xa1\t\x03\n\x10\n\x08\x04\x16\x02\0\
+    \x08\x9c\x08\0\x12\x04\x9d\t\x04*\n\x11\n\x07\x04\x16\x02\0\x08\x9f\x08\
+    \x12\x06\x9e\t\x04\xa0\t\x05\n\x8b\x01\n\x04\x04\x16\x02\x01\x12\x04\xa5\
+    \t\x02\x16\x1a}\x20Number\x20of\x20database\x20roles\x20to\x20be\x20retu\
+    rned\x20in\x20the\x20response.\x20If\x200\x20or\x20less,\n\x20defaults\
+    \x20to\x20the\x20server's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\
+    \x05\x04\x16\x02\x01\x05\x12\x04\xa5\t\x02\x07\n\r\n\x05\x04\x16\x02\x01\
+    \x01\x12\x04\xa5\t\x08\x11\n\r\n\x05\x04\x16\x02\x01\x03\x12\x04\xa5\t\
+    \x14\x15\n\x86\x02\n\x04\x04\x16\x02\x02\x12\x04\xab\t\x02\x18\x1a\xf7\
+    \x01\x20If\x20non-empty,\x20`page_token`\x20should\x20contain\x20a\n\x20\
+    [next_page_token][google.spanner.admin.database.v1.ListDatabaseRolesResp\
+    onse.next_page_token]\n\x20from\x20a\x20previous\n\x20[ListDatabaseRoles\
+    Response][google.spanner.admin.database.v1.ListDatabaseRolesResponse].\n\
+    \n\r\n\x05\x04\x16\x02\x02\x05\x12\x04\xab\t\x02\x08\n\r\n\x05\x04\x16\
+    \x02\x02\x01\x12\x04\xab\t\t\x13\n\r\n\x05\x04\x16\x02\x02\x03\x12\x04\
+    \xab\t\x16\x17\nx\n\x02\x04\x17\x12\x06\xb0\t\0\xb8\t\x01\x1aj\x20The\
+    \x20response\x20for\n\x20[ListDatabaseRoles][google.spanner.admin.databa\
+    se.v1.DatabaseAdmin.ListDatabaseRoles].\n\n\x0b\n\x03\x04\x17\x01\x12\
+    \x04\xb0\t\x08!\n8\n\x04\x04\x17\x02\0\x12\x04\xb2\t\x02+\x1a*\x20Databa\
+    se\x20roles\x20that\x20matched\x20the\x20request.\n\n\r\n\x05\x04\x17\
+    \x02\0\x04\x12\x04\xb2\t\x02\n\n\r\n\x05\x04\x17\x02\0\x06\x12\x04\xb2\t\
+    \x0b\x17\n\r\n\x05\x04\x17\x02\0\x01\x12\x04\xb2\t\x18&\n\r\n\x05\x04\
+    \x17\x02\0\x03\x12\x04\xb2\t)*\n\xc0\x01\n\x04\x04\x17\x02\x01\x12\x04\
+    \xb7\t\x02\x1d\x1a\xb1\x01\x20`next_page_token`\x20can\x20be\x20sent\x20\
+    in\x20a\x20subsequent\n\x20[ListDatabaseRoles][google.spanner.admin.data\
+    base.v1.DatabaseAdmin.ListDatabaseRoles]\n\x20call\x20to\x20fetch\x20mor\
+    e\x20of\x20the\x20matching\x20roles.\n\n\r\n\x05\x04\x17\x02\x01\x05\x12\
+    \x04\xb7\t\x02\x08\n\r\n\x05\x04\x17\x02\x01\x01\x12\x04\xb7\t\t\x18\n\r\
+    \n\x05\x04\x17\x02\x01\x03\x12\x04\xb7\t\x1b\x1cb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -2179,7 +6177,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(9);
+            let mut deps = ::std::vec::Vec::with_capacity(13);
             deps.push(super::annotations::file_descriptor().clone());
             deps.push(super::client::file_descriptor().clone());
             deps.push(super::field_behavior::file_descriptor().clone());
@@ -2188,21 +6186,40 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             deps.push(super::policy::file_descriptor().clone());
             deps.push(super::operations::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::empty::file_descriptor().clone());
+            deps.push(::protobuf::well_known_types::field_mask::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(11);
+            deps.push(super::backup::file_descriptor().clone());
+            deps.push(super::backup_schedule::file_descriptor().clone());
+            deps.push(super::common::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(24);
+            messages.push(RestoreInfo::generated_message_descriptor_data());
             messages.push(Database::generated_message_descriptor_data());
             messages.push(ListDatabasesRequest::generated_message_descriptor_data());
             messages.push(ListDatabasesResponse::generated_message_descriptor_data());
             messages.push(CreateDatabaseRequest::generated_message_descriptor_data());
             messages.push(CreateDatabaseMetadata::generated_message_descriptor_data());
             messages.push(GetDatabaseRequest::generated_message_descriptor_data());
+            messages.push(UpdateDatabaseRequest::generated_message_descriptor_data());
+            messages.push(UpdateDatabaseMetadata::generated_message_descriptor_data());
             messages.push(UpdateDatabaseDdlRequest::generated_message_descriptor_data());
+            messages.push(DdlStatementActionInfo::generated_message_descriptor_data());
             messages.push(UpdateDatabaseDdlMetadata::generated_message_descriptor_data());
             messages.push(DropDatabaseRequest::generated_message_descriptor_data());
             messages.push(GetDatabaseDdlRequest::generated_message_descriptor_data());
             messages.push(GetDatabaseDdlResponse::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(1);
+            messages.push(ListDatabaseOperationsRequest::generated_message_descriptor_data());
+            messages.push(ListDatabaseOperationsResponse::generated_message_descriptor_data());
+            messages.push(RestoreDatabaseRequest::generated_message_descriptor_data());
+            messages.push(RestoreDatabaseEncryptionConfig::generated_message_descriptor_data());
+            messages.push(RestoreDatabaseMetadata::generated_message_descriptor_data());
+            messages.push(OptimizeRestoredDatabaseMetadata::generated_message_descriptor_data());
+            messages.push(DatabaseRole::generated_message_descriptor_data());
+            messages.push(ListDatabaseRolesRequest::generated_message_descriptor_data());
+            messages.push(ListDatabaseRolesResponse::generated_message_descriptor_data());
+            let mut enums = ::std::vec::Vec::with_capacity(3);
+            enums.push(RestoreSourceType::generated_enum_descriptor_data());
             enums.push(database::State::generated_enum_descriptor_data());
+            enums.push(restore_database_encryption_config::EncryptionType::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

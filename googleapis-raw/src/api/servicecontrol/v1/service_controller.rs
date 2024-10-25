@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -207,9 +207,6 @@ pub struct CheckResponse {
     ///  and diagnostics purposes.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.operation_id)
     pub operation_id: ::std::string::String,
-    ///  The current service rollout id used to process the request.
-    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.service_rollout_id)
-    pub service_rollout_id: ::std::string::String,
     ///  Indicate the decision of the check.
     ///
     ///  If no check errors are present, the service should process the operation.
@@ -220,6 +217,9 @@ pub struct CheckResponse {
     ///  The actual config id used to process the request.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.service_config_id)
     pub service_config_id: ::std::string::String,
+    ///  The current service rollout id used to process the request.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.service_rollout_id)
+    pub service_rollout_id: ::std::string::String,
     ///  Feedback data returned from the server during processing a Check request.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.check_info)
     pub check_info: ::protobuf::MessageField<check_response::CheckInfo>,
@@ -247,11 +247,6 @@ impl CheckResponse {
             |m: &CheckResponse| { &m.operation_id },
             |m: &mut CheckResponse| { &mut m.operation_id },
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "service_rollout_id",
-            |m: &CheckResponse| { &m.service_rollout_id },
-            |m: &mut CheckResponse| { &mut m.service_rollout_id },
-        ));
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "check_errors",
             |m: &CheckResponse| { &m.check_errors },
@@ -261,6 +256,11 @@ impl CheckResponse {
             "service_config_id",
             |m: &CheckResponse| { &m.service_config_id },
             |m: &mut CheckResponse| { &mut m.service_config_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "service_rollout_id",
+            |m: &CheckResponse| { &m.service_rollout_id },
+            |m: &mut CheckResponse| { &mut m.service_rollout_id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, check_response::CheckInfo>(
             "check_info",
@@ -288,14 +288,14 @@ impl ::protobuf::Message for CheckResponse {
                 10 => {
                     self.operation_id = is.read_string()?;
                 },
-                90 => {
-                    self.service_rollout_id = is.read_string()?;
-                },
                 18 => {
                     self.check_errors.push(is.read_message()?);
                 },
                 42 => {
                     self.service_config_id = is.read_string()?;
+                },
+                90 => {
+                    self.service_rollout_id = is.read_string()?;
                 },
                 50 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.check_info)?;
@@ -315,15 +315,15 @@ impl ::protobuf::Message for CheckResponse {
         if !self.operation_id.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.operation_id);
         }
-        if !self.service_rollout_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(11, &self.service_rollout_id);
-        }
         for value in &self.check_errors {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
         if !self.service_config_id.is_empty() {
             my_size += ::protobuf::rt::string_size(5, &self.service_config_id);
+        }
+        if !self.service_rollout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(11, &self.service_rollout_id);
         }
         if let Some(v) = self.check_info.as_ref() {
             let len = v.compute_size();
@@ -338,14 +338,14 @@ impl ::protobuf::Message for CheckResponse {
         if !self.operation_id.is_empty() {
             os.write_string(1, &self.operation_id)?;
         }
-        if !self.service_rollout_id.is_empty() {
-            os.write_string(11, &self.service_rollout_id)?;
-        }
         for v in &self.check_errors {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
         };
         if !self.service_config_id.is_empty() {
             os.write_string(5, &self.service_config_id)?;
+        }
+        if !self.service_rollout_id.is_empty() {
+            os.write_string(11, &self.service_rollout_id)?;
         }
         if let Some(v) = self.check_info.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
@@ -368,9 +368,9 @@ impl ::protobuf::Message for CheckResponse {
 
     fn clear(&mut self) {
         self.operation_id.clear();
-        self.service_rollout_id.clear();
         self.check_errors.clear();
         self.service_config_id.clear();
+        self.service_rollout_id.clear();
         self.check_info.clear();
         self.special_fields.clear();
     }
@@ -378,9 +378,9 @@ impl ::protobuf::Message for CheckResponse {
     fn default_instance() -> &'static CheckResponse {
         static instance: CheckResponse = CheckResponse {
             operation_id: ::std::string::String::new(),
-            service_rollout_id: ::std::string::String::new(),
             check_errors: ::std::vec::Vec::new(),
             service_config_id: ::std::string::String::new(),
+            service_rollout_id: ::std::string::String::new(),
             check_info: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -407,13 +407,24 @@ impl ::protobuf::reflect::ProtobufValue for CheckResponse {
 
 /// Nested message and enums of message `CheckResponse`
 pub mod check_response {
+    ///  Contains additional information about the check operation.
     // @@protoc_insertion_point(message:google.api.servicecontrol.v1.CheckResponse.CheckInfo)
     #[derive(PartialEq,Clone,Default,Debug)]
     pub struct CheckInfo {
         // message fields
+        ///  A list of fields and label keys that are ignored by the server.
+        ///  The client doesn't need to send them for following requests to improve
+        ///  performance and allow better aggregation.
+        // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.CheckInfo.unused_arguments)
+        pub unused_arguments: ::std::vec::Vec<::std::string::String>,
         ///  Consumer info of this check.
         // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.CheckInfo.consumer_info)
         pub consumer_info: ::protobuf::MessageField<ConsumerInfo>,
+        ///  The unique id of the api key in the format of "apikey:<UID>".
+        ///  This field will be populated when the consumer passed to Service Control
+        ///  is an API key and all the API key related validations are successful.
+        // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.CheckInfo.api_key_uid)
+        pub api_key_uid: ::std::string::String,
         // special fields
         // @@protoc_insertion_point(special_field:google.api.servicecontrol.v1.CheckResponse.CheckInfo.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -431,12 +442,22 @@ pub mod check_response {
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut fields = ::std::vec::Vec::with_capacity(3);
             let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "unused_arguments",
+                |m: &CheckInfo| { &m.unused_arguments },
+                |m: &mut CheckInfo| { &mut m.unused_arguments },
+            ));
             fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ConsumerInfo>(
                 "consumer_info",
                 |m: &CheckInfo| { &m.consumer_info },
                 |m: &mut CheckInfo| { &mut m.consumer_info },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "api_key_uid",
+                |m: &CheckInfo| { &m.api_key_uid },
+                |m: &mut CheckInfo| { &mut m.api_key_uid },
             ));
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CheckInfo>(
                 "CheckResponse.CheckInfo",
@@ -456,8 +477,14 @@ pub mod check_response {
         fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
             while let Some(tag) = is.read_raw_tag_or_eof()? {
                 match tag {
+                    10 => {
+                        self.unused_arguments.push(is.read_string()?);
+                    },
                     18 => {
                         ::protobuf::rt::read_singular_message_into_field(is, &mut self.consumer_info)?;
+                    },
+                    42 => {
+                        self.api_key_uid = is.read_string()?;
                     },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -471,9 +498,15 @@ pub mod check_response {
         #[allow(unused_variables)]
         fn compute_size(&self) -> u64 {
             let mut my_size = 0;
+            for value in &self.unused_arguments {
+                my_size += ::protobuf::rt::string_size(1, &value);
+            };
             if let Some(v) = self.consumer_info.as_ref() {
                 let len = v.compute_size();
                 my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if !self.api_key_uid.is_empty() {
+                my_size += ::protobuf::rt::string_size(5, &self.api_key_uid);
             }
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
             self.special_fields.cached_size().set(my_size as u32);
@@ -481,8 +514,14 @@ pub mod check_response {
         }
 
         fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.unused_arguments {
+                os.write_string(1, &v)?;
+            };
             if let Some(v) = self.consumer_info.as_ref() {
                 ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            if !self.api_key_uid.is_empty() {
+                os.write_string(5, &self.api_key_uid)?;
             }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
@@ -501,13 +540,17 @@ pub mod check_response {
         }
 
         fn clear(&mut self) {
+            self.unused_arguments.clear();
             self.consumer_info.clear();
+            self.api_key_uid.clear();
             self.special_fields.clear();
         }
 
         fn default_instance() -> &'static CheckInfo {
             static instance: CheckInfo = CheckInfo {
+                unused_arguments: ::std::vec::Vec::new(),
                 consumer_info: ::protobuf::MessageField::none(),
+                api_key_uid: ::std::string::String::new(),
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
@@ -531,15 +574,27 @@ pub mod check_response {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 
-    ///  `ConsumerInfo` provides information about the consumer project.
+    ///  `ConsumerInfo` provides information about the consumer.
     // @@protoc_insertion_point(message:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo)
     #[derive(PartialEq,Clone,Default,Debug)]
     pub struct ConsumerInfo {
         // message fields
         ///  The Google cloud project number, e.g. 1234567890. A value of 0 indicates
         ///  no project number is found.
+        ///
+        ///  NOTE: This field is deprecated after we support flexible consumer
+        ///  id. New code should not depend on this field anymore.
         // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.project_number)
         pub project_number: i64,
+        ///  The type of the consumer which should have been defined in
+        ///  [Google Resource Manager](https://cloud.google.com/resource-manager/).
+        // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.type)
+        pub type_: ::protobuf::EnumOrUnknown<consumer_info::ConsumerType>,
+        ///  The consumer identity number, can be Google cloud project number, folder
+        ///  number or organization number e.g. 1234567890. A value of 0 indicates no
+        ///  consumer number is found.
+        // @@protoc_insertion_point(field:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.consumer_number)
+        pub consumer_number: i64,
         // special fields
         // @@protoc_insertion_point(special_field:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -557,12 +612,22 @@ pub mod check_response {
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut fields = ::std::vec::Vec::with_capacity(3);
             let mut oneofs = ::std::vec::Vec::with_capacity(0);
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
                 "project_number",
                 |m: &ConsumerInfo| { &m.project_number },
                 |m: &mut ConsumerInfo| { &mut m.project_number },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "type",
+                |m: &ConsumerInfo| { &m.type_ },
+                |m: &mut ConsumerInfo| { &mut m.type_ },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "consumer_number",
+                |m: &ConsumerInfo| { &m.consumer_number },
+                |m: &mut ConsumerInfo| { &mut m.consumer_number },
             ));
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ConsumerInfo>(
                 "CheckResponse.ConsumerInfo",
@@ -585,6 +650,12 @@ pub mod check_response {
                     8 => {
                         self.project_number = is.read_int64()?;
                     },
+                    16 => {
+                        self.type_ = is.read_enum_or_unknown()?;
+                    },
+                    24 => {
+                        self.consumer_number = is.read_int64()?;
+                    },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                     },
@@ -600,6 +671,12 @@ pub mod check_response {
             if self.project_number != 0 {
                 my_size += ::protobuf::rt::int64_size(1, self.project_number);
             }
+            if self.type_ != ::protobuf::EnumOrUnknown::new(consumer_info::ConsumerType::CONSUMER_TYPE_UNSPECIFIED) {
+                my_size += ::protobuf::rt::int32_size(2, self.type_.value());
+            }
+            if self.consumer_number != 0 {
+                my_size += ::protobuf::rt::int64_size(3, self.consumer_number);
+            }
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
             self.special_fields.cached_size().set(my_size as u32);
             my_size
@@ -608,6 +685,12 @@ pub mod check_response {
         fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
             if self.project_number != 0 {
                 os.write_int64(1, self.project_number)?;
+            }
+            if self.type_ != ::protobuf::EnumOrUnknown::new(consumer_info::ConsumerType::CONSUMER_TYPE_UNSPECIFIED) {
+                os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.type_))?;
+            }
+            if self.consumer_number != 0 {
+                os.write_int64(3, self.consumer_number)?;
             }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
@@ -627,12 +710,16 @@ pub mod check_response {
 
         fn clear(&mut self) {
             self.project_number = 0;
+            self.type_ = ::protobuf::EnumOrUnknown::new(consumer_info::ConsumerType::CONSUMER_TYPE_UNSPECIFIED);
+            self.consumer_number = 0;
             self.special_fields.clear();
         }
 
         fn default_instance() -> &'static ConsumerInfo {
             static instance: ConsumerInfo = ConsumerInfo {
                 project_number: 0,
+                type_: ::protobuf::EnumOrUnknown::from_i32(0),
+                consumer_number: 0,
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
@@ -654,6 +741,88 @@ pub mod check_response {
 
     impl ::protobuf::reflect::ProtobufValue for ConsumerInfo {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `ConsumerInfo`
+    pub mod consumer_info {
+        ///  The type of the consumer as defined in
+        ///  [Google Resource Manager](https://cloud.google.com/resource-manager/).
+        #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+        // @@protoc_insertion_point(enum:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerType)
+        pub enum ConsumerType {
+            // @@protoc_insertion_point(enum_value:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerType.CONSUMER_TYPE_UNSPECIFIED)
+            CONSUMER_TYPE_UNSPECIFIED = 0,
+            // @@protoc_insertion_point(enum_value:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerType.PROJECT)
+            PROJECT = 1,
+            // @@protoc_insertion_point(enum_value:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerType.FOLDER)
+            FOLDER = 2,
+            // @@protoc_insertion_point(enum_value:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerType.ORGANIZATION)
+            ORGANIZATION = 3,
+            // @@protoc_insertion_point(enum_value:google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerType.SERVICE_SPECIFIC)
+            SERVICE_SPECIFIC = 4,
+        }
+
+        impl ::protobuf::Enum for ConsumerType {
+            const NAME: &'static str = "ConsumerType";
+
+            fn value(&self) -> i32 {
+                *self as i32
+            }
+
+            fn from_i32(value: i32) -> ::std::option::Option<ConsumerType> {
+                match value {
+                    0 => ::std::option::Option::Some(ConsumerType::CONSUMER_TYPE_UNSPECIFIED),
+                    1 => ::std::option::Option::Some(ConsumerType::PROJECT),
+                    2 => ::std::option::Option::Some(ConsumerType::FOLDER),
+                    3 => ::std::option::Option::Some(ConsumerType::ORGANIZATION),
+                    4 => ::std::option::Option::Some(ConsumerType::SERVICE_SPECIFIC),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            fn from_str(str: &str) -> ::std::option::Option<ConsumerType> {
+                match str {
+                    "CONSUMER_TYPE_UNSPECIFIED" => ::std::option::Option::Some(ConsumerType::CONSUMER_TYPE_UNSPECIFIED),
+                    "PROJECT" => ::std::option::Option::Some(ConsumerType::PROJECT),
+                    "FOLDER" => ::std::option::Option::Some(ConsumerType::FOLDER),
+                    "ORGANIZATION" => ::std::option::Option::Some(ConsumerType::ORGANIZATION),
+                    "SERVICE_SPECIFIC" => ::std::option::Option::Some(ConsumerType::SERVICE_SPECIFIC),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            const VALUES: &'static [ConsumerType] = &[
+                ConsumerType::CONSUMER_TYPE_UNSPECIFIED,
+                ConsumerType::PROJECT,
+                ConsumerType::FOLDER,
+                ConsumerType::ORGANIZATION,
+                ConsumerType::SERVICE_SPECIFIC,
+            ];
+        }
+
+        impl ::protobuf::EnumFull for ConsumerType {
+            fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().enum_by_package_relative_name("CheckResponse.ConsumerInfo.ConsumerType").unwrap()).clone()
+            }
+
+            fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+                let index = *self as usize;
+                Self::enum_descriptor().value_by_index(index)
+            }
+        }
+
+        impl ::std::default::Default for ConsumerType {
+            fn default() -> Self {
+                ConsumerType::CONSUMER_TYPE_UNSPECIFIED
+            }
+        }
+
+        impl ConsumerType {
+            pub(in super::super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+                ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ConsumerType>("CheckResponse.ConsumerInfo.ConsumerType")
+            }
+        }
     }
 }
 
@@ -677,8 +846,8 @@ pub struct ReportRequest {
     ///  be used only when multiple operations are natually available at the time
     ///  of the report.
     ///
-    ///  If multiple operations are in a single request, the total request size
-    ///  should be no larger than 1MB. See
+    ///  There is no limit on the number of operations in the same ReportRequest,
+    ///  however the ReportRequest size should be no larger than 1MB. See
     ///  [ReportResponse.report_errors][google.api.servicecontrol.v1.ReportResponse.report_errors]
     ///  for partial failure behavior.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.ReportRequest.operations)
@@ -1154,83 +1323,105 @@ pub mod report_response {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n5google/api/servicecontrol/v1/service_controller.proto\x12\x1cgoogle.a\
-    pi.servicecontrol.v1\x1a\x1cgoogle/api/annotations.proto\x1a.google/api/\
-    servicecontrol/v1/check_error.proto\x1a,google/api/servicecontrol/v1/ope\
-    ration.proto\x1a\x17google/rpc/status.proto\"\xa4\x01\n\x0cCheckRequest\
-    \x12!\n\x0cservice_name\x18\x01\x20\x01(\tR\x0bserviceName\x12E\n\topera\
-    tion\x18\x02\x20\x01(\x0b2'.google.api.servicecontrol.v1.OperationR\tope\
-    ration\x12*\n\x11service_config_id\x18\x04\x20\x01(\tR\x0fserviceConfigI\
-    d\"\xd2\x03\n\rCheckResponse\x12!\n\x0coperation_id\x18\x01\x20\x01(\tR\
-    \x0boperationId\x12,\n\x12service_rollout_id\x18\x0b\x20\x01(\tR\x10serv\
-    iceRolloutId\x12K\n\x0ccheck_errors\x18\x02\x20\x03(\x0b2(.google.api.se\
-    rvicecontrol.v1.CheckErrorR\x0bcheckErrors\x12*\n\x11service_config_id\
-    \x18\x05\x20\x01(\tR\x0fserviceConfigId\x12T\n\ncheck_info\x18\x06\x20\
-    \x01(\x0b25.google.api.servicecontrol.v1.CheckResponse.CheckInfoR\tcheck\
-    Info\x1aj\n\tCheckInfo\x12]\n\rconsumer_info\x18\x02\x20\x01(\x0b28.goog\
-    le.api.servicecontrol.v1.CheckResponse.ConsumerInfoR\x0cconsumerInfo\x1a\
-    5\n\x0cConsumerInfo\x12%\n\x0eproject_number\x18\x01\x20\x01(\x03R\rproj\
-    ectNumber\"\xa7\x01\n\rReportRequest\x12!\n\x0cservice_name\x18\x01\x20\
-    \x01(\tR\x0bserviceName\x12G\n\noperations\x18\x02\x20\x03(\x0b2'.google\
-    .api.servicecontrol.v1.OperationR\noperations\x12*\n\x11service_config_i\
-    d\x18\x03\x20\x01(\tR\x0fserviceConfigId\"\xa7\x02\n\x0eReportResponse\
-    \x12]\n\rreport_errors\x18\x01\x20\x03(\x0b28.google.api.servicecontrol.\
-    v1.ReportResponse.ReportErrorR\x0creportErrors\x12*\n\x11service_config_\
-    id\x18\x02\x20\x01(\tR\x0fserviceConfigId\x12,\n\x12service_rollout_id\
-    \x18\x04\x20\x01(\tR\x10serviceRolloutId\x1a\\\n\x0bReportError\x12!\n\
-    \x0coperation_id\x18\x01\x20\x01(\tR\x0boperationId\x12*\n\x06status\x18\
-    \x02\x20\x01(\x0b2\x12.google.rpc.StatusR\x06status2\xb9\x02\n\x11Servic\
-    eController\x12\x8e\x01\n\x05Check\x12*.google.api.servicecontrol.v1.Che\
-    ckRequest\x1a+.google.api.servicecontrol.v1.CheckResponse\",\x82\xd3\xe4\
-    \x93\x02&\"!/v1/services/{service_name}:check:\x01*\x12\x92\x01\n\x06Rep\
-    ort\x12+.google.api.servicecontrol.v1.ReportRequest\x1a,.google.api.serv\
-    icecontrol.v1.ReportResponse\"-\x82\xd3\xe4\x93\x02'\"\"/v1/services/{se\
-    rvice_name}:report:\x01*B\x92\x01\n\x20com.google.api.servicecontrol.v1B\
-    \x16ServiceControllerProtoP\x01ZJgoogle.golang.org/genproto/googleapis/a\
-    pi/servicecontrol/v1;servicecontrol\xf8\x01\x01\xa2\x02\x04GASCJ\xf69\n\
-    \x07\x12\x05\x0e\0\xcb\x01\x01\n\xbd\x04\n\x01\x0c\x12\x03\x0e\0\x122\
-    \xb2\x04\x20Copyright\x202017\x20Google\x20Inc.\n\n\x20Licensed\x20under\
-    \x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\
-    \n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compli\
-    ance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\
-    \x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.\
-    org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\
-    \x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distrib\
-    uted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\
-    \x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
-    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
-    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
-    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\
-    \x02\x12\x03\x10\0%\n\t\n\x02\x03\0\x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\
-    \x03\x13\08\n\t\n\x02\x03\x02\x12\x03\x14\06\n\t\n\x02\x03\x03\x12\x03\
-    \x15\0!\n\x08\n\x01\x08\x12\x03\x17\0\x1f\n\t\n\x02\x08\x1f\x12\x03\x17\
-    \0\x1f\n\x08\n\x01\x08\x12\x03\x18\0a\n\t\n\x02\x08\x0b\x12\x03\x18\0a\n\
-    \x08\n\x01\x08\x12\x03\x19\0\"\n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\
-    \x01\x08\x12\x03\x1a\07\n\t\n\x02\x08\x08\x12\x03\x1a\07\n\x08\n\x01\x08\
-    \x12\x03\x1b\09\n\t\n\x02\x08\x01\x12\x03\x1b\09\n\x08\n\x01\x08\x12\x03\
-    \x1c\0\"\n\t\n\x02\x08$\x12\x03\x1c\0\"\n\x99\x02\n\x02\x06\0\x12\x04\"\
-    \0M\x01\x1a\x8c\x02\x20[Google\x20Service\x20Control\x20API](/service-co\
-    ntrol/overview)\n\n\x20Lets\x20clients\x20check\x20and\x20report\x20oper\
-    ations\x20against\x20a\x20[managed\n\x20service](https://cloud.google.co\
-    m/service-management/reference/rpc/google.api/servicemanagement.v1#googl\
-    e.api.servicemanagement.v1.ManagedService).\n\n\n\n\x03\x06\0\x01\x12\
-    \x03\"\x08\x19\n\xf1\x04\n\x04\x06\0\x02\0\x12\x041\x026\x03\x1a\xe2\x04\
-    \x20Checks\x20an\x20operation\x20with\x20Google\x20Service\x20Control\
-    \x20to\x20decide\x20whether\n\x20the\x20given\x20operation\x20should\x20\
-    proceed.\x20It\x20should\x20be\x20called\x20before\x20the\n\x20operation\
-    \x20is\x20executed.\n\n\x20If\x20feasible,\x20the\x20client\x20should\
-    \x20cache\x20the\x20check\x20results\x20and\x20reuse\x20them\x20for\n\
-    \x2060\x20seconds.\x20In\x20case\x20of\x20server\x20errors,\x20the\x20cl\
-    ient\x20can\x20rely\x20on\x20the\x20cached\n\x20results\x20for\x20longer\
-    \x20time.\n\n\x20NOTE:\x20the\x20[CheckRequest][google.api.servicecontro\
-    l.v1.CheckRequest]\x20has\x20the\n\x20size\x20limit\x20of\x2064KB.\n\n\
-    \x20This\x20method\x20requires\x20the\x20`servicemanagement.services.che\
-    ck`\x20permission\n\x20on\x20the\x20specified\x20service.\x20For\x20more\
-    \x20information,\x20see\n\x20[Google\x20Cloud\x20IAM](https://cloud.goog\
-    le.com/iam).\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x031\x06\x0b\n\x0c\n\x05\
-    \x06\0\x02\0\x02\x12\x031\x0c\x18\n\x0c\n\x05\x06\0\x02\0\x03\x12\x031#0\
-    \n\r\n\x05\x06\0\x02\0\x04\x12\x042\x045\x06\n\x11\n\t\x06\0\x02\0\x04\
-    \xb0\xca\xbc\"\x12\x042\x045\x06\n\xed\x05\n\x04\x06\0\x02\x01\x12\x04G\
-    \x02L\x03\x1a\xde\x05\x20Reports\x20operation\x20results\x20to\x20Google\
+    pi.servicecontrol.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/a\
+    pi/client.proto\x1a.google/api/servicecontrol/v1/check_error.proto\x1a,g\
+    oogle/api/servicecontrol/v1/operation.proto\x1a\x17google/rpc/status.pro\
+    to\"\xa4\x01\n\x0cCheckRequest\x12!\n\x0cservice_name\x18\x01\x20\x01(\t\
+    R\x0bserviceName\x12E\n\toperation\x18\x02\x20\x01(\x0b2'.google.api.ser\
+    vicecontrol.v1.OperationR\toperation\x12*\n\x11service_config_id\x18\x04\
+    \x20\x01(\tR\x0fserviceConfigId\"\x93\x06\n\rCheckResponse\x12!\n\x0cope\
+    ration_id\x18\x01\x20\x01(\tR\x0boperationId\x12K\n\x0ccheck_errors\x18\
+    \x02\x20\x03(\x0b2(.google.api.servicecontrol.v1.CheckErrorR\x0bcheckErr\
+    ors\x12*\n\x11service_config_id\x18\x05\x20\x01(\tR\x0fserviceConfigId\
+    \x12,\n\x12service_rollout_id\x18\x0b\x20\x01(\tR\x10serviceRolloutId\
+    \x12T\n\ncheck_info\x18\x06\x20\x01(\x0b25.google.api.servicecontrol.v1.\
+    CheckResponse.CheckInfoR\tcheckInfo\x1a\xb5\x01\n\tCheckInfo\x12)\n\x10u\
+    nused_arguments\x18\x01\x20\x03(\tR\x0funusedArguments\x12]\n\rconsumer_\
+    info\x18\x02\x20\x01(\x0b28.google.api.servicecontrol.v1.CheckResponse.C\
+    onsumerInfoR\x0cconsumerInfo\x12\x1e\n\x0bapi_key_uid\x18\x05\x20\x01(\t\
+    R\tapiKeyUid\x1a\xa9\x02\n\x0cConsumerInfo\x12%\n\x0eproject_number\x18\
+    \x01\x20\x01(\x03R\rprojectNumber\x12Y\n\x04type\x18\x02\x20\x01(\x0e2E.\
+    google.api.servicecontrol.v1.CheckResponse.ConsumerInfo.ConsumerTypeR\
+    \x04type\x12'\n\x0fconsumer_number\x18\x03\x20\x01(\x03R\x0econsumerNumb\
+    er\"n\n\x0cConsumerType\x12\x1d\n\x19CONSUMER_TYPE_UNSPECIFIED\x10\0\x12\
+    \x0b\n\x07PROJECT\x10\x01\x12\n\n\x06FOLDER\x10\x02\x12\x10\n\x0cORGANIZ\
+    ATION\x10\x03\x12\x14\n\x10SERVICE_SPECIFIC\x10\x04\"\xa7\x01\n\rReportR\
+    equest\x12!\n\x0cservice_name\x18\x01\x20\x01(\tR\x0bserviceName\x12G\n\
+    \noperations\x18\x02\x20\x03(\x0b2'.google.api.servicecontrol.v1.Operati\
+    onR\noperations\x12*\n\x11service_config_id\x18\x03\x20\x01(\tR\x0fservi\
+    ceConfigId\"\xa7\x02\n\x0eReportResponse\x12]\n\rreport_errors\x18\x01\
+    \x20\x03(\x0b28.google.api.servicecontrol.v1.ReportResponse.ReportErrorR\
+    \x0creportErrors\x12*\n\x11service_config_id\x18\x02\x20\x01(\tR\x0fserv\
+    iceConfigId\x12,\n\x12service_rollout_id\x18\x04\x20\x01(\tR\x10serviceR\
+    olloutId\x1a\\\n\x0bReportError\x12!\n\x0coperation_id\x18\x01\x20\x01(\
+    \tR\x0boperationId\x12*\n\x06status\x18\x02\x20\x01(\x0b2\x12.google.rpc\
+    .StatusR\x06status2\xbc\x03\n\x11ServiceController\x12\x8e\x01\n\x05Chec\
+    k\x12*.google.api.servicecontrol.v1.CheckRequest\x1a+.google.api.service\
+    control.v1.CheckResponse\",\x82\xd3\xe4\x93\x02&\"!/v1/services/{service\
+    _name}:check:\x01*\x12\x92\x01\n\x06Report\x12+.google.api.servicecontro\
+    l.v1.ReportRequest\x1a,.google.api.servicecontrol.v1.ReportResponse\"-\
+    \x82\xd3\xe4\x93\x02'\"\"/v1/services/{service_name}:report:\x01*\x1a\
+    \x80\x01\xd2A]https://www.googleapis.com/auth/cloud-platform,https://www\
+    .googleapis.com/auth/servicecontrol\xcaA\x1dservicecontrol.googleapis.co\
+    mB\xf8\x01\n\x20com.google.api.servicecontrol.v1B\x16ServiceControllerPr\
+    otoP\x01ZJcloud.google.com/go/servicecontrol/apiv1/servicecontrolpb;serv\
+    icecontrolpb\xf8\x01\x01\xa2\x02\x04GASC\xaa\x02\x1eGoogle.Cloud.Service\
+    Control.V1\xca\x02\x1eGoogle\\Cloud\\ServiceControl\\V1\xea\x02!Google::\
+    Cloud::ServiceControl::V1J\xe9L\n\x07\x12\x05\x0e\0\x83\x02\x01\n\xbc\
+    \x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\
+    \x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\
+    \x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\
+    \x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20Y\
+    ou\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\
+    \x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\
+    \x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20w\
+    riting,\x20software\n\x20distributed\x20under\x20the\x20License\x20is\
+    \x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WA\
+    RRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\
+    \x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
+    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
+    r\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0%\n\t\n\x02\x03\0\
+    \x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\x03\x13\0!\n\t\n\x02\x03\x02\x12\
+    \x03\x14\08\n\t\n\x02\x03\x03\x12\x03\x15\06\n\t\n\x02\x03\x04\x12\x03\
+    \x16\0!\n\x08\n\x01\x08\x12\x03\x18\0\x1f\n\t\n\x02\x08\x1f\x12\x03\x18\
+    \0\x1f\n\x08\n\x01\x08\x12\x03\x19\0;\n\t\n\x02\x08%\x12\x03\x19\0;\n\
+    \x08\n\x01\x08\x12\x03\x1a\0a\n\t\n\x02\x08\x0b\x12\x03\x1a\0a\n\x08\n\
+    \x01\x08\x12\x03\x1b\0\"\n\t\n\x02\x08\n\x12\x03\x1b\0\"\n\x08\n\x01\x08\
+    \x12\x03\x1c\07\n\t\n\x02\x08\x08\x12\x03\x1c\07\n\x08\n\x01\x08\x12\x03\
+    \x1d\09\n\t\n\x02\x08\x01\x12\x03\x1d\09\n\x08\n\x01\x08\x12\x03\x1e\0\"\
+    \n\t\n\x02\x08$\x12\x03\x1e\0\"\n\x08\n\x01\x08\x12\x03\x1f\0;\n\t\n\x02\
+    \x08)\x12\x03\x1f\0;\n\x08\n\x01\x08\x12\x03\x20\0:\n\t\n\x02\x08-\x12\
+    \x03\x20\0:\n\x99\x02\n\x02\x06\0\x12\x04&\0Y\x01\x1a\x8c\x02\x20[Google\
+    \x20Service\x20Control\x20API](/service-control/overview)\n\n\x20Lets\
+    \x20clients\x20check\x20and\x20report\x20operations\x20against\x20a\x20[\
+    managed\n\x20service](https://cloud.google.com/service-management/refere\
+    nce/rpc/google.api/servicemanagement.v1#google.api.servicemanagement.v1.\
+    ManagedService).\n\n\n\n\x03\x06\0\x01\x12\x03&\x08\x19\n\n\n\x03\x06\0\
+    \x03\x12\x03'\x02E\n\x0c\n\x05\x06\0\x03\x99\x08\x12\x03'\x02E\n\x0b\n\
+    \x03\x06\0\x03\x12\x04(\x02*7\n\r\n\x05\x06\0\x03\x9a\x08\x12\x04(\x02*7\
+    \n\xee\x06\n\x04\x06\0\x02\0\x12\x04=\x02B\x03\x1a\xdf\x06\x20Checks\x20\
+    whether\x20an\x20operation\x20on\x20a\x20service\x20should\x20be\x20allo\
+    wed\x20to\x20proceed\n\x20based\x20on\x20the\x20configuration\x20of\x20t\
+    he\x20service\x20and\x20related\x20policies.\x20It\x20must\x20be\n\x20ca\
+    lled\x20before\x20the\x20operation\x20is\x20executed.\n\n\x20If\x20feasi\
+    ble,\x20the\x20client\x20should\x20cache\x20the\x20check\x20results\x20a\
+    nd\x20reuse\x20them\x20for\n\x2060\x20seconds.\x20In\x20case\x20of\x20an\
+    y\x20server\x20errors,\x20the\x20client\x20should\x20rely\x20on\x20the\n\
+    \x20cached\x20results\x20for\x20much\x20longer\x20time\x20to\x20avoid\
+    \x20outage.\n\x20WARNING:\x20There\x20is\x20general\x2060s\x20delay\x20f\
+    or\x20the\x20configuration\x20and\x20policy\n\x20propagation,\x20therefo\
+    re\x20callers\x20MUST\x20NOT\x20depend\x20on\x20the\x20`Check`\x20method\
+    \x20having\n\x20the\x20latest\x20policy\x20information.\n\n\x20NOTE:\x20\
+    the\x20[CheckRequest][google.api.servicecontrol.v1.CheckRequest]\x20has\
+    \n\x20the\x20size\x20limit\x20(wire-format\x20byte\x20size)\x20of\x201MB\
+    .\n\n\x20This\x20method\x20requires\x20the\x20`servicemanagement.service\
+    s.check`\x20permission\n\x20on\x20the\x20specified\x20service.\x20For\
+    \x20more\x20information,\x20see\n\x20[Cloud\x20IAM](https://cloud.google\
+    .com/iam).\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03=\x06\x0b\n\x0c\n\x05\
+    \x06\0\x02\0\x02\x12\x03=\x0c\x18\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03=#0\
+    \n\r\n\x05\x06\0\x02\0\x04\x12\x04>\x04A\x06\n\x11\n\t\x06\0\x02\0\x04\
+    \xb0\xca\xbc\"\x12\x04>\x04A\x06\n\x85\x06\n\x04\x06\0\x02\x01\x12\x04S\
+    \x02X\x03\x1a\xf6\x05\x20Reports\x20operation\x20results\x20to\x20Google\
     \x20Service\x20Control,\x20such\x20as\x20logs\x20and\n\x20metrics.\x20It\
     \x20should\x20be\x20called\x20after\x20an\x20operation\x20is\x20complete\
     d.\n\n\x20If\x20feasible,\x20the\x20client\x20should\x20aggregate\x20rep\
@@ -1241,149 +1432,210 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20window\x20to\x20avoid\x20data\x20loss\x20risk\x20more\x20than\x200.0\
     1%\n\x20for\x20business\x20and\x20compliance\x20reasons.\n\n\x20NOTE:\
     \x20the\x20[ReportRequest][google.api.servicecontrol.v1.ReportRequest]\
-    \x20has\n\x20the\x20size\x20limit\x20of\x201MB.\n\n\x20This\x20method\
-    \x20requires\x20the\x20`servicemanagement.services.report`\x20permission\
-    \n\x20on\x20the\x20specified\x20service.\x20For\x20more\x20information,\
-    \x20see\n\x20[Google\x20Cloud\x20IAM](https://cloud.google.com/iam).\n\n\
-    \x0c\n\x05\x06\0\x02\x01\x01\x12\x03G\x06\x0c\n\x0c\n\x05\x06\0\x02\x01\
-    \x02\x12\x03G\r\x1a\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03G%3\n\r\n\x05\
-    \x06\0\x02\x01\x04\x12\x04H\x04K\x06\n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\
-    \xbc\"\x12\x04H\x04K\x06\n3\n\x02\x04\0\x12\x04P\0b\x01\x1a'\x20Request\
-    \x20message\x20for\x20the\x20Check\x20method.\n\n\n\n\x03\x04\0\x01\x12\
-    \x03P\x08\x14\n\x90\x02\n\x04\x04\0\x02\0\x12\x03W\x02\x1a\x1a\x82\x02\
-    \x20The\x20service\x20name\x20as\x20specified\x20in\x20its\x20service\
-    \x20configuration.\x20For\x20example,\n\x20`\"pubsub.googleapis.com\"`.\
-    \n\n\x20See\n\x20[google.api.Service](https://cloud.google.com/service-m\
-    anagement/reference/rpc/google.api#google.api.Service)\n\x20for\x20the\
-    \x20definition\x20of\x20a\x20service\x20name.\n\n\x0c\n\x05\x04\0\x02\0\
-    \x05\x12\x03W\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03W\t\x15\n\x0c\n\
-    \x05\x04\0\x02\0\x03\x12\x03W\x18\x19\n+\n\x04\x04\0\x02\x01\x12\x03Z\
-    \x02\x1a\x1a\x1e\x20The\x20operation\x20to\x20be\x20checked.\n\n\x0c\n\
-    \x05\x04\0\x02\x01\x06\x12\x03Z\x02\x0b\n\x0c\n\x05\x04\0\x02\x01\x01\
-    \x12\x03Z\x0c\x15\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03Z\x18\x19\n\xbc\
-    \x01\n\x04\x04\0\x02\x02\x12\x03a\x02\x1f\x1a\xae\x01\x20Specifies\x20wh\
-    ich\x20version\x20of\x20service\x20configuration\x20should\x20be\x20used\
-    \x20to\x20process\n\x20the\x20request.\n\n\x20If\x20unspecified\x20or\
-    \x20no\x20matching\x20version\x20can\x20be\x20found,\x20the\n\x20latest\
-    \x20one\x20will\x20be\x20used.\n\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03a\
-    \x02\x08\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03a\t\x1a\n\x0c\n\x05\x04\0\
-    \x02\x02\x03\x12\x03a\x1d\x1e\n5\n\x02\x04\x01\x12\x05e\0\x86\x01\x01\
-    \x1a(\x20Response\x20message\x20for\x20the\x20Check\x20method.\n\n\n\n\
-    \x03\x04\x01\x01\x12\x03e\x08\x15\n\x0c\n\x04\x04\x01\x03\0\x12\x04f\x02\
-    i\x03\n\x0c\n\x05\x04\x01\x03\0\x01\x12\x03f\n\x13\n-\n\x06\x04\x01\x03\
-    \0\x02\0\x12\x03h\x04#\x1a\x1e\x20Consumer\x20info\x20of\x20this\x20chec\
-    k.\n\n\x0e\n\x07\x04\x01\x03\0\x02\0\x06\x12\x03h\x04\x10\n\x0e\n\x07\
-    \x04\x01\x03\0\x02\0\x01\x12\x03h\x11\x1e\n\x0e\n\x07\x04\x01\x03\0\x02\
-    \0\x03\x12\x03h!\"\nO\n\x04\x04\x01\x03\x01\x12\x04l\x02p\x03\x1aA\x20`C\
-    onsumerInfo`\x20provides\x20information\x20about\x20the\x20consumer\x20p\
-    roject.\n\n\x0c\n\x05\x04\x01\x03\x01\x01\x12\x03l\n\x16\nv\n\x06\x04\
-    \x01\x03\x01\x02\0\x12\x03o\x04\x1d\x1ag\x20The\x20Google\x20cloud\x20pr\
-    oject\x20number,\x20e.g.\x201234567890.\x20A\x20value\x20of\x200\x20indi\
-    cates\n\x20no\x20project\x20number\x20is\x20found.\n\n\x0e\n\x07\x04\x01\
-    \x03\x01\x02\0\x05\x12\x03o\x04\t\n\x0e\n\x07\x04\x01\x03\x01\x02\0\x01\
-    \x12\x03o\n\x18\n\x0e\n\x07\x04\x01\x03\x01\x02\0\x03\x12\x03o\x1b\x1c\n\
-    \x9f\x01\n\x04\x04\x01\x02\0\x12\x03u\x02\x1a\x1a\x91\x01\x20The\x20same\
+    \x20has\n\x20the\x20size\x20limit\x20(wire-format\x20byte\x20size)\x20of\
+    \x201MB.\n\n\x20This\x20method\x20requires\x20the\x20`servicemanagement.\
+    services.report`\x20permission\n\x20on\x20the\x20specified\x20service.\
+    \x20For\x20more\x20information,\x20see\n\x20[Google\x20Cloud\x20IAM](htt\
+    ps://cloud.google.com/iam).\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03S\x06\
+    \x0c\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x03S\r\x1a\n\x0c\n\x05\x06\0\x02\
+    \x01\x03\x12\x03S%3\n\r\n\x05\x06\0\x02\x01\x04\x12\x04T\x04W\x06\n\x11\
+    \n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x04T\x04W\x06\n3\n\x02\x04\0\
+    \x12\x04\\\0n\x01\x1a'\x20Request\x20message\x20for\x20the\x20Check\x20m\
+    ethod.\n\n\n\n\x03\x04\0\x01\x12\x03\\\x08\x14\n\x90\x02\n\x04\x04\0\x02\
+    \0\x12\x03c\x02\x1a\x1a\x82\x02\x20The\x20service\x20name\x20as\x20speci\
+    fied\x20in\x20its\x20service\x20configuration.\x20For\x20example,\n\x20`\
+    \"pubsub.googleapis.com\"`.\n\n\x20See\n\x20[google.api.Service](https:/\
+    /cloud.google.com/service-management/reference/rpc/google.api#google.api\
+    .Service)\n\x20for\x20the\x20definition\x20of\x20a\x20service\x20name.\n\
+    \n\x0c\n\x05\x04\0\x02\0\x05\x12\x03c\x02\x08\n\x0c\n\x05\x04\0\x02\0\
+    \x01\x12\x03c\t\x15\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03c\x18\x19\n+\n\
+    \x04\x04\0\x02\x01\x12\x03f\x02\x1a\x1a\x1e\x20The\x20operation\x20to\
+    \x20be\x20checked.\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x03f\x02\x0b\n\
+    \x0c\n\x05\x04\0\x02\x01\x01\x12\x03f\x0c\x15\n\x0c\n\x05\x04\0\x02\x01\
+    \x03\x12\x03f\x18\x19\n\xbc\x01\n\x04\x04\0\x02\x02\x12\x03m\x02\x1f\x1a\
+    \xae\x01\x20Specifies\x20which\x20version\x20of\x20service\x20configurat\
+    ion\x20should\x20be\x20used\x20to\x20process\n\x20the\x20request.\n\n\
+    \x20If\x20unspecified\x20or\x20no\x20matching\x20version\x20can\x20be\
+    \x20found,\x20the\n\x20latest\x20one\x20will\x20be\x20used.\n\n\x0c\n\
+    \x05\x04\0\x02\x02\x05\x12\x03m\x02\x08\n\x0c\n\x05\x04\0\x02\x02\x01\
+    \x12\x03m\t\x1a\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03m\x1d\x1e\n5\n\x02\
+    \x04\x01\x12\x05q\0\xbe\x01\x01\x1a(\x20Response\x20message\x20for\x20th\
+    e\x20Check\x20method.\n\n\n\n\x03\x04\x01\x01\x12\x03q\x08\x15\nK\n\x04\
+    \x04\x01\x03\0\x12\x05s\x02\x80\x01\x03\x1a<\x20Contains\x20additional\
+    \x20information\x20about\x20the\x20check\x20operation.\n\n\x0c\n\x05\x04\
+    \x01\x03\0\x01\x12\x03s\n\x13\n\xc4\x01\n\x06\x04\x01\x03\0\x02\0\x12\
+    \x03w\x04)\x1a\xb4\x01\x20A\x20list\x20of\x20fields\x20and\x20label\x20k\
+    eys\x20that\x20are\x20ignored\x20by\x20the\x20server.\n\x20The\x20client\
+    \x20doesn't\x20need\x20to\x20send\x20them\x20for\x20following\x20request\
+    s\x20to\x20improve\n\x20performance\x20and\x20allow\x20better\x20aggrega\
+    tion.\n\n\x0e\n\x07\x04\x01\x03\0\x02\0\x04\x12\x03w\x04\x0c\n\x0e\n\x07\
+    \x04\x01\x03\0\x02\0\x05\x12\x03w\r\x13\n\x0e\n\x07\x04\x01\x03\0\x02\0\
+    \x01\x12\x03w\x14$\n\x0e\n\x07\x04\x01\x03\0\x02\0\x03\x12\x03w'(\n-\n\
+    \x06\x04\x01\x03\0\x02\x01\x12\x03z\x04#\x1a\x1e\x20Consumer\x20info\x20\
+    of\x20this\x20check.\n\n\x0e\n\x07\x04\x01\x03\0\x02\x01\x06\x12\x03z\
+    \x04\x10\n\x0e\n\x07\x04\x01\x03\0\x02\x01\x01\x12\x03z\x11\x1e\n\x0e\n\
+    \x07\x04\x01\x03\0\x02\x01\x03\x12\x03z!\"\n\xe0\x01\n\x06\x04\x01\x03\0\
+    \x02\x02\x12\x03\x7f\x04\x1b\x1a\xd0\x01\x20The\x20unique\x20id\x20of\
+    \x20the\x20api\x20key\x20in\x20the\x20format\x20of\x20\"apikey:<UID>\".\
+    \n\x20This\x20field\x20will\x20be\x20populated\x20when\x20the\x20consume\
+    r\x20passed\x20to\x20Service\x20Control\n\x20is\x20an\x20API\x20key\x20a\
+    nd\x20all\x20the\x20API\x20key\x20related\x20validations\x20are\x20succe\
+    ssful.\n\n\x0e\n\x07\x04\x01\x03\0\x02\x02\x05\x12\x03\x7f\x04\n\n\x0e\n\
+    \x07\x04\x01\x03\0\x02\x02\x01\x12\x03\x7f\x0b\x16\n\x0e\n\x07\x04\x01\
+    \x03\0\x02\x02\x03\x12\x03\x7f\x19\x1a\nI\n\x04\x04\x01\x03\x01\x12\x06\
+    \x83\x01\x02\xa8\x01\x03\x1a9\x20`ConsumerInfo`\x20provides\x20informati\
+    on\x20about\x20the\x20consumer.\n\n\r\n\x05\x04\x01\x03\x01\x01\x12\x04\
+    \x83\x01\n\x16\n\x82\x01\n\x06\x04\x01\x03\x01\x04\0\x12\x06\x86\x01\x04\
+    \x97\x01\x05\x1ap\x20The\x20type\x20of\x20the\x20consumer\x20as\x20defin\
+    ed\x20in\n\x20[Google\x20Resource\x20Manager](https://cloud.google.com/r\
+    esource-manager/).\n\n\x0f\n\x07\x04\x01\x03\x01\x04\0\x01\x12\x04\x86\
+    \x01\t\x15\n'\n\x08\x04\x01\x03\x01\x04\0\x02\0\x12\x04\x88\x01\x06$\x1a\
+    \x15\x20This\x20is\x20never\x20used.\n\n\x11\n\t\x04\x01\x03\x01\x04\0\
+    \x02\0\x01\x12\x04\x88\x01\x06\x1f\n\x11\n\t\x04\x01\x03\x01\x04\0\x02\0\
+    \x02\x12\x04\x88\x01\"#\n;\n\x08\x04\x01\x03\x01\x04\0\x02\x01\x12\x04\
+    \x8b\x01\x06\x12\x1a)\x20The\x20consumer\x20is\x20a\x20Google\x20Cloud\
+    \x20Project.\n\n\x11\n\t\x04\x01\x03\x01\x04\0\x02\x01\x01\x12\x04\x8b\
+    \x01\x06\r\n\x11\n\t\x04\x01\x03\x01\x04\0\x02\x01\x02\x12\x04\x8b\x01\
+    \x10\x11\n:\n\x08\x04\x01\x03\x01\x04\0\x02\x02\x12\x04\x8e\x01\x06\x11\
+    \x1a(\x20The\x20consumer\x20is\x20a\x20Google\x20Cloud\x20Folder.\n\n\
+    \x11\n\t\x04\x01\x03\x01\x04\0\x02\x02\x01\x12\x04\x8e\x01\x06\x0c\n\x11\
+    \n\t\x04\x01\x03\x01\x04\0\x02\x02\x02\x12\x04\x8e\x01\x0f\x10\n@\n\x08\
+    \x04\x01\x03\x01\x04\0\x02\x03\x12\x04\x91\x01\x06\x17\x1a.\x20The\x20co\
+    nsumer\x20is\x20a\x20Google\x20Cloud\x20Organization.\n\n\x11\n\t\x04\
+    \x01\x03\x01\x04\0\x02\x03\x01\x12\x04\x91\x01\x06\x12\n\x11\n\t\x04\x01\
+    \x03\x01\x04\0\x02\x03\x02\x12\x04\x91\x01\x15\x16\n\xe0\x01\n\x08\x04\
+    \x01\x03\x01\x04\0\x02\x04\x12\x04\x96\x01\x06\x1b\x1a\xcd\x01\x20Servic\
+    e-specific\x20resource\x20container\x20which\x20is\x20defined\x20by\x20t\
+    he\x20service\n\x20producer\x20to\x20offer\x20their\x20users\x20the\x20a\
+    bility\x20to\x20manage\x20service\x20control\n\x20functionalities\x20at\
+    \x20a\x20finer\x20level\x20of\x20granularity\x20than\x20the\x20PROJECT.\
+    \n\n\x11\n\t\x04\x01\x03\x01\x04\0\x02\x04\x01\x12\x04\x96\x01\x06\x16\n\
+    \x11\n\t\x04\x01\x03\x01\x04\0\x02\x04\x02\x12\x04\x96\x01\x19\x1a\n\xf3\
+    \x01\n\x06\x04\x01\x03\x01\x02\0\x12\x04\x9e\x01\x04\x1d\x1a\xe2\x01\x20\
+    The\x20Google\x20cloud\x20project\x20number,\x20e.g.\x201234567890.\x20A\
+    \x20value\x20of\x200\x20indicates\n\x20no\x20project\x20number\x20is\x20\
+    found.\n\n\x20NOTE:\x20This\x20field\x20is\x20deprecated\x20after\x20we\
+    \x20support\x20flexible\x20consumer\n\x20id.\x20New\x20code\x20should\
+    \x20not\x20depend\x20on\x20this\x20field\x20anymore.\n\n\x0f\n\x07\x04\
+    \x01\x03\x01\x02\0\x05\x12\x04\x9e\x01\x04\t\n\x0f\n\x07\x04\x01\x03\x01\
+    \x02\0\x01\x12\x04\x9e\x01\n\x18\n\x0f\n\x07\x04\x01\x03\x01\x02\0\x03\
+    \x12\x04\x9e\x01\x1b\x1c\n\x95\x01\n\x06\x04\x01\x03\x01\x02\x01\x12\x04\
+    \xa2\x01\x04\x1a\x1a\x84\x01\x20The\x20type\x20of\x20the\x20consumer\x20\
+    which\x20should\x20have\x20been\x20defined\x20in\n\x20[Google\x20Resourc\
+    e\x20Manager](https://cloud.google.com/resource-manager/).\n\n\x0f\n\x07\
+    \x04\x01\x03\x01\x02\x01\x06\x12\x04\xa2\x01\x04\x10\n\x0f\n\x07\x04\x01\
+    \x03\x01\x02\x01\x01\x12\x04\xa2\x01\x11\x15\n\x0f\n\x07\x04\x01\x03\x01\
+    \x02\x01\x03\x12\x04\xa2\x01\x18\x19\n\xc0\x01\n\x06\x04\x01\x03\x01\x02\
+    \x02\x12\x04\xa7\x01\x04\x1e\x1a\xaf\x01\x20The\x20consumer\x20identity\
+    \x20number,\x20can\x20be\x20Google\x20cloud\x20project\x20number,\x20fol\
+    der\n\x20number\x20or\x20organization\x20number\x20e.g.\x201234567890.\
+    \x20A\x20value\x20of\x200\x20indicates\x20no\n\x20consumer\x20number\x20\
+    is\x20found.\n\n\x0f\n\x07\x04\x01\x03\x01\x02\x02\x05\x12\x04\xa7\x01\
+    \x04\t\n\x0f\n\x07\x04\x01\x03\x01\x02\x02\x01\x12\x04\xa7\x01\n\x19\n\
+    \x0f\n\x07\x04\x01\x03\x01\x02\x02\x03\x12\x04\xa7\x01\x1c\x1d\n\xa0\x01\
+    \n\x04\x04\x01\x02\0\x12\x04\xad\x01\x02\x1a\x1a\x91\x01\x20The\x20same\
     \x20operation_id\x20value\x20used\x20in\x20the\n\x20[CheckRequest][googl\
     e.api.servicecontrol.v1.CheckRequest].\x20Used\x20for\x20logging\n\x20an\
-    d\x20diagnostics\x20purposes.\n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03u\
-    \x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03u\t\x15\n\x0c\n\x05\x04\
-    \x01\x02\0\x03\x12\x03u\x18\x19\nJ\n\x04\x04\x01\x02\x01\x12\x03x\x02!\
-    \x1a=\x20The\x20current\x20service\x20rollout\x20id\x20used\x20to\x20pro\
-    cess\x20the\x20request.\n\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03x\x02\
-    \x08\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03x\t\x1b\n\x0c\n\x05\x04\x01\
-    \x02\x01\x03\x12\x03x\x1e\x20\n\xda\x01\n\x04\x04\x01\x02\x02\x12\x03\
-    \x7f\x02'\x1a\xcc\x01\x20Indicate\x20the\x20decision\x20of\x20the\x20che\
-    ck.\n\n\x20If\x20no\x20check\x20errors\x20are\x20present,\x20the\x20serv\
-    ice\x20should\x20process\x20the\x20operation.\n\x20Otherwise\x20the\x20s\
-    ervice\x20should\x20use\x20the\x20list\x20of\x20errors\x20to\x20determin\
-    e\x20the\n\x20appropriate\x20action.\n\n\x0c\n\x05\x04\x01\x02\x02\x04\
-    \x12\x03\x7f\x02\n\n\x0c\n\x05\x04\x01\x02\x02\x06\x12\x03\x7f\x0b\x15\n\
-    \x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\x7f\x16\"\n\x0c\n\x05\x04\x01\x02\
-    \x02\x03\x12\x03\x7f%&\nA\n\x04\x04\x01\x02\x03\x12\x04\x82\x01\x02\x1f\
-    \x1a3\x20The\x20actual\x20config\x20id\x20used\x20to\x20process\x20the\
-    \x20request.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\x82\x01\x02\x08\n\r\
-    \n\x05\x04\x01\x02\x03\x01\x12\x04\x82\x01\t\x1a\n\r\n\x05\x04\x01\x02\
-    \x03\x03\x12\x04\x82\x01\x1d\x1e\nY\n\x04\x04\x01\x02\x04\x12\x04\x85\
-    \x01\x02\x1b\x1aK\x20Feedback\x20data\x20returned\x20from\x20the\x20serv\
-    er\x20during\x20processing\x20a\x20Check\x20request.\n\n\r\n\x05\x04\x01\
-    \x02\x04\x06\x12\x04\x85\x01\x02\x0b\n\r\n\x05\x04\x01\x02\x04\x01\x12\
-    \x04\x85\x01\x0c\x16\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\x85\x01\x19\
-    \x1a\n6\n\x02\x04\x02\x12\x06\x89\x01\0\xa5\x01\x01\x1a(\x20Request\x20m\
-    essage\x20for\x20the\x20Report\x20method.\n\n\x0b\n\x03\x04\x02\x01\x12\
-    \x04\x89\x01\x08\x15\n\x91\x02\n\x04\x04\x02\x02\0\x12\x04\x90\x01\x02\
-    \x1a\x1a\x82\x02\x20The\x20service\x20name\x20as\x20specified\x20in\x20i\
-    ts\x20service\x20configuration.\x20For\x20example,\n\x20`\"pubsub.google\
-    apis.com\"`.\n\n\x20See\n\x20[google.api.Service](https://cloud.google.c\
-    om/service-management/reference/rpc/google.api#google.api.Service)\n\x20\
-    for\x20the\x20definition\x20of\x20a\x20service\x20name.\n\n\r\n\x05\x04\
-    \x02\x02\0\x05\x12\x04\x90\x01\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\
-    \x04\x90\x01\t\x15\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\x90\x01\x18\x19\n\
-    \xf6\x03\n\x04\x04\x02\x02\x01\x12\x04\x9d\x01\x02$\x1a\xe7\x03\x20Opera\
-    tions\x20to\x20be\x20reported.\n\n\x20Typically\x20the\x20service\x20sho\
-    uld\x20report\x20one\x20operation\x20per\x20request.\n\x20Putting\x20mul\
-    tiple\x20operations\x20into\x20a\x20single\x20request\x20is\x20allowed,\
-    \x20but\x20should\n\x20be\x20used\x20only\x20when\x20multiple\x20operati\
-    ons\x20are\x20natually\x20available\x20at\x20the\x20time\n\x20of\x20the\
-    \x20report.\n\n\x20If\x20multiple\x20operations\x20are\x20in\x20a\x20sin\
-    gle\x20request,\x20the\x20total\x20request\x20size\n\x20should\x20be\x20\
-    no\x20larger\x20than\x201MB.\x20See\n\x20[ReportResponse.report_errors][\
-    google.api.servicecontrol.v1.ReportResponse.report_errors]\n\x20for\x20p\
-    artial\x20failure\x20behavior.\n\n\r\n\x05\x04\x02\x02\x01\x04\x12\x04\
-    \x9d\x01\x02\n\n\r\n\x05\x04\x02\x02\x01\x06\x12\x04\x9d\x01\x0b\x14\n\r\
-    \n\x05\x04\x02\x02\x01\x01\x12\x04\x9d\x01\x15\x1f\n\r\n\x05\x04\x02\x02\
-    \x01\x03\x12\x04\x9d\x01\"#\n\xb6\x01\n\x04\x04\x02\x02\x02\x12\x04\xa4\
-    \x01\x02\x1f\x1a\xa7\x01\x20Specifies\x20which\x20version\x20of\x20servi\
-    ce\x20config\x20should\x20be\x20used\x20to\x20process\x20the\n\x20reques\
-    t.\n\n\x20If\x20unspecified\x20or\x20no\x20matching\x20version\x20can\
-    \x20be\x20found,\x20the\n\x20latest\x20one\x20will\x20be\x20used.\n\n\r\
-    \n\x05\x04\x02\x02\x02\x05\x12\x04\xa4\x01\x02\x08\n\r\n\x05\x04\x02\x02\
-    \x02\x01\x12\x04\xa4\x01\t\x1a\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xa4\
-    \x01\x1d\x1e\n7\n\x02\x04\x03\x12\x06\xa8\x01\0\xcb\x01\x01\x1a)\x20Resp\
-    onse\x20message\x20for\x20the\x20Report\x20method.\n\n\x0b\n\x03\x04\x03\
-    \x01\x12\x04\xa8\x01\x08\x16\n}\n\x04\x04\x03\x03\0\x12\x06\xab\x01\x02\
-    \xb4\x01\x03\x1am\x20Represents\x20the\x20processing\x20error\x20of\x20o\
-    ne\n\x20[Operation][google.api.servicecontrol.v1.Operation]\x20in\x20the\
-    \x20request.\n\n\r\n\x05\x04\x03\x03\0\x01\x12\x04\xab\x01\n\x15\n}\n\
-    \x06\x04\x03\x03\0\x02\0\x12\x04\xaf\x01\x04\x1c\x1am\x20The\n\x20[Opera\
-    tion.operation_id][google.api.servicecontrol.v1.Operation.operation_id]\
-    \n\x20value\x20from\x20the\x20request.\n\n\x0f\n\x07\x04\x03\x03\0\x02\0\
-    \x05\x12\x04\xaf\x01\x04\n\n\x0f\n\x07\x04\x03\x03\0\x02\0\x01\x12\x04\
-    \xaf\x01\x0b\x17\n\x0f\n\x07\x04\x03\x03\0\x02\0\x03\x12\x04\xaf\x01\x1a\
-    \x1b\np\n\x06\x04\x03\x03\0\x02\x01\x12\x04\xb3\x01\x04!\x1a`\x20Details\
-    \x20of\x20the\x20error\x20when\x20processing\x20the\n\x20[Operation][goo\
-    gle.api.servicecontrol.v1.Operation].\n\n\x0f\n\x07\x04\x03\x03\0\x02\
-    \x01\x06\x12\x04\xb3\x01\x04\x15\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x01\
-    \x12\x04\xb3\x01\x16\x1c\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x03\x12\x04\
-    \xb3\x01\x1f\x20\n\x8e\x06\n\x04\x04\x03\x02\0\x12\x04\xc4\x01\x02)\x1a\
-    \xff\x05\x20Partial\x20failures,\x20one\x20for\x20each\x20`Operation`\
-    \x20in\x20the\x20request\x20that\x20failed\n\x20processing.\x20There\x20\
-    are\x20three\x20possible\x20combinations\x20of\x20the\x20RPC\x20status:\
-    \n\n\x201.\x20The\x20combination\x20of\x20a\x20successful\x20RPC\x20stat\
-    us\x20and\x20an\x20empty\x20`report_errors`\n\x20\x20\x20\x20list\x20ind\
-    icates\x20a\x20complete\x20success\x20where\x20all\x20`Operations`\x20in\
-    \x20the\n\x20\x20\x20\x20request\x20are\x20processed\x20successfully.\n\
-    \x202.\x20The\x20combination\x20of\x20a\x20successful\x20RPC\x20status\
-    \x20and\x20a\x20non-empty\n\x20\x20\x20\x20`report_errors`\x20list\x20in\
-    dicates\x20a\x20partial\x20success\x20where\x20some\n\x20\x20\x20\x20`Op\
-    erations`\x20in\x20the\x20request\x20succeeded.\x20Each\n\x20\x20\x20\
-    \x20`Operation`\x20that\x20failed\x20processing\x20has\x20a\x20correspon\
-    ding\x20item\n\x20\x20\x20\x20in\x20this\x20list.\n\x203.\x20A\x20failed\
-    \x20RPC\x20status\x20indicates\x20a\x20general\x20non-deterministic\x20f\
-    ailure.\n\x20\x20\x20\x20When\x20this\x20happens,\x20it's\x20impossible\
-    \x20to\x20know\x20which\x20of\x20the\n\x20\x20\x20\x20'Operations'\x20in\
-    \x20the\x20request\x20succeeded\x20or\x20failed.\n\n\r\n\x05\x04\x03\x02\
-    \0\x04\x12\x04\xc4\x01\x02\n\n\r\n\x05\x04\x03\x02\0\x06\x12\x04\xc4\x01\
-    \x0b\x16\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xc4\x01\x17$\n\r\n\x05\x04\
-    \x03\x02\0\x03\x12\x04\xc4\x01'(\nA\n\x04\x04\x03\x02\x01\x12\x04\xc7\
-    \x01\x02\x1f\x1a3\x20The\x20actual\x20config\x20id\x20used\x20to\x20proc\
-    ess\x20the\x20request.\n\n\r\n\x05\x04\x03\x02\x01\x05\x12\x04\xc7\x01\
-    \x02\x08\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\xc7\x01\t\x1a\n\r\n\x05\
-    \x04\x03\x02\x01\x03\x12\x04\xc7\x01\x1d\x1e\nK\n\x04\x04\x03\x02\x02\
-    \x12\x04\xca\x01\x02\x20\x1a=\x20The\x20current\x20service\x20rollout\
-    \x20id\x20used\x20to\x20process\x20the\x20request.\n\n\r\n\x05\x04\x03\
-    \x02\x02\x05\x12\x04\xca\x01\x02\x08\n\r\n\x05\x04\x03\x02\x02\x01\x12\
-    \x04\xca\x01\t\x1b\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\xca\x01\x1e\x1f\
-    b\x06proto3\
+    d\x20diagnostics\x20purposes.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\xad\
+    \x01\x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\xad\x01\t\x15\n\r\n\x05\
+    \x04\x01\x02\0\x03\x12\x04\xad\x01\x18\x19\n\xdb\x01\n\x04\x04\x01\x02\
+    \x01\x12\x04\xb4\x01\x02'\x1a\xcc\x01\x20Indicate\x20the\x20decision\x20\
+    of\x20the\x20check.\n\n\x20If\x20no\x20check\x20errors\x20are\x20present\
+    ,\x20the\x20service\x20should\x20process\x20the\x20operation.\n\x20Other\
+    wise\x20the\x20service\x20should\x20use\x20the\x20list\x20of\x20errors\
+    \x20to\x20determine\x20the\n\x20appropriate\x20action.\n\n\r\n\x05\x04\
+    \x01\x02\x01\x04\x12\x04\xb4\x01\x02\n\n\r\n\x05\x04\x01\x02\x01\x06\x12\
+    \x04\xb4\x01\x0b\x15\n\r\n\x05\x04\x01\x02\x01\x01\x12\x04\xb4\x01\x16\"\
+    \n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\xb4\x01%&\nA\n\x04\x04\x01\x02\
+    \x02\x12\x04\xb7\x01\x02\x1f\x1a3\x20The\x20actual\x20config\x20id\x20us\
+    ed\x20to\x20process\x20the\x20request.\n\n\r\n\x05\x04\x01\x02\x02\x05\
+    \x12\x04\xb7\x01\x02\x08\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\xb7\x01\t\
+    \x1a\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\xb7\x01\x1d\x1e\nK\n\x04\x04\
+    \x01\x02\x03\x12\x04\xba\x01\x02!\x1a=\x20The\x20current\x20service\x20r\
+    ollout\x20id\x20used\x20to\x20process\x20the\x20request.\n\n\r\n\x05\x04\
+    \x01\x02\x03\x05\x12\x04\xba\x01\x02\x08\n\r\n\x05\x04\x01\x02\x03\x01\
+    \x12\x04\xba\x01\t\x1b\n\r\n\x05\x04\x01\x02\x03\x03\x12\x04\xba\x01\x1e\
+    \x20\nY\n\x04\x04\x01\x02\x04\x12\x04\xbd\x01\x02\x1b\x1aK\x20Feedback\
+    \x20data\x20returned\x20from\x20the\x20server\x20during\x20processing\
+    \x20a\x20Check\x20request.\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\x04\xbd\
+    \x01\x02\x0b\n\r\n\x05\x04\x01\x02\x04\x01\x12\x04\xbd\x01\x0c\x16\n\r\n\
+    \x05\x04\x01\x02\x04\x03\x12\x04\xbd\x01\x19\x1a\n6\n\x02\x04\x02\x12\
+    \x06\xc1\x01\0\xdd\x01\x01\x1a(\x20Request\x20message\x20for\x20the\x20R\
+    eport\x20method.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xc1\x01\x08\x15\n\x91\
+    \x02\n\x04\x04\x02\x02\0\x12\x04\xc8\x01\x02\x1a\x1a\x82\x02\x20The\x20s\
+    ervice\x20name\x20as\x20specified\x20in\x20its\x20service\x20configurati\
+    on.\x20For\x20example,\n\x20`\"pubsub.googleapis.com\"`.\n\n\x20See\n\
+    \x20[google.api.Service](https://cloud.google.com/service-management/ref\
+    erence/rpc/google.api#google.api.Service)\n\x20for\x20the\x20definition\
+    \x20of\x20a\x20service\x20name.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\
+    \xc8\x01\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xc8\x01\t\x15\n\r\n\
+    \x05\x04\x02\x02\0\x03\x12\x04\xc8\x01\x18\x19\n\x97\x04\n\x04\x04\x02\
+    \x02\x01\x12\x04\xd5\x01\x02$\x1a\x88\x04\x20Operations\x20to\x20be\x20r\
+    eported.\n\n\x20Typically\x20the\x20service\x20should\x20report\x20one\
+    \x20operation\x20per\x20request.\n\x20Putting\x20multiple\x20operations\
+    \x20into\x20a\x20single\x20request\x20is\x20allowed,\x20but\x20should\n\
+    \x20be\x20used\x20only\x20when\x20multiple\x20operations\x20are\x20natua\
+    lly\x20available\x20at\x20the\x20time\n\x20of\x20the\x20report.\n\n\x20T\
+    here\x20is\x20no\x20limit\x20on\x20the\x20number\x20of\x20operations\x20\
+    in\x20the\x20same\x20ReportRequest,\n\x20however\x20the\x20ReportRequest\
+    \x20size\x20should\x20be\x20no\x20larger\x20than\x201MB.\x20See\n\x20[Re\
+    portResponse.report_errors][google.api.servicecontrol.v1.ReportResponse.\
+    report_errors]\n\x20for\x20partial\x20failure\x20behavior.\n\n\r\n\x05\
+    \x04\x02\x02\x01\x04\x12\x04\xd5\x01\x02\n\n\r\n\x05\x04\x02\x02\x01\x06\
+    \x12\x04\xd5\x01\x0b\x14\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\xd5\x01\
+    \x15\x1f\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xd5\x01\"#\n\xb6\x01\n\
+    \x04\x04\x02\x02\x02\x12\x04\xdc\x01\x02\x1f\x1a\xa7\x01\x20Specifies\
+    \x20which\x20version\x20of\x20service\x20config\x20should\x20be\x20used\
+    \x20to\x20process\x20the\n\x20request.\n\n\x20If\x20unspecified\x20or\
+    \x20no\x20matching\x20version\x20can\x20be\x20found,\x20the\n\x20latest\
+    \x20one\x20will\x20be\x20used.\n\n\r\n\x05\x04\x02\x02\x02\x05\x12\x04\
+    \xdc\x01\x02\x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\xdc\x01\t\x1a\n\r\
+    \n\x05\x04\x02\x02\x02\x03\x12\x04\xdc\x01\x1d\x1e\n7\n\x02\x04\x03\x12\
+    \x06\xe0\x01\0\x83\x02\x01\x1a)\x20Response\x20message\x20for\x20the\x20\
+    Report\x20method.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\xe0\x01\x08\x16\n}\n\
+    \x04\x04\x03\x03\0\x12\x06\xe3\x01\x02\xec\x01\x03\x1am\x20Represents\
+    \x20the\x20processing\x20error\x20of\x20one\n\x20[Operation][google.api.\
+    servicecontrol.v1.Operation]\x20in\x20the\x20request.\n\n\r\n\x05\x04\
+    \x03\x03\0\x01\x12\x04\xe3\x01\n\x15\n}\n\x06\x04\x03\x03\0\x02\0\x12\
+    \x04\xe7\x01\x04\x1c\x1am\x20The\n\x20[Operation.operation_id][google.ap\
+    i.servicecontrol.v1.Operation.operation_id]\n\x20value\x20from\x20the\
+    \x20request.\n\n\x0f\n\x07\x04\x03\x03\0\x02\0\x05\x12\x04\xe7\x01\x04\n\
+    \n\x0f\n\x07\x04\x03\x03\0\x02\0\x01\x12\x04\xe7\x01\x0b\x17\n\x0f\n\x07\
+    \x04\x03\x03\0\x02\0\x03\x12\x04\xe7\x01\x1a\x1b\np\n\x06\x04\x03\x03\0\
+    \x02\x01\x12\x04\xeb\x01\x04!\x1a`\x20Details\x20of\x20the\x20error\x20w\
+    hen\x20processing\x20the\n\x20[Operation][google.api.servicecontrol.v1.O\
+    peration].\n\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x06\x12\x04\xeb\x01\x04\
+    \x15\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x01\x12\x04\xeb\x01\x16\x1c\n\x0f\
+    \n\x07\x04\x03\x03\0\x02\x01\x03\x12\x04\xeb\x01\x1f\x20\n\x8e\x06\n\x04\
+    \x04\x03\x02\0\x12\x04\xfc\x01\x02)\x1a\xff\x05\x20Partial\x20failures,\
+    \x20one\x20for\x20each\x20`Operation`\x20in\x20the\x20request\x20that\
+    \x20failed\n\x20processing.\x20There\x20are\x20three\x20possible\x20comb\
+    inations\x20of\x20the\x20RPC\x20status:\n\n\x201.\x20The\x20combination\
+    \x20of\x20a\x20successful\x20RPC\x20status\x20and\x20an\x20empty\x20`rep\
+    ort_errors`\n\x20\x20\x20\x20list\x20indicates\x20a\x20complete\x20succe\
+    ss\x20where\x20all\x20`Operations`\x20in\x20the\n\x20\x20\x20\x20request\
+    \x20are\x20processed\x20successfully.\n\x202.\x20The\x20combination\x20o\
+    f\x20a\x20successful\x20RPC\x20status\x20and\x20a\x20non-empty\n\x20\x20\
+    \x20\x20`report_errors`\x20list\x20indicates\x20a\x20partial\x20success\
+    \x20where\x20some\n\x20\x20\x20\x20`Operations`\x20in\x20the\x20request\
+    \x20succeeded.\x20Each\n\x20\x20\x20\x20`Operation`\x20that\x20failed\
+    \x20processing\x20has\x20a\x20corresponding\x20item\n\x20\x20\x20\x20in\
+    \x20this\x20list.\n\x203.\x20A\x20failed\x20RPC\x20status\x20indicates\
+    \x20a\x20general\x20non-deterministic\x20failure.\n\x20\x20\x20\x20When\
+    \x20this\x20happens,\x20it's\x20impossible\x20to\x20know\x20which\x20of\
+    \x20the\n\x20\x20\x20\x20'Operations'\x20in\x20the\x20request\x20succeed\
+    ed\x20or\x20failed.\n\n\r\n\x05\x04\x03\x02\0\x04\x12\x04\xfc\x01\x02\n\
+    \n\r\n\x05\x04\x03\x02\0\x06\x12\x04\xfc\x01\x0b\x16\n\r\n\x05\x04\x03\
+    \x02\0\x01\x12\x04\xfc\x01\x17$\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xfc\
+    \x01'(\nA\n\x04\x04\x03\x02\x01\x12\x04\xff\x01\x02\x1f\x1a3\x20The\x20a\
+    ctual\x20config\x20id\x20used\x20to\x20process\x20the\x20request.\n\n\r\
+    \n\x05\x04\x03\x02\x01\x05\x12\x04\xff\x01\x02\x08\n\r\n\x05\x04\x03\x02\
+    \x01\x01\x12\x04\xff\x01\t\x1a\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xff\
+    \x01\x1d\x1e\nK\n\x04\x04\x03\x02\x02\x12\x04\x82\x02\x02\x20\x1a=\x20Th\
+    e\x20current\x20service\x20rollout\x20id\x20used\x20to\x20process\x20the\
+    \x20request.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\x82\x02\x02\x08\n\r\
+    \n\x05\x04\x03\x02\x02\x01\x12\x04\x82\x02\t\x1b\n\r\n\x05\x04\x03\x02\
+    \x02\x03\x12\x04\x82\x02\x1e\x1fb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1400,8 +1652,9 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(4);
+            let mut deps = ::std::vec::Vec::with_capacity(5);
             deps.push(super::annotations::file_descriptor().clone());
+            deps.push(super::client::file_descriptor().clone());
             deps.push(super::check_error::file_descriptor().clone());
             deps.push(super::operation::file_descriptor().clone());
             deps.push(super::status::file_descriptor().clone());
@@ -1413,7 +1666,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(check_response::CheckInfo::generated_message_descriptor_data());
             messages.push(check_response::ConsumerInfo::generated_message_descriptor_data());
             messages.push(report_response::ReportError::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(0);
+            let mut enums = ::std::vec::Vec::with_capacity(1);
+            enums.push(check_response::consumer_info::ConsumerType::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

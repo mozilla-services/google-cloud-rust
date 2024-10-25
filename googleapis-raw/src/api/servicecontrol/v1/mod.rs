@@ -1,8 +1,13 @@
 // @generated
-use crate::{api::annotations, logging::r#type::log_severity, r#type::money, rpc::status};
+use crate::{
+    api::{annotations, client, distribution as api_distribution},
+    logging::r#type::log_severity,
+    rpc::status,
+};
 
 pub mod check_error;
 pub mod distribution;
+pub mod http_request;
 pub mod log_entry;
 pub mod metric_value;
 pub mod operation;

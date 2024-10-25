@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -52,6 +52,15 @@ pub struct ResultSet {
     ///  [ExecuteSqlRequest.query_mode][google.spanner.v1.ExecuteSqlRequest.query_mode].
     // @@protoc_insertion_point(field:google.spanner.v1.ResultSet.stats)
     pub stats: ::protobuf::MessageField<ResultSetStats>,
+    ///  Optional. A precommit token will be included if the read-write transaction
+    ///  is on a multiplexed session.
+    ///  The precommit token with the highest sequence number from this transaction
+    ///  attempt should be passed to the
+    ///  [Commit][google.spanner.v1.Spanner.Commit] request for this transaction.
+    ///  This feature is not yet supported and will result in an UNIMPLEMENTED
+    ///  error.
+    // @@protoc_insertion_point(field:google.spanner.v1.ResultSet.precommit_token)
+    pub precommit_token: ::protobuf::MessageField<super::transaction::MultiplexedSessionPrecommitToken>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.v1.ResultSet.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -69,7 +78,7 @@ impl ResultSet {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ResultSetMetadata>(
             "metadata",
@@ -85,6 +94,11 @@ impl ResultSet {
             "stats",
             |m: &ResultSet| { &m.stats },
             |m: &mut ResultSet| { &mut m.stats },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::transaction::MultiplexedSessionPrecommitToken>(
+            "precommit_token",
+            |m: &ResultSet| { &m.precommit_token },
+            |m: &mut ResultSet| { &mut m.precommit_token },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ResultSet>(
             "ResultSet",
@@ -113,6 +127,9 @@ impl ::protobuf::Message for ResultSet {
                 26 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.stats)?;
                 },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.precommit_token)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -137,6 +154,10 @@ impl ::protobuf::Message for ResultSet {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.precommit_token.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -151,6 +172,9 @@ impl ::protobuf::Message for ResultSet {
         };
         if let Some(v) = self.stats.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.precommit_token.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -172,6 +196,7 @@ impl ::protobuf::Message for ResultSet {
         self.metadata.clear();
         self.rows.clear();
         self.stats.clear();
+        self.precommit_token.clear();
         self.special_fields.clear();
     }
 
@@ -180,6 +205,7 @@ impl ::protobuf::Message for ResultSet {
             metadata: ::protobuf::MessageField::none(),
             rows: ::std::vec::Vec::new(),
             stats: ::protobuf::MessageField::none(),
+            precommit_token: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -236,6 +262,15 @@ pub struct PartialResultSet {
     ///  statements.
     // @@protoc_insertion_point(field:google.spanner.v1.PartialResultSet.stats)
     pub stats: ::protobuf::MessageField<ResultSetStats>,
+    ///  Optional. A precommit token will be included if the read-write transaction
+    ///  is on a multiplexed session.
+    ///  The precommit token with the highest sequence number from this transaction
+    ///  attempt should be passed to the
+    ///  [Commit][google.spanner.v1.Spanner.Commit] request for this transaction.
+    ///  This feature is not yet supported and will result in an UNIMPLEMENTED
+    ///  error.
+    // @@protoc_insertion_point(field:google.spanner.v1.PartialResultSet.precommit_token)
+    pub precommit_token: ::protobuf::MessageField<super::transaction::MultiplexedSessionPrecommitToken>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.v1.PartialResultSet.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -253,7 +288,7 @@ impl PartialResultSet {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ResultSetMetadata>(
             "metadata",
@@ -279,6 +314,11 @@ impl PartialResultSet {
             "stats",
             |m: &PartialResultSet| { &m.stats },
             |m: &mut PartialResultSet| { &mut m.stats },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::transaction::MultiplexedSessionPrecommitToken>(
+            "precommit_token",
+            |m: &PartialResultSet| { &m.precommit_token },
+            |m: &mut PartialResultSet| { &mut m.precommit_token },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PartialResultSet>(
             "PartialResultSet",
@@ -313,6 +353,9 @@ impl ::protobuf::Message for PartialResultSet {
                 42 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.stats)?;
                 },
+                66 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.precommit_token)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -343,6 +386,10 @@ impl ::protobuf::Message for PartialResultSet {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.precommit_token.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -363,6 +410,9 @@ impl ::protobuf::Message for PartialResultSet {
         }
         if let Some(v) = self.stats.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        }
+        if let Some(v) = self.precommit_token.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -386,6 +436,7 @@ impl ::protobuf::Message for PartialResultSet {
         self.chunked_value = false;
         self.resume_token.clear();
         self.stats.clear();
+        self.precommit_token.clear();
         self.special_fields.clear();
     }
 
@@ -396,6 +447,7 @@ impl ::protobuf::Message for PartialResultSet {
             chunked_value: false,
             resume_token: ::std::vec::Vec::new(),
             stats: ::protobuf::MessageField::none(),
+            precommit_token: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -430,6 +482,8 @@ pub struct ResultSetMetadata {
     ///  information about the new transaction is yielded here.
     // @@protoc_insertion_point(field:google.spanner.v1.ResultSetMetadata.transaction)
     pub transaction: ::protobuf::MessageField<super::transaction::Transaction>,
+    // @@protoc_insertion_point(field:google.spanner.v1.ResultSetMetadata.undeclared_parameters)
+    pub undeclared_parameters: ::protobuf::MessageField<super::type_::StructType>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.v1.ResultSetMetadata.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -447,7 +501,7 @@ impl ResultSetMetadata {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::type_::StructType>(
             "row_type",
@@ -458,6 +512,11 @@ impl ResultSetMetadata {
             "transaction",
             |m: &ResultSetMetadata| { &m.transaction },
             |m: &mut ResultSetMetadata| { &mut m.transaction },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::type_::StructType>(
+            "undeclared_parameters",
+            |m: &ResultSetMetadata| { &m.undeclared_parameters },
+            |m: &mut ResultSetMetadata| { &mut m.undeclared_parameters },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ResultSetMetadata>(
             "ResultSetMetadata",
@@ -483,6 +542,9 @@ impl ::protobuf::Message for ResultSetMetadata {
                 18 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.transaction)?;
                 },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.undeclared_parameters)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -503,6 +565,10 @@ impl ::protobuf::Message for ResultSetMetadata {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.undeclared_parameters.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -514,6 +580,9 @@ impl ::protobuf::Message for ResultSetMetadata {
         }
         if let Some(v) = self.transaction.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.undeclared_parameters.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -534,6 +603,7 @@ impl ::protobuf::Message for ResultSetMetadata {
     fn clear(&mut self) {
         self.row_type.clear();
         self.transaction.clear();
+        self.undeclared_parameters.clear();
         self.special_fields.clear();
     }
 
@@ -541,6 +611,7 @@ impl ::protobuf::Message for ResultSetMetadata {
         static instance: ResultSetMetadata = ResultSetMetadata {
             row_type: ::protobuf::MessageField::none(),
             transaction: ::protobuf::MessageField::none(),
+            undeclared_parameters: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -833,238 +904,282 @@ pub mod result_set_stats {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\"google/spanner/v1/result_set.proto\x12\x11google.spanner.v1\x1a\x1cg\
-    oogle/protobuf/struct.proto\x1a\"google/spanner/v1/query_plan.proto\x1a#\
-    google/spanner/v1/transaction.proto\x1a\x1cgoogle/spanner/v1/type.proto\
-    \x1a\x1cgoogle/api/annotations.proto\"\xb6\x01\n\tResultSet\x12@\n\x08me\
-    tadata\x18\x01\x20\x01(\x0b2$.google.spanner.v1.ResultSetMetadataR\x08me\
-    tadata\x12.\n\x04rows\x18\x02\x20\x03(\x0b2\x1a.google.protobuf.ListValu\
-    eR\x04rows\x127\n\x05stats\x18\x03\x20\x01(\x0b2!.google.spanner.v1.Resu\
-    ltSetStatsR\x05stats\"\x85\x02\n\x10PartialResultSet\x12@\n\x08metadata\
-    \x18\x01\x20\x01(\x0b2$.google.spanner.v1.ResultSetMetadataR\x08metadata\
-    \x12.\n\x06values\x18\x02\x20\x03(\x0b2\x16.google.protobuf.ValueR\x06va\
-    lues\x12#\n\rchunked_value\x18\x03\x20\x01(\x08R\x0cchunkedValue\x12!\n\
-    \x0cresume_token\x18\x04\x20\x01(\x0cR\x0bresumeToken\x127\n\x05stats\
-    \x18\x05\x20\x01(\x0b2!.google.spanner.v1.ResultSetStatsR\x05stats\"\x8f\
-    \x01\n\x11ResultSetMetadata\x128\n\x08row_type\x18\x01\x20\x01(\x0b2\x1d\
-    .google.spanner.v1.StructTypeR\x07rowType\x12@\n\x0btransaction\x18\x02\
-    \x20\x01(\x0b2\x1e.google.spanner.v1.TransactionR\x0btransaction\"\xf3\
-    \x01\n\x0eResultSetStats\x12;\n\nquery_plan\x18\x01\x20\x01(\x0b2\x1c.go\
-    ogle.spanner.v1.QueryPlanR\tqueryPlan\x128\n\x0bquery_stats\x18\x02\x20\
-    \x01(\x0b2\x17.google.protobuf.StructR\nqueryStats\x12(\n\x0frow_count_e\
-    xact\x18\x03\x20\x01(\x03H\0R\rrowCountExact\x123\n\x15row_count_lower_b\
-    ound\x18\x04\x20\x01(\x03H\0R\x12rowCountLowerBoundB\x0b\n\trow_countB\
-    \x9a\x01\n\x15com.google.spanner.v1B\x0eResultSetProtoP\x01Z8google.gola\
-    ng.org/genproto/googleapis/spanner/v1;spanner\xf8\x01\x01\xaa\x02\x17Goo\
-    gle.Cloud.Spanner.V1\xca\x02\x17Google\\Cloud\\Spanner\\V1J\xae?\n\x07\
-    \x12\x05\x0f\0\xcc\x01\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\
-    \x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Licensed\x20under\x20\
-    the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\
-    \x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20complian\
-    ce\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20\
-    of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/\
-    licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20la\
-    w\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
-    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
-    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
-    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
-    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
-    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\n\x08\n\x01\x02\
-    \x12\x03\x11\0\x1a\n\t\n\x02\x03\0\x12\x03\x13\0&\n\t\n\x02\x03\x01\x12\
-    \x03\x14\0,\n\t\n\x02\x03\x02\x12\x03\x15\0-\n\t\n\x02\x03\x03\x12\x03\
-    \x16\0&\n\t\n\x02\x03\x04\x12\x03\x17\0&\n\x08\n\x01\x08\x12\x03\x19\0\
-    \x1f\n\t\n\x02\x08\x1f\x12\x03\x19\0\x1f\n\x08\n\x01\x08\x12\x03\x1a\04\
-    \n\t\n\x02\x08%\x12\x03\x1a\04\n\x08\n\x01\x08\x12\x03\x1b\0O\n\t\n\x02\
-    \x08\x0b\x12\x03\x1b\0O\n\x08\n\x01\x08\x12\x03\x1c\0\"\n\t\n\x02\x08\n\
-    \x12\x03\x1c\0\"\n\x08\n\x01\x08\x12\x03\x1d\0/\n\t\n\x02\x08\x08\x12\
-    \x03\x1d\0/\n\x08\n\x01\x08\x12\x03\x1e\0.\n\t\n\x02\x08\x01\x12\x03\x1e\
-    \0.\n\x08\n\x01\x08\x12\x03\x1f\04\n\t\n\x02\x08)\x12\x03\x1f\04\ny\n\
-    \x02\x04\0\x12\x04#\08\x01\x1am\x20Results\x20from\x20[Read][google.span\
-    ner.v1.Spanner.Read]\x20or\n\x20[ExecuteSql][google.spanner.v1.Spanner.E\
-    xecuteSql].\n\n\n\n\x03\x04\0\x01\x12\x03#\x08\x11\nK\n\x04\x04\0\x02\0\
-    \x12\x03%\x02!\x1a>\x20Metadata\x20about\x20the\x20result\x20set,\x20suc\
-    h\x20as\x20row\x20type\x20information.\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\
-    \x03%\x02\x13\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03%\x14\x1c\n\x0c\n\x05\
-    \x04\0\x02\0\x03\x12\x03%\x1f\x20\n\xde\x02\n\x04\x04\0\x02\x01\x12\x03-\
-    \x02.\x1a\xd0\x02\x20Each\x20element\x20in\x20`rows`\x20is\x20a\x20row\
-    \x20whose\x20format\x20is\x20defined\x20by\n\x20[metadata.row_type][goog\
-    le.spanner.v1.ResultSetMetadata.row_type].\x20The\x20ith\x20element\n\
-    \x20in\x20each\x20row\x20matches\x20the\x20ith\x20field\x20in\n\x20[meta\
-    data.row_type][google.spanner.v1.ResultSetMetadata.row_type].\x20Element\
-    s\x20are\n\x20encoded\x20based\x20on\x20type\x20as\x20described\n\x20[he\
-    re][google.spanner.v1.TypeCode].\n\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03\
-    -\x02\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x03-\x0b$\n\x0c\n\x05\x04\0\
-    \x02\x01\x01\x12\x03-%)\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03-,-\n\xf5\
-    \x04\n\x04\x04\0\x02\x02\x12\x037\x02\x1b\x1a\xe7\x04\x20Query\x20plan\
-    \x20and\x20execution\x20statistics\x20for\x20the\x20SQL\x20statement\x20\
-    that\n\x20produced\x20this\x20result\x20set.\x20These\x20can\x20be\x20re\
-    quested\x20by\x20setting\n\x20[ExecuteSqlRequest.query_mode][google.span\
-    ner.v1.ExecuteSqlRequest.query_mode].\n\x20DML\x20statements\x20always\
-    \x20produce\x20stats\x20containing\x20the\x20number\x20of\x20rows\n\x20m\
-    odified,\x20unless\x20executed\x20using\x20the\n\x20[ExecuteSqlRequest.Q\
-    ueryMode.PLAN][google.spanner.v1.ExecuteSqlRequest.QueryMode.PLAN]\x20[E\
-    xecuteSqlRequest.query_mode][google.spanner.v1.ExecuteSqlRequest.query_m\
-    ode].\n\x20Other\x20fields\x20may\x20or\x20may\x20not\x20be\x20populated\
-    ,\x20based\x20on\x20the\n\x20[ExecuteSqlRequest.query_mode][google.spann\
-    er.v1.ExecuteSqlRequest.query_mode].\n\n\x0c\n\x05\x04\0\x02\x02\x06\x12\
-    \x037\x02\x10\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x037\x11\x16\n\x0c\n\x05\
-    \x04\0\x02\x02\x03\x12\x037\x19\x1a\n\xcc\x01\n\x02\x04\x01\x12\x05=\0\
-    \xa0\x01\x01\x1a\xbe\x01\x20Partial\x20results\x20from\x20a\x20streaming\
-    \x20read\x20or\x20SQL\x20query.\x20Streaming\x20reads\x20and\n\x20SQL\
-    \x20queries\x20better\x20tolerate\x20large\x20result\x20sets,\x20large\
-    \x20rows,\x20and\x20large\n\x20values,\x20but\x20are\x20a\x20little\x20t\
-    rickier\x20to\x20consume.\n\n\n\n\x03\x04\x01\x01\x12\x03=\x08\x18\np\n\
-    \x04\x04\x01\x02\0\x12\x03@\x02!\x1ac\x20Metadata\x20about\x20the\x20res\
-    ult\x20set,\x20such\x20as\x20row\x20type\x20information.\n\x20Only\x20pr\
-    esent\x20in\x20the\x20first\x20response.\n\n\x0c\n\x05\x04\x01\x02\0\x06\
-    \x12\x03@\x02\x13\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03@\x14\x1c\n\x0c\n\
-    \x05\x04\x01\x02\0\x03\x12\x03@\x1f\x20\n\xc0\x15\n\x04\x04\x01\x02\x01\
-    \x12\x04\x8b\x01\x02,\x1a\xb1\x15\x20A\x20streamed\x20result\x20set\x20c\
-    onsists\x20of\x20a\x20stream\x20of\x20values,\x20which\x20might\n\x20be\
-    \x20split\x20into\x20many\x20`PartialResultSet`\x20messages\x20to\x20acc\
-    ommodate\n\x20large\x20rows\x20and/or\x20large\x20values.\x20Every\x20N\
-    \x20complete\x20values\x20defines\x20a\n\x20row,\x20where\x20N\x20is\x20\
-    equal\x20to\x20the\x20number\x20of\x20entries\x20in\n\x20[metadata.row_t\
-    ype.fields][google.spanner.v1.StructType.fields].\n\n\x20Most\x20values\
-    \x20are\x20encoded\x20based\x20on\x20type\x20as\x20described\n\x20[here]\
-    [google.spanner.v1.TypeCode].\n\n\x20It\x20is\x20possible\x20that\x20the\
-    \x20last\x20value\x20in\x20values\x20is\x20\"chunked\",\n\x20meaning\x20\
-    that\x20the\x20rest\x20of\x20the\x20value\x20is\x20sent\x20in\x20subsequ\
-    ent\n\x20`PartialResultSet`(s).\x20This\x20is\x20denoted\x20by\x20the\
-    \x20[chunked_value][google.spanner.v1.PartialResultSet.chunked_value]\n\
-    \x20field.\x20Two\x20or\x20more\x20chunked\x20values\x20can\x20be\x20mer\
-    ged\x20to\x20form\x20a\n\x20complete\x20value\x20as\x20follows:\n\n\x20\
-    \x20\x20*\x20`bool/number/null`:\x20cannot\x20be\x20chunked\n\x20\x20\
-    \x20*\x20`string`:\x20concatenate\x20the\x20strings\n\x20\x20\x20*\x20`l\
-    ist`:\x20concatenate\x20the\x20lists.\x20If\x20the\x20last\x20element\
-    \x20in\x20a\x20list\x20is\x20a\n\x20\x20\x20\x20\x20`string`,\x20`list`,\
-    \x20or\x20`object`,\x20merge\x20it\x20with\x20the\x20first\x20element\
-    \x20in\n\x20\x20\x20\x20\x20the\x20next\x20list\x20by\x20applying\x20the\
-    se\x20rules\x20recursively.\n\x20\x20\x20*\x20`object`:\x20concatenate\
-    \x20the\x20(field\x20name,\x20field\x20value)\x20pairs.\x20If\x20a\n\x20\
-    \x20\x20\x20\x20field\x20name\x20is\x20duplicated,\x20then\x20apply\x20t\
-    hese\x20rules\x20recursively\n\x20\x20\x20\x20\x20to\x20merge\x20the\x20\
-    field\x20values.\n\n\x20Some\x20examples\x20of\x20merging:\n\n\x20\x20\
-    \x20\x20\x20#\x20Strings\x20are\x20concatenated.\n\x20\x20\x20\x20\x20\"\
-    foo\",\x20\"bar\"\x20=>\x20\"foobar\"\n\n\x20\x20\x20\x20\x20#\x20Lists\
-    \x20of\x20non-strings\x20are\x20concatenated.\n\x20\x20\x20\x20\x20[2,\
-    \x203],\x20[4]\x20=>\x20[2,\x203,\x204]\n\n\x20\x20\x20\x20\x20#\x20List\
-    s\x20are\x20concatenated,\x20but\x20the\x20last\x20and\x20first\x20eleme\
-    nts\x20are\x20merged\n\x20\x20\x20\x20\x20#\x20because\x20they\x20are\
-    \x20strings.\n\x20\x20\x20\x20\x20[\"a\",\x20\"b\"],\x20[\"c\",\x20\"d\"\
-    ]\x20=>\x20[\"a\",\x20\"bc\",\x20\"d\"]\n\n\x20\x20\x20\x20\x20#\x20List\
-    s\x20are\x20concatenated,\x20but\x20the\x20last\x20and\x20first\x20eleme\
-    nts\x20are\x20merged\n\x20\x20\x20\x20\x20#\x20because\x20they\x20are\
-    \x20lists.\x20Recursively,\x20the\x20last\x20and\x20first\x20elements\n\
-    \x20\x20\x20\x20\x20#\x20of\x20the\x20inner\x20lists\x20are\x20merged\
-    \x20because\x20they\x20are\x20strings.\n\x20\x20\x20\x20\x20[\"a\",\x20[\
-    \"b\",\x20\"c\"]],\x20[[\"d\"],\x20\"e\"]\x20=>\x20[\"a\",\x20[\"b\",\
-    \x20\"cd\"],\x20\"e\"]\n\n\x20\x20\x20\x20\x20#\x20Non-overlapping\x20ob\
-    ject\x20fields\x20are\x20combined.\n\x20\x20\x20\x20\x20{\"a\":\x20\"1\"\
-    },\x20{\"b\":\x20\"2\"}\x20=>\x20{\"a\":\x20\"1\",\x20\"b\":\x202\"}\n\n\
-    \x20\x20\x20\x20\x20#\x20Overlapping\x20object\x20fields\x20are\x20merge\
-    d.\n\x20\x20\x20\x20\x20{\"a\":\x20\"1\"},\x20{\"a\":\x20\"2\"}\x20=>\
-    \x20{\"a\":\x20\"12\"}\n\n\x20\x20\x20\x20\x20#\x20Examples\x20of\x20mer\
-    ging\x20objects\x20containing\x20lists\x20of\x20strings.\n\x20\x20\x20\
-    \x20\x20{\"a\":\x20[\"1\"]},\x20{\"a\":\x20[\"2\"]}\x20=>\x20{\"a\":\x20\
-    [\"12\"]}\n\n\x20For\x20a\x20more\x20complete\x20example,\x20suppose\x20\
-    a\x20streaming\x20SQL\x20query\x20is\n\x20yielding\x20a\x20result\x20set\
-    \x20whose\x20rows\x20contain\x20a\x20single\x20string\n\x20field.\x20The\
-    \x20following\x20`PartialResultSet`s\x20might\x20be\x20yielded:\n\n\x20\
-    \x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"metadata\":\x20{\x20...\
-    \x20}\n\x20\x20\x20\x20\x20\x20\x20\"values\":\x20[\"Hello\",\x20\"W\"]\
-    \n\x20\x20\x20\x20\x20\x20\x20\"chunked_value\":\x20true\n\x20\x20\x20\
-    \x20\x20\x20\x20\"resume_token\":\x20\"Af65...\"\n\x20\x20\x20\x20\x20}\
-    \n\x20\x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"values\":\x20[\"o\
-    rl\"]\n\x20\x20\x20\x20\x20\x20\x20\"chunked_value\":\x20true\n\x20\x20\
-    \x20\x20\x20\x20\x20\"resume_token\":\x20\"Bqp2...\"\n\x20\x20\x20\x20\
-    \x20}\n\x20\x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"values\":\
-    \x20[\"d\"]\n\x20\x20\x20\x20\x20\x20\x20\"resume_token\":\x20\"Zx1B...\
-    \"\n\x20\x20\x20\x20\x20}\n\n\x20This\x20sequence\x20of\x20`PartialResul\
-    tSet`s\x20encodes\x20two\x20rows,\x20one\n\x20containing\x20the\x20field\
-    \x20value\x20`\"Hello\"`,\x20and\x20a\x20second\x20containing\x20the\n\
-    \x20field\x20value\x20`\"World\"\x20=\x20\"W\"\x20+\x20\"orl\"\x20+\x20\
-    \"d\"`.\n\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04\x8b\x01\x02\n\n\r\n\x05\
-    \x04\x01\x02\x01\x06\x12\x04\x8b\x01\x0b\x20\n\r\n\x05\x04\x01\x02\x01\
-    \x01\x12\x04\x8b\x01!'\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x8b\x01*+\n\
-    \xdf\x01\n\x04\x04\x01\x02\x02\x12\x04\x90\x01\x02\x19\x1a\xd0\x01\x20If\
-    \x20true,\x20then\x20the\x20final\x20value\x20in\x20[values][google.span\
-    ner.v1.PartialResultSet.values]\x20is\x20chunked,\x20and\x20must\n\x20be\
-    \x20combined\x20with\x20more\x20values\x20from\x20subsequent\x20`Partial\
-    ResultSet`s\n\x20to\x20obtain\x20a\x20complete\x20field\x20value.\n\n\r\
-    \n\x05\x04\x01\x02\x02\x05\x12\x04\x90\x01\x02\x06\n\r\n\x05\x04\x01\x02\
-    \x02\x01\x12\x04\x90\x01\x07\x14\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\
-    \x90\x01\x17\x18\n\xbb\x02\n\x04\x04\x01\x02\x03\x12\x04\x97\x01\x02\x19\
-    \x1a\xac\x02\x20Streaming\x20calls\x20might\x20be\x20interrupted\x20for\
-    \x20a\x20variety\x20of\x20reasons,\x20such\n\x20as\x20TCP\x20connection\
-    \x20loss.\x20If\x20this\x20occurs,\x20the\x20stream\x20of\x20results\x20\
-    can\n\x20be\x20resumed\x20by\x20re-sending\x20the\x20original\x20request\
-    \x20and\x20including\n\x20`resume_token`.\x20Note\x20that\x20executing\
-    \x20any\x20other\x20transaction\x20in\x20the\n\x20same\x20session\x20inv\
-    alidates\x20the\x20token.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\x97\
-    \x01\x02\x07\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\x97\x01\x08\x14\n\r\n\
-    \x05\x04\x01\x02\x03\x03\x12\x04\x97\x01\x17\x18\n\xeb\x02\n\x04\x04\x01\
-    \x02\x04\x12\x04\x9f\x01\x02\x1b\x1a\xdc\x02\x20Query\x20plan\x20and\x20\
-    execution\x20statistics\x20for\x20the\x20statement\x20that\x20produced\
-    \x20this\n\x20streaming\x20result\x20set.\x20These\x20can\x20be\x20reque\
-    sted\x20by\x20setting\n\x20[ExecuteSqlRequest.query_mode][google.spanner\
-    .v1.ExecuteSqlRequest.query_mode]\x20and\x20are\x20sent\n\x20only\x20onc\
-    e\x20with\x20the\x20last\x20response\x20in\x20the\x20stream.\n\x20This\
+    \n\"google/spanner/v1/result_set.proto\x12\x11google.spanner.v1\x1a\x1fg\
+    oogle/api/field_behavior.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\"\
+    google/spanner/v1/query_plan.proto\x1a#google/spanner/v1/transaction.pro\
+    to\x1a\x1cgoogle/spanner/v1/type.proto\"\x99\x02\n\tResultSet\x12@\n\x08\
+    metadata\x18\x01\x20\x01(\x0b2$.google.spanner.v1.ResultSetMetadataR\x08\
+    metadata\x12.\n\x04rows\x18\x02\x20\x03(\x0b2\x1a.google.protobuf.ListVa\
+    lueR\x04rows\x127\n\x05stats\x18\x03\x20\x01(\x0b2!.google.spanner.v1.Re\
+    sultSetStatsR\x05stats\x12a\n\x0fprecommit_token\x18\x05\x20\x01(\x0b23.\
+    google.spanner.v1.MultiplexedSessionPrecommitTokenR\x0eprecommitTokenB\
+    \x03\xe0A\x01\"\xe8\x02\n\x10PartialResultSet\x12@\n\x08metadata\x18\x01\
+    \x20\x01(\x0b2$.google.spanner.v1.ResultSetMetadataR\x08metadata\x12.\n\
+    \x06values\x18\x02\x20\x03(\x0b2\x16.google.protobuf.ValueR\x06values\
+    \x12#\n\rchunked_value\x18\x03\x20\x01(\x08R\x0cchunkedValue\x12!\n\x0cr\
+    esume_token\x18\x04\x20\x01(\x0cR\x0bresumeToken\x127\n\x05stats\x18\x05\
+    \x20\x01(\x0b2!.google.spanner.v1.ResultSetStatsR\x05stats\x12a\n\x0fpre\
+    commit_token\x18\x08\x20\x01(\x0b23.google.spanner.v1.MultiplexedSession\
+    PrecommitTokenR\x0eprecommitTokenB\x03\xe0A\x01\"\xe3\x01\n\x11ResultSet\
+    Metadata\x128\n\x08row_type\x18\x01\x20\x01(\x0b2\x1d.google.spanner.v1.\
+    StructTypeR\x07rowType\x12@\n\x0btransaction\x18\x02\x20\x01(\x0b2\x1e.g\
+    oogle.spanner.v1.TransactionR\x0btransaction\x12R\n\x15undeclared_parame\
+    ters\x18\x03\x20\x01(\x0b2\x1d.google.spanner.v1.StructTypeR\x14undeclar\
+    edParameters\"\xf3\x01\n\x0eResultSetStats\x12;\n\nquery_plan\x18\x01\
+    \x20\x01(\x0b2\x1c.google.spanner.v1.QueryPlanR\tqueryPlan\x128\n\x0bque\
+    ry_stats\x18\x02\x20\x01(\x0b2\x17.google.protobuf.StructR\nqueryStats\
+    \x12(\n\x0frow_count_exact\x18\x03\x20\x01(\x03H\0R\rrowCountExact\x123\
+    \n\x15row_count_lower_bound\x18\x04\x20\x01(\x03H\0R\x12rowCountLowerBou\
+    ndB\x0b\n\trow_countB\xb4\x01\n\x15com.google.spanner.v1B\x0eResultSetPr\
+    otoP\x01Z5cloud.google.com/go/spanner/apiv1/spannerpb;spannerpb\xf8\x01\
+    \x01\xaa\x02\x17Google.Cloud.Spanner.V1\xca\x02\x17Google\\Cloud\\Spanne\
+    r\\V1\xea\x02\x1aGoogle::Cloud::Spanner::V1J\xfbJ\n\x07\x12\x05\x0e\0\
+    \xec\x01\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\
+    \x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20L\
+    icense,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20no\
+    t\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\
+    \x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20Lice\
+    nse\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-\
+    2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\
+    \x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
+    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
+    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
+    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
+    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
+    tations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x1a\
+    \n\t\n\x02\x03\0\x12\x03\x12\0)\n\t\n\x02\x03\x01\x12\x03\x13\0&\n\t\n\
+    \x02\x03\x02\x12\x03\x14\0,\n\t\n\x02\x03\x03\x12\x03\x15\0-\n\t\n\x02\
+    \x03\x04\x12\x03\x16\0&\n\x08\n\x01\x08\x12\x03\x18\0\x1f\n\t\n\x02\x08\
+    \x1f\x12\x03\x18\0\x1f\n\x08\n\x01\x08\x12\x03\x19\04\n\t\n\x02\x08%\x12\
+    \x03\x19\04\n\x08\n\x01\x08\x12\x03\x1a\0L\n\t\n\x02\x08\x0b\x12\x03\x1a\
+    \0L\n\x08\n\x01\x08\x12\x03\x1b\0\"\n\t\n\x02\x08\n\x12\x03\x1b\0\"\n\
+    \x08\n\x01\x08\x12\x03\x1c\0/\n\t\n\x02\x08\x08\x12\x03\x1c\0/\n\x08\n\
+    \x01\x08\x12\x03\x1d\0.\n\t\n\x02\x08\x01\x12\x03\x1d\0.\n\x08\n\x01\x08\
+    \x12\x03\x1e\04\n\t\n\x02\x08)\x12\x03\x1e\04\n\x08\n\x01\x08\x12\x03\
+    \x1f\03\n\t\n\x02\x08-\x12\x03\x1f\03\ny\n\x02\x04\0\x12\x04#\0B\x01\x1a\
+    m\x20Results\x20from\x20[Read][google.spanner.v1.Spanner.Read]\x20or\n\
+    \x20[ExecuteSql][google.spanner.v1.Spanner.ExecuteSql].\n\n\n\n\x03\x04\
+    \0\x01\x12\x03#\x08\x11\nK\n\x04\x04\0\x02\0\x12\x03%\x02!\x1a>\x20Metad\
+    ata\x20about\x20the\x20result\x20set,\x20such\x20as\x20row\x20type\x20in\
+    formation.\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\x03%\x02\x13\n\x0c\n\x05\
+    \x04\0\x02\0\x01\x12\x03%\x14\x1c\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03%\
+    \x1f\x20\n\xde\x02\n\x04\x04\0\x02\x01\x12\x03-\x02.\x1a\xd0\x02\x20Each\
+    \x20element\x20in\x20`rows`\x20is\x20a\x20row\x20whose\x20format\x20is\
+    \x20defined\x20by\n\x20[metadata.row_type][google.spanner.v1.ResultSetMe\
+    tadata.row_type].\x20The\x20ith\x20element\n\x20in\x20each\x20row\x20mat\
+    ches\x20the\x20ith\x20field\x20in\n\x20[metadata.row_type][google.spanne\
+    r.v1.ResultSetMetadata.row_type].\x20Elements\x20are\n\x20encoded\x20bas\
+    ed\x20on\x20type\x20as\x20described\n\x20[here][google.spanner.v1.TypeCo\
+    de].\n\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03-\x02\n\n\x0c\n\x05\x04\0\
+    \x02\x01\x06\x12\x03-\x0b$\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03-%)\n\
+    \x0c\n\x05\x04\0\x02\x01\x03\x12\x03-,-\n\xf5\x04\n\x04\x04\0\x02\x02\
+    \x12\x037\x02\x1b\x1a\xe7\x04\x20Query\x20plan\x20and\x20execution\x20st\
+    atistics\x20for\x20the\x20SQL\x20statement\x20that\n\x20produced\x20this\
+    \x20result\x20set.\x20These\x20can\x20be\x20requested\x20by\x20setting\n\
+    \x20[ExecuteSqlRequest.query_mode][google.spanner.v1.ExecuteSqlRequest.q\
+    uery_mode].\n\x20DML\x20statements\x20always\x20produce\x20stats\x20cont\
+    aining\x20the\x20number\x20of\x20rows\n\x20modified,\x20unless\x20execut\
+    ed\x20using\x20the\n\x20[ExecuteSqlRequest.QueryMode.PLAN][google.spanne\
+    r.v1.ExecuteSqlRequest.QueryMode.PLAN]\x20[ExecuteSqlRequest.query_mode]\
+    [google.spanner.v1.ExecuteSqlRequest.query_mode].\n\x20Other\x20fields\
+    \x20may\x20or\x20may\x20not\x20be\x20populated,\x20based\x20on\x20the\n\
+    \x20[ExecuteSqlRequest.query_mode][google.spanner.v1.ExecuteSqlRequest.q\
+    uery_mode].\n\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x037\x02\x10\n\x0c\n\x05\
+    \x04\0\x02\x02\x01\x12\x037\x11\x16\n\x0c\n\x05\x04\0\x02\x02\x03\x12\
+    \x037\x19\x1a\n\xff\x02\n\x04\x04\0\x02\x03\x12\x04@\x02A/\x1a\xf0\x02\
+    \x20Optional.\x20A\x20precommit\x20token\x20will\x20be\x20included\x20if\
+    \x20the\x20read-write\x20transaction\n\x20is\x20on\x20a\x20multiplexed\
+    \x20session.\n\x20The\x20precommit\x20token\x20with\x20the\x20highest\
+    \x20sequence\x20number\x20from\x20this\x20transaction\n\x20attempt\x20sh\
+    ould\x20be\x20passed\x20to\x20the\n\x20[Commit][google.spanner.v1.Spanne\
+    r.Commit]\x20request\x20for\x20this\x20transaction.\n\x20This\x20feature\
+    \x20is\x20not\x20yet\x20supported\x20and\x20will\x20result\x20in\x20an\
+    \x20UNIMPLEMENTED\n\x20error.\n\n\x0c\n\x05\x04\0\x02\x03\x06\x12\x03@\
+    \x02\"\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03@#2\n\x0c\n\x05\x04\0\x02\
+    \x03\x03\x12\x03@56\n\x0c\n\x05\x04\0\x02\x03\x08\x12\x03A\x06.\n\x0f\n\
+    \x08\x04\0\x02\x03\x08\x9c\x08\0\x12\x03A\x07-\n\xcc\x01\n\x02\x04\x01\
+    \x12\x05G\0\xb4\x01\x01\x1a\xbe\x01\x20Partial\x20results\x20from\x20a\
+    \x20streaming\x20read\x20or\x20SQL\x20query.\x20Streaming\x20reads\x20an\
+    d\n\x20SQL\x20queries\x20better\x20tolerate\x20large\x20result\x20sets,\
+    \x20large\x20rows,\x20and\x20large\n\x20values,\x20but\x20are\x20a\x20li\
+    ttle\x20trickier\x20to\x20consume.\n\n\n\n\x03\x04\x01\x01\x12\x03G\x08\
+    \x18\np\n\x04\x04\x01\x02\0\x12\x03J\x02!\x1ac\x20Metadata\x20about\x20t\
+    he\x20result\x20set,\x20such\x20as\x20row\x20type\x20information.\n\x20O\
+    nly\x20present\x20in\x20the\x20first\x20response.\n\n\x0c\n\x05\x04\x01\
+    \x02\0\x06\x12\x03J\x02\x13\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03J\x14\
+    \x1c\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03J\x1f\x20\n\xc0\x15\n\x04\x04\
+    \x01\x02\x01\x12\x04\x95\x01\x02,\x1a\xb1\x15\x20A\x20streamed\x20result\
+    \x20set\x20consists\x20of\x20a\x20stream\x20of\x20values,\x20which\x20mi\
+    ght\n\x20be\x20split\x20into\x20many\x20`PartialResultSet`\x20messages\
+    \x20to\x20accommodate\n\x20large\x20rows\x20and/or\x20large\x20values.\
+    \x20Every\x20N\x20complete\x20values\x20defines\x20a\n\x20row,\x20where\
+    \x20N\x20is\x20equal\x20to\x20the\x20number\x20of\x20entries\x20in\n\x20\
+    [metadata.row_type.fields][google.spanner.v1.StructType.fields].\n\n\x20\
+    Most\x20values\x20are\x20encoded\x20based\x20on\x20type\x20as\x20describ\
+    ed\n\x20[here][google.spanner.v1.TypeCode].\n\n\x20It\x20is\x20possible\
+    \x20that\x20the\x20last\x20value\x20in\x20values\x20is\x20\"chunked\",\n\
+    \x20meaning\x20that\x20the\x20rest\x20of\x20the\x20value\x20is\x20sent\
+    \x20in\x20subsequent\n\x20`PartialResultSet`(s).\x20This\x20is\x20denote\
+    d\x20by\x20the\x20[chunked_value][google.spanner.v1.PartialResultSet.chu\
+    nked_value]\n\x20field.\x20Two\x20or\x20more\x20chunked\x20values\x20can\
+    \x20be\x20merged\x20to\x20form\x20a\n\x20complete\x20value\x20as\x20foll\
+    ows:\n\n\x20\x20\x20*\x20`bool/number/null`:\x20cannot\x20be\x20chunked\
+    \n\x20\x20\x20*\x20`string`:\x20concatenate\x20the\x20strings\n\x20\x20\
+    \x20*\x20`list`:\x20concatenate\x20the\x20lists.\x20If\x20the\x20last\
+    \x20element\x20in\x20a\x20list\x20is\x20a\n\x20\x20\x20\x20\x20`string`,\
+    \x20`list`,\x20or\x20`object`,\x20merge\x20it\x20with\x20the\x20first\
+    \x20element\x20in\n\x20\x20\x20\x20\x20the\x20next\x20list\x20by\x20appl\
+    ying\x20these\x20rules\x20recursively.\n\x20\x20\x20*\x20`object`:\x20co\
+    ncatenate\x20the\x20(field\x20name,\x20field\x20value)\x20pairs.\x20If\
+    \x20a\n\x20\x20\x20\x20\x20field\x20name\x20is\x20duplicated,\x20then\
+    \x20apply\x20these\x20rules\x20recursively\n\x20\x20\x20\x20\x20to\x20me\
+    rge\x20the\x20field\x20values.\n\n\x20Some\x20examples\x20of\x20merging:\
+    \n\n\x20\x20\x20\x20\x20#\x20Strings\x20are\x20concatenated.\n\x20\x20\
+    \x20\x20\x20\"foo\",\x20\"bar\"\x20=>\x20\"foobar\"\n\n\x20\x20\x20\x20\
+    \x20#\x20Lists\x20of\x20non-strings\x20are\x20concatenated.\n\x20\x20\
+    \x20\x20\x20[2,\x203],\x20[4]\x20=>\x20[2,\x203,\x204]\n\n\x20\x20\x20\
+    \x20\x20#\x20Lists\x20are\x20concatenated,\x20but\x20the\x20last\x20and\
+    \x20first\x20elements\x20are\x20merged\n\x20\x20\x20\x20\x20#\x20because\
+    \x20they\x20are\x20strings.\n\x20\x20\x20\x20\x20[\"a\",\x20\"b\"],\x20[\
+    \"c\",\x20\"d\"]\x20=>\x20[\"a\",\x20\"bc\",\x20\"d\"]\n\n\x20\x20\x20\
+    \x20\x20#\x20Lists\x20are\x20concatenated,\x20but\x20the\x20last\x20and\
+    \x20first\x20elements\x20are\x20merged\n\x20\x20\x20\x20\x20#\x20because\
+    \x20they\x20are\x20lists.\x20Recursively,\x20the\x20last\x20and\x20first\
+    \x20elements\n\x20\x20\x20\x20\x20#\x20of\x20the\x20inner\x20lists\x20ar\
+    e\x20merged\x20because\x20they\x20are\x20strings.\n\x20\x20\x20\x20\x20[\
+    \"a\",\x20[\"b\",\x20\"c\"]],\x20[[\"d\"],\x20\"e\"]\x20=>\x20[\"a\",\
+    \x20[\"b\",\x20\"cd\"],\x20\"e\"]\n\n\x20\x20\x20\x20\x20#\x20Non-overla\
+    pping\x20object\x20fields\x20are\x20combined.\n\x20\x20\x20\x20\x20{\"a\
+    \":\x20\"1\"},\x20{\"b\":\x20\"2\"}\x20=>\x20{\"a\":\x20\"1\",\x20\"b\":\
+    \x202\"}\n\n\x20\x20\x20\x20\x20#\x20Overlapping\x20object\x20fields\x20\
+    are\x20merged.\n\x20\x20\x20\x20\x20{\"a\":\x20\"1\"},\x20{\"a\":\x20\"2\
+    \"}\x20=>\x20{\"a\":\x20\"12\"}\n\n\x20\x20\x20\x20\x20#\x20Examples\x20\
+    of\x20merging\x20objects\x20containing\x20lists\x20of\x20strings.\n\x20\
+    \x20\x20\x20\x20{\"a\":\x20[\"1\"]},\x20{\"a\":\x20[\"2\"]}\x20=>\x20{\"\
+    a\":\x20[\"12\"]}\n\n\x20For\x20a\x20more\x20complete\x20example,\x20sup\
+    pose\x20a\x20streaming\x20SQL\x20query\x20is\n\x20yielding\x20a\x20resul\
+    t\x20set\x20whose\x20rows\x20contain\x20a\x20single\x20string\n\x20field\
+    .\x20The\x20following\x20`PartialResultSet`s\x20might\x20be\x20yielded:\
+    \n\n\x20\x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"metadata\":\x20\
+    {\x20...\x20}\n\x20\x20\x20\x20\x20\x20\x20\"values\":\x20[\"Hello\",\
+    \x20\"W\"]\n\x20\x20\x20\x20\x20\x20\x20\"chunked_value\":\x20true\n\x20\
+    \x20\x20\x20\x20\x20\x20\"resume_token\":\x20\"Af65...\"\n\x20\x20\x20\
+    \x20\x20}\n\x20\x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"values\"\
+    :\x20[\"orl\"]\n\x20\x20\x20\x20\x20\x20\x20\"chunked_value\":\x20true\n\
+    \x20\x20\x20\x20\x20\x20\x20\"resume_token\":\x20\"Bqp2...\"\n\x20\x20\
+    \x20\x20\x20}\n\x20\x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"valu\
+    es\":\x20[\"d\"]\n\x20\x20\x20\x20\x20\x20\x20\"resume_token\":\x20\"Zx1\
+    B...\"\n\x20\x20\x20\x20\x20}\n\n\x20This\x20sequence\x20of\x20`PartialR\
+    esultSet`s\x20encodes\x20two\x20rows,\x20one\n\x20containing\x20the\x20f\
+    ield\x20value\x20`\"Hello\"`,\x20and\x20a\x20second\x20containing\x20the\
+    \n\x20field\x20value\x20`\"World\"\x20=\x20\"W\"\x20+\x20\"orl\"\x20+\
+    \x20\"d\"`.\n\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04\x95\x01\x02\n\n\r\n\
+    \x05\x04\x01\x02\x01\x06\x12\x04\x95\x01\x0b\x20\n\r\n\x05\x04\x01\x02\
+    \x01\x01\x12\x04\x95\x01!'\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\x95\x01\
+    *+\n\xdf\x01\n\x04\x04\x01\x02\x02\x12\x04\x9a\x01\x02\x19\x1a\xd0\x01\
+    \x20If\x20true,\x20then\x20the\x20final\x20value\x20in\x20[values][googl\
+    e.spanner.v1.PartialResultSet.values]\x20is\x20chunked,\x20and\x20must\n\
+    \x20be\x20combined\x20with\x20more\x20values\x20from\x20subsequent\x20`P\
+    artialResultSet`s\n\x20to\x20obtain\x20a\x20complete\x20field\x20value.\
+    \n\n\r\n\x05\x04\x01\x02\x02\x05\x12\x04\x9a\x01\x02\x06\n\r\n\x05\x04\
+    \x01\x02\x02\x01\x12\x04\x9a\x01\x07\x14\n\r\n\x05\x04\x01\x02\x02\x03\
+    \x12\x04\x9a\x01\x17\x18\n\xbb\x02\n\x04\x04\x01\x02\x03\x12\x04\xa1\x01\
+    \x02\x19\x1a\xac\x02\x20Streaming\x20calls\x20might\x20be\x20interrupted\
+    \x20for\x20a\x20variety\x20of\x20reasons,\x20such\n\x20as\x20TCP\x20conn\
+    ection\x20loss.\x20If\x20this\x20occurs,\x20the\x20stream\x20of\x20resul\
+    ts\x20can\n\x20be\x20resumed\x20by\x20re-sending\x20the\x20original\x20r\
+    equest\x20and\x20including\n\x20`resume_token`.\x20Note\x20that\x20execu\
+    ting\x20any\x20other\x20transaction\x20in\x20the\n\x20same\x20session\
+    \x20invalidates\x20the\x20token.\n\n\r\n\x05\x04\x01\x02\x03\x05\x12\x04\
+    \xa1\x01\x02\x07\n\r\n\x05\x04\x01\x02\x03\x01\x12\x04\xa1\x01\x08\x14\n\
+    \r\n\x05\x04\x01\x02\x03\x03\x12\x04\xa1\x01\x17\x18\n\xeb\x02\n\x04\x04\
+    \x01\x02\x04\x12\x04\xa9\x01\x02\x1b\x1a\xdc\x02\x20Query\x20plan\x20and\
+    \x20execution\x20statistics\x20for\x20the\x20statement\x20that\x20produc\
+    ed\x20this\n\x20streaming\x20result\x20set.\x20These\x20can\x20be\x20req\
+    uested\x20by\x20setting\n\x20[ExecuteSqlRequest.query_mode][google.spann\
+    er.v1.ExecuteSqlRequest.query_mode]\x20and\x20are\x20sent\n\x20only\x20o\
+    nce\x20with\x20the\x20last\x20response\x20in\x20the\x20stream.\n\x20This\
     \x20field\x20will\x20also\x20be\x20present\x20in\x20the\x20last\x20respo\
     nse\x20for\x20DML\n\x20statements.\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\
-    \x04\x9f\x01\x02\x10\n\r\n\x05\x04\x01\x02\x04\x01\x12\x04\x9f\x01\x11\
-    \x16\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\x9f\x01\x19\x1a\n\x84\x01\n\
-    \x02\x04\x02\x12\x06\xa3\x01\0\xb1\x01\x01\x1av\x20Metadata\x20about\x20\
-    a\x20[ResultSet][google.spanner.v1.ResultSet]\x20or\x20[PartialResultSet\
-    ][google.spanner.v1.PartialResultSet].\n\n\x0b\n\x03\x04\x02\x01\x12\x04\
-    \xa3\x01\x08\x19\n\xd2\x02\n\x04\x04\x02\x02\0\x12\x04\xac\x01\x02\x1a\
-    \x1a\xc3\x02\x20Indicates\x20the\x20field\x20names\x20and\x20types\x20fo\
-    r\x20the\x20rows\x20in\x20the\x20result\n\x20set.\x20\x20For\x20example,\
-    \x20a\x20SQL\x20query\x20like\x20`\"SELECT\x20UserId,\x20UserName\x20FRO\
-    M\n\x20Users\"`\x20could\x20return\x20a\x20`row_type`\x20value\x20like:\
-    \n\n\x20\x20\x20\x20\x20\"fields\":\x20[\n\x20\x20\x20\x20\x20\x20\x20{\
-    \x20\"name\":\x20\"UserId\",\x20\"type\":\x20{\x20\"code\":\x20\"INT64\"\
-    \x20}\x20},\n\x20\x20\x20\x20\x20\x20\x20{\x20\"name\":\x20\"UserName\",\
-    \x20\"type\":\x20{\x20\"code\":\x20\"STRING\"\x20}\x20},\n\x20\x20\x20\
-    \x20\x20]\n\n\r\n\x05\x04\x02\x02\0\x06\x12\x04\xac\x01\x02\x0c\n\r\n\
-    \x05\x04\x02\x02\0\x01\x12\x04\xac\x01\r\x15\n\r\n\x05\x04\x02\x02\0\x03\
-    \x12\x04\xac\x01\x18\x19\n\x8a\x01\n\x04\x04\x02\x02\x01\x12\x04\xb0\x01\
-    \x02\x1e\x1a|\x20If\x20the\x20read\x20or\x20SQL\x20query\x20began\x20a\
-    \x20transaction\x20as\x20a\x20side-effect,\x20the\n\x20information\x20ab\
-    out\x20the\x20new\x20transaction\x20is\x20yielded\x20here.\n\n\r\n\x05\
-    \x04\x02\x02\x01\x06\x12\x04\xb0\x01\x02\r\n\r\n\x05\x04\x02\x02\x01\x01\
-    \x12\x04\xb0\x01\x0e\x19\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xb0\x01\
-    \x1c\x1d\n\x92\x01\n\x02\x04\x03\x12\x06\xb4\x01\0\xcc\x01\x01\x1a\x83\
-    \x01\x20Additional\x20statistics\x20about\x20a\x20[ResultSet][google.spa\
-    nner.v1.ResultSet]\x20or\x20[PartialResultSet][google.spanner.v1.Partial\
-    ResultSet].\n\n\x0b\n\x03\x04\x03\x01\x12\x04\xb4\x01\x08\x16\nc\n\x04\
-    \x04\x03\x02\0\x12\x04\xb6\x01\x02\x1b\x1aU\x20[QueryPlan][google.spanne\
-    r.v1.QueryPlan]\x20for\x20the\x20query\x20associated\x20with\x20this\x20\
-    result.\n\n\r\n\x05\x04\x03\x02\0\x06\x12\x04\xb6\x01\x02\x0b\n\r\n\x05\
-    \x04\x03\x02\0\x01\x12\x04\xb6\x01\x0c\x16\n\r\n\x05\x04\x03\x02\0\x03\
-    \x12\x04\xb6\x01\x19\x1a\n\x9e\x02\n\x04\x04\x03\x02\x01\x12\x04\xc1\x01\
-    \x02)\x1a\x8f\x02\x20Aggregated\x20statistics\x20from\x20the\x20executio\
-    n\x20of\x20the\x20query.\x20Only\x20present\x20when\n\x20the\x20query\
-    \x20is\x20profiled.\x20For\x20example,\x20a\x20query\x20could\x20return\
-    \x20the\x20statistics\x20as\n\x20follows:\n\n\x20\x20\x20\x20\x20{\n\x20\
-    \x20\x20\x20\x20\x20\x20\"rows_returned\":\x20\"3\",\n\x20\x20\x20\x20\
-    \x20\x20\x20\"elapsed_time\":\x20\"1.22\x20secs\",\n\x20\x20\x20\x20\x20\
-    \x20\x20\"cpu_time\":\x20\"1.19\x20secs\"\n\x20\x20\x20\x20\x20}\n\n\r\n\
-    \x05\x04\x03\x02\x01\x06\x12\x04\xc1\x01\x02\x18\n\r\n\x05\x04\x03\x02\
-    \x01\x01\x12\x04\xc1\x01\x19$\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xc1\
-    \x01'(\nC\n\x04\x04\x03\x08\0\x12\x06\xc4\x01\x02\xcb\x01\x03\x1a3\x20Th\
-    e\x20number\x20of\x20rows\x20modified\x20by\x20the\x20DML\x20statement.\
-    \n\n\r\n\x05\x04\x03\x08\0\x01\x12\x04\xc4\x01\x08\x11\nO\n\x04\x04\x03\
-    \x02\x02\x12\x04\xc6\x01\x04\x1e\x1aA\x20Standard\x20DML\x20returns\x20a\
-    n\x20exact\x20count\x20of\x20rows\x20that\x20were\x20modified.\n\n\r\n\
-    \x05\x04\x03\x02\x02\x05\x12\x04\xc6\x01\x04\t\n\r\n\x05\x04\x03\x02\x02\
-    \x01\x12\x04\xc6\x01\n\x19\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\xc6\x01\
-    \x1c\x1d\ny\n\x04\x04\x03\x02\x03\x12\x04\xca\x01\x04$\x1ak\x20Partition\
-    ed\x20DML\x20does\x20not\x20offer\x20exactly-once\x20semantics,\x20so\
-    \x20it\n\x20returns\x20a\x20lower\x20bound\x20of\x20the\x20rows\x20modif\
-    ied.\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\x04\xca\x01\x04\t\n\r\n\x05\x04\
-    \x03\x02\x03\x01\x12\x04\xca\x01\n\x1f\n\r\n\x05\x04\x03\x02\x03\x03\x12\
-    \x04\xca\x01\"#b\x06proto3\
+    \x04\xa9\x01\x02\x10\n\r\n\x05\x04\x01\x02\x04\x01\x12\x04\xa9\x01\x11\
+    \x16\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\xa9\x01\x19\x1a\n\x81\x03\n\
+    \x04\x04\x01\x02\x05\x12\x06\xb2\x01\x02\xb3\x01/\x1a\xf0\x02\x20Optiona\
+    l.\x20A\x20precommit\x20token\x20will\x20be\x20included\x20if\x20the\x20\
+    read-write\x20transaction\n\x20is\x20on\x20a\x20multiplexed\x20session.\
+    \n\x20The\x20precommit\x20token\x20with\x20the\x20highest\x20sequence\
+    \x20number\x20from\x20this\x20transaction\n\x20attempt\x20should\x20be\
+    \x20passed\x20to\x20the\n\x20[Commit][google.spanner.v1.Spanner.Commit]\
+    \x20request\x20for\x20this\x20transaction.\n\x20This\x20feature\x20is\
+    \x20not\x20yet\x20supported\x20and\x20will\x20result\x20in\x20an\x20UNIM\
+    PLEMENTED\n\x20error.\n\n\r\n\x05\x04\x01\x02\x05\x06\x12\x04\xb2\x01\
+    \x02\"\n\r\n\x05\x04\x01\x02\x05\x01\x12\x04\xb2\x01#2\n\r\n\x05\x04\x01\
+    \x02\x05\x03\x12\x04\xb2\x0156\n\r\n\x05\x04\x01\x02\x05\x08\x12\x04\xb3\
+    \x01\x06.\n\x10\n\x08\x04\x01\x02\x05\x08\x9c\x08\0\x12\x04\xb3\x01\x07-\
+    \n\x84\x01\n\x02\x04\x02\x12\x06\xb7\x01\0\xd1\x01\x01\x1av\x20Metadata\
+    \x20about\x20a\x20[ResultSet][google.spanner.v1.ResultSet]\x20or\x20[Par\
+    tialResultSet][google.spanner.v1.PartialResultSet].\n\n\x0b\n\x03\x04\
+    \x02\x01\x12\x04\xb7\x01\x08\x19\n\xd2\x02\n\x04\x04\x02\x02\0\x12\x04\
+    \xc0\x01\x02\x1a\x1a\xc3\x02\x20Indicates\x20the\x20field\x20names\x20an\
+    d\x20types\x20for\x20the\x20rows\x20in\x20the\x20result\n\x20set.\x20\
+    \x20For\x20example,\x20a\x20SQL\x20query\x20like\x20`\"SELECT\x20UserId,\
+    \x20UserName\x20FROM\n\x20Users\"`\x20could\x20return\x20a\x20`row_type`\
+    \x20value\x20like:\n\n\x20\x20\x20\x20\x20\"fields\":\x20[\n\x20\x20\x20\
+    \x20\x20\x20\x20{\x20\"name\":\x20\"UserId\",\x20\"type\":\x20{\x20\"cod\
+    e\":\x20\"INT64\"\x20}\x20},\n\x20\x20\x20\x20\x20\x20\x20{\x20\"name\":\
+    \x20\"UserName\",\x20\"type\":\x20{\x20\"code\":\x20\"STRING\"\x20}\x20}\
+    ,\n\x20\x20\x20\x20\x20]\n\n\r\n\x05\x04\x02\x02\0\x06\x12\x04\xc0\x01\
+    \x02\x0c\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xc0\x01\r\x15\n\r\n\x05\x04\
+    \x02\x02\0\x03\x12\x04\xc0\x01\x18\x19\n\x8a\x01\n\x04\x04\x02\x02\x01\
+    \x12\x04\xc4\x01\x02\x1e\x1a|\x20If\x20the\x20read\x20or\x20SQL\x20query\
+    \x20began\x20a\x20transaction\x20as\x20a\x20side-effect,\x20the\n\x20inf\
+    ormation\x20about\x20the\x20new\x20transaction\x20is\x20yielded\x20here.\
+    \n\n\r\n\x05\x04\x02\x02\x01\x06\x12\x04\xc4\x01\x02\r\n\r\n\x05\x04\x02\
+    \x02\x01\x01\x12\x04\xc4\x01\x0e\x19\n\r\n\x05\x04\x02\x02\x01\x03\x12\
+    \x04\xc4\x01\x1c\x1d\n\xed\x03\n\x04\x04\x02\x02\x02\x12\x04\xd0\x01\x02\
+    '\x1a\xde\x03\x20A\x20SQL\x20query\x20can\x20be\x20parameterized.\x20In\
+    \x20PLAN\x20mode,\x20these\x20parameters\x20can\x20be\n\x20undeclared.\
+    \x20This\x20indicates\x20the\x20field\x20names\x20and\x20types\x20for\
+    \x20those\x20undeclared\n\x20parameters\x20in\x20the\x20SQL\x20query.\
+    \x20For\x20example,\x20a\x20SQL\x20query\x20like\x20`\"SELECT\x20*\x20FR\
+    OM\n\x20Users\x20where\x20UserId\x20=\x20@userId\x20and\x20UserName\x20=\
+    \x20@userName\x20\"`\x20could\x20return\x20a\n\x20`undeclared_parameters\
+    `\x20value\x20like:\n\n\x20\x20\x20\x20\x20\"fields\":\x20[\n\x20\x20\
+    \x20\x20\x20\x20\x20{\x20\"name\":\x20\"UserId\",\x20\"type\":\x20{\x20\
+    \"code\":\x20\"INT64\"\x20}\x20},\n\x20\x20\x20\x20\x20\x20\x20{\x20\"na\
+    me\":\x20\"UserName\",\x20\"type\":\x20{\x20\"code\":\x20\"STRING\"\x20}\
+    \x20},\n\x20\x20\x20\x20\x20]\n\n\r\n\x05\x04\x02\x02\x02\x06\x12\x04\
+    \xd0\x01\x02\x0c\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\xd0\x01\r\"\n\r\n\
+    \x05\x04\x02\x02\x02\x03\x12\x04\xd0\x01%&\n\x92\x01\n\x02\x04\x03\x12\
+    \x06\xd4\x01\0\xec\x01\x01\x1a\x83\x01\x20Additional\x20statistics\x20ab\
+    out\x20a\x20[ResultSet][google.spanner.v1.ResultSet]\x20or\x20[PartialRe\
+    sultSet][google.spanner.v1.PartialResultSet].\n\n\x0b\n\x03\x04\x03\x01\
+    \x12\x04\xd4\x01\x08\x16\nc\n\x04\x04\x03\x02\0\x12\x04\xd6\x01\x02\x1b\
+    \x1aU\x20[QueryPlan][google.spanner.v1.QueryPlan]\x20for\x20the\x20query\
+    \x20associated\x20with\x20this\x20result.\n\n\r\n\x05\x04\x03\x02\0\x06\
+    \x12\x04\xd6\x01\x02\x0b\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xd6\x01\x0c\
+    \x16\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xd6\x01\x19\x1a\n\x9e\x02\n\x04\
+    \x04\x03\x02\x01\x12\x04\xe1\x01\x02)\x1a\x8f\x02\x20Aggregated\x20stati\
+    stics\x20from\x20the\x20execution\x20of\x20the\x20query.\x20Only\x20pres\
+    ent\x20when\n\x20the\x20query\x20is\x20profiled.\x20For\x20example,\x20a\
+    \x20query\x20could\x20return\x20the\x20statistics\x20as\n\x20follows:\n\
+    \n\x20\x20\x20\x20\x20{\n\x20\x20\x20\x20\x20\x20\x20\"rows_returned\":\
+    \x20\"3\",\n\x20\x20\x20\x20\x20\x20\x20\"elapsed_time\":\x20\"1.22\x20s\
+    ecs\",\n\x20\x20\x20\x20\x20\x20\x20\"cpu_time\":\x20\"1.19\x20secs\"\n\
+    \x20\x20\x20\x20\x20}\n\n\r\n\x05\x04\x03\x02\x01\x06\x12\x04\xe1\x01\
+    \x02\x18\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\xe1\x01\x19$\n\r\n\x05\
+    \x04\x03\x02\x01\x03\x12\x04\xe1\x01'(\nC\n\x04\x04\x03\x08\0\x12\x06\
+    \xe4\x01\x02\xeb\x01\x03\x1a3\x20The\x20number\x20of\x20rows\x20modified\
+    \x20by\x20the\x20DML\x20statement.\n\n\r\n\x05\x04\x03\x08\0\x01\x12\x04\
+    \xe4\x01\x08\x11\nO\n\x04\x04\x03\x02\x02\x12\x04\xe6\x01\x04\x1e\x1aA\
+    \x20Standard\x20DML\x20returns\x20an\x20exact\x20count\x20of\x20rows\x20\
+    that\x20were\x20modified.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\xe6\
+    \x01\x04\t\n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\xe6\x01\n\x19\n\r\n\x05\
+    \x04\x03\x02\x02\x03\x12\x04\xe6\x01\x1c\x1d\ny\n\x04\x04\x03\x02\x03\
+    \x12\x04\xea\x01\x04$\x1ak\x20Partitioned\x20DML\x20does\x20not\x20offer\
+    \x20exactly-once\x20semantics,\x20so\x20it\n\x20returns\x20a\x20lower\
+    \x20bound\x20of\x20the\x20rows\x20modified.\n\n\r\n\x05\x04\x03\x02\x03\
+    \x05\x12\x04\xea\x01\x04\t\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xea\x01\
+    \n\x1f\n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\xea\x01\"#b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1082,11 +1197,11 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(5);
+            deps.push(super::field_behavior::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::struct_::file_descriptor().clone());
             deps.push(super::query_plan::file_descriptor().clone());
             deps.push(super::transaction::file_descriptor().clone());
             deps.push(super::type_::file_descriptor().clone());
-            deps.push(super::annotations::file_descriptor().clone());
             let mut messages = ::std::vec::Vec::with_capacity(4);
             messages.push(ResultSet::generated_message_descriptor_data());
             messages.push(PartialResultSet::generated_message_descriptor_data());

@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -25,8 +25,8 @@
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 
-///  Temporal asset. In addition to the asset, the temporal asset includes the
-///  status of the asset and valid from and to time of it.
+///  An asset in Google Cloud and its temporal metadata, including the time window
+///  when it was observed and its status during that window.
 // @@protoc_insertion_point(message:google.cloud.asset.v1.TemporalAsset)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct TemporalAsset {
@@ -34,12 +34,19 @@ pub struct TemporalAsset {
     ///  The time window when the asset data and state was observed.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.TemporalAsset.window)
     pub window: ::protobuf::MessageField<TimeWindow>,
-    ///  If the asset is deleted or not.
+    ///  Whether the asset has been deleted or not.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.TemporalAsset.deleted)
     pub deleted: bool,
-    ///  Asset.
+    ///  An asset in Google Cloud.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.TemporalAsset.asset)
     pub asset: ::protobuf::MessageField<Asset>,
+    ///  State of prior_asset.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.TemporalAsset.prior_asset_state)
+    pub prior_asset_state: ::protobuf::EnumOrUnknown<temporal_asset::PriorAssetState>,
+    ///  Prior copy of the asset. Populated if prior_asset_state is PRESENT.
+    ///  Currently this is only set for responses in Real-Time Feed.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.TemporalAsset.prior_asset)
+    pub prior_asset: ::protobuf::MessageField<Asset>,
     // special fields
     // @@protoc_insertion_point(special_field:google.cloud.asset.v1.TemporalAsset.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -57,7 +64,7 @@ impl TemporalAsset {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, TimeWindow>(
             "window",
@@ -73,6 +80,16 @@ impl TemporalAsset {
             "asset",
             |m: &TemporalAsset| { &m.asset },
             |m: &mut TemporalAsset| { &mut m.asset },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "prior_asset_state",
+            |m: &TemporalAsset| { &m.prior_asset_state },
+            |m: &mut TemporalAsset| { &mut m.prior_asset_state },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, Asset>(
+            "prior_asset",
+            |m: &TemporalAsset| { &m.prior_asset },
+            |m: &mut TemporalAsset| { &mut m.prior_asset },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TemporalAsset>(
             "TemporalAsset",
@@ -101,6 +118,12 @@ impl ::protobuf::Message for TemporalAsset {
                 26 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.asset)?;
                 },
+                32 => {
+                    self.prior_asset_state = is.read_enum_or_unknown()?;
+                },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.prior_asset)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -124,6 +147,13 @@ impl ::protobuf::Message for TemporalAsset {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if self.prior_asset_state != ::protobuf::EnumOrUnknown::new(temporal_asset::PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(4, self.prior_asset_state.value());
+        }
+        if let Some(v) = self.prior_asset.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -138,6 +168,12 @@ impl ::protobuf::Message for TemporalAsset {
         }
         if let Some(v) = self.asset.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if self.prior_asset_state != ::protobuf::EnumOrUnknown::new(temporal_asset::PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED) {
+            os.write_enum(4, ::protobuf::EnumOrUnknown::value(&self.prior_asset_state))?;
+        }
+        if let Some(v) = self.prior_asset.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -159,6 +195,8 @@ impl ::protobuf::Message for TemporalAsset {
         self.window.clear();
         self.deleted = false;
         self.asset.clear();
+        self.prior_asset_state = ::protobuf::EnumOrUnknown::new(temporal_asset::PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED);
+        self.prior_asset.clear();
         self.special_fields.clear();
     }
 
@@ -167,6 +205,8 @@ impl ::protobuf::Message for TemporalAsset {
             window: ::protobuf::MessageField::none(),
             deleted: false,
             asset: ::protobuf::MessageField::none(),
+            prior_asset_state: ::protobuf::EnumOrUnknown::from_i32(0),
+            prior_asset: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -190,7 +230,88 @@ impl ::protobuf::reflect::ProtobufValue for TemporalAsset {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-///  A time window of (start_time, end_time].
+/// Nested message and enums of message `TemporalAsset`
+pub mod temporal_asset {
+    ///  State of prior asset.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.cloud.asset.v1.TemporalAsset.PriorAssetState)
+    pub enum PriorAssetState {
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.TemporalAsset.PriorAssetState.PRIOR_ASSET_STATE_UNSPECIFIED)
+        PRIOR_ASSET_STATE_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.TemporalAsset.PriorAssetState.PRESENT)
+        PRESENT = 1,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.TemporalAsset.PriorAssetState.INVALID)
+        INVALID = 2,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.TemporalAsset.PriorAssetState.DOES_NOT_EXIST)
+        DOES_NOT_EXIST = 3,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.TemporalAsset.PriorAssetState.DELETED)
+        DELETED = 4,
+    }
+
+    impl ::protobuf::Enum for PriorAssetState {
+        const NAME: &'static str = "PriorAssetState";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<PriorAssetState> {
+            match value {
+                0 => ::std::option::Option::Some(PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED),
+                1 => ::std::option::Option::Some(PriorAssetState::PRESENT),
+                2 => ::std::option::Option::Some(PriorAssetState::INVALID),
+                3 => ::std::option::Option::Some(PriorAssetState::DOES_NOT_EXIST),
+                4 => ::std::option::Option::Some(PriorAssetState::DELETED),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<PriorAssetState> {
+            match str {
+                "PRIOR_ASSET_STATE_UNSPECIFIED" => ::std::option::Option::Some(PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED),
+                "PRESENT" => ::std::option::Option::Some(PriorAssetState::PRESENT),
+                "INVALID" => ::std::option::Option::Some(PriorAssetState::INVALID),
+                "DOES_NOT_EXIST" => ::std::option::Option::Some(PriorAssetState::DOES_NOT_EXIST),
+                "DELETED" => ::std::option::Option::Some(PriorAssetState::DELETED),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [PriorAssetState] = &[
+            PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED,
+            PriorAssetState::PRESENT,
+            PriorAssetState::INVALID,
+            PriorAssetState::DOES_NOT_EXIST,
+            PriorAssetState::DELETED,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for PriorAssetState {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("TemporalAsset.PriorAssetState").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for PriorAssetState {
+        fn default() -> Self {
+            PriorAssetState::PRIOR_ASSET_STATE_UNSPECIFIED
+        }
+    }
+
+    impl PriorAssetState {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<PriorAssetState>("TemporalAsset.PriorAssetState")
+        }
+    }
+}
+
+///  A time window specified by its `start_time` and `end_time`.
 // @@protoc_insertion_point(message:google.cloud.asset.v1.TimeWindow)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct TimeWindow {
@@ -198,8 +319,8 @@ pub struct TimeWindow {
     ///  Start time of the time window (exclusive).
     // @@protoc_insertion_point(field:google.cloud.asset.v1.TimeWindow.start_time)
     pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
-    ///  End time of the time window (inclusive).
-    ///  Current timestamp if not specified.
+    ///  End time of the time window (inclusive). If not specified, the current
+    ///  timestamp is used instead.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.TimeWindow.end_time)
     pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
     // special fields
@@ -336,29 +457,85 @@ impl ::protobuf::reflect::ProtobufValue for TimeWindow {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-///  Cloud asset. This includes all Google Cloud Platform resources,
-///  Cloud IAM policies, and other non-GCP assets.
+///  An asset in Google Cloud. An asset can be any resource in the Google Cloud
+///  [resource
+///  hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+///  a resource outside the Google Cloud resource hierarchy (such as Google
+///  Kubernetes Engine clusters and objects), or a policy (e.g. IAM policy),
+///  or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP relationship).
+///  See [Supported asset
+///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+///  for more information.
 // @@protoc_insertion_point(message:google.cloud.asset.v1.Asset)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Asset {
     // message fields
-    ///  The full name of the asset. For example:
-    ///  `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.
+    ///  The last update timestamp of an asset. update_time is updated when
+    ///  create/update/delete operation is performed.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.update_time)
+    pub update_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  The full name of the asset. Example:
+    ///  `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`
+    ///
     ///  See [Resource
-    ///  Names](https://cloud.google.com/apis/design/resource_names#full_resource_name)
+    ///  names](https://cloud.google.com/apis/design/resource_names#full_resource_name)
     ///  for more information.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.name)
     pub name: ::std::string::String,
-    ///  Type of the asset. Example: "compute.googleapis.com/Disk".
+    ///  The type of the asset. Example: `compute.googleapis.com/Disk`
+    ///
+    ///  See [Supported asset
+    ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+    ///  for more information.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.asset_type)
     pub asset_type: ::std::string::String,
-    ///  Representation of the resource.
+    ///  A representation of the resource.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.resource)
     pub resource: ::protobuf::MessageField<Resource>,
-    ///  Representation of the actual Cloud IAM policy set on a cloud resource. For
-    ///  each resource, there must be at most one Cloud IAM policy set on it.
+    ///  A representation of the IAM policy set on a Google Cloud resource.
+    ///  There can be a maximum of one IAM policy set on any given resource.
+    ///  In addition, IAM policies inherit their granted access scope from any
+    ///  policies set on parent resources in the resource hierarchy. Therefore, the
+    ///  effectively policy is the union of both the policy set on this resource
+    ///  and each policy set on all of the resource's ancestry resource levels in
+    ///  the hierarchy. See
+    ///  [this topic](https://cloud.google.com/iam/help/allow-policies/inheritance)
+    ///  for more information.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.iam_policy)
     pub iam_policy: ::protobuf::MessageField<super::policy::Policy>,
+    ///  A representation of an [organization
+    ///  policy](https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+    ///  There can be more than one organization policy with different constraints
+    ///  set on a given resource.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.org_policy)
+    pub org_policy: ::std::vec::Vec<super::orgpolicy::Policy>,
+    ///  A representation of runtime OS Inventory information. See [this
+    ///  topic](https://cloud.google.com/compute/docs/instances/os-inventory-management)
+    ///  for more information.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.os_inventory)
+    pub os_inventory: ::protobuf::MessageField<super::inventory::Inventory>,
+    ///  DEPRECATED. This field only presents for the purpose of
+    ///  backward-compatibility. The server will never generate responses with this
+    ///  field.
+    ///  The related assets of the asset of one relationship type. One asset
+    ///  only represents one type of relationship.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.related_assets)
+    pub related_assets: ::protobuf::MessageField<RelatedAssets>,
+    ///  One related asset of the current asset.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.related_asset)
+    pub related_asset: ::protobuf::MessageField<RelatedAsset>,
+    ///  The ancestry path of an asset in Google Cloud [resource
+    ///  hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+    ///  represented as a list of relative resource names. An ancestry path starts
+    ///  with the closest ancestor in the hierarchy and ends at root. If the asset
+    ///  is a project, folder, or organization, the ancestry path starts from the
+    ///  asset itself.
+    ///
+    ///  Example: `["projects/123456789", "folders/5432", "organizations/1234"]`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Asset.ancestors)
+    pub ancestors: ::std::vec::Vec<::std::string::String>,
+    // message oneof groups
+    pub access_context_policy: ::std::option::Option<asset::Access_context_policy>,
     // special fields
     // @@protoc_insertion_point(special_field:google.cloud.asset.v1.Asset.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -375,9 +552,161 @@ impl Asset {
         ::std::default::Default::default()
     }
 
+    // .google.identity.accesscontextmanager.v1.AccessPolicy access_policy = 7;
+
+    pub fn access_policy(&self) -> &super::access_policy::AccessPolicy {
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(ref v)) => v,
+            _ => <super::access_policy::AccessPolicy as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_access_policy(&mut self) {
+        self.access_context_policy = ::std::option::Option::None;
+    }
+
+    pub fn has_access_policy(&self) -> bool {
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_access_policy(&mut self, v: super::access_policy::AccessPolicy) {
+        self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_access_policy(&mut self) -> &mut super::access_policy::AccessPolicy {
+        if let ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(_)) = self.access_context_policy {
+        } else {
+            self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(super::access_policy::AccessPolicy::new()));
+        }
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_access_policy(&mut self) -> super::access_policy::AccessPolicy {
+        if self.has_access_policy() {
+            match self.access_context_policy.take() {
+                ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::access_policy::AccessPolicy::new()
+        }
+    }
+
+    // .google.identity.accesscontextmanager.v1.AccessLevel access_level = 8;
+
+    pub fn access_level(&self) -> &super::access_level::AccessLevel {
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(ref v)) => v,
+            _ => <super::access_level::AccessLevel as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_access_level(&mut self) {
+        self.access_context_policy = ::std::option::Option::None;
+    }
+
+    pub fn has_access_level(&self) -> bool {
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_access_level(&mut self, v: super::access_level::AccessLevel) {
+        self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_access_level(&mut self) -> &mut super::access_level::AccessLevel {
+        if let ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(_)) = self.access_context_policy {
+        } else {
+            self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(super::access_level::AccessLevel::new()));
+        }
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_access_level(&mut self) -> super::access_level::AccessLevel {
+        if self.has_access_level() {
+            match self.access_context_policy.take() {
+                ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::access_level::AccessLevel::new()
+        }
+    }
+
+    // .google.identity.accesscontextmanager.v1.ServicePerimeter service_perimeter = 9;
+
+    pub fn service_perimeter(&self) -> &super::service_perimeter::ServicePerimeter {
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(ref v)) => v,
+            _ => <super::service_perimeter::ServicePerimeter as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_service_perimeter(&mut self) {
+        self.access_context_policy = ::std::option::Option::None;
+    }
+
+    pub fn has_service_perimeter(&self) -> bool {
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_service_perimeter(&mut self, v: super::service_perimeter::ServicePerimeter) {
+        self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_service_perimeter(&mut self) -> &mut super::service_perimeter::ServicePerimeter {
+        if let ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(_)) = self.access_context_policy {
+        } else {
+            self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(super::service_perimeter::ServicePerimeter::new()));
+        }
+        match self.access_context_policy {
+            ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_service_perimeter(&mut self) -> super::service_perimeter::ServicePerimeter {
+        if self.has_service_perimeter() {
+            match self.access_context_policy.take() {
+                ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::service_perimeter::ServicePerimeter::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(13);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "update_time",
+            |m: &Asset| { &m.update_time },
+            |m: &mut Asset| { &mut m.update_time },
+        ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
             |m: &Asset| { &m.name },
@@ -398,6 +727,53 @@ impl Asset {
             |m: &Asset| { &m.iam_policy },
             |m: &mut Asset| { &mut m.iam_policy },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "org_policy",
+            |m: &Asset| { &m.org_policy },
+            |m: &mut Asset| { &mut m.org_policy },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::access_policy::AccessPolicy>(
+            "access_policy",
+            Asset::has_access_policy,
+            Asset::access_policy,
+            Asset::mut_access_policy,
+            Asset::set_access_policy,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::access_level::AccessLevel>(
+            "access_level",
+            Asset::has_access_level,
+            Asset::access_level,
+            Asset::mut_access_level,
+            Asset::set_access_level,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::service_perimeter::ServicePerimeter>(
+            "service_perimeter",
+            Asset::has_service_perimeter,
+            Asset::service_perimeter,
+            Asset::mut_service_perimeter,
+            Asset::set_service_perimeter,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::inventory::Inventory>(
+            "os_inventory",
+            |m: &Asset| { &m.os_inventory },
+            |m: &mut Asset| { &mut m.os_inventory },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RelatedAssets>(
+            "related_assets",
+            |m: &Asset| { &m.related_assets },
+            |m: &mut Asset| { &mut m.related_assets },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RelatedAsset>(
+            "related_asset",
+            |m: &Asset| { &m.related_asset },
+            |m: &mut Asset| { &mut m.related_asset },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "ancestors",
+            |m: &Asset| { &m.ancestors },
+            |m: &mut Asset| { &mut m.ancestors },
+        ));
+        oneofs.push(asset::Access_context_policy::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Asset>(
             "Asset",
             fields,
@@ -416,6 +792,9 @@ impl ::protobuf::Message for Asset {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
+                90 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_time)?;
+                },
                 10 => {
                     self.name = is.read_string()?;
                 },
@@ -427,6 +806,30 @@ impl ::protobuf::Message for Asset {
                 },
                 34 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.iam_policy)?;
+                },
+                50 => {
+                    self.org_policy.push(is.read_message()?);
+                },
+                58 => {
+                    self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::AccessPolicy(is.read_message()?));
+                },
+                66 => {
+                    self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::AccessLevel(is.read_message()?));
+                },
+                74 => {
+                    self.access_context_policy = ::std::option::Option::Some(asset::Access_context_policy::ServicePerimeter(is.read_message()?));
+                },
+                98 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.os_inventory)?;
+                },
+                106 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.related_assets)?;
+                },
+                122 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.related_asset)?;
+                },
+                82 => {
+                    self.ancestors.push(is.read_string()?);
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -440,6 +843,10 @@ impl ::protobuf::Message for Asset {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
+        if let Some(v) = self.update_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
@@ -454,12 +861,50 @@ impl ::protobuf::Message for Asset {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        for value in &self.org_policy {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if let Some(v) = self.os_inventory.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.related_assets.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.related_asset.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        for value in &self.ancestors {
+            my_size += ::protobuf::rt::string_size(10, &value);
+        };
+        if let ::std::option::Option::Some(ref v) = self.access_context_policy {
+            match v {
+                &asset::Access_context_policy::AccessPolicy(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &asset::Access_context_policy::AccessLevel(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &asset::Access_context_policy::ServicePerimeter(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.update_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(11, v, os)?;
+        }
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
@@ -471,6 +916,34 @@ impl ::protobuf::Message for Asset {
         }
         if let Some(v) = self.iam_policy.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        for v in &self.org_policy {
+            ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+        };
+        if let Some(v) = self.os_inventory.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
+        }
+        if let Some(v) = self.related_assets.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
+        }
+        if let Some(v) = self.related_asset.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(15, v, os)?;
+        }
+        for v in &self.ancestors {
+            os.write_string(10, &v)?;
+        };
+        if let ::std::option::Option::Some(ref v) = self.access_context_policy {
+            match v {
+                &asset::Access_context_policy::AccessPolicy(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+                },
+                &asset::Access_context_policy::AccessLevel(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
+                },
+                &asset::Access_context_policy::ServicePerimeter(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(9, v, os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -489,19 +962,35 @@ impl ::protobuf::Message for Asset {
     }
 
     fn clear(&mut self) {
+        self.update_time.clear();
         self.name.clear();
         self.asset_type.clear();
         self.resource.clear();
         self.iam_policy.clear();
+        self.org_policy.clear();
+        self.access_context_policy = ::std::option::Option::None;
+        self.access_context_policy = ::std::option::Option::None;
+        self.access_context_policy = ::std::option::Option::None;
+        self.os_inventory.clear();
+        self.related_assets.clear();
+        self.related_asset.clear();
+        self.ancestors.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static Asset {
         static instance: Asset = Asset {
+            update_time: ::protobuf::MessageField::none(),
             name: ::std::string::String::new(),
             asset_type: ::std::string::String::new(),
             resource: ::protobuf::MessageField::none(),
             iam_policy: ::protobuf::MessageField::none(),
+            org_policy: ::std::vec::Vec::new(),
+            os_inventory: ::protobuf::MessageField::none(),
+            related_assets: ::protobuf::MessageField::none(),
+            related_asset: ::protobuf::MessageField::none(),
+            ancestors: ::std::vec::Vec::new(),
+            access_context_policy: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -525,31 +1014,66 @@ impl ::protobuf::reflect::ProtobufValue for Asset {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-///  Representation of a cloud resource.
+/// Nested message and enums of message `Asset`
+pub mod asset {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.cloud.asset.v1.Asset.access_context_policy)
+    pub enum Access_context_policy {
+        // @@protoc_insertion_point(oneof_field:google.cloud.asset.v1.Asset.access_policy)
+        AccessPolicy(super::super::access_policy::AccessPolicy),
+        // @@protoc_insertion_point(oneof_field:google.cloud.asset.v1.Asset.access_level)
+        AccessLevel(super::super::access_level::AccessLevel),
+        // @@protoc_insertion_point(oneof_field:google.cloud.asset.v1.Asset.service_perimeter)
+        ServicePerimeter(super::super::service_perimeter::ServicePerimeter),
+    }
+
+    impl ::protobuf::Oneof for Access_context_policy {
+    }
+
+    impl ::protobuf::OneofFull for Access_context_policy {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::Asset as ::protobuf::MessageFull>::descriptor().oneof_by_name("access_context_policy").unwrap()).clone()
+        }
+    }
+
+    impl Access_context_policy {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Access_context_policy>("access_context_policy")
+        }
+    }
+}
+
+///  A representation of a Google Cloud resource.
 // @@protoc_insertion_point(message:google.cloud.asset.v1.Resource)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Resource {
     // message fields
-    ///  The API version. Example: "v1".
+    ///  The API version. Example: `v1`
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.version)
     pub version: ::std::string::String,
     ///  The URL of the discovery document containing the resource's JSON schema.
-    ///  For example:
-    ///  `"https://www.googleapis.com/discovery/v1/apis/compute/v1/rest"`.
-    ///  It will be left unspecified for resources without a discovery-based API,
-    ///  such as Cloud Bigtable.
+    ///  Example:
+    ///  `https://www.googleapis.com/discovery/v1/apis/compute/v1/rest`
+    ///
+    ///  This value is unspecified for resources that do not have an API based on a
+    ///  discovery document, such as Cloud Bigtable.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.discovery_document_uri)
     pub discovery_document_uri: ::std::string::String,
-    ///  The JSON schema name listed in the discovery document.
-    ///  Example: "Project". It will be left unspecified for resources (such as
-    ///  Cloud Bigtable) without a discovery-based API.
+    ///  The JSON schema name listed in the discovery document. Example:
+    ///  `Project`
+    ///
+    ///  This value is unspecified for resources that do not have an API based on a
+    ///  discovery document, such as Cloud Bigtable.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.discovery_name)
     pub discovery_name: ::std::string::String,
-    ///  The REST URL for accessing the resource. An HTTP GET operation using this
-    ///  URL returns the resource itself.
-    ///  Example:
-    ///  `https://cloudresourcemanager.googleapis.com/v1/projects/my-project-123`.
-    ///  It will be left unspecified for resources without a REST API.
+    ///  The REST URL for accessing the resource. An HTTP `GET` request using this
+    ///  URL returns the resource itself. Example:
+    ///  `https://cloudresourcemanager.googleapis.com/v1/projects/my-project-123`
+    ///
+    ///  This value is unspecified for resources without a REST API.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.resource_url)
     pub resource_url: ::std::string::String,
     ///  The full name of the immediate parent of this resource. See
@@ -557,18 +1081,21 @@ pub struct Resource {
     ///  Names](https://cloud.google.com/apis/design/resource_names#full_resource_name)
     ///  for more information.
     ///
-    ///  For GCP assets, it is the parent resource defined in the [Cloud IAM policy
+    ///  For Google Cloud assets, this value is the parent resource defined in the
+    ///  [IAM policy
     ///  hierarchy](https://cloud.google.com/iam/docs/overview#policy_hierarchy).
-    ///  For example:
-    ///  `"//cloudresourcemanager.googleapis.com/projects/my_project_123"`.
-    ///
-    ///  For third-party assets, it is up to the users to define.
+    ///  Example:
+    ///  `//cloudresourcemanager.googleapis.com/projects/my_project_123`
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.parent)
     pub parent: ::std::string::String,
-    ///  The content of the resource, in which some sensitive fields are scrubbed
-    ///  away and may not be present.
+    ///  The content of the resource, in which some sensitive fields are removed
+    ///  and may not be present.
     // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.data)
     pub data: ::protobuf::MessageField<::protobuf::well_known_types::struct_::Struct>,
+    ///  The location of the resource in Google Cloud, such as its zone and region.
+    ///  For more information, see https://cloud.google.com/about/locations/.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Resource.location)
+    pub location: ::std::string::String,
     // special fields
     // @@protoc_insertion_point(special_field:google.cloud.asset.v1.Resource.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -586,7 +1113,7 @@ impl Resource {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut fields = ::std::vec::Vec::with_capacity(7);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "version",
@@ -617,6 +1144,11 @@ impl Resource {
             "data",
             |m: &Resource| { &m.data },
             |m: &mut Resource| { &mut m.data },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "location",
+            |m: &Resource| { &m.location },
+            |m: &mut Resource| { &mut m.location },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Resource>(
             "Resource",
@@ -654,6 +1186,9 @@ impl ::protobuf::Message for Resource {
                 50 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.data)?;
                 },
+                66 => {
+                    self.location = is.read_string()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -685,6 +1220,9 @@ impl ::protobuf::Message for Resource {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if !self.location.is_empty() {
+            my_size += ::protobuf::rt::string_size(8, &self.location);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -709,6 +1247,9 @@ impl ::protobuf::Message for Resource {
         if let Some(v) = self.data.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
         }
+        if !self.location.is_empty() {
+            os.write_string(8, &self.location)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -732,6 +1273,7 @@ impl ::protobuf::Message for Resource {
         self.resource_url.clear();
         self.parent.clear();
         self.data.clear();
+        self.location.clear();
         self.special_fields.clear();
     }
 
@@ -743,6 +1285,7 @@ impl ::protobuf::Message for Resource {
             resource_url: ::std::string::String::new(),
             parent: ::std::string::String::new(),
             data: ::protobuf::MessageField::none(),
+            location: ::std::string::String::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -766,145 +1309,5754 @@ impl ::protobuf::reflect::ProtobufValue for Resource {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  DEPRECATED. This message only presents for the purpose of
+///  backward-compatibility. The server will never populate this message in
+///  responses.
+///  The detailed related assets with the `relationship_type`.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.RelatedAssets)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RelatedAssets {
+    // message fields
+    ///  The detailed relationship attributes.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedAssets.relationship_attributes)
+    pub relationship_attributes: ::protobuf::MessageField<RelationshipAttributes>,
+    ///  The peer resources of the relationship.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedAssets.assets)
+    pub assets: ::std::vec::Vec<RelatedAsset>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.RelatedAssets.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RelatedAssets {
+    fn default() -> &'a RelatedAssets {
+        <RelatedAssets as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RelatedAssets {
+    pub fn new() -> RelatedAssets {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RelationshipAttributes>(
+            "relationship_attributes",
+            |m: &RelatedAssets| { &m.relationship_attributes },
+            |m: &mut RelatedAssets| { &mut m.relationship_attributes },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "assets",
+            |m: &RelatedAssets| { &m.assets },
+            |m: &mut RelatedAssets| { &mut m.assets },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RelatedAssets>(
+            "RelatedAssets",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RelatedAssets {
+    const NAME: &'static str = "RelatedAssets";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.relationship_attributes)?;
+                },
+                18 => {
+                    self.assets.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.relationship_attributes.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        for value in &self.assets {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.relationship_attributes.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        for v in &self.assets {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RelatedAssets {
+        RelatedAssets::new()
+    }
+
+    fn clear(&mut self) {
+        self.relationship_attributes.clear();
+        self.assets.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RelatedAssets {
+        static instance: RelatedAssets = RelatedAssets {
+            relationship_attributes: ::protobuf::MessageField::none(),
+            assets: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RelatedAssets {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RelatedAssets").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RelatedAssets {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RelatedAssets {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  DEPRECATED. This message only presents for the purpose of
+///  backward-compatibility. The server will never populate this message in
+///  responses.
+///  The relationship attributes which include  `type`, `source_resource_type`,
+///  `target_resource_type` and `action`.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.RelationshipAttributes)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RelationshipAttributes {
+    // message fields
+    ///  The unique identifier of the relationship type. Example:
+    ///  `INSTANCE_TO_INSTANCEGROUP`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelationshipAttributes.type)
+    pub type_: ::std::string::String,
+    ///  The source asset type. Example: `compute.googleapis.com/Instance`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelationshipAttributes.source_resource_type)
+    pub source_resource_type: ::std::string::String,
+    ///  The target asset type. Example: `compute.googleapis.com/Disk`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelationshipAttributes.target_resource_type)
+    pub target_resource_type: ::std::string::String,
+    ///  The detail of the relationship, e.g. `contains`, `attaches`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelationshipAttributes.action)
+    pub action: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.RelationshipAttributes.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RelationshipAttributes {
+    fn default() -> &'a RelationshipAttributes {
+        <RelationshipAttributes as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RelationshipAttributes {
+    pub fn new() -> RelationshipAttributes {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "type",
+            |m: &RelationshipAttributes| { &m.type_ },
+            |m: &mut RelationshipAttributes| { &mut m.type_ },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_resource_type",
+            |m: &RelationshipAttributes| { &m.source_resource_type },
+            |m: &mut RelationshipAttributes| { &mut m.source_resource_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "target_resource_type",
+            |m: &RelationshipAttributes| { &m.target_resource_type },
+            |m: &mut RelationshipAttributes| { &mut m.target_resource_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "action",
+            |m: &RelationshipAttributes| { &m.action },
+            |m: &mut RelationshipAttributes| { &mut m.action },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RelationshipAttributes>(
+            "RelationshipAttributes",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RelationshipAttributes {
+    const NAME: &'static str = "RelationshipAttributes";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                34 => {
+                    self.type_ = is.read_string()?;
+                },
+                10 => {
+                    self.source_resource_type = is.read_string()?;
+                },
+                18 => {
+                    self.target_resource_type = is.read_string()?;
+                },
+                26 => {
+                    self.action = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.type_.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.type_);
+        }
+        if !self.source_resource_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.source_resource_type);
+        }
+        if !self.target_resource_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.target_resource_type);
+        }
+        if !self.action.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.action);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.type_.is_empty() {
+            os.write_string(4, &self.type_)?;
+        }
+        if !self.source_resource_type.is_empty() {
+            os.write_string(1, &self.source_resource_type)?;
+        }
+        if !self.target_resource_type.is_empty() {
+            os.write_string(2, &self.target_resource_type)?;
+        }
+        if !self.action.is_empty() {
+            os.write_string(3, &self.action)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RelationshipAttributes {
+        RelationshipAttributes::new()
+    }
+
+    fn clear(&mut self) {
+        self.type_.clear();
+        self.source_resource_type.clear();
+        self.target_resource_type.clear();
+        self.action.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RelationshipAttributes {
+        static instance: RelationshipAttributes = RelationshipAttributes {
+            type_: ::std::string::String::new(),
+            source_resource_type: ::std::string::String::new(),
+            target_resource_type: ::std::string::String::new(),
+            action: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RelationshipAttributes {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RelationshipAttributes").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RelationshipAttributes {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RelationshipAttributes {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  An asset identifier in Google Cloud which contains its name, type and
+///  ancestors. An asset can be any resource in the Google Cloud [resource
+///  hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+///  a resource outside the Google Cloud resource hierarchy (such as Google
+///  Kubernetes Engine clusters and objects), or a policy (e.g. IAM policy).
+///  See [Supported asset
+///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+///  for more information.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.RelatedAsset)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RelatedAsset {
+    // message fields
+    ///  The full name of the asset. Example:
+    ///  `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`
+    ///
+    ///  See [Resource
+    ///  names](https://cloud.google.com/apis/design/resource_names#full_resource_name)
+    ///  for more information.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedAsset.asset)
+    pub asset: ::std::string::String,
+    ///  The type of the asset. Example: `compute.googleapis.com/Disk`
+    ///
+    ///  See [Supported asset
+    ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+    ///  for more information.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedAsset.asset_type)
+    pub asset_type: ::std::string::String,
+    ///  The ancestors of an asset in Google Cloud [resource
+    ///  hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+    ///  represented as a list of relative resource names. An ancestry path starts
+    ///  with the closest ancestor in the hierarchy and ends at root.
+    ///
+    ///  Example: `["projects/123456789", "folders/5432", "organizations/1234"]`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedAsset.ancestors)
+    pub ancestors: ::std::vec::Vec<::std::string::String>,
+    ///  The unique identifier of the relationship type. Example:
+    ///  `INSTANCE_TO_INSTANCEGROUP`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedAsset.relationship_type)
+    pub relationship_type: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.RelatedAsset.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RelatedAsset {
+    fn default() -> &'a RelatedAsset {
+        <RelatedAsset as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RelatedAsset {
+    pub fn new() -> RelatedAsset {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "asset",
+            |m: &RelatedAsset| { &m.asset },
+            |m: &mut RelatedAsset| { &mut m.asset },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "asset_type",
+            |m: &RelatedAsset| { &m.asset_type },
+            |m: &mut RelatedAsset| { &mut m.asset_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "ancestors",
+            |m: &RelatedAsset| { &m.ancestors },
+            |m: &mut RelatedAsset| { &mut m.ancestors },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "relationship_type",
+            |m: &RelatedAsset| { &m.relationship_type },
+            |m: &mut RelatedAsset| { &mut m.relationship_type },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RelatedAsset>(
+            "RelatedAsset",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RelatedAsset {
+    const NAME: &'static str = "RelatedAsset";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.asset = is.read_string()?;
+                },
+                18 => {
+                    self.asset_type = is.read_string()?;
+                },
+                26 => {
+                    self.ancestors.push(is.read_string()?);
+                },
+                34 => {
+                    self.relationship_type = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.asset.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.asset);
+        }
+        if !self.asset_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.asset_type);
+        }
+        for value in &self.ancestors {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        if !self.relationship_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.relationship_type);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.asset.is_empty() {
+            os.write_string(1, &self.asset)?;
+        }
+        if !self.asset_type.is_empty() {
+            os.write_string(2, &self.asset_type)?;
+        }
+        for v in &self.ancestors {
+            os.write_string(3, &v)?;
+        };
+        if !self.relationship_type.is_empty() {
+            os.write_string(4, &self.relationship_type)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RelatedAsset {
+        RelatedAsset::new()
+    }
+
+    fn clear(&mut self) {
+        self.asset.clear();
+        self.asset_type.clear();
+        self.ancestors.clear();
+        self.relationship_type.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RelatedAsset {
+        static instance: RelatedAsset = RelatedAsset {
+            asset: ::std::string::String::new(),
+            asset_type: ::std::string::String::new(),
+            ancestors: ::std::vec::Vec::new(),
+            relationship_type: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RelatedAsset {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RelatedAsset").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RelatedAsset {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RelatedAsset {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The key and value for a
+///  [tag](https://cloud.google.com/resource-manager/docs/tags/tags-overview).
+// @@protoc_insertion_point(message:google.cloud.asset.v1.Tag)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct Tag {
+    // message fields
+    ///  TagKey namespaced name, in the format of {ORG_ID}/{TAG_KEY_SHORT_NAME}.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Tag.tag_key)
+    pub tag_key: ::std::option::Option<::std::string::String>,
+    ///  TagKey ID, in the format of tagKeys/{TAG_KEY_ID}.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Tag.tag_key_id)
+    pub tag_key_id: ::std::option::Option<::std::string::String>,
+    ///  TagValue namespaced name, in the format of
+    ///  {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Tag.tag_value)
+    pub tag_value: ::std::option::Option<::std::string::String>,
+    ///  TagValue ID, in the format of tagValues/{TAG_VALUE_ID}.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.Tag.tag_value_id)
+    pub tag_value_id: ::std::option::Option<::std::string::String>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.Tag.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a Tag {
+    fn default() -> &'a Tag {
+        <Tag as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Tag {
+    pub fn new() -> Tag {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "tag_key",
+            |m: &Tag| { &m.tag_key },
+            |m: &mut Tag| { &mut m.tag_key },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "tag_key_id",
+            |m: &Tag| { &m.tag_key_id },
+            |m: &mut Tag| { &mut m.tag_key_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "tag_value",
+            |m: &Tag| { &m.tag_value },
+            |m: &mut Tag| { &mut m.tag_value },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "tag_value_id",
+            |m: &Tag| { &m.tag_value_id },
+            |m: &mut Tag| { &mut m.tag_value_id },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Tag>(
+            "Tag",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for Tag {
+    const NAME: &'static str = "Tag";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.tag_key = ::std::option::Option::Some(is.read_string()?);
+                },
+                18 => {
+                    self.tag_key_id = ::std::option::Option::Some(is.read_string()?);
+                },
+                26 => {
+                    self.tag_value = ::std::option::Option::Some(is.read_string()?);
+                },
+                34 => {
+                    self.tag_value_id = ::std::option::Option::Some(is.read_string()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.tag_key.as_ref() {
+            my_size += ::protobuf::rt::string_size(1, &v);
+        }
+        if let Some(v) = self.tag_key_id.as_ref() {
+            my_size += ::protobuf::rt::string_size(2, &v);
+        }
+        if let Some(v) = self.tag_value.as_ref() {
+            my_size += ::protobuf::rt::string_size(3, &v);
+        }
+        if let Some(v) = self.tag_value_id.as_ref() {
+            my_size += ::protobuf::rt::string_size(4, &v);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.tag_key.as_ref() {
+            os.write_string(1, v)?;
+        }
+        if let Some(v) = self.tag_key_id.as_ref() {
+            os.write_string(2, v)?;
+        }
+        if let Some(v) = self.tag_value.as_ref() {
+            os.write_string(3, v)?;
+        }
+        if let Some(v) = self.tag_value_id.as_ref() {
+            os.write_string(4, v)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> Tag {
+        Tag::new()
+    }
+
+    fn clear(&mut self) {
+        self.tag_key = ::std::option::Option::None;
+        self.tag_key_id = ::std::option::Option::None;
+        self.tag_value = ::std::option::Option::None;
+        self.tag_value_id = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static Tag {
+        static instance: Tag = Tag {
+            tag_key: ::std::option::Option::None,
+            tag_key_id: ::std::option::Option::None,
+            tag_value: ::std::option::Option::None,
+            tag_value_id: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for Tag {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("Tag").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for Tag {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Tag {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The effective tags and the ancestor resources from which they were inherited.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.EffectiveTagDetails)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct EffectiveTagDetails {
+    // message fields
+    ///  The [full resource
+    ///  name](https://cloud.google.com/asset-inventory/docs/resource-name-format)
+    ///  of the ancestor from which an [effective_tag][] is inherited, according to
+    ///  [tag
+    ///  inheritance](https://cloud.google.com/resource-manager/docs/tags/tags-overview#inheritance).
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.EffectiveTagDetails.attached_resource)
+    pub attached_resource: ::std::option::Option<::std::string::String>,
+    ///  The effective tags inherited from the
+    ///  [attached_resource][google.cloud.asset.v1.EffectiveTagDetails.attached_resource].
+    ///  Note that tags with the same key but different values may attach to
+    ///  resources at a different hierarchy levels. The lower hierarchy tag value
+    ///  will overwrite the higher hierarchy tag value of the same tag key. In this
+    ///  case, the tag value at the higher hierarchy level will be removed. For more
+    ///  information, see [tag
+    ///  inheritance](https://cloud.google.com/resource-manager/docs/tags/tags-overview#inheritance).
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.EffectiveTagDetails.effective_tags)
+    pub effective_tags: ::std::vec::Vec<Tag>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.EffectiveTagDetails.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a EffectiveTagDetails {
+    fn default() -> &'a EffectiveTagDetails {
+        <EffectiveTagDetails as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl EffectiveTagDetails {
+    pub fn new() -> EffectiveTagDetails {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "attached_resource",
+            |m: &EffectiveTagDetails| { &m.attached_resource },
+            |m: &mut EffectiveTagDetails| { &mut m.attached_resource },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "effective_tags",
+            |m: &EffectiveTagDetails| { &m.effective_tags },
+            |m: &mut EffectiveTagDetails| { &mut m.effective_tags },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EffectiveTagDetails>(
+            "EffectiveTagDetails",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for EffectiveTagDetails {
+    const NAME: &'static str = "EffectiveTagDetails";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.attached_resource = ::std::option::Option::Some(is.read_string()?);
+                },
+                18 => {
+                    self.effective_tags.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.attached_resource.as_ref() {
+            my_size += ::protobuf::rt::string_size(1, &v);
+        }
+        for value in &self.effective_tags {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.attached_resource.as_ref() {
+            os.write_string(1, v)?;
+        }
+        for v in &self.effective_tags {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> EffectiveTagDetails {
+        EffectiveTagDetails::new()
+    }
+
+    fn clear(&mut self) {
+        self.attached_resource = ::std::option::Option::None;
+        self.effective_tags.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static EffectiveTagDetails {
+        static instance: EffectiveTagDetails = EffectiveTagDetails {
+            attached_resource: ::std::option::Option::None,
+            effective_tags: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for EffectiveTagDetails {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("EffectiveTagDetails").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for EffectiveTagDetails {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for EffectiveTagDetails {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  A result of Resource Search, containing information of a cloud resource.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.ResourceSearchResult)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ResourceSearchResult {
+    // message fields
+    ///  The full resource name of this resource. Example:
+    ///  `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.
+    ///  See [Cloud Asset Inventory Resource Name
+    ///  Format](https://cloud.google.com/asset-inventory/docs/resource-name-format)
+    ///  for more information.
+    ///
+    ///  To search against the `name`:
+    ///
+    ///  * Use a field query. Example: `name:instance1`
+    ///  * Use a free text query. Example: `instance1`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.name)
+    pub name: ::std::string::String,
+    ///  The type of this resource. Example: `compute.googleapis.com/Disk`.
+    ///
+    ///  To search against the `asset_type`:
+    ///
+    ///  * Specify the `asset_type` field in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.asset_type)
+    pub asset_type: ::std::string::String,
+    ///  The project that this resource belongs to, in the form of
+    ///  projects/{PROJECT_NUMBER}. This field is available when the resource
+    ///  belongs to a project.
+    ///
+    ///  To search against `project`:
+    ///
+    ///  * Use a field query. Example: `project:12345`
+    ///  * Use a free text query. Example: `12345`
+    ///  * Specify the `scope` field as this project in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.project)
+    pub project: ::std::string::String,
+    ///  The folder(s) that this resource belongs to, in the form of
+    ///  folders/{FOLDER_NUMBER}. This field is available when the resource
+    ///  belongs to one or more folders.
+    ///
+    ///  To search against `folders`:
+    ///
+    ///  * Use a field query. Example: `folders:(123 OR 456)`
+    ///  * Use a free text query. Example: `123`
+    ///  * Specify the `scope` field as this folder in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.folders)
+    pub folders: ::std::vec::Vec<::std::string::String>,
+    ///  The organization that this resource belongs to, in the form of
+    ///  organizations/{ORGANIZATION_NUMBER}. This field is available when the
+    ///  resource belongs to an organization.
+    ///
+    ///  To search against `organization`:
+    ///
+    ///  * Use a field query. Example: `organization:123`
+    ///  * Use a free text query. Example: `123`
+    ///  * Specify the `scope` field as this organization in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.organization)
+    pub organization: ::std::string::String,
+    ///  The display name of this resource. This field is available only when the
+    ///  resource's Protobuf contains it.
+    ///
+    ///  To search against the `display_name`:
+    ///
+    ///  * Use a field query. Example: `displayName:"My Instance"`
+    ///  * Use a free text query. Example: `"My Instance"`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.display_name)
+    pub display_name: ::std::string::String,
+    ///  One or more paragraphs of text description of this resource. Maximum length
+    ///  could be up to 1M bytes. This field is available only when the resource's
+    ///  Protobuf contains it.
+    ///
+    ///  To search against the `description`:
+    ///
+    ///  * Use a field query. Example: `description:"important instance"`
+    ///  * Use a free text query. Example: `"important instance"`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.description)
+    pub description: ::std::string::String,
+    ///  Location can be `global`, regional like `us-east1`, or zonal like
+    ///  `us-west1-b`. This field is available only when the resource's Protobuf
+    ///  contains it.
+    ///
+    ///  To search against the `location`:
+    ///
+    ///  * Use a field query. Example: `location:us-west*`
+    ///  * Use a free text query. Example: `us-west*`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.location)
+    pub location: ::std::string::String,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.labels)
+    pub labels: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    ///  Network tags associated with this resource. Like labels, network tags are a
+    ///  type of annotations used to group Google Cloud resources. See [Labelling
+    ///  Google Cloud
+    ///  resources](https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
+    ///  for more information. This field is available only when the resource's
+    ///  Protobuf contains it.
+    ///
+    ///  To search against the `network_tags`:
+    ///
+    ///  * Use a field query. Example: `networkTags:internal`
+    ///  * Use a free text query. Example: `internal`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.network_tags)
+    pub network_tags: ::std::vec::Vec<::std::string::String>,
+    ///  The Cloud KMS
+    ///  [CryptoKey](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys)
+    ///  name or
+    ///  [CryptoKeyVersion](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys.cryptoKeyVersions)
+    ///  name.
+    ///
+    ///  This field only presents for the purpose of backward compatibility.
+    ///  Use the `kms_keys` field to retrieve Cloud KMS key information. This field
+    ///  is available only when the resource's Protobuf contains it and will only be
+    ///  populated for [these resource
+    ///  types](https://cloud.google.com/asset-inventory/docs/legacy-field-names#resource_types_with_the_to_be_deprecated_kmskey_field)
+    ///  for backward compatible purposes.
+    ///
+    ///  To search against the `kms_key`:
+    ///
+    ///  * Use a field query. Example: `kmsKey:key`
+    ///  * Use a free text query. Example: `key`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.kms_key)
+    pub kms_key: ::std::string::String,
+    ///  The Cloud KMS
+    ///  [CryptoKey](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys)
+    ///  names or
+    ///  [CryptoKeyVersion](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys.cryptoKeyVersions)
+    ///  names. This field is available only when the resource's Protobuf contains
+    ///  it.
+    ///
+    ///  To search against the `kms_keys`:
+    ///
+    ///  * Use a field query. Example: `kmsKeys:key`
+    ///  * Use a free text query. Example: `key`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.kms_keys)
+    pub kms_keys: ::std::vec::Vec<::std::string::String>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.create_time)
+    pub create_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.update_time)
+    pub update_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  The state of this resource. Different resources types have different state
+    ///  definitions that are mapped from various fields of different resource
+    ///  types. This field is available only when the resource's Protobuf contains
+    ///  it.
+    ///
+    ///  Example:
+    ///  If the resource is an instance provided by Compute Engine,
+    ///  its state will include PROVISIONING, STAGING, RUNNING, STOPPING,
+    ///  SUSPENDING, SUSPENDED, REPAIRING, and TERMINATED. See `status` definition
+    ///  in [API
+    ///  Reference](https://cloud.google.com/compute/docs/reference/rest/v1/instances).
+    ///  If the resource is a project provided by Resource Manager, its state
+    ///  will include LIFECYCLE_STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED and
+    ///  DELETE_IN_PROGRESS. See `lifecycleState` definition in [API
+    ///  Reference](https://cloud.google.com/resource-manager/reference/rest/v1/projects).
+    ///
+    ///  To search against the `state`:
+    ///
+    ///  * Use a field query. Example: `state:RUNNING`
+    ///  * Use a free text query. Example: `RUNNING`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.state)
+    pub state: ::std::string::String,
+    ///  The additional searchable attributes of this resource. The attributes may
+    ///  vary from one resource type to another. Examples: `projectId` for Project,
+    ///  `dnsName` for DNS ManagedZone. This field contains a subset of the resource
+    ///  metadata fields that are returned by the List or Get APIs provided by the
+    ///  corresponding Google Cloud service (e.g., Compute Engine). see [API
+    ///  references and supported searchable
+    ///  attributes](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+    ///  to see which fields are included.
+    ///
+    ///  You can search values of these fields through free text search. However,
+    ///  you should not consume the field programically as the field names and
+    ///  values may change as the Google Cloud service updates to a new incompatible
+    ///  API version.
+    ///
+    ///  To search against the `additional_attributes`:
+    ///
+    ///  * Use a free text query to match the attributes values. Example: to search
+    ///    `additional_attributes = { dnsName: "foobar" }`, you can issue a query
+    ///    `foobar`.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.additional_attributes)
+    pub additional_attributes: ::protobuf::MessageField<::protobuf::well_known_types::struct_::Struct>,
+    ///  The full resource name of this resource's parent, if it has one.
+    ///  To search against the `parent_full_resource_name`:
+    ///
+    ///  * Use a field query. Example:
+    ///  `parentFullResourceName:"project-name"`
+    ///  * Use a free text query. Example:
+    ///  `project-name`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.parent_full_resource_name)
+    pub parent_full_resource_name: ::std::string::String,
+    ///  Versioned resource representations of this resource. This is repeated
+    ///  because there could be multiple versions of resource representations during
+    ///  version migration.
+    ///
+    ///  This `versioned_resources` field is not searchable. Some attributes of the
+    ///  resource representations are exposed in `additional_attributes` field, so
+    ///  as to allow users to search on them.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.versioned_resources)
+    pub versioned_resources: ::std::vec::Vec<VersionedResource>,
+    ///  Attached resources of this resource. For example, an OSConfig
+    ///  Inventory is an attached resource of a Compute Instance. This field is
+    ///  repeated because a resource could have multiple attached resources.
+    ///
+    ///  This `attached_resources` field is not searchable. Some attributes
+    ///  of the attached resources are exposed in `additional_attributes` field, so
+    ///  as to allow users to search on them.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.attached_resources)
+    pub attached_resources: ::std::vec::Vec<AttachedResource>,
+    ///  A map of related resources of this resource, keyed by the
+    ///  relationship type. A relationship type is in the format of
+    ///  {SourceType}_{ACTION}_{DestType}. Example: `DISK_TO_INSTANCE`,
+    ///  `DISK_TO_NETWORK`, `INSTANCE_TO_INSTANCEGROUP`.
+    ///  See [supported relationship
+    ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#supported_relationship_types).
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.relationships)
+    pub relationships: ::std::collections::HashMap<::std::string::String, RelatedResources>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.tag_keys)
+    pub tag_keys: ::std::vec::Vec<::std::string::String>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.tag_values)
+    pub tag_values: ::std::vec::Vec<::std::string::String>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.tag_value_ids)
+    pub tag_value_ids: ::std::vec::Vec<::std::string::String>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.tags)
+    pub tags: ::std::vec::Vec<Tag>,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.effective_tags)
+    pub effective_tags: ::std::vec::Vec<EffectiveTagDetails>,
+    ///  The type of this resource's immediate parent, if there is one.
+    ///
+    ///  To search against the `parent_asset_type`:
+    ///
+    ///  * Use a field query. Example:
+    ///  `parentAssetType:"cloudresourcemanager.googleapis.com/Project"`
+    ///  * Use a free text query. Example:
+    ///  `cloudresourcemanager.googleapis.com/Project`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.parent_asset_type)
+    pub parent_asset_type: ::std::string::String,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ResourceSearchResult.scc_security_marks)
+    pub scc_security_marks: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.ResourceSearchResult.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ResourceSearchResult {
+    fn default() -> &'a ResourceSearchResult {
+        <ResourceSearchResult as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ResourceSearchResult {
+    pub fn new() -> ResourceSearchResult {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(27);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &ResourceSearchResult| { &m.name },
+            |m: &mut ResourceSearchResult| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "asset_type",
+            |m: &ResourceSearchResult| { &m.asset_type },
+            |m: &mut ResourceSearchResult| { &mut m.asset_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "project",
+            |m: &ResourceSearchResult| { &m.project },
+            |m: &mut ResourceSearchResult| { &mut m.project },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "folders",
+            |m: &ResourceSearchResult| { &m.folders },
+            |m: &mut ResourceSearchResult| { &mut m.folders },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "organization",
+            |m: &ResourceSearchResult| { &m.organization },
+            |m: &mut ResourceSearchResult| { &mut m.organization },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "display_name",
+            |m: &ResourceSearchResult| { &m.display_name },
+            |m: &mut ResourceSearchResult| { &mut m.display_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "description",
+            |m: &ResourceSearchResult| { &m.description },
+            |m: &mut ResourceSearchResult| { &mut m.description },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "location",
+            |m: &ResourceSearchResult| { &m.location },
+            |m: &mut ResourceSearchResult| { &mut m.location },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_map_simpler_accessor::<_, _, _>(
+            "labels",
+            |m: &ResourceSearchResult| { &m.labels },
+            |m: &mut ResourceSearchResult| { &mut m.labels },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "network_tags",
+            |m: &ResourceSearchResult| { &m.network_tags },
+            |m: &mut ResourceSearchResult| { &mut m.network_tags },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "kms_key",
+            |m: &ResourceSearchResult| { &m.kms_key },
+            |m: &mut ResourceSearchResult| { &mut m.kms_key },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "kms_keys",
+            |m: &ResourceSearchResult| { &m.kms_keys },
+            |m: &mut ResourceSearchResult| { &mut m.kms_keys },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "create_time",
+            |m: &ResourceSearchResult| { &m.create_time },
+            |m: &mut ResourceSearchResult| { &mut m.create_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "update_time",
+            |m: &ResourceSearchResult| { &m.update_time },
+            |m: &mut ResourceSearchResult| { &mut m.update_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "state",
+            |m: &ResourceSearchResult| { &m.state },
+            |m: &mut ResourceSearchResult| { &mut m.state },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::struct_::Struct>(
+            "additional_attributes",
+            |m: &ResourceSearchResult| { &m.additional_attributes },
+            |m: &mut ResourceSearchResult| { &mut m.additional_attributes },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent_full_resource_name",
+            |m: &ResourceSearchResult| { &m.parent_full_resource_name },
+            |m: &mut ResourceSearchResult| { &mut m.parent_full_resource_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "versioned_resources",
+            |m: &ResourceSearchResult| { &m.versioned_resources },
+            |m: &mut ResourceSearchResult| { &mut m.versioned_resources },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "attached_resources",
+            |m: &ResourceSearchResult| { &m.attached_resources },
+            |m: &mut ResourceSearchResult| { &mut m.attached_resources },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_map_simpler_accessor::<_, _, _>(
+            "relationships",
+            |m: &ResourceSearchResult| { &m.relationships },
+            |m: &mut ResourceSearchResult| { &mut m.relationships },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "tag_keys",
+            |m: &ResourceSearchResult| { &m.tag_keys },
+            |m: &mut ResourceSearchResult| { &mut m.tag_keys },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "tag_values",
+            |m: &ResourceSearchResult| { &m.tag_values },
+            |m: &mut ResourceSearchResult| { &mut m.tag_values },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "tag_value_ids",
+            |m: &ResourceSearchResult| { &m.tag_value_ids },
+            |m: &mut ResourceSearchResult| { &mut m.tag_value_ids },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "tags",
+            |m: &ResourceSearchResult| { &m.tags },
+            |m: &mut ResourceSearchResult| { &mut m.tags },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "effective_tags",
+            |m: &ResourceSearchResult| { &m.effective_tags },
+            |m: &mut ResourceSearchResult| { &mut m.effective_tags },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent_asset_type",
+            |m: &ResourceSearchResult| { &m.parent_asset_type },
+            |m: &mut ResourceSearchResult| { &mut m.parent_asset_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_map_simpler_accessor::<_, _, _>(
+            "scc_security_marks",
+            |m: &ResourceSearchResult| { &m.scc_security_marks },
+            |m: &mut ResourceSearchResult| { &mut m.scc_security_marks },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ResourceSearchResult>(
+            "ResourceSearchResult",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ResourceSearchResult {
+    const NAME: &'static str = "ResourceSearchResult";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.asset_type = is.read_string()?;
+                },
+                26 => {
+                    self.project = is.read_string()?;
+                },
+                138 => {
+                    self.folders.push(is.read_string()?);
+                },
+                146 => {
+                    self.organization = is.read_string()?;
+                },
+                34 => {
+                    self.display_name = is.read_string()?;
+                },
+                42 => {
+                    self.description = is.read_string()?;
+                },
+                50 => {
+                    self.location = is.read_string()?;
+                },
+                58 => {
+                    let len = is.read_raw_varint32()?;
+                    let old_limit = is.push_limit(len as u64)?;
+                    let mut key = ::std::default::Default::default();
+                    let mut value = ::std::default::Default::default();
+                    while let Some(tag) = is.read_raw_tag_or_eof()? {
+                        match tag {
+                            10 => key = is.read_string()?,
+                            18 => value = is.read_string()?,
+                            _ => ::protobuf::rt::skip_field_for_tag(tag, is)?,
+                        };
+                    }
+                    is.pop_limit(old_limit);
+                    self.labels.insert(key, value);
+                },
+                66 => {
+                    self.network_tags.push(is.read_string()?);
+                },
+                82 => {
+                    self.kms_key = is.read_string()?;
+                },
+                226 => {
+                    self.kms_keys.push(is.read_string()?);
+                },
+                90 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.create_time)?;
+                },
+                98 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_time)?;
+                },
+                106 => {
+                    self.state = is.read_string()?;
+                },
+                74 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.additional_attributes)?;
+                },
+                154 => {
+                    self.parent_full_resource_name = is.read_string()?;
+                },
+                130 => {
+                    self.versioned_resources.push(is.read_message()?);
+                },
+                162 => {
+                    self.attached_resources.push(is.read_message()?);
+                },
+                170 => {
+                    let len = is.read_raw_varint32()?;
+                    let old_limit = is.push_limit(len as u64)?;
+                    let mut key = ::std::default::Default::default();
+                    let mut value = ::std::default::Default::default();
+                    while let Some(tag) = is.read_raw_tag_or_eof()? {
+                        match tag {
+                            10 => key = is.read_string()?,
+                            18 => value = is.read_message()?,
+                            _ => ::protobuf::rt::skip_field_for_tag(tag, is)?,
+                        };
+                    }
+                    is.pop_limit(old_limit);
+                    self.relationships.insert(key, value);
+                },
+                186 => {
+                    self.tag_keys.push(is.read_string()?);
+                },
+                202 => {
+                    self.tag_values.push(is.read_string()?);
+                },
+                210 => {
+                    self.tag_value_ids.push(is.read_string()?);
+                },
+                234 => {
+                    self.tags.push(is.read_message()?);
+                },
+                242 => {
+                    self.effective_tags.push(is.read_message()?);
+                },
+                826 => {
+                    self.parent_asset_type = is.read_string()?;
+                },
+                258 => {
+                    let len = is.read_raw_varint32()?;
+                    let old_limit = is.push_limit(len as u64)?;
+                    let mut key = ::std::default::Default::default();
+                    let mut value = ::std::default::Default::default();
+                    while let Some(tag) = is.read_raw_tag_or_eof()? {
+                        match tag {
+                            10 => key = is.read_string()?,
+                            18 => value = is.read_string()?,
+                            _ => ::protobuf::rt::skip_field_for_tag(tag, is)?,
+                        };
+                    }
+                    is.pop_limit(old_limit);
+                    self.scc_security_marks.insert(key, value);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.asset_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.asset_type);
+        }
+        if !self.project.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.project);
+        }
+        for value in &self.folders {
+            my_size += ::protobuf::rt::string_size(17, &value);
+        };
+        if !self.organization.is_empty() {
+            my_size += ::protobuf::rt::string_size(18, &self.organization);
+        }
+        if !self.display_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.display_name);
+        }
+        if !self.description.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.description);
+        }
+        if !self.location.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.location);
+        }
+        for (k, v) in &self.labels {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            entry_size += ::protobuf::rt::string_size(2, &v);
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
+        };
+        for value in &self.network_tags {
+            my_size += ::protobuf::rt::string_size(8, &value);
+        };
+        if !self.kms_key.is_empty() {
+            my_size += ::protobuf::rt::string_size(10, &self.kms_key);
+        }
+        for value in &self.kms_keys {
+            my_size += ::protobuf::rt::string_size(28, &value);
+        };
+        if let Some(v) = self.create_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.update_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.state.is_empty() {
+            my_size += ::protobuf::rt::string_size(13, &self.state);
+        }
+        if let Some(v) = self.additional_attributes.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.parent_full_resource_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(19, &self.parent_full_resource_name);
+        }
+        for value in &self.versioned_resources {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        for value in &self.attached_resources {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        for (k, v) in &self.relationships {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            let len = v.compute_size();
+            entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
+        };
+        for value in &self.tag_keys {
+            my_size += ::protobuf::rt::string_size(23, &value);
+        };
+        for value in &self.tag_values {
+            my_size += ::protobuf::rt::string_size(25, &value);
+        };
+        for value in &self.tag_value_ids {
+            my_size += ::protobuf::rt::string_size(26, &value);
+        };
+        for value in &self.tags {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        for value in &self.effective_tags {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if !self.parent_asset_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(103, &self.parent_asset_type);
+        }
+        for (k, v) in &self.scc_security_marks {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            entry_size += ::protobuf::rt::string_size(2, &v);
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.asset_type.is_empty() {
+            os.write_string(2, &self.asset_type)?;
+        }
+        if !self.project.is_empty() {
+            os.write_string(3, &self.project)?;
+        }
+        for v in &self.folders {
+            os.write_string(17, &v)?;
+        };
+        if !self.organization.is_empty() {
+            os.write_string(18, &self.organization)?;
+        }
+        if !self.display_name.is_empty() {
+            os.write_string(4, &self.display_name)?;
+        }
+        if !self.description.is_empty() {
+            os.write_string(5, &self.description)?;
+        }
+        if !self.location.is_empty() {
+            os.write_string(6, &self.location)?;
+        }
+        for (k, v) in &self.labels {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            entry_size += ::protobuf::rt::string_size(2, &v);
+            os.write_raw_varint32(58)?; // Tag.
+            os.write_raw_varint32(entry_size as u32)?;
+            os.write_string(1, &k)?;
+            os.write_string(2, &v)?;
+        };
+        for v in &self.network_tags {
+            os.write_string(8, &v)?;
+        };
+        if !self.kms_key.is_empty() {
+            os.write_string(10, &self.kms_key)?;
+        }
+        for v in &self.kms_keys {
+            os.write_string(28, &v)?;
+        };
+        if let Some(v) = self.create_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(11, v, os)?;
+        }
+        if let Some(v) = self.update_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
+        }
+        if !self.state.is_empty() {
+            os.write_string(13, &self.state)?;
+        }
+        if let Some(v) = self.additional_attributes.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(9, v, os)?;
+        }
+        if !self.parent_full_resource_name.is_empty() {
+            os.write_string(19, &self.parent_full_resource_name)?;
+        }
+        for v in &self.versioned_resources {
+            ::protobuf::rt::write_message_field_with_cached_size(16, v, os)?;
+        };
+        for v in &self.attached_resources {
+            ::protobuf::rt::write_message_field_with_cached_size(20, v, os)?;
+        };
+        for (k, v) in &self.relationships {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            let len = v.cached_size() as u64;
+            entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            os.write_raw_varint32(170)?; // Tag.
+            os.write_raw_varint32(entry_size as u32)?;
+            os.write_string(1, &k)?;
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        };
+        for v in &self.tag_keys {
+            os.write_string(23, &v)?;
+        };
+        for v in &self.tag_values {
+            os.write_string(25, &v)?;
+        };
+        for v in &self.tag_value_ids {
+            os.write_string(26, &v)?;
+        };
+        for v in &self.tags {
+            ::protobuf::rt::write_message_field_with_cached_size(29, v, os)?;
+        };
+        for v in &self.effective_tags {
+            ::protobuf::rt::write_message_field_with_cached_size(30, v, os)?;
+        };
+        if !self.parent_asset_type.is_empty() {
+            os.write_string(103, &self.parent_asset_type)?;
+        }
+        for (k, v) in &self.scc_security_marks {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            entry_size += ::protobuf::rt::string_size(2, &v);
+            os.write_raw_varint32(258)?; // Tag.
+            os.write_raw_varint32(entry_size as u32)?;
+            os.write_string(1, &k)?;
+            os.write_string(2, &v)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ResourceSearchResult {
+        ResourceSearchResult::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.asset_type.clear();
+        self.project.clear();
+        self.folders.clear();
+        self.organization.clear();
+        self.display_name.clear();
+        self.description.clear();
+        self.location.clear();
+        self.labels.clear();
+        self.network_tags.clear();
+        self.kms_key.clear();
+        self.kms_keys.clear();
+        self.create_time.clear();
+        self.update_time.clear();
+        self.state.clear();
+        self.additional_attributes.clear();
+        self.parent_full_resource_name.clear();
+        self.versioned_resources.clear();
+        self.attached_resources.clear();
+        self.relationships.clear();
+        self.tag_keys.clear();
+        self.tag_values.clear();
+        self.tag_value_ids.clear();
+        self.tags.clear();
+        self.effective_tags.clear();
+        self.parent_asset_type.clear();
+        self.scc_security_marks.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ResourceSearchResult {
+        static instance: ::protobuf::rt::Lazy<ResourceSearchResult> = ::protobuf::rt::Lazy::new();
+        instance.get(ResourceSearchResult::new)
+    }
+}
+
+impl ::protobuf::MessageFull for ResourceSearchResult {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ResourceSearchResult").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ResourceSearchResult {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ResourceSearchResult {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Resource representation as defined by the corresponding service providing the
+///  resource for a given API version.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.VersionedResource)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct VersionedResource {
+    // message fields
+    ///  API version of the resource.
+    ///
+    ///  Example:
+    ///  If the resource is an instance provided by Compute Engine v1 API as defined
+    ///  in `https://cloud.google.com/compute/docs/reference/rest/v1/instances`,
+    ///  version will be "v1".
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.VersionedResource.version)
+    pub version: ::std::string::String,
+    ///  JSON representation of the resource as defined by the corresponding
+    ///  service providing this resource.
+    ///
+    ///  Example:
+    ///  If the resource is an instance provided by Compute Engine, this field will
+    ///  contain the JSON representation of the instance as defined by Compute
+    ///  Engine:
+    ///  `https://cloud.google.com/compute/docs/reference/rest/v1/instances`.
+    ///
+    ///  You can find the resource definition for each supported resource type in
+    ///  this table:
+    ///  `https://cloud.google.com/asset-inventory/docs/supported-asset-types`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.VersionedResource.resource)
+    pub resource: ::protobuf::MessageField<::protobuf::well_known_types::struct_::Struct>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.VersionedResource.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a VersionedResource {
+    fn default() -> &'a VersionedResource {
+        <VersionedResource as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl VersionedResource {
+    pub fn new() -> VersionedResource {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "version",
+            |m: &VersionedResource| { &m.version },
+            |m: &mut VersionedResource| { &mut m.version },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::struct_::Struct>(
+            "resource",
+            |m: &VersionedResource| { &m.resource },
+            |m: &mut VersionedResource| { &mut m.resource },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<VersionedResource>(
+            "VersionedResource",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for VersionedResource {
+    const NAME: &'static str = "VersionedResource";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.version = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.resource)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.version.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.version);
+        }
+        if let Some(v) = self.resource.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.version.is_empty() {
+            os.write_string(1, &self.version)?;
+        }
+        if let Some(v) = self.resource.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> VersionedResource {
+        VersionedResource::new()
+    }
+
+    fn clear(&mut self) {
+        self.version.clear();
+        self.resource.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static VersionedResource {
+        static instance: VersionedResource = VersionedResource {
+            version: ::std::string::String::new(),
+            resource: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for VersionedResource {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("VersionedResource").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for VersionedResource {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for VersionedResource {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Attached resource representation, which is defined by the corresponding
+///  service provider. It represents an attached resource's payload.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.AttachedResource)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct AttachedResource {
+    // message fields
+    ///  The type of this attached resource.
+    ///
+    ///  Example: `osconfig.googleapis.com/Inventory`
+    ///
+    ///  You can find the supported attached asset types of each resource in this
+    ///  table:
+    ///  `https://cloud.google.com/asset-inventory/docs/supported-asset-types`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.AttachedResource.asset_type)
+    pub asset_type: ::std::string::String,
+    ///  Versioned resource representations of this attached resource. This is
+    ///  repeated because there could be multiple versions of the attached resource
+    ///  representations during version migration.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.AttachedResource.versioned_resources)
+    pub versioned_resources: ::std::vec::Vec<VersionedResource>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.AttachedResource.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AttachedResource {
+    fn default() -> &'a AttachedResource {
+        <AttachedResource as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AttachedResource {
+    pub fn new() -> AttachedResource {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "asset_type",
+            |m: &AttachedResource| { &m.asset_type },
+            |m: &mut AttachedResource| { &mut m.asset_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "versioned_resources",
+            |m: &AttachedResource| { &m.versioned_resources },
+            |m: &mut AttachedResource| { &mut m.versioned_resources },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AttachedResource>(
+            "AttachedResource",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AttachedResource {
+    const NAME: &'static str = "AttachedResource";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.asset_type = is.read_string()?;
+                },
+                26 => {
+                    self.versioned_resources.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.asset_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.asset_type);
+        }
+        for value in &self.versioned_resources {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.asset_type.is_empty() {
+            os.write_string(1, &self.asset_type)?;
+        }
+        for v in &self.versioned_resources {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AttachedResource {
+        AttachedResource::new()
+    }
+
+    fn clear(&mut self) {
+        self.asset_type.clear();
+        self.versioned_resources.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AttachedResource {
+        static instance: AttachedResource = AttachedResource {
+            asset_type: ::std::string::String::new(),
+            versioned_resources: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AttachedResource {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AttachedResource").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AttachedResource {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AttachedResource {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The related resources of the primary resource.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.RelatedResources)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RelatedResources {
+    // message fields
+    ///  The detailed related resources of the primary resource.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedResources.related_resources)
+    pub related_resources: ::std::vec::Vec<RelatedResource>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.RelatedResources.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RelatedResources {
+    fn default() -> &'a RelatedResources {
+        <RelatedResources as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RelatedResources {
+    pub fn new() -> RelatedResources {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "related_resources",
+            |m: &RelatedResources| { &m.related_resources },
+            |m: &mut RelatedResources| { &mut m.related_resources },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RelatedResources>(
+            "RelatedResources",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RelatedResources {
+    const NAME: &'static str = "RelatedResources";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.related_resources.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.related_resources {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.related_resources {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RelatedResources {
+        RelatedResources::new()
+    }
+
+    fn clear(&mut self) {
+        self.related_resources.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RelatedResources {
+        static instance: RelatedResources = RelatedResources {
+            related_resources: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RelatedResources {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RelatedResources").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RelatedResources {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RelatedResources {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The detailed related resource.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.RelatedResource)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RelatedResource {
+    // message fields
+    ///  The type of the asset. Example: `compute.googleapis.com/Instance`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedResource.asset_type)
+    pub asset_type: ::std::string::String,
+    ///  The full resource name of the related resource. Example:
+    ///  `//compute.googleapis.com/projects/my_proj_123/zones/instance/instance123`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.RelatedResource.full_resource_name)
+    pub full_resource_name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.RelatedResource.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RelatedResource {
+    fn default() -> &'a RelatedResource {
+        <RelatedResource as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RelatedResource {
+    pub fn new() -> RelatedResource {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "asset_type",
+            |m: &RelatedResource| { &m.asset_type },
+            |m: &mut RelatedResource| { &mut m.asset_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "full_resource_name",
+            |m: &RelatedResource| { &m.full_resource_name },
+            |m: &mut RelatedResource| { &mut m.full_resource_name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RelatedResource>(
+            "RelatedResource",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RelatedResource {
+    const NAME: &'static str = "RelatedResource";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.asset_type = is.read_string()?;
+                },
+                18 => {
+                    self.full_resource_name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.asset_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.asset_type);
+        }
+        if !self.full_resource_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.full_resource_name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.asset_type.is_empty() {
+            os.write_string(1, &self.asset_type)?;
+        }
+        if !self.full_resource_name.is_empty() {
+            os.write_string(2, &self.full_resource_name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RelatedResource {
+        RelatedResource::new()
+    }
+
+    fn clear(&mut self) {
+        self.asset_type.clear();
+        self.full_resource_name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RelatedResource {
+        static instance: RelatedResource = RelatedResource {
+            asset_type: ::std::string::String::new(),
+            full_resource_name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RelatedResource {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RelatedResource").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RelatedResource {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RelatedResource {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  A result of IAM Policy search, containing information of an IAM policy.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicySearchResult)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct IamPolicySearchResult {
+    // message fields
+    ///  The full resource name of the resource associated with this IAM policy.
+    ///  Example:
+    ///  `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.
+    ///  See [Cloud Asset Inventory Resource Name
+    ///  Format](https://cloud.google.com/asset-inventory/docs/resource-name-format)
+    ///  for more information.
+    ///
+    ///  To search against the `resource`:
+    ///
+    ///  * use a field query. Example: `resource:organizations/123`
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.resource)
+    pub resource: ::std::string::String,
+    ///  The type of the resource associated with this IAM policy. Example:
+    ///  `compute.googleapis.com/Disk`.
+    ///
+    ///  To search against the `asset_type`:
+    ///
+    ///  * specify the `asset_types` field in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.asset_type)
+    pub asset_type: ::std::string::String,
+    ///  The project that the associated Google Cloud resource belongs to, in the
+    ///  form of projects/{PROJECT_NUMBER}. If an IAM policy is set on a resource
+    ///  (like VM instance, Cloud Storage bucket), the project field will indicate
+    ///  the project that contains the resource. If an IAM policy is set on a folder
+    ///  or orgnization, this field will be empty.
+    ///
+    ///  To search against the `project`:
+    ///
+    ///  * specify the `scope` field as this project in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.project)
+    pub project: ::std::string::String,
+    ///  The folder(s) that the IAM policy belongs to, in the form of
+    ///  folders/{FOLDER_NUMBER}. This field is available when the IAM policy
+    ///  belongs to one or more folders.
+    ///
+    ///  To search against `folders`:
+    ///
+    ///  * use a field query. Example: `folders:(123 OR 456)`
+    ///  * use a free text query. Example: `123`
+    ///  * specify the `scope` field as this folder in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.folders)
+    pub folders: ::std::vec::Vec<::std::string::String>,
+    ///  The organization that the IAM policy belongs to, in the form
+    ///  of organizations/{ORGANIZATION_NUMBER}. This field is available when the
+    ///  IAM policy belongs to an organization.
+    ///
+    ///  To search against `organization`:
+    ///
+    ///  * use a field query. Example: `organization:123`
+    ///  * use a free text query. Example: `123`
+    ///  * specify the `scope` field as this organization in your search request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.organization)
+    pub organization: ::std::string::String,
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.policy)
+    pub policy: ::protobuf::MessageField<super::policy::Policy>,
+    ///  Explanation about the IAM policy search result. It contains additional
+    ///  information to explain why the search result matches the query.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.explanation)
+    pub explanation: ::protobuf::MessageField<iam_policy_search_result::Explanation>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicySearchResult.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a IamPolicySearchResult {
+    fn default() -> &'a IamPolicySearchResult {
+        <IamPolicySearchResult as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl IamPolicySearchResult {
+    pub fn new() -> IamPolicySearchResult {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "resource",
+            |m: &IamPolicySearchResult| { &m.resource },
+            |m: &mut IamPolicySearchResult| { &mut m.resource },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "asset_type",
+            |m: &IamPolicySearchResult| { &m.asset_type },
+            |m: &mut IamPolicySearchResult| { &mut m.asset_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "project",
+            |m: &IamPolicySearchResult| { &m.project },
+            |m: &mut IamPolicySearchResult| { &mut m.project },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "folders",
+            |m: &IamPolicySearchResult| { &m.folders },
+            |m: &mut IamPolicySearchResult| { &mut m.folders },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "organization",
+            |m: &IamPolicySearchResult| { &m.organization },
+            |m: &mut IamPolicySearchResult| { &mut m.organization },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::policy::Policy>(
+            "policy",
+            |m: &IamPolicySearchResult| { &m.policy },
+            |m: &mut IamPolicySearchResult| { &mut m.policy },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, iam_policy_search_result::Explanation>(
+            "explanation",
+            |m: &IamPolicySearchResult| { &m.explanation },
+            |m: &mut IamPolicySearchResult| { &mut m.explanation },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IamPolicySearchResult>(
+            "IamPolicySearchResult",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for IamPolicySearchResult {
+    const NAME: &'static str = "IamPolicySearchResult";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.resource = is.read_string()?;
+                },
+                42 => {
+                    self.asset_type = is.read_string()?;
+                },
+                18 => {
+                    self.project = is.read_string()?;
+                },
+                50 => {
+                    self.folders.push(is.read_string()?);
+                },
+                58 => {
+                    self.organization = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.policy)?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.explanation)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.resource.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.resource);
+        }
+        if !self.asset_type.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.asset_type);
+        }
+        if !self.project.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.project);
+        }
+        for value in &self.folders {
+            my_size += ::protobuf::rt::string_size(6, &value);
+        };
+        if !self.organization.is_empty() {
+            my_size += ::protobuf::rt::string_size(7, &self.organization);
+        }
+        if let Some(v) = self.policy.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.explanation.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.resource.is_empty() {
+            os.write_string(1, &self.resource)?;
+        }
+        if !self.asset_type.is_empty() {
+            os.write_string(5, &self.asset_type)?;
+        }
+        if !self.project.is_empty() {
+            os.write_string(2, &self.project)?;
+        }
+        for v in &self.folders {
+            os.write_string(6, &v)?;
+        };
+        if !self.organization.is_empty() {
+            os.write_string(7, &self.organization)?;
+        }
+        if let Some(v) = self.policy.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.explanation.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> IamPolicySearchResult {
+        IamPolicySearchResult::new()
+    }
+
+    fn clear(&mut self) {
+        self.resource.clear();
+        self.asset_type.clear();
+        self.project.clear();
+        self.folders.clear();
+        self.organization.clear();
+        self.policy.clear();
+        self.explanation.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static IamPolicySearchResult {
+        static instance: IamPolicySearchResult = IamPolicySearchResult {
+            resource: ::std::string::String::new(),
+            asset_type: ::std::string::String::new(),
+            project: ::std::string::String::new(),
+            folders: ::std::vec::Vec::new(),
+            organization: ::std::string::String::new(),
+            policy: ::protobuf::MessageField::none(),
+            explanation: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for IamPolicySearchResult {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("IamPolicySearchResult").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for IamPolicySearchResult {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for IamPolicySearchResult {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `IamPolicySearchResult`
+pub mod iam_policy_search_result {
+    ///  Explanation about the IAM policy search result.
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicySearchResult.Explanation)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct Explanation {
+        // message fields
+        ///  The map from roles to their included permissions that match the
+        ///  permission query (i.e., a query containing `policy.role.permissions:`).
+        ///  Example: if query `policy.role.permissions:compute.disk.get`
+        ///  matches a policy binding that contains owner role, the
+        ///  matched_permissions will be `{"roles/owner": ["compute.disk.get"]}`. The
+        ///  roles can also be found in the returned `policy` bindings. Note that the
+        ///  map is populated only for requests with permission queries.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.Explanation.matched_permissions)
+        pub matched_permissions: ::std::collections::HashMap<::std::string::String, explanation::Permissions>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicySearchResult.Explanation.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a Explanation {
+        fn default() -> &'a Explanation {
+            <Explanation as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl Explanation {
+        pub fn new() -> Explanation {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_map_simpler_accessor::<_, _, _>(
+                "matched_permissions",
+                |m: &Explanation| { &m.matched_permissions },
+                |m: &mut Explanation| { &mut m.matched_permissions },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Explanation>(
+                "IamPolicySearchResult.Explanation",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for Explanation {
+        const NAME: &'static str = "Explanation";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        let len = is.read_raw_varint32()?;
+                        let old_limit = is.push_limit(len as u64)?;
+                        let mut key = ::std::default::Default::default();
+                        let mut value = ::std::default::Default::default();
+                        while let Some(tag) = is.read_raw_tag_or_eof()? {
+                            match tag {
+                                10 => key = is.read_string()?,
+                                18 => value = is.read_message()?,
+                                _ => ::protobuf::rt::skip_field_for_tag(tag, is)?,
+                            };
+                        }
+                        is.pop_limit(old_limit);
+                        self.matched_permissions.insert(key, value);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            for (k, v) in &self.matched_permissions {
+                let mut entry_size = 0;
+                entry_size += ::protobuf::rt::string_size(1, &k);
+                let len = v.compute_size();
+                entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for (k, v) in &self.matched_permissions {
+                let mut entry_size = 0;
+                entry_size += ::protobuf::rt::string_size(1, &k);
+                let len = v.cached_size() as u64;
+                entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                os.write_raw_varint32(10)?; // Tag.
+                os.write_raw_varint32(entry_size as u32)?;
+                os.write_string(1, &k)?;
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Explanation {
+            Explanation::new()
+        }
+
+        fn clear(&mut self) {
+            self.matched_permissions.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Explanation {
+            static instance: ::protobuf::rt::Lazy<Explanation> = ::protobuf::rt::Lazy::new();
+            instance.get(Explanation::new)
+        }
+    }
+
+    impl ::protobuf::MessageFull for Explanation {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicySearchResult.Explanation").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Explanation {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Explanation {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `Explanation`
+    pub mod explanation {
+        ///  IAM permissions
+        // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicySearchResult.Explanation.Permissions)
+        #[derive(PartialEq,Clone,Default,Debug)]
+        pub struct Permissions {
+            // message fields
+            ///  A list of permissions. A sample permission string: `compute.disk.get`.
+            // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicySearchResult.Explanation.Permissions.permissions)
+            pub permissions: ::std::vec::Vec<::std::string::String>,
+            // special fields
+            // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicySearchResult.Explanation.Permissions.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a Permissions {
+            fn default() -> &'a Permissions {
+                <Permissions as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl Permissions {
+            pub fn new() -> Permissions {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(1);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                    "permissions",
+                    |m: &Permissions| { &m.permissions },
+                    |m: &mut Permissions| { &mut m.permissions },
+                ));
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Permissions>(
+                    "IamPolicySearchResult.Explanation.Permissions",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for Permissions {
+            const NAME: &'static str = "Permissions";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        10 => {
+                            self.permissions.push(is.read_string()?);
+                        },
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                for value in &self.permissions {
+                    my_size += ::protobuf::rt::string_size(1, &value);
+                };
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                for v in &self.permissions {
+                    os.write_string(1, &v)?;
+                };
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> Permissions {
+                Permissions::new()
+            }
+
+            fn clear(&mut self) {
+                self.permissions.clear();
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static Permissions {
+                static instance: Permissions = Permissions {
+                    permissions: ::std::vec::Vec::new(),
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for Permissions {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("IamPolicySearchResult.Explanation.Permissions").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for Permissions {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for Permissions {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+    }
+}
+
+///  Represents the detailed state of an entity under analysis, such as a
+///  resource, an identity or an access.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisState)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct IamPolicyAnalysisState {
+    // message fields
+    ///  The Google standard error code that best describes the state.
+    ///  For example:
+    ///  - OK means the analysis on this entity has been successfully finished;
+    ///  - PERMISSION_DENIED means an access denied error is encountered;
+    ///  - DEADLINE_EXCEEDED means the analysis on this entity hasn't been started
+    ///  in time;
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisState.code)
+    pub code: ::protobuf::EnumOrUnknown<super::code::Code>,
+    ///  The human-readable description of the cause of failure.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisState.cause)
+    pub cause: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisState.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a IamPolicyAnalysisState {
+    fn default() -> &'a IamPolicyAnalysisState {
+        <IamPolicyAnalysisState as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl IamPolicyAnalysisState {
+    pub fn new() -> IamPolicyAnalysisState {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "code",
+            |m: &IamPolicyAnalysisState| { &m.code },
+            |m: &mut IamPolicyAnalysisState| { &mut m.code },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "cause",
+            |m: &IamPolicyAnalysisState| { &m.cause },
+            |m: &mut IamPolicyAnalysisState| { &mut m.cause },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IamPolicyAnalysisState>(
+            "IamPolicyAnalysisState",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for IamPolicyAnalysisState {
+    const NAME: &'static str = "IamPolicyAnalysisState";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.code = is.read_enum_or_unknown()?;
+                },
+                18 => {
+                    self.cause = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.code != ::protobuf::EnumOrUnknown::new(super::code::Code::OK) {
+            my_size += ::protobuf::rt::int32_size(1, self.code.value());
+        }
+        if !self.cause.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.cause);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.code != ::protobuf::EnumOrUnknown::new(super::code::Code::OK) {
+            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.code))?;
+        }
+        if !self.cause.is_empty() {
+            os.write_string(2, &self.cause)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> IamPolicyAnalysisState {
+        IamPolicyAnalysisState::new()
+    }
+
+    fn clear(&mut self) {
+        self.code = ::protobuf::EnumOrUnknown::new(super::code::Code::OK);
+        self.cause.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static IamPolicyAnalysisState {
+        static instance: IamPolicyAnalysisState = IamPolicyAnalysisState {
+            code: ::protobuf::EnumOrUnknown::from_i32(0),
+            cause: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for IamPolicyAnalysisState {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("IamPolicyAnalysisState").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for IamPolicyAnalysisState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for IamPolicyAnalysisState {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The condition evaluation.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.ConditionEvaluation)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ConditionEvaluation {
+    // message fields
+    ///  The evaluation result.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.ConditionEvaluation.evaluation_value)
+    pub evaluation_value: ::protobuf::EnumOrUnknown<condition_evaluation::EvaluationValue>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.ConditionEvaluation.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ConditionEvaluation {
+    fn default() -> &'a ConditionEvaluation {
+        <ConditionEvaluation as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ConditionEvaluation {
+    pub fn new() -> ConditionEvaluation {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "evaluation_value",
+            |m: &ConditionEvaluation| { &m.evaluation_value },
+            |m: &mut ConditionEvaluation| { &mut m.evaluation_value },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ConditionEvaluation>(
+            "ConditionEvaluation",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ConditionEvaluation {
+    const NAME: &'static str = "ConditionEvaluation";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.evaluation_value = is.read_enum_or_unknown()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.evaluation_value != ::protobuf::EnumOrUnknown::new(condition_evaluation::EvaluationValue::EVALUATION_VALUE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(1, self.evaluation_value.value());
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.evaluation_value != ::protobuf::EnumOrUnknown::new(condition_evaluation::EvaluationValue::EVALUATION_VALUE_UNSPECIFIED) {
+            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.evaluation_value))?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ConditionEvaluation {
+        ConditionEvaluation::new()
+    }
+
+    fn clear(&mut self) {
+        self.evaluation_value = ::protobuf::EnumOrUnknown::new(condition_evaluation::EvaluationValue::EVALUATION_VALUE_UNSPECIFIED);
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ConditionEvaluation {
+        static instance: ConditionEvaluation = ConditionEvaluation {
+            evaluation_value: ::protobuf::EnumOrUnknown::from_i32(0),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ConditionEvaluation {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ConditionEvaluation").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ConditionEvaluation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ConditionEvaluation {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ConditionEvaluation`
+pub mod condition_evaluation {
+    ///  Value of this expression.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.cloud.asset.v1.ConditionEvaluation.EvaluationValue)
+    pub enum EvaluationValue {
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.ConditionEvaluation.EvaluationValue.EVALUATION_VALUE_UNSPECIFIED)
+        EVALUATION_VALUE_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.ConditionEvaluation.EvaluationValue.TRUE)
+        TRUE = 1,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.ConditionEvaluation.EvaluationValue.FALSE)
+        FALSE = 2,
+        // @@protoc_insertion_point(enum_value:google.cloud.asset.v1.ConditionEvaluation.EvaluationValue.CONDITIONAL)
+        CONDITIONAL = 3,
+    }
+
+    impl ::protobuf::Enum for EvaluationValue {
+        const NAME: &'static str = "EvaluationValue";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<EvaluationValue> {
+            match value {
+                0 => ::std::option::Option::Some(EvaluationValue::EVALUATION_VALUE_UNSPECIFIED),
+                1 => ::std::option::Option::Some(EvaluationValue::TRUE),
+                2 => ::std::option::Option::Some(EvaluationValue::FALSE),
+                3 => ::std::option::Option::Some(EvaluationValue::CONDITIONAL),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<EvaluationValue> {
+            match str {
+                "EVALUATION_VALUE_UNSPECIFIED" => ::std::option::Option::Some(EvaluationValue::EVALUATION_VALUE_UNSPECIFIED),
+                "TRUE" => ::std::option::Option::Some(EvaluationValue::TRUE),
+                "FALSE" => ::std::option::Option::Some(EvaluationValue::FALSE),
+                "CONDITIONAL" => ::std::option::Option::Some(EvaluationValue::CONDITIONAL),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [EvaluationValue] = &[
+            EvaluationValue::EVALUATION_VALUE_UNSPECIFIED,
+            EvaluationValue::TRUE,
+            EvaluationValue::FALSE,
+            EvaluationValue::CONDITIONAL,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for EvaluationValue {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("ConditionEvaluation.EvaluationValue").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for EvaluationValue {
+        fn default() -> Self {
+            EvaluationValue::EVALUATION_VALUE_UNSPECIFIED
+        }
+    }
+
+    impl EvaluationValue {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<EvaluationValue>("ConditionEvaluation.EvaluationValue")
+        }
+    }
+}
+
+///  IAM Policy analysis result, consisting of one IAM policy binding and derived
+///  access control lists.
+// @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct IamPolicyAnalysisResult {
+    // message fields
+    ///  The [full resource
+    ///  name](https://cloud.google.com/asset-inventory/docs/resource-name-format)
+    ///  of the resource to which the
+    ///  [iam_binding][google.cloud.asset.v1.IamPolicyAnalysisResult.iam_binding]
+    ///  policy attaches.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.attached_resource_full_name)
+    pub attached_resource_full_name: ::std::string::String,
+    ///  The IAM policy binding under analysis.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.iam_binding)
+    pub iam_binding: ::protobuf::MessageField<super::policy::Binding>,
+    ///  The access control lists derived from the
+    ///  [iam_binding][google.cloud.asset.v1.IamPolicyAnalysisResult.iam_binding]
+    ///  that match or potentially match resource and access selectors specified in
+    ///  the request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.access_control_lists)
+    pub access_control_lists: ::std::vec::Vec<iam_policy_analysis_result::AccessControlList>,
+    ///  The identity list derived from members of the
+    ///  [iam_binding][google.cloud.asset.v1.IamPolicyAnalysisResult.iam_binding]
+    ///  that match or potentially match identity selector specified in the request.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.identity_list)
+    pub identity_list: ::protobuf::MessageField<iam_policy_analysis_result::IdentityList>,
+    ///  Represents whether all analyses on the
+    ///  [iam_binding][google.cloud.asset.v1.IamPolicyAnalysisResult.iam_binding]
+    ///  have successfully finished.
+    // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.fully_explored)
+    pub fully_explored: bool,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a IamPolicyAnalysisResult {
+    fn default() -> &'a IamPolicyAnalysisResult {
+        <IamPolicyAnalysisResult as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl IamPolicyAnalysisResult {
+    pub fn new() -> IamPolicyAnalysisResult {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "attached_resource_full_name",
+            |m: &IamPolicyAnalysisResult| { &m.attached_resource_full_name },
+            |m: &mut IamPolicyAnalysisResult| { &mut m.attached_resource_full_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::policy::Binding>(
+            "iam_binding",
+            |m: &IamPolicyAnalysisResult| { &m.iam_binding },
+            |m: &mut IamPolicyAnalysisResult| { &mut m.iam_binding },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "access_control_lists",
+            |m: &IamPolicyAnalysisResult| { &m.access_control_lists },
+            |m: &mut IamPolicyAnalysisResult| { &mut m.access_control_lists },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, iam_policy_analysis_result::IdentityList>(
+            "identity_list",
+            |m: &IamPolicyAnalysisResult| { &m.identity_list },
+            |m: &mut IamPolicyAnalysisResult| { &mut m.identity_list },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "fully_explored",
+            |m: &IamPolicyAnalysisResult| { &m.fully_explored },
+            |m: &mut IamPolicyAnalysisResult| { &mut m.fully_explored },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IamPolicyAnalysisResult>(
+            "IamPolicyAnalysisResult",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for IamPolicyAnalysisResult {
+    const NAME: &'static str = "IamPolicyAnalysisResult";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.attached_resource_full_name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.iam_binding)?;
+                },
+                26 => {
+                    self.access_control_lists.push(is.read_message()?);
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.identity_list)?;
+                },
+                40 => {
+                    self.fully_explored = is.read_bool()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.attached_resource_full_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.attached_resource_full_name);
+        }
+        if let Some(v) = self.iam_binding.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        for value in &self.access_control_lists {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if let Some(v) = self.identity_list.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.fully_explored != false {
+            my_size += 1 + 1;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.attached_resource_full_name.is_empty() {
+            os.write_string(1, &self.attached_resource_full_name)?;
+        }
+        if let Some(v) = self.iam_binding.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        for v in &self.access_control_lists {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        };
+        if let Some(v) = self.identity_list.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if self.fully_explored != false {
+            os.write_bool(5, self.fully_explored)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> IamPolicyAnalysisResult {
+        IamPolicyAnalysisResult::new()
+    }
+
+    fn clear(&mut self) {
+        self.attached_resource_full_name.clear();
+        self.iam_binding.clear();
+        self.access_control_lists.clear();
+        self.identity_list.clear();
+        self.fully_explored = false;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static IamPolicyAnalysisResult {
+        static instance: IamPolicyAnalysisResult = IamPolicyAnalysisResult {
+            attached_resource_full_name: ::std::string::String::new(),
+            iam_binding: ::protobuf::MessageField::none(),
+            access_control_lists: ::std::vec::Vec::new(),
+            identity_list: ::protobuf::MessageField::none(),
+            fully_explored: false,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for IamPolicyAnalysisResult {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for IamPolicyAnalysisResult {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for IamPolicyAnalysisResult {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `IamPolicyAnalysisResult`
+pub mod iam_policy_analysis_result {
+    ///  A Google Cloud resource under analysis.
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult.Resource)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct Resource {
+        // message fields
+        ///  The [full resource
+        ///  name](https://cloud.google.com/asset-inventory/docs/resource-name-format)
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Resource.full_resource_name)
+        pub full_resource_name: ::std::string::String,
+        ///  The analysis state of this resource.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Resource.analysis_state)
+        pub analysis_state: ::protobuf::MessageField<super::IamPolicyAnalysisState>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.Resource.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a Resource {
+        fn default() -> &'a Resource {
+            <Resource as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl Resource {
+        pub fn new() -> Resource {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "full_resource_name",
+                |m: &Resource| { &m.full_resource_name },
+                |m: &mut Resource| { &mut m.full_resource_name },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::IamPolicyAnalysisState>(
+                "analysis_state",
+                |m: &Resource| { &m.analysis_state },
+                |m: &mut Resource| { &mut m.analysis_state },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Resource>(
+                "IamPolicyAnalysisResult.Resource",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for Resource {
+        const NAME: &'static str = "Resource";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.full_resource_name = is.read_string()?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.analysis_state)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.full_resource_name.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.full_resource_name);
+            }
+            if let Some(v) = self.analysis_state.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.full_resource_name.is_empty() {
+                os.write_string(1, &self.full_resource_name)?;
+            }
+            if let Some(v) = self.analysis_state.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Resource {
+            Resource::new()
+        }
+
+        fn clear(&mut self) {
+            self.full_resource_name.clear();
+            self.analysis_state.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Resource {
+            static instance: Resource = Resource {
+                full_resource_name: ::std::string::String::new(),
+                analysis_state: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for Resource {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult.Resource").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Resource {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Resource {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  An IAM role or permission under analysis.
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult.Access)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct Access {
+        // message fields
+        ///  The analysis state of this access.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Access.analysis_state)
+        pub analysis_state: ::protobuf::MessageField<super::IamPolicyAnalysisState>,
+        // message oneof groups
+        pub oneof_access: ::std::option::Option<access::Oneof_access>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.Access.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a Access {
+        fn default() -> &'a Access {
+            <Access as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl Access {
+        pub fn new() -> Access {
+            ::std::default::Default::default()
+        }
+
+        // string role = 1;
+
+        pub fn role(&self) -> &str {
+            match self.oneof_access {
+                ::std::option::Option::Some(access::Oneof_access::Role(ref v)) => v,
+                _ => "",
+            }
+        }
+
+        pub fn clear_role(&mut self) {
+            self.oneof_access = ::std::option::Option::None;
+        }
+
+        pub fn has_role(&self) -> bool {
+            match self.oneof_access {
+                ::std::option::Option::Some(access::Oneof_access::Role(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_role(&mut self, v: ::std::string::String) {
+            self.oneof_access = ::std::option::Option::Some(access::Oneof_access::Role(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_role(&mut self) -> &mut ::std::string::String {
+            if let ::std::option::Option::Some(access::Oneof_access::Role(_)) = self.oneof_access {
+            } else {
+                self.oneof_access = ::std::option::Option::Some(access::Oneof_access::Role(::std::string::String::new()));
+            }
+            match self.oneof_access {
+                ::std::option::Option::Some(access::Oneof_access::Role(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_role(&mut self) -> ::std::string::String {
+            if self.has_role() {
+                match self.oneof_access.take() {
+                    ::std::option::Option::Some(access::Oneof_access::Role(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                ::std::string::String::new()
+            }
+        }
+
+        // string permission = 2;
+
+        pub fn permission(&self) -> &str {
+            match self.oneof_access {
+                ::std::option::Option::Some(access::Oneof_access::Permission(ref v)) => v,
+                _ => "",
+            }
+        }
+
+        pub fn clear_permission(&mut self) {
+            self.oneof_access = ::std::option::Option::None;
+        }
+
+        pub fn has_permission(&self) -> bool {
+            match self.oneof_access {
+                ::std::option::Option::Some(access::Oneof_access::Permission(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_permission(&mut self, v: ::std::string::String) {
+            self.oneof_access = ::std::option::Option::Some(access::Oneof_access::Permission(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_permission(&mut self) -> &mut ::std::string::String {
+            if let ::std::option::Option::Some(access::Oneof_access::Permission(_)) = self.oneof_access {
+            } else {
+                self.oneof_access = ::std::option::Option::Some(access::Oneof_access::Permission(::std::string::String::new()));
+            }
+            match self.oneof_access {
+                ::std::option::Option::Some(access::Oneof_access::Permission(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_permission(&mut self) -> ::std::string::String {
+            if self.has_permission() {
+                match self.oneof_access.take() {
+                    ::std::option::Option::Some(access::Oneof_access::Permission(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                ::std::string::String::new()
+            }
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(3);
+            let mut oneofs = ::std::vec::Vec::with_capacity(1);
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+                "role",
+                Access::has_role,
+                Access::role,
+                Access::set_role,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+                "permission",
+                Access::has_permission,
+                Access::permission,
+                Access::set_permission,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::IamPolicyAnalysisState>(
+                "analysis_state",
+                |m: &Access| { &m.analysis_state },
+                |m: &mut Access| { &mut m.analysis_state },
+            ));
+            oneofs.push(access::Oneof_access::generated_oneof_descriptor_data());
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Access>(
+                "IamPolicyAnalysisResult.Access",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for Access {
+        const NAME: &'static str = "Access";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.oneof_access = ::std::option::Option::Some(access::Oneof_access::Role(is.read_string()?));
+                    },
+                    18 => {
+                        self.oneof_access = ::std::option::Option::Some(access::Oneof_access::Permission(is.read_string()?));
+                    },
+                    26 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.analysis_state)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.analysis_state.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let ::std::option::Option::Some(ref v) = self.oneof_access {
+                match v {
+                    &access::Oneof_access::Role(ref v) => {
+                        my_size += ::protobuf::rt::string_size(1, &v);
+                    },
+                    &access::Oneof_access::Permission(ref v) => {
+                        my_size += ::protobuf::rt::string_size(2, &v);
+                    },
+                };
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.analysis_state.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+            }
+            if let ::std::option::Option::Some(ref v) = self.oneof_access {
+                match v {
+                    &access::Oneof_access::Role(ref v) => {
+                        os.write_string(1, v)?;
+                    },
+                    &access::Oneof_access::Permission(ref v) => {
+                        os.write_string(2, v)?;
+                    },
+                };
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Access {
+            Access::new()
+        }
+
+        fn clear(&mut self) {
+            self.oneof_access = ::std::option::Option::None;
+            self.oneof_access = ::std::option::Option::None;
+            self.analysis_state.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Access {
+            static instance: Access = Access {
+                analysis_state: ::protobuf::MessageField::none(),
+                oneof_access: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for Access {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult.Access").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Access {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Access {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `Access`
+    pub mod access {
+
+        #[derive(Clone,PartialEq,Debug)]
+        #[non_exhaustive]
+        // @@protoc_insertion_point(oneof:google.cloud.asset.v1.IamPolicyAnalysisResult.Access.oneof_access)
+        pub enum Oneof_access {
+            // @@protoc_insertion_point(oneof_field:google.cloud.asset.v1.IamPolicyAnalysisResult.Access.role)
+            Role(::std::string::String),
+            // @@protoc_insertion_point(oneof_field:google.cloud.asset.v1.IamPolicyAnalysisResult.Access.permission)
+            Permission(::std::string::String),
+        }
+
+        impl ::protobuf::Oneof for Oneof_access {
+        }
+
+        impl ::protobuf::OneofFull for Oneof_access {
+            fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| <super::Access as ::protobuf::MessageFull>::descriptor().oneof_by_name("oneof_access").unwrap()).clone()
+            }
+        }
+
+        impl Oneof_access {
+            pub(in super::super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+                ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Oneof_access>("oneof_access")
+            }
+        }
+    }
+
+    ///  An identity under analysis.
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult.Identity)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct Identity {
+        // message fields
+        ///  The identity of members, formatted as appear in an
+        ///  [IAM policy
+        ///  binding](https://cloud.google.com/iam/reference/rest/v1/Binding). For
+        ///  example, they might be formatted like the following:
+        ///
+        ///  - user:foo@google.com
+        ///  - group:group1@google.com
+        ///  - serviceAccount:s1@prj1.iam.gserviceaccount.com
+        ///  - projectOwner:some_project_id
+        ///  - domain:google.com
+        ///  - allUsers
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Identity.name)
+        pub name: ::std::string::String,
+        ///  The analysis state of this identity.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Identity.analysis_state)
+        pub analysis_state: ::protobuf::MessageField<super::IamPolicyAnalysisState>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.Identity.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a Identity {
+        fn default() -> &'a Identity {
+            <Identity as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl Identity {
+        pub fn new() -> Identity {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "name",
+                |m: &Identity| { &m.name },
+                |m: &mut Identity| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::IamPolicyAnalysisState>(
+                "analysis_state",
+                |m: &Identity| { &m.analysis_state },
+                |m: &mut Identity| { &mut m.analysis_state },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Identity>(
+                "IamPolicyAnalysisResult.Identity",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for Identity {
+        const NAME: &'static str = "Identity";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.name = is.read_string()?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.analysis_state)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.name.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.name);
+            }
+            if let Some(v) = self.analysis_state.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.name.is_empty() {
+                os.write_string(1, &self.name)?;
+            }
+            if let Some(v) = self.analysis_state.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Identity {
+            Identity::new()
+        }
+
+        fn clear(&mut self) {
+            self.name.clear();
+            self.analysis_state.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Identity {
+            static instance: Identity = Identity {
+                name: ::std::string::String::new(),
+                analysis_state: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for Identity {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult.Identity").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Identity {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Identity {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  A directional edge.
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult.Edge)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct Edge {
+        // message fields
+        ///  The source node of the edge. For example, it could be a full resource
+        ///  name for a resource node or an email of an identity.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.source_node)
+        pub source_node: ::std::string::String,
+        ///  The target node of the edge. For example, it could be a full resource
+        ///  name for a resource node or an email of an identity.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.target_node)
+        pub target_node: ::std::string::String,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a Edge {
+        fn default() -> &'a Edge {
+            <Edge as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl Edge {
+        pub fn new() -> Edge {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "source_node",
+                |m: &Edge| { &m.source_node },
+                |m: &mut Edge| { &mut m.source_node },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "target_node",
+                |m: &Edge| { &m.target_node },
+                |m: &mut Edge| { &mut m.target_node },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Edge>(
+                "IamPolicyAnalysisResult.Edge",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for Edge {
+        const NAME: &'static str = "Edge";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.source_node = is.read_string()?;
+                    },
+                    18 => {
+                        self.target_node = is.read_string()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.source_node.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.source_node);
+            }
+            if !self.target_node.is_empty() {
+                my_size += ::protobuf::rt::string_size(2, &self.target_node);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.source_node.is_empty() {
+                os.write_string(1, &self.source_node)?;
+            }
+            if !self.target_node.is_empty() {
+                os.write_string(2, &self.target_node)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Edge {
+            Edge::new()
+        }
+
+        fn clear(&mut self) {
+            self.source_node.clear();
+            self.target_node.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Edge {
+            static instance: Edge = Edge {
+                source_node: ::std::string::String::new(),
+                target_node: ::std::string::String::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for Edge {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult.Edge").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Edge {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Edge {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  An access control list, derived from the above IAM policy binding, which
+    ///  contains a set of resources and accesses. May include one
+    ///  item from each set to compose an access control entry.
+    ///
+    ///  NOTICE that there could be multiple access control lists for one IAM policy
+    ///  binding. The access control lists are created based on resource and access
+    ///  combinations.
+    ///
+    ///  For example, assume we have the following cases in one IAM policy binding:
+    ///  - Permission P1 and P2 apply to resource R1 and R2;
+    ///  - Permission P3 applies to resource R2 and R3;
+    ///
+    ///  This will result in the following access control lists:
+    ///  - AccessControlList 1: [R1, R2], [P1, P2]
+    ///  - AccessControlList 2: [R2, R3], [P3]
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult.AccessControlList)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct AccessControlList {
+        // message fields
+        ///  The resources that match one of the following conditions:
+        ///  - The resource_selector, if it is specified in request;
+        ///  - Otherwise, resources reachable from the policy attached resource.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.AccessControlList.resources)
+        pub resources: ::std::vec::Vec<Resource>,
+        ///  The accesses that match one of the following conditions:
+        ///  - The access_selector, if it is specified in request;
+        ///  - Otherwise, access specifiers reachable from the policy binding's role.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.AccessControlList.accesses)
+        pub accesses: ::std::vec::Vec<Access>,
+        ///  Resource edges of the graph starting from the policy attached
+        ///  resource to any descendant resources. The
+        ///  [Edge.source_node][google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.source_node]
+        ///  contains the full resource name of a parent resource and
+        ///  [Edge.target_node][google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.target_node]
+        ///  contains the full resource name of a child resource. This field is
+        ///  present only if the output_resource_edges option is enabled in request.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.AccessControlList.resource_edges)
+        pub resource_edges: ::std::vec::Vec<Edge>,
+        ///  Condition evaluation for this AccessControlList, if there is a condition
+        ///  defined in the above IAM policy binding.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.AccessControlList.condition_evaluation)
+        pub condition_evaluation: ::protobuf::MessageField<super::ConditionEvaluation>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.AccessControlList.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a AccessControlList {
+        fn default() -> &'a AccessControlList {
+            <AccessControlList as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl AccessControlList {
+        pub fn new() -> AccessControlList {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(4);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "resources",
+                |m: &AccessControlList| { &m.resources },
+                |m: &mut AccessControlList| { &mut m.resources },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "accesses",
+                |m: &AccessControlList| { &m.accesses },
+                |m: &mut AccessControlList| { &mut m.accesses },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "resource_edges",
+                |m: &AccessControlList| { &m.resource_edges },
+                |m: &mut AccessControlList| { &mut m.resource_edges },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::ConditionEvaluation>(
+                "condition_evaluation",
+                |m: &AccessControlList| { &m.condition_evaluation },
+                |m: &mut AccessControlList| { &mut m.condition_evaluation },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AccessControlList>(
+                "IamPolicyAnalysisResult.AccessControlList",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for AccessControlList {
+        const NAME: &'static str = "AccessControlList";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.resources.push(is.read_message()?);
+                    },
+                    18 => {
+                        self.accesses.push(is.read_message()?);
+                    },
+                    26 => {
+                        self.resource_edges.push(is.read_message()?);
+                    },
+                    34 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.condition_evaluation)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            for value in &self.resources {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            for value in &self.accesses {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            for value in &self.resource_edges {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            if let Some(v) = self.condition_evaluation.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.resources {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            };
+            for v in &self.accesses {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            for v in &self.resource_edges {
+                ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+            };
+            if let Some(v) = self.condition_evaluation.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> AccessControlList {
+            AccessControlList::new()
+        }
+
+        fn clear(&mut self) {
+            self.resources.clear();
+            self.accesses.clear();
+            self.resource_edges.clear();
+            self.condition_evaluation.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static AccessControlList {
+            static instance: AccessControlList = AccessControlList {
+                resources: ::std::vec::Vec::new(),
+                accesses: ::std::vec::Vec::new(),
+                resource_edges: ::std::vec::Vec::new(),
+                condition_evaluation: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for AccessControlList {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult.AccessControlList").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for AccessControlList {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for AccessControlList {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  The identities and group edges.
+    // @@protoc_insertion_point(message:google.cloud.asset.v1.IamPolicyAnalysisResult.IdentityList)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct IdentityList {
+        // message fields
+        ///  Only the identities that match one of the following conditions will be
+        ///  presented:
+        ///  - The identity_selector, if it is specified in request;
+        ///  - Otherwise, identities reachable from the policy binding's members.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.IdentityList.identities)
+        pub identities: ::std::vec::Vec<Identity>,
+        ///  Group identity edges of the graph starting from the binding's
+        ///  group members to any node of the
+        ///  [identities][google.cloud.asset.v1.IamPolicyAnalysisResult.IdentityList.identities].
+        ///  The
+        ///  [Edge.source_node][google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.source_node]
+        ///  contains a group, such as `group:parent@google.com`. The
+        ///  [Edge.target_node][google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.target_node]
+        ///  contains a member of the group, such as `group:child@google.com` or
+        ///  `user:foo@google.com`. This field is present only if the
+        ///  output_group_edges option is enabled in request.
+        // @@protoc_insertion_point(field:google.cloud.asset.v1.IamPolicyAnalysisResult.IdentityList.group_edges)
+        pub group_edges: ::std::vec::Vec<Edge>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.cloud.asset.v1.IamPolicyAnalysisResult.IdentityList.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a IdentityList {
+        fn default() -> &'a IdentityList {
+            <IdentityList as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl IdentityList {
+        pub fn new() -> IdentityList {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "identities",
+                |m: &IdentityList| { &m.identities },
+                |m: &mut IdentityList| { &mut m.identities },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "group_edges",
+                |m: &IdentityList| { &m.group_edges },
+                |m: &mut IdentityList| { &mut m.group_edges },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IdentityList>(
+                "IamPolicyAnalysisResult.IdentityList",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for IdentityList {
+        const NAME: &'static str = "IdentityList";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.identities.push(is.read_message()?);
+                    },
+                    18 => {
+                        self.group_edges.push(is.read_message()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            for value in &self.identities {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            for value in &self.group_edges {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.identities {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            };
+            for v in &self.group_edges {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> IdentityList {
+            IdentityList::new()
+        }
+
+        fn clear(&mut self) {
+            self.identities.clear();
+            self.group_edges.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static IdentityList {
+            static instance: IdentityList = IdentityList {
+                identities: ::std::vec::Vec::new(),
+                group_edges: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for IdentityList {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("IamPolicyAnalysisResult.IdentityList").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for IdentityList {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for IdentityList {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\"google/cloud/asset/v1/assets.proto\x12\x15google.cloud.asset.v1\x1a\
-    \x1cgoogle/api/annotations.proto\x1a\x19google/api/resource.proto\x1a\
-    \x1agoogle/iam/v1/policy.proto\x1a\x19google/protobuf/any.proto\x1a\x1cg\
-    oogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x98\
-    \x01\n\rTemporalAsset\x129\n\x06window\x18\x01\x20\x01(\x0b2!.google.clo\
-    ud.asset.v1.TimeWindowR\x06window\x12\x18\n\x07deleted\x18\x02\x20\x01(\
-    \x08R\x07deleted\x122\n\x05asset\x18\x03\x20\x01(\x0b2\x1c.google.cloud.\
-    asset.v1.AssetR\x05asset\"~\n\nTimeWindow\x129\n\nstart_time\x18\x01\x20\
-    \x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\x125\n\x08end_time\
-    \x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07endTime\"\xd6\
-    \x01\n\x05Asset\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1d\n\
-    \nasset_type\x18\x02\x20\x01(\tR\tassetType\x12;\n\x08resource\x18\x03\
-    \x20\x01(\x0b2\x1f.google.cloud.asset.v1.ResourceR\x08resource\x124\n\ni\
-    am_policy\x18\x04\x20\x01(\x0b2\x15.google.iam.v1.PolicyR\tiamPolicy:'\
-    \xeaA$\n\x1fcloudasset.googleapis.com/Asset\x12\x01*\"\xe9\x01\n\x08Reso\
-    urce\x12\x18\n\x07version\x18\x01\x20\x01(\tR\x07version\x124\n\x16disco\
-    very_document_uri\x18\x02\x20\x01(\tR\x14discoveryDocumentUri\x12%\n\x0e\
-    discovery_name\x18\x03\x20\x01(\tR\rdiscoveryName\x12!\n\x0cresource_url\
-    \x18\x04\x20\x01(\tR\x0bresourceUrl\x12\x16\n\x06parent\x18\x05\x20\x01(\
-    \tR\x06parent\x12+\n\x04data\x18\x06\x20\x01(\x0b2\x17.google.protobuf.S\
-    tructR\x04dataB\x98\x01\n\x19com.google.cloud.asset.v1B\nAssetProtoP\x01\
-    Z:google.golang.org/genproto/googleapis/cloud/asset/v1;asset\xf8\x01\x01\
-    \xaa\x02\x15Google.Cloud.Asset.V1\xca\x02\x15Google\\Cloud\\Asset\\V1J\
-    \xa2\x20\n\x06\x12\x04\x0f\0{\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\
-    \xb3\x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Licensed\x20under\
-    \x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\
-    \n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compli\
-    ance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\
-    \x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.\
-    org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\
-    \x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distrib\
-    uted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\
-    \x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
-    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
-    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
-    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\n\x08\n\
-    \x01\x02\x12\x03\x11\0\x1e\n\t\n\x02\x03\0\x12\x03\x13\0&\n\t\n\x02\x03\
-    \x01\x12\x03\x14\0#\n\t\n\x02\x03\x02\x12\x03\x15\0$\n\t\n\x02\x03\x03\
-    \x12\x03\x16\0#\n\t\n\x02\x03\x04\x12\x03\x17\0&\n\t\n\x02\x03\x05\x12\
-    \x03\x18\0)\n\x08\n\x01\x08\x12\x03\x1a\0\x1f\n\t\n\x02\x08\x1f\x12\x03\
-    \x1a\0\x1f\n\x08\n\x01\x08\x12\x03\x1b\02\n\t\n\x02\x08%\x12\x03\x1b\02\
-    \n\x08\n\x01\x08\x12\x03\x1c\0Q\n\t\n\x02\x08\x0b\x12\x03\x1c\0Q\n\x08\n\
-    \x01\x08\x12\x03\x1d\0\"\n\t\n\x02\x08\n\x12\x03\x1d\0\"\n\x08\n\x01\x08\
-    \x12\x03\x1e\0+\n\t\n\x02\x08\x08\x12\x03\x1e\0+\n\x08\n\x01\x08\x12\x03\
-    \x1f\02\n\t\n\x02\x08\x01\x12\x03\x1f\02\n\x08\n\x01\x08\x12\x03\x20\02\
-    \n\t\n\x02\x08)\x12\x03\x20\02\n\x8f\x01\n\x02\x04\0\x12\x04$\0-\x01\x1a\
-    \x82\x01\x20Temporal\x20asset.\x20In\x20addition\x20to\x20the\x20asset,\
-    \x20the\x20temporal\x20asset\x20includes\x20the\n\x20status\x20of\x20the\
-    \x20asset\x20and\x20valid\x20from\x20and\x20to\x20time\x20of\x20it.\n\n\
-    \n\n\x03\x04\0\x01\x12\x03$\x08\x15\nJ\n\x04\x04\0\x02\0\x12\x03&\x02\
-    \x18\x1a=\x20The\x20time\x20window\x20when\x20the\x20asset\x20data\x20an\
-    d\x20state\x20was\x20observed.\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\x03&\
-    \x02\x0c\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03&\r\x13\n\x0c\n\x05\x04\0\
-    \x02\0\x03\x12\x03&\x16\x17\n.\n\x04\x04\0\x02\x01\x12\x03)\x02\x13\x1a!\
-    \x20If\x20the\x20asset\x20is\x20deleted\x20or\x20not.\n\n\x0c\n\x05\x04\
-    \0\x02\x01\x05\x12\x03)\x02\x06\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03)\
-    \x07\x0e\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03)\x11\x12\n\x15\n\x04\x04\
-    \0\x02\x02\x12\x03,\x02\x12\x1a\x08\x20Asset.\n\n\x0c\n\x05\x04\0\x02\
-    \x02\x06\x12\x03,\x02\x07\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03,\x08\r\n\
-    \x0c\n\x05\x04\0\x02\x02\x03\x12\x03,\x10\x11\n6\n\x02\x04\x01\x12\x040\
-    \07\x01\x1a*\x20A\x20time\x20window\x20of\x20(start_time,\x20end_time].\
-    \n\n\n\n\x03\x04\x01\x01\x12\x030\x08\x12\n9\n\x04\x04\x01\x02\0\x12\x03\
-    2\x02+\x1a,\x20Start\x20time\x20of\x20the\x20time\x20window\x20(exclusiv\
-    e).\n\n\x0c\n\x05\x04\x01\x02\0\x06\x12\x032\x02\x1b\n\x0c\n\x05\x04\x01\
-    \x02\0\x01\x12\x032\x1c&\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x032)*\n\\\n\
-    \x04\x04\x01\x02\x01\x12\x036\x02)\x1aO\x20End\x20time\x20of\x20the\x20t\
-    ime\x20window\x20(inclusive).\n\x20Current\x20timestamp\x20if\x20not\x20\
-    specified.\n\n\x0c\n\x05\x04\x01\x02\x01\x06\x12\x036\x02\x1b\n\x0c\n\
-    \x05\x04\x01\x02\x01\x01\x12\x036\x1c$\n\x0c\n\x05\x04\x01\x02\x01\x03\
-    \x12\x036'(\n|\n\x02\x04\x02\x12\x04;\0Q\x01\x1ap\x20Cloud\x20asset.\x20\
-    This\x20includes\x20all\x20Google\x20Cloud\x20Platform\x20resources,\n\
-    \x20Cloud\x20IAM\x20policies,\x20and\x20other\x20non-GCP\x20assets.\n\n\
-    \n\n\x03\x04\x02\x01\x12\x03;\x08\r\n\x0b\n\x03\x04\x02\x07\x12\x04<\x02\
-    ?\x04\n\r\n\x05\x04\x02\x07\x9d\x08\x12\x04<\x02?\x04\n\x83\x02\n\x04\
-    \x04\x02\x02\0\x12\x03F\x02\x12\x1a\xf5\x01\x20The\x20full\x20name\x20of\
-    \x20the\x20asset.\x20For\x20example:\n\x20`//compute.googleapis.com/proj\
-    ects/my_project_123/zones/zone1/instances/instance1`.\n\x20See\x20[Resou\
-    rce\n\x20Names](https://cloud.google.com/apis/design/resource_names#full\
-    _resource_name)\n\x20for\x20more\x20information.\n\n\x0c\n\x05\x04\x02\
-    \x02\0\x05\x12\x03F\x02\x08\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03F\t\r\n\
-    \x0c\n\x05\x04\x02\x02\0\x03\x12\x03F\x10\x11\nI\n\x04\x04\x02\x02\x01\
-    \x12\x03I\x02\x18\x1a<\x20Type\x20of\x20the\x20asset.\x20Example:\x20\"c\
-    ompute.googleapis.com/Disk\".\n\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x03I\
-    \x02\x08\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03I\t\x13\n\x0c\n\x05\x04\
-    \x02\x02\x01\x03\x12\x03I\x16\x17\n.\n\x04\x04\x02\x02\x02\x12\x03L\x02\
-    \x18\x1a!\x20Representation\x20of\x20the\x20resource.\n\n\x0c\n\x05\x04\
-    \x02\x02\x02\x06\x12\x03L\x02\n\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03L\
-    \x0b\x13\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03L\x16\x17\n\xa0\x01\n\
-    \x04\x04\x02\x02\x03\x12\x03P\x02&\x1a\x92\x01\x20Representation\x20of\
-    \x20the\x20actual\x20Cloud\x20IAM\x20policy\x20set\x20on\x20a\x20cloud\
-    \x20resource.\x20For\n\x20each\x20resource,\x20there\x20must\x20be\x20at\
-    \x20most\x20one\x20Cloud\x20IAM\x20policy\x20set\x20on\x20it.\n\n\x0c\n\
-    \x05\x04\x02\x02\x03\x06\x12\x03P\x02\x16\n\x0c\n\x05\x04\x02\x02\x03\
-    \x01\x12\x03P\x17!\n\x0c\n\x05\x04\x02\x02\x03\x03\x12\x03P$%\n1\n\x02\
-    \x04\x03\x12\x04T\0{\x01\x1a%\x20Representation\x20of\x20a\x20cloud\x20r\
-    esource.\n\n\n\n\x03\x04\x03\x01\x12\x03T\x08\x10\n.\n\x04\x04\x03\x02\0\
-    \x12\x03V\x02\x15\x1a!\x20The\x20API\x20version.\x20Example:\x20\"v1\".\
-    \n\n\x0c\n\x05\x04\x03\x02\0\x05\x12\x03V\x02\x08\n\x0c\n\x05\x04\x03\
-    \x02\0\x01\x12\x03V\t\x10\n\x0c\n\x05\x04\x03\x02\0\x03\x12\x03V\x13\x14\
-    \n\x8c\x02\n\x04\x04\x03\x02\x01\x12\x03]\x02$\x1a\xfe\x01\x20The\x20URL\
-    \x20of\x20the\x20discovery\x20document\x20containing\x20the\x20resource'\
-    s\x20JSON\x20schema.\n\x20For\x20example:\n\x20`\"https://www.googleapis\
-    .com/discovery/v1/apis/compute/v1/rest\"`.\n\x20It\x20will\x20be\x20left\
-    \x20unspecified\x20for\x20resources\x20without\x20a\x20discovery-based\
-    \x20API,\n\x20such\x20as\x20Cloud\x20Bigtable.\n\n\x0c\n\x05\x04\x03\x02\
-    \x01\x05\x12\x03]\x02\x08\n\x0c\n\x05\x04\x03\x02\x01\x01\x12\x03]\t\x1f\
-    \n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03]\"#\n\xbe\x01\n\x04\x04\x03\x02\
-    \x02\x12\x03b\x02\x1c\x1a\xb0\x01\x20The\x20JSON\x20schema\x20name\x20li\
-    sted\x20in\x20the\x20discovery\x20document.\n\x20Example:\x20\"Project\"\
-    .\x20It\x20will\x20be\x20left\x20unspecified\x20for\x20resources\x20(suc\
-    h\x20as\n\x20Cloud\x20Bigtable)\x20without\x20a\x20discovery-based\x20AP\
-    I.\n\n\x0c\n\x05\x04\x03\x02\x02\x05\x12\x03b\x02\x08\n\x0c\n\x05\x04\
-    \x03\x02\x02\x01\x12\x03b\t\x17\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03b\
-    \x1a\x1b\n\x8f\x02\n\x04\x04\x03\x02\x03\x12\x03i\x02\x1a\x1a\x81\x02\
-    \x20The\x20REST\x20URL\x20for\x20accessing\x20the\x20resource.\x20An\x20\
-    HTTP\x20GET\x20operation\x20using\x20this\n\x20URL\x20returns\x20the\x20\
-    resource\x20itself.\n\x20Example:\n\x20`https://cloudresourcemanager.goo\
-    gleapis.com/v1/projects/my-project-123`.\n\x20It\x20will\x20be\x20left\
-    \x20unspecified\x20for\x20resources\x20without\x20a\x20REST\x20API.\n\n\
-    \x0c\n\x05\x04\x03\x02\x03\x05\x12\x03i\x02\x08\n\x0c\n\x05\x04\x03\x02\
-    \x03\x01\x12\x03i\t\x15\n\x0c\n\x05\x04\x03\x02\x03\x03\x12\x03i\x18\x19\
-    \n\xe1\x03\n\x04\x04\x03\x02\x04\x12\x03v\x02\x14\x1a\xd3\x03\x20The\x20\
-    full\x20name\x20of\x20the\x20immediate\x20parent\x20of\x20this\x20resour\
-    ce.\x20See\n\x20[Resource\n\x20Names](https://cloud.google.com/apis/desi\
-    gn/resource_names#full_resource_name)\n\x20for\x20more\x20information.\n\
-    \n\x20For\x20GCP\x20assets,\x20it\x20is\x20the\x20parent\x20resource\x20\
-    defined\x20in\x20the\x20[Cloud\x20IAM\x20policy\n\x20hierarchy](https://\
-    cloud.google.com/iam/docs/overview#policy_hierarchy).\n\x20For\x20exampl\
-    e:\n\x20`\"//cloudresourcemanager.googleapis.com/projects/my_project_123\
-    \"`.\n\n\x20For\x20third-party\x20assets,\x20it\x20is\x20up\x20to\x20the\
-    \x20users\x20to\x20define.\n\n\x0c\n\x05\x04\x03\x02\x04\x05\x12\x03v\
-    \x02\x08\n\x0c\n\x05\x04\x03\x02\x04\x01\x12\x03v\t\x0f\n\x0c\n\x05\x04\
-    \x03\x02\x04\x03\x12\x03v\x12\x13\nu\n\x04\x04\x03\x02\x05\x12\x03z\x02\
-    \"\x1ah\x20The\x20content\x20of\x20the\x20resource,\x20in\x20which\x20so\
-    me\x20sensitive\x20fields\x20are\x20scrubbed\n\x20away\x20and\x20may\x20\
-    not\x20be\x20present.\n\n\x0c\n\x05\x04\x03\x02\x05\x06\x12\x03z\x02\x18\
-    \n\x0c\n\x05\x04\x03\x02\x05\x01\x12\x03z\x19\x1d\n\x0c\n\x05\x04\x03\
-    \x02\x05\x03\x12\x03z\x20!b\x06proto3\
+    \x19google/api/resource.proto\x1a)google/cloud/orgpolicy/v1/orgpolicy.pr\
+    oto\x1a(google/cloud/osconfig/v1/inventory.proto\x1a\x1agoogle/iam/v1/po\
+    licy.proto\x1a:google/identity/accesscontextmanager/v1/access_level.prot\
+    o\x1a;google/identity/accesscontextmanager/v1/access_policy.proto\x1a?go\
+    ogle/identity/accesscontextmanager/v1/service_perimeter.proto\x1a\x1cgoo\
+    gle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15\
+    google/rpc/code.proto\"\xaa\x03\n\rTemporalAsset\x129\n\x06window\x18\
+    \x01\x20\x01(\x0b2!.google.cloud.asset.v1.TimeWindowR\x06window\x12\x18\
+    \n\x07deleted\x18\x02\x20\x01(\x08R\x07deleted\x122\n\x05asset\x18\x03\
+    \x20\x01(\x0b2\x1c.google.cloud.asset.v1.AssetR\x05asset\x12`\n\x11prior\
+    _asset_state\x18\x04\x20\x01(\x0e24.google.cloud.asset.v1.TemporalAsset.\
+    PriorAssetStateR\x0fpriorAssetState\x12=\n\x0bprior_asset\x18\x05\x20\
+    \x01(\x0b2\x1c.google.cloud.asset.v1.AssetR\npriorAsset\"o\n\x0fPriorAss\
+    etState\x12!\n\x1dPRIOR_ASSET_STATE_UNSPECIFIED\x10\0\x12\x0b\n\x07PRESE\
+    NT\x10\x01\x12\x0b\n\x07INVALID\x10\x02\x12\x12\n\x0eDOES_NOT_EXIST\x10\
+    \x03\x12\x0b\n\x07DELETED\x10\x04\"~\n\nTimeWindow\x129\n\nstart_time\
+    \x18\x01\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\x125\n\
+    \x08end_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07end\
+    Time\"\x92\x07\n\x05Asset\x12;\n\x0bupdate_time\x18\x0b\x20\x01(\x0b2\
+    \x1a.google.protobuf.TimestampR\nupdateTime\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x12\x1d\n\nasset_type\x18\x02\x20\x01(\tR\tassetTyp\
+    e\x12;\n\x08resource\x18\x03\x20\x01(\x0b2\x1f.google.cloud.asset.v1.Res\
+    ourceR\x08resource\x124\n\niam_policy\x18\x04\x20\x01(\x0b2\x15.google.i\
+    am.v1.PolicyR\tiamPolicy\x12@\n\norg_policy\x18\x06\x20\x03(\x0b2!.googl\
+    e.cloud.orgpolicy.v1.PolicyR\torgPolicy\x12\\\n\raccess_policy\x18\x07\
+    \x20\x01(\x0b25.google.identity.accesscontextmanager.v1.AccessPolicyH\0R\
+    \x0caccessPolicy\x12Y\n\x0caccess_level\x18\x08\x20\x01(\x0b24.google.id\
+    entity.accesscontextmanager.v1.AccessLevelH\0R\x0baccessLevel\x12h\n\x11\
+    service_perimeter\x18\t\x20\x01(\x0b29.google.identity.accesscontextmana\
+    ger.v1.ServicePerimeterH\0R\x10servicePerimeter\x12F\n\x0cos_inventory\
+    \x18\x0c\x20\x01(\x0b2#.google.cloud.osconfig.v1.InventoryR\x0bosInvento\
+    ry\x12O\n\x0erelated_assets\x18\r\x20\x01(\x0b2$.google.cloud.asset.v1.R\
+    elatedAssetsR\rrelatedAssetsB\x02\x18\x01\x12H\n\rrelated_asset\x18\x0f\
+    \x20\x01(\x0b2#.google.cloud.asset.v1.RelatedAssetR\x0crelatedAsset\x12\
+    \x1c\n\tancestors\x18\n\x20\x03(\tR\tancestorsB\x17\n\x15access_context_\
+    policy:'\xeaA$\n\x1fcloudasset.googleapis.com/Asset\x12\x01*\"\x85\x02\n\
+    \x08Resource\x12\x18\n\x07version\x18\x01\x20\x01(\tR\x07version\x124\n\
+    \x16discovery_document_uri\x18\x02\x20\x01(\tR\x14discoveryDocumentUri\
+    \x12%\n\x0ediscovery_name\x18\x03\x20\x01(\tR\rdiscoveryName\x12!\n\x0cr\
+    esource_url\x18\x04\x20\x01(\tR\x0bresourceUrl\x12\x16\n\x06parent\x18\
+    \x05\x20\x01(\tR\x06parent\x12+\n\x04data\x18\x06\x20\x01(\x0b2\x17.goog\
+    le.protobuf.StructR\x04data\x12\x1a\n\x08location\x18\x08\x20\x01(\tR\
+    \x08location\"\xb8\x01\n\rRelatedAssets\x12f\n\x17relationship_attribute\
+    s\x18\x01\x20\x01(\x0b2-.google.cloud.asset.v1.RelationshipAttributesR\
+    \x16relationshipAttributes\x12;\n\x06assets\x18\x02\x20\x03(\x0b2#.googl\
+    e.cloud.asset.v1.RelatedAssetR\x06assets:\x02\x18\x01\"\xac\x01\n\x16Rel\
+    ationshipAttributes\x12\x12\n\x04type\x18\x04\x20\x01(\tR\x04type\x120\n\
+    \x14source_resource_type\x18\x01\x20\x01(\tR\x12sourceResourceType\x120\
+    \n\x14target_resource_type\x18\x02\x20\x01(\tR\x12targetResourceType\x12\
+    \x16\n\x06action\x18\x03\x20\x01(\tR\x06action:\x02\x18\x01\"\xb4\x01\n\
+    \x0cRelatedAsset\x12:\n\x05asset\x18\x01\x20\x01(\tR\x05assetB$\xfaA!\n\
+    \x1fcloudasset.googleapis.com/Asset\x12\x1d\n\nasset_type\x18\x02\x20\
+    \x01(\tR\tassetType\x12\x1c\n\tancestors\x18\x03\x20\x03(\tR\tancestors\
+    \x12+\n\x11relationship_type\x18\x04\x20\x01(\tR\x10relationshipType\"\
+    \xc9\x01\n\x03Tag\x12\x1c\n\x07tag_key\x18\x01\x20\x01(\tH\0R\x06tagKey\
+    \x88\x01\x01\x12!\n\ntag_key_id\x18\x02\x20\x01(\tH\x01R\x08tagKeyId\x88\
+    \x01\x01\x12\x20\n\ttag_value\x18\x03\x20\x01(\tH\x02R\x08tagValue\x88\
+    \x01\x01\x12%\n\x0ctag_value_id\x18\x04\x20\x01(\tH\x03R\ntagValueId\x88\
+    \x01\x01B\n\n\x08_tag_keyB\r\n\x0b_tag_key_idB\x0c\n\n_tag_valueB\x0f\n\
+    \r_tag_value_id\"\xa0\x01\n\x13EffectiveTagDetails\x120\n\x11attached_re\
+    source\x18\x01\x20\x01(\tH\0R\x10attachedResource\x88\x01\x01\x12A\n\x0e\
+    effective_tags\x18\x02\x20\x03(\x0b2\x1a.google.cloud.asset.v1.TagR\reff\
+    ectiveTagsB\x14\n\x12_attached_resource\"\xd5\x0c\n\x14ResourceSearchRes\
+    ult\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1d\n\nasset_type\
+    \x18\x02\x20\x01(\tR\tassetType\x12\x18\n\x07project\x18\x03\x20\x01(\tR\
+    \x07project\x12\x18\n\x07folders\x18\x11\x20\x03(\tR\x07folders\x12\"\n\
+    \x0corganization\x18\x12\x20\x01(\tR\x0corganization\x12!\n\x0cdisplay_n\
+    ame\x18\x04\x20\x01(\tR\x0bdisplayName\x12\x20\n\x0bdescription\x18\x05\
+    \x20\x01(\tR\x0bdescription\x12\x1a\n\x08location\x18\x06\x20\x01(\tR\
+    \x08location\x12O\n\x06labels\x18\x07\x20\x03(\x0b27.google.cloud.asset.\
+    v1.ResourceSearchResult.LabelsEntryR\x06labels\x12!\n\x0cnetwork_tags\
+    \x18\x08\x20\x03(\tR\x0bnetworkTags\x12\x1b\n\x07kms_key\x18\n\x20\x01(\
+    \tR\x06kmsKeyB\x02\x18\x01\x12\x19\n\x08kms_keys\x18\x1c\x20\x03(\tR\x07\
+    kmsKeys\x12;\n\x0bcreate_time\x18\x0b\x20\x01(\x0b2\x1a.google.protobuf.\
+    TimestampR\ncreateTime\x12;\n\x0bupdate_time\x18\x0c\x20\x01(\x0b2\x1a.g\
+    oogle.protobuf.TimestampR\nupdateTime\x12\x14\n\x05state\x18\r\x20\x01(\
+    \tR\x05state\x12L\n\x15additional_attributes\x18\t\x20\x01(\x0b2\x17.goo\
+    gle.protobuf.StructR\x14additionalAttributes\x129\n\x19parent_full_resou\
+    rce_name\x18\x13\x20\x01(\tR\x16parentFullResourceName\x12Y\n\x13version\
+    ed_resources\x18\x10\x20\x03(\x0b2(.google.cloud.asset.v1.VersionedResou\
+    rceR\x12versionedResources\x12V\n\x12attached_resources\x18\x14\x20\x03(\
+    \x0b2'.google.cloud.asset.v1.AttachedResourceR\x11attachedResources\x12d\
+    \n\rrelationships\x18\x15\x20\x03(\x0b2>.google.cloud.asset.v1.ResourceS\
+    earchResult.RelationshipsEntryR\rrelationships\x12\x1d\n\x08tag_keys\x18\
+    \x17\x20\x03(\tR\x07tagKeysB\x02\x18\x01\x12!\n\ntag_values\x18\x19\x20\
+    \x03(\tR\ttagValuesB\x02\x18\x01\x12&\n\rtag_value_ids\x18\x1a\x20\x03(\
+    \tR\x0btagValueIdsB\x02\x18\x01\x12.\n\x04tags\x18\x1d\x20\x03(\x0b2\x1a\
+    .google.cloud.asset.v1.TagR\x04tags\x12Q\n\x0eeffective_tags\x18\x1e\x20\
+    \x03(\x0b2*.google.cloud.asset.v1.EffectiveTagDetailsR\reffectiveTags\
+    \x12*\n\x11parent_asset_type\x18g\x20\x01(\tR\x0fparentAssetType\x12o\n\
+    \x12scc_security_marks\x18\x20\x20\x03(\x0b2A.google.cloud.asset.v1.Reso\
+    urceSearchResult.SccSecurityMarksEntryR\x10sccSecurityMarks\x1a9\n\x0bLa\
+    belsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\
+    \x18\x02\x20\x01(\tR\x05value:\x028\x01\x1ai\n\x12RelationshipsEntry\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12=\n\x05value\x18\x02\x20\x01\
+    (\x0b2'.google.cloud.asset.v1.RelatedResourcesR\x05value:\x028\x01\x1aC\
+    \n\x15SccSecurityMarksEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"b\n\x11Versi\
+    onedResource\x12\x18\n\x07version\x18\x01\x20\x01(\tR\x07version\x123\n\
+    \x08resource\x18\x02\x20\x01(\x0b2\x17.google.protobuf.StructR\x08resour\
+    ce\"\x8c\x01\n\x10AttachedResource\x12\x1d\n\nasset_type\x18\x01\x20\x01\
+    (\tR\tassetType\x12Y\n\x13versioned_resources\x18\x03\x20\x03(\x0b2(.goo\
+    gle.cloud.asset.v1.VersionedResourceR\x12versionedResources\"g\n\x10Rela\
+    tedResources\x12S\n\x11related_resources\x18\x01\x20\x03(\x0b2&.google.c\
+    loud.asset.v1.RelatedResourceR\x10relatedResources\"^\n\x0fRelatedResour\
+    ce\x12\x1d\n\nasset_type\x18\x01\x20\x01(\tR\tassetType\x12,\n\x12full_r\
+    esource_name\x18\x02\x20\x01(\tR\x10fullResourceName\"\x88\x05\n\x15IamP\
+    olicySearchResult\x12\x1a\n\x08resource\x18\x01\x20\x01(\tR\x08resource\
+    \x12\x1d\n\nasset_type\x18\x05\x20\x01(\tR\tassetType\x12\x18\n\x07proje\
+    ct\x18\x02\x20\x01(\tR\x07project\x12\x18\n\x07folders\x18\x06\x20\x03(\
+    \tR\x07folders\x12\"\n\x0corganization\x18\x07\x20\x01(\tR\x0corganizati\
+    on\x12-\n\x06policy\x18\x03\x20\x01(\x0b2\x15.google.iam.v1.PolicyR\x06p\
+    olicy\x12Z\n\x0bexplanation\x18\x04\x20\x01(\x0b28.google.cloud.asset.v1\
+    .IamPolicySearchResult.ExplanationR\x0bexplanation\x1a\xd0\x02\n\x0bExpl\
+    anation\x12\x81\x01\n\x13matched_permissions\x18\x01\x20\x03(\x0b2P.goog\
+    le.cloud.asset.v1.IamPolicySearchResult.Explanation.MatchedPermissionsEn\
+    tryR\x12matchedPermissions\x1a/\n\x0bPermissions\x12\x20\n\x0bpermission\
+    s\x18\x01\x20\x03(\tR\x0bpermissions\x1a\x8b\x01\n\x17MatchedPermissions\
+    Entry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12Z\n\x05value\x18\
+    \x02\x20\x01(\x0b2D.google.cloud.asset.v1.IamPolicySearchResult.Explanat\
+    ion.PermissionsR\x05value:\x028\x01\"T\n\x16IamPolicyAnalysisState\x12$\
+    \n\x04code\x18\x01\x20\x01(\x0e2\x10.google.rpc.CodeR\x04code\x12\x14\n\
+    \x05cause\x18\x02\x20\x01(\tR\x05cause\"\xd7\x01\n\x13ConditionEvaluatio\
+    n\x12e\n\x10evaluation_value\x18\x01\x20\x01(\x0e2:.google.cloud.asset.v\
+    1.ConditionEvaluation.EvaluationValueR\x0fevaluationValue\"Y\n\x0fEvalua\
+    tionValue\x12\x20\n\x1cEVALUATION_VALUE_UNSPECIFIED\x10\0\x12\x08\n\x04T\
+    RUE\x10\x01\x12\t\n\x05FALSE\x10\x02\x12\x0f\n\x0bCONDITIONAL\x10\x03\"\
+    \xc3\x0b\n\x17IamPolicyAnalysisResult\x12=\n\x1battached_resource_full_n\
+    ame\x18\x01\x20\x01(\tR\x18attachedResourceFullName\x127\n\x0biam_bindin\
+    g\x18\x02\x20\x01(\x0b2\x16.google.iam.v1.BindingR\niamBinding\x12r\n\
+    \x14access_control_lists\x18\x03\x20\x03(\x0b2@.google.cloud.asset.v1.Ia\
+    mPolicyAnalysisResult.AccessControlListR\x12accessControlLists\x12`\n\ri\
+    dentity_list\x18\x04\x20\x01(\x0b2;.google.cloud.asset.v1.IamPolicyAnaly\
+    sisResult.IdentityListR\x0cidentityList\x12%\n\x0efully_explored\x18\x05\
+    \x20\x01(\x08R\rfullyExplored\x1a\x8e\x01\n\x08Resource\x12,\n\x12full_r\
+    esource_name\x18\x01\x20\x01(\tR\x10fullResourceName\x12T\n\x0eanalysis_\
+    state\x18\x02\x20\x01(\x0b2-.google.cloud.asset.v1.IamPolicyAnalysisStat\
+    eR\ranalysisState\x1a\xa6\x01\n\x06Access\x12\x14\n\x04role\x18\x01\x20\
+    \x01(\tH\0R\x04role\x12\x20\n\npermission\x18\x02\x20\x01(\tH\0R\npermis\
+    sion\x12T\n\x0eanalysis_state\x18\x03\x20\x01(\x0b2-.google.cloud.asset.\
+    v1.IamPolicyAnalysisStateR\ranalysisStateB\x0e\n\x0coneof_access\x1at\n\
+    \x08Identity\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12T\n\x0eana\
+    lysis_state\x18\x02\x20\x01(\x0b2-.google.cloud.asset.v1.IamPolicyAnalys\
+    isStateR\ranalysisState\x1aH\n\x04Edge\x12\x1f\n\x0bsource_node\x18\x01\
+    \x20\x01(\tR\nsourceNode\x12\x1f\n\x0btarget_node\x18\x02\x20\x01(\tR\nt\
+    argetNode\x1a\xf8\x02\n\x11AccessControlList\x12U\n\tresources\x18\x01\
+    \x20\x03(\x0b27.google.cloud.asset.v1.IamPolicyAnalysisResult.ResourceR\
+    \tresources\x12Q\n\x08accesses\x18\x02\x20\x03(\x0b25.google.cloud.asset\
+    .v1.IamPolicyAnalysisResult.AccessR\x08accesses\x12Z\n\x0eresource_edges\
+    \x18\x03\x20\x03(\x0b23.google.cloud.asset.v1.IamPolicyAnalysisResult.Ed\
+    geR\rresourceEdges\x12]\n\x14condition_evaluation\x18\x04\x20\x01(\x0b2*\
+    .google.cloud.asset.v1.ConditionEvaluationR\x13conditionEvaluation\x1a\
+    \xbd\x01\n\x0cIdentityList\x12W\n\nidentities\x18\x01\x20\x03(\x0b27.goo\
+    gle.cloud.asset.v1.IamPolicyAnalysisResult.IdentityR\nidentities\x12T\n\
+    \x0bgroup_edges\x18\x02\x20\x03(\x0b23.google.cloud.asset.v1.IamPolicyAn\
+    alysisResult.EdgeR\ngroupEdgesB\x8d\x01\n\x19com.google.cloud.asset.v1B\
+    \nAssetProtoP\x01Z/cloud.google.com/go/asset/apiv1/assetpb;assetpb\xf8\
+    \x01\x01\xaa\x02\x15Google.Cloud.Asset.V1\xca\x02\x15Google\\Cloud\\Asse\
+    t\\V1J\xf9\xc2\x02\n\x07\x12\x05\x0e\0\x86\x08\x01\n\xbc\x04\n\x01\x0c\
+    \x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\n\
+    \x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20\
+    (the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20e\
+    xcept\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20\
+    obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\
+    \x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\
+    \x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20s\
+    oftware\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\
+    \x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\
+    \x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20impli\
+    ed.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20\
+    governing\x20permissions\x20and\n\x20limitations\x20under\x20the\x20Lice\
+    nse.\n\n\x08\n\x01\x02\x12\x03\x10\0\x1e\n\t\n\x02\x03\0\x12\x03\x12\0#\
+    \n\t\n\x02\x03\x01\x12\x03\x13\03\n\t\n\x02\x03\x02\x12\x03\x14\02\n\t\n\
+    \x02\x03\x03\x12\x03\x15\0$\n\t\n\x02\x03\x04\x12\x03\x16\0D\n\t\n\x02\
+    \x03\x05\x12\x03\x17\0E\n\t\n\x02\x03\x06\x12\x03\x18\0I\n\t\n\x02\x03\
+    \x07\x12\x03\x19\0&\n\t\n\x02\x03\x08\x12\x03\x1a\0)\n\t\n\x02\x03\t\x12\
+    \x03\x1b\0\x1f\n\x08\n\x01\x08\x12\x03\x1d\0\x1f\n\t\n\x02\x08\x1f\x12\
+    \x03\x1d\0\x1f\n\x08\n\x01\x08\x12\x03\x1e\02\n\t\n\x02\x08%\x12\x03\x1e\
+    \02\n\x08\n\x01\x08\x12\x03\x1f\0F\n\t\n\x02\x08\x0b\x12\x03\x1f\0F\n\
+    \x08\n\x01\x08\x12\x03\x20\0\"\n\t\n\x02\x08\n\x12\x03\x20\0\"\n\x08\n\
+    \x01\x08\x12\x03!\0+\n\t\n\x02\x08\x08\x12\x03!\0+\n\x08\n\x01\x08\x12\
+    \x03\"\02\n\t\n\x02\x08\x01\x12\x03\"\02\n\x08\n\x01\x08\x12\x03#\02\n\t\
+    \n\x02\x08)\x12\x03#\02\n\x95\x01\n\x02\x04\0\x12\x04'\0I\x01\x1a\x88\
+    \x01\x20An\x20asset\x20in\x20Google\x20Cloud\x20and\x20its\x20temporal\
+    \x20metadata,\x20including\x20the\x20time\x20window\n\x20when\x20it\x20w\
+    as\x20observed\x20and\x20its\x20status\x20during\x20that\x20window.\n\n\
+    \n\n\x03\x04\0\x01\x12\x03'\x08\x15\n%\n\x04\x04\0\x04\0\x12\x04)\x028\
+    \x03\x1a\x17\x20State\x20of\x20prior\x20asset.\n\n\x0c\n\x05\x04\0\x04\0\
+    \x01\x12\x03)\x07\x16\nE\n\x06\x04\0\x04\0\x02\0\x12\x03+\x04&\x1a6\x20p\
+    rior_asset\x20is\x20not\x20applicable\x20for\x20the\x20current\x20asset.\
+    \n\n\x0e\n\x07\x04\0\x04\0\x02\0\x01\x12\x03+\x04!\n\x0e\n\x07\x04\0\x04\
+    \0\x02\0\x02\x12\x03+$%\n4\n\x06\x04\0\x04\0\x02\x01\x12\x03.\x04\x10\
+    \x1a%\x20prior_asset\x20is\x20populated\x20correctly.\n\n\x0e\n\x07\x04\
+    \0\x04\0\x02\x01\x01\x12\x03.\x04\x0b\n\x0e\n\x07\x04\0\x04\0\x02\x01\
+    \x02\x12\x03.\x0e\x0f\n+\n\x06\x04\0\x04\0\x02\x02\x12\x031\x04\x10\x1a\
+    \x1c\x20Failed\x20to\x20set\x20prior_asset.\n\n\x0e\n\x07\x04\0\x04\0\
+    \x02\x02\x01\x12\x031\x04\x0b\n\x0e\n\x07\x04\0\x04\0\x02\x02\x02\x12\
+    \x031\x0e\x0f\n8\n\x06\x04\0\x04\0\x02\x03\x12\x034\x04\x17\x1a)\x20Curr\
+    ent\x20asset\x20is\x20the\x20first\x20known\x20state.\n\n\x0e\n\x07\x04\
+    \0\x04\0\x02\x03\x01\x12\x034\x04\x12\n\x0e\n\x07\x04\0\x04\0\x02\x03\
+    \x02\x12\x034\x15\x16\n+\n\x06\x04\0\x04\0\x02\x04\x12\x037\x04\x10\x1a\
+    \x1c\x20prior_asset\x20is\x20a\x20deletion.\n\n\x0e\n\x07\x04\0\x04\0\
+    \x02\x04\x01\x12\x037\x04\x0b\n\x0e\n\x07\x04\0\x04\0\x02\x04\x02\x12\
+    \x037\x0e\x0f\nJ\n\x04\x04\0\x02\0\x12\x03;\x02\x18\x1a=\x20The\x20time\
+    \x20window\x20when\x20the\x20asset\x20data\x20and\x20state\x20was\x20obs\
+    erved.\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\x03;\x02\x0c\n\x0c\n\x05\x04\0\
+    \x02\0\x01\x12\x03;\r\x13\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03;\x16\x17\n\
+    9\n\x04\x04\0\x02\x01\x12\x03>\x02\x13\x1a,\x20Whether\x20the\x20asset\
+    \x20has\x20been\x20deleted\x20or\x20not.\n\n\x0c\n\x05\x04\0\x02\x01\x05\
+    \x12\x03>\x02\x06\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03>\x07\x0e\n\x0c\n\
+    \x05\x04\0\x02\x01\x03\x12\x03>\x11\x12\n(\n\x04\x04\0\x02\x02\x12\x03A\
+    \x02\x12\x1a\x1b\x20An\x20asset\x20in\x20Google\x20Cloud.\n\n\x0c\n\x05\
+    \x04\0\x02\x02\x06\x12\x03A\x02\x07\n\x0c\n\x05\x04\0\x02\x02\x01\x12\
+    \x03A\x08\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03A\x10\x11\n$\n\x04\x04\
+    \0\x02\x03\x12\x03D\x02(\x1a\x17\x20State\x20of\x20prior_asset.\n\n\x0c\
+    \n\x05\x04\0\x02\x03\x06\x12\x03D\x02\x11\n\x0c\n\x05\x04\0\x02\x03\x01\
+    \x12\x03D\x12#\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03D&'\n\x90\x01\n\x04\
+    \x04\0\x02\x04\x12\x03H\x02\x18\x1a\x82\x01\x20Prior\x20copy\x20of\x20th\
+    e\x20asset.\x20Populated\x20if\x20prior_asset_state\x20is\x20PRESENT.\n\
+    \x20Currently\x20this\x20is\x20only\x20set\x20for\x20responses\x20in\x20\
+    Real-Time\x20Feed.\n\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03H\x02\x07\n\
+    \x0c\n\x05\x04\0\x02\x04\x01\x12\x03H\x08\x13\n\x0c\n\x05\x04\0\x02\x04\
+    \x03\x12\x03H\x16\x17\nI\n\x02\x04\x01\x12\x04L\0S\x01\x1a=\x20A\x20time\
+    \x20window\x20specified\x20by\x20its\x20`start_time`\x20and\x20`end_time\
+    `.\n\n\n\n\x03\x04\x01\x01\x12\x03L\x08\x12\n9\n\x04\x04\x01\x02\0\x12\
+    \x03N\x02+\x1a,\x20Start\x20time\x20of\x20the\x20time\x20window\x20(excl\
+    usive).\n\n\x0c\n\x05\x04\x01\x02\0\x06\x12\x03N\x02\x1b\n\x0c\n\x05\x04\
+    \x01\x02\0\x01\x12\x03N\x1c&\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03N)*\nq\
+    \n\x04\x04\x01\x02\x01\x12\x03R\x02)\x1ad\x20End\x20time\x20of\x20the\
+    \x20time\x20window\x20(inclusive).\x20If\x20not\x20specified,\x20the\x20\
+    current\n\x20timestamp\x20is\x20used\x20instead.\n\n\x0c\n\x05\x04\x01\
+    \x02\x01\x06\x12\x03R\x02\x1b\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03R\
+    \x1c$\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03R'(\n\x94\x04\n\x02\x04\x02\
+    \x12\x05^\0\xb4\x01\x01\x1a\x86\x04\x20An\x20asset\x20in\x20Google\x20Cl\
+    oud.\x20An\x20asset\x20can\x20be\x20any\x20resource\x20in\x20the\x20Goog\
+    le\x20Cloud\n\x20[resource\n\x20hierarchy](https://cloud.google.com/reso\
+    urce-manager/docs/cloud-platform-resource-hierarchy),\n\x20a\x20resource\
+    \x20outside\x20the\x20Google\x20Cloud\x20resource\x20hierarchy\x20(such\
+    \x20as\x20Google\n\x20Kubernetes\x20Engine\x20clusters\x20and\x20objects\
+    ),\x20or\x20a\x20policy\x20(e.g.\x20IAM\x20policy),\n\x20or\x20a\x20rela\
+    tionship\x20(e.g.\x20an\x20INSTANCE_TO_INSTANCEGROUP\x20relationship).\n\
+    \x20See\x20[Supported\x20asset\n\x20types](https://cloud.google.com/asse\
+    t-inventory/docs/supported-asset-types)\n\x20for\x20more\x20information.\
+    \n\n\n\n\x03\x04\x02\x01\x12\x03^\x08\r\n\x0b\n\x03\x04\x02\x07\x12\x04_\
+    \x02b\x04\n\r\n\x05\x04\x02\x07\x9d\x08\x12\x04_\x02b\x04\n\x7f\n\x04\
+    \x04\x02\x02\0\x12\x03f\x02-\x1ar\x20The\x20last\x20update\x20timestamp\
+    \x20of\x20an\x20asset.\x20update_time\x20is\x20updated\x20when\n\x20crea\
+    te/update/delete\x20operation\x20is\x20performed.\n\n\x0c\n\x05\x04\x02\
+    \x02\0\x06\x12\x03f\x02\x1b\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03f\x1c'\
+    \n\x0c\n\x05\x04\x02\x02\0\x03\x12\x03f*,\n\xff\x01\n\x04\x04\x02\x02\
+    \x01\x12\x03n\x02\x12\x1a\xf1\x01\x20The\x20full\x20name\x20of\x20the\
+    \x20asset.\x20Example:\n\x20`//compute.googleapis.com/projects/my_projec\
+    t_123/zones/zone1/instances/instance1`\n\n\x20See\x20[Resource\n\x20name\
+    s](https://cloud.google.com/apis/design/resource_names#full_resource_nam\
+    e)\n\x20for\x20more\x20information.\n\n\x0c\n\x05\x04\x02\x02\x01\x05\
+    \x12\x03n\x02\x08\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03n\t\r\n\x0c\n\
+    \x05\x04\x02\x02\x01\x03\x12\x03n\x10\x11\n\xc8\x01\n\x04\x04\x02\x02\
+    \x02\x12\x03u\x02\x18\x1a\xba\x01\x20The\x20type\x20of\x20the\x20asset.\
+    \x20Example:\x20`compute.googleapis.com/Disk`\n\n\x20See\x20[Supported\
+    \x20asset\n\x20types](https://cloud.google.com/asset-inventory/docs/supp\
+    orted-asset-types)\n\x20for\x20more\x20information.\n\n\x0c\n\x05\x04\
+    \x02\x02\x02\x05\x12\x03u\x02\x08\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\
+    \x03u\t\x13\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03u\x16\x17\n0\n\x04\
+    \x04\x02\x02\x03\x12\x03x\x02\x18\x1a#\x20A\x20representation\x20of\x20t\
+    he\x20resource.\n\n\x0c\n\x05\x04\x02\x02\x03\x06\x12\x03x\x02\n\n\x0c\n\
+    \x05\x04\x02\x02\x03\x01\x12\x03x\x0b\x13\n\x0c\n\x05\x04\x02\x02\x03\
+    \x03\x12\x03x\x16\x17\n\xb5\x04\n\x04\x04\x02\x02\x04\x12\x04\x83\x01\
+    \x02&\x1a\xa6\x04\x20A\x20representation\x20of\x20the\x20IAM\x20policy\
+    \x20set\x20on\x20a\x20Google\x20Cloud\x20resource.\n\x20There\x20can\x20\
+    be\x20a\x20maximum\x20of\x20one\x20IAM\x20policy\x20set\x20on\x20any\x20\
+    given\x20resource.\n\x20In\x20addition,\x20IAM\x20policies\x20inherit\
+    \x20their\x20granted\x20access\x20scope\x20from\x20any\n\x20policies\x20\
+    set\x20on\x20parent\x20resources\x20in\x20the\x20resource\x20hierarchy.\
+    \x20Therefore,\x20the\n\x20effectively\x20policy\x20is\x20the\x20union\
+    \x20of\x20both\x20the\x20policy\x20set\x20on\x20this\x20resource\n\x20an\
+    d\x20each\x20policy\x20set\x20on\x20all\x20of\x20the\x20resource's\x20an\
+    cestry\x20resource\x20levels\x20in\n\x20the\x20hierarchy.\x20See\n\x20[t\
+    his\x20topic](https://cloud.google.com/iam/help/allow-policies/inheritan\
+    ce)\n\x20for\x20more\x20information.\n\n\r\n\x05\x04\x02\x02\x04\x06\x12\
+    \x04\x83\x01\x02\x16\n\r\n\x05\x04\x02\x02\x04\x01\x12\x04\x83\x01\x17!\
+    \n\r\n\x05\x04\x02\x02\x04\x03\x12\x04\x83\x01$%\n\x85\x02\n\x04\x04\x02\
+    \x02\x05\x12\x04\x89\x01\x02;\x1a\xf6\x01\x20A\x20representation\x20of\
+    \x20an\x20[organization\n\x20policy](https://cloud.google.com/resource-m\
+    anager/docs/organization-policy/overview#organization_policy).\n\x20Ther\
+    e\x20can\x20be\x20more\x20than\x20one\x20organization\x20policy\x20with\
+    \x20different\x20constraints\n\x20set\x20on\x20a\x20given\x20resource.\n\
+    \n\r\n\x05\x04\x02\x02\x05\x04\x12\x04\x89\x01\x02\n\n\r\n\x05\x04\x02\
+    \x02\x05\x06\x12\x04\x89\x01\x0b+\n\r\n\x05\x04\x02\x02\x05\x01\x12\x04\
+    \x89\x01,6\n\r\n\x05\x04\x02\x02\x05\x03\x12\x04\x89\x019:\n\x89\x01\n\
+    \x04\x04\x02\x08\0\x12\x06\x8d\x01\x02\x9a\x01\x03\x1ay\x20A\x20represen\
+    tation\x20of\x20an\x20[access\n\x20policy](https://cloud.google.com/acce\
+    ss-context-manager/docs/overview#access-policies).\n\n\r\n\x05\x04\x02\
+    \x08\0\x01\x12\x04\x8d\x01\x08\x1d\n\x8d\x01\n\x04\x04\x02\x02\x06\x12\
+    \x04\x90\x01\x04K\x1a\x7f\x20Also\x20refer\x20to\x20the\x20[access\x20po\
+    licy\x20user\n\x20guide](https://cloud.google.com/access-context-manager\
+    /docs/overview#access-policies).\n\n\r\n\x05\x04\x02\x02\x06\x06\x12\x04\
+    \x90\x01\x048\n\r\n\x05\x04\x02\x02\x06\x01\x12\x04\x90\x019F\n\r\n\x05\
+    \x04\x02\x02\x06\x03\x12\x04\x90\x01IJ\n\x8a\x01\n\x04\x04\x02\x02\x07\
+    \x12\x04\x94\x01\x04I\x1a|\x20Also\x20refer\x20to\x20the\x20[access\x20l\
+    evel\x20user\n\x20guide](https://cloud.google.com/access-context-manager\
+    /docs/overview#access-levels).\n\n\r\n\x05\x04\x02\x02\x07\x06\x12\x04\
+    \x94\x01\x047\n\r\n\x05\x04\x02\x02\x07\x01\x12\x04\x94\x018D\n\r\n\x05\
+    \x04\x02\x02\x07\x03\x12\x04\x94\x01GH\n\x81\x01\n\x04\x04\x02\x02\x08\
+    \x12\x06\x98\x01\x04\x99\x01\n\x1aq\x20Also\x20refer\x20to\x20the\x20[se\
+    rvice\x20perimeter\x20user\n\x20guide](https://cloud.google.com/vpc-serv\
+    ice-controls/docs/overview).\n\n\r\n\x05\x04\x02\x02\x08\x06\x12\x04\x98\
+    \x01\x04<\n\r\n\x05\x04\x02\x02\x08\x01\x12\x04\x98\x01=N\n\r\n\x05\x04\
+    \x02\x02\x08\x03\x12\x04\x99\x01\x08\t\n\xb8\x01\n\x04\x04\x02\x02\t\x12\
+    \x04\x9f\x01\x027\x1a\xa9\x01\x20A\x20representation\x20of\x20runtime\
+    \x20OS\x20Inventory\x20information.\x20See\x20[this\n\x20topic](https://\
+    cloud.google.com/compute/docs/instances/os-inventory-management)\n\x20fo\
+    r\x20more\x20information.\n\n\r\n\x05\x04\x02\x02\t\x06\x12\x04\x9f\x01\
+    \x02$\n\r\n\x05\x04\x02\x02\t\x01\x12\x04\x9f\x01%1\n\r\n\x05\x04\x02\
+    \x02\t\x03\x12\x04\x9f\x0146\n\x8c\x02\n\x04\x04\x02\x02\n\x12\x04\xa6\
+    \x01\x028\x1a\xfd\x01\x20DEPRECATED.\x20This\x20field\x20only\x20present\
+    s\x20for\x20the\x20purpose\x20of\n\x20backward-compatibility.\x20The\x20\
+    server\x20will\x20never\x20generate\x20responses\x20with\x20this\n\x20fi\
+    eld.\n\x20The\x20related\x20assets\x20of\x20the\x20asset\x20of\x20one\
+    \x20relationship\x20type.\x20One\x20asset\n\x20only\x20represents\x20one\
+    \x20type\x20of\x20relationship.\n\n\r\n\x05\x04\x02\x02\n\x06\x12\x04\
+    \xa6\x01\x02\x0f\n\r\n\x05\x04\x02\x02\n\x01\x12\x04\xa6\x01\x10\x1e\n\r\
+    \n\x05\x04\x02\x02\n\x03\x12\x04\xa6\x01!#\n\r\n\x05\x04\x02\x02\n\x08\
+    \x12\x04\xa6\x01$7\n\x0e\n\x06\x04\x02\x02\n\x08\x03\x12\x04\xa6\x01%6\n\
+    7\n\x04\x04\x02\x02\x0b\x12\x04\xa9\x01\x02\"\x1a)\x20One\x20related\x20\
+    asset\x20of\x20the\x20current\x20asset.\n\n\r\n\x05\x04\x02\x02\x0b\x06\
+    \x12\x04\xa9\x01\x02\x0e\n\r\n\x05\x04\x02\x02\x0b\x01\x12\x04\xa9\x01\
+    \x0f\x1c\n\r\n\x05\x04\x02\x02\x0b\x03\x12\x04\xa9\x01\x1f!\n\xe0\x03\n\
+    \x04\x04\x02\x02\x0c\x12\x04\xb3\x01\x02!\x1a\xd1\x03\x20The\x20ancestry\
+    \x20path\x20of\x20an\x20asset\x20in\x20Google\x20Cloud\x20[resource\n\
+    \x20hierarchy](https://cloud.google.com/resource-manager/docs/cloud-plat\
+    form-resource-hierarchy),\n\x20represented\x20as\x20a\x20list\x20of\x20r\
+    elative\x20resource\x20names.\x20An\x20ancestry\x20path\x20starts\n\x20w\
+    ith\x20the\x20closest\x20ancestor\x20in\x20the\x20hierarchy\x20and\x20en\
+    ds\x20at\x20root.\x20If\x20the\x20asset\n\x20is\x20a\x20project,\x20fold\
+    er,\x20or\x20organization,\x20the\x20ancestry\x20path\x20starts\x20from\
+    \x20the\n\x20asset\x20itself.\n\n\x20Example:\x20`[\"projects/123456789\
+    \",\x20\"folders/5432\",\x20\"organizations/1234\"]`\n\n\r\n\x05\x04\x02\
+    \x02\x0c\x04\x12\x04\xb3\x01\x02\n\n\r\n\x05\x04\x02\x02\x0c\x05\x12\x04\
+    \xb3\x01\x0b\x11\n\r\n\x05\x04\x02\x02\x0c\x01\x12\x04\xb3\x01\x12\x1b\n\
+    \r\n\x05\x04\x02\x02\x0c\x03\x12\x04\xb3\x01\x1e\x20\n<\n\x02\x04\x03\
+    \x12\x06\xb7\x01\0\xe4\x01\x01\x1a.\x20A\x20representation\x20of\x20a\
+    \x20Google\x20Cloud\x20resource.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\xb7\
+    \x01\x08\x10\n.\n\x04\x04\x03\x02\0\x12\x04\xb9\x01\x02\x15\x1a\x20\x20T\
+    he\x20API\x20version.\x20Example:\x20`v1`\n\n\r\n\x05\x04\x03\x02\0\x05\
+    \x12\x04\xb9\x01\x02\x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xb9\x01\t\
+    \x10\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xb9\x01\x13\x14\n\x9d\x02\n\x04\
+    \x04\x03\x02\x01\x12\x04\xc1\x01\x02$\x1a\x8e\x02\x20The\x20URL\x20of\
+    \x20the\x20discovery\x20document\x20containing\x20the\x20resource's\x20J\
+    SON\x20schema.\n\x20Example:\n\x20`https://www.googleapis.com/discovery/\
+    v1/apis/compute/v1/rest`\n\n\x20This\x20value\x20is\x20unspecified\x20fo\
+    r\x20resources\x20that\x20do\x20not\x20have\x20an\x20API\x20based\x20on\
+    \x20a\n\x20discovery\x20document,\x20such\x20as\x20Cloud\x20Bigtable.\n\
+    \n\r\n\x05\x04\x03\x02\x01\x05\x12\x04\xc1\x01\x02\x08\n\r\n\x05\x04\x03\
+    \x02\x01\x01\x12\x04\xc1\x01\t\x1f\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\
+    \xc1\x01\"#\n\xd5\x01\n\x04\x04\x03\x02\x02\x12\x04\xc8\x01\x02\x1c\x1a\
+    \xc6\x01\x20The\x20JSON\x20schema\x20name\x20listed\x20in\x20the\x20disc\
+    overy\x20document.\x20Example:\n\x20`Project`\n\n\x20This\x20value\x20is\
+    \x20unspecified\x20for\x20resources\x20that\x20do\x20not\x20have\x20an\
+    \x20API\x20based\x20on\x20a\n\x20discovery\x20document,\x20such\x20as\
+    \x20Cloud\x20Bigtable.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\xc8\x01\
+    \x02\x08\n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\xc8\x01\t\x17\n\r\n\x05\
+    \x04\x03\x02\x02\x03\x12\x04\xc8\x01\x1a\x1b\n\x8d\x02\n\x04\x04\x03\x02\
+    \x03\x12\x04\xcf\x01\x02\x1a\x1a\xfe\x01\x20The\x20REST\x20URL\x20for\
+    \x20accessing\x20the\x20resource.\x20An\x20HTTP\x20`GET`\x20request\x20u\
+    sing\x20this\n\x20URL\x20returns\x20the\x20resource\x20itself.\x20Exampl\
+    e:\n\x20`https://cloudresourcemanager.googleapis.com/v1/projects/my-proj\
+    ect-123`\n\n\x20This\x20value\x20is\x20unspecified\x20for\x20resources\
+    \x20without\x20a\x20REST\x20API.\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\x04\
+    \xcf\x01\x02\x08\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xcf\x01\t\x15\n\r\
+    \n\x05\x04\x03\x02\x03\x03\x12\x04\xcf\x01\x18\x19\n\xac\x03\n\x04\x04\
+    \x03\x02\x04\x12\x04\xdb\x01\x02\x14\x1a\x9d\x03\x20The\x20full\x20name\
+    \x20of\x20the\x20immediate\x20parent\x20of\x20this\x20resource.\x20See\n\
+    \x20[Resource\n\x20Names](https://cloud.google.com/apis/design/resource_\
+    names#full_resource_name)\n\x20for\x20more\x20information.\n\n\x20For\
+    \x20Google\x20Cloud\x20assets,\x20this\x20value\x20is\x20the\x20parent\
+    \x20resource\x20defined\x20in\x20the\n\x20[IAM\x20policy\n\x20hierarchy]\
+    (https://cloud.google.com/iam/docs/overview#policy_hierarchy).\n\x20Exam\
+    ple:\n\x20`//cloudresourcemanager.googleapis.com/projects/my_project_123\
+    `\n\n\r\n\x05\x04\x03\x02\x04\x05\x12\x04\xdb\x01\x02\x08\n\r\n\x05\x04\
+    \x03\x02\x04\x01\x12\x04\xdb\x01\t\x0f\n\r\n\x05\x04\x03\x02\x04\x03\x12\
+    \x04\xdb\x01\x12\x13\np\n\x04\x04\x03\x02\x05\x12\x04\xdf\x01\x02\"\x1ab\
+    \x20The\x20content\x20of\x20the\x20resource,\x20in\x20which\x20some\x20s\
+    ensitive\x20fields\x20are\x20removed\n\x20and\x20may\x20not\x20be\x20pre\
+    sent.\n\n\r\n\x05\x04\x03\x02\x05\x06\x12\x04\xdf\x01\x02\x18\n\r\n\x05\
+    \x04\x03\x02\x05\x01\x12\x04\xdf\x01\x19\x1d\n\r\n\x05\x04\x03\x02\x05\
+    \x03\x12\x04\xdf\x01\x20!\n\xa1\x01\n\x04\x04\x03\x02\x06\x12\x04\xe3\
+    \x01\x02\x16\x1a\x92\x01\x20The\x20location\x20of\x20the\x20resource\x20\
+    in\x20Google\x20Cloud,\x20such\x20as\x20its\x20zone\x20and\x20region.\n\
+    \x20For\x20more\x20information,\x20see\x20https://cloud.google.com/about\
+    /locations/.\n\n\r\n\x05\x04\x03\x02\x06\x05\x12\x04\xe3\x01\x02\x08\n\r\
+    \n\x05\x04\x03\x02\x06\x01\x12\x04\xe3\x01\t\x11\n\r\n\x05\x04\x03\x02\
+    \x06\x03\x12\x04\xe3\x01\x14\x15\n\xd9\x01\n\x02\x04\x04\x12\x06\xea\x01\
+    \0\xf2\x01\x01\x1a\xca\x01\x20DEPRECATED.\x20This\x20message\x20only\x20\
+    presents\x20for\x20the\x20purpose\x20of\n\x20backward-compatibility.\x20\
+    The\x20server\x20will\x20never\x20populate\x20this\x20message\x20in\n\
+    \x20responses.\n\x20The\x20detailed\x20related\x20assets\x20with\x20the\
+    \x20`relationship_type`.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xea\x01\x08\
+    \x15\n\x0b\n\x03\x04\x04\x07\x12\x04\xeb\x01\x02\x1b\n\x0c\n\x04\x04\x04\
+    \x07\x03\x12\x04\xeb\x01\x02\x1b\n5\n\x04\x04\x04\x02\0\x12\x04\xee\x01\
+    \x025\x1a'\x20The\x20detailed\x20relationship\x20attributes.\n\n\r\n\x05\
+    \x04\x04\x02\0\x06\x12\x04\xee\x01\x02\x18\n\r\n\x05\x04\x04\x02\0\x01\
+    \x12\x04\xee\x01\x190\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\xee\x0134\n7\n\
+    \x04\x04\x04\x02\x01\x12\x04\xf1\x01\x02#\x1a)\x20The\x20peer\x20resourc\
+    es\x20of\x20the\x20relationship.\n\n\r\n\x05\x04\x04\x02\x01\x04\x12\x04\
+    \xf1\x01\x02\n\n\r\n\x05\x04\x04\x02\x01\x06\x12\x04\xf1\x01\x0b\x17\n\r\
+    \n\x05\x04\x04\x02\x01\x01\x12\x04\xf1\x01\x18\x1e\n\r\n\x05\x04\x04\x02\
+    \x01\x03\x12\x04\xf1\x01!\"\n\x90\x02\n\x02\x04\x05\x12\x06\xf9\x01\0\
+    \x88\x02\x01\x1a\x81\x02\x20DEPRECATED.\x20This\x20message\x20only\x20pr\
+    esents\x20for\x20the\x20purpose\x20of\n\x20backward-compatibility.\x20Th\
+    e\x20server\x20will\x20never\x20populate\x20this\x20message\x20in\n\x20r\
+    esponses.\n\x20The\x20relationship\x20attributes\x20which\x20include\x20\
+    \x20`type`,\x20`source_resource_type`,\n\x20`target_resource_type`\x20an\
+    d\x20`action`.\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xf9\x01\x08\x1e\n\x0b\n\
+    \x03\x04\x05\x07\x12\x04\xfa\x01\x02\x1b\n\x0c\n\x04\x04\x05\x07\x03\x12\
+    \x04\xfa\x01\x02\x1b\ne\n\x04\x04\x05\x02\0\x12\x04\xfe\x01\x02\x12\x1aW\
+    \x20The\x20unique\x20identifier\x20of\x20the\x20relationship\x20type.\
+    \x20Example:\n\x20`INSTANCE_TO_INSTANCEGROUP`\n\n\r\n\x05\x04\x05\x02\0\
+    \x05\x12\x04\xfe\x01\x02\x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xfe\x01\
+    \t\r\n\r\n\x05\x04\x05\x02\0\x03\x12\x04\xfe\x01\x10\x11\nQ\n\x04\x04\
+    \x05\x02\x01\x12\x04\x81\x02\x02\"\x1aC\x20The\x20source\x20asset\x20typ\
+    e.\x20Example:\x20`compute.googleapis.com/Instance`\n\n\r\n\x05\x04\x05\
+    \x02\x01\x05\x12\x04\x81\x02\x02\x08\n\r\n\x05\x04\x05\x02\x01\x01\x12\
+    \x04\x81\x02\t\x1d\n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\x81\x02\x20!\nM\
+    \n\x04\x04\x05\x02\x02\x12\x04\x84\x02\x02\"\x1a?\x20The\x20target\x20as\
+    set\x20type.\x20Example:\x20`compute.googleapis.com/Disk`\n\n\r\n\x05\
+    \x04\x05\x02\x02\x05\x12\x04\x84\x02\x02\x08\n\r\n\x05\x04\x05\x02\x02\
+    \x01\x12\x04\x84\x02\t\x1d\n\r\n\x05\x04\x05\x02\x02\x03\x12\x04\x84\x02\
+    \x20!\nK\n\x04\x04\x05\x02\x03\x12\x04\x87\x02\x02\x14\x1a=\x20The\x20de\
+    tail\x20of\x20the\x20relationship,\x20e.g.\x20`contains`,\x20`attaches`\
+    \n\n\r\n\x05\x04\x05\x02\x03\x05\x12\x04\x87\x02\x02\x08\n\r\n\x05\x04\
+    \x05\x02\x03\x01\x12\x04\x87\x02\t\x0f\n\r\n\x05\x04\x05\x02\x03\x03\x12\
+    \x04\x87\x02\x12\x13\n\x87\x04\n\x02\x04\x06\x12\x06\x92\x02\0\xaf\x02\
+    \x01\x1a\xf8\x03\x20An\x20asset\x20identifier\x20in\x20Google\x20Cloud\
+    \x20which\x20contains\x20its\x20name,\x20type\x20and\n\x20ancestors.\x20\
+    An\x20asset\x20can\x20be\x20any\x20resource\x20in\x20the\x20Google\x20Cl\
+    oud\x20[resource\n\x20hierarchy](https://cloud.google.com/resource-manag\
+    er/docs/cloud-platform-resource-hierarchy),\n\x20a\x20resource\x20outsid\
+    e\x20the\x20Google\x20Cloud\x20resource\x20hierarchy\x20(such\x20as\x20G\
+    oogle\n\x20Kubernetes\x20Engine\x20clusters\x20and\x20objects),\x20or\
+    \x20a\x20policy\x20(e.g.\x20IAM\x20policy).\n\x20See\x20[Supported\x20as\
+    set\n\x20types](https://cloud.google.com/asset-inventory/docs/supported-\
+    asset-types)\n\x20for\x20more\x20information.\n\n\x0b\n\x03\x04\x06\x01\
+    \x12\x04\x92\x02\x08\x14\n\x82\x02\n\x04\x04\x06\x02\0\x12\x06\x99\x02\
+    \x02\x9b\x02\x05\x1a\xf1\x01\x20The\x20full\x20name\x20of\x20the\x20asse\
+    t.\x20Example:\n\x20`//compute.googleapis.com/projects/my_project_123/zo\
+    nes/zone1/instances/instance1`\n\n\x20See\x20[Resource\n\x20names](https\
+    ://cloud.google.com/apis/design/resource_names#full_resource_name)\n\x20\
+    for\x20more\x20information.\n\n\r\n\x05\x04\x06\x02\0\x05\x12\x04\x99\
+    \x02\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\x04\x99\x02\t\x0e\n\r\n\x05\
+    \x04\x06\x02\0\x03\x12\x04\x99\x02\x11\x12\n\x0f\n\x05\x04\x06\x02\0\x08\
+    \x12\x06\x99\x02\x13\x9b\x02\x04\n\x11\n\x07\x04\x06\x02\0\x08\x9f\x08\
+    \x12\x06\x99\x02\x14\x9b\x02\x03\n\xc9\x01\n\x04\x04\x06\x02\x01\x12\x04\
+    \xa2\x02\x02\x18\x1a\xba\x01\x20The\x20type\x20of\x20the\x20asset.\x20Ex\
+    ample:\x20`compute.googleapis.com/Disk`\n\n\x20See\x20[Supported\x20asse\
+    t\n\x20types](https://cloud.google.com/asset-inventory/docs/supported-as\
+    set-types)\n\x20for\x20more\x20information.\n\n\r\n\x05\x04\x06\x02\x01\
+    \x05\x12\x04\xa2\x02\x02\x08\n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xa2\
+    \x02\t\x13\n\r\n\x05\x04\x06\x02\x01\x03\x12\x04\xa2\x02\x16\x17\n\xf6\
+    \x02\n\x04\x04\x06\x02\x02\x12\x04\xaa\x02\x02\x20\x1a\xe7\x02\x20The\
+    \x20ancestors\x20of\x20an\x20asset\x20in\x20Google\x20Cloud\x20[resource\
+    \n\x20hierarchy](https://cloud.google.com/resource-manager/docs/cloud-pl\
+    atform-resource-hierarchy),\n\x20represented\x20as\x20a\x20list\x20of\
+    \x20relative\x20resource\x20names.\x20An\x20ancestry\x20path\x20starts\n\
+    \x20with\x20the\x20closest\x20ancestor\x20in\x20the\x20hierarchy\x20and\
+    \x20ends\x20at\x20root.\n\n\x20Example:\x20`[\"projects/123456789\",\x20\
+    \"folders/5432\",\x20\"organizations/1234\"]`\n\n\r\n\x05\x04\x06\x02\
+    \x02\x04\x12\x04\xaa\x02\x02\n\n\r\n\x05\x04\x06\x02\x02\x05\x12\x04\xaa\
+    \x02\x0b\x11\n\r\n\x05\x04\x06\x02\x02\x01\x12\x04\xaa\x02\x12\x1b\n\r\n\
+    \x05\x04\x06\x02\x02\x03\x12\x04\xaa\x02\x1e\x1f\ne\n\x04\x04\x06\x02\
+    \x03\x12\x04\xae\x02\x02\x1f\x1aW\x20The\x20unique\x20identifier\x20of\
+    \x20the\x20relationship\x20type.\x20Example:\n\x20`INSTANCE_TO_INSTANCEG\
+    ROUP`\n\n\r\n\x05\x04\x06\x02\x03\x05\x12\x04\xae\x02\x02\x08\n\r\n\x05\
+    \x04\x06\x02\x03\x01\x12\x04\xae\x02\t\x1a\n\r\n\x05\x04\x06\x02\x03\x03\
+    \x12\x04\xae\x02\x1d\x1e\nr\n\x02\x04\x07\x12\x06\xb3\x02\0\xc0\x02\x01\
+    \x1ad\x20The\x20key\x20and\x20value\x20for\x20a\n\x20[tag](https://cloud\
+    .google.com/resource-manager/docs/tags/tags-overview).\n\n\x0b\n\x03\x04\
+    \x07\x01\x12\x04\xb3\x02\x08\x0b\nW\n\x04\x04\x07\x02\0\x12\x04\xb5\x02\
+    \x02\x1e\x1aI\x20TagKey\x20namespaced\x20name,\x20in\x20the\x20format\
+    \x20of\x20{ORG_ID}/{TAG_KEY_SHORT_NAME}.\n\n\r\n\x05\x04\x07\x02\0\x04\
+    \x12\x04\xb5\x02\x02\n\n\r\n\x05\x04\x07\x02\0\x05\x12\x04\xb5\x02\x0b\
+    \x11\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\xb5\x02\x12\x19\n\r\n\x05\x04\
+    \x07\x02\0\x03\x12\x04\xb5\x02\x1c\x1d\nA\n\x04\x04\x07\x02\x01\x12\x04\
+    \xb8\x02\x02!\x1a3\x20TagKey\x20ID,\x20in\x20the\x20format\x20of\x20tagK\
+    eys/{TAG_KEY_ID}.\n\n\r\n\x05\x04\x07\x02\x01\x04\x12\x04\xb8\x02\x02\n\
+    \n\r\n\x05\x04\x07\x02\x01\x05\x12\x04\xb8\x02\x0b\x11\n\r\n\x05\x04\x07\
+    \x02\x01\x01\x12\x04\xb8\x02\x12\x1c\n\r\n\x05\x04\x07\x02\x01\x03\x12\
+    \x04\xb8\x02\x1f\x20\nq\n\x04\x04\x07\x02\x02\x12\x04\xbc\x02\x02\x20\
+    \x1ac\x20TagValue\x20namespaced\x20name,\x20in\x20the\x20format\x20of\n\
+    \x20{ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}.\n\n\r\n\x05\
+    \x04\x07\x02\x02\x04\x12\x04\xbc\x02\x02\n\n\r\n\x05\x04\x07\x02\x02\x05\
+    \x12\x04\xbc\x02\x0b\x11\n\r\n\x05\x04\x07\x02\x02\x01\x12\x04\xbc\x02\
+    \x12\x1b\n\r\n\x05\x04\x07\x02\x02\x03\x12\x04\xbc\x02\x1e\x1f\nG\n\x04\
+    \x04\x07\x02\x03\x12\x04\xbf\x02\x02#\x1a9\x20TagValue\x20ID,\x20in\x20t\
+    he\x20format\x20of\x20tagValues/{TAG_VALUE_ID}.\n\n\r\n\x05\x04\x07\x02\
+    \x03\x04\x12\x04\xbf\x02\x02\n\n\r\n\x05\x04\x07\x02\x03\x05\x12\x04\xbf\
+    \x02\x0b\x11\n\r\n\x05\x04\x07\x02\x03\x01\x12\x04\xbf\x02\x12\x1e\n\r\n\
+    \x05\x04\x07\x02\x03\x03\x12\x04\xbf\x02!\"\n]\n\x02\x04\x08\x12\x06\xc3\
+    \x02\0\xd4\x02\x01\x1aO\x20The\x20effective\x20tags\x20and\x20the\x20anc\
+    estor\x20resources\x20from\x20which\x20they\x20were\x20inherited.\n\n\
+    \x0b\n\x03\x04\x08\x01\x12\x04\xc3\x02\x08\x1b\n\x9e\x02\n\x04\x04\x08\
+    \x02\0\x12\x04\xc9\x02\x02(\x1a\x8f\x02\x20The\x20[full\x20resource\n\
+    \x20name](https://cloud.google.com/asset-inventory/docs/resource-name-fo\
+    rmat)\n\x20of\x20the\x20ancestor\x20from\x20which\x20an\x20[effective_ta\
+    g][]\x20is\x20inherited,\x20according\x20to\n\x20[tag\n\x20inheritance](\
+    https://cloud.google.com/resource-manager/docs/tags/tags-overview#inheri\
+    tance).\n\n\r\n\x05\x04\x08\x02\0\x04\x12\x04\xc9\x02\x02\n\n\r\n\x05\
+    \x04\x08\x02\0\x05\x12\x04\xc9\x02\x0b\x11\n\r\n\x05\x04\x08\x02\0\x01\
+    \x12\x04\xc9\x02\x12#\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\xc9\x02&'\n\
+    \xa6\x04\n\x04\x04\x08\x02\x01\x12\x04\xd3\x02\x02\"\x1a\x97\x04\x20The\
+    \x20effective\x20tags\x20inherited\x20from\x20the\n\x20[attached_resourc\
+    e][google.cloud.asset.v1.EffectiveTagDetails.attached_resource].\n\x20No\
+    te\x20that\x20tags\x20with\x20the\x20same\x20key\x20but\x20different\x20\
+    values\x20may\x20attach\x20to\n\x20resources\x20at\x20a\x20different\x20\
+    hierarchy\x20levels.\x20The\x20lower\x20hierarchy\x20tag\x20value\n\x20w\
+    ill\x20overwrite\x20the\x20higher\x20hierarchy\x20tag\x20value\x20of\x20\
+    the\x20same\x20tag\x20key.\x20In\x20this\n\x20case,\x20the\x20tag\x20val\
+    ue\x20at\x20the\x20higher\x20hierarchy\x20level\x20will\x20be\x20removed\
+    .\x20For\x20more\n\x20information,\x20see\x20[tag\n\x20inheritance](http\
+    s://cloud.google.com/resource-manager/docs/tags/tags-overview#inheritanc\
+    e).\n\n\r\n\x05\x04\x08\x02\x01\x04\x12\x04\xd3\x02\x02\n\n\r\n\x05\x04\
+    \x08\x02\x01\x06\x12\x04\xd3\x02\x0b\x0e\n\r\n\x05\x04\x08\x02\x01\x01\
+    \x12\x04\xd3\x02\x0f\x1d\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xd3\x02\
+    \x20!\nX\n\x02\x04\t\x12\x06\xd7\x02\0\xb5\x05\x01\x1aJ\x20A\x20result\
+    \x20of\x20Resource\x20Search,\x20containing\x20information\x20of\x20a\
+    \x20cloud\x20resource.\n\n\x0b\n\x03\x04\t\x01\x12\x04\xd7\x02\x08\x1c\n\
+    \xa5\x03\n\x04\x04\t\x02\0\x12\x04\xe2\x02\x02\x12\x1a\x96\x03\x20The\
+    \x20full\x20resource\x20name\x20of\x20this\x20resource.\x20Example:\n\
+    \x20`//compute.googleapis.com/projects/my_project_123/zones/zone1/instan\
+    ces/instance1`.\n\x20See\x20[Cloud\x20Asset\x20Inventory\x20Resource\x20\
+    Name\n\x20Format](https://cloud.google.com/asset-inventory/docs/resource\
+    -name-format)\n\x20for\x20more\x20information.\n\n\x20To\x20search\x20ag\
+    ainst\x20the\x20`name`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Examp\
+    le:\x20`name:instance1`\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20\
+    Example:\x20`instance1`\n\n\r\n\x05\x04\t\x02\0\x05\x12\x04\xe2\x02\x02\
+    \x08\n\r\n\x05\x04\t\x02\0\x01\x12\x04\xe2\x02\t\r\n\r\n\x05\x04\t\x02\0\
+    \x03\x12\x04\xe2\x02\x10\x11\n\xb4\x01\n\x04\x04\t\x02\x01\x12\x04\xe9\
+    \x02\x02\x18\x1a\xa5\x01\x20The\x20type\x20of\x20this\x20resource.\x20Ex\
+    ample:\x20`compute.googleapis.com/Disk`.\n\n\x20To\x20search\x20against\
+    \x20the\x20`asset_type`:\n\n\x20*\x20Specify\x20the\x20`asset_type`\x20f\
+    ield\x20in\x20your\x20search\x20request.\n\n\r\n\x05\x04\t\x02\x01\x05\
+    \x12\x04\xe9\x02\x02\x08\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xe9\x02\t\
+    \x13\n\r\n\x05\x04\t\x02\x01\x03\x12\x04\xe9\x02\x16\x17\n\xe6\x02\n\x04\
+    \x04\t\x02\x02\x12\x04\xf4\x02\x02\x15\x1a\xd7\x02\x20The\x20project\x20\
+    that\x20this\x20resource\x20belongs\x20to,\x20in\x20the\x20form\x20of\n\
+    \x20projects/{PROJECT_NUMBER}.\x20This\x20field\x20is\x20available\x20wh\
+    en\x20the\x20resource\n\x20belongs\x20to\x20a\x20project.\n\n\x20To\x20s\
+    earch\x20against\x20`project`:\n\n\x20*\x20Use\x20a\x20field\x20query.\
+    \x20Example:\x20`project:12345`\n\x20*\x20Use\x20a\x20free\x20text\x20qu\
+    ery.\x20Example:\x20`12345`\n\x20*\x20Specify\x20the\x20`scope`\x20field\
+    \x20as\x20this\x20project\x20in\x20your\x20search\x20request.\n\n\r\n\
+    \x05\x04\t\x02\x02\x05\x12\x04\xf4\x02\x02\x08\n\r\n\x05\x04\t\x02\x02\
+    \x01\x12\x04\xf4\x02\t\x10\n\r\n\x05\x04\t\x02\x02\x03\x12\x04\xf4\x02\
+    \x13\x14\n\xf4\x02\n\x04\x04\t\x02\x03\x12\x04\xff\x02\x02\x1f\x1a\xe5\
+    \x02\x20The\x20folder(s)\x20that\x20this\x20resource\x20belongs\x20to,\
+    \x20in\x20the\x20form\x20of\n\x20folders/{FOLDER_NUMBER}.\x20This\x20fie\
+    ld\x20is\x20available\x20when\x20the\x20resource\n\x20belongs\x20to\x20o\
+    ne\x20or\x20more\x20folders.\n\n\x20To\x20search\x20against\x20`folders`\
+    :\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example:\x20`folders:(123\
+    \x20OR\x20456)`\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\
+    \x20`123`\n\x20*\x20Specify\x20the\x20`scope`\x20field\x20as\x20this\x20\
+    folder\x20in\x20your\x20search\x20request.\n\n\r\n\x05\x04\t\x02\x03\x04\
+    \x12\x04\xff\x02\x02\n\n\r\n\x05\x04\t\x02\x03\x05\x12\x04\xff\x02\x0b\
+    \x11\n\r\n\x05\x04\t\x02\x03\x01\x12\x04\xff\x02\x12\x19\n\r\n\x05\x04\t\
+    \x02\x03\x03\x12\x04\xff\x02\x1c\x1e\n\x86\x03\n\x04\x04\t\x02\x04\x12\
+    \x04\x8a\x03\x02\x1b\x1a\xf7\x02\x20The\x20organization\x20that\x20this\
+    \x20resource\x20belongs\x20to,\x20in\x20the\x20form\x20of\n\x20organizat\
+    ions/{ORGANIZATION_NUMBER}.\x20This\x20field\x20is\x20available\x20when\
+    \x20the\n\x20resource\x20belongs\x20to\x20an\x20organization.\n\n\x20To\
+    \x20search\x20against\x20`organization`:\n\n\x20*\x20Use\x20a\x20field\
+    \x20query.\x20Example:\x20`organization:123`\n\x20*\x20Use\x20a\x20free\
+    \x20text\x20query.\x20Example:\x20`123`\n\x20*\x20Specify\x20the\x20`sco\
+    pe`\x20field\x20as\x20this\x20organization\x20in\x20your\x20search\x20re\
+    quest.\n\n\r\n\x05\x04\t\x02\x04\x05\x12\x04\x8a\x03\x02\x08\n\r\n\x05\
+    \x04\t\x02\x04\x01\x12\x04\x8a\x03\t\x15\n\r\n\x05\x04\t\x02\x04\x03\x12\
+    \x04\x8a\x03\x18\x1a\n\x92\x02\n\x04\x04\t\x02\x05\x12\x04\x93\x03\x02\
+    \x1a\x1a\x83\x02\x20The\x20display\x20name\x20of\x20this\x20resource.\
+    \x20This\x20field\x20is\x20available\x20only\x20when\x20the\n\x20resourc\
+    e's\x20Protobuf\x20contains\x20it.\n\n\x20To\x20search\x20against\x20the\
+    \x20`display_name`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example:\
+    \x20`displayName:\"My\x20Instance\"`\n\x20*\x20Use\x20a\x20free\x20text\
+    \x20query.\x20Example:\x20`\"My\x20Instance\"`\n\n\r\n\x05\x04\t\x02\x05\
+    \x05\x12\x04\x93\x03\x02\x08\n\r\n\x05\x04\t\x02\x05\x01\x12\x04\x93\x03\
+    \t\x15\n\r\n\x05\x04\t\x02\x05\x03\x12\x04\x93\x03\x18\x19\n\xe2\x02\n\
+    \x04\x04\t\x02\x06\x12\x04\x9d\x03\x02\x19\x1a\xd3\x02\x20One\x20or\x20m\
+    ore\x20paragraphs\x20of\x20text\x20description\x20of\x20this\x20resource\
+    .\x20Maximum\x20length\n\x20could\x20be\x20up\x20to\x201M\x20bytes.\x20T\
+    his\x20field\x20is\x20available\x20only\x20when\x20the\x20resource's\n\
+    \x20Protobuf\x20contains\x20it.\n\n\x20To\x20search\x20against\x20the\
+    \x20`description`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example:\
+    \x20`description:\"important\x20instance\"`\n\x20*\x20Use\x20a\x20free\
+    \x20text\x20query.\x20Example:\x20`\"important\x20instance\"`\n\n\r\n\
+    \x05\x04\t\x02\x06\x05\x12\x04\x9d\x03\x02\x08\n\r\n\x05\x04\t\x02\x06\
+    \x01\x12\x04\x9d\x03\t\x14\n\r\n\x05\x04\t\x02\x06\x03\x12\x04\x9d\x03\
+    \x17\x18\n\xaf\x02\n\x04\x04\t\x02\x07\x12\x04\xa7\x03\x02\x16\x1a\xa0\
+    \x02\x20Location\x20can\x20be\x20`global`,\x20regional\x20like\x20`us-ea\
+    st1`,\x20or\x20zonal\x20like\n\x20`us-west1-b`.\x20This\x20field\x20is\
+    \x20available\x20only\x20when\x20the\x20resource's\x20Protobuf\n\x20cont\
+    ains\x20it.\n\n\x20To\x20search\x20against\x20the\x20`location`:\n\n\x20\
+    *\x20Use\x20a\x20field\x20query.\x20Example:\x20`location:us-west*`\n\
+    \x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\x20`us-west*`\n\
+    \n\r\n\x05\x04\t\x02\x07\x05\x12\x04\xa7\x03\x02\x08\n\r\n\x05\x04\t\x02\
+    \x07\x01\x12\x04\xa7\x03\t\x11\n\r\n\x05\x04\t\x02\x07\x03\x12\x04\xa7\
+    \x03\x14\x15\n\xd9\x04\n\x04\x04\t\x02\x08\x12\x04\xb6\x03\x02!\x1a\xca\
+    \x04\x20User\x20labels\x20associated\x20with\x20this\x20resource.\x20See\
+    \x20[Labelling\x20and\x20grouping\n\x20Google\x20Cloud\n\x20resources](h\
+    ttps://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-go\
+    ogle-cloud-platform-resources)\n\x20for\x20more\x20information.\x20This\
+    \x20field\x20is\x20available\x20only\x20when\x20the\x20resource's\n\x20P\
+    rotobuf\x20contains\x20it.\n\n\x20To\x20search\x20against\x20the\x20`lab\
+    els`:\n\n\x20*\x20Use\x20a\x20field\x20query:\n\x20\x20\x20\x20\x20-\x20\
+    query\x20on\x20any\x20label's\x20key\x20or\x20value.\x20Example:\x20`lab\
+    els:prod`\n\x20\x20\x20\x20\x20-\x20query\x20by\x20a\x20given\x20label.\
+    \x20Example:\x20`labels.env:prod`\n\x20\x20\x20\x20\x20-\x20query\x20by\
+    \x20a\x20given\x20label's\x20existence.\x20Example:\x20`labels.env:*`\n\
+    \x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\x20`prod`\n\n\r\
+    \n\x05\x04\t\x02\x08\x06\x12\x04\xb6\x03\x02\x15\n\r\n\x05\x04\t\x02\x08\
+    \x01\x12\x04\xb6\x03\x16\x1c\n\r\n\x05\x04\t\x02\x08\x03\x12\x04\xb6\x03\
+    \x1f\x20\n\x94\x04\n\x04\x04\t\x02\t\x12\x04\xc3\x03\x02#\x1a\x85\x04\
+    \x20Network\x20tags\x20associated\x20with\x20this\x20resource.\x20Like\
+    \x20labels,\x20network\x20tags\x20are\x20a\n\x20type\x20of\x20annotation\
+    s\x20used\x20to\x20group\x20Google\x20Cloud\x20resources.\x20See\x20[Lab\
+    elling\n\x20Google\x20Cloud\n\x20resources](https://cloud.google.com/blo\
+    g/products/gcp/labelling-and-grouping-your-google-cloud-platform-resourc\
+    es)\n\x20for\x20more\x20information.\x20This\x20field\x20is\x20available\
+    \x20only\x20when\x20the\x20resource's\n\x20Protobuf\x20contains\x20it.\n\
+    \n\x20To\x20search\x20against\x20the\x20`network_tags`:\n\n\x20*\x20Use\
+    \x20a\x20field\x20query.\x20Example:\x20`networkTags:internal`\n\x20*\
+    \x20Use\x20a\x20free\x20text\x20query.\x20Example:\x20`internal`\n\n\r\n\
+    \x05\x04\t\x02\t\x04\x12\x04\xc3\x03\x02\n\n\r\n\x05\x04\t\x02\t\x05\x12\
+    \x04\xc3\x03\x0b\x11\n\r\n\x05\x04\t\x02\t\x01\x12\x04\xc3\x03\x12\x1e\n\
+    \r\n\x05\x04\t\x02\t\x03\x12\x04\xc3\x03!\"\n\xb3\x06\n\x04\x04\t\x02\n\
+    \x12\x04\xd6\x03\x02*\x1a\xa4\x06\x20The\x20Cloud\x20KMS\n\x20[CryptoKey\
+    ](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations\
+    .keyRings.cryptoKeys)\n\x20name\x20or\n\x20[CryptoKeyVersion](https://cl\
+    oud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cr\
+    yptoKeys.cryptoKeyVersions)\n\x20name.\n\n\x20This\x20field\x20only\x20p\
+    resents\x20for\x20the\x20purpose\x20of\x20backward\x20compatibility.\n\
+    \x20Use\x20the\x20`kms_keys`\x20field\x20to\x20retrieve\x20Cloud\x20KMS\
+    \x20key\x20information.\x20This\x20field\n\x20is\x20available\x20only\
+    \x20when\x20the\x20resource's\x20Protobuf\x20contains\x20it\x20and\x20wi\
+    ll\x20only\x20be\n\x20populated\x20for\x20[these\x20resource\n\x20types]\
+    (https://cloud.google.com/asset-inventory/docs/legacy-field-names#resour\
+    ce_types_with_the_to_be_deprecated_kmskey_field)\n\x20for\x20backward\
+    \x20compatible\x20purposes.\n\n\x20To\x20search\x20against\x20the\x20`km\
+    s_key`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example:\x20`kmsKey:k\
+    ey`\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\x20`key`\n\
+    \n\r\n\x05\x04\t\x02\n\x05\x12\x04\xd6\x03\x02\x08\n\r\n\x05\x04\t\x02\n\
+    \x01\x12\x04\xd6\x03\t\x10\n\r\n\x05\x04\t\x02\n\x03\x12\x04\xd6\x03\x13\
+    \x15\n\r\n\x05\x04\t\x02\n\x08\x12\x04\xd6\x03\x16)\n\x0e\n\x06\x04\t\
+    \x02\n\x08\x03\x12\x04\xd6\x03\x17(\n\xde\x03\n\x04\x04\t\x02\x0b\x12\
+    \x04\xe3\x03\x02\x20\x1a\xcf\x03\x20The\x20Cloud\x20KMS\n\x20[CryptoKey]\
+    (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.\
+    keyRings.cryptoKeys)\n\x20names\x20or\n\x20[CryptoKeyVersion](https://cl\
+    oud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cr\
+    yptoKeys.cryptoKeyVersions)\n\x20names.\x20This\x20field\x20is\x20availa\
+    ble\x20only\x20when\x20the\x20resource's\x20Protobuf\x20contains\n\x20it\
+    .\n\n\x20To\x20search\x20against\x20the\x20`kms_keys`:\n\n\x20*\x20Use\
+    \x20a\x20field\x20query.\x20Example:\x20`kmsKeys:key`\n\x20*\x20Use\x20a\
+    \x20free\x20text\x20query.\x20Example:\x20`key`\n\n\r\n\x05\x04\t\x02\
+    \x0b\x04\x12\x04\xe3\x03\x02\n\n\r\n\x05\x04\t\x02\x0b\x05\x12\x04\xe3\
+    \x03\x0b\x11\n\r\n\x05\x04\t\x02\x0b\x01\x12\x04\xe3\x03\x12\x1a\n\r\n\
+    \x05\x04\t\x02\x0b\x03\x12\x04\xe3\x03\x1d\x1f\n\x91\x04\n\x04\x04\t\x02\
+    \x0c\x12\x04\xf0\x03\x02-\x1a\x82\x04\x20The\x20create\x20timestamp\x20o\
+    f\x20this\x20resource,\x20at\x20which\x20the\x20resource\x20was\x20creat\
+    ed.\n\x20The\x20granularity\x20is\x20in\x20seconds.\x20Timestamp.nanos\
+    \x20will\x20always\x20be\x200.\x20This\x20field\n\x20is\x20available\x20\
+    only\x20when\x20the\x20resource's\x20Protobuf\x20contains\x20it.\n\n\x20\
+    To\x20search\x20against\x20`create_time`:\n\n\x20*\x20Use\x20a\x20field\
+    \x20query.\n\x20\x20\x20\x20\x20-\x20value\x20in\x20seconds\x20since\x20\
+    unix\x20epoch.\x20Example:\x20`createTime\x20>\x201609459200`\n\x20\x20\
+    \x20\x20\x20-\x20value\x20in\x20date\x20string.\x20Example:\x20`createTi\
+    me\x20>\x202021-01-01`\n\x20\x20\x20\x20\x20-\x20value\x20in\x20date-tim\
+    e\x20string\x20(must\x20be\x20quoted).\x20Example:\x20`createTime\x20>\n\
+    \x20\x20\x20\x20\x20\"2021-01-01T00:00:00\"`\n\n\r\n\x05\x04\t\x02\x0c\
+    \x06\x12\x04\xf0\x03\x02\x1b\n\r\n\x05\x04\t\x02\x0c\x01\x12\x04\xf0\x03\
+    \x1c'\n\r\n\x05\x04\t\x02\x0c\x03\x12\x04\xf0\x03*,\n\xa8\x04\n\x04\x04\
+    \t\x02\r\x12\x04\xfe\x03\x02-\x1a\x99\x04\x20The\x20last\x20update\x20ti\
+    mestamp\x20of\x20this\x20resource,\x20at\x20which\x20the\x20resource\x20\
+    was\x20last\n\x20modified\x20or\x20deleted.\x20The\x20granularity\x20is\
+    \x20in\x20seconds.\x20Timestamp.nanos\x20will\n\x20always\x20be\x200.\
+    \x20This\x20field\x20is\x20available\x20only\x20when\x20the\x20resource'\
+    s\x20Protobuf\n\x20contains\x20it.\n\n\x20To\x20search\x20against\x20`up\
+    date_time`:\n\n\x20*\x20Use\x20a\x20field\x20query.\n\x20\x20\x20\x20\
+    \x20-\x20value\x20in\x20seconds\x20since\x20unix\x20epoch.\x20Example:\
+    \x20`updateTime\x20<\x201609459200`\n\x20\x20\x20\x20\x20-\x20value\x20i\
+    n\x20date\x20string.\x20Example:\x20`updateTime\x20<\x202021-01-01`\n\
+    \x20\x20\x20\x20\x20-\x20value\x20in\x20date-time\x20string\x20(must\x20\
+    be\x20quoted).\x20Example:\x20`updateTime\x20<\n\x20\x20\x20\x20\x20\"20\
+    21-01-01T00:00:00\"`\n\n\r\n\x05\x04\t\x02\r\x06\x12\x04\xfe\x03\x02\x1b\
+    \n\r\n\x05\x04\t\x02\r\x01\x12\x04\xfe\x03\x1c'\n\r\n\x05\x04\t\x02\r\
+    \x03\x12\x04\xfe\x03*,\n\xbb\x07\n\x04\x04\t\x02\x0e\x12\x04\x94\x04\x02\
+    \x14\x1a\xac\x07\x20The\x20state\x20of\x20this\x20resource.\x20Different\
+    \x20resources\x20types\x20have\x20different\x20state\n\x20definitions\
+    \x20that\x20are\x20mapped\x20from\x20various\x20fields\x20of\x20differen\
+    t\x20resource\n\x20types.\x20This\x20field\x20is\x20available\x20only\
+    \x20when\x20the\x20resource's\x20Protobuf\x20contains\n\x20it.\n\n\x20Ex\
+    ample:\n\x20If\x20the\x20resource\x20is\x20an\x20instance\x20provided\
+    \x20by\x20Compute\x20Engine,\n\x20its\x20state\x20will\x20include\x20PRO\
+    VISIONING,\x20STAGING,\x20RUNNING,\x20STOPPING,\n\x20SUSPENDING,\x20SUSP\
+    ENDED,\x20REPAIRING,\x20and\x20TERMINATED.\x20See\x20`status`\x20definit\
+    ion\n\x20in\x20[API\n\x20Reference](https://cloud.google.com/compute/doc\
+    s/reference/rest/v1/instances).\n\x20If\x20the\x20resource\x20is\x20a\
+    \x20project\x20provided\x20by\x20Resource\x20Manager,\x20its\x20state\n\
+    \x20will\x20include\x20LIFECYCLE_STATE_UNSPECIFIED,\x20ACTIVE,\x20DELETE\
+    _REQUESTED\x20and\n\x20DELETE_IN_PROGRESS.\x20See\x20`lifecycleState`\
+    \x20definition\x20in\x20[API\n\x20Reference](https://cloud.google.com/re\
+    source-manager/reference/rest/v1/projects).\n\n\x20To\x20search\x20again\
+    st\x20the\x20`state`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example\
+    :\x20`state:RUNNING`\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Exa\
+    mple:\x20`RUNNING`\n\n\r\n\x05\x04\t\x02\x0e\x05\x12\x04\x94\x04\x02\x08\
+    \n\r\n\x05\x04\t\x02\x0e\x01\x12\x04\x94\x04\t\x0e\n\r\n\x05\x04\t\x02\
+    \x0e\x03\x12\x04\x94\x04\x11\x13\n\xdf\x07\n\x04\x04\t\x02\x0f\x12\x04\
+    \xa9\x04\x023\x1a\xd0\x07\x20The\x20additional\x20searchable\x20attribut\
+    es\x20of\x20this\x20resource.\x20The\x20attributes\x20may\n\x20vary\x20f\
+    rom\x20one\x20resource\x20type\x20to\x20another.\x20Examples:\x20`projec\
+    tId`\x20for\x20Project,\n\x20`dnsName`\x20for\x20DNS\x20ManagedZone.\x20\
+    This\x20field\x20contains\x20a\x20subset\x20of\x20the\x20resource\n\x20m\
+    etadata\x20fields\x20that\x20are\x20returned\x20by\x20the\x20List\x20or\
+    \x20Get\x20APIs\x20provided\x20by\x20the\n\x20corresponding\x20Google\
+    \x20Cloud\x20service\x20(e.g.,\x20Compute\x20Engine).\x20see\x20[API\n\
+    \x20references\x20and\x20supported\x20searchable\n\x20attributes](https:\
+    //cloud.google.com/asset-inventory/docs/supported-asset-types)\n\x20to\
+    \x20see\x20which\x20fields\x20are\x20included.\n\n\x20You\x20can\x20sear\
+    ch\x20values\x20of\x20these\x20fields\x20through\x20free\x20text\x20sear\
+    ch.\x20However,\n\x20you\x20should\x20not\x20consume\x20the\x20field\x20\
+    programically\x20as\x20the\x20field\x20names\x20and\n\x20values\x20may\
+    \x20change\x20as\x20the\x20Google\x20Cloud\x20service\x20updates\x20to\
+    \x20a\x20new\x20incompatible\n\x20API\x20version.\n\n\x20To\x20search\
+    \x20against\x20the\x20`additional_attributes`:\n\n\x20*\x20Use\x20a\x20f\
+    ree\x20text\x20query\x20to\x20match\x20the\x20attributes\x20values.\x20E\
+    xample:\x20to\x20search\n\x20\x20\x20`additional_attributes\x20=\x20{\
+    \x20dnsName:\x20\"foobar\"\x20}`,\x20you\x20can\x20issue\x20a\x20query\n\
+    \x20\x20\x20`foobar`.\n\n\r\n\x05\x04\t\x02\x0f\x06\x12\x04\xa9\x04\x02\
+    \x18\n\r\n\x05\x04\t\x02\x0f\x01\x12\x04\xa9\x04\x19.\n\r\n\x05\x04\t\
+    \x02\x0f\x03\x12\x04\xa9\x0412\n\x81\x02\n\x04\x04\t\x02\x10\x12\x04\xb2\
+    \x04\x02(\x1a\xf2\x01\x20The\x20full\x20resource\x20name\x20of\x20this\
+    \x20resource's\x20parent,\x20if\x20it\x20has\x20one.\n\x20To\x20search\
+    \x20against\x20the\x20`parent_full_resource_name`:\n\n\x20*\x20Use\x20a\
+    \x20field\x20query.\x20Example:\n\x20`parentFullResourceName:\"project-n\
+    ame\"`\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\n\x20`pr\
+    oject-name`\n\n\r\n\x05\x04\t\x02\x10\x05\x12\x04\xb2\x04\x02\x08\n\r\n\
+    \x05\x04\t\x02\x10\x01\x12\x04\xb2\x04\t\"\n\r\n\x05\x04\t\x02\x10\x03\
+    \x12\x04\xb2\x04%'\n\xf5\x02\n\x04\x04\t\x02\x11\x12\x04\xbb\x04\x026\
+    \x1a\xe6\x02\x20Versioned\x20resource\x20representations\x20of\x20this\
+    \x20resource.\x20This\x20is\x20repeated\n\x20because\x20there\x20could\
+    \x20be\x20multiple\x20versions\x20of\x20resource\x20representations\x20d\
+    uring\n\x20version\x20migration.\n\n\x20This\x20`versioned_resources`\
+    \x20field\x20is\x20not\x20searchable.\x20Some\x20attributes\x20of\x20the\
+    \n\x20resource\x20representations\x20are\x20exposed\x20in\x20`additional\
+    _attributes`\x20field,\x20so\n\x20as\x20to\x20allow\x20users\x20to\x20se\
+    arch\x20on\x20them.\n\n\r\n\x05\x04\t\x02\x11\x04\x12\x04\xbb\x04\x02\n\
+    \n\r\n\x05\x04\t\x02\x11\x06\x12\x04\xbb\x04\x0b\x1c\n\r\n\x05\x04\t\x02\
+    \x11\x01\x12\x04\xbb\x04\x1d0\n\r\n\x05\x04\t\x02\x11\x03\x12\x04\xbb\
+    \x0435\n\x92\x03\n\x04\x04\t\x02\x12\x12\x04\xc4\x04\x024\x1a\x83\x03\
+    \x20Attached\x20resources\x20of\x20this\x20resource.\x20For\x20example,\
+    \x20an\x20OSConfig\n\x20Inventory\x20is\x20an\x20attached\x20resource\
+    \x20of\x20a\x20Compute\x20Instance.\x20This\x20field\x20is\n\x20repeated\
+    \x20because\x20a\x20resource\x20could\x20have\x20multiple\x20attached\
+    \x20resources.\n\n\x20This\x20`attached_resources`\x20field\x20is\x20not\
+    \x20searchable.\x20Some\x20attributes\n\x20of\x20the\x20attached\x20reso\
+    urces\x20are\x20exposed\x20in\x20`additional_attributes`\x20field,\x20so\
+    \n\x20as\x20to\x20allow\x20users\x20to\x20search\x20on\x20them.\n\n\r\n\
+    \x05\x04\t\x02\x12\x04\x12\x04\xc4\x04\x02\n\n\r\n\x05\x04\t\x02\x12\x06\
+    \x12\x04\xc4\x04\x0b\x1b\n\r\n\x05\x04\t\x02\x12\x01\x12\x04\xc4\x04\x1c\
+    .\n\r\n\x05\x04\t\x02\x12\x03\x12\x04\xc4\x0413\n\xff\x02\n\x04\x04\t\
+    \x02\x13\x12\x04\xcc\x04\x023\x1a\xf0\x02\x20A\x20map\x20of\x20related\
+    \x20resources\x20of\x20this\x20resource,\x20keyed\x20by\x20the\n\x20rela\
+    tionship\x20type.\x20A\x20relationship\x20type\x20is\x20in\x20the\x20for\
+    mat\x20of\n\x20{SourceType}_{ACTION}_{DestType}.\x20Example:\x20`DISK_TO\
+    _INSTANCE`,\n\x20`DISK_TO_NETWORK`,\x20`INSTANCE_TO_INSTANCEGROUP`.\n\
+    \x20See\x20[supported\x20relationship\n\x20types](https://cloud.google.c\
+    om/asset-inventory/docs/supported-asset-types#supported_relationship_typ\
+    es).\n\n\r\n\x05\x04\t\x02\x13\x06\x12\x04\xcc\x04\x02\x1f\n\r\n\x05\x04\
+    \t\x02\x13\x01\x12\x04\xcc\x04\x20-\n\r\n\x05\x04\t\x02\x13\x03\x12\x04\
+    \xcc\x0402\n\x8d\x03\n\x04\x04\t\x02\x14\x12\x04\xdb\x04\x024\x1a\xfe\
+    \x02\x20This\x20field\x20is\x20only\x20present\x20for\x20the\x20purpose\
+    \x20of\x20backward\x20compatibility.\n\x20Use\x20the\x20`tags`\x20field\
+    \x20instead.\n\n\x20TagKey\x20namespaced\x20names,\x20in\x20the\x20forma\
+    t\x20of\x20{ORG_ID}/{TAG_KEY_SHORT_NAME}.\n\x20To\x20search\x20against\
+    \x20the\x20`tagKeys`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example\
+    :\n\x20\x20\x20\x20\x20-\x20`tagKeys:\"123456789/env*\"`\n\x20\x20\x20\
+    \x20\x20-\x20`tagKeys=\"123456789/env\"`\n\x20\x20\x20\x20\x20-\x20`tagK\
+    eys:\"env\"`\n\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\
+    \n\x20\x20\x20\x20\x20-\x20`env`\n\n\r\n\x05\x04\t\x02\x14\x04\x12\x04\
+    \xdb\x04\x02\n\n\r\n\x05\x04\t\x02\x14\x05\x12\x04\xdb\x04\x0b\x11\n\r\n\
+    \x05\x04\t\x02\x14\x01\x12\x04\xdb\x04\x12\x1a\n\r\n\x05\x04\t\x02\x14\
+    \x03\x12\x04\xdb\x04\x1d\x1f\n\r\n\x05\x04\t\x02\x14\x08\x12\x04\xdb\x04\
+    \x203\n\x0e\n\x06\x04\t\x02\x14\x08\x03\x12\x04\xdb\x04!2\n\xd8\x03\n\
+    \x04\x04\t\x02\x15\x12\x04\xec\x04\x026\x1a\xc9\x03\x20This\x20field\x20\
+    is\x20only\x20present\x20for\x20the\x20purpose\x20of\x20backward\x20comp\
+    atibility.\n\x20Use\x20the\x20`tags`\x20field\x20instead.\n\n\x20TagValu\
+    e\x20namespaced\x20names,\x20in\x20the\x20format\x20of\n\x20{ORG_ID}/{TA\
+    G_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}.\n\x20To\x20search\x20against\
+    \x20the\x20`tagValues`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Examp\
+    le:\n\x20\x20\x20\x20\x20-\x20`tagValues:\"env\"`\n\x20\x20\x20\x20\x20-\
+    \x20`tagValues:\"env/prod\"`\n\x20\x20\x20\x20\x20-\x20`tagValues:\"1234\
+    56789/env/prod*\"`\n\x20\x20\x20\x20\x20-\x20`tagValues=\"123456789/env/\
+    prod\"`\n\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\n\x20\
+    \x20\x20\x20\x20-\x20`prod`\n\n\r\n\x05\x04\t\x02\x15\x04\x12\x04\xec\
+    \x04\x02\n\n\r\n\x05\x04\t\x02\x15\x05\x12\x04\xec\x04\x0b\x11\n\r\n\x05\
+    \x04\t\x02\x15\x01\x12\x04\xec\x04\x12\x1c\n\r\n\x05\x04\t\x02\x15\x03\
+    \x12\x04\xec\x04\x1f!\n\r\n\x05\x04\t\x02\x15\x08\x12\x04\xec\x04\"5\n\
+    \x0e\n\x06\x04\t\x02\x15\x08\x03\x12\x04\xec\x04#4\n\xcc\x02\n\x04\x04\t\
+    \x02\x16\x12\x04\xf9\x04\x029\x1a\xbd\x02\x20This\x20field\x20is\x20only\
+    \x20present\x20for\x20the\x20purpose\x20of\x20backward\x20compatibility.\
+    \n\x20Use\x20the\x20`tags`\x20field\x20instead.\n\n\x20TagValue\x20IDs,\
+    \x20in\x20the\x20format\x20of\x20tagValues/{TAG_VALUE_ID}.\n\x20To\x20se\
+    arch\x20against\x20the\x20`tagValueIds`:\n\n\x20*\x20Use\x20a\x20field\
+    \x20query.\x20Example:\n\x20\x20\x20\x20\x20-\x20`tagValueIds=\"tagValue\
+    s/456\"`\n\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Example:\n\
+    \x20\x20\x20\x20\x20-\x20`456`\n\n\r\n\x05\x04\t\x02\x16\x04\x12\x04\xf9\
+    \x04\x02\n\n\r\n\x05\x04\t\x02\x16\x05\x12\x04\xf9\x04\x0b\x11\n\r\n\x05\
+    \x04\t\x02\x16\x01\x12\x04\xf9\x04\x12\x1f\n\r\n\x05\x04\t\x02\x16\x03\
+    \x12\x04\xf9\x04\"$\n\r\n\x05\x04\t\x02\x16\x08\x12\x04\xf9\x04%8\n\x0e\
+    \n\x06\x04\t\x02\x16\x08\x03\x12\x04\xf9\x04&7\n\xdb\x03\n\x04\x04\t\x02\
+    \x17\x12\x04\x8c\x05\x02\x19\x1a\xcc\x03\x20The\x20tags\x20directly\x20a\
+    ttached\x20to\x20this\x20resource.\n\n\x20To\x20search\x20against\x20the\
+    \x20`tags`:\n\n\x20*\x20Use\x20a\x20field\x20query.\x20Example:\n\x20\
+    \x20\x20\x20\x20-\x20`tagKeys:\"123456789/env*\"`\n\x20\x20\x20\x20\x20-\
+    \x20`tagKeys=\"123456789/env\"`\n\x20\x20\x20\x20\x20-\x20`tagKeys:\"env\
+    \"`\n\x20\x20\x20\x20\x20-\x20`tagKeyIds=\"tagKeys/123\"`\n\x20\x20\x20\
+    \x20\x20-\x20`tagValues:\"env\"`\n\x20\x20\x20\x20\x20-\x20`tagValues:\"\
+    env/prod\"`\n\x20\x20\x20\x20\x20-\x20`tagValues:\"123456789/env/prod*\"\
+    `\n\x20\x20\x20\x20\x20-\x20`tagValues=\"123456789/env/prod\"`\n\x20\x20\
+    \x20\x20\x20-\x20`tagValueIds=\"tagValues/456\"`\n\n\x20*\x20Use\x20a\
+    \x20free\x20text\x20query.\x20Example:\n\x20\x20\x20\x20\x20-\x20`env/pr\
+    od`\n\n\r\n\x05\x04\t\x02\x17\x04\x12\x04\x8c\x05\x02\n\n\r\n\x05\x04\t\
+    \x02\x17\x06\x12\x04\x8c\x05\x0b\x0e\n\r\n\x05\x04\t\x02\x17\x01\x12\x04\
+    \x8c\x05\x0f\x13\n\r\n\x05\x04\t\x02\x17\x03\x12\x04\x8c\x05\x16\x18\n\
+    \xe9\x05\n\x04\x04\t\x02\x18\x12\x04\x9f\x05\x023\x1a\xda\x05\x20The\x20\
+    effective\x20tags\x20on\x20this\x20resource.\x20All\x20of\x20the\x20tags\
+    \x20that\x20are\x20both\x20attached\n\x20to\x20and\x20inherited\x20by\
+    \x20a\x20resource\x20are\x20collectively\x20called\x20the\x20effective\n\
+    \x20tags.\x20For\x20more\x20information,\x20see\x20[tag\n\x20inheritance\
+    ](https://cloud.google.com/resource-manager/docs/tags/tags-overview#inhe\
+    ritance).\n\n\x20To\x20search\x20against\x20the\x20`effective_tags`:\n\n\
+    \x20*\x20Use\x20a\x20field\x20query.\x20Example:\n\x20\x20\x20\x20\x20-\
+    \x20`effectiveTagKeys:\"123456789/env*\"`\n\x20\x20\x20\x20\x20-\x20`eff\
+    ectiveTagKeys=\"123456789/env\"`\n\x20\x20\x20\x20\x20-\x20`effectiveTag\
+    Keys:\"env\"`\n\x20\x20\x20\x20\x20-\x20`effectiveTagKeyIds=\"tagKeys/12\
+    3\"`\n\x20\x20\x20\x20\x20-\x20`effectiveTagValues:\"env\"`\n\x20\x20\
+    \x20\x20\x20-\x20`effectiveTagValues:\"env/prod\"`\n\x20\x20\x20\x20\x20\
+    -\x20`effectiveTagValues:\"123456789/env/prod*\"`\n\x20\x20\x20\x20\x20-\
+    \x20`effectiveTagValues=\"123456789/env/prod\"`\n\x20\x20\x20\x20\x20-\
+    \x20`effectiveTagValueIds=\"tagValues/456\"`\n\n\r\n\x05\x04\t\x02\x18\
+    \x04\x12\x04\x9f\x05\x02\n\n\r\n\x05\x04\t\x02\x18\x06\x12\x04\x9f\x05\
+    \x0b\x1e\n\r\n\x05\x04\t\x02\x18\x01\x12\x04\x9f\x05\x1f-\n\r\n\x05\x04\
+    \t\x02\x18\x03\x12\x04\x9f\x0502\n\xaf\x02\n\x04\x04\t\x02\x19\x12\x04\
+    \xa9\x05\x02!\x1a\xa0\x02\x20The\x20type\x20of\x20this\x20resource's\x20\
+    immediate\x20parent,\x20if\x20there\x20is\x20one.\n\n\x20To\x20search\
+    \x20against\x20the\x20`parent_asset_type`:\n\n\x20*\x20Use\x20a\x20field\
+    \x20query.\x20Example:\n\x20`parentAssetType:\"cloudresourcemanager.goog\
+    leapis.com/Project\"`\n\x20*\x20Use\x20a\x20free\x20text\x20query.\x20Ex\
+    ample:\n\x20`cloudresourcemanager.googleapis.com/Project`\n\n\r\n\x05\
+    \x04\t\x02\x19\x05\x12\x04\xa9\x05\x02\x08\n\r\n\x05\x04\t\x02\x19\x01\
+    \x12\x04\xa9\x05\t\x1a\n\r\n\x05\x04\t\x02\x19\x03\x12\x04\xa9\x05\x1d\
+    \x20\n\xc7\x02\n\x04\x04\t\x02\x1a\x12\x04\xb4\x05\x02.\x1a\xb8\x02\x20T\
+    he\x20actual\x20content\x20of\x20Security\x20Command\x20Center\x20securi\
+    ty\x20marks\x20associated\n\x20with\x20the\x20asset.\n\n\n\x20To\x20sear\
+    ch\x20against\x20SCC\x20SecurityMarks\x20field:\n\n\x20\x20\x20*\x20Use\
+    \x20a\x20field\x20query:\n\x20\x20\x20\x20\x20-\x20query\x20by\x20a\x20g\
+    iven\x20key\x20value\x20pair.\x20Example:\x20`sccSecurityMarks.foo=bar`\
+    \n\x20\x20\x20\x20\x20-\x20query\x20by\x20a\x20given\x20key's\x20existen\
+    ce.\x20Example:\x20`sccSecurityMarks.foo:*`\n\n\r\n\x05\x04\t\x02\x1a\
+    \x06\x12\x04\xb4\x05\x02\x15\n\r\n\x05\x04\t\x02\x1a\x01\x12\x04\xb4\x05\
+    \x16(\n\r\n\x05\x04\t\x02\x1a\x03\x12\x04\xb4\x05+-\n\x80\x01\n\x02\x04\
+    \n\x12\x06\xb9\x05\0\xcf\x05\x01\x1ar\x20Resource\x20representation\x20a\
+    s\x20defined\x20by\x20the\x20corresponding\x20service\x20providing\x20th\
+    e\n\x20resource\x20for\x20a\x20given\x20API\x20version.\n\n\x0b\n\x03\
+    \x04\n\x01\x12\x04\xb9\x05\x08\x19\n\xe5\x01\n\x04\x04\n\x02\0\x12\x04\
+    \xc0\x05\x02\x15\x1a\xd6\x01\x20API\x20version\x20of\x20the\x20resource.\
+    \n\n\x20Example:\n\x20If\x20the\x20resource\x20is\x20an\x20instance\x20p\
+    rovided\x20by\x20Compute\x20Engine\x20v1\x20API\x20as\x20defined\n\x20in\
+    \x20`https://cloud.google.com/compute/docs/reference/rest/v1/instances`,\
+    \n\x20version\x20will\x20be\x20\"v1\".\n\n\r\n\x05\x04\n\x02\0\x05\x12\
+    \x04\xc0\x05\x02\x08\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xc0\x05\t\x10\n\r\
+    \n\x05\x04\n\x02\0\x03\x12\x04\xc0\x05\x13\x14\n\x82\x04\n\x04\x04\n\x02\
+    \x01\x12\x04\xce\x05\x02&\x1a\xf3\x03\x20JSON\x20representation\x20of\
+    \x20the\x20resource\x20as\x20defined\x20by\x20the\x20corresponding\n\x20\
+    service\x20providing\x20this\x20resource.\n\n\x20Example:\n\x20If\x20the\
+    \x20resource\x20is\x20an\x20instance\x20provided\x20by\x20Compute\x20Eng\
+    ine,\x20this\x20field\x20will\n\x20contain\x20the\x20JSON\x20representat\
+    ion\x20of\x20the\x20instance\x20as\x20defined\x20by\x20Compute\n\x20Engi\
+    ne:\n\x20`https://cloud.google.com/compute/docs/reference/rest/v1/instan\
+    ces`.\n\n\x20You\x20can\x20find\x20the\x20resource\x20definition\x20for\
+    \x20each\x20supported\x20resource\x20type\x20in\n\x20this\x20table:\n\
+    \x20`https://cloud.google.com/asset-inventory/docs/supported-asset-types\
+    `\n\n\r\n\x05\x04\n\x02\x01\x06\x12\x04\xce\x05\x02\x18\n\r\n\x05\x04\n\
+    \x02\x01\x01\x12\x04\xce\x05\x19!\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\
+    \xce\x05$%\n\x99\x01\n\x02\x04\x0b\x12\x06\xd3\x05\0\xe1\x05\x01\x1a\x8a\
+    \x01\x20Attached\x20resource\x20representation,\x20which\x20is\x20define\
+    d\x20by\x20the\x20corresponding\n\x20service\x20provider.\x20It\x20repre\
+    sents\x20an\x20attached\x20resource's\x20payload.\n\n\x0b\n\x03\x04\x0b\
+    \x01\x12\x04\xd3\x05\x08\x18\n\xfd\x01\n\x04\x04\x0b\x02\0\x12\x04\xdb\
+    \x05\x02\x18\x1a\xee\x01\x20The\x20type\x20of\x20this\x20attached\x20res\
+    ource.\n\n\x20Example:\x20`osconfig.googleapis.com/Inventory`\n\n\x20You\
+    \x20can\x20find\x20the\x20supported\x20attached\x20asset\x20types\x20of\
+    \x20each\x20resource\x20in\x20this\n\x20table:\n\x20`https://cloud.googl\
+    e.com/asset-inventory/docs/supported-asset-types`\n\n\r\n\x05\x04\x0b\
+    \x02\0\x05\x12\x04\xdb\x05\x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\
+    \xdb\x05\t\x13\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xdb\x05\x16\x17\n\xcd\
+    \x01\n\x04\x04\x0b\x02\x01\x12\x04\xe0\x05\x025\x1a\xbe\x01\x20Versioned\
+    \x20resource\x20representations\x20of\x20this\x20attached\x20resource.\
+    \x20This\x20is\n\x20repeated\x20because\x20there\x20could\x20be\x20multi\
+    ple\x20versions\x20of\x20the\x20attached\x20resource\n\x20representation\
+    s\x20during\x20version\x20migration.\n\n\r\n\x05\x04\x0b\x02\x01\x04\x12\
+    \x04\xe0\x05\x02\n\n\r\n\x05\x04\x0b\x02\x01\x06\x12\x04\xe0\x05\x0b\x1c\
+    \n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\xe0\x05\x1d0\n\r\n\x05\x04\x0b\
+    \x02\x01\x03\x12\x04\xe0\x0534\n>\n\x02\x04\x0c\x12\x06\xe4\x05\0\xe7\
+    \x05\x01\x1a0\x20The\x20related\x20resources\x20of\x20the\x20primary\x20\
+    resource.\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\xe4\x05\x08\x18\nG\n\x04\x04\
+    \x0c\x02\0\x12\x04\xe6\x05\x021\x1a9\x20The\x20detailed\x20related\x20re\
+    sources\x20of\x20the\x20primary\x20resource.\n\n\r\n\x05\x04\x0c\x02\0\
+    \x04\x12\x04\xe6\x05\x02\n\n\r\n\x05\x04\x0c\x02\0\x06\x12\x04\xe6\x05\
+    \x0b\x1a\n\r\n\x05\x04\x0c\x02\0\x01\x12\x04\xe6\x05\x1b,\n\r\n\x05\x04\
+    \x0c\x02\0\x03\x12\x04\xe6\x05/0\n.\n\x02\x04\r\x12\x06\xea\x05\0\xf1\
+    \x05\x01\x1a\x20\x20The\x20detailed\x20related\x20resource.\n\n\x0b\n\
+    \x03\x04\r\x01\x12\x04\xea\x05\x08\x17\nQ\n\x04\x04\r\x02\0\x12\x04\xec\
+    \x05\x02\x18\x1aC\x20The\x20type\x20of\x20the\x20asset.\x20Example:\x20`\
+    compute.googleapis.com/Instance`\n\n\r\n\x05\x04\r\x02\0\x05\x12\x04\xec\
+    \x05\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xec\x05\t\x13\n\r\n\x05\
+    \x04\r\x02\0\x03\x12\x04\xec\x05\x16\x17\n\x95\x01\n\x04\x04\r\x02\x01\
+    \x12\x04\xf0\x05\x02\x20\x1a\x86\x01\x20The\x20full\x20resource\x20name\
+    \x20of\x20the\x20related\x20resource.\x20Example:\n\x20`//compute.google\
+    apis.com/projects/my_proj_123/zones/instance/instance123`\n\n\r\n\x05\
+    \x04\r\x02\x01\x05\x12\x04\xf0\x05\x02\x08\n\r\n\x05\x04\r\x02\x01\x01\
+    \x12\x04\xf0\x05\t\x1b\n\r\n\x05\x04\r\x02\x01\x03\x12\x04\xf0\x05\x1e\
+    \x1f\nW\n\x02\x04\x0e\x12\x06\xf4\x05\0\xcf\x06\x01\x1aI\x20A\x20result\
+    \x20of\x20IAM\x20Policy\x20search,\x20containing\x20information\x20of\
+    \x20an\x20IAM\x20policy.\n\n\x0b\n\x03\x04\x0e\x01\x12\x04\xf4\x05\x08\
+    \x1d\nA\n\x04\x04\x0e\x03\0\x12\x06\xf6\x05\x02\x85\x06\x03\x1a1\x20Expl\
+    anation\x20about\x20the\x20IAM\x20policy\x20search\x20result.\n\n\r\n\
+    \x05\x04\x0e\x03\0\x01\x12\x04\xf6\x05\n\x15\n#\n\x06\x04\x0e\x03\0\x03\
+    \0\x12\x06\xf8\x05\x04\xfb\x05\x05\x1a\x11\x20IAM\x20permissions\n\n\x0f\
+    \n\x07\x04\x0e\x03\0\x03\0\x01\x12\x04\xf8\x05\x0c\x17\nZ\n\x08\x04\x0e\
+    \x03\0\x03\0\x02\0\x12\x04\xfa\x05\x06&\x1aH\x20A\x20list\x20of\x20permi\
+    ssions.\x20A\x20sample\x20permission\x20string:\x20`compute.disk.get`.\n\
+    \n\x11\n\t\x04\x0e\x03\0\x03\0\x02\0\x04\x12\x04\xfa\x05\x06\x0e\n\x11\n\
+    \t\x04\x0e\x03\0\x03\0\x02\0\x05\x12\x04\xfa\x05\x0f\x15\n\x11\n\t\x04\
+    \x0e\x03\0\x03\0\x02\0\x01\x12\x04\xfa\x05\x16!\n\x11\n\t\x04\x0e\x03\0\
+    \x03\0\x02\0\x03\x12\x04\xfa\x05$%\n\xe2\x03\n\x06\x04\x0e\x03\0\x02\0\
+    \x12\x04\x84\x06\x045\x1a\xd1\x03\x20The\x20map\x20from\x20roles\x20to\
+    \x20their\x20included\x20permissions\x20that\x20match\x20the\n\x20permis\
+    sion\x20query\x20(i.e.,\x20a\x20query\x20containing\x20`policy.role.perm\
+    issions:`).\n\x20Example:\x20if\x20query\x20`policy.role.permissions:com\
+    pute.disk.get`\n\x20matches\x20a\x20policy\x20binding\x20that\x20contain\
+    s\x20owner\x20role,\x20the\n\x20matched_permissions\x20will\x20be\x20`{\
+    \"roles/owner\":\x20[\"compute.disk.get\"]}`.\x20The\n\x20roles\x20can\
+    \x20also\x20be\x20found\x20in\x20the\x20returned\x20`policy`\x20bindings\
+    .\x20Note\x20that\x20the\n\x20map\x20is\x20populated\x20only\x20for\x20r\
+    equests\x20with\x20permission\x20queries.\n\n\x0f\n\x07\x04\x0e\x03\0\
+    \x02\0\x06\x12\x04\x84\x06\x04\x1c\n\x0f\n\x07\x04\x0e\x03\0\x02\0\x01\
+    \x12\x04\x84\x06\x1d0\n\x0f\n\x07\x04\x0e\x03\0\x02\0\x03\x12\x04\x84\
+    \x0634\n\xa6\x03\n\x04\x04\x0e\x02\0\x12\x04\x91\x06\x02\x16\x1a\x97\x03\
+    \x20The\x20full\x20resource\x20name\x20of\x20the\x20resource\x20associat\
+    ed\x20with\x20this\x20IAM\x20policy.\n\x20Example:\n\x20`//compute.googl\
+    eapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\n\
+    \x20See\x20[Cloud\x20Asset\x20Inventory\x20Resource\x20Name\n\x20Format]\
+    (https://cloud.google.com/asset-inventory/docs/resource-name-format)\n\
+    \x20for\x20more\x20information.\n\n\x20To\x20search\x20against\x20the\
+    \x20`resource`:\n\n\x20*\x20use\x20a\x20field\x20query.\x20Example:\x20`\
+    resource:organizations/123`\n\n\r\n\x05\x04\x0e\x02\0\x05\x12\x04\x91\
+    \x06\x02\x08\n\r\n\x05\x04\x0e\x02\0\x01\x12\x04\x91\x06\t\x11\n\r\n\x05\
+    \x04\x0e\x02\0\x03\x12\x04\x91\x06\x14\x15\n\xd5\x01\n\x04\x04\x0e\x02\
+    \x01\x12\x04\x99\x06\x02\x18\x1a\xc6\x01\x20The\x20type\x20of\x20the\x20\
+    resource\x20associated\x20with\x20this\x20IAM\x20policy.\x20Example:\n\
+    \x20`compute.googleapis.com/Disk`.\n\n\x20To\x20search\x20against\x20the\
+    \x20`asset_type`:\n\n\x20*\x20specify\x20the\x20`asset_types`\x20field\
+    \x20in\x20your\x20search\x20request.\n\n\r\n\x05\x04\x0e\x02\x01\x05\x12\
+    \x04\x99\x06\x02\x08\n\r\n\x05\x04\x0e\x02\x01\x01\x12\x04\x99\x06\t\x13\
+    \n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\x99\x06\x16\x17\n\xcf\x03\n\x04\
+    \x04\x0e\x02\x02\x12\x04\xa4\x06\x02\x15\x1a\xc0\x03\x20The\x20project\
+    \x20that\x20the\x20associated\x20Google\x20Cloud\x20resource\x20belongs\
+    \x20to,\x20in\x20the\n\x20form\x20of\x20projects/{PROJECT_NUMBER}.\x20If\
+    \x20an\x20IAM\x20policy\x20is\x20set\x20on\x20a\x20resource\n\x20(like\
+    \x20VM\x20instance,\x20Cloud\x20Storage\x20bucket),\x20the\x20project\
+    \x20field\x20will\x20indicate\n\x20the\x20project\x20that\x20contains\
+    \x20the\x20resource.\x20If\x20an\x20IAM\x20policy\x20is\x20set\x20on\x20\
+    a\x20folder\n\x20or\x20orgnization,\x20this\x20field\x20will\x20be\x20em\
+    pty.\n\n\x20To\x20search\x20against\x20the\x20`project`:\n\n\x20*\x20spe\
+    cify\x20the\x20`scope`\x20field\x20as\x20this\x20project\x20in\x20your\
+    \x20search\x20request.\n\n\r\n\x05\x04\x0e\x02\x02\x05\x12\x04\xa4\x06\
+    \x02\x08\n\r\n\x05\x04\x0e\x02\x02\x01\x12\x04\xa4\x06\t\x10\n\r\n\x05\
+    \x04\x0e\x02\x02\x03\x12\x04\xa4\x06\x13\x14\n\xf7\x02\n\x04\x04\x0e\x02\
+    \x03\x12\x04\xaf\x06\x02\x1e\x1a\xe8\x02\x20The\x20folder(s)\x20that\x20\
+    the\x20IAM\x20policy\x20belongs\x20to,\x20in\x20the\x20form\x20of\n\x20f\
+    olders/{FOLDER_NUMBER}.\x20This\x20field\x20is\x20available\x20when\x20t\
+    he\x20IAM\x20policy\n\x20belongs\x20to\x20one\x20or\x20more\x20folders.\
+    \n\n\x20To\x20search\x20against\x20`folders`:\n\n\x20*\x20use\x20a\x20fi\
+    eld\x20query.\x20Example:\x20`folders:(123\x20OR\x20456)`\n\x20*\x20use\
+    \x20a\x20free\x20text\x20query.\x20Example:\x20`123`\n\x20*\x20specify\
+    \x20the\x20`scope`\x20field\x20as\x20this\x20folder\x20in\x20your\x20sea\
+    rch\x20request.\n\n\r\n\x05\x04\x0e\x02\x03\x04\x12\x04\xaf\x06\x02\n\n\
+    \r\n\x05\x04\x0e\x02\x03\x05\x12\x04\xaf\x06\x0b\x11\n\r\n\x05\x04\x0e\
+    \x02\x03\x01\x12\x04\xaf\x06\x12\x19\n\r\n\x05\x04\x0e\x02\x03\x03\x12\
+    \x04\xaf\x06\x1c\x1d\n\x89\x03\n\x04\x04\x0e\x02\x04\x12\x04\xba\x06\x02\
+    \x1a\x1a\xfa\x02\x20The\x20organization\x20that\x20the\x20IAM\x20policy\
+    \x20belongs\x20to,\x20in\x20the\x20form\n\x20of\x20organizations/{ORGANI\
+    ZATION_NUMBER}.\x20This\x20field\x20is\x20available\x20when\x20the\n\x20\
+    IAM\x20policy\x20belongs\x20to\x20an\x20organization.\n\n\x20To\x20searc\
+    h\x20against\x20`organization`:\n\n\x20*\x20use\x20a\x20field\x20query.\
+    \x20Example:\x20`organization:123`\n\x20*\x20use\x20a\x20free\x20text\
+    \x20query.\x20Example:\x20`123`\n\x20*\x20specify\x20the\x20`scope`\x20f\
+    ield\x20as\x20this\x20organization\x20in\x20your\x20search\x20request.\n\
+    \n\r\n\x05\x04\x0e\x02\x04\x05\x12\x04\xba\x06\x02\x08\n\r\n\x05\x04\x0e\
+    \x02\x04\x01\x12\x04\xba\x06\t\x15\n\r\n\x05\x04\x0e\x02\x04\x03\x12\x04\
+    \xba\x06\x18\x19\n\xa7\x05\n\x04\x04\x0e\x02\x05\x12\x04\xca\x06\x02\"\
+    \x1a\x98\x05\x20The\x20IAM\x20policy\x20directly\x20set\x20on\x20the\x20\
+    given\x20resource.\x20Note\x20that\x20the\x20original\n\x20IAM\x20policy\
+    \x20can\x20contain\x20multiple\x20bindings.\x20This\x20only\x20contains\
+    \x20the\x20bindings\n\x20that\x20match\x20the\x20given\x20query.\x20For\
+    \x20queries\x20that\x20don't\x20contain\x20a\x20constrain\x20on\n\x20pol\
+    icies\x20(e.g.,\x20an\x20empty\x20query),\x20this\x20contains\x20all\x20\
+    the\x20bindings.\n\n\x20To\x20search\x20against\x20the\x20`policy`\x20bi\
+    ndings:\n\n\x20*\x20use\x20a\x20field\x20query:\n\x20\x20\x20\x20\x20-\
+    \x20query\x20by\x20the\x20policy\x20contained\x20members.\x20Example:\n\
+    \x20\x20\x20\x20\x20\x20\x20`policy:amy@gmail.com`\n\x20\x20\x20\x20\x20\
+    -\x20query\x20by\x20the\x20policy\x20contained\x20roles.\x20Example:\n\
+    \x20\x20\x20\x20\x20\x20\x20`policy:roles/compute.admin`\n\x20\x20\x20\
+    \x20\x20-\x20query\x20by\x20the\x20policy\x20contained\x20roles'\x20incl\
+    uded\x20permissions.\x20Example:\n\x20\x20\x20\x20\x20\x20\x20`policy.ro\
+    le.permissions:compute.instances.create`\n\n\r\n\x05\x04\x0e\x02\x05\x06\
+    \x12\x04\xca\x06\x02\x16\n\r\n\x05\x04\x0e\x02\x05\x01\x12\x04\xca\x06\
+    \x17\x1d\n\r\n\x05\x04\x0e\x02\x05\x03\x12\x04\xca\x06\x20!\n\x98\x01\n\
+    \x04\x04\x0e\x02\x06\x12\x04\xce\x06\x02\x1e\x1a\x89\x01\x20Explanation\
+    \x20about\x20the\x20IAM\x20policy\x20search\x20result.\x20It\x20contains\
+    \x20additional\n\x20information\x20to\x20explain\x20why\x20the\x20search\
+    \x20result\x20matches\x20the\x20query.\n\n\r\n\x05\x04\x0e\x02\x06\x06\
+    \x12\x04\xce\x06\x02\r\n\r\n\x05\x04\x0e\x02\x06\x01\x12\x04\xce\x06\x0e\
+    \x19\n\r\n\x05\x04\x0e\x02\x06\x03\x12\x04\xce\x06\x1c\x1d\ny\n\x02\x04\
+    \x0f\x12\x06\xd3\x06\0\xde\x06\x01\x1ak\x20Represents\x20the\x20detailed\
+    \x20state\x20of\x20an\x20entity\x20under\x20analysis,\x20such\x20as\x20a\
+    \n\x20resource,\x20an\x20identity\x20or\x20an\x20access.\n\n\x0b\n\x03\
+    \x04\x0f\x01\x12\x04\xd3\x06\x08\x1e\n\xbb\x02\n\x04\x04\x0f\x02\0\x12\
+    \x04\xda\x06\x02\x1b\x1a\xac\x02\x20The\x20Google\x20standard\x20error\
+    \x20code\x20that\x20best\x20describes\x20the\x20state.\n\x20For\x20examp\
+    le:\n\x20-\x20OK\x20means\x20the\x20analysis\x20on\x20this\x20entity\x20\
+    has\x20been\x20successfully\x20finished;\n\x20-\x20PERMISSION_DENIED\x20\
+    means\x20an\x20access\x20denied\x20error\x20is\x20encountered;\n\x20-\
+    \x20DEADLINE_EXCEEDED\x20means\x20the\x20analysis\x20on\x20this\x20entit\
+    y\x20hasn't\x20been\x20started\n\x20in\x20time;\n\n\r\n\x05\x04\x0f\x02\
+    \0\x06\x12\x04\xda\x06\x02\x11\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\xda\
+    \x06\x12\x16\n\r\n\x05\x04\x0f\x02\0\x03\x12\x04\xda\x06\x19\x1a\nG\n\
+    \x04\x04\x0f\x02\x01\x12\x04\xdd\x06\x02\x13\x1a9\x20The\x20human-readab\
+    le\x20description\x20of\x20the\x20cause\x20of\x20failure.\n\n\r\n\x05\
+    \x04\x0f\x02\x01\x05\x12\x04\xdd\x06\x02\x08\n\r\n\x05\x04\x0f\x02\x01\
+    \x01\x12\x04\xdd\x06\t\x0e\n\r\n\x05\x04\x0f\x02\x01\x03\x12\x04\xdd\x06\
+    \x11\x12\n)\n\x02\x04\x10\x12\x06\xe1\x06\0\xf5\x06\x01\x1a\x1b\x20The\
+    \x20condition\x20evaluation.\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xe1\x06\
+    \x08\x1b\n+\n\x04\x04\x10\x04\0\x12\x06\xe3\x06\x02\xf1\x06\x03\x1a\x1b\
+    \x20Value\x20of\x20this\x20expression.\n\n\r\n\x05\x04\x10\x04\0\x01\x12\
+    \x04\xe3\x06\x07\x16\n*\n\x06\x04\x10\x04\0\x02\0\x12\x04\xe5\x06\x04%\
+    \x1a\x1a\x20Reserved\x20for\x20future\x20use.\n\n\x0f\n\x07\x04\x10\x04\
+    \0\x02\0\x01\x12\x04\xe5\x06\x04\x20\n\x0f\n\x07\x04\x10\x04\0\x02\0\x02\
+    \x12\x04\xe5\x06#$\n2\n\x06\x04\x10\x04\0\x02\x01\x12\x04\xe8\x06\x04\r\
+    \x1a\"\x20The\x20evaluation\x20result\x20is\x20`true`.\n\n\x0f\n\x07\x04\
+    \x10\x04\0\x02\x01\x01\x12\x04\xe8\x06\x04\x08\n\x0f\n\x07\x04\x10\x04\0\
+    \x02\x01\x02\x12\x04\xe8\x06\x0b\x0c\n3\n\x06\x04\x10\x04\0\x02\x02\x12\
+    \x04\xeb\x06\x04\x0e\x1a#\x20The\x20evaluation\x20result\x20is\x20`false\
+    `.\n\n\x0f\n\x07\x04\x10\x04\0\x02\x02\x01\x12\x04\xeb\x06\x04\t\n\x0f\n\
+    \x07\x04\x10\x04\0\x02\x02\x02\x12\x04\xeb\x06\x0c\r\n\xc4\x01\n\x06\x04\
+    \x10\x04\0\x02\x03\x12\x04\xf0\x06\x04\x14\x1a\xb3\x01\x20The\x20evaluat\
+    ion\x20result\x20is\x20`conditional`\x20when\x20the\x20condition\x20expr\
+    ession\n\x20contains\x20variables\x20that\x20are\x20either\x20missing\
+    \x20input\x20values\x20or\x20have\x20not\x20been\n\x20supported\x20by\
+    \x20Policy\x20Analyzer\x20yet.\n\n\x0f\n\x07\x04\x10\x04\0\x02\x03\x01\
+    \x12\x04\xf0\x06\x04\x0f\n\x0f\n\x07\x04\x10\x04\0\x02\x03\x02\x12\x04\
+    \xf0\x06\x12\x13\n&\n\x04\x04\x10\x02\0\x12\x04\xf4\x06\x02'\x1a\x18\x20\
+    The\x20evaluation\x20result.\n\n\r\n\x05\x04\x10\x02\0\x06\x12\x04\xf4\
+    \x06\x02\x11\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\xf4\x06\x12\"\n\r\n\x05\
+    \x04\x10\x02\0\x03\x12\x04\xf4\x06%&\ns\n\x02\x04\x11\x12\x06\xf9\x06\0\
+    \x86\x08\x01\x1ae\x20IAM\x20Policy\x20analysis\x20result,\x20consisting\
+    \x20of\x20one\x20IAM\x20policy\x20binding\x20and\x20derived\n\x20access\
+    \x20control\x20lists.\n\n\x0b\n\x03\x04\x11\x01\x12\x04\xf9\x06\x08\x1f\
+    \n9\n\x04\x04\x11\x03\0\x12\x06\xfb\x06\x02\x82\x07\x03\x1a)\x20A\x20Goo\
+    gle\x20Cloud\x20resource\x20under\x20analysis.\n\n\r\n\x05\x04\x11\x03\0\
+    \x01\x12\x04\xfb\x06\n\x12\no\n\x06\x04\x11\x03\0\x02\0\x12\x04\xfe\x06\
+    \x04\"\x1a_\x20The\x20[full\x20resource\n\x20name](https://cloud.google.\
+    com/asset-inventory/docs/resource-name-format)\n\n\x0f\n\x07\x04\x11\x03\
+    \0\x02\0\x05\x12\x04\xfe\x06\x04\n\n\x0f\n\x07\x04\x11\x03\0\x02\0\x01\
+    \x12\x04\xfe\x06\x0b\x1d\n\x0f\n\x07\x04\x11\x03\0\x02\0\x03\x12\x04\xfe\
+    \x06\x20!\n6\n\x06\x04\x11\x03\0\x02\x01\x12\x04\x81\x07\x04.\x1a&\x20Th\
+    e\x20analysis\x20state\x20of\x20this\x20resource.\n\n\x0f\n\x07\x04\x11\
+    \x03\0\x02\x01\x06\x12\x04\x81\x07\x04\x1a\n\x0f\n\x07\x04\x11\x03\0\x02\
+    \x01\x01\x12\x04\x81\x07\x1b)\n\x0f\n\x07\x04\x11\x03\0\x02\x01\x03\x12\
+    \x04\x81\x07,-\n;\n\x04\x04\x11\x03\x01\x12\x06\x85\x07\x02\x90\x07\x03\
+    \x1a+\x20An\x20IAM\x20role\x20or\x20permission\x20under\x20analysis.\n\n\
+    \r\n\x05\x04\x11\x03\x01\x01\x12\x04\x85\x07\n\x10\n\x10\n\x06\x04\x11\
+    \x03\x01\x08\0\x12\x06\x86\x07\x04\x8c\x07\x05\n\x0f\n\x07\x04\x11\x03\
+    \x01\x08\0\x01\x12\x04\x86\x07\n\x16\n\x1b\n\x06\x04\x11\x03\x01\x02\0\
+    \x12\x04\x88\x07\x06\x16\x1a\x0b\x20The\x20role.\n\n\x0f\n\x07\x04\x11\
+    \x03\x01\x02\0\x05\x12\x04\x88\x07\x06\x0c\n\x0f\n\x07\x04\x11\x03\x01\
+    \x02\0\x01\x12\x04\x88\x07\r\x11\n\x0f\n\x07\x04\x11\x03\x01\x02\0\x03\
+    \x12\x04\x88\x07\x14\x15\n!\n\x06\x04\x11\x03\x01\x02\x01\x12\x04\x8b\
+    \x07\x06\x1c\x1a\x11\x20The\x20permission.\n\n\x0f\n\x07\x04\x11\x03\x01\
+    \x02\x01\x05\x12\x04\x8b\x07\x06\x0c\n\x0f\n\x07\x04\x11\x03\x01\x02\x01\
+    \x01\x12\x04\x8b\x07\r\x17\n\x0f\n\x07\x04\x11\x03\x01\x02\x01\x03\x12\
+    \x04\x8b\x07\x1a\x1b\n4\n\x06\x04\x11\x03\x01\x02\x02\x12\x04\x8f\x07\
+    \x04.\x1a$\x20The\x20analysis\x20state\x20of\x20this\x20access.\n\n\x0f\
+    \n\x07\x04\x11\x03\x01\x02\x02\x06\x12\x04\x8f\x07\x04\x1a\n\x0f\n\x07\
+    \x04\x11\x03\x01\x02\x02\x01\x12\x04\x8f\x07\x1b)\n\x0f\n\x07\x04\x11\
+    \x03\x01\x02\x02\x03\x12\x04\x8f\x07,-\n-\n\x04\x04\x11\x03\x02\x12\x06\
+    \x93\x07\x02\xa3\x07\x03\x1a\x1d\x20An\x20identity\x20under\x20analysis.\
+    \n\n\r\n\x05\x04\x11\x03\x02\x01\x12\x04\x93\x07\n\x12\n\xf5\x02\n\x06\
+    \x04\x11\x03\x02\x02\0\x12\x04\x9f\x07\x04\x14\x1a\xe4\x02\x20The\x20ide\
+    ntity\x20of\x20members,\x20formatted\x20as\x20appear\x20in\x20an\n\x20[I\
+    AM\x20policy\n\x20binding](https://cloud.google.com/iam/reference/rest/v\
+    1/Binding).\x20For\n\x20example,\x20they\x20might\x20be\x20formatted\x20\
+    like\x20the\x20following:\n\n\x20-\x20user:foo@google.com\n\x20-\x20grou\
+    p:group1@google.com\n\x20-\x20serviceAccount:s1@prj1.iam.gserviceaccount\
+    .com\n\x20-\x20projectOwner:some_project_id\n\x20-\x20domain:google.com\
+    \n\x20-\x20allUsers\n\n\x0f\n\x07\x04\x11\x03\x02\x02\0\x05\x12\x04\x9f\
+    \x07\x04\n\n\x0f\n\x07\x04\x11\x03\x02\x02\0\x01\x12\x04\x9f\x07\x0b\x0f\
+    \n\x0f\n\x07\x04\x11\x03\x02\x02\0\x03\x12\x04\x9f\x07\x12\x13\n6\n\x06\
+    \x04\x11\x03\x02\x02\x01\x12\x04\xa2\x07\x04.\x1a&\x20The\x20analysis\
+    \x20state\x20of\x20this\x20identity.\n\n\x0f\n\x07\x04\x11\x03\x02\x02\
+    \x01\x06\x12\x04\xa2\x07\x04\x1a\n\x0f\n\x07\x04\x11\x03\x02\x02\x01\x01\
+    \x12\x04\xa2\x07\x1b)\n\x0f\n\x07\x04\x11\x03\x02\x02\x01\x03\x12\x04\
+    \xa2\x07,-\n%\n\x04\x04\x11\x03\x03\x12\x06\xa6\x07\x02\xae\x07\x03\x1a\
+    \x15\x20A\x20directional\x20edge.\n\n\r\n\x05\x04\x11\x03\x03\x01\x12\
+    \x04\xa6\x07\n\x0e\n\x8d\x01\n\x06\x04\x11\x03\x03\x02\0\x12\x04\xa9\x07\
+    \x04\x1b\x1a}\x20The\x20source\x20node\x20of\x20the\x20edge.\x20For\x20e\
+    xample,\x20it\x20could\x20be\x20a\x20full\x20resource\n\x20name\x20for\
+    \x20a\x20resource\x20node\x20or\x20an\x20email\x20of\x20an\x20identity.\
+    \n\n\x0f\n\x07\x04\x11\x03\x03\x02\0\x05\x12\x04\xa9\x07\x04\n\n\x0f\n\
+    \x07\x04\x11\x03\x03\x02\0\x01\x12\x04\xa9\x07\x0b\x16\n\x0f\n\x07\x04\
+    \x11\x03\x03\x02\0\x03\x12\x04\xa9\x07\x19\x1a\n\x8d\x01\n\x06\x04\x11\
+    \x03\x03\x02\x01\x12\x04\xad\x07\x04\x1b\x1a}\x20The\x20target\x20node\
+    \x20of\x20the\x20edge.\x20For\x20example,\x20it\x20could\x20be\x20a\x20f\
+    ull\x20resource\n\x20name\x20for\x20a\x20resource\x20node\x20or\x20an\
+    \x20email\x20of\x20an\x20identity.\n\n\x0f\n\x07\x04\x11\x03\x03\x02\x01\
+    \x05\x12\x04\xad\x07\x04\n\n\x0f\n\x07\x04\x11\x03\x03\x02\x01\x01\x12\
+    \x04\xad\x07\x0b\x16\n\x0f\n\x07\x04\x11\x03\x03\x02\x01\x03\x12\x04\xad\
+    \x07\x19\x1a\n\xb5\x05\n\x04\x04\x11\x03\x04\x12\x06\xbf\x07\x02\xd6\x07\
+    \x03\x1a\xa4\x05\x20An\x20access\x20control\x20list,\x20derived\x20from\
+    \x20the\x20above\x20IAM\x20policy\x20binding,\x20which\n\x20contains\x20\
+    a\x20set\x20of\x20resources\x20and\x20accesses.\x20May\x20include\x20one\
+    \n\x20item\x20from\x20each\x20set\x20to\x20compose\x20an\x20access\x20co\
+    ntrol\x20entry.\n\n\x20NOTICE\x20that\x20there\x20could\x20be\x20multipl\
+    e\x20access\x20control\x20lists\x20for\x20one\x20IAM\x20policy\n\x20bind\
+    ing.\x20The\x20access\x20control\x20lists\x20are\x20created\x20based\x20\
+    on\x20resource\x20and\x20access\n\x20combinations.\n\n\x20For\x20example\
+    ,\x20assume\x20we\x20have\x20the\x20following\x20cases\x20in\x20one\x20I\
+    AM\x20policy\x20binding:\n\x20-\x20Permission\x20P1\x20and\x20P2\x20appl\
+    y\x20to\x20resource\x20R1\x20and\x20R2;\n\x20-\x20Permission\x20P3\x20ap\
+    plies\x20to\x20resource\x20R2\x20and\x20R3;\n\n\x20This\x20will\x20resul\
+    t\x20in\x20the\x20following\x20access\x20control\x20lists:\n\x20-\x20Acc\
+    essControlList\x201:\x20[R1,\x20R2],\x20[P1,\x20P2]\n\x20-\x20AccessCont\
+    rolList\x202:\x20[R2,\x20R3],\x20[P3]\n\n\r\n\x05\x04\x11\x03\x04\x01\
+    \x12\x04\xbf\x07\n\x1b\n\xca\x01\n\x06\x04\x11\x03\x04\x02\0\x12\x04\xc3\
+    \x07\x04$\x1a\xb9\x01\x20The\x20resources\x20that\x20match\x20one\x20of\
+    \x20the\x20following\x20conditions:\n\x20-\x20The\x20resource_selector,\
+    \x20if\x20it\x20is\x20specified\x20in\x20request;\n\x20-\x20Otherwise,\
+    \x20resources\x20reachable\x20from\x20the\x20policy\x20attached\x20resou\
+    rce.\n\n\x0f\n\x07\x04\x11\x03\x04\x02\0\x04\x12\x04\xc3\x07\x04\x0c\n\
+    \x0f\n\x07\x04\x11\x03\x04\x02\0\x06\x12\x04\xc3\x07\r\x15\n\x0f\n\x07\
+    \x04\x11\x03\x04\x02\0\x01\x12\x04\xc3\x07\x16\x1f\n\x0f\n\x07\x04\x11\
+    \x03\x04\x02\0\x03\x12\x04\xc3\x07\"#\n\xcc\x01\n\x06\x04\x11\x03\x04\
+    \x02\x01\x12\x04\xc8\x07\x04!\x1a\xbb\x01\x20The\x20accesses\x20that\x20\
+    match\x20one\x20of\x20the\x20following\x20conditions:\n\x20-\x20The\x20a\
+    ccess_selector,\x20if\x20it\x20is\x20specified\x20in\x20request;\n\x20-\
+    \x20Otherwise,\x20access\x20specifiers\x20reachable\x20from\x20the\x20po\
+    licy\x20binding's\x20role.\n\n\x0f\n\x07\x04\x11\x03\x04\x02\x01\x04\x12\
+    \x04\xc8\x07\x04\x0c\n\x0f\n\x07\x04\x11\x03\x04\x02\x01\x06\x12\x04\xc8\
+    \x07\r\x13\n\x0f\n\x07\x04\x11\x03\x04\x02\x01\x01\x12\x04\xc8\x07\x14\
+    \x1c\n\x0f\n\x07\x04\x11\x03\x04\x02\x01\x03\x12\x04\xc8\x07\x1f\x20\n\
+    \xea\x03\n\x06\x04\x11\x03\x04\x02\x02\x12\x04\xd1\x07\x04%\x1a\xd9\x03\
+    \x20Resource\x20edges\x20of\x20the\x20graph\x20starting\x20from\x20the\
+    \x20policy\x20attached\n\x20resource\x20to\x20any\x20descendant\x20resou\
+    rces.\x20The\n\x20[Edge.source_node][google.cloud.asset.v1.IamPolicyAnal\
+    ysisResult.Edge.source_node]\n\x20contains\x20the\x20full\x20resource\
+    \x20name\x20of\x20a\x20parent\x20resource\x20and\n\x20[Edge.target_node]\
+    [google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.target_node]\n\x20co\
+    ntains\x20the\x20full\x20resource\x20name\x20of\x20a\x20child\x20resourc\
+    e.\x20This\x20field\x20is\n\x20present\x20only\x20if\x20the\x20output_re\
+    source_edges\x20option\x20is\x20enabled\x20in\x20request.\n\n\x0f\n\x07\
+    \x04\x11\x03\x04\x02\x02\x04\x12\x04\xd1\x07\x04\x0c\n\x0f\n\x07\x04\x11\
+    \x03\x04\x02\x02\x06\x12\x04\xd1\x07\r\x11\n\x0f\n\x07\x04\x11\x03\x04\
+    \x02\x02\x01\x12\x04\xd1\x07\x12\x20\n\x0f\n\x07\x04\x11\x03\x04\x02\x02\
+    \x03\x12\x04\xd1\x07#$\n\x84\x01\n\x06\x04\x11\x03\x04\x02\x03\x12\x04\
+    \xd5\x07\x041\x1at\x20Condition\x20evaluation\x20for\x20this\x20AccessCo\
+    ntrolList,\x20if\x20there\x20is\x20a\x20condition\n\x20defined\x20in\x20\
+    the\x20above\x20IAM\x20policy\x20binding.\n\n\x0f\n\x07\x04\x11\x03\x04\
+    \x02\x03\x06\x12\x04\xd5\x07\x04\x17\n\x0f\n\x07\x04\x11\x03\x04\x02\x03\
+    \x01\x12\x04\xd5\x07\x18,\n\x0f\n\x07\x04\x11\x03\x04\x02\x03\x03\x12\
+    \x04\xd5\x07/0\n1\n\x04\x04\x11\x03\x05\x12\x06\xd9\x07\x02\xeb\x07\x03\
+    \x1a!\x20The\x20identities\x20and\x20group\x20edges.\n\n\r\n\x05\x04\x11\
+    \x03\x05\x01\x12\x04\xd9\x07\n\x16\n\xe4\x01\n\x06\x04\x11\x03\x05\x02\0\
+    \x12\x04\xde\x07\x04%\x1a\xd3\x01\x20Only\x20the\x20identities\x20that\
+    \x20match\x20one\x20of\x20the\x20following\x20conditions\x20will\x20be\n\
+    \x20presented:\n\x20-\x20The\x20identity_selector,\x20if\x20it\x20is\x20\
+    specified\x20in\x20request;\n\x20-\x20Otherwise,\x20identities\x20reacha\
+    ble\x20from\x20the\x20policy\x20binding's\x20members.\n\n\x0f\n\x07\x04\
+    \x11\x03\x05\x02\0\x04\x12\x04\xde\x07\x04\x0c\n\x0f\n\x07\x04\x11\x03\
+    \x05\x02\0\x06\x12\x04\xde\x07\r\x15\n\x0f\n\x07\x04\x11\x03\x05\x02\0\
+    \x01\x12\x04\xde\x07\x16\x20\n\x0f\n\x07\x04\x11\x03\x05\x02\0\x03\x12\
+    \x04\xde\x07#$\n\xe0\x04\n\x06\x04\x11\x03\x05\x02\x01\x12\x04\xea\x07\
+    \x04\"\x1a\xcf\x04\x20Group\x20identity\x20edges\x20of\x20the\x20graph\
+    \x20starting\x20from\x20the\x20binding's\n\x20group\x20members\x20to\x20\
+    any\x20node\x20of\x20the\n\x20[identities][google.cloud.asset.v1.IamPoli\
+    cyAnalysisResult.IdentityList.identities].\n\x20The\n\x20[Edge.source_no\
+    de][google.cloud.asset.v1.IamPolicyAnalysisResult.Edge.source_node]\n\
+    \x20contains\x20a\x20group,\x20such\x20as\x20`group:parent@google.com`.\
+    \x20The\n\x20[Edge.target_node][google.cloud.asset.v1.IamPolicyAnalysisR\
+    esult.Edge.target_node]\n\x20contains\x20a\x20member\x20of\x20the\x20gro\
+    up,\x20such\x20as\x20`group:child@google.com`\x20or\n\x20`user:foo@googl\
+    e.com`.\x20This\x20field\x20is\x20present\x20only\x20if\x20the\n\x20outp\
+    ut_group_edges\x20option\x20is\x20enabled\x20in\x20request.\n\n\x0f\n\
+    \x07\x04\x11\x03\x05\x02\x01\x04\x12\x04\xea\x07\x04\x0c\n\x0f\n\x07\x04\
+    \x11\x03\x05\x02\x01\x06\x12\x04\xea\x07\r\x11\n\x0f\n\x07\x04\x11\x03\
+    \x05\x02\x01\x01\x12\x04\xea\x07\x12\x1d\n\x0f\n\x07\x04\x11\x03\x05\x02\
+    \x01\x03\x12\x04\xea\x07\x20!\n\xe8\x01\n\x04\x04\x11\x02\0\x12\x04\xf2\
+    \x07\x02)\x1a\xd9\x01\x20The\x20[full\x20resource\n\x20name](https://clo\
+    ud.google.com/asset-inventory/docs/resource-name-format)\n\x20of\x20the\
+    \x20resource\x20to\x20which\x20the\n\x20[iam_binding][google.cloud.asset\
+    .v1.IamPolicyAnalysisResult.iam_binding]\n\x20policy\x20attaches.\n\n\r\
+    \n\x05\x04\x11\x02\0\x05\x12\x04\xf2\x07\x02\x08\n\r\n\x05\x04\x11\x02\0\
+    \x01\x12\x04\xf2\x07\t$\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xf2\x07'(\n6\
+    \n\x04\x04\x11\x02\x01\x12\x04\xf5\x07\x02(\x1a(\x20The\x20IAM\x20policy\
+    \x20binding\x20under\x20analysis.\n\n\r\n\x05\x04\x11\x02\x01\x06\x12\
+    \x04\xf5\x07\x02\x17\n\r\n\x05\x04\x11\x02\x01\x01\x12\x04\xf5\x07\x18#\
+    \n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\xf5\x07&'\n\xde\x01\n\x04\x04\x11\
+    \x02\x02\x12\x04\xfb\x07\x026\x1a\xcf\x01\x20The\x20access\x20control\
+    \x20lists\x20derived\x20from\x20the\n\x20[iam_binding][google.cloud.asse\
+    t.v1.IamPolicyAnalysisResult.iam_binding]\n\x20that\x20match\x20or\x20po\
+    tentially\x20match\x20resource\x20and\x20access\x20selectors\x20specifie\
+    d\x20in\n\x20the\x20request.\n\n\r\n\x05\x04\x11\x02\x02\x04\x12\x04\xfb\
+    \x07\x02\n\n\r\n\x05\x04\x11\x02\x02\x06\x12\x04\xfb\x07\x0b\x1c\n\r\n\
+    \x05\x04\x11\x02\x02\x01\x12\x04\xfb\x07\x1d1\n\r\n\x05\x04\x11\x02\x02\
+    \x03\x12\x04\xfb\x0745\n\xd5\x01\n\x04\x04\x11\x02\x03\x12\x04\x80\x08\
+    \x02!\x1a\xc6\x01\x20The\x20identity\x20list\x20derived\x20from\x20membe\
+    rs\x20of\x20the\n\x20[iam_binding][google.cloud.asset.v1.IamPolicyAnalys\
+    isResult.iam_binding]\n\x20that\x20match\x20or\x20potentially\x20match\
+    \x20identity\x20selector\x20specified\x20in\x20the\x20request.\n\n\r\n\
+    \x05\x04\x11\x02\x03\x06\x12\x04\x80\x08\x02\x0e\n\r\n\x05\x04\x11\x02\
+    \x03\x01\x12\x04\x80\x08\x0f\x1c\n\r\n\x05\x04\x11\x02\x03\x03\x12\x04\
+    \x80\x08\x1f\x20\n\x9e\x01\n\x04\x04\x11\x02\x04\x12\x04\x85\x08\x02\x1a\
+    \x1a\x8f\x01\x20Represents\x20whether\x20all\x20analyses\x20on\x20the\n\
+    \x20[iam_binding][google.cloud.asset.v1.IamPolicyAnalysisResult.iam_bind\
+    ing]\n\x20have\x20successfully\x20finished.\n\n\r\n\x05\x04\x11\x02\x04\
+    \x05\x12\x04\x85\x08\x02\x06\n\r\n\x05\x04\x11\x02\x04\x01\x12\x04\x85\
+    \x08\x07\x15\n\r\n\x05\x04\x11\x02\x04\x03\x12\x04\x85\x08\x18\x19b\x06p\
+    roto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -921,19 +7073,47 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(6);
-            deps.push(super::annotations::file_descriptor().clone());
+            let mut deps = ::std::vec::Vec::with_capacity(10);
             deps.push(super::resource::file_descriptor().clone());
+            deps.push(super::orgpolicy::file_descriptor().clone());
+            deps.push(super::inventory::file_descriptor().clone());
             deps.push(super::policy::file_descriptor().clone());
-            deps.push(::protobuf::well_known_types::any::file_descriptor().clone());
+            deps.push(super::access_level::file_descriptor().clone());
+            deps.push(super::access_policy::file_descriptor().clone());
+            deps.push(super::service_perimeter::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::struct_::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(4);
+            deps.push(super::code::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(26);
             messages.push(TemporalAsset::generated_message_descriptor_data());
             messages.push(TimeWindow::generated_message_descriptor_data());
             messages.push(Asset::generated_message_descriptor_data());
             messages.push(Resource::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(0);
+            messages.push(RelatedAssets::generated_message_descriptor_data());
+            messages.push(RelationshipAttributes::generated_message_descriptor_data());
+            messages.push(RelatedAsset::generated_message_descriptor_data());
+            messages.push(Tag::generated_message_descriptor_data());
+            messages.push(EffectiveTagDetails::generated_message_descriptor_data());
+            messages.push(ResourceSearchResult::generated_message_descriptor_data());
+            messages.push(VersionedResource::generated_message_descriptor_data());
+            messages.push(AttachedResource::generated_message_descriptor_data());
+            messages.push(RelatedResources::generated_message_descriptor_data());
+            messages.push(RelatedResource::generated_message_descriptor_data());
+            messages.push(IamPolicySearchResult::generated_message_descriptor_data());
+            messages.push(IamPolicyAnalysisState::generated_message_descriptor_data());
+            messages.push(ConditionEvaluation::generated_message_descriptor_data());
+            messages.push(IamPolicyAnalysisResult::generated_message_descriptor_data());
+            messages.push(iam_policy_search_result::Explanation::generated_message_descriptor_data());
+            messages.push(iam_policy_search_result::explanation::Permissions::generated_message_descriptor_data());
+            messages.push(iam_policy_analysis_result::Resource::generated_message_descriptor_data());
+            messages.push(iam_policy_analysis_result::Access::generated_message_descriptor_data());
+            messages.push(iam_policy_analysis_result::Identity::generated_message_descriptor_data());
+            messages.push(iam_policy_analysis_result::Edge::generated_message_descriptor_data());
+            messages.push(iam_policy_analysis_result::AccessControlList::generated_message_descriptor_data());
+            messages.push(iam_policy_analysis_result::IdentityList::generated_message_descriptor_data());
+            let mut enums = ::std::vec::Vec::with_capacity(2);
+            enums.push(temporal_asset::PriorAssetState::generated_enum_descriptor_data());
+            enums.push(condition_evaluation::EvaluationValue::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

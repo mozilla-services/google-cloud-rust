@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -638,6 +638,889 @@ impl ::std::fmt::Display for Cell {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Cell {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  `Value` represents a dynamically typed value.
+///  The typed fields in `Value` are used as a transport encoding for the actual
+///  value (which may be of a more complex type). See the documentation of the
+///  `Type` message for more details.
+// @@protoc_insertion_point(message:google.bigtable.v2.Value)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct Value {
+    // message fields
+    ///  The verified `Type` of this `Value`, if it cannot be inferred.
+    ///
+    ///  Read results will never specify the encoding for `type` since the value
+    ///  will already have been decoded by the server. Furthermore, the `type` will
+    ///  be omitted entirely if it can be inferred from a previous response. The
+    ///  exact semantics for inferring `type` will vary, and are therefore
+    ///  documented separately for each read method.
+    ///
+    ///  When using composite types (Struct, Array, Map) only the outermost `Value`
+    ///  will specify the `type`. This top-level `type` will define the types for
+    ///  any nested `Struct' fields, `Array` elements, or `Map` key/value pairs.
+    ///  If a nested `Value` provides a `type` on write, the request will be
+    ///  rejected with INVALID_ARGUMENT.
+    // @@protoc_insertion_point(field:google.bigtable.v2.Value.type)
+    pub type_: ::protobuf::MessageField<super::types::Type>,
+    // message oneof groups
+    pub kind: ::std::option::Option<value::Kind>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.Value.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a Value {
+    fn default() -> &'a Value {
+        <Value as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Value {
+    pub fn new() -> Value {
+        ::std::default::Default::default()
+    }
+
+    // bytes raw_value = 8;
+
+    pub fn raw_value(&self) -> &[u8] {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::RawValue(ref v)) => v,
+            _ => &[],
+        }
+    }
+
+    pub fn clear_raw_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_raw_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::RawValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_raw_value(&mut self, v: ::std::vec::Vec<u8>) {
+        self.kind = ::std::option::Option::Some(value::Kind::RawValue(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_raw_value(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if let ::std::option::Option::Some(value::Kind::RawValue(_)) = self.kind {
+        } else {
+            self.kind = ::std::option::Option::Some(value::Kind::RawValue(::std::vec::Vec::new()));
+        }
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::RawValue(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_raw_value(&mut self) -> ::std::vec::Vec<u8> {
+        if self.has_raw_value() {
+            match self.kind.take() {
+                ::std::option::Option::Some(value::Kind::RawValue(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::vec::Vec::new()
+        }
+    }
+
+    // int64 raw_timestamp_micros = 9;
+
+    pub fn raw_timestamp_micros(&self) -> i64 {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::RawTimestampMicros(v)) => v,
+            _ => 0,
+        }
+    }
+
+    pub fn clear_raw_timestamp_micros(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_raw_timestamp_micros(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::RawTimestampMicros(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_raw_timestamp_micros(&mut self, v: i64) {
+        self.kind = ::std::option::Option::Some(value::Kind::RawTimestampMicros(v))
+    }
+
+    // bytes bytes_value = 2;
+
+    pub fn bytes_value(&self) -> &[u8] {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::BytesValue(ref v)) => v,
+            _ => &[],
+        }
+    }
+
+    pub fn clear_bytes_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_bytes_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::BytesValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bytes_value(&mut self, v: ::std::vec::Vec<u8>) {
+        self.kind = ::std::option::Option::Some(value::Kind::BytesValue(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_bytes_value(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if let ::std::option::Option::Some(value::Kind::BytesValue(_)) = self.kind {
+        } else {
+            self.kind = ::std::option::Option::Some(value::Kind::BytesValue(::std::vec::Vec::new()));
+        }
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::BytesValue(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_bytes_value(&mut self) -> ::std::vec::Vec<u8> {
+        if self.has_bytes_value() {
+            match self.kind.take() {
+                ::std::option::Option::Some(value::Kind::BytesValue(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::vec::Vec::new()
+        }
+    }
+
+    // string string_value = 3;
+
+    pub fn string_value(&self) -> &str {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::StringValue(ref v)) => v,
+            _ => "",
+        }
+    }
+
+    pub fn clear_string_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_string_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::StringValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_string_value(&mut self, v: ::std::string::String) {
+        self.kind = ::std::option::Option::Some(value::Kind::StringValue(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_string_value(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(value::Kind::StringValue(_)) = self.kind {
+        } else {
+            self.kind = ::std::option::Option::Some(value::Kind::StringValue(::std::string::String::new()));
+        }
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::StringValue(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_string_value(&mut self) -> ::std::string::String {
+        if self.has_string_value() {
+            match self.kind.take() {
+                ::std::option::Option::Some(value::Kind::StringValue(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // int64 int_value = 6;
+
+    pub fn int_value(&self) -> i64 {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::IntValue(v)) => v,
+            _ => 0,
+        }
+    }
+
+    pub fn clear_int_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_int_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::IntValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_int_value(&mut self, v: i64) {
+        self.kind = ::std::option::Option::Some(value::Kind::IntValue(v))
+    }
+
+    // bool bool_value = 10;
+
+    pub fn bool_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::BoolValue(v)) => v,
+            _ => false,
+        }
+    }
+
+    pub fn clear_bool_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_bool_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::BoolValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bool_value(&mut self, v: bool) {
+        self.kind = ::std::option::Option::Some(value::Kind::BoolValue(v))
+    }
+
+    // double float_value = 11;
+
+    pub fn float_value(&self) -> f64 {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::FloatValue(v)) => v,
+            _ => 0.,
+        }
+    }
+
+    pub fn clear_float_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_float_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::FloatValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_float_value(&mut self, v: f64) {
+        self.kind = ::std::option::Option::Some(value::Kind::FloatValue(v))
+    }
+
+    // .google.protobuf.Timestamp timestamp_value = 12;
+
+    pub fn timestamp_value(&self) -> &::protobuf::well_known_types::timestamp::Timestamp {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::TimestampValue(ref v)) => v,
+            _ => <::protobuf::well_known_types::timestamp::Timestamp as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_timestamp_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_timestamp_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::TimestampValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_timestamp_value(&mut self, v: ::protobuf::well_known_types::timestamp::Timestamp) {
+        self.kind = ::std::option::Option::Some(value::Kind::TimestampValue(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_timestamp_value(&mut self) -> &mut ::protobuf::well_known_types::timestamp::Timestamp {
+        if let ::std::option::Option::Some(value::Kind::TimestampValue(_)) = self.kind {
+        } else {
+            self.kind = ::std::option::Option::Some(value::Kind::TimestampValue(::protobuf::well_known_types::timestamp::Timestamp::new()));
+        }
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::TimestampValue(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_timestamp_value(&mut self) -> ::protobuf::well_known_types::timestamp::Timestamp {
+        if self.has_timestamp_value() {
+            match self.kind.take() {
+                ::std::option::Option::Some(value::Kind::TimestampValue(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::protobuf::well_known_types::timestamp::Timestamp::new()
+        }
+    }
+
+    // .google.type.Date date_value = 13;
+
+    pub fn date_value(&self) -> &super::date::Date {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::DateValue(ref v)) => v,
+            _ => <super::date::Date as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_date_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_date_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::DateValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_date_value(&mut self, v: super::date::Date) {
+        self.kind = ::std::option::Option::Some(value::Kind::DateValue(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_date_value(&mut self) -> &mut super::date::Date {
+        if let ::std::option::Option::Some(value::Kind::DateValue(_)) = self.kind {
+        } else {
+            self.kind = ::std::option::Option::Some(value::Kind::DateValue(super::date::Date::new()));
+        }
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::DateValue(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_date_value(&mut self) -> super::date::Date {
+        if self.has_date_value() {
+            match self.kind.take() {
+                ::std::option::Option::Some(value::Kind::DateValue(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::date::Date::new()
+        }
+    }
+
+    // .google.bigtable.v2.ArrayValue array_value = 4;
+
+    pub fn array_value(&self) -> &ArrayValue {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::ArrayValue(ref v)) => v,
+            _ => <ArrayValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_array_value(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_array_value(&self) -> bool {
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::ArrayValue(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_array_value(&mut self, v: ArrayValue) {
+        self.kind = ::std::option::Option::Some(value::Kind::ArrayValue(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_array_value(&mut self) -> &mut ArrayValue {
+        if let ::std::option::Option::Some(value::Kind::ArrayValue(_)) = self.kind {
+        } else {
+            self.kind = ::std::option::Option::Some(value::Kind::ArrayValue(ArrayValue::new()));
+        }
+        match self.kind {
+            ::std::option::Option::Some(value::Kind::ArrayValue(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_array_value(&mut self) -> ArrayValue {
+        if self.has_array_value() {
+            match self.kind.take() {
+                ::std::option::Option::Some(value::Kind::ArrayValue(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ArrayValue::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(11);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::types::Type>(
+            "type",
+            |m: &Value| { &m.type_ },
+            |m: &mut Value| { &mut m.type_ },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+            "raw_value",
+            Value::has_raw_value,
+            Value::raw_value,
+            Value::set_raw_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+            "raw_timestamp_micros",
+            Value::has_raw_timestamp_micros,
+            Value::raw_timestamp_micros,
+            Value::set_raw_timestamp_micros,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+            "bytes_value",
+            Value::has_bytes_value,
+            Value::bytes_value,
+            Value::set_bytes_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+            "string_value",
+            Value::has_string_value,
+            Value::string_value,
+            Value::set_string_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+            "int_value",
+            Value::has_int_value,
+            Value::int_value,
+            Value::set_int_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+            "bool_value",
+            Value::has_bool_value,
+            Value::bool_value,
+            Value::set_bool_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+            "float_value",
+            Value::has_float_value,
+            Value::float_value,
+            Value::set_float_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "timestamp_value",
+            Value::has_timestamp_value,
+            Value::timestamp_value,
+            Value::mut_timestamp_value,
+            Value::set_timestamp_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::date::Date>(
+            "date_value",
+            Value::has_date_value,
+            Value::date_value,
+            Value::mut_date_value,
+            Value::set_date_value,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ArrayValue>(
+            "array_value",
+            Value::has_array_value,
+            Value::array_value,
+            Value::mut_array_value,
+            Value::set_array_value,
+        ));
+        oneofs.push(value::Kind::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Value>(
+            "Value",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for Value {
+    const NAME: &'static str = "Value";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                58 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.type_)?;
+                },
+                66 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::RawValue(is.read_bytes()?));
+                },
+                72 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::RawTimestampMicros(is.read_int64()?));
+                },
+                18 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::BytesValue(is.read_bytes()?));
+                },
+                26 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::StringValue(is.read_string()?));
+                },
+                48 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::IntValue(is.read_int64()?));
+                },
+                80 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::BoolValue(is.read_bool()?));
+                },
+                89 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::FloatValue(is.read_double()?));
+                },
+                98 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::TimestampValue(is.read_message()?));
+                },
+                106 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::DateValue(is.read_message()?));
+                },
+                34 => {
+                    self.kind = ::std::option::Option::Some(value::Kind::ArrayValue(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.type_.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.kind {
+            match v {
+                &value::Kind::RawValue(ref v) => {
+                    my_size += ::protobuf::rt::bytes_size(8, &v);
+                },
+                &value::Kind::RawTimestampMicros(v) => {
+                    my_size += ::protobuf::rt::int64_size(9, v);
+                },
+                &value::Kind::BytesValue(ref v) => {
+                    my_size += ::protobuf::rt::bytes_size(2, &v);
+                },
+                &value::Kind::StringValue(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+                &value::Kind::IntValue(v) => {
+                    my_size += ::protobuf::rt::int64_size(6, v);
+                },
+                &value::Kind::BoolValue(v) => {
+                    my_size += 1 + 1;
+                },
+                &value::Kind::FloatValue(v) => {
+                    my_size += 1 + 8;
+                },
+                &value::Kind::TimestampValue(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &value::Kind::DateValue(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &value::Kind::ArrayValue(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.type_.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.kind {
+            match v {
+                &value::Kind::RawValue(ref v) => {
+                    os.write_bytes(8, v)?;
+                },
+                &value::Kind::RawTimestampMicros(v) => {
+                    os.write_int64(9, v)?;
+                },
+                &value::Kind::BytesValue(ref v) => {
+                    os.write_bytes(2, v)?;
+                },
+                &value::Kind::StringValue(ref v) => {
+                    os.write_string(3, v)?;
+                },
+                &value::Kind::IntValue(v) => {
+                    os.write_int64(6, v)?;
+                },
+                &value::Kind::BoolValue(v) => {
+                    os.write_bool(10, v)?;
+                },
+                &value::Kind::FloatValue(v) => {
+                    os.write_double(11, v)?;
+                },
+                &value::Kind::TimestampValue(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
+                },
+                &value::Kind::DateValue(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
+                },
+                &value::Kind::ArrayValue(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> Value {
+        Value::new()
+    }
+
+    fn clear(&mut self) {
+        self.type_.clear();
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static Value {
+        static instance: Value = Value {
+            type_: ::protobuf::MessageField::none(),
+            kind: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for Value {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("Value").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for Value {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Value {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `Value`
+pub mod value {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.Value.kind)
+    pub enum Kind {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.raw_value)
+        RawValue(::std::vec::Vec<u8>),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.raw_timestamp_micros)
+        RawTimestampMicros(i64),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.bytes_value)
+        BytesValue(::std::vec::Vec<u8>),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.string_value)
+        StringValue(::std::string::String),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.int_value)
+        IntValue(i64),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.bool_value)
+        BoolValue(bool),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.float_value)
+        FloatValue(f64),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.timestamp_value)
+        TimestampValue(::protobuf::well_known_types::timestamp::Timestamp),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.date_value)
+        DateValue(super::super::date::Date),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Value.array_value)
+        ArrayValue(super::ArrayValue),
+    }
+
+    impl ::protobuf::Oneof for Kind {
+    }
+
+    impl ::protobuf::OneofFull for Kind {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::Value as ::protobuf::MessageFull>::descriptor().oneof_by_name("kind").unwrap()).clone()
+        }
+    }
+
+    impl Kind {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Kind>("kind")
+        }
+    }
+}
+
+///  `ArrayValue` is an ordered list of `Value`.
+// @@protoc_insertion_point(message:google.bigtable.v2.ArrayValue)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ArrayValue {
+    // message fields
+    ///  The ordered elements in the array.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ArrayValue.values)
+    pub values: ::std::vec::Vec<Value>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ArrayValue.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ArrayValue {
+    fn default() -> &'a ArrayValue {
+        <ArrayValue as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ArrayValue {
+    pub fn new() -> ArrayValue {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "values",
+            |m: &ArrayValue| { &m.values },
+            |m: &mut ArrayValue| { &mut m.values },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ArrayValue>(
+            "ArrayValue",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ArrayValue {
+    const NAME: &'static str = "ArrayValue";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.values.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.values {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.values {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ArrayValue {
+        ArrayValue::new()
+    }
+
+    fn clear(&mut self) {
+        self.values.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ArrayValue {
+        static instance: ArrayValue = ArrayValue {
+            values: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ArrayValue {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ArrayValue").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ArrayValue {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ArrayValue {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -2311,7 +3194,7 @@ pub mod value_range {
 ///  RowFilter.Chain and RowFilter.Interleave documentation.
 ///
 ///  The total serialized size of a RowFilter message must not
-///  exceed 4096 bytes, and RowFilters may not be nested within each other
+///  exceed 20480 bytes, and RowFilters may not be nested within each other
 ///  (in Chains or Interleaves) to a depth of more than 20.
 // @@protoc_insertion_point(message:google.bigtable.v2.RowFilter)
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -4044,6 +4927,104 @@ impl Mutation {
         }
     }
 
+    // .google.bigtable.v2.Mutation.AddToCell add_to_cell = 5;
+
+    pub fn add_to_cell(&self) -> &mutation::AddToCell {
+        match self.mutation {
+            ::std::option::Option::Some(mutation::Mutation::AddToCell(ref v)) => v,
+            _ => <mutation::AddToCell as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_add_to_cell(&mut self) {
+        self.mutation = ::std::option::Option::None;
+    }
+
+    pub fn has_add_to_cell(&self) -> bool {
+        match self.mutation {
+            ::std::option::Option::Some(mutation::Mutation::AddToCell(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_add_to_cell(&mut self, v: mutation::AddToCell) {
+        self.mutation = ::std::option::Option::Some(mutation::Mutation::AddToCell(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_add_to_cell(&mut self) -> &mut mutation::AddToCell {
+        if let ::std::option::Option::Some(mutation::Mutation::AddToCell(_)) = self.mutation {
+        } else {
+            self.mutation = ::std::option::Option::Some(mutation::Mutation::AddToCell(mutation::AddToCell::new()));
+        }
+        match self.mutation {
+            ::std::option::Option::Some(mutation::Mutation::AddToCell(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_add_to_cell(&mut self) -> mutation::AddToCell {
+        if self.has_add_to_cell() {
+            match self.mutation.take() {
+                ::std::option::Option::Some(mutation::Mutation::AddToCell(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            mutation::AddToCell::new()
+        }
+    }
+
+    // .google.bigtable.v2.Mutation.MergeToCell merge_to_cell = 6;
+
+    pub fn merge_to_cell(&self) -> &mutation::MergeToCell {
+        match self.mutation {
+            ::std::option::Option::Some(mutation::Mutation::MergeToCell(ref v)) => v,
+            _ => <mutation::MergeToCell as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_merge_to_cell(&mut self) {
+        self.mutation = ::std::option::Option::None;
+    }
+
+    pub fn has_merge_to_cell(&self) -> bool {
+        match self.mutation {
+            ::std::option::Option::Some(mutation::Mutation::MergeToCell(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_merge_to_cell(&mut self, v: mutation::MergeToCell) {
+        self.mutation = ::std::option::Option::Some(mutation::Mutation::MergeToCell(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_merge_to_cell(&mut self) -> &mut mutation::MergeToCell {
+        if let ::std::option::Option::Some(mutation::Mutation::MergeToCell(_)) = self.mutation {
+        } else {
+            self.mutation = ::std::option::Option::Some(mutation::Mutation::MergeToCell(mutation::MergeToCell::new()));
+        }
+        match self.mutation {
+            ::std::option::Option::Some(mutation::Mutation::MergeToCell(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_merge_to_cell(&mut self) -> mutation::MergeToCell {
+        if self.has_merge_to_cell() {
+            match self.mutation.take() {
+                ::std::option::Option::Some(mutation::Mutation::MergeToCell(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            mutation::MergeToCell::new()
+        }
+    }
+
     // .google.bigtable.v2.Mutation.DeleteFromColumn delete_from_column = 2;
 
     pub fn delete_from_column(&self) -> &mutation::DeleteFromColumn {
@@ -4192,7 +5173,7 @@ impl Mutation {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, mutation::SetCell>(
             "set_cell",
@@ -4200,6 +5181,20 @@ impl Mutation {
             Mutation::set_cell,
             Mutation::mut_set_cell,
             Mutation::set_set_cell,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, mutation::AddToCell>(
+            "add_to_cell",
+            Mutation::has_add_to_cell,
+            Mutation::add_to_cell,
+            Mutation::mut_add_to_cell,
+            Mutation::set_add_to_cell,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, mutation::MergeToCell>(
+            "merge_to_cell",
+            Mutation::has_merge_to_cell,
+            Mutation::merge_to_cell,
+            Mutation::mut_merge_to_cell,
+            Mutation::set_merge_to_cell,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, mutation::DeleteFromColumn>(
             "delete_from_column",
@@ -4244,6 +5239,12 @@ impl ::protobuf::Message for Mutation {
                 10 => {
                     self.mutation = ::std::option::Option::Some(mutation::Mutation::SetCell(is.read_message()?));
                 },
+                42 => {
+                    self.mutation = ::std::option::Option::Some(mutation::Mutation::AddToCell(is.read_message()?));
+                },
+                50 => {
+                    self.mutation = ::std::option::Option::Some(mutation::Mutation::MergeToCell(is.read_message()?));
+                },
                 18 => {
                     self.mutation = ::std::option::Option::Some(mutation::Mutation::DeleteFromColumn(is.read_message()?));
                 },
@@ -4271,6 +5272,14 @@ impl ::protobuf::Message for Mutation {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &mutation::Mutation::AddToCell(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &mutation::Mutation::MergeToCell(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
                 &mutation::Mutation::DeleteFromColumn(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
@@ -4295,6 +5304,12 @@ impl ::protobuf::Message for Mutation {
             match v {
                 &mutation::Mutation::SetCell(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                },
+                &mutation::Mutation::AddToCell(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+                },
+                &mutation::Mutation::MergeToCell(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
                 },
                 &mutation::Mutation::DeleteFromColumn(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
@@ -4324,6 +5339,8 @@ impl ::protobuf::Message for Mutation {
     }
 
     fn clear(&mut self) {
+        self.mutation = ::std::option::Option::None;
+        self.mutation = ::std::option::Option::None;
         self.mutation = ::std::option::Option::None;
         self.mutation = ::std::option::Option::None;
         self.mutation = ::std::option::Option::None;
@@ -4366,6 +5383,10 @@ pub mod mutation {
     pub enum Mutation {
         // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Mutation.set_cell)
         SetCell(SetCell),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Mutation.add_to_cell)
+        AddToCell(AddToCell),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Mutation.merge_to_cell)
+        MergeToCell(MergeToCell),
         // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Mutation.delete_from_column)
         DeleteFromColumn(DeleteFromColumn),
         // @@protoc_insertion_point(oneof_field:google.bigtable.v2.Mutation.delete_from_family)
@@ -4573,6 +5594,386 @@ pub mod mutation {
     }
 
     impl ::protobuf::reflect::ProtobufValue for SetCell {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  A Mutation which incrementally updates a cell in an `Aggregate` family.
+    // @@protoc_insertion_point(message:google.bigtable.v2.Mutation.AddToCell)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct AddToCell {
+        // message fields
+        ///  The name of the `Aggregate` family into which new data should be added.
+        ///  This must be a family with a `value_type` of `Aggregate`.
+        ///  Format: `[-_.a-zA-Z0-9]+`
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.AddToCell.family_name)
+        pub family_name: ::std::string::String,
+        ///  The qualifier of the column into which new data should be added. This
+        ///  must be a `raw_value`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.AddToCell.column_qualifier)
+        pub column_qualifier: ::protobuf::MessageField<super::Value>,
+        ///  The timestamp of the cell to which new data should be added. This must
+        ///  be a `raw_timestamp_micros` that matches the table's `granularity`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.AddToCell.timestamp)
+        pub timestamp: ::protobuf::MessageField<super::Value>,
+        ///  The input value to be accumulated into the specified cell. This must be
+        ///  compatible with the family's `value_type.input_type`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.AddToCell.input)
+        pub input: ::protobuf::MessageField<super::Value>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.v2.Mutation.AddToCell.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a AddToCell {
+        fn default() -> &'a AddToCell {
+            <AddToCell as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl AddToCell {
+        pub fn new() -> AddToCell {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(4);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "family_name",
+                |m: &AddToCell| { &m.family_name },
+                |m: &mut AddToCell| { &mut m.family_name },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::Value>(
+                "column_qualifier",
+                |m: &AddToCell| { &m.column_qualifier },
+                |m: &mut AddToCell| { &mut m.column_qualifier },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::Value>(
+                "timestamp",
+                |m: &AddToCell| { &m.timestamp },
+                |m: &mut AddToCell| { &mut m.timestamp },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::Value>(
+                "input",
+                |m: &AddToCell| { &m.input },
+                |m: &mut AddToCell| { &mut m.input },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AddToCell>(
+                "Mutation.AddToCell",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for AddToCell {
+        const NAME: &'static str = "AddToCell";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.family_name = is.read_string()?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.column_qualifier)?;
+                    },
+                    26 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.timestamp)?;
+                    },
+                    34 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.input)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.family_name.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.family_name);
+            }
+            if let Some(v) = self.column_qualifier.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.timestamp.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.input.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.family_name.is_empty() {
+                os.write_string(1, &self.family_name)?;
+            }
+            if let Some(v) = self.column_qualifier.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            if let Some(v) = self.timestamp.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+            }
+            if let Some(v) = self.input.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> AddToCell {
+            AddToCell::new()
+        }
+
+        fn clear(&mut self) {
+            self.family_name.clear();
+            self.column_qualifier.clear();
+            self.timestamp.clear();
+            self.input.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static AddToCell {
+            static instance: AddToCell = AddToCell {
+                family_name: ::std::string::String::new(),
+                column_qualifier: ::protobuf::MessageField::none(),
+                timestamp: ::protobuf::MessageField::none(),
+                input: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for AddToCell {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Mutation.AddToCell").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for AddToCell {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for AddToCell {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  A Mutation which merges accumulated state into a cell in an `Aggregate`
+    ///  family.
+    // @@protoc_insertion_point(message:google.bigtable.v2.Mutation.MergeToCell)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct MergeToCell {
+        // message fields
+        ///  The name of the `Aggregate` family into which new data should be added.
+        ///  This must be a family with a `value_type` of `Aggregate`.
+        ///  Format: `[-_.a-zA-Z0-9]+`
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.MergeToCell.family_name)
+        pub family_name: ::std::string::String,
+        ///  The qualifier of the column into which new data should be added. This
+        ///  must be a `raw_value`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.MergeToCell.column_qualifier)
+        pub column_qualifier: ::protobuf::MessageField<super::Value>,
+        ///  The timestamp of the cell to which new data should be added. This must
+        ///  be a `raw_timestamp_micros` that matches the table's `granularity`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.MergeToCell.timestamp)
+        pub timestamp: ::protobuf::MessageField<super::Value>,
+        ///  The input value to be merged into the specified cell. This must be
+        ///  compatible with the family's `value_type.state_type`. Merging `NULL` is
+        ///  allowed, but has no effect.
+        // @@protoc_insertion_point(field:google.bigtable.v2.Mutation.MergeToCell.input)
+        pub input: ::protobuf::MessageField<super::Value>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.v2.Mutation.MergeToCell.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a MergeToCell {
+        fn default() -> &'a MergeToCell {
+            <MergeToCell as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl MergeToCell {
+        pub fn new() -> MergeToCell {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(4);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "family_name",
+                |m: &MergeToCell| { &m.family_name },
+                |m: &mut MergeToCell| { &mut m.family_name },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::Value>(
+                "column_qualifier",
+                |m: &MergeToCell| { &m.column_qualifier },
+                |m: &mut MergeToCell| { &mut m.column_qualifier },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::Value>(
+                "timestamp",
+                |m: &MergeToCell| { &m.timestamp },
+                |m: &mut MergeToCell| { &mut m.timestamp },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::Value>(
+                "input",
+                |m: &MergeToCell| { &m.input },
+                |m: &mut MergeToCell| { &mut m.input },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MergeToCell>(
+                "Mutation.MergeToCell",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for MergeToCell {
+        const NAME: &'static str = "MergeToCell";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.family_name = is.read_string()?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.column_qualifier)?;
+                    },
+                    26 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.timestamp)?;
+                    },
+                    34 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.input)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.family_name.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.family_name);
+            }
+            if let Some(v) = self.column_qualifier.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.timestamp.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.input.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.family_name.is_empty() {
+                os.write_string(1, &self.family_name)?;
+            }
+            if let Some(v) = self.column_qualifier.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            if let Some(v) = self.timestamp.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+            }
+            if let Some(v) = self.input.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> MergeToCell {
+            MergeToCell::new()
+        }
+
+        fn clear(&mut self) {
+            self.family_name.clear();
+            self.column_qualifier.clear();
+            self.timestamp.clear();
+            self.input.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static MergeToCell {
+            static instance: MergeToCell = MergeToCell {
+                family_name: ::std::string::String::new(),
+                column_qualifier: ::protobuf::MessageField::none(),
+                timestamp: ::protobuf::MessageField::none(),
+                input: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for MergeToCell {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Mutation.MergeToCell").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for MergeToCell {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for MergeToCell {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 
@@ -5267,405 +6668,2062 @@ pub mod read_modify_write_rule {
     }
 }
 
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  A partition of a change stream.
+// @@protoc_insertion_point(message:google.bigtable.v2.StreamPartition)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct StreamPartition {
+    // message fields
+    ///  The row range covered by this partition and is specified by
+    ///  [`start_key_closed`, `end_key_open`).
+    // @@protoc_insertion_point(field:google.bigtable.v2.StreamPartition.row_range)
+    pub row_range: ::protobuf::MessageField<RowRange>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.StreamPartition.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a StreamPartition {
+    fn default() -> &'a StreamPartition {
+        <StreamPartition as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamPartition {
+    pub fn new() -> StreamPartition {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RowRange>(
+            "row_range",
+            |m: &StreamPartition| { &m.row_range },
+            |m: &mut StreamPartition| { &mut m.row_range },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StreamPartition>(
+            "StreamPartition",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for StreamPartition {
+    const NAME: &'static str = "StreamPartition";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.row_range)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.row_range.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.row_range.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> StreamPartition {
+        StreamPartition::new()
+    }
+
+    fn clear(&mut self) {
+        self.row_range.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static StreamPartition {
+        static instance: StreamPartition = StreamPartition {
+            row_range: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for StreamPartition {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("StreamPartition").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for StreamPartition {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamPartition {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  The information required to continue reading the data from multiple
+///  `StreamPartitions` from where a previous read left off.
+// @@protoc_insertion_point(message:google.bigtable.v2.StreamContinuationTokens)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct StreamContinuationTokens {
+    // message fields
+    ///  List of continuation tokens.
+    // @@protoc_insertion_point(field:google.bigtable.v2.StreamContinuationTokens.tokens)
+    pub tokens: ::std::vec::Vec<StreamContinuationToken>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.StreamContinuationTokens.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a StreamContinuationTokens {
+    fn default() -> &'a StreamContinuationTokens {
+        <StreamContinuationTokens as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamContinuationTokens {
+    pub fn new() -> StreamContinuationTokens {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "tokens",
+            |m: &StreamContinuationTokens| { &m.tokens },
+            |m: &mut StreamContinuationTokens| { &mut m.tokens },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StreamContinuationTokens>(
+            "StreamContinuationTokens",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for StreamContinuationTokens {
+    const NAME: &'static str = "StreamContinuationTokens";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.tokens.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.tokens {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.tokens {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> StreamContinuationTokens {
+        StreamContinuationTokens::new()
+    }
+
+    fn clear(&mut self) {
+        self.tokens.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static StreamContinuationTokens {
+        static instance: StreamContinuationTokens = StreamContinuationTokens {
+            tokens: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for StreamContinuationTokens {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("StreamContinuationTokens").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for StreamContinuationTokens {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamContinuationTokens {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  The information required to continue reading the data from a
+///  `StreamPartition` from where a previous read left off.
+// @@protoc_insertion_point(message:google.bigtable.v2.StreamContinuationToken)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct StreamContinuationToken {
+    // message fields
+    ///  The partition that this token applies to.
+    // @@protoc_insertion_point(field:google.bigtable.v2.StreamContinuationToken.partition)
+    pub partition: ::protobuf::MessageField<StreamPartition>,
+    ///  An encoded position in the stream to restart reading from.
+    // @@protoc_insertion_point(field:google.bigtable.v2.StreamContinuationToken.token)
+    pub token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.StreamContinuationToken.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a StreamContinuationToken {
+    fn default() -> &'a StreamContinuationToken {
+        <StreamContinuationToken as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StreamContinuationToken {
+    pub fn new() -> StreamContinuationToken {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, StreamPartition>(
+            "partition",
+            |m: &StreamContinuationToken| { &m.partition },
+            |m: &mut StreamContinuationToken| { &mut m.partition },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "token",
+            |m: &StreamContinuationToken| { &m.token },
+            |m: &mut StreamContinuationToken| { &mut m.token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StreamContinuationToken>(
+            "StreamContinuationToken",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for StreamContinuationToken {
+    const NAME: &'static str = "StreamContinuationToken";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.partition)?;
+                },
+                18 => {
+                    self.token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.partition.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if !self.token.is_empty() {
+            os.write_string(2, &self.token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> StreamContinuationToken {
+        StreamContinuationToken::new()
+    }
+
+    fn clear(&mut self) {
+        self.partition.clear();
+        self.token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static StreamContinuationToken {
+        static instance: StreamContinuationToken = StreamContinuationToken {
+            partition: ::protobuf::MessageField::none(),
+            token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for StreamContinuationToken {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("StreamContinuationToken").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for StreamContinuationToken {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StreamContinuationToken {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Protocol buffers format descriptor, as described by Messages ProtoSchema and
+///  ProtoRows
+// @@protoc_insertion_point(message:google.bigtable.v2.ProtoFormat)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ProtoFormat {
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ProtoFormat.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ProtoFormat {
+    fn default() -> &'a ProtoFormat {
+        <ProtoFormat as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProtoFormat {
+    pub fn new() -> ProtoFormat {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProtoFormat>(
+            "ProtoFormat",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ProtoFormat {
+    const NAME: &'static str = "ProtoFormat";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ProtoFormat {
+        ProtoFormat::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ProtoFormat {
+        static instance: ProtoFormat = ProtoFormat {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ProtoFormat {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProtoFormat").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ProtoFormat {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProtoFormat {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Describes a column in a Bigtable Query Language result set.
+// @@protoc_insertion_point(message:google.bigtable.v2.ColumnMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ColumnMetadata {
+    // message fields
+    ///  The name of the column.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ColumnMetadata.name)
+    pub name: ::std::string::String,
+    ///  The type of the column.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ColumnMetadata.type)
+    pub type_: ::protobuf::MessageField<super::types::Type>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ColumnMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ColumnMetadata {
+    fn default() -> &'a ColumnMetadata {
+        <ColumnMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ColumnMetadata {
+    pub fn new() -> ColumnMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &ColumnMetadata| { &m.name },
+            |m: &mut ColumnMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::types::Type>(
+            "type",
+            |m: &ColumnMetadata| { &m.type_ },
+            |m: &mut ColumnMetadata| { &mut m.type_ },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColumnMetadata>(
+            "ColumnMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ColumnMetadata {
+    const NAME: &'static str = "ColumnMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.type_)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if let Some(v) = self.type_.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if let Some(v) = self.type_.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ColumnMetadata {
+        ColumnMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.type_.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ColumnMetadata {
+        static instance: ColumnMetadata = ColumnMetadata {
+            name: ::std::string::String::new(),
+            type_: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ColumnMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColumnMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ColumnMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ColumnMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  ResultSet schema in proto format
+// @@protoc_insertion_point(message:google.bigtable.v2.ProtoSchema)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ProtoSchema {
+    // message fields
+    ///  The columns in the result set.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ProtoSchema.columns)
+    pub columns: ::std::vec::Vec<ColumnMetadata>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ProtoSchema.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ProtoSchema {
+    fn default() -> &'a ProtoSchema {
+        <ProtoSchema as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProtoSchema {
+    pub fn new() -> ProtoSchema {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "columns",
+            |m: &ProtoSchema| { &m.columns },
+            |m: &mut ProtoSchema| { &mut m.columns },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProtoSchema>(
+            "ProtoSchema",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ProtoSchema {
+    const NAME: &'static str = "ProtoSchema";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.columns.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.columns {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.columns {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ProtoSchema {
+        ProtoSchema::new()
+    }
+
+    fn clear(&mut self) {
+        self.columns.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ProtoSchema {
+        static instance: ProtoSchema = ProtoSchema {
+            columns: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ProtoSchema {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProtoSchema").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ProtoSchema {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProtoSchema {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Describes the structure of a Bigtable result set.
+// @@protoc_insertion_point(message:google.bigtable.v2.ResultSetMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ResultSetMetadata {
+    // message oneof groups
+    pub schema: ::std::option::Option<result_set_metadata::Schema>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ResultSetMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ResultSetMetadata {
+    fn default() -> &'a ResultSetMetadata {
+        <ResultSetMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ResultSetMetadata {
+    pub fn new() -> ResultSetMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.ProtoSchema proto_schema = 1;
+
+    pub fn proto_schema(&self) -> &ProtoSchema {
+        match self.schema {
+            ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(ref v)) => v,
+            _ => <ProtoSchema as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_proto_schema(&mut self) {
+        self.schema = ::std::option::Option::None;
+    }
+
+    pub fn has_proto_schema(&self) -> bool {
+        match self.schema {
+            ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_proto_schema(&mut self, v: ProtoSchema) {
+        self.schema = ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_proto_schema(&mut self) -> &mut ProtoSchema {
+        if let ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(_)) = self.schema {
+        } else {
+            self.schema = ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(ProtoSchema::new()));
+        }
+        match self.schema {
+            ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_proto_schema(&mut self) -> ProtoSchema {
+        if self.has_proto_schema() {
+            match self.schema.take() {
+                ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ProtoSchema::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ProtoSchema>(
+            "proto_schema",
+            ResultSetMetadata::has_proto_schema,
+            ResultSetMetadata::proto_schema,
+            ResultSetMetadata::mut_proto_schema,
+            ResultSetMetadata::set_proto_schema,
+        ));
+        oneofs.push(result_set_metadata::Schema::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ResultSetMetadata>(
+            "ResultSetMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ResultSetMetadata {
+    const NAME: &'static str = "ResultSetMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.schema = ::std::option::Option::Some(result_set_metadata::Schema::ProtoSchema(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.schema {
+            match v {
+                &result_set_metadata::Schema::ProtoSchema(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let ::std::option::Option::Some(ref v) = self.schema {
+            match v {
+                &result_set_metadata::Schema::ProtoSchema(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ResultSetMetadata {
+        ResultSetMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.schema = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ResultSetMetadata {
+        static instance: ResultSetMetadata = ResultSetMetadata {
+            schema: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ResultSetMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ResultSetMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ResultSetMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ResultSetMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ResultSetMetadata`
+pub mod result_set_metadata {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.ResultSetMetadata.schema)
+    pub enum Schema {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ResultSetMetadata.proto_schema)
+        ProtoSchema(super::ProtoSchema),
+    }
+
+    impl ::protobuf::Oneof for Schema {
+    }
+
+    impl ::protobuf::OneofFull for Schema {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::ResultSetMetadata as ::protobuf::MessageFull>::descriptor().oneof_by_name("schema").unwrap()).clone()
+        }
+    }
+
+    impl Schema {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Schema>("schema")
+        }
+    }
+}
+
+///  Rows represented in proto format.
+///
+///  This should be constructed by concatenating the `batch_data` from each
+///  of the relevant `ProtoRowsBatch` messages and parsing the result as a
+///  `ProtoRows` message.
+// @@protoc_insertion_point(message:google.bigtable.v2.ProtoRows)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ProtoRows {
+    // message fields
+    ///  A proto rows message consists of a list of values. Every N complete values
+    ///  defines a row, where N is equal to the  number of entries in the
+    ///  `metadata.proto_schema.columns` value received in the first response.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ProtoRows.values)
+    pub values: ::std::vec::Vec<Value>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ProtoRows.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ProtoRows {
+    fn default() -> &'a ProtoRows {
+        <ProtoRows as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProtoRows {
+    pub fn new() -> ProtoRows {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "values",
+            |m: &ProtoRows| { &m.values },
+            |m: &mut ProtoRows| { &mut m.values },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProtoRows>(
+            "ProtoRows",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ProtoRows {
+    const NAME: &'static str = "ProtoRows";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                18 => {
+                    self.values.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.values {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.values {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ProtoRows {
+        ProtoRows::new()
+    }
+
+    fn clear(&mut self) {
+        self.values.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ProtoRows {
+        static instance: ProtoRows = ProtoRows {
+            values: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ProtoRows {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProtoRows").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ProtoRows {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProtoRows {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Batch of serialized ProtoRows.
+// @@protoc_insertion_point(message:google.bigtable.v2.ProtoRowsBatch)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ProtoRowsBatch {
+    // message fields
+    ///  Merge partial results by concatenating these bytes, then parsing the
+    ///  overall value as a `ProtoRows` message.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ProtoRowsBatch.batch_data)
+    pub batch_data: ::std::vec::Vec<u8>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ProtoRowsBatch.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ProtoRowsBatch {
+    fn default() -> &'a ProtoRowsBatch {
+        <ProtoRowsBatch as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProtoRowsBatch {
+    pub fn new() -> ProtoRowsBatch {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "batch_data",
+            |m: &ProtoRowsBatch| { &m.batch_data },
+            |m: &mut ProtoRowsBatch| { &mut m.batch_data },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProtoRowsBatch>(
+            "ProtoRowsBatch",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ProtoRowsBatch {
+    const NAME: &'static str = "ProtoRowsBatch";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.batch_data = is.read_bytes()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.batch_data.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(1, &self.batch_data);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.batch_data.is_empty() {
+            os.write_bytes(1, &self.batch_data)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ProtoRowsBatch {
+        ProtoRowsBatch::new()
+    }
+
+    fn clear(&mut self) {
+        self.batch_data.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ProtoRowsBatch {
+        static instance: ProtoRowsBatch = ProtoRowsBatch {
+            batch_data: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ProtoRowsBatch {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProtoRowsBatch").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ProtoRowsBatch {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProtoRowsBatch {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  A partial result set from the streaming query API.
+///  CBT client will buffer partial_rows from result_sets until it gets a
+///  resumption_token.
+// @@protoc_insertion_point(message:google.bigtable.v2.PartialResultSet)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct PartialResultSet {
+    // message fields
+    ///  An opaque token sent by the server to allow query resumption and signal
+    ///  the client to accumulate `partial_rows` since the last non-empty
+    ///  `resume_token`. On resumption, the resumed query will return the remaining
+    ///  rows for this query.
+    ///
+    ///  If there is a batch in progress, a non-empty `resume_token`
+    ///  means that that the batch of `partial_rows` will be complete after merging
+    ///  the `partial_rows` from this response. The client must only yield
+    ///  completed batches to the application, and must ensure that any future
+    ///  retries send the latest token to avoid returning duplicate data.
+    ///
+    ///  The server may set 'resume_token' without a 'partial_rows'. If there is a
+    ///  batch in progress the client should yield it.
+    ///
+    ///  The server will also send a sentinel `resume_token` when last batch of
+    ///  `partial_rows` is sent. If the client retries the ExecuteQueryRequest with
+    ///  the sentinel `resume_token`, the server will emit it again without any
+    ///  `partial_rows`, then return OK.
+    // @@protoc_insertion_point(field:google.bigtable.v2.PartialResultSet.resume_token)
+    pub resume_token: ::std::vec::Vec<u8>,
+    ///  Estimated size of a new batch. The server will always set this when
+    ///  returning the first `partial_rows` of a batch, and will not set it at any
+    ///  other time.
+    ///
+    ///  The client can use this estimate to allocate an initial buffer for the
+    ///  batched results. This helps minimize the number of allocations required,
+    ///  though the buffer size may still need to be increased if the estimate is
+    ///  too low.
+    // @@protoc_insertion_point(field:google.bigtable.v2.PartialResultSet.estimated_batch_size)
+    pub estimated_batch_size: i32,
+    // message oneof groups
+    pub partial_rows: ::std::option::Option<partial_result_set::Partial_rows>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.PartialResultSet.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a PartialResultSet {
+    fn default() -> &'a PartialResultSet {
+        <PartialResultSet as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PartialResultSet {
+    pub fn new() -> PartialResultSet {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.ProtoRowsBatch proto_rows_batch = 3;
+
+    pub fn proto_rows_batch(&self) -> &ProtoRowsBatch {
+        match self.partial_rows {
+            ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(ref v)) => v,
+            _ => <ProtoRowsBatch as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_proto_rows_batch(&mut self) {
+        self.partial_rows = ::std::option::Option::None;
+    }
+
+    pub fn has_proto_rows_batch(&self) -> bool {
+        match self.partial_rows {
+            ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_proto_rows_batch(&mut self, v: ProtoRowsBatch) {
+        self.partial_rows = ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_proto_rows_batch(&mut self) -> &mut ProtoRowsBatch {
+        if let ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(_)) = self.partial_rows {
+        } else {
+            self.partial_rows = ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(ProtoRowsBatch::new()));
+        }
+        match self.partial_rows {
+            ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_proto_rows_batch(&mut self) -> ProtoRowsBatch {
+        if self.has_proto_rows_batch() {
+            match self.partial_rows.take() {
+                ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ProtoRowsBatch::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ProtoRowsBatch>(
+            "proto_rows_batch",
+            PartialResultSet::has_proto_rows_batch,
+            PartialResultSet::proto_rows_batch,
+            PartialResultSet::mut_proto_rows_batch,
+            PartialResultSet::set_proto_rows_batch,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "resume_token",
+            |m: &PartialResultSet| { &m.resume_token },
+            |m: &mut PartialResultSet| { &mut m.resume_token },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "estimated_batch_size",
+            |m: &PartialResultSet| { &m.estimated_batch_size },
+            |m: &mut PartialResultSet| { &mut m.estimated_batch_size },
+        ));
+        oneofs.push(partial_result_set::Partial_rows::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PartialResultSet>(
+            "PartialResultSet",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for PartialResultSet {
+    const NAME: &'static str = "PartialResultSet";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                26 => {
+                    self.partial_rows = ::std::option::Option::Some(partial_result_set::Partial_rows::ProtoRowsBatch(is.read_message()?));
+                },
+                42 => {
+                    self.resume_token = is.read_bytes()?;
+                },
+                32 => {
+                    self.estimated_batch_size = is.read_int32()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.resume_token.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(5, &self.resume_token);
+        }
+        if self.estimated_batch_size != 0 {
+            my_size += ::protobuf::rt::int32_size(4, self.estimated_batch_size);
+        }
+        if let ::std::option::Option::Some(ref v) = self.partial_rows {
+            match v {
+                &partial_result_set::Partial_rows::ProtoRowsBatch(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.resume_token.is_empty() {
+            os.write_bytes(5, &self.resume_token)?;
+        }
+        if self.estimated_batch_size != 0 {
+            os.write_int32(4, self.estimated_batch_size)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.partial_rows {
+            match v {
+                &partial_result_set::Partial_rows::ProtoRowsBatch(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> PartialResultSet {
+        PartialResultSet::new()
+    }
+
+    fn clear(&mut self) {
+        self.partial_rows = ::std::option::Option::None;
+        self.resume_token.clear();
+        self.estimated_batch_size = 0;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static PartialResultSet {
+        static instance: PartialResultSet = PartialResultSet {
+            resume_token: ::std::vec::Vec::new(),
+            estimated_batch_size: 0,
+            partial_rows: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for PartialResultSet {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("PartialResultSet").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for PartialResultSet {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PartialResultSet {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `PartialResultSet`
+pub mod partial_result_set {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.PartialResultSet.partial_rows)
+    pub enum Partial_rows {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.PartialResultSet.proto_rows_batch)
+        ProtoRowsBatch(super::ProtoRowsBatch),
+    }
+
+    impl ::protobuf::Oneof for Partial_rows {
+    }
+
+    impl ::protobuf::OneofFull for Partial_rows {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::PartialResultSet as ::protobuf::MessageFull>::descriptor().oneof_by_name("partial_rows").unwrap()).clone()
+        }
+    }
+
+    impl Partial_rows {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Partial_rows>("partial_rows")
+        }
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x1dgoogle/bigtable/v2/data.proto\x12\x12google.bigtable.v2\"O\n\x03Ro\
-    w\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x126\n\x08families\x18\
-    \x02\x20\x03(\x0b2\x1a.google.bigtable.v2.FamilyR\x08families\"R\n\x06Fa\
-    mily\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x124\n\x07columns\x18\
-    \x02\x20\x03(\x0b2\x1a.google.bigtable.v2.ColumnR\x07columns\"V\n\x06Col\
-    umn\x12\x1c\n\tqualifier\x18\x01\x20\x01(\x0cR\tqualifier\x12.\n\x05cell\
-    s\x18\x02\x20\x03(\x0b2\x18.google.bigtable.v2.CellR\x05cells\"_\n\x04Ce\
-    ll\x12)\n\x10timestamp_micros\x18\x01\x20\x01(\x03R\x0ftimestampMicros\
-    \x12\x14\n\x05value\x18\x02\x20\x01(\x0cR\x05value\x12\x16\n\x06labels\
-    \x18\x03\x20\x03(\tR\x06labels\"\xc2\x01\n\x08RowRange\x12*\n\x10start_k\
-    ey_closed\x18\x01\x20\x01(\x0cH\0R\x0estartKeyClosed\x12&\n\x0estart_key\
-    _open\x18\x02\x20\x01(\x0cH\0R\x0cstartKeyOpen\x12\"\n\x0cend_key_open\
-    \x18\x03\x20\x01(\x0cH\x01R\nendKeyOpen\x12&\n\x0eend_key_closed\x18\x04\
-    \x20\x01(\x0cH\x01R\x0cendKeyClosedB\x0b\n\tstart_keyB\t\n\x07end_key\"`\
-    \n\x06RowSet\x12\x19\n\x08row_keys\x18\x01\x20\x03(\x0cR\x07rowKeys\x12;\
-    \n\nrow_ranges\x18\x02\x20\x03(\x0b2\x1c.google.bigtable.v2.RowRangeR\tr\
-    owRanges\"\xa2\x02\n\x0bColumnRange\x12\x1f\n\x0bfamily_name\x18\x01\x20\
-    \x01(\tR\nfamilyName\x126\n\x16start_qualifier_closed\x18\x02\x20\x01(\
-    \x0cH\0R\x14startQualifierClosed\x122\n\x14start_qualifier_open\x18\x03\
-    \x20\x01(\x0cH\0R\x12startQualifierOpen\x122\n\x14end_qualifier_closed\
-    \x18\x04\x20\x01(\x0cH\x01R\x12endQualifierClosed\x12.\n\x12end_qualifie\
-    r_open\x18\x05\x20\x01(\x0cH\x01R\x10endQualifierOpenB\x11\n\x0fstart_qu\
-    alifierB\x0f\n\rend_qualifier\"x\n\x0eTimestampRange\x124\n\x16start_tim\
-    estamp_micros\x18\x01\x20\x01(\x03R\x14startTimestampMicros\x120\n\x14en\
-    d_timestamp_micros\x18\x02\x20\x01(\x03R\x12endTimestampMicros\"\xd8\x01\
-    \n\nValueRange\x12.\n\x12start_value_closed\x18\x01\x20\x01(\x0cH\0R\x10\
-    startValueClosed\x12*\n\x10start_value_open\x18\x02\x20\x01(\x0cH\0R\x0e\
-    startValueOpen\x12*\n\x10end_value_closed\x18\x03\x20\x01(\x0cH\x01R\x0e\
-    endValueClosed\x12&\n\x0eend_value_open\x18\x04\x20\x01(\x0cH\x01R\x0cen\
-    dValueOpenB\r\n\x0bstart_valueB\x0b\n\tend_value\"\xfc\x0b\n\tRowFilter\
-    \x12;\n\x05chain\x18\x01\x20\x01(\x0b2#.google.bigtable.v2.RowFilter.Cha\
-    inH\0R\x05chain\x12J\n\ninterleave\x18\x02\x20\x01(\x0b2(.google.bigtabl\
-    e.v2.RowFilter.InterleaveH\0R\ninterleave\x12G\n\tcondition\x18\x03\x20\
-    \x01(\x0b2'.google.bigtable.v2.RowFilter.ConditionH\0R\tcondition\x12\
-    \x14\n\x04sink\x18\x10\x20\x01(\x08H\0R\x04sink\x12(\n\x0fpass_all_filte\
-    r\x18\x11\x20\x01(\x08H\0R\rpassAllFilter\x12*\n\x10block_all_filter\x18\
-    \x12\x20\x01(\x08H\0R\x0eblockAllFilter\x121\n\x14row_key_regex_filter\
-    \x18\x04\x20\x01(\x0cH\0R\x11rowKeyRegexFilter\x12,\n\x11row_sample_filt\
-    er\x18\x0e\x20\x01(\x01H\0R\x0frowSampleFilter\x129\n\x18family_name_reg\
-    ex_filter\x18\x05\x20\x01(\tH\0R\x15familyNameRegexFilter\x12C\n\x1dcolu\
-    mn_qualifier_regex_filter\x18\x06\x20\x01(\x0cH\0R\x1acolumnQualifierReg\
-    exFilter\x12Q\n\x13column_range_filter\x18\x07\x20\x01(\x0b2\x1f.google.\
-    bigtable.v2.ColumnRangeH\0R\x11columnRangeFilter\x12Z\n\x16timestamp_ran\
-    ge_filter\x18\x08\x20\x01(\x0b2\".google.bigtable.v2.TimestampRangeH\0R\
-    \x14timestampRangeFilter\x12.\n\x12value_regex_filter\x18\t\x20\x01(\x0c\
-    H\0R\x10valueRegexFilter\x12N\n\x12value_range_filter\x18\x0f\x20\x01(\
-    \x0b2\x1e.google.bigtable.v2.ValueRangeH\0R\x10valueRangeFilter\x12>\n\
-    \x1bcells_per_row_offset_filter\x18\n\x20\x01(\x05H\0R\x17cellsPerRowOff\
-    setFilter\x12<\n\x1acells_per_row_limit_filter\x18\x0b\x20\x01(\x05H\0R\
-    \x16cellsPerRowLimitFilter\x12B\n\x1dcells_per_column_limit_filter\x18\
-    \x0c\x20\x01(\x05H\0R\x19cellsPerColumnLimitFilter\x128\n\x17strip_value\
-    _transformer\x18\r\x20\x01(\x08H\0R\x15stripValueTransformer\x128\n\x17a\
-    pply_label_transformer\x18\x13\x20\x01(\tH\0R\x15applyLabelTransformer\
-    \x1a@\n\x05Chain\x127\n\x07filters\x18\x01\x20\x03(\x0b2\x1d.google.bigt\
-    able.v2.RowFilterR\x07filters\x1aE\n\nInterleave\x127\n\x07filters\x18\
-    \x01\x20\x03(\x0b2\x1d.google.bigtable.v2.RowFilterR\x07filters\x1a\xd7\
-    \x01\n\tCondition\x12H\n\x10predicate_filter\x18\x01\x20\x01(\x0b2\x1d.g\
-    oogle.bigtable.v2.RowFilterR\x0fpredicateFilter\x12>\n\x0btrue_filter\
-    \x18\x02\x20\x01(\x0b2\x1d.google.bigtable.v2.RowFilterR\ntrueFilter\x12\
-    @\n\x0cfalse_filter\x18\x03\x20\x01(\x0b2\x1d.google.bigtable.v2.RowFilt\
-    erR\x0bfalseFilterB\x08\n\x06filter\"\xf0\x05\n\x08Mutation\x12A\n\x08se\
-    t_cell\x18\x01\x20\x01(\x0b2$.google.bigtable.v2.Mutation.SetCellH\0R\
-    \x07setCell\x12]\n\x12delete_from_column\x18\x02\x20\x01(\x0b2-.google.b\
-    igtable.v2.Mutation.DeleteFromColumnH\0R\x10deleteFromColumn\x12]\n\x12d\
-    elete_from_family\x18\x03\x20\x01(\x0b2-.google.bigtable.v2.Mutation.Del\
-    eteFromFamilyH\0R\x10deleteFromFamily\x12T\n\x0fdelete_from_row\x18\x04\
-    \x20\x01(\x0b2*.google.bigtable.v2.Mutation.DeleteFromRowH\0R\rdeleteFro\
-    mRow\x1a\x96\x01\n\x07SetCell\x12\x1f\n\x0bfamily_name\x18\x01\x20\x01(\
-    \tR\nfamilyName\x12)\n\x10column_qualifier\x18\x02\x20\x01(\x0cR\x0fcolu\
-    mnQualifier\x12)\n\x10timestamp_micros\x18\x03\x20\x01(\x03R\x0ftimestam\
-    pMicros\x12\x14\n\x05value\x18\x04\x20\x01(\x0cR\x05value\x1a\xa1\x01\n\
-    \x10DeleteFromColumn\x12\x1f\n\x0bfamily_name\x18\x01\x20\x01(\tR\nfamil\
-    yName\x12)\n\x10column_qualifier\x18\x02\x20\x01(\x0cR\x0fcolumnQualifie\
-    r\x12A\n\ntime_range\x18\x03\x20\x01(\x0b2\".google.bigtable.v2.Timestam\
-    pRangeR\ttimeRange\x1a3\n\x10DeleteFromFamily\x12\x1f\n\x0bfamily_name\
-    \x18\x01\x20\x01(\tR\nfamilyName\x1a\x0f\n\rDeleteFromRowB\n\n\x08mutati\
-    on\"\xbb\x01\n\x13ReadModifyWriteRule\x12\x1f\n\x0bfamily_name\x18\x01\
-    \x20\x01(\tR\nfamilyName\x12)\n\x10column_qualifier\x18\x02\x20\x01(\x0c\
-    R\x0fcolumnQualifier\x12#\n\x0cappend_value\x18\x03\x20\x01(\x0cH\0R\x0b\
-    appendValue\x12+\n\x10increment_amount\x18\x04\x20\x01(\x03H\0R\x0fincre\
-    mentAmountB\x06\n\x04ruleB\x97\x01\n\x16com.google.bigtable.v2B\tDataPro\
-    toP\x01Z:google.golang.org/genproto/googleapis/bigtable/v2;bigtable\xaa\
-    \x02\x18Google.Cloud.Bigtable.V2\xca\x02\x18Google\\Cloud\\Bigtable\\V2J\
-    \xb1\xb5\x01\n\x07\x12\x05\x0f\0\x96\x04\x01\n\xbe\x04\n\x01\x0c\x12\x03\
-    \x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Licens\
-    ed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"\
-    License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20i\
-    n\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20\
-    a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://ww\
-    w.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20app\
-    licable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20\
-    distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\
-    \x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITION\
-    S\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\
-    \x20the\x20License\x20for\x20the\x20specific\x20language\x20governing\
-    \x20permissions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\
-    \n\x08\n\x01\x02\x12\x03\x11\0\x1b\n\x08\n\x01\x08\x12\x03\x13\05\n\t\n\
-    \x02\x08%\x12\x03\x13\05\n\x08\n\x01\x08\x12\x03\x14\0Q\n\t\n\x02\x08\
-    \x0b\x12\x03\x14\0Q\n\x08\n\x01\x08\x12\x03\x15\0\"\n\t\n\x02\x08\n\x12\
-    \x03\x15\0\"\n\x08\n\x01\x08\x12\x03\x16\0*\n\t\n\x02\x08\x08\x12\x03\
-    \x16\0*\n\x08\n\x01\x08\x12\x03\x17\0/\n\t\n\x02\x08\x01\x12\x03\x17\0/\
-    \n\x08\n\x01\x08\x12\x03\x18\05\n\t\n\x02\x08)\x12\x03\x18\05\n\x90\x01\
-    \n\x02\x04\0\x12\x04\x1c\0%\x01\x1a\x83\x01\x20Specifies\x20the\x20compl\
-    ete\x20(requested)\x20contents\x20of\x20a\x20single\x20row\x20of\x20a\
-    \x20table.\n\x20Rows\x20which\x20exceed\x20256MiB\x20in\x20size\x20canno\
-    t\x20be\x20read\x20in\x20full.\n\n\n\n\x03\x04\0\x01\x12\x03\x1c\x08\x0b\
-    \n\xe2\x01\n\x04\x04\0\x02\0\x12\x03\x20\x02\x10\x1a\xd4\x01\x20The\x20u\
-    nique\x20key\x20which\x20identifies\x20this\x20row\x20within\x20its\x20t\
-    able.\x20This\x20is\x20the\x20same\n\x20key\x20that's\x20used\x20to\x20i\
-    dentify\x20the\x20row\x20in,\x20for\x20example,\x20a\x20MutateRowRequest\
-    .\n\x20May\x20contain\x20any\x20non-empty\x20byte\x20string\x20up\x20to\
-    \x204KiB\x20in\x20length.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x20\x02\
-    \x07\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x20\x08\x0b\n\x0c\n\x05\x04\0\
-    \x02\0\x03\x12\x03\x20\x0e\x0f\n{\n\x04\x04\0\x02\x01\x12\x03$\x02\x1f\
-    \x1an\x20May\x20be\x20empty,\x20but\x20only\x20if\x20the\x20entire\x20ro\
-    w\x20is\x20empty.\n\x20The\x20mutual\x20ordering\x20of\x20column\x20fami\
-    lies\x20is\x20not\x20specified.\n\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03$\
-    \x02\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x03$\x0b\x11\n\x0c\n\x05\x04\0\
-    \x02\x01\x01\x12\x03$\x12\x1a\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03$\x1d\
-    \x1e\nf\n\x02\x04\x01\x12\x04)\04\x01\x1aZ\x20Specifies\x20(some\x20of)\
-    \x20the\x20contents\x20of\x20a\x20single\x20row/column\x20family\x20inte\
-    rsection\n\x20of\x20a\x20table.\n\n\n\n\x03\x04\x01\x01\x12\x03)\x08\x0e\
-    \n\x85\x03\n\x04\x04\x01\x02\0\x12\x030\x02\x12\x1a\xf7\x02\x20The\x20un\
-    ique\x20key\x20which\x20identifies\x20this\x20family\x20within\x20its\
-    \x20row.\x20This\x20is\x20the\n\x20same\x20key\x20that's\x20used\x20to\
-    \x20identify\x20the\x20family\x20in,\x20for\x20example,\x20a\x20RowFilte\
-    r\n\x20which\x20sets\x20its\x20\"family_name_regex_filter\"\x20field.\n\
-    \x20Must\x20match\x20`[-_.a-zA-Z0-9]+`,\x20except\x20that\x20Aggregating\
-    RowProcessors\x20may\n\x20produce\x20cells\x20in\x20a\x20sentinel\x20fam\
-    ily\x20with\x20an\x20empty\x20name.\n\x20Must\x20be\x20no\x20greater\x20\
-    than\x2064\x20characters\x20in\x20length.\n\n\x0c\n\x05\x04\x01\x02\0\
-    \x05\x12\x030\x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x030\t\r\n\x0c\n\
-    \x05\x04\x01\x02\0\x03\x12\x030\x10\x11\nL\n\x04\x04\x01\x02\x01\x12\x03\
-    3\x02\x1e\x1a?\x20Must\x20not\x20be\x20empty.\x20Sorted\x20in\x20order\
-    \x20of\x20increasing\x20\"qualifier\".\n\n\x0c\n\x05\x04\x01\x02\x01\x04\
-    \x12\x033\x02\n\n\x0c\n\x05\x04\x01\x02\x01\x06\x12\x033\x0b\x11\n\x0c\n\
-    \x05\x04\x01\x02\x01\x01\x12\x033\x12\x19\n\x0c\n\x05\x04\x01\x02\x01\
-    \x03\x12\x033\x1c\x1d\n_\n\x02\x04\x02\x12\x048\0B\x01\x1aS\x20Specifies\
-    \x20(some\x20of)\x20the\x20contents\x20of\x20a\x20single\x20row/column\
-    \x20intersection\x20of\x20a\n\x20table.\n\n\n\n\x03\x04\x02\x01\x12\x038\
-    \x08\x0e\n\xad\x02\n\x04\x04\x02\x02\0\x12\x03>\x02\x16\x1a\x9f\x02\x20T\
-    he\x20unique\x20key\x20which\x20identifies\x20this\x20column\x20within\
-    \x20its\x20family.\x20This\x20is\x20the\n\x20same\x20key\x20that's\x20us\
-    ed\x20to\x20identify\x20the\x20column\x20in,\x20for\x20example,\x20a\x20\
-    RowFilter\n\x20which\x20sets\x20its\x20`column_qualifier_regex_filter`\
-    \x20field.\n\x20May\x20contain\x20any\x20byte\x20string,\x20including\
-    \x20the\x20empty\x20string,\x20up\x20to\x2016kiB\x20in\n\x20length.\n\n\
-    \x0c\n\x05\x04\x02\x02\0\x05\x12\x03>\x02\x07\n\x0c\n\x05\x04\x02\x02\0\
-    \x01\x12\x03>\x08\x11\n\x0c\n\x05\x04\x02\x02\0\x03\x12\x03>\x14\x15\nS\
-    \n\x04\x04\x02\x02\x01\x12\x03A\x02\x1a\x1aF\x20Must\x20not\x20be\x20emp\
-    ty.\x20Sorted\x20in\x20order\x20of\x20decreasing\x20\"timestamp_micros\"\
-    .\n\n\x0c\n\x05\x04\x02\x02\x01\x04\x12\x03A\x02\n\n\x0c\n\x05\x04\x02\
-    \x02\x01\x06\x12\x03A\x0b\x0f\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03A\
-    \x10\x15\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03A\x18\x19\n[\n\x02\x04\
-    \x03\x12\x04E\0U\x01\x1aO\x20Specifies\x20(some\x20of)\x20the\x20content\
-    s\x20of\x20a\x20single\x20row/column/timestamp\x20of\x20a\x20table.\n\n\
-    \n\n\x03\x04\x03\x01\x12\x03E\x08\x0c\n\xf6\x02\n\x04\x04\x03\x02\0\x12\
-    \x03L\x02\x1d\x1a\xe8\x02\x20The\x20cell's\x20stored\x20timestamp,\x20wh\
-    ich\x20also\x20uniquely\x20identifies\x20it\x20within\n\x20its\x20column\
-    .\n\x20Values\x20are\x20always\x20expressed\x20in\x20microseconds,\x20bu\
-    t\x20individual\x20tables\x20may\x20set\n\x20a\x20coarser\x20granularity\
-    \x20to\x20further\x20restrict\x20the\x20allowed\x20values.\x20For\n\x20e\
-    xample,\x20a\x20table\x20which\x20specifies\x20millisecond\x20granularit\
-    y\x20will\x20only\x20allow\n\x20values\x20of\x20`timestamp_micros`\x20wh\
-    ich\x20are\x20multiples\x20of\x201000.\n\n\x0c\n\x05\x04\x03\x02\0\x05\
-    \x12\x03L\x02\x07\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x03L\x08\x18\n\x0c\n\
-    \x05\x04\x03\x02\0\x03\x12\x03L\x1b\x1c\n\x7f\n\x04\x04\x03\x02\x01\x12\
-    \x03Q\x02\x12\x1ar\x20The\x20value\x20stored\x20in\x20the\x20cell.\n\x20\
-    May\x20contain\x20any\x20byte\x20string,\x20including\x20the\x20empty\
-    \x20string,\x20up\x20to\x20100MiB\x20in\n\x20length.\n\n\x0c\n\x05\x04\
-    \x03\x02\x01\x05\x12\x03Q\x02\x07\n\x0c\n\x05\x04\x03\x02\x01\x01\x12\
-    \x03Q\x08\r\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03Q\x10\x11\nY\n\x04\
-    \x04\x03\x02\x02\x12\x03T\x02\x1d\x1aL\x20Labels\x20applied\x20to\x20the\
-    \x20cell\x20by\x20a\x20[RowFilter][google.bigtable.v2.RowFilter].\n\n\
-    \x0c\n\x05\x04\x03\x02\x02\x04\x12\x03T\x02\n\n\x0c\n\x05\x04\x03\x02\
-    \x02\x05\x12\x03T\x0b\x11\n\x0c\n\x05\x04\x03\x02\x02\x01\x12\x03T\x12\
-    \x18\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03T\x1b\x1c\n3\n\x02\x04\x04\
-    \x12\x04X\0l\x01\x1a'\x20Specifies\x20a\x20contiguous\x20range\x20of\x20\
-    rows.\n\n\n\n\x03\x04\x04\x01\x12\x03X\x08\x10\n~\n\x04\x04\x04\x08\0\
-    \x12\x04[\x02a\x03\x1ap\x20The\x20row\x20key\x20at\x20which\x20to\x20sta\
-    rt\x20the\x20range.\n\x20If\x20neither\x20field\x20is\x20set,\x20interpr\
-    eted\x20as\x20the\x20empty\x20string,\x20inclusive.\n\n\x0c\n\x05\x04\
-    \x04\x08\0\x01\x12\x03[\x08\x11\nG\n\x04\x04\x04\x02\0\x12\x03]\x04\x1f\
-    \x1a:\x20Used\x20when\x20giving\x20an\x20inclusive\x20lower\x20bound\x20\
-    for\x20the\x20range.\n\n\x0c\n\x05\x04\x04\x02\0\x05\x12\x03]\x04\t\n\
-    \x0c\n\x05\x04\x04\x02\0\x01\x12\x03]\n\x1a\n\x0c\n\x05\x04\x04\x02\0\
-    \x03\x12\x03]\x1d\x1e\nG\n\x04\x04\x04\x02\x01\x12\x03`\x04\x1d\x1a:\x20\
-    Used\x20when\x20giving\x20an\x20exclusive\x20lower\x20bound\x20for\x20th\
-    e\x20range.\n\n\x0c\n\x05\x04\x04\x02\x01\x05\x12\x03`\x04\t\n\x0c\n\x05\
-    \x04\x04\x02\x01\x01\x12\x03`\n\x18\n\x0c\n\x05\x04\x04\x02\x01\x03\x12\
-    \x03`\x1b\x1c\n\x80\x01\n\x04\x04\x04\x08\x01\x12\x04e\x02k\x03\x1ar\x20\
-    The\x20row\x20key\x20at\x20which\x20to\x20end\x20the\x20range.\n\x20If\
-    \x20neither\x20field\x20is\x20set,\x20interpreted\x20as\x20the\x20infini\
-    te\x20row\x20key,\x20exclusive.\n\n\x0c\n\x05\x04\x04\x08\x01\x01\x12\
-    \x03e\x08\x0f\nG\n\x04\x04\x04\x02\x02\x12\x03g\x04\x1b\x1a:\x20Used\x20\
-    when\x20giving\x20an\x20exclusive\x20upper\x20bound\x20for\x20the\x20ran\
-    ge.\n\n\x0c\n\x05\x04\x04\x02\x02\x05\x12\x03g\x04\t\n\x0c\n\x05\x04\x04\
-    \x02\x02\x01\x12\x03g\n\x16\n\x0c\n\x05\x04\x04\x02\x02\x03\x12\x03g\x19\
-    \x1a\nG\n\x04\x04\x04\x02\x03\x12\x03j\x04\x1d\x1a:\x20Used\x20when\x20g\
-    iving\x20an\x20inclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\
-    \x0c\n\x05\x04\x04\x02\x03\x05\x12\x03j\x04\t\n\x0c\n\x05\x04\x04\x02\
-    \x03\x01\x12\x03j\n\x18\n\x0c\n\x05\x04\x04\x02\x03\x03\x12\x03j\x1b\x1c\
-    \n5\n\x02\x04\x05\x12\x04o\0u\x01\x1a)\x20Specifies\x20a\x20non-contiguo\
-    us\x20set\x20of\x20rows.\n\n\n\n\x03\x04\x05\x01\x12\x03o\x08\x0e\n/\n\
-    \x04\x04\x05\x02\0\x12\x03q\x02\x1e\x1a\"\x20Single\x20rows\x20included\
-    \x20in\x20the\x20set.\n\n\x0c\n\x05\x04\x05\x02\0\x04\x12\x03q\x02\n\n\
-    \x0c\n\x05\x04\x05\x02\0\x05\x12\x03q\x0b\x10\n\x0c\n\x05\x04\x05\x02\0\
-    \x01\x12\x03q\x11\x19\n\x0c\n\x05\x04\x05\x02\0\x03\x12\x03q\x1c\x1d\n9\
-    \n\x04\x04\x05\x02\x01\x12\x03t\x02#\x1a,\x20Contiguous\x20row\x20ranges\
-    \x20included\x20in\x20the\x20set.\n\n\x0c\n\x05\x04\x05\x02\x01\x04\x12\
-    \x03t\x02\n\n\x0c\n\x05\x04\x05\x02\x01\x06\x12\x03t\x0b\x13\n\x0c\n\x05\
-    \x04\x05\x02\x01\x01\x12\x03t\x14\x1e\n\x0c\n\x05\x04\x05\x02\x01\x03\
-    \x12\x03t!\"\n\x84\x02\n\x02\x04\x06\x12\x05{\0\x92\x01\x01\x1a\xf6\x01\
-    \x20Specifies\x20a\x20contiguous\x20range\x20of\x20columns\x20within\x20\
-    a\x20single\x20column\x20family.\n\x20The\x20range\x20spans\x20from\x20&\
-    lt;column_family&gt;:&lt;start_qualifier&gt;\x20to\n\x20&lt;column_famil\
-    y&gt;:&lt;end_qualifier&gt;,\x20where\x20both\x20bounds\x20can\x20be\x20\
-    either\n\x20inclusive\x20or\x20exclusive.\n\n\n\n\x03\x04\x06\x01\x12\
-    \x03{\x08\x13\nK\n\x04\x04\x06\x02\0\x12\x03}\x02\x19\x1a>\x20The\x20nam\
-    e\x20of\x20the\x20column\x20family\x20within\x20which\x20this\x20range\
-    \x20falls.\n\n\x0c\n\x05\x04\x06\x02\0\x05\x12\x03}\x02\x08\n\x0c\n\x05\
-    \x04\x06\x02\0\x01\x12\x03}\t\x14\n\x0c\n\x05\x04\x06\x02\0\x03\x12\x03}\
-    \x17\x18\n\xa3\x01\n\x04\x04\x06\x08\0\x12\x06\x81\x01\x02\x87\x01\x03\
-    \x1a\x92\x01\x20The\x20column\x20qualifier\x20at\x20which\x20to\x20start\
-    \x20the\x20range\x20(within\x20`column_family`).\n\x20If\x20neither\x20f\
-    ield\x20is\x20set,\x20interpreted\x20as\x20the\x20empty\x20string,\x20in\
-    clusive.\n\n\r\n\x05\x04\x06\x08\0\x01\x12\x04\x81\x01\x08\x17\nH\n\x04\
-    \x04\x06\x02\x01\x12\x04\x83\x01\x04%\x1a:\x20Used\x20when\x20giving\x20\
-    an\x20inclusive\x20lower\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\
-    \x04\x06\x02\x01\x05\x12\x04\x83\x01\x04\t\n\r\n\x05\x04\x06\x02\x01\x01\
-    \x12\x04\x83\x01\n\x20\n\r\n\x05\x04\x06\x02\x01\x03\x12\x04\x83\x01#$\n\
-    H\n\x04\x04\x06\x02\x02\x12\x04\x86\x01\x04#\x1a:\x20Used\x20when\x20giv\
+    \n\x1dgoogle/bigtable/v2/data.proto\x12\x12google.bigtable.v2\x1a\x1fgoo\
+    gle/api/field_behavior.proto\x1a\x1egoogle/bigtable/v2/types.proto\x1a\
+    \x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\"O\n\
+    \x03Row\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x126\n\x08families\
+    \x18\x02\x20\x03(\x0b2\x1a.google.bigtable.v2.FamilyR\x08families\"R\n\
+    \x06Family\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x124\n\x07colum\
+    ns\x18\x02\x20\x03(\x0b2\x1a.google.bigtable.v2.ColumnR\x07columns\"V\n\
+    \x06Column\x12\x1c\n\tqualifier\x18\x01\x20\x01(\x0cR\tqualifier\x12.\n\
+    \x05cells\x18\x02\x20\x03(\x0b2\x18.google.bigtable.v2.CellR\x05cells\"_\
+    \n\x04Cell\x12)\n\x10timestamp_micros\x18\x01\x20\x01(\x03R\x0ftimestamp\
+    Micros\x12\x14\n\x05value\x18\x02\x20\x01(\x0cR\x05value\x12\x16\n\x06la\
+    bels\x18\x03\x20\x03(\tR\x06labels\"\xf9\x03\n\x05Value\x12,\n\x04type\
+    \x18\x07\x20\x01(\x0b2\x18.google.bigtable.v2.TypeR\x04type\x12\x1d\n\tr\
+    aw_value\x18\x08\x20\x01(\x0cH\0R\x08rawValue\x122\n\x14raw_timestamp_mi\
+    cros\x18\t\x20\x01(\x03H\0R\x12rawTimestampMicros\x12!\n\x0bbytes_value\
+    \x18\x02\x20\x01(\x0cH\0R\nbytesValue\x12#\n\x0cstring_value\x18\x03\x20\
+    \x01(\tH\0R\x0bstringValue\x12\x1d\n\tint_value\x18\x06\x20\x01(\x03H\0R\
+    \x08intValue\x12\x1f\n\nbool_value\x18\n\x20\x01(\x08H\0R\tboolValue\x12\
+    !\n\x0bfloat_value\x18\x0b\x20\x01(\x01H\0R\nfloatValue\x12E\n\x0ftimest\
+    amp_value\x18\x0c\x20\x01(\x0b2\x1a.google.protobuf.TimestampH\0R\x0etim\
+    estampValue\x122\n\ndate_value\x18\r\x20\x01(\x0b2\x11.google.type.DateH\
+    \0R\tdateValue\x12A\n\x0barray_value\x18\x04\x20\x01(\x0b2\x1e.google.bi\
+    gtable.v2.ArrayValueH\0R\narrayValueB\x06\n\x04kind\"?\n\nArrayValue\x12\
+    1\n\x06values\x18\x01\x20\x03(\x0b2\x19.google.bigtable.v2.ValueR\x06val\
+    ues\"\xc2\x01\n\x08RowRange\x12*\n\x10start_key_closed\x18\x01\x20\x01(\
+    \x0cH\0R\x0estartKeyClosed\x12&\n\x0estart_key_open\x18\x02\x20\x01(\x0c\
+    H\0R\x0cstartKeyOpen\x12\"\n\x0cend_key_open\x18\x03\x20\x01(\x0cH\x01R\
+    \nendKeyOpen\x12&\n\x0eend_key_closed\x18\x04\x20\x01(\x0cH\x01R\x0cendK\
+    eyClosedB\x0b\n\tstart_keyB\t\n\x07end_key\"`\n\x06RowSet\x12\x19\n\x08r\
+    ow_keys\x18\x01\x20\x03(\x0cR\x07rowKeys\x12;\n\nrow_ranges\x18\x02\x20\
+    \x03(\x0b2\x1c.google.bigtable.v2.RowRangeR\trowRanges\"\xa2\x02\n\x0bCo\
+    lumnRange\x12\x1f\n\x0bfamily_name\x18\x01\x20\x01(\tR\nfamilyName\x126\
+    \n\x16start_qualifier_closed\x18\x02\x20\x01(\x0cH\0R\x14startQualifierC\
+    losed\x122\n\x14start_qualifier_open\x18\x03\x20\x01(\x0cH\0R\x12startQu\
+    alifierOpen\x122\n\x14end_qualifier_closed\x18\x04\x20\x01(\x0cH\x01R\
+    \x12endQualifierClosed\x12.\n\x12end_qualifier_open\x18\x05\x20\x01(\x0c\
+    H\x01R\x10endQualifierOpenB\x11\n\x0fstart_qualifierB\x0f\n\rend_qualifi\
+    er\"x\n\x0eTimestampRange\x124\n\x16start_timestamp_micros\x18\x01\x20\
+    \x01(\x03R\x14startTimestampMicros\x120\n\x14end_timestamp_micros\x18\
+    \x02\x20\x01(\x03R\x12endTimestampMicros\"\xd8\x01\n\nValueRange\x12.\n\
+    \x12start_value_closed\x18\x01\x20\x01(\x0cH\0R\x10startValueClosed\x12*\
+    \n\x10start_value_open\x18\x02\x20\x01(\x0cH\0R\x0estartValueOpen\x12*\n\
+    \x10end_value_closed\x18\x03\x20\x01(\x0cH\x01R\x0eendValueClosed\x12&\n\
+    \x0eend_value_open\x18\x04\x20\x01(\x0cH\x01R\x0cendValueOpenB\r\n\x0bst\
+    art_valueB\x0b\n\tend_value\"\xfc\x0b\n\tRowFilter\x12;\n\x05chain\x18\
+    \x01\x20\x01(\x0b2#.google.bigtable.v2.RowFilter.ChainH\0R\x05chain\x12J\
+    \n\ninterleave\x18\x02\x20\x01(\x0b2(.google.bigtable.v2.RowFilter.Inter\
+    leaveH\0R\ninterleave\x12G\n\tcondition\x18\x03\x20\x01(\x0b2'.google.bi\
+    gtable.v2.RowFilter.ConditionH\0R\tcondition\x12\x14\n\x04sink\x18\x10\
+    \x20\x01(\x08H\0R\x04sink\x12(\n\x0fpass_all_filter\x18\x11\x20\x01(\x08\
+    H\0R\rpassAllFilter\x12*\n\x10block_all_filter\x18\x12\x20\x01(\x08H\0R\
+    \x0eblockAllFilter\x121\n\x14row_key_regex_filter\x18\x04\x20\x01(\x0cH\
+    \0R\x11rowKeyRegexFilter\x12,\n\x11row_sample_filter\x18\x0e\x20\x01(\
+    \x01H\0R\x0frowSampleFilter\x129\n\x18family_name_regex_filter\x18\x05\
+    \x20\x01(\tH\0R\x15familyNameRegexFilter\x12C\n\x1dcolumn_qualifier_rege\
+    x_filter\x18\x06\x20\x01(\x0cH\0R\x1acolumnQualifierRegexFilter\x12Q\n\
+    \x13column_range_filter\x18\x07\x20\x01(\x0b2\x1f.google.bigtable.v2.Col\
+    umnRangeH\0R\x11columnRangeFilter\x12Z\n\x16timestamp_range_filter\x18\
+    \x08\x20\x01(\x0b2\".google.bigtable.v2.TimestampRangeH\0R\x14timestampR\
+    angeFilter\x12.\n\x12value_regex_filter\x18\t\x20\x01(\x0cH\0R\x10valueR\
+    egexFilter\x12N\n\x12value_range_filter\x18\x0f\x20\x01(\x0b2\x1e.google\
+    .bigtable.v2.ValueRangeH\0R\x10valueRangeFilter\x12>\n\x1bcells_per_row_\
+    offset_filter\x18\n\x20\x01(\x05H\0R\x17cellsPerRowOffsetFilter\x12<\n\
+    \x1acells_per_row_limit_filter\x18\x0b\x20\x01(\x05H\0R\x16cellsPerRowLi\
+    mitFilter\x12B\n\x1dcells_per_column_limit_filter\x18\x0c\x20\x01(\x05H\
+    \0R\x19cellsPerColumnLimitFilter\x128\n\x17strip_value_transformer\x18\r\
+    \x20\x01(\x08H\0R\x15stripValueTransformer\x128\n\x17apply_label_transfo\
+    rmer\x18\x13\x20\x01(\tH\0R\x15applyLabelTransformer\x1a@\n\x05Chain\x12\
+    7\n\x07filters\x18\x01\x20\x03(\x0b2\x1d.google.bigtable.v2.RowFilterR\
+    \x07filters\x1aE\n\nInterleave\x127\n\x07filters\x18\x01\x20\x03(\x0b2\
+    \x1d.google.bigtable.v2.RowFilterR\x07filters\x1a\xd7\x01\n\tCondition\
+    \x12H\n\x10predicate_filter\x18\x01\x20\x01(\x0b2\x1d.google.bigtable.v2\
+    .RowFilterR\x0fpredicateFilter\x12>\n\x0btrue_filter\x18\x02\x20\x01(\
+    \x0b2\x1d.google.bigtable.v2.RowFilterR\ntrueFilter\x12@\n\x0cfalse_filt\
+    er\x18\x03\x20\x01(\x0b2\x1d.google.bigtable.v2.RowFilterR\x0bfalseFilte\
+    rB\x08\n\x06filter\"\xca\n\n\x08Mutation\x12A\n\x08set_cell\x18\x01\x20\
+    \x01(\x0b2$.google.bigtable.v2.Mutation.SetCellH\0R\x07setCell\x12H\n\
+    \x0badd_to_cell\x18\x05\x20\x01(\x0b2&.google.bigtable.v2.Mutation.AddTo\
+    CellH\0R\taddToCell\x12N\n\rmerge_to_cell\x18\x06\x20\x01(\x0b2(.google.\
+    bigtable.v2.Mutation.MergeToCellH\0R\x0bmergeToCell\x12]\n\x12delete_fro\
+    m_column\x18\x02\x20\x01(\x0b2-.google.bigtable.v2.Mutation.DeleteFromCo\
+    lumnH\0R\x10deleteFromColumn\x12]\n\x12delete_from_family\x18\x03\x20\
+    \x01(\x0b2-.google.bigtable.v2.Mutation.DeleteFromFamilyH\0R\x10deleteFr\
+    omFamily\x12T\n\x0fdelete_from_row\x18\x04\x20\x01(\x0b2*.google.bigtabl\
+    e.v2.Mutation.DeleteFromRowH\0R\rdeleteFromRow\x1a\x96\x01\n\x07SetCell\
+    \x12\x1f\n\x0bfamily_name\x18\x01\x20\x01(\tR\nfamilyName\x12)\n\x10colu\
+    mn_qualifier\x18\x02\x20\x01(\x0cR\x0fcolumnQualifier\x12)\n\x10timestam\
+    p_micros\x18\x03\x20\x01(\x03R\x0ftimestampMicros\x12\x14\n\x05value\x18\
+    \x04\x20\x01(\x0cR\x05value\x1a\xdc\x01\n\tAddToCell\x12\x1f\n\x0bfamily\
+    _name\x18\x01\x20\x01(\tR\nfamilyName\x12D\n\x10column_qualifier\x18\x02\
+    \x20\x01(\x0b2\x19.google.bigtable.v2.ValueR\x0fcolumnQualifier\x127\n\t\
+    timestamp\x18\x03\x20\x01(\x0b2\x19.google.bigtable.v2.ValueR\ttimestamp\
+    \x12/\n\x05input\x18\x04\x20\x01(\x0b2\x19.google.bigtable.v2.ValueR\x05\
+    input\x1a\xde\x01\n\x0bMergeToCell\x12\x1f\n\x0bfamily_name\x18\x01\x20\
+    \x01(\tR\nfamilyName\x12D\n\x10column_qualifier\x18\x02\x20\x01(\x0b2\
+    \x19.google.bigtable.v2.ValueR\x0fcolumnQualifier\x127\n\ttimestamp\x18\
+    \x03\x20\x01(\x0b2\x19.google.bigtable.v2.ValueR\ttimestamp\x12/\n\x05in\
+    put\x18\x04\x20\x01(\x0b2\x19.google.bigtable.v2.ValueR\x05input\x1a\xa1\
+    \x01\n\x10DeleteFromColumn\x12\x1f\n\x0bfamily_name\x18\x01\x20\x01(\tR\
+    \nfamilyName\x12)\n\x10column_qualifier\x18\x02\x20\x01(\x0cR\x0fcolumnQ\
+    ualifier\x12A\n\ntime_range\x18\x03\x20\x01(\x0b2\".google.bigtable.v2.T\
+    imestampRangeR\ttimeRange\x1a3\n\x10DeleteFromFamily\x12\x1f\n\x0bfamily\
+    _name\x18\x01\x20\x01(\tR\nfamilyName\x1a\x0f\n\rDeleteFromRowB\n\n\x08m\
+    utation\"\xbb\x01\n\x13ReadModifyWriteRule\x12\x1f\n\x0bfamily_name\x18\
+    \x01\x20\x01(\tR\nfamilyName\x12)\n\x10column_qualifier\x18\x02\x20\x01(\
+    \x0cR\x0fcolumnQualifier\x12#\n\x0cappend_value\x18\x03\x20\x01(\x0cH\0R\
+    \x0bappendValue\x12+\n\x10increment_amount\x18\x04\x20\x01(\x03H\0R\x0fi\
+    ncrementAmountB\x06\n\x04rule\"L\n\x0fStreamPartition\x129\n\trow_range\
+    \x18\x01\x20\x01(\x0b2\x1c.google.bigtable.v2.RowRangeR\x08rowRange\"_\n\
+    \x18StreamContinuationTokens\x12C\n\x06tokens\x18\x01\x20\x03(\x0b2+.goo\
+    gle.bigtable.v2.StreamContinuationTokenR\x06tokens\"r\n\x17StreamContinu\
+    ationToken\x12A\n\tpartition\x18\x01\x20\x01(\x0b2#.google.bigtable.v2.S\
+    treamPartitionR\tpartition\x12\x14\n\x05token\x18\x02\x20\x01(\tR\x05tok\
+    en\"\r\n\x0bProtoFormat\"R\n\x0eColumnMetadata\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x12,\n\x04type\x18\x02\x20\x01(\x0b2\x18.google.big\
+    table.v2.TypeR\x04type\"K\n\x0bProtoSchema\x12<\n\x07columns\x18\x01\x20\
+    \x03(\x0b2\".google.bigtable.v2.ColumnMetadataR\x07columns\"c\n\x11Resul\
+    tSetMetadata\x12D\n\x0cproto_schema\x18\x01\x20\x01(\x0b2\x1f.google.big\
+    table.v2.ProtoSchemaH\0R\x0bprotoSchemaB\x08\n\x06schema\">\n\tProtoRows\
+    \x121\n\x06values\x18\x02\x20\x03(\x0b2\x19.google.bigtable.v2.ValueR\
+    \x06values\"/\n\x0eProtoRowsBatch\x12\x1d\n\nbatch_data\x18\x01\x20\x01(\
+    \x0cR\tbatchData\"\xc7\x01\n\x10PartialResultSet\x12N\n\x10proto_rows_ba\
+    tch\x18\x03\x20\x01(\x0b2\".google.bigtable.v2.ProtoRowsBatchH\0R\x0epro\
+    toRowsBatch\x12!\n\x0cresume_token\x18\x05\x20\x01(\x0cR\x0bresumeToken\
+    \x120\n\x14estimated_batch_size\x18\x04\x20\x01(\x05R\x12estimatedBatchS\
+    izeB\x0e\n\x0cpartial_rowsB\xb3\x01\n\x16com.google.bigtable.v2B\tDataPr\
+    otoP\x01Z8cloud.google.com/go/bigtable/apiv2/bigtablepb;bigtablepb\xaa\
+    \x02\x18Google.Cloud.Bigtable.V2\xca\x02\x18Google\\Cloud\\Bigtable\\V2\
+    \xea\x02\x1bGoogle::Cloud::Bigtable::V2J\x9d\x84\x02\n\x07\x12\x05\x0e\0\
+    \x88\x06\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\
+    \x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20L\
+    icense,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20no\
+    t\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\
+    \x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20Lice\
+    nse\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-\
+    2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\
+    \x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
+    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
+    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
+    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
+    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
+    tations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x1b\
+    \n\t\n\x02\x03\0\x12\x03\x12\0)\n\t\n\x02\x03\x01\x12\x03\x13\0(\n\t\n\
+    \x02\x03\x02\x12\x03\x14\0)\n\t\n\x02\x03\x03\x12\x03\x15\0\x20\n\x08\n\
+    \x01\x08\x12\x03\x17\05\n\t\n\x02\x08%\x12\x03\x17\05\n\x08\n\x01\x08\
+    \x12\x03\x18\0O\n\t\n\x02\x08\x0b\x12\x03\x18\0O\n\x08\n\x01\x08\x12\x03\
+    \x19\0\"\n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\x01\x08\x12\x03\x1a\0*\
+    \n\t\n\x02\x08\x08\x12\x03\x1a\0*\n\x08\n\x01\x08\x12\x03\x1b\0/\n\t\n\
+    \x02\x08\x01\x12\x03\x1b\0/\n\x08\n\x01\x08\x12\x03\x1c\05\n\t\n\x02\x08\
+    )\x12\x03\x1c\05\n\x08\n\x01\x08\x12\x03\x1d\04\n\t\n\x02\x08-\x12\x03\
+    \x1d\04\n\x90\x01\n\x02\x04\0\x12\x04!\0*\x01\x1a\x83\x01\x20Specifies\
+    \x20the\x20complete\x20(requested)\x20contents\x20of\x20a\x20single\x20r\
+    ow\x20of\x20a\x20table.\n\x20Rows\x20which\x20exceed\x20256MiB\x20in\x20\
+    size\x20cannot\x20be\x20read\x20in\x20full.\n\n\n\n\x03\x04\0\x01\x12\
+    \x03!\x08\x0b\n\xe2\x01\n\x04\x04\0\x02\0\x12\x03%\x02\x10\x1a\xd4\x01\
+    \x20The\x20unique\x20key\x20which\x20identifies\x20this\x20row\x20within\
+    \x20its\x20table.\x20This\x20is\x20the\x20same\n\x20key\x20that's\x20use\
+    d\x20to\x20identify\x20the\x20row\x20in,\x20for\x20example,\x20a\x20Muta\
+    teRowRequest.\n\x20May\x20contain\x20any\x20non-empty\x20byte\x20string\
+    \x20up\x20to\x204KiB\x20in\x20length.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\
+    \x03%\x02\x07\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03%\x08\x0b\n\x0c\n\x05\
+    \x04\0\x02\0\x03\x12\x03%\x0e\x0f\n{\n\x04\x04\0\x02\x01\x12\x03)\x02\
+    \x1f\x1an\x20May\x20be\x20empty,\x20but\x20only\x20if\x20the\x20entire\
+    \x20row\x20is\x20empty.\n\x20The\x20mutual\x20ordering\x20of\x20column\
+    \x20families\x20is\x20not\x20specified.\n\n\x0c\n\x05\x04\0\x02\x01\x04\
+    \x12\x03)\x02\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x03)\x0b\x11\n\x0c\n\
+    \x05\x04\0\x02\x01\x01\x12\x03)\x12\x1a\n\x0c\n\x05\x04\0\x02\x01\x03\
+    \x12\x03)\x1d\x1e\nf\n\x02\x04\x01\x12\x04.\09\x01\x1aZ\x20Specifies\x20\
+    (some\x20of)\x20the\x20contents\x20of\x20a\x20single\x20row/column\x20fa\
+    mily\x20intersection\n\x20of\x20a\x20table.\n\n\n\n\x03\x04\x01\x01\x12\
+    \x03.\x08\x0e\n\x85\x03\n\x04\x04\x01\x02\0\x12\x035\x02\x12\x1a\xf7\x02\
+    \x20The\x20unique\x20key\x20which\x20identifies\x20this\x20family\x20wit\
+    hin\x20its\x20row.\x20This\x20is\x20the\n\x20same\x20key\x20that's\x20us\
+    ed\x20to\x20identify\x20the\x20family\x20in,\x20for\x20example,\x20a\x20\
+    RowFilter\n\x20which\x20sets\x20its\x20\"family_name_regex_filter\"\x20f\
+    ield.\n\x20Must\x20match\x20`[-_.a-zA-Z0-9]+`,\x20except\x20that\x20Aggr\
+    egatingRowProcessors\x20may\n\x20produce\x20cells\x20in\x20a\x20sentinel\
+    \x20family\x20with\x20an\x20empty\x20name.\n\x20Must\x20be\x20no\x20grea\
+    ter\x20than\x2064\x20characters\x20in\x20length.\n\n\x0c\n\x05\x04\x01\
+    \x02\0\x05\x12\x035\x02\x08\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x035\t\r\n\
+    \x0c\n\x05\x04\x01\x02\0\x03\x12\x035\x10\x11\nL\n\x04\x04\x01\x02\x01\
+    \x12\x038\x02\x1e\x1a?\x20Must\x20not\x20be\x20empty.\x20Sorted\x20in\
+    \x20order\x20of\x20increasing\x20\"qualifier\".\n\n\x0c\n\x05\x04\x01\
+    \x02\x01\x04\x12\x038\x02\n\n\x0c\n\x05\x04\x01\x02\x01\x06\x12\x038\x0b\
+    \x11\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x038\x12\x19\n\x0c\n\x05\x04\
+    \x01\x02\x01\x03\x12\x038\x1c\x1d\n_\n\x02\x04\x02\x12\x04=\0G\x01\x1aS\
+    \x20Specifies\x20(some\x20of)\x20the\x20contents\x20of\x20a\x20single\
+    \x20row/column\x20intersection\x20of\x20a\n\x20table.\n\n\n\n\x03\x04\
+    \x02\x01\x12\x03=\x08\x0e\n\xad\x02\n\x04\x04\x02\x02\0\x12\x03C\x02\x16\
+    \x1a\x9f\x02\x20The\x20unique\x20key\x20which\x20identifies\x20this\x20c\
+    olumn\x20within\x20its\x20family.\x20This\x20is\x20the\n\x20same\x20key\
+    \x20that's\x20used\x20to\x20identify\x20the\x20column\x20in,\x20for\x20e\
+    xample,\x20a\x20RowFilter\n\x20which\x20sets\x20its\x20`column_qualifier\
+    _regex_filter`\x20field.\n\x20May\x20contain\x20any\x20byte\x20string,\
+    \x20including\x20the\x20empty\x20string,\x20up\x20to\x2016kiB\x20in\n\
+    \x20length.\n\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03C\x02\x07\n\x0c\n\x05\
+    \x04\x02\x02\0\x01\x12\x03C\x08\x11\n\x0c\n\x05\x04\x02\x02\0\x03\x12\
+    \x03C\x14\x15\nS\n\x04\x04\x02\x02\x01\x12\x03F\x02\x1a\x1aF\x20Must\x20\
+    not\x20be\x20empty.\x20Sorted\x20in\x20order\x20of\x20decreasing\x20\"ti\
+    mestamp_micros\".\n\n\x0c\n\x05\x04\x02\x02\x01\x04\x12\x03F\x02\n\n\x0c\
+    \n\x05\x04\x02\x02\x01\x06\x12\x03F\x0b\x0f\n\x0c\n\x05\x04\x02\x02\x01\
+    \x01\x12\x03F\x10\x15\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03F\x18\x19\n\
+    [\n\x02\x04\x03\x12\x04J\0Z\x01\x1aO\x20Specifies\x20(some\x20of)\x20the\
+    \x20contents\x20of\x20a\x20single\x20row/column/timestamp\x20of\x20a\x20\
+    table.\n\n\n\n\x03\x04\x03\x01\x12\x03J\x08\x0c\n\xf6\x02\n\x04\x04\x03\
+    \x02\0\x12\x03Q\x02\x1d\x1a\xe8\x02\x20The\x20cell's\x20stored\x20timest\
+    amp,\x20which\x20also\x20uniquely\x20identifies\x20it\x20within\n\x20its\
+    \x20column.\n\x20Values\x20are\x20always\x20expressed\x20in\x20microseco\
+    nds,\x20but\x20individual\x20tables\x20may\x20set\n\x20a\x20coarser\x20g\
+    ranularity\x20to\x20further\x20restrict\x20the\x20allowed\x20values.\x20\
+    For\n\x20example,\x20a\x20table\x20which\x20specifies\x20millisecond\x20\
+    granularity\x20will\x20only\x20allow\n\x20values\x20of\x20`timestamp_mic\
+    ros`\x20which\x20are\x20multiples\x20of\x201000.\n\n\x0c\n\x05\x04\x03\
+    \x02\0\x05\x12\x03Q\x02\x07\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x03Q\x08\
+    \x18\n\x0c\n\x05\x04\x03\x02\0\x03\x12\x03Q\x1b\x1c\n\x7f\n\x04\x04\x03\
+    \x02\x01\x12\x03V\x02\x12\x1ar\x20The\x20value\x20stored\x20in\x20the\
+    \x20cell.\n\x20May\x20contain\x20any\x20byte\x20string,\x20including\x20\
+    the\x20empty\x20string,\x20up\x20to\x20100MiB\x20in\n\x20length.\n\n\x0c\
+    \n\x05\x04\x03\x02\x01\x05\x12\x03V\x02\x07\n\x0c\n\x05\x04\x03\x02\x01\
+    \x01\x12\x03V\x08\r\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03V\x10\x11\nY\
+    \n\x04\x04\x03\x02\x02\x12\x03Y\x02\x1d\x1aL\x20Labels\x20applied\x20to\
+    \x20the\x20cell\x20by\x20a\x20[RowFilter][google.bigtable.v2.RowFilter].\
+    \n\n\x0c\n\x05\x04\x03\x02\x02\x04\x12\x03Y\x02\n\n\x0c\n\x05\x04\x03\
+    \x02\x02\x05\x12\x03Y\x0b\x11\n\x0c\n\x05\x04\x03\x02\x02\x01\x12\x03Y\
+    \x12\x18\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03Y\x1b\x1c\n\xf7\x01\n\
+    \x02\x04\x04\x12\x05`\0\x9b\x01\x01\x1a\xe9\x01\x20`Value`\x20represents\
+    \x20a\x20dynamically\x20typed\x20value.\n\x20The\x20typed\x20fields\x20i\
+    n\x20`Value`\x20are\x20used\x20as\x20a\x20transport\x20encoding\x20for\
+    \x20the\x20actual\n\x20value\x20(which\x20may\x20be\x20of\x20a\x20more\
+    \x20complex\x20type).\x20See\x20the\x20documentation\x20of\x20the\n\x20`\
+    Type`\x20message\x20for\x20more\x20details.\n\n\n\n\x03\x04\x04\x01\x12\
+    \x03`\x08\r\n\xe3\x05\n\x04\x04\x04\x02\0\x12\x03n\x02\x10\x1a\xd5\x05\
+    \x20The\x20verified\x20`Type`\x20of\x20this\x20`Value`,\x20if\x20it\x20c\
+    annot\x20be\x20inferred.\n\n\x20Read\x20results\x20will\x20never\x20spec\
+    ify\x20the\x20encoding\x20for\x20`type`\x20since\x20the\x20value\n\x20wi\
+    ll\x20already\x20have\x20been\x20decoded\x20by\x20the\x20server.\x20Furt\
+    hermore,\x20the\x20`type`\x20will\n\x20be\x20omitted\x20entirely\x20if\
+    \x20it\x20can\x20be\x20inferred\x20from\x20a\x20previous\x20response.\
+    \x20The\n\x20exact\x20semantics\x20for\x20inferring\x20`type`\x20will\
+    \x20vary,\x20and\x20are\x20therefore\n\x20documented\x20separately\x20fo\
+    r\x20each\x20read\x20method.\n\n\x20When\x20using\x20composite\x20types\
+    \x20(Struct,\x20Array,\x20Map)\x20only\x20the\x20outermost\x20`Value`\n\
+    \x20will\x20specify\x20the\x20`type`.\x20This\x20top-level\x20`type`\x20\
+    will\x20define\x20the\x20types\x20for\n\x20any\x20nested\x20`Struct'\x20\
+    fields,\x20`Array`\x20elements,\x20or\x20`Map`\x20key/value\x20pairs.\n\
+    \x20If\x20a\x20nested\x20`Value`\x20provides\x20a\x20`type`\x20on\x20wri\
+    te,\x20the\x20request\x20will\x20be\n\x20rejected\x20with\x20INVALID_ARG\
+    UMENT.\n\n\x0c\n\x05\x04\x04\x02\0\x06\x12\x03n\x02\x06\n\x0c\n\x05\x04\
+    \x04\x02\0\x01\x12\x03n\x07\x0b\n\x0c\n\x05\x04\x04\x02\0\x03\x12\x03n\
+    \x0e\x0f\n\xd9\x02\n\x04\x04\x04\x08\0\x12\x05v\x02\x9a\x01\x03\x1a\xc9\
+    \x02\x20Options\x20for\x20transporting\x20values\x20within\x20the\x20pro\
+    tobuf\x20type\x20system.\x20A\x20given\n\x20`kind`\x20may\x20support\x20\
+    more\x20than\x20one\x20`type`\x20and\x20vice\x20versa.\x20On\x20write,\
+    \x20this\x20is\n\x20roughly\x20analogous\x20to\x20a\x20GoogleSQL\x20lite\
+    ral.\n\n\x20The\x20value\x20is\x20`NULL`\x20if\x20none\x20of\x20the\x20f\
+    ields\x20in\x20`kind`\x20is\x20set.\x20If\x20`type`\x20is\n\x20also\x20o\
+    mitted\x20on\x20write,\x20we\x20will\x20infer\x20it\x20based\x20on\x20th\
+    e\x20schema.\n\n\x0c\n\x05\x04\x04\x08\0\x01\x12\x03v\x08\x0c\nj\n\x04\
+    \x04\x04\x02\x01\x12\x03y\x04\x18\x1a]\x20Represents\x20a\x20raw\x20byte\
+    \x20sequence\x20with\x20no\x20type\x20information.\n\x20The\x20`type`\
+    \x20field\x20must\x20be\x20omitted.\n\n\x0c\n\x05\x04\x04\x02\x01\x05\
+    \x12\x03y\x04\t\n\x0c\n\x05\x04\x04\x02\x01\x01\x12\x03y\n\x13\n\x0c\n\
+    \x05\x04\x04\x02\x01\x03\x12\x03y\x16\x17\nk\n\x04\x04\x04\x02\x02\x12\
+    \x03}\x04#\x1a^\x20Represents\x20a\x20raw\x20cell\x20timestamp\x20with\
+    \x20no\x20type\x20information.\n\x20The\x20`type`\x20field\x20must\x20be\
+    \x20omitted.\n\n\x0c\n\x05\x04\x04\x02\x02\x05\x12\x03}\x04\t\n\x0c\n\
+    \x05\x04\x04\x02\x02\x01\x12\x03}\n\x1e\n\x0c\n\x05\x04\x04\x02\x02\x03\
+    \x12\x03}!\"\nH\n\x04\x04\x04\x02\x03\x12\x04\x80\x01\x04\x1a\x1a:\x20Re\
+    presents\x20a\x20typed\x20value\x20transported\x20as\x20a\x20byte\x20seq\
+    uence.\n\n\r\n\x05\x04\x04\x02\x03\x05\x12\x04\x80\x01\x04\t\n\r\n\x05\
+    \x04\x04\x02\x03\x01\x12\x04\x80\x01\n\x15\n\r\n\x05\x04\x04\x02\x03\x03\
+    \x12\x04\x80\x01\x18\x19\nA\n\x04\x04\x04\x02\x04\x12\x04\x83\x01\x04\
+    \x1c\x1a3\x20Represents\x20a\x20typed\x20value\x20transported\x20as\x20a\
+    \x20string.\n\n\r\n\x05\x04\x04\x02\x04\x05\x12\x04\x83\x01\x04\n\n\r\n\
+    \x05\x04\x04\x02\x04\x01\x12\x04\x83\x01\x0b\x17\n\r\n\x05\x04\x04\x02\
+    \x04\x03\x12\x04\x83\x01\x1a\x1b\nC\n\x04\x04\x04\x02\x05\x12\x04\x86\
+    \x01\x04\x18\x1a5\x20Represents\x20a\x20typed\x20value\x20transported\
+    \x20as\x20an\x20integer.\n\n\r\n\x05\x04\x04\x02\x05\x05\x12\x04\x86\x01\
+    \x04\t\n\r\n\x05\x04\x04\x02\x05\x01\x12\x04\x86\x01\n\x13\n\r\n\x05\x04\
+    \x04\x02\x05\x03\x12\x04\x86\x01\x16\x17\nB\n\x04\x04\x04\x02\x06\x12\
+    \x04\x89\x01\x04\x19\x1a4\x20Represents\x20a\x20typed\x20value\x20transp\
+    orted\x20as\x20a\x20boolean.\n\n\r\n\x05\x04\x04\x02\x06\x05\x12\x04\x89\
+    \x01\x04\x08\n\r\n\x05\x04\x04\x02\x06\x01\x12\x04\x89\x01\t\x13\n\r\n\
+    \x05\x04\x04\x02\x06\x03\x12\x04\x89\x01\x16\x18\nP\n\x04\x04\x04\x02\
+    \x07\x12\x04\x8c\x01\x04\x1c\x1aB\x20Represents\x20a\x20typed\x20value\
+    \x20transported\x20as\x20a\x20floating\x20point\x20number.\n\n\r\n\x05\
+    \x04\x04\x02\x07\x05\x12\x04\x8c\x01\x04\n\n\r\n\x05\x04\x04\x02\x07\x01\
+    \x12\x04\x8c\x01\x0b\x16\n\r\n\x05\x04\x04\x02\x07\x03\x12\x04\x8c\x01\
+    \x19\x1b\nD\n\x04\x04\x04\x02\x08\x12\x04\x8f\x01\x043\x1a6\x20Represent\
+    s\x20a\x20typed\x20value\x20transported\x20as\x20a\x20timestamp.\n\n\r\n\
+    \x05\x04\x04\x02\x08\x06\x12\x04\x8f\x01\x04\x1d\n\r\n\x05\x04\x04\x02\
+    \x08\x01\x12\x04\x8f\x01\x1e-\n\r\n\x05\x04\x04\x02\x08\x03\x12\x04\x8f\
+    \x0102\n?\n\x04\x04\x04\x02\t\x12\x04\x92\x01\x04%\x1a1\x20Represents\
+    \x20a\x20typed\x20value\x20transported\x20as\x20a\x20date.\n\n\r\n\x05\
+    \x04\x04\x02\t\x06\x12\x04\x92\x01\x04\x14\n\r\n\x05\x04\x04\x02\t\x01\
+    \x12\x04\x92\x01\x15\x1f\n\r\n\x05\x04\x04\x02\t\x03\x12\x04\x92\x01\"$\
+    \n\xe1\x02\n\x04\x04\x04\x02\n\x12\x04\x99\x01\x04\x1f\x1a\xd2\x02\x20Re\
+    presents\x20a\x20typed\x20value\x20transported\x20as\x20a\x20sequence\
+    \x20of\x20values.\n\x20To\x20differentiate\x20between\x20`Struct`,\x20`A\
+    rray`,\x20and\x20`Map`,\x20the\x20outermost\n\x20`Value`\x20must\x20prov\
+    ide\x20an\x20explicit\x20`type`\x20on\x20write.\x20This\x20`type`\x20wil\
+    l\n\x20apply\x20recursively\x20to\x20the\x20nested\x20`Struct`\x20fields\
+    ,\x20`Array`\x20elements,\n\x20or\x20`Map`\x20key/value\x20pairs,\x20whi\
+    ch\x20*must\x20not*\x20supply\x20their\x20own\x20`type`.\n\n\r\n\x05\x04\
+    \x04\x02\n\x06\x12\x04\x99\x01\x04\x0e\n\r\n\x05\x04\x04\x02\n\x01\x12\
+    \x04\x99\x01\x0f\x1a\n\r\n\x05\x04\x04\x02\n\x03\x12\x04\x99\x01\x1d\x1e\
+    \n;\n\x02\x04\x05\x12\x06\x9e\x01\0\xa1\x01\x01\x1a-\x20`ArrayValue`\x20\
+    is\x20an\x20ordered\x20list\x20of\x20`Value`.\n\n\x0b\n\x03\x04\x05\x01\
+    \x12\x04\x9e\x01\x08\x12\n2\n\x04\x04\x05\x02\0\x12\x04\xa0\x01\x02\x1c\
+    \x1a$\x20The\x20ordered\x20elements\x20in\x20the\x20array.\n\n\r\n\x05\
+    \x04\x05\x02\0\x04\x12\x04\xa0\x01\x02\n\n\r\n\x05\x04\x05\x02\0\x06\x12\
+    \x04\xa0\x01\x0b\x10\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xa0\x01\x11\x17\
+    \n\r\n\x05\x04\x05\x02\0\x03\x12\x04\xa0\x01\x1a\x1b\n5\n\x02\x04\x06\
+    \x12\x06\xa4\x01\0\xb8\x01\x01\x1a'\x20Specifies\x20a\x20contiguous\x20r\
+    ange\x20of\x20rows.\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xa4\x01\x08\x10\n\
+    \x80\x01\n\x04\x04\x06\x08\0\x12\x06\xa7\x01\x02\xad\x01\x03\x1ap\x20The\
+    \x20row\x20key\x20at\x20which\x20to\x20start\x20the\x20range.\n\x20If\
+    \x20neither\x20field\x20is\x20set,\x20interpreted\x20as\x20the\x20empty\
+    \x20string,\x20inclusive.\n\n\r\n\x05\x04\x06\x08\0\x01\x12\x04\xa7\x01\
+    \x08\x11\nH\n\x04\x04\x06\x02\0\x12\x04\xa9\x01\x04\x1f\x1a:\x20Used\x20\
+    when\x20giving\x20an\x20inclusive\x20lower\x20bound\x20for\x20the\x20ran\
+    ge.\n\n\r\n\x05\x04\x06\x02\0\x05\x12\x04\xa9\x01\x04\t\n\r\n\x05\x04\
+    \x06\x02\0\x01\x12\x04\xa9\x01\n\x1a\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\
+    \xa9\x01\x1d\x1e\nH\n\x04\x04\x06\x02\x01\x12\x04\xac\x01\x04\x1d\x1a:\
+    \x20Used\x20when\x20giving\x20an\x20exclusive\x20lower\x20bound\x20for\
+    \x20the\x20range.\n\n\r\n\x05\x04\x06\x02\x01\x05\x12\x04\xac\x01\x04\t\
+    \n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xac\x01\n\x18\n\r\n\x05\x04\x06\
+    \x02\x01\x03\x12\x04\xac\x01\x1b\x1c\n\x82\x01\n\x04\x04\x06\x08\x01\x12\
+    \x06\xb1\x01\x02\xb7\x01\x03\x1ar\x20The\x20row\x20key\x20at\x20which\
+    \x20to\x20end\x20the\x20range.\n\x20If\x20neither\x20field\x20is\x20set,\
+    \x20interpreted\x20as\x20the\x20infinite\x20row\x20key,\x20exclusive.\n\
+    \n\r\n\x05\x04\x06\x08\x01\x01\x12\x04\xb1\x01\x08\x0f\nH\n\x04\x04\x06\
+    \x02\x02\x12\x04\xb3\x01\x04\x1b\x1a:\x20Used\x20when\x20giving\x20an\
+    \x20exclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\x04\
+    \x06\x02\x02\x05\x12\x04\xb3\x01\x04\t\n\r\n\x05\x04\x06\x02\x02\x01\x12\
+    \x04\xb3\x01\n\x16\n\r\n\x05\x04\x06\x02\x02\x03\x12\x04\xb3\x01\x19\x1a\
+    \nH\n\x04\x04\x06\x02\x03\x12\x04\xb6\x01\x04\x1d\x1a:\x20Used\x20when\
+    \x20giving\x20an\x20inclusive\x20upper\x20bound\x20for\x20the\x20range.\
+    \n\n\r\n\x05\x04\x06\x02\x03\x05\x12\x04\xb6\x01\x04\t\n\r\n\x05\x04\x06\
+    \x02\x03\x01\x12\x04\xb6\x01\n\x18\n\r\n\x05\x04\x06\x02\x03\x03\x12\x04\
+    \xb6\x01\x1b\x1c\n7\n\x02\x04\x07\x12\x06\xbb\x01\0\xc1\x01\x01\x1a)\x20\
+    Specifies\x20a\x20non-contiguous\x20set\x20of\x20rows.\n\n\x0b\n\x03\x04\
+    \x07\x01\x12\x04\xbb\x01\x08\x0e\n0\n\x04\x04\x07\x02\0\x12\x04\xbd\x01\
+    \x02\x1e\x1a\"\x20Single\x20rows\x20included\x20in\x20the\x20set.\n\n\r\
+    \n\x05\x04\x07\x02\0\x04\x12\x04\xbd\x01\x02\n\n\r\n\x05\x04\x07\x02\0\
+    \x05\x12\x04\xbd\x01\x0b\x10\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\xbd\x01\
+    \x11\x19\n\r\n\x05\x04\x07\x02\0\x03\x12\x04\xbd\x01\x1c\x1d\n:\n\x04\
+    \x04\x07\x02\x01\x12\x04\xc0\x01\x02#\x1a,\x20Contiguous\x20row\x20range\
+    s\x20included\x20in\x20the\x20set.\n\n\r\n\x05\x04\x07\x02\x01\x04\x12\
+    \x04\xc0\x01\x02\n\n\r\n\x05\x04\x07\x02\x01\x06\x12\x04\xc0\x01\x0b\x13\
+    \n\r\n\x05\x04\x07\x02\x01\x01\x12\x04\xc0\x01\x14\x1e\n\r\n\x05\x04\x07\
+    \x02\x01\x03\x12\x04\xc0\x01!\"\n\x85\x02\n\x02\x04\x08\x12\x06\xc7\x01\
+    \0\xde\x01\x01\x1a\xf6\x01\x20Specifies\x20a\x20contiguous\x20range\x20o\
+    f\x20columns\x20within\x20a\x20single\x20column\x20family.\n\x20The\x20r\
+    ange\x20spans\x20from\x20&lt;column_family&gt;:&lt;start_qualifier&gt;\
+    \x20to\n\x20&lt;column_family&gt;:&lt;end_qualifier&gt;,\x20where\x20bot\
+    h\x20bounds\x20can\x20be\x20either\n\x20inclusive\x20or\x20exclusive.\n\
+    \n\x0b\n\x03\x04\x08\x01\x12\x04\xc7\x01\x08\x13\nL\n\x04\x04\x08\x02\0\
+    \x12\x04\xc9\x01\x02\x19\x1a>\x20The\x20name\x20of\x20the\x20column\x20f\
+    amily\x20within\x20which\x20this\x20range\x20falls.\n\n\r\n\x05\x04\x08\
+    \x02\0\x05\x12\x04\xc9\x01\x02\x08\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\
+    \xc9\x01\t\x14\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\xc9\x01\x17\x18\n\xa3\
+    \x01\n\x04\x04\x08\x08\0\x12\x06\xcd\x01\x02\xd3\x01\x03\x1a\x92\x01\x20\
+    The\x20column\x20qualifier\x20at\x20which\x20to\x20start\x20the\x20range\
+    \x20(within\x20`column_family`).\n\x20If\x20neither\x20field\x20is\x20se\
+    t,\x20interpreted\x20as\x20the\x20empty\x20string,\x20inclusive.\n\n\r\n\
+    \x05\x04\x08\x08\0\x01\x12\x04\xcd\x01\x08\x17\nH\n\x04\x04\x08\x02\x01\
+    \x12\x04\xcf\x01\x04%\x1a:\x20Used\x20when\x20giving\x20an\x20inclusive\
+    \x20lower\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\x04\x08\x02\x01\
+    \x05\x12\x04\xcf\x01\x04\t\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xcf\x01\
+    \n\x20\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xcf\x01#$\nH\n\x04\x04\x08\
+    \x02\x02\x12\x04\xd2\x01\x04#\x1a:\x20Used\x20when\x20giving\x20an\x20ex\
+    clusive\x20lower\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\x04\x08\
+    \x02\x02\x05\x12\x04\xd2\x01\x04\t\n\r\n\x05\x04\x08\x02\x02\x01\x12\x04\
+    \xd2\x01\n\x1e\n\r\n\x05\x04\x08\x02\x02\x03\x12\x04\xd2\x01!\"\n\xa4\
+    \x01\n\x04\x04\x08\x08\x01\x12\x06\xd7\x01\x02\xdd\x01\x03\x1a\x93\x01\
+    \x20The\x20column\x20qualifier\x20at\x20which\x20to\x20end\x20the\x20ran\
+    ge\x20(within\x20`column_family`).\n\x20If\x20neither\x20field\x20is\x20\
+    set,\x20interpreted\x20as\x20the\x20infinite\x20string,\x20exclusive.\n\
+    \n\r\n\x05\x04\x08\x08\x01\x01\x12\x04\xd7\x01\x08\x15\nH\n\x04\x04\x08\
+    \x02\x03\x12\x04\xd9\x01\x04#\x1a:\x20Used\x20when\x20giving\x20an\x20in\
+    clusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\x04\x08\
+    \x02\x03\x05\x12\x04\xd9\x01\x04\t\n\r\n\x05\x04\x08\x02\x03\x01\x12\x04\
+    \xd9\x01\n\x1e\n\r\n\x05\x04\x08\x02\x03\x03\x12\x04\xd9\x01!\"\nH\n\x04\
+    \x04\x08\x02\x04\x12\x04\xdc\x01\x04!\x1a:\x20Used\x20when\x20giving\x20\
+    an\x20exclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\
+    \x04\x08\x02\x04\x05\x12\x04\xdc\x01\x04\t\n\r\n\x05\x04\x08\x02\x04\x01\
+    \x12\x04\xdc\x01\n\x1c\n\r\n\x05\x04\x08\x02\x04\x03\x12\x04\xdc\x01\x1f\
+    \x20\nG\n\x02\x04\t\x12\x06\xe1\x01\0\xe7\x01\x01\x1a9\x20Specified\x20a\
+    \x20contiguous\x20range\x20of\x20microsecond\x20timestamps.\n\n\x0b\n\
+    \x03\x04\t\x01\x12\x04\xe1\x01\x08\x16\nG\n\x04\x04\t\x02\0\x12\x04\xe3\
+    \x01\x02#\x1a9\x20Inclusive\x20lower\x20bound.\x20If\x20left\x20empty,\
+    \x20interpreted\x20as\x200.\n\n\r\n\x05\x04\t\x02\0\x05\x12\x04\xe3\x01\
+    \x02\x07\n\r\n\x05\x04\t\x02\0\x01\x12\x04\xe3\x01\x08\x1e\n\r\n\x05\x04\
+    \t\x02\0\x03\x12\x04\xe3\x01!\"\nN\n\x04\x04\t\x02\x01\x12\x04\xe6\x01\
+    \x02!\x1a@\x20Exclusive\x20upper\x20bound.\x20If\x20left\x20empty,\x20in\
+    terpreted\x20as\x20infinity.\n\n\r\n\x05\x04\t\x02\x01\x05\x12\x04\xe6\
+    \x01\x02\x07\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xe6\x01\x08\x1c\n\r\n\
+    \x05\x04\t\x02\x01\x03\x12\x04\xe6\x01\x1f\x20\n@\n\x02\x04\n\x12\x06\
+    \xea\x01\0\xfe\x01\x01\x1a2\x20Specifies\x20a\x20contiguous\x20range\x20\
+    of\x20raw\x20byte\x20values.\n\n\x0b\n\x03\x04\n\x01\x12\x04\xea\x01\x08\
+    \x12\n~\n\x04\x04\n\x08\0\x12\x06\xed\x01\x02\xf3\x01\x03\x1an\x20The\
+    \x20value\x20at\x20which\x20to\x20start\x20the\x20range.\n\x20If\x20neit\
+    her\x20field\x20is\x20set,\x20interpreted\x20as\x20the\x20empty\x20strin\
+    g,\x20inclusive.\n\n\r\n\x05\x04\n\x08\0\x01\x12\x04\xed\x01\x08\x13\nH\
+    \n\x04\x04\n\x02\0\x12\x04\xef\x01\x04!\x1a:\x20Used\x20when\x20giving\
+    \x20an\x20inclusive\x20lower\x20bound\x20for\x20the\x20range.\n\n\r\n\
+    \x05\x04\n\x02\0\x05\x12\x04\xef\x01\x04\t\n\r\n\x05\x04\n\x02\0\x01\x12\
+    \x04\xef\x01\n\x1c\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xef\x01\x1f\x20\nH\
+    \n\x04\x04\n\x02\x01\x12\x04\xf2\x01\x04\x1f\x1a:\x20Used\x20when\x20giv\
     ing\x20an\x20exclusive\x20lower\x20bound\x20for\x20the\x20range.\n\n\r\n\
-    \x05\x04\x06\x02\x02\x05\x12\x04\x86\x01\x04\t\n\r\n\x05\x04\x06\x02\x02\
-    \x01\x12\x04\x86\x01\n\x1e\n\r\n\x05\x04\x06\x02\x02\x03\x12\x04\x86\x01\
-    !\"\n\xa4\x01\n\x04\x04\x06\x08\x01\x12\x06\x8b\x01\x02\x91\x01\x03\x1a\
-    \x93\x01\x20The\x20column\x20qualifier\x20at\x20which\x20to\x20end\x20th\
-    e\x20range\x20(within\x20`column_family`).\n\x20If\x20neither\x20field\
-    \x20is\x20set,\x20interpreted\x20as\x20the\x20infinite\x20string,\x20exc\
-    lusive.\n\n\r\n\x05\x04\x06\x08\x01\x01\x12\x04\x8b\x01\x08\x15\nH\n\x04\
-    \x04\x06\x02\x03\x12\x04\x8d\x01\x04#\x1a:\x20Used\x20when\x20giving\x20\
-    an\x20inclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\
-    \x04\x06\x02\x03\x05\x12\x04\x8d\x01\x04\t\n\r\n\x05\x04\x06\x02\x03\x01\
-    \x12\x04\x8d\x01\n\x1e\n\r\n\x05\x04\x06\x02\x03\x03\x12\x04\x8d\x01!\"\
-    \nH\n\x04\x04\x06\x02\x04\x12\x04\x90\x01\x04!\x1a:\x20Used\x20when\x20g\
-    iving\x20an\x20exclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\
-    \n\x05\x04\x06\x02\x04\x05\x12\x04\x90\x01\x04\t\n\r\n\x05\x04\x06\x02\
-    \x04\x01\x12\x04\x90\x01\n\x1c\n\r\n\x05\x04\x06\x02\x04\x03\x12\x04\x90\
-    \x01\x1f\x20\nG\n\x02\x04\x07\x12\x06\x95\x01\0\x9b\x01\x01\x1a9\x20Spec\
-    ified\x20a\x20contiguous\x20range\x20of\x20microsecond\x20timestamps.\n\
-    \n\x0b\n\x03\x04\x07\x01\x12\x04\x95\x01\x08\x16\nG\n\x04\x04\x07\x02\0\
-    \x12\x04\x97\x01\x02#\x1a9\x20Inclusive\x20lower\x20bound.\x20If\x20left\
-    \x20empty,\x20interpreted\x20as\x200.\n\n\r\n\x05\x04\x07\x02\0\x05\x12\
-    \x04\x97\x01\x02\x07\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\x97\x01\x08\x1e\
-    \n\r\n\x05\x04\x07\x02\0\x03\x12\x04\x97\x01!\"\nN\n\x04\x04\x07\x02\x01\
-    \x12\x04\x9a\x01\x02!\x1a@\x20Exclusive\x20upper\x20bound.\x20If\x20left\
-    \x20empty,\x20interpreted\x20as\x20infinity.\n\n\r\n\x05\x04\x07\x02\x01\
-    \x05\x12\x04\x9a\x01\x02\x07\n\r\n\x05\x04\x07\x02\x01\x01\x12\x04\x9a\
-    \x01\x08\x1c\n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\x9a\x01\x1f\x20\n@\n\
-    \x02\x04\x08\x12\x06\x9e\x01\0\xb2\x01\x01\x1a2\x20Specifies\x20a\x20con\
-    tiguous\x20range\x20of\x20raw\x20byte\x20values.\n\n\x0b\n\x03\x04\x08\
-    \x01\x12\x04\x9e\x01\x08\x12\n~\n\x04\x04\x08\x08\0\x12\x06\xa1\x01\x02\
-    \xa7\x01\x03\x1an\x20The\x20value\x20at\x20which\x20to\x20start\x20the\
-    \x20range.\n\x20If\x20neither\x20field\x20is\x20set,\x20interpreted\x20a\
-    s\x20the\x20empty\x20string,\x20inclusive.\n\n\r\n\x05\x04\x08\x08\0\x01\
-    \x12\x04\xa1\x01\x08\x13\nH\n\x04\x04\x08\x02\0\x12\x04\xa3\x01\x04!\x1a\
-    :\x20Used\x20when\x20giving\x20an\x20inclusive\x20lower\x20bound\x20for\
-    \x20the\x20range.\n\n\r\n\x05\x04\x08\x02\0\x05\x12\x04\xa3\x01\x04\t\n\
-    \r\n\x05\x04\x08\x02\0\x01\x12\x04\xa3\x01\n\x1c\n\r\n\x05\x04\x08\x02\0\
-    \x03\x12\x04\xa3\x01\x1f\x20\nH\n\x04\x04\x08\x02\x01\x12\x04\xa6\x01\
-    \x04\x1f\x1a:\x20Used\x20when\x20giving\x20an\x20exclusive\x20lower\x20b\
-    ound\x20for\x20the\x20range.\n\n\r\n\x05\x04\x08\x02\x01\x05\x12\x04\xa6\
-    \x01\x04\t\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xa6\x01\n\x1a\n\r\n\x05\
-    \x04\x08\x02\x01\x03\x12\x04\xa6\x01\x1d\x1e\n\x7f\n\x04\x04\x08\x08\x01\
-    \x12\x06\xab\x01\x02\xb1\x01\x03\x1ao\x20The\x20value\x20at\x20which\x20\
-    to\x20end\x20the\x20range.\n\x20If\x20neither\x20field\x20is\x20set,\x20\
-    interpreted\x20as\x20the\x20infinite\x20string,\x20exclusive.\n\n\r\n\
-    \x05\x04\x08\x08\x01\x01\x12\x04\xab\x01\x08\x11\nH\n\x04\x04\x08\x02\
-    \x02\x12\x04\xad\x01\x04\x1f\x1a:\x20Used\x20when\x20giving\x20an\x20inc\
-    lusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\x05\x04\x08\x02\
-    \x02\x05\x12\x04\xad\x01\x04\t\n\r\n\x05\x04\x08\x02\x02\x01\x12\x04\xad\
-    \x01\n\x1a\n\r\n\x05\x04\x08\x02\x02\x03\x12\x04\xad\x01\x1d\x1e\nH\n\
-    \x04\x04\x08\x02\x03\x12\x04\xb0\x01\x04\x1d\x1a:\x20Used\x20when\x20giv\
-    ing\x20an\x20exclusive\x20upper\x20bound\x20for\x20the\x20range.\n\n\r\n\
-    \x05\x04\x08\x02\x03\x05\x12\x04\xb0\x01\x04\t\n\r\n\x05\x04\x08\x02\x03\
-    \x01\x12\x04\xb0\x01\n\x18\n\r\n\x05\x04\x08\x02\x03\x03\x12\x04\xb0\x01\
-    \x1b\x1c\n\xa9\x0f\n\x02\x04\t\x12\x06\xd5\x01\0\xb8\x03\x01\x1a\x9a\x0f\
-    \x20Takes\x20a\x20row\x20as\x20input\x20and\x20produces\x20an\x20alterna\
-    te\x20view\x20of\x20the\x20row\x20based\x20on\n\x20specified\x20rules.\
-    \x20For\x20example,\x20a\x20RowFilter\x20might\x20trim\x20down\x20a\x20r\
-    ow\x20to\x20include\n\x20just\x20the\x20cells\x20from\x20columns\x20matc\
-    hing\x20a\x20given\x20regular\x20expression,\x20or\x20might\n\x20return\
-    \x20all\x20the\x20cells\x20of\x20a\x20row\x20but\x20not\x20their\x20valu\
-    es.\x20More\x20complicated\x20filters\n\x20can\x20be\x20composed\x20out\
-    \x20of\x20these\x20components\x20to\x20express\x20requests\x20such\x20as\
-    ,\x20\"within\n\x20every\x20column\x20of\x20a\x20particular\x20family,\
-    \x20give\x20just\x20the\x20two\x20most\x20recent\x20cells\n\x20which\x20\
-    are\x20older\x20than\x20timestamp\x20X.\"\n\n\x20There\x20are\x20two\x20\
-    broad\x20categories\x20of\x20RowFilters\x20(true\x20filters\x20and\x20tr\
-    ansformers),\n\x20as\x20well\x20as\x20two\x20ways\x20to\x20compose\x20si\
-    mple\x20filters\x20into\x20more\x20complex\x20ones\n\x20(chains\x20and\
-    \x20interleaves).\x20They\x20work\x20as\x20follows:\n\n\x20*\x20True\x20\
-    filters\x20alter\x20the\x20input\x20row\x20by\x20excluding\x20some\x20of\
-    \x20its\x20cells\x20wholesale\n\x20from\x20the\x20output\x20row.\x20An\
-    \x20example\x20of\x20a\x20true\x20filter\x20is\x20the\x20`value_regex_fi\
-    lter`,\n\x20which\x20excludes\x20cells\x20whose\x20values\x20don't\x20ma\
-    tch\x20the\x20specified\x20pattern.\x20All\n\x20regex\x20true\x20filters\
-    \x20use\x20RE2\x20syntax\x20(https://github.com/google/re2/wiki/Syntax)\
-    \n\x20in\x20raw\x20byte\x20mode\x20(RE2::Latin1),\x20and\x20are\x20evalu\
-    ated\x20as\x20full\x20matches.\x20An\n\x20important\x20point\x20to\x20ke\
-    ep\x20in\x20mind\x20is\x20that\x20`RE2(.)`\x20is\x20equivalent\x20by\x20\
-    default\x20to\n\x20`RE2([^\\n])`,\x20meaning\x20that\x20it\x20does\x20no\
-    t\x20match\x20newlines.\x20When\x20attempting\x20to\n\x20match\x20an\x20\
-    arbitrary\x20byte,\x20you\x20should\x20therefore\x20use\x20the\x20escape\
-    \x20sequence\x20`\\C`,\n\x20which\x20may\x20need\x20to\x20be\x20further\
-    \x20escaped\x20as\x20`\\\\C`\x20in\x20your\x20client\x20language.\n\n\
-    \x20*\x20Transformers\x20alter\x20the\x20input\x20row\x20by\x20changing\
-    \x20the\x20values\x20of\x20some\x20of\x20its\n\x20cells\x20in\x20the\x20\
-    output,\x20without\x20excluding\x20them\x20completely.\x20Currently,\x20\
-    the\x20only\n\x20supported\x20transformer\x20is\x20the\x20`strip_value_t\
-    ransformer`,\x20which\x20replaces\x20every\n\x20cell's\x20value\x20with\
-    \x20the\x20empty\x20string.\n\n\x20*\x20Chains\x20and\x20interleaves\x20\
-    are\x20described\x20in\x20more\x20detail\x20in\x20the\n\x20RowFilter.Cha\
-    in\x20and\x20RowFilter.Interleave\x20documentation.\n\n\x20The\x20total\
-    \x20serialized\x20size\x20of\x20a\x20RowFilter\x20message\x20must\x20not\
-    \n\x20exceed\x204096\x20bytes,\x20and\x20RowFilters\x20may\x20not\x20be\
-    \x20nested\x20within\x20each\x20other\n\x20(in\x20Chains\x20or\x20Interl\
-    eaves)\x20to\x20a\x20depth\x20of\x20more\x20than\x2020.\n\n\x0b\n\x03\
-    \x04\t\x01\x12\x04\xd5\x01\x08\x11\nV\n\x04\x04\t\x03\0\x12\x06\xd7\x01\
-    \x02\xdc\x01\x03\x1aF\x20A\x20RowFilter\x20which\x20sends\x20rows\x20thr\
-    ough\x20several\x20RowFilters\x20in\x20sequence.\n\n\r\n\x05\x04\t\x03\0\
-    \x01\x12\x04\xd7\x01\n\x0f\n\xc9\x01\n\x06\x04\t\x03\0\x02\0\x12\x04\xdb\
-    \x01\x04#\x1a\xb8\x01\x20The\x20elements\x20of\x20\"filters\"\x20are\x20\
-    chained\x20together\x20to\x20process\x20the\x20input\x20row:\n\x20in\x20\
-    row\x20->\x20f(0)\x20->\x20intermediate\x20row\x20->\x20f(1)\x20->\x20..\
-    .\x20->\x20f(N)\x20->\x20out\x20row\n\x20The\x20full\x20chain\x20is\x20e\
-    xecuted\x20atomically.\n\n\x0f\n\x07\x04\t\x03\0\x02\0\x04\x12\x04\xdb\
-    \x01\x04\x0c\n\x0f\n\x07\x04\t\x03\0\x02\0\x06\x12\x04\xdb\x01\r\x16\n\
-    \x0f\n\x07\x04\t\x03\0\x02\0\x01\x12\x04\xdb\x01\x17\x1e\n\x0f\n\x07\x04\
-    \t\x03\0\x02\0\x03\x12\x04\xdb\x01!\"\nx\n\x04\x04\t\x03\x01\x12\x06\xe0\
-    \x01\x02\xfb\x01\x03\x1ah\x20A\x20RowFilter\x20which\x20sends\x20each\
-    \x20row\x20to\x20each\x20of\x20several\x20component\n\x20RowFilters\x20a\
-    nd\x20interleaves\x20the\x20results.\n\n\r\n\x05\x04\t\x03\x01\x01\x12\
-    \x04\xe0\x01\n\x14\n\x93\x0b\n\x06\x04\t\x03\x01\x02\0\x12\x04\xfa\x01\
-    \x04#\x1a\x82\x0b\x20The\x20elements\x20of\x20\"filters\"\x20all\x20proc\
-    ess\x20a\x20copy\x20of\x20the\x20input\x20row,\x20and\x20the\n\x20result\
-    s\x20are\x20pooled,\x20sorted,\x20and\x20combined\x20into\x20a\x20single\
-    \x20output\x20row.\n\x20If\x20multiple\x20cells\x20are\x20produced\x20wi\
-    th\x20the\x20same\x20column\x20and\x20timestamp,\n\x20they\x20will\x20al\
-    l\x20appear\x20in\x20the\x20output\x20row\x20in\x20an\x20unspecified\x20\
-    mutual\x20order.\n\x20Consider\x20the\x20following\x20example,\x20with\
-    \x20three\x20filters:\n\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x05\x04\n\x02\x01\x05\x12\x04\xf2\x01\x04\t\n\r\n\x05\x04\n\x02\x01\x01\
+    \x12\x04\xf2\x01\n\x1a\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xf2\x01\x1d\
+    \x1e\n\x7f\n\x04\x04\n\x08\x01\x12\x06\xf7\x01\x02\xfd\x01\x03\x1ao\x20T\
+    he\x20value\x20at\x20which\x20to\x20end\x20the\x20range.\n\x20If\x20neit\
+    her\x20field\x20is\x20set,\x20interpreted\x20as\x20the\x20infinite\x20st\
+    ring,\x20exclusive.\n\n\r\n\x05\x04\n\x08\x01\x01\x12\x04\xf7\x01\x08\
+    \x11\nH\n\x04\x04\n\x02\x02\x12\x04\xf9\x01\x04\x1f\x1a:\x20Used\x20when\
+    \x20giving\x20an\x20inclusive\x20upper\x20bound\x20for\x20the\x20range.\
+    \n\n\r\n\x05\x04\n\x02\x02\x05\x12\x04\xf9\x01\x04\t\n\r\n\x05\x04\n\x02\
+    \x02\x01\x12\x04\xf9\x01\n\x1a\n\r\n\x05\x04\n\x02\x02\x03\x12\x04\xf9\
+    \x01\x1d\x1e\nH\n\x04\x04\n\x02\x03\x12\x04\xfc\x01\x04\x1d\x1a:\x20Used\
+    \x20when\x20giving\x20an\x20exclusive\x20upper\x20bound\x20for\x20the\
+    \x20range.\n\n\r\n\x05\x04\n\x02\x03\x05\x12\x04\xfc\x01\x04\t\n\r\n\x05\
+    \x04\n\x02\x03\x01\x12\x04\xfc\x01\n\x18\n\r\n\x05\x04\n\x02\x03\x03\x12\
+    \x04\xfc\x01\x1b\x1c\n\xaa\x0f\n\x02\x04\x0b\x12\x06\xa1\x02\0\x84\x04\
+    \x01\x1a\x9b\x0f\x20Takes\x20a\x20row\x20as\x20input\x20and\x20produces\
+    \x20an\x20alternate\x20view\x20of\x20the\x20row\x20based\x20on\n\x20spec\
+    ified\x20rules.\x20For\x20example,\x20a\x20RowFilter\x20might\x20trim\
+    \x20down\x20a\x20row\x20to\x20include\n\x20just\x20the\x20cells\x20from\
+    \x20columns\x20matching\x20a\x20given\x20regular\x20expression,\x20or\
+    \x20might\n\x20return\x20all\x20the\x20cells\x20of\x20a\x20row\x20but\
+    \x20not\x20their\x20values.\x20More\x20complicated\x20filters\n\x20can\
+    \x20be\x20composed\x20out\x20of\x20these\x20components\x20to\x20express\
+    \x20requests\x20such\x20as,\x20\"within\n\x20every\x20column\x20of\x20a\
+    \x20particular\x20family,\x20give\x20just\x20the\x20two\x20most\x20recen\
+    t\x20cells\n\x20which\x20are\x20older\x20than\x20timestamp\x20X.\"\n\n\
+    \x20There\x20are\x20two\x20broad\x20categories\x20of\x20RowFilters\x20(t\
+    rue\x20filters\x20and\x20transformers),\n\x20as\x20well\x20as\x20two\x20\
+    ways\x20to\x20compose\x20simple\x20filters\x20into\x20more\x20complex\
+    \x20ones\n\x20(chains\x20and\x20interleaves).\x20They\x20work\x20as\x20f\
+    ollows:\n\n\x20*\x20True\x20filters\x20alter\x20the\x20input\x20row\x20b\
+    y\x20excluding\x20some\x20of\x20its\x20cells\x20wholesale\n\x20from\x20t\
+    he\x20output\x20row.\x20An\x20example\x20of\x20a\x20true\x20filter\x20is\
+    \x20the\x20`value_regex_filter`,\n\x20which\x20excludes\x20cells\x20whos\
+    e\x20values\x20don't\x20match\x20the\x20specified\x20pattern.\x20All\n\
+    \x20regex\x20true\x20filters\x20use\x20RE2\x20syntax\x20(https://github.\
+    com/google/re2/wiki/Syntax)\n\x20in\x20raw\x20byte\x20mode\x20(RE2::Lati\
+    n1),\x20and\x20are\x20evaluated\x20as\x20full\x20matches.\x20An\n\x20imp\
+    ortant\x20point\x20to\x20keep\x20in\x20mind\x20is\x20that\x20`RE2(.)`\
+    \x20is\x20equivalent\x20by\x20default\x20to\n\x20`RE2([^\\n])`,\x20meani\
+    ng\x20that\x20it\x20does\x20not\x20match\x20newlines.\x20When\x20attempt\
+    ing\x20to\n\x20match\x20an\x20arbitrary\x20byte,\x20you\x20should\x20the\
+    refore\x20use\x20the\x20escape\x20sequence\x20`\\C`,\n\x20which\x20may\
+    \x20need\x20to\x20be\x20further\x20escaped\x20as\x20`\\\\C`\x20in\x20you\
+    r\x20client\x20language.\n\n\x20*\x20Transformers\x20alter\x20the\x20inp\
+    ut\x20row\x20by\x20changing\x20the\x20values\x20of\x20some\x20of\x20its\
+    \n\x20cells\x20in\x20the\x20output,\x20without\x20excluding\x20them\x20c\
+    ompletely.\x20Currently,\x20the\x20only\n\x20supported\x20transformer\
+    \x20is\x20the\x20`strip_value_transformer`,\x20which\x20replaces\x20ever\
+    y\n\x20cell's\x20value\x20with\x20the\x20empty\x20string.\n\n\x20*\x20Ch\
+    ains\x20and\x20interleaves\x20are\x20described\x20in\x20more\x20detail\
+    \x20in\x20the\n\x20RowFilter.Chain\x20and\x20RowFilter.Interleave\x20doc\
+    umentation.\n\n\x20The\x20total\x20serialized\x20size\x20of\x20a\x20RowF\
+    ilter\x20message\x20must\x20not\n\x20exceed\x2020480\x20bytes,\x20and\
+    \x20RowFilters\x20may\x20not\x20be\x20nested\x20within\x20each\x20other\
+    \n\x20(in\x20Chains\x20or\x20Interleaves)\x20to\x20a\x20depth\x20of\x20m\
+    ore\x20than\x2020.\n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xa1\x02\x08\x11\nV\
+    \n\x04\x04\x0b\x03\0\x12\x06\xa3\x02\x02\xa8\x02\x03\x1aF\x20A\x20RowFil\
+    ter\x20which\x20sends\x20rows\x20through\x20several\x20RowFilters\x20in\
+    \x20sequence.\n\n\r\n\x05\x04\x0b\x03\0\x01\x12\x04\xa3\x02\n\x0f\n\xc9\
+    \x01\n\x06\x04\x0b\x03\0\x02\0\x12\x04\xa7\x02\x04#\x1a\xb8\x01\x20The\
+    \x20elements\x20of\x20\"filters\"\x20are\x20chained\x20together\x20to\
+    \x20process\x20the\x20input\x20row:\n\x20in\x20row\x20->\x20f(0)\x20->\
+    \x20intermediate\x20row\x20->\x20f(1)\x20->\x20...\x20->\x20f(N)\x20->\
+    \x20out\x20row\n\x20The\x20full\x20chain\x20is\x20executed\x20atomically\
+    .\n\n\x0f\n\x07\x04\x0b\x03\0\x02\0\x04\x12\x04\xa7\x02\x04\x0c\n\x0f\n\
+    \x07\x04\x0b\x03\0\x02\0\x06\x12\x04\xa7\x02\r\x16\n\x0f\n\x07\x04\x0b\
+    \x03\0\x02\0\x01\x12\x04\xa7\x02\x17\x1e\n\x0f\n\x07\x04\x0b\x03\0\x02\0\
+    \x03\x12\x04\xa7\x02!\"\nx\n\x04\x04\x0b\x03\x01\x12\x06\xac\x02\x02\xc7\
+    \x02\x03\x1ah\x20A\x20RowFilter\x20which\x20sends\x20each\x20row\x20to\
+    \x20each\x20of\x20several\x20component\n\x20RowFilters\x20and\x20interle\
+    aves\x20the\x20results.\n\n\r\n\x05\x04\x0b\x03\x01\x01\x12\x04\xac\x02\
+    \n\x14\n\x93\x0b\n\x06\x04\x0b\x03\x01\x02\0\x12\x04\xc6\x02\x04#\x1a\
+    \x82\x0b\x20The\x20elements\x20of\x20\"filters\"\x20all\x20process\x20a\
+    \x20copy\x20of\x20the\x20input\x20row,\x20and\x20the\n\x20results\x20are\
+    \x20pooled,\x20sorted,\x20and\x20combined\x20into\x20a\x20single\x20outp\
+    ut\x20row.\n\x20If\x20multiple\x20cells\x20are\x20produced\x20with\x20th\
+    e\x20same\x20column\x20and\x20timestamp,\n\x20they\x20will\x20all\x20app\
+    ear\x20in\x20the\x20output\x20row\x20in\x20an\x20unspecified\x20mutual\
+    \x20order.\n\x20Consider\x20the\x20following\x20example,\x20with\x20thre\
+    e\x20filters:\n\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20input\x20row\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20input\x20row\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20------------------------------------------------\
-    -----\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20-----------------------------------------------------\n\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20f(0)\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20f(1)\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20f(2)\n\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\
+    \x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20f(0)\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20f(1)\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20f(2)\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x201:\x20foo,bar\
-    ,10,x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20foo,bar,10,z\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20far,bar,7,a\n\
-    \x20\x20\x20\x20\x202:\x20foo,blah,11,z\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20far,blah,5,x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20far,blah,5,x\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20------------------------\
-    -----------------------------\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    |\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x201:\x20foo,bar,10,\
+    x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20foo,bar,10,z\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20far,bar,7,a\n\x20\
+    \x20\x20\x20\x202:\x20foo,blah,11,z\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20far,blah,5,x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20far,blah,5,x\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x201:\x20\
+    \x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--------------------------------\
+    ---------------------\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20foo,bar,10,z\x20\x20\x20//\x20could\x20have\x20switched\x20w\
-    ith\x20#2\n\x20\x20\x20\x20\x202:\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20foo,bar,10,x\x20\x20\
-    \x20//\x20could\x20have\x20switched\x20with\x20#1\n\x20\x20\x20\x20\x203\
-    :\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20foo,blah,11,z\n\x20\x20\x20\x20\x204:\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x201:\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20far,bar,7,a\n\x20\x20\x20\x20\x205:\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20far,blah,5,x\x20\
-    \x20\x20//\x20identical\x20to\x20#6\n\x20\x20\x20\x20\x206:\x20\x20\x20\
+    \x20foo,bar,10,z\x20\x20\x20//\x20could\x20have\x20switched\x20with\x20#\
+    2\n\x20\x20\x20\x20\x202:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20foo,bar,10,x\x20\x20\x20//\
+    \x20could\x20have\x20switched\x20with\x20#1\n\x20\x20\x20\x20\x203:\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20far,blah,5,x\x20\x20\x20//\x20identical\x20to\x20#5\n\n\x20All\x20in\
-    terleaved\x20filters\x20are\x20executed\x20atomically.\n\n\x0f\n\x07\x04\
-    \t\x03\x01\x02\0\x04\x12\x04\xfa\x01\x04\x0c\n\x0f\n\x07\x04\t\x03\x01\
-    \x02\0\x06\x12\x04\xfa\x01\r\x16\n\x0f\n\x07\x04\t\x03\x01\x02\0\x01\x12\
-    \x04\xfa\x01\x17\x1e\n\x0f\n\x07\x04\t\x03\x01\x02\0\x03\x12\x04\xfa\x01\
-    !\"\n\xb4\x03\n\x04\x04\t\x03\x02\x12\x06\x84\x02\x02\x91\x02\x03\x1a\
+    \x20\x20\x20foo,blah,11,z\n\x20\x20\x20\x20\x204:\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20far,\
+    bar,7,a\n\x20\x20\x20\x20\x205:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20far,blah,5,x\x20\x20\x20\
+    //\x20identical\x20to\x20#6\n\x20\x20\x20\x20\x206:\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20far,\
+    blah,5,x\x20\x20\x20//\x20identical\x20to\x20#5\n\n\x20All\x20interleave\
+    d\x20filters\x20are\x20executed\x20atomically.\n\n\x0f\n\x07\x04\x0b\x03\
+    \x01\x02\0\x04\x12\x04\xc6\x02\x04\x0c\n\x0f\n\x07\x04\x0b\x03\x01\x02\0\
+    \x06\x12\x04\xc6\x02\r\x16\n\x0f\n\x07\x04\x0b\x03\x01\x02\0\x01\x12\x04\
+    \xc6\x02\x17\x1e\n\x0f\n\x07\x04\x0b\x03\x01\x02\0\x03\x12\x04\xc6\x02!\
+    \"\n\xb4\x03\n\x04\x04\x0b\x03\x02\x12\x06\xd0\x02\x02\xdd\x02\x03\x1a\
     \xa3\x03\x20A\x20RowFilter\x20which\x20evaluates\x20one\x20of\x20two\x20\
     possible\x20RowFilters,\x20depending\x20on\n\x20whether\x20or\x20not\x20\
     a\x20predicate\x20RowFilter\x20outputs\x20any\x20cells\x20from\x20the\
@@ -5674,371 +8732,574 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     d\x20false\x20filters,\x20which\x20may\x20lead\x20to\x20inconsistent\x20\
     or\x20unexpected\n\x20results.\x20Additionally,\x20Condition\x20filters\
     \x20have\x20poor\x20performance,\x20especially\n\x20when\x20filters\x20a\
-    re\x20set\x20for\x20the\x20false\x20condition.\n\n\r\n\x05\x04\t\x03\x02\
-    \x01\x12\x04\x84\x02\n\x13\n\xa0\x01\n\x06\x04\t\x03\x02\x02\0\x12\x04\
-    \x87\x02\x04#\x1a\x8f\x01\x20If\x20`predicate_filter`\x20outputs\x20any\
-    \x20cells,\x20then\x20`true_filter`\x20will\x20be\n\x20evaluated\x20on\
-    \x20the\x20input\x20row.\x20Otherwise,\x20`false_filter`\x20will\x20be\
-    \x20evaluated.\n\n\x0f\n\x07\x04\t\x03\x02\x02\0\x06\x12\x04\x87\x02\x04\
-    \r\n\x0f\n\x07\x04\t\x03\x02\x02\0\x01\x12\x04\x87\x02\x0e\x1e\n\x0f\n\
-    \x07\x04\t\x03\x02\x02\0\x03\x12\x04\x87\x02!\"\n\xa2\x01\n\x06\x04\t\
-    \x03\x02\x02\x01\x12\x04\x8b\x02\x04\x1e\x1a\x91\x01\x20The\x20filter\
-    \x20to\x20apply\x20to\x20the\x20input\x20row\x20if\x20`predicate_filter`\
-    \x20returns\x20any\n\x20results.\x20If\x20not\x20provided,\x20no\x20resu\
-    lts\x20will\x20be\x20returned\x20in\x20the\x20true\x20case.\n\n\x0f\n\
-    \x07\x04\t\x03\x02\x02\x01\x06\x12\x04\x8b\x02\x04\r\n\x0f\n\x07\x04\t\
-    \x03\x02\x02\x01\x01\x12\x04\x8b\x02\x0e\x19\n\x0f\n\x07\x04\t\x03\x02\
-    \x02\x01\x03\x12\x04\x8b\x02\x1c\x1d\n\xac\x01\n\x06\x04\t\x03\x02\x02\
-    \x02\x12\x04\x90\x02\x04\x1f\x1a\x9b\x01\x20The\x20filter\x20to\x20apply\
-    \x20to\x20the\x20input\x20row\x20if\x20`predicate_filter`\x20does\x20not\
-    \n\x20return\x20any\x20results.\x20If\x20not\x20provided,\x20no\x20resul\
-    ts\x20will\x20be\x20returned\x20in\x20the\n\x20false\x20case.\n\n\x0f\n\
-    \x07\x04\t\x03\x02\x02\x02\x06\x12\x04\x90\x02\x04\r\n\x0f\n\x07\x04\t\
-    \x03\x02\x02\x02\x01\x12\x04\x90\x02\x0e\x1a\n\x0f\n\x07\x04\t\x03\x02\
-    \x02\x02\x03\x12\x04\x90\x02\x1d\x1e\n\x86\x01\n\x04\x04\t\x08\0\x12\x06\
-    \x95\x02\x02\xb7\x03\x03\x1av\x20Which\x20of\x20the\x20possible\x20RowFi\
-    lter\x20types\x20to\x20apply.\x20If\x20none\x20are\x20set,\x20this\n\x20\
-    RowFilter\x20returns\x20all\x20cells\x20in\x20the\x20input\x20row.\n\n\r\
-    \n\x05\x04\t\x08\0\x01\x12\x04\x95\x02\x08\x0e\ni\n\x04\x04\t\x02\0\x12\
-    \x04\x98\x02\x04\x14\x1a[\x20Applies\x20several\x20RowFilters\x20to\x20t\
-    he\x20data\x20in\x20sequence,\x20progressively\n\x20narrowing\x20the\x20\
-    results.\n\n\r\n\x05\x04\t\x02\0\x06\x12\x04\x98\x02\x04\t\n\r\n\x05\x04\
-    \t\x02\0\x01\x12\x04\x98\x02\n\x0f\n\r\n\x05\x04\t\x02\0\x03\x12\x04\x98\
-    \x02\x12\x13\n]\n\x04\x04\t\x02\x01\x12\x04\x9c\x02\x04\x1e\x1aO\x20Appl\
-    ies\x20several\x20RowFilters\x20to\x20the\x20data\x20in\x20parallel\x20a\
-    nd\x20combines\x20the\n\x20results.\n\n\r\n\x05\x04\t\x02\x01\x06\x12\
-    \x04\x9c\x02\x04\x0e\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\x9c\x02\x0f\x19\
-    \n\r\n\x05\x04\t\x02\x01\x03\x12\x04\x9c\x02\x1c\x1d\nq\n\x04\x04\t\x02\
-    \x02\x12\x04\xa0\x02\x04\x1c\x1ac\x20Applies\x20one\x20of\x20two\x20poss\
-    ible\x20RowFilters\x20to\x20the\x20data\x20based\x20on\x20the\x20output\
-    \x20of\n\x20a\x20predicate\x20RowFilter.\n\n\r\n\x05\x04\t\x02\x02\x06\
-    \x12\x04\xa0\x02\x04\r\n\r\n\x05\x04\t\x02\x02\x01\x12\x04\xa0\x02\x0e\
-    \x17\n\r\n\x05\x04\t\x02\x02\x03\x12\x04\xa0\x02\x1a\x1b\n\xb7\x14\n\x04\
-    \x04\t\x02\x03\x12\x04\xdd\x02\x04\x13\x1a\xa8\x14\x20ADVANCED\x20USE\
-    \x20ONLY.\n\x20Hook\x20for\x20introspection\x20into\x20the\x20RowFilter.\
-    \x20Outputs\x20all\x20cells\x20directly\x20to\n\x20the\x20output\x20of\
-    \x20the\x20read\x20rather\x20than\x20to\x20any\x20parent\x20filter.\x20C\
-    onsider\x20the\n\x20following\x20example:\n\n\x20\x20\x20\x20\x20Chain(\
-    \n\x20\x20\x20\x20\x20\x20\x20FamilyRegex(\"A\"),\n\x20\x20\x20\x20\x20\
-    \x20\x20Interleave(\n\x20\x20\x20\x20\x20\x20\x20\x20\x20All(),\n\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20Chain(Label(\"foo\"),\x20Sink())\n\x20\
-    \x20\x20\x20\x20\x20\x20),\n\x20\x20\x20\x20\x20\x20\x20QualifierRegex(\
-    \"B\")\n\x20\x20\x20\x20\x20)\n\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w\
-    \n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\n\x20\x20\x20\x20\x20\x20\x20\
+    re\x20set\x20for\x20the\x20false\x20condition.\n\n\r\n\x05\x04\x0b\x03\
+    \x02\x01\x12\x04\xd0\x02\n\x13\n\xa0\x01\n\x06\x04\x0b\x03\x02\x02\0\x12\
+    \x04\xd3\x02\x04#\x1a\x8f\x01\x20If\x20`predicate_filter`\x20outputs\x20\
+    any\x20cells,\x20then\x20`true_filter`\x20will\x20be\n\x20evaluated\x20o\
+    n\x20the\x20input\x20row.\x20Otherwise,\x20`false_filter`\x20will\x20be\
+    \x20evaluated.\n\n\x0f\n\x07\x04\x0b\x03\x02\x02\0\x06\x12\x04\xd3\x02\
+    \x04\r\n\x0f\n\x07\x04\x0b\x03\x02\x02\0\x01\x12\x04\xd3\x02\x0e\x1e\n\
+    \x0f\n\x07\x04\x0b\x03\x02\x02\0\x03\x12\x04\xd3\x02!\"\n\xa2\x01\n\x06\
+    \x04\x0b\x03\x02\x02\x01\x12\x04\xd7\x02\x04\x1e\x1a\x91\x01\x20The\x20f\
+    ilter\x20to\x20apply\x20to\x20the\x20input\x20row\x20if\x20`predicate_fi\
+    lter`\x20returns\x20any\n\x20results.\x20If\x20not\x20provided,\x20no\
+    \x20results\x20will\x20be\x20returned\x20in\x20the\x20true\x20case.\n\n\
+    \x0f\n\x07\x04\x0b\x03\x02\x02\x01\x06\x12\x04\xd7\x02\x04\r\n\x0f\n\x07\
+    \x04\x0b\x03\x02\x02\x01\x01\x12\x04\xd7\x02\x0e\x19\n\x0f\n\x07\x04\x0b\
+    \x03\x02\x02\x01\x03\x12\x04\xd7\x02\x1c\x1d\n\xac\x01\n\x06\x04\x0b\x03\
+    \x02\x02\x02\x12\x04\xdc\x02\x04\x1f\x1a\x9b\x01\x20The\x20filter\x20to\
+    \x20apply\x20to\x20the\x20input\x20row\x20if\x20`predicate_filter`\x20do\
+    es\x20not\n\x20return\x20any\x20results.\x20If\x20not\x20provided,\x20no\
+    \x20results\x20will\x20be\x20returned\x20in\x20the\n\x20false\x20case.\n\
+    \n\x0f\n\x07\x04\x0b\x03\x02\x02\x02\x06\x12\x04\xdc\x02\x04\r\n\x0f\n\
+    \x07\x04\x0b\x03\x02\x02\x02\x01\x12\x04\xdc\x02\x0e\x1a\n\x0f\n\x07\x04\
+    \x0b\x03\x02\x02\x02\x03\x12\x04\xdc\x02\x1d\x1e\n\x86\x01\n\x04\x04\x0b\
+    \x08\0\x12\x06\xe1\x02\x02\x83\x04\x03\x1av\x20Which\x20of\x20the\x20pos\
+    sible\x20RowFilter\x20types\x20to\x20apply.\x20If\x20none\x20are\x20set,\
+    \x20this\n\x20RowFilter\x20returns\x20all\x20cells\x20in\x20the\x20input\
+    \x20row.\n\n\r\n\x05\x04\x0b\x08\0\x01\x12\x04\xe1\x02\x08\x0e\ni\n\x04\
+    \x04\x0b\x02\0\x12\x04\xe4\x02\x04\x14\x1a[\x20Applies\x20several\x20Row\
+    Filters\x20to\x20the\x20data\x20in\x20sequence,\x20progressively\n\x20na\
+    rrowing\x20the\x20results.\n\n\r\n\x05\x04\x0b\x02\0\x06\x12\x04\xe4\x02\
+    \x04\t\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\xe4\x02\n\x0f\n\r\n\x05\x04\
+    \x0b\x02\0\x03\x12\x04\xe4\x02\x12\x13\n]\n\x04\x04\x0b\x02\x01\x12\x04\
+    \xe8\x02\x04\x1e\x1aO\x20Applies\x20several\x20RowFilters\x20to\x20the\
+    \x20data\x20in\x20parallel\x20and\x20combines\x20the\n\x20results.\n\n\r\
+    \n\x05\x04\x0b\x02\x01\x06\x12\x04\xe8\x02\x04\x0e\n\r\n\x05\x04\x0b\x02\
+    \x01\x01\x12\x04\xe8\x02\x0f\x19\n\r\n\x05\x04\x0b\x02\x01\x03\x12\x04\
+    \xe8\x02\x1c\x1d\nq\n\x04\x04\x0b\x02\x02\x12\x04\xec\x02\x04\x1c\x1ac\
+    \x20Applies\x20one\x20of\x20two\x20possible\x20RowFilters\x20to\x20the\
+    \x20data\x20based\x20on\x20the\x20output\x20of\n\x20a\x20predicate\x20Ro\
+    wFilter.\n\n\r\n\x05\x04\x0b\x02\x02\x06\x12\x04\xec\x02\x04\r\n\r\n\x05\
+    \x04\x0b\x02\x02\x01\x12\x04\xec\x02\x0e\x17\n\r\n\x05\x04\x0b\x02\x02\
+    \x03\x12\x04\xec\x02\x1a\x1b\n\xb7\x14\n\x04\x04\x0b\x02\x03\x12\x04\xa9\
+    \x03\x04\x13\x1a\xa8\x14\x20ADVANCED\x20USE\x20ONLY.\n\x20Hook\x20for\
+    \x20introspection\x20into\x20the\x20RowFilter.\x20Outputs\x20all\x20cell\
+    s\x20directly\x20to\n\x20the\x20output\x20of\x20the\x20read\x20rather\
+    \x20than\x20to\x20any\x20parent\x20filter.\x20Consider\x20the\n\x20follo\
+    wing\x20example:\n\n\x20\x20\x20\x20\x20Chain(\n\x20\x20\x20\x20\x20\x20\
+    \x20FamilyRegex(\"A\"),\n\x20\x20\x20\x20\x20\x20\x20Interleave(\n\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20All(),\n\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20Chain(Label(\"foo\"),\x20Sink())\n\x20\x20\x20\x20\x20\x20\x20),\n\
+    \x20\x20\x20\x20\x20\x20\x20QualifierRegex(\"B\")\n\x20\x20\x20\x20\x20)\
+    \n\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w\n\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    B,B,4,z\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Fami\
-    lyRegex(\"A\")\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20A,A,1,w\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\n\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20+------------+-------------+\n\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20All()\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20Label(foo)\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20A,A,1,w\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20A,A,1,w,labels:[foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20A,B,2,x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20A,B,2,x,labels:[foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20Sink()\x20--------------+\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20+------------+\x20\
-    \x20\x20\x20\x20\x20x------+\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,\
-    1,w,labels:[foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20A,B,2,x,labels:[foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,\
-    1,w\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20A,B,2,x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    A,B,2,x\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20B,B,4,z\n\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20QualifierRegex(\"B\")\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20FamilyRegex(\"A\")\n\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w\n\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20A,B,2,x\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20+----\
+    --------+-------------+\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20All()\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Label(foo)\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1\
+    ,w\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w,labels\
+    :[foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x,labels:[foo]\n\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Sink()\x20--------------+\n\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20+------------+\x20\x20\x20\x20\x20\x20x------+\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w,labels:[foo]\n\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x,labels:[\
+    foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    |\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    QualifierRegex(\"B\")\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     |\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\
+    \x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20|\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20+--------------------------------+\n\x20\x20\x20\x20\x20\
     \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20+-----------------------\
-    ---------+\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20A,A,1,w,labels:[foo]\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x,\
-    labels:[foo]\x20\x20//\x20could\x20be\x20switched\n\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20A,B,2,x\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20//\x20could\x20be\x20switched\n\n\x20Despite\x20being\x20excluded\
-    \x20by\x20the\x20qualifier\x20filter,\x20a\x20copy\x20of\x20every\x20cel\
-    l\n\x20that\x20reaches\x20the\x20sink\x20is\x20present\x20in\x20the\x20f\
-    inal\x20result.\n\n\x20As\x20with\x20an\x20[Interleave][google.bigtable.\
-    v2.RowFilter.Interleave],\n\x20duplicate\x20cells\x20are\x20possible,\
-    \x20and\x20appear\x20in\x20an\x20unspecified\x20mutual\x20order.\n\x20In\
-    \x20this\x20case\x20we\x20have\x20a\x20duplicate\x20with\x20column\x20\"\
-    A:B\"\x20and\x20timestamp\x202,\n\x20because\x20one\x20copy\x20passed\
-    \x20through\x20the\x20all\x20filter\x20while\x20the\x20other\x20was\n\
-    \x20passed\x20through\x20the\x20label\x20and\x20sink.\x20Note\x20that\
-    \x20one\x20copy\x20has\x20label\x20\"foo\",\n\x20while\x20the\x20other\
-    \x20does\x20not.\n\n\x20Cannot\x20be\x20used\x20within\x20the\x20`predic\
-    ate_filter`,\x20`true_filter`,\x20or\n\x20`false_filter`\x20of\x20a\x20[\
-    Condition][google.bigtable.v2.RowFilter.Condition].\n\n\r\n\x05\x04\t\
-    \x02\x03\x05\x12\x04\xdd\x02\x04\x08\n\r\n\x05\x04\t\x02\x03\x01\x12\x04\
-    \xdd\x02\t\r\n\r\n\x05\x04\t\x02\x03\x03\x12\x04\xdd\x02\x10\x12\n\x8a\
-    \x01\n\x04\x04\t\x02\x04\x12\x04\xe1\x02\x04\x1e\x1a|\x20Matches\x20all\
-    \x20cells,\x20regardless\x20of\x20input.\x20Functionally\x20equivalent\
-    \x20to\n\x20leaving\x20`filter`\x20unset,\x20but\x20included\x20for\x20c\
-    ompleteness.\n\n\r\n\x05\x04\t\x02\x04\x05\x12\x04\xe1\x02\x04\x08\n\r\n\
-    \x05\x04\t\x02\x04\x01\x12\x04\xe1\x02\t\x18\n\r\n\x05\x04\t\x02\x04\x03\
-    \x12\x04\xe1\x02\x1b\x1d\nw\n\x04\x04\t\x02\x05\x12\x04\xe5\x02\x04\x1f\
-    \x1ai\x20Does\x20not\x20match\x20any\x20cells,\x20regardless\x20of\x20in\
-    put.\x20Useful\x20for\x20temporarily\n\x20disabling\x20just\x20part\x20o\
-    f\x20a\x20filter.\n\n\r\n\x05\x04\t\x02\x05\x05\x12\x04\xe5\x02\x04\x08\
-    \n\r\n\x05\x04\t\x02\x05\x01\x12\x04\xe5\x02\t\x19\n\r\n\x05\x04\t\x02\
-    \x05\x03\x12\x04\xe5\x02\x1c\x1e\n\xa4\x03\n\x04\x04\t\x02\x06\x12\x04\
-    \xee\x02\x04#\x1a\x95\x03\x20Matches\x20only\x20cells\x20from\x20rows\
-    \x20whose\x20keys\x20satisfy\x20the\x20given\x20RE2\x20regex.\x20In\n\
-    \x20other\x20words,\x20passes\x20through\x20the\x20entire\x20row\x20when\
-    \x20the\x20key\x20matches,\x20and\n\x20otherwise\x20produces\x20an\x20em\
-    pty\x20row.\n\x20Note\x20that,\x20since\x20row\x20keys\x20can\x20contain\
-    \x20arbitrary\x20bytes,\x20the\x20`\\C`\x20escape\n\x20sequence\x20must\
-    \x20be\x20used\x20if\x20a\x20true\x20wildcard\x20is\x20desired.\x20The\
-    \x20`.`\x20character\n\x20will\x20not\x20match\x20the\x20new\x20line\x20\
-    character\x20`\\n`,\x20which\x20may\x20be\x20present\x20in\x20a\n\x20bin\
-    ary\x20key.\n\n\r\n\x05\x04\t\x02\x06\x05\x12\x04\xee\x02\x04\t\n\r\n\
-    \x05\x04\t\x02\x06\x01\x12\x04\xee\x02\n\x1e\n\r\n\x05\x04\t\x02\x06\x03\
-    \x12\x04\xee\x02!\"\ny\n\x04\x04\t\x02\x07\x12\x04\xf2\x02\x04\"\x1ak\
-    \x20Matches\x20all\x20cells\x20from\x20a\x20row\x20with\x20probability\
-    \x20p,\x20and\x20matches\x20no\x20cells\n\x20from\x20the\x20row\x20with\
-    \x20probability\x201-p.\n\n\r\n\x05\x04\t\x02\x07\x05\x12\x04\xf2\x02\
-    \x04\n\n\r\n\x05\x04\t\x02\x07\x01\x12\x04\xf2\x02\x0b\x1c\n\r\n\x05\x04\
-    \t\x02\x07\x03\x12\x04\xf2\x02\x1f!\n\xf0\x02\n\x04\x04\t\x02\x08\x12\
-    \x04\xfa\x02\x04(\x1a\xe1\x02\x20Matches\x20only\x20cells\x20from\x20col\
-    umns\x20whose\x20families\x20satisfy\x20the\x20given\x20RE2\n\x20regex.\
-    \x20For\x20technical\x20reasons,\x20the\x20regex\x20must\x20not\x20conta\
-    in\x20the\x20`:`\n\x20character,\x20even\x20if\x20it\x20is\x20not\x20bei\
-    ng\x20used\x20as\x20a\x20literal.\n\x20Note\x20that,\x20since\x20column\
-    \x20families\x20cannot\x20contain\x20the\x20new\x20line\x20character\n\
-    \x20`\\n`,\x20it\x20is\x20sufficient\x20to\x20use\x20`.`\x20as\x20a\x20f\
-    ull\x20wildcard\x20when\x20matching\n\x20column\x20family\x20names.\n\n\
-    \r\n\x05\x04\t\x02\x08\x05\x12\x04\xfa\x02\x04\n\n\r\n\x05\x04\t\x02\x08\
-    \x01\x12\x04\xfa\x02\x0b#\n\r\n\x05\x04\t\x02\x08\x03\x12\x04\xfa\x02&'\
-    \n\xd2\x02\n\x04\x04\t\x02\t\x12\x04\x82\x03\x04,\x1a\xc3\x02\x20Matches\
+    \x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,A,1,w,labels:[foo]\
+    \n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x,labels:[foo]\x20\x20//\x20could\
+    \x20be\x20switched\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20A,B,2,x\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20//\x20could\x20be\x20switche\
+    d\n\n\x20Despite\x20being\x20excluded\x20by\x20the\x20qualifier\x20filte\
+    r,\x20a\x20copy\x20of\x20every\x20cell\n\x20that\x20reaches\x20the\x20si\
+    nk\x20is\x20present\x20in\x20the\x20final\x20result.\n\n\x20As\x20with\
+    \x20an\x20[Interleave][google.bigtable.v2.RowFilter.Interleave],\n\x20du\
+    plicate\x20cells\x20are\x20possible,\x20and\x20appear\x20in\x20an\x20uns\
+    pecified\x20mutual\x20order.\n\x20In\x20this\x20case\x20we\x20have\x20a\
+    \x20duplicate\x20with\x20column\x20\"A:B\"\x20and\x20timestamp\x202,\n\
+    \x20because\x20one\x20copy\x20passed\x20through\x20the\x20all\x20filter\
+    \x20while\x20the\x20other\x20was\n\x20passed\x20through\x20the\x20label\
+    \x20and\x20sink.\x20Note\x20that\x20one\x20copy\x20has\x20label\x20\"foo\
+    \",\n\x20while\x20the\x20other\x20does\x20not.\n\n\x20Cannot\x20be\x20us\
+    ed\x20within\x20the\x20`predicate_filter`,\x20`true_filter`,\x20or\n\x20\
+    `false_filter`\x20of\x20a\x20[Condition][google.bigtable.v2.RowFilter.Co\
+    ndition].\n\n\r\n\x05\x04\x0b\x02\x03\x05\x12\x04\xa9\x03\x04\x08\n\r\n\
+    \x05\x04\x0b\x02\x03\x01\x12\x04\xa9\x03\t\r\n\r\n\x05\x04\x0b\x02\x03\
+    \x03\x12\x04\xa9\x03\x10\x12\n\x8a\x01\n\x04\x04\x0b\x02\x04\x12\x04\xad\
+    \x03\x04\x1e\x1a|\x20Matches\x20all\x20cells,\x20regardless\x20of\x20inp\
+    ut.\x20Functionally\x20equivalent\x20to\n\x20leaving\x20`filter`\x20unse\
+    t,\x20but\x20included\x20for\x20completeness.\n\n\r\n\x05\x04\x0b\x02\
+    \x04\x05\x12\x04\xad\x03\x04\x08\n\r\n\x05\x04\x0b\x02\x04\x01\x12\x04\
+    \xad\x03\t\x18\n\r\n\x05\x04\x0b\x02\x04\x03\x12\x04\xad\x03\x1b\x1d\nw\
+    \n\x04\x04\x0b\x02\x05\x12\x04\xb1\x03\x04\x1f\x1ai\x20Does\x20not\x20ma\
+    tch\x20any\x20cells,\x20regardless\x20of\x20input.\x20Useful\x20for\x20t\
+    emporarily\n\x20disabling\x20just\x20part\x20of\x20a\x20filter.\n\n\r\n\
+    \x05\x04\x0b\x02\x05\x05\x12\x04\xb1\x03\x04\x08\n\r\n\x05\x04\x0b\x02\
+    \x05\x01\x12\x04\xb1\x03\t\x19\n\r\n\x05\x04\x0b\x02\x05\x03\x12\x04\xb1\
+    \x03\x1c\x1e\n\xa4\x03\n\x04\x04\x0b\x02\x06\x12\x04\xba\x03\x04#\x1a\
+    \x95\x03\x20Matches\x20only\x20cells\x20from\x20rows\x20whose\x20keys\
+    \x20satisfy\x20the\x20given\x20RE2\x20regex.\x20In\n\x20other\x20words,\
+    \x20passes\x20through\x20the\x20entire\x20row\x20when\x20the\x20key\x20m\
+    atches,\x20and\n\x20otherwise\x20produces\x20an\x20empty\x20row.\n\x20No\
+    te\x20that,\x20since\x20row\x20keys\x20can\x20contain\x20arbitrary\x20by\
+    tes,\x20the\x20`\\C`\x20escape\n\x20sequence\x20must\x20be\x20used\x20if\
+    \x20a\x20true\x20wildcard\x20is\x20desired.\x20The\x20`.`\x20character\n\
+    \x20will\x20not\x20match\x20the\x20new\x20line\x20character\x20`\\n`,\
+    \x20which\x20may\x20be\x20present\x20in\x20a\n\x20binary\x20key.\n\n\r\n\
+    \x05\x04\x0b\x02\x06\x05\x12\x04\xba\x03\x04\t\n\r\n\x05\x04\x0b\x02\x06\
+    \x01\x12\x04\xba\x03\n\x1e\n\r\n\x05\x04\x0b\x02\x06\x03\x12\x04\xba\x03\
+    !\"\ny\n\x04\x04\x0b\x02\x07\x12\x04\xbe\x03\x04\"\x1ak\x20Matches\x20al\
+    l\x20cells\x20from\x20a\x20row\x20with\x20probability\x20p,\x20and\x20ma\
+    tches\x20no\x20cells\n\x20from\x20the\x20row\x20with\x20probability\x201\
+    -p.\n\n\r\n\x05\x04\x0b\x02\x07\x05\x12\x04\xbe\x03\x04\n\n\r\n\x05\x04\
+    \x0b\x02\x07\x01\x12\x04\xbe\x03\x0b\x1c\n\r\n\x05\x04\x0b\x02\x07\x03\
+    \x12\x04\xbe\x03\x1f!\n\xf0\x02\n\x04\x04\x0b\x02\x08\x12\x04\xc6\x03\
+    \x04(\x1a\xe1\x02\x20Matches\x20only\x20cells\x20from\x20columns\x20whos\
+    e\x20families\x20satisfy\x20the\x20given\x20RE2\n\x20regex.\x20For\x20te\
+    chnical\x20reasons,\x20the\x20regex\x20must\x20not\x20contain\x20the\x20\
+    `:`\n\x20character,\x20even\x20if\x20it\x20is\x20not\x20being\x20used\
+    \x20as\x20a\x20literal.\n\x20Note\x20that,\x20since\x20column\x20familie\
+    s\x20cannot\x20contain\x20the\x20new\x20line\x20character\n\x20`\\n`,\
+    \x20it\x20is\x20sufficient\x20to\x20use\x20`.`\x20as\x20a\x20full\x20wil\
+    dcard\x20when\x20matching\n\x20column\x20family\x20names.\n\n\r\n\x05\
+    \x04\x0b\x02\x08\x05\x12\x04\xc6\x03\x04\n\n\r\n\x05\x04\x0b\x02\x08\x01\
+    \x12\x04\xc6\x03\x0b#\n\r\n\x05\x04\x0b\x02\x08\x03\x12\x04\xc6\x03&'\n\
+    \xd2\x02\n\x04\x04\x0b\x02\t\x12\x04\xce\x03\x04,\x1a\xc3\x02\x20Matches\
     \x20only\x20cells\x20from\x20columns\x20whose\x20qualifiers\x20satisfy\
     \x20the\x20given\x20RE2\n\x20regex.\n\x20Note\x20that,\x20since\x20colum\
     n\x20qualifiers\x20can\x20contain\x20arbitrary\x20bytes,\x20the\x20`\\C`\
     \n\x20escape\x20sequence\x20must\x20be\x20used\x20if\x20a\x20true\x20wil\
     dcard\x20is\x20desired.\x20The\x20`.`\n\x20character\x20will\x20not\x20m\
     atch\x20the\x20new\x20line\x20character\x20`\\n`,\x20which\x20may\x20be\
-    \n\x20present\x20in\x20a\x20binary\x20qualifier.\n\n\r\n\x05\x04\t\x02\t\
-    \x05\x12\x04\x82\x03\x04\t\n\r\n\x05\x04\t\x02\t\x01\x12\x04\x82\x03\n'\
-    \n\r\n\x05\x04\t\x02\t\x03\x12\x04\x82\x03*+\nG\n\x04\x04\t\x02\n\x12\
-    \x04\x85\x03\x04(\x1a9\x20Matches\x20only\x20cells\x20from\x20columns\
-    \x20within\x20the\x20given\x20range.\n\n\r\n\x05\x04\t\x02\n\x06\x12\x04\
-    \x85\x03\x04\x0f\n\r\n\x05\x04\t\x02\n\x01\x12\x04\x85\x03\x10#\n\r\n\
-    \x05\x04\t\x02\n\x03\x12\x04\x85\x03&'\nJ\n\x04\x04\t\x02\x0b\x12\x04\
-    \x88\x03\x04.\x1a<\x20Matches\x20only\x20cells\x20with\x20timestamps\x20\
-    within\x20the\x20given\x20range.\n\n\r\n\x05\x04\t\x02\x0b\x06\x12\x04\
-    \x88\x03\x04\x12\n\r\n\x05\x04\t\x02\x0b\x01\x12\x04\x88\x03\x13)\n\r\n\
-    \x05\x04\t\x02\x0b\x03\x12\x04\x88\x03,-\n\xc3\x02\n\x04\x04\t\x02\x0c\
-    \x12\x04\x8f\x03\x04!\x1a\xb4\x02\x20Matches\x20only\x20cells\x20with\
-    \x20values\x20that\x20satisfy\x20the\x20given\x20regular\x20expression.\
-    \n\x20Note\x20that,\x20since\x20cell\x20values\x20can\x20contain\x20arbi\
-    trary\x20bytes,\x20the\x20`\\C`\x20escape\n\x20sequence\x20must\x20be\
-    \x20used\x20if\x20a\x20true\x20wildcard\x20is\x20desired.\x20The\x20`.`\
-    \x20character\n\x20will\x20not\x20match\x20the\x20new\x20line\x20charact\
-    er\x20`\\n`,\x20which\x20may\x20be\x20present\x20in\x20a\n\x20binary\x20\
-    value.\n\n\r\n\x05\x04\t\x02\x0c\x05\x12\x04\x8f\x03\x04\t\n\r\n\x05\x04\
-    \t\x02\x0c\x01\x12\x04\x8f\x03\n\x1c\n\r\n\x05\x04\t\x02\x0c\x03\x12\x04\
-    \x8f\x03\x1f\x20\nP\n\x04\x04\t\x02\r\x12\x04\x92\x03\x04'\x1aB\x20Match\
-    es\x20only\x20cells\x20with\x20values\x20that\x20fall\x20within\x20the\
-    \x20given\x20range.\n\n\r\n\x05\x04\t\x02\r\x06\x12\x04\x92\x03\x04\x0e\
-    \n\r\n\x05\x04\t\x02\r\x01\x12\x04\x92\x03\x0f!\n\r\n\x05\x04\t\x02\r\
-    \x03\x12\x04\x92\x03$&\n\xcc\x01\n\x04\x04\t\x02\x0e\x12\x04\x97\x03\x04\
-    +\x1a\xbd\x01\x20Skips\x20the\x20first\x20N\x20cells\x20of\x20each\x20ro\
-    w,\x20matching\x20all\x20subsequent\x20cells.\n\x20If\x20duplicate\x20ce\
-    lls\x20are\x20present,\x20as\x20is\x20possible\x20when\x20using\x20an\
-    \x20Interleave,\n\x20each\x20copy\x20of\x20the\x20cell\x20is\x20counted\
-    \x20separately.\n\n\r\n\x05\x04\t\x02\x0e\x05\x12\x04\x97\x03\x04\t\n\r\
-    \n\x05\x04\t\x02\x0e\x01\x12\x04\x97\x03\n%\n\r\n\x05\x04\t\x02\x0e\x03\
-    \x12\x04\x97\x03(*\n\xb4\x01\n\x04\x04\t\x02\x0f\x12\x04\x9c\x03\x04*\
-    \x1a\xa5\x01\x20Matches\x20only\x20the\x20first\x20N\x20cells\x20of\x20e\
-    ach\x20row.\n\x20If\x20duplicate\x20cells\x20are\x20present,\x20as\x20is\
+    \n\x20present\x20in\x20a\x20binary\x20qualifier.\n\n\r\n\x05\x04\x0b\x02\
+    \t\x05\x12\x04\xce\x03\x04\t\n\r\n\x05\x04\x0b\x02\t\x01\x12\x04\xce\x03\
+    \n'\n\r\n\x05\x04\x0b\x02\t\x03\x12\x04\xce\x03*+\nG\n\x04\x04\x0b\x02\n\
+    \x12\x04\xd1\x03\x04(\x1a9\x20Matches\x20only\x20cells\x20from\x20column\
+    s\x20within\x20the\x20given\x20range.\n\n\r\n\x05\x04\x0b\x02\n\x06\x12\
+    \x04\xd1\x03\x04\x0f\n\r\n\x05\x04\x0b\x02\n\x01\x12\x04\xd1\x03\x10#\n\
+    \r\n\x05\x04\x0b\x02\n\x03\x12\x04\xd1\x03&'\nJ\n\x04\x04\x0b\x02\x0b\
+    \x12\x04\xd4\x03\x04.\x1a<\x20Matches\x20only\x20cells\x20with\x20timest\
+    amps\x20within\x20the\x20given\x20range.\n\n\r\n\x05\x04\x0b\x02\x0b\x06\
+    \x12\x04\xd4\x03\x04\x12\n\r\n\x05\x04\x0b\x02\x0b\x01\x12\x04\xd4\x03\
+    \x13)\n\r\n\x05\x04\x0b\x02\x0b\x03\x12\x04\xd4\x03,-\n\xc3\x02\n\x04\
+    \x04\x0b\x02\x0c\x12\x04\xdb\x03\x04!\x1a\xb4\x02\x20Matches\x20only\x20\
+    cells\x20with\x20values\x20that\x20satisfy\x20the\x20given\x20regular\
+    \x20expression.\n\x20Note\x20that,\x20since\x20cell\x20values\x20can\x20\
+    contain\x20arbitrary\x20bytes,\x20the\x20`\\C`\x20escape\n\x20sequence\
+    \x20must\x20be\x20used\x20if\x20a\x20true\x20wildcard\x20is\x20desired.\
+    \x20The\x20`.`\x20character\n\x20will\x20not\x20match\x20the\x20new\x20l\
+    ine\x20character\x20`\\n`,\x20which\x20may\x20be\x20present\x20in\x20a\n\
+    \x20binary\x20value.\n\n\r\n\x05\x04\x0b\x02\x0c\x05\x12\x04\xdb\x03\x04\
+    \t\n\r\n\x05\x04\x0b\x02\x0c\x01\x12\x04\xdb\x03\n\x1c\n\r\n\x05\x04\x0b\
+    \x02\x0c\x03\x12\x04\xdb\x03\x1f\x20\nP\n\x04\x04\x0b\x02\r\x12\x04\xde\
+    \x03\x04'\x1aB\x20Matches\x20only\x20cells\x20with\x20values\x20that\x20\
+    fall\x20within\x20the\x20given\x20range.\n\n\r\n\x05\x04\x0b\x02\r\x06\
+    \x12\x04\xde\x03\x04\x0e\n\r\n\x05\x04\x0b\x02\r\x01\x12\x04\xde\x03\x0f\
+    !\n\r\n\x05\x04\x0b\x02\r\x03\x12\x04\xde\x03$&\n\xcc\x01\n\x04\x04\x0b\
+    \x02\x0e\x12\x04\xe3\x03\x04+\x1a\xbd\x01\x20Skips\x20the\x20first\x20N\
+    \x20cells\x20of\x20each\x20row,\x20matching\x20all\x20subsequent\x20cell\
+    s.\n\x20If\x20duplicate\x20cells\x20are\x20present,\x20as\x20is\x20possi\
+    ble\x20when\x20using\x20an\x20Interleave,\n\x20each\x20copy\x20of\x20the\
+    \x20cell\x20is\x20counted\x20separately.\n\n\r\n\x05\x04\x0b\x02\x0e\x05\
+    \x12\x04\xe3\x03\x04\t\n\r\n\x05\x04\x0b\x02\x0e\x01\x12\x04\xe3\x03\n%\
+    \n\r\n\x05\x04\x0b\x02\x0e\x03\x12\x04\xe3\x03(*\n\xb4\x01\n\x04\x04\x0b\
+    \x02\x0f\x12\x04\xe8\x03\x04*\x1a\xa5\x01\x20Matches\x20only\x20the\x20f\
+    irst\x20N\x20cells\x20of\x20each\x20row.\n\x20If\x20duplicate\x20cells\
+    \x20are\x20present,\x20as\x20is\x20possible\x20when\x20using\x20an\x20In\
+    terleave,\n\x20each\x20copy\x20of\x20the\x20cell\x20is\x20counted\x20sep\
+    arately.\n\n\r\n\x05\x04\x0b\x02\x0f\x05\x12\x04\xe8\x03\x04\t\n\r\n\x05\
+    \x04\x0b\x02\x0f\x01\x12\x04\xe8\x03\n$\n\r\n\x05\x04\x0b\x02\x0f\x03\
+    \x12\x04\xe8\x03')\n\xf3\x02\n\x04\x04\x0b\x02\x10\x12\x04\xf0\x03\x04-\
+    \x1a\xe4\x02\x20Matches\x20only\x20the\x20most\x20recent\x20N\x20cells\
+    \x20within\x20each\x20column.\x20For\x20example,\n\x20if\x20N=2,\x20this\
+    \x20filter\x20would\x20match\x20column\x20`foo:bar`\x20at\x20timestamps\
+    \x2010\x20and\x209,\n\x20skip\x20all\x20earlier\x20cells\x20in\x20`foo:b\
+    ar`,\x20and\x20then\x20begin\x20matching\x20again\x20in\n\x20column\x20`\
+    foo:bar2`.\n\x20If\x20duplicate\x20cells\x20are\x20present,\x20as\x20is\
     \x20possible\x20when\x20using\x20an\x20Interleave,\n\x20each\x20copy\x20\
-    of\x20the\x20cell\x20is\x20counted\x20separately.\n\n\r\n\x05\x04\t\x02\
-    \x0f\x05\x12\x04\x9c\x03\x04\t\n\r\n\x05\x04\t\x02\x0f\x01\x12\x04\x9c\
-    \x03\n$\n\r\n\x05\x04\t\x02\x0f\x03\x12\x04\x9c\x03')\n\xf3\x02\n\x04\
-    \x04\t\x02\x10\x12\x04\xa4\x03\x04-\x1a\xe4\x02\x20Matches\x20only\x20th\
-    e\x20most\x20recent\x20N\x20cells\x20within\x20each\x20column.\x20For\
-    \x20example,\n\x20if\x20N=2,\x20this\x20filter\x20would\x20match\x20colu\
-    mn\x20`foo:bar`\x20at\x20timestamps\x2010\x20and\x209,\n\x20skip\x20all\
-    \x20earlier\x20cells\x20in\x20`foo:bar`,\x20and\x20then\x20begin\x20matc\
-    hing\x20again\x20in\n\x20column\x20`foo:bar2`.\n\x20If\x20duplicate\x20c\
-    ells\x20are\x20present,\x20as\x20is\x20possible\x20when\x20using\x20an\
-    \x20Interleave,\n\x20each\x20copy\x20of\x20the\x20cell\x20is\x20counted\
-    \x20separately.\n\n\r\n\x05\x04\t\x02\x10\x05\x12\x04\xa4\x03\x04\t\n\r\
-    \n\x05\x04\t\x02\x10\x01\x12\x04\xa4\x03\n'\n\r\n\x05\x04\t\x02\x10\x03\
-    \x12\x04\xa4\x03*,\nA\n\x04\x04\t\x02\x11\x12\x04\xa7\x03\x04&\x1a3\x20R\
-    eplaces\x20each\x20cell's\x20value\x20with\x20the\x20empty\x20string.\n\
-    \n\r\n\x05\x04\t\x02\x11\x05\x12\x04\xa7\x03\x04\x08\n\r\n\x05\x04\t\x02\
-    \x11\x01\x12\x04\xa7\x03\t\x20\n\r\n\x05\x04\t\x02\x11\x03\x12\x04\xa7\
-    \x03#%\n\xfb\x04\n\x04\x04\t\x02\x12\x12\x04\xb6\x03\x04(\x1a\xec\x04\
-    \x20Applies\x20the\x20given\x20label\x20to\x20all\x20cells\x20in\x20the\
-    \x20output\x20row.\x20This\x20allows\n\x20the\x20client\x20to\x20determi\
-    ne\x20which\x20results\x20were\x20produced\x20from\x20which\x20part\x20o\
-    f\n\x20the\x20filter.\n\n\x20Values\x20must\x20be\x20at\x20most\x2015\
-    \x20characters\x20in\x20length,\x20and\x20match\x20the\x20RE2\n\x20patte\
-    rn\x20`[a-z0-9\\\\-]+`\n\n\x20Due\x20to\x20a\x20technical\x20limitation,\
-    \x20it\x20is\x20not\x20currently\x20possible\x20to\x20apply\n\x20multipl\
-    e\x20labels\x20to\x20a\x20cell.\x20As\x20a\x20result,\x20a\x20Chain\x20m\
-    ay\x20have\x20no\x20more\x20than\n\x20one\x20sub-filter\x20which\x20cont\
-    ains\x20a\x20`apply_label_transformer`.\x20It\x20is\x20okay\x20for\n\x20\
-    an\x20Interleave\x20to\x20contain\x20multiple\x20`apply_label_transforme\
-    rs`,\x20as\x20they\n\x20will\x20be\x20applied\x20to\x20separate\x20copie\
-    s\x20of\x20the\x20input.\x20This\x20may\x20be\x20relaxed\x20in\n\x20the\
-    \x20future.\n\n\r\n\x05\x04\t\x02\x12\x05\x12\x04\xb6\x03\x04\n\n\r\n\
-    \x05\x04\t\x02\x12\x01\x12\x04\xb6\x03\x0b\"\n\r\n\x05\x04\t\x02\x12\x03\
-    \x12\x04\xb6\x03%'\nR\n\x02\x04\n\x12\x06\xbb\x03\0\xfa\x03\x01\x1aD\x20\
-    Specifies\x20a\x20particular\x20change\x20to\x20be\x20made\x20to\x20the\
-    \x20contents\x20of\x20a\x20row.\n\n\x0b\n\x03\x04\n\x01\x12\x04\xbb\x03\
-    \x08\x10\nH\n\x04\x04\n\x03\0\x12\x06\xbd\x03\x02\xcf\x03\x03\x1a8\x20A\
-    \x20Mutation\x20which\x20sets\x20the\x20value\x20of\x20the\x20specified\
-    \x20cell.\n\n\r\n\x05\x04\n\x03\0\x01\x12\x04\xbd\x03\n\x11\nm\n\x06\x04\
-    \n\x03\0\x02\0\x12\x04\xc0\x03\x04\x1b\x1a]\x20The\x20name\x20of\x20the\
-    \x20family\x20into\x20which\x20new\x20data\x20should\x20be\x20written.\n\
-    \x20Must\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\n\x03\0\x02\0\
-    \x05\x12\x04\xc0\x03\x04\n\n\x0f\n\x07\x04\n\x03\0\x02\0\x01\x12\x04\xc0\
-    \x03\x0b\x16\n\x0f\n\x07\x04\n\x03\0\x02\0\x03\x12\x04\xc0\x03\x19\x1a\n\
-    \x89\x01\n\x06\x04\n\x03\0\x02\x01\x12\x04\xc4\x03\x04\x1f\x1ay\x20The\
-    \x20qualifier\x20of\x20the\x20column\x20into\x20which\x20new\x20data\x20\
-    should\x20be\x20written.\n\x20Can\x20be\x20any\x20byte\x20string,\x20inc\
-    luding\x20the\x20empty\x20string.\n\n\x0f\n\x07\x04\n\x03\0\x02\x01\x05\
-    \x12\x04\xc4\x03\x04\t\n\x0f\n\x07\x04\n\x03\0\x02\x01\x01\x12\x04\xc4\
-    \x03\n\x1a\n\x0f\n\x07\x04\n\x03\0\x02\x01\x03\x12\x04\xc4\x03\x1d\x1e\n\
-    \xd1\x02\n\x06\x04\n\x03\0\x02\x02\x12\x04\xcb\x03\x04\x1f\x1a\xc0\x02\
-    \x20The\x20timestamp\x20of\x20the\x20cell\x20into\x20which\x20new\x20dat\
-    a\x20should\x20be\x20written.\n\x20Use\x20-1\x20for\x20current\x20Bigtab\
-    le\x20server\x20time.\n\x20Otherwise,\x20the\x20client\x20should\x20set\
-    \x20this\x20value\x20itself,\x20noting\x20that\x20the\n\x20default\x20va\
-    lue\x20is\x20a\x20timestamp\x20of\x20zero\x20if\x20the\x20field\x20is\
-    \x20left\x20unspecified.\n\x20Values\x20must\x20match\x20the\x20granular\
-    ity\x20of\x20the\x20table\x20(e.g.\x20micros,\x20millis).\n\n\x0f\n\x07\
-    \x04\n\x03\0\x02\x02\x05\x12\x04\xcb\x03\x04\t\n\x0f\n\x07\x04\n\x03\0\
-    \x02\x02\x01\x12\x04\xcb\x03\n\x1a\n\x0f\n\x07\x04\n\x03\0\x02\x02\x03\
-    \x12\x04\xcb\x03\x1d\x1e\nB\n\x06\x04\n\x03\0\x02\x03\x12\x04\xce\x03\
-    \x04\x14\x1a2\x20The\x20value\x20to\x20be\x20written\x20into\x20the\x20s\
-    pecified\x20cell.\n\n\x0f\n\x07\x04\n\x03\0\x02\x03\x05\x12\x04\xce\x03\
-    \x04\t\n\x0f\n\x07\x04\n\x03\0\x02\x03\x01\x12\x04\xce\x03\n\x0f\n\x0f\n\
-    \x07\x04\n\x03\0\x02\x03\x03\x12\x04\xce\x03\x12\x13\n\x8d\x01\n\x04\x04\
-    \n\x03\x01\x12\x06\xd3\x03\x02\xde\x03\x03\x1a}\x20A\x20Mutation\x20whic\
-    h\x20deletes\x20cells\x20from\x20the\x20specified\x20column,\x20optional\
-    ly\n\x20restricting\x20the\x20deletions\x20to\x20a\x20given\x20timestamp\
-    \x20range.\n\n\r\n\x05\x04\n\x03\x01\x01\x12\x04\xd3\x03\n\x1a\nj\n\x06\
-    \x04\n\x03\x01\x02\0\x12\x04\xd6\x03\x04\x1b\x1aZ\x20The\x20name\x20of\
-    \x20the\x20family\x20from\x20which\x20cells\x20should\x20be\x20deleted.\
-    \n\x20Must\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\n\x03\x01\x02\
-    \0\x05\x12\x04\xd6\x03\x04\n\n\x0f\n\x07\x04\n\x03\x01\x02\0\x01\x12\x04\
-    \xd6\x03\x0b\x16\n\x0f\n\x07\x04\n\x03\x01\x02\0\x03\x12\x04\xd6\x03\x19\
-    \x1a\n\x86\x01\n\x06\x04\n\x03\x01\x02\x01\x12\x04\xda\x03\x04\x1f\x1av\
-    \x20The\x20qualifier\x20of\x20the\x20column\x20from\x20which\x20cells\
-    \x20should\x20be\x20deleted.\n\x20Can\x20be\x20any\x20byte\x20string,\
-    \x20including\x20the\x20empty\x20string.\n\n\x0f\n\x07\x04\n\x03\x01\x02\
-    \x01\x05\x12\x04\xda\x03\x04\t\n\x0f\n\x07\x04\n\x03\x01\x02\x01\x01\x12\
-    \x04\xda\x03\n\x1a\n\x0f\n\x07\x04\n\x03\x01\x02\x01\x03\x12\x04\xda\x03\
-    \x1d\x1e\nO\n\x06\x04\n\x03\x01\x02\x02\x12\x04\xdd\x03\x04\"\x1a?\x20Th\
-    e\x20range\x20of\x20timestamps\x20within\x20which\x20cells\x20should\x20\
-    be\x20deleted.\n\n\x0f\n\x07\x04\n\x03\x01\x02\x02\x06\x12\x04\xdd\x03\
-    \x04\x12\n\x0f\n\x07\x04\n\x03\x01\x02\x02\x01\x12\x04\xdd\x03\x13\x1d\n\
-    \x0f\n\x07\x04\n\x03\x01\x02\x02\x03\x12\x04\xdd\x03\x20!\nV\n\x04\x04\n\
-    \x03\x02\x12\x06\xe1\x03\x02\xe5\x03\x03\x1aF\x20A\x20Mutation\x20which\
-    \x20deletes\x20all\x20cells\x20from\x20the\x20specified\x20column\x20fam\
-    ily.\n\n\r\n\x05\x04\n\x03\x02\x01\x12\x04\xe1\x03\n\x1a\nj\n\x06\x04\n\
-    \x03\x02\x02\0\x12\x04\xe4\x03\x04\x1b\x1aZ\x20The\x20name\x20of\x20the\
+    of\x20the\x20cell\x20is\x20counted\x20separately.\n\n\r\n\x05\x04\x0b\
+    \x02\x10\x05\x12\x04\xf0\x03\x04\t\n\r\n\x05\x04\x0b\x02\x10\x01\x12\x04\
+    \xf0\x03\n'\n\r\n\x05\x04\x0b\x02\x10\x03\x12\x04\xf0\x03*,\nA\n\x04\x04\
+    \x0b\x02\x11\x12\x04\xf3\x03\x04&\x1a3\x20Replaces\x20each\x20cell's\x20\
+    value\x20with\x20the\x20empty\x20string.\n\n\r\n\x05\x04\x0b\x02\x11\x05\
+    \x12\x04\xf3\x03\x04\x08\n\r\n\x05\x04\x0b\x02\x11\x01\x12\x04\xf3\x03\t\
+    \x20\n\r\n\x05\x04\x0b\x02\x11\x03\x12\x04\xf3\x03#%\n\xfb\x04\n\x04\x04\
+    \x0b\x02\x12\x12\x04\x82\x04\x04(\x1a\xec\x04\x20Applies\x20the\x20given\
+    \x20label\x20to\x20all\x20cells\x20in\x20the\x20output\x20row.\x20This\
+    \x20allows\n\x20the\x20client\x20to\x20determine\x20which\x20results\x20\
+    were\x20produced\x20from\x20which\x20part\x20of\n\x20the\x20filter.\n\n\
+    \x20Values\x20must\x20be\x20at\x20most\x2015\x20characters\x20in\x20leng\
+    th,\x20and\x20match\x20the\x20RE2\n\x20pattern\x20`[a-z0-9\\\\-]+`\n\n\
+    \x20Due\x20to\x20a\x20technical\x20limitation,\x20it\x20is\x20not\x20cur\
+    rently\x20possible\x20to\x20apply\n\x20multiple\x20labels\x20to\x20a\x20\
+    cell.\x20As\x20a\x20result,\x20a\x20Chain\x20may\x20have\x20no\x20more\
+    \x20than\n\x20one\x20sub-filter\x20which\x20contains\x20a\x20`apply_labe\
+    l_transformer`.\x20It\x20is\x20okay\x20for\n\x20an\x20Interleave\x20to\
+    \x20contain\x20multiple\x20`apply_label_transformers`,\x20as\x20they\n\
+    \x20will\x20be\x20applied\x20to\x20separate\x20copies\x20of\x20the\x20in\
+    put.\x20This\x20may\x20be\x20relaxed\x20in\n\x20the\x20future.\n\n\r\n\
+    \x05\x04\x0b\x02\x12\x05\x12\x04\x82\x04\x04\n\n\r\n\x05\x04\x0b\x02\x12\
+    \x01\x12\x04\x82\x04\x0b\"\n\r\n\x05\x04\x0b\x02\x12\x03\x12\x04\x82\x04\
+    %'\nR\n\x02\x04\x0c\x12\x06\x87\x04\0\xf4\x04\x01\x1aD\x20Specifies\x20a\
+    \x20particular\x20change\x20to\x20be\x20made\x20to\x20the\x20contents\
+    \x20of\x20a\x20row.\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\x87\x04\x08\x10\nH\
+    \n\x04\x04\x0c\x03\0\x12\x06\x89\x04\x02\x9b\x04\x03\x1a8\x20A\x20Mutati\
+    on\x20which\x20sets\x20the\x20value\x20of\x20the\x20specified\x20cell.\n\
+    \n\r\n\x05\x04\x0c\x03\0\x01\x12\x04\x89\x04\n\x11\nm\n\x06\x04\x0c\x03\
+    \0\x02\0\x12\x04\x8c\x04\x04\x1b\x1a]\x20The\x20name\x20of\x20the\x20fam\
+    ily\x20into\x20which\x20new\x20data\x20should\x20be\x20written.\n\x20Mus\
+    t\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\x0c\x03\0\x02\0\x05\
+    \x12\x04\x8c\x04\x04\n\n\x0f\n\x07\x04\x0c\x03\0\x02\0\x01\x12\x04\x8c\
+    \x04\x0b\x16\n\x0f\n\x07\x04\x0c\x03\0\x02\0\x03\x12\x04\x8c\x04\x19\x1a\
+    \n\x89\x01\n\x06\x04\x0c\x03\0\x02\x01\x12\x04\x90\x04\x04\x1f\x1ay\x20T\
+    he\x20qualifier\x20of\x20the\x20column\x20into\x20which\x20new\x20data\
+    \x20should\x20be\x20written.\n\x20Can\x20be\x20any\x20byte\x20string,\
+    \x20including\x20the\x20empty\x20string.\n\n\x0f\n\x07\x04\x0c\x03\0\x02\
+    \x01\x05\x12\x04\x90\x04\x04\t\n\x0f\n\x07\x04\x0c\x03\0\x02\x01\x01\x12\
+    \x04\x90\x04\n\x1a\n\x0f\n\x07\x04\x0c\x03\0\x02\x01\x03\x12\x04\x90\x04\
+    \x1d\x1e\n\xd1\x02\n\x06\x04\x0c\x03\0\x02\x02\x12\x04\x97\x04\x04\x1f\
+    \x1a\xc0\x02\x20The\x20timestamp\x20of\x20the\x20cell\x20into\x20which\
+    \x20new\x20data\x20should\x20be\x20written.\n\x20Use\x20-1\x20for\x20cur\
+    rent\x20Bigtable\x20server\x20time.\n\x20Otherwise,\x20the\x20client\x20\
+    should\x20set\x20this\x20value\x20itself,\x20noting\x20that\x20the\n\x20\
+    default\x20value\x20is\x20a\x20timestamp\x20of\x20zero\x20if\x20the\x20f\
+    ield\x20is\x20left\x20unspecified.\n\x20Values\x20must\x20match\x20the\
+    \x20granularity\x20of\x20the\x20table\x20(e.g.\x20micros,\x20millis).\n\
+    \n\x0f\n\x07\x04\x0c\x03\0\x02\x02\x05\x12\x04\x97\x04\x04\t\n\x0f\n\x07\
+    \x04\x0c\x03\0\x02\x02\x01\x12\x04\x97\x04\n\x1a\n\x0f\n\x07\x04\x0c\x03\
+    \0\x02\x02\x03\x12\x04\x97\x04\x1d\x1e\nB\n\x06\x04\x0c\x03\0\x02\x03\
+    \x12\x04\x9a\x04\x04\x14\x1a2\x20The\x20value\x20to\x20be\x20written\x20\
+    into\x20the\x20specified\x20cell.\n\n\x0f\n\x07\x04\x0c\x03\0\x02\x03\
+    \x05\x12\x04\x9a\x04\x04\t\n\x0f\n\x07\x04\x0c\x03\0\x02\x03\x01\x12\x04\
+    \x9a\x04\n\x0f\n\x0f\n\x07\x04\x0c\x03\0\x02\x03\x03\x12\x04\x9a\x04\x12\
+    \x13\nY\n\x04\x04\x0c\x03\x01\x12\x06\x9e\x04\x02\xaf\x04\x03\x1aI\x20A\
+    \x20Mutation\x20which\x20incrementally\x20updates\x20a\x20cell\x20in\x20\
+    an\x20`Aggregate`\x20family.\n\n\r\n\x05\x04\x0c\x03\x01\x01\x12\x04\x9e\
+    \x04\n\x13\n\xb0\x01\n\x06\x04\x0c\x03\x01\x02\0\x12\x04\xa2\x04\x04\x1b\
+    \x1a\x9f\x01\x20The\x20name\x20of\x20the\x20`Aggregate`\x20family\x20int\
+    o\x20which\x20new\x20data\x20should\x20be\x20added.\n\x20This\x20must\
+    \x20be\x20a\x20family\x20with\x20a\x20`value_type`\x20of\x20`Aggregate`.\
+    \n\x20Format:\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\x0c\x03\x01\x02\0\
+    \x05\x12\x04\xa2\x04\x04\n\n\x0f\n\x07\x04\x0c\x03\x01\x02\0\x01\x12\x04\
+    \xa2\x04\x0b\x16\n\x0f\n\x07\x04\x0c\x03\x01\x02\0\x03\x12\x04\xa2\x04\
+    \x19\x1a\no\n\x06\x04\x0c\x03\x01\x02\x01\x12\x04\xa6\x04\x04\x1f\x1a_\
+    \x20The\x20qualifier\x20of\x20the\x20column\x20into\x20which\x20new\x20d\
+    ata\x20should\x20be\x20added.\x20This\n\x20must\x20be\x20a\x20`raw_value\
+    `.\n\n\x0f\n\x07\x04\x0c\x03\x01\x02\x01\x06\x12\x04\xa6\x04\x04\t\n\x0f\
+    \n\x07\x04\x0c\x03\x01\x02\x01\x01\x12\x04\xa6\x04\n\x1a\n\x0f\n\x07\x04\
+    \x0c\x03\x01\x02\x01\x03\x12\x04\xa6\x04\x1d\x1e\n\x9e\x01\n\x06\x04\x0c\
+    \x03\x01\x02\x02\x12\x04\xaa\x04\x04\x18\x1a\x8d\x01\x20The\x20timestamp\
+    \x20of\x20the\x20cell\x20to\x20which\x20new\x20data\x20should\x20be\x20a\
+    dded.\x20This\x20must\n\x20be\x20a\x20`raw_timestamp_micros`\x20that\x20\
+    matches\x20the\x20table's\x20`granularity`.\n\n\x0f\n\x07\x04\x0c\x03\
+    \x01\x02\x02\x06\x12\x04\xaa\x04\x04\t\n\x0f\n\x07\x04\x0c\x03\x01\x02\
+    \x02\x01\x12\x04\xaa\x04\n\x13\n\x0f\n\x07\x04\x0c\x03\x01\x02\x02\x03\
+    \x12\x04\xaa\x04\x16\x17\n\x91\x01\n\x06\x04\x0c\x03\x01\x02\x03\x12\x04\
+    \xae\x04\x04\x14\x1a\x80\x01\x20The\x20input\x20value\x20to\x20be\x20acc\
+    umulated\x20into\x20the\x20specified\x20cell.\x20This\x20must\x20be\n\
+    \x20compatible\x20with\x20the\x20family's\x20`value_type.input_type`.\n\
+    \n\x0f\n\x07\x04\x0c\x03\x01\x02\x03\x06\x12\x04\xae\x04\x04\t\n\x0f\n\
+    \x07\x04\x0c\x03\x01\x02\x03\x01\x12\x04\xae\x04\n\x0f\n\x0f\n\x07\x04\
+    \x0c\x03\x01\x02\x03\x03\x12\x04\xae\x04\x12\x13\nb\n\x04\x04\x0c\x03\
+    \x02\x12\x06\xb3\x04\x02\xc5\x04\x03\x1aR\x20A\x20Mutation\x20which\x20m\
+    erges\x20accumulated\x20state\x20into\x20a\x20cell\x20in\x20an\x20`Aggre\
+    gate`\n\x20family.\n\n\r\n\x05\x04\x0c\x03\x02\x01\x12\x04\xb3\x04\n\x15\
+    \n\xb0\x01\n\x06\x04\x0c\x03\x02\x02\0\x12\x04\xb7\x04\x04\x1b\x1a\x9f\
+    \x01\x20The\x20name\x20of\x20the\x20`Aggregate`\x20family\x20into\x20whi\
+    ch\x20new\x20data\x20should\x20be\x20added.\n\x20This\x20must\x20be\x20a\
+    \x20family\x20with\x20a\x20`value_type`\x20of\x20`Aggregate`.\n\x20Forma\
+    t:\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\x0c\x03\x02\x02\0\x05\x12\x04\
+    \xb7\x04\x04\n\n\x0f\n\x07\x04\x0c\x03\x02\x02\0\x01\x12\x04\xb7\x04\x0b\
+    \x16\n\x0f\n\x07\x04\x0c\x03\x02\x02\0\x03\x12\x04\xb7\x04\x19\x1a\no\n\
+    \x06\x04\x0c\x03\x02\x02\x01\x12\x04\xbb\x04\x04\x1f\x1a_\x20The\x20qual\
+    ifier\x20of\x20the\x20column\x20into\x20which\x20new\x20data\x20should\
+    \x20be\x20added.\x20This\n\x20must\x20be\x20a\x20`raw_value`.\n\n\x0f\n\
+    \x07\x04\x0c\x03\x02\x02\x01\x06\x12\x04\xbb\x04\x04\t\n\x0f\n\x07\x04\
+    \x0c\x03\x02\x02\x01\x01\x12\x04\xbb\x04\n\x1a\n\x0f\n\x07\x04\x0c\x03\
+    \x02\x02\x01\x03\x12\x04\xbb\x04\x1d\x1e\n\x9e\x01\n\x06\x04\x0c\x03\x02\
+    \x02\x02\x12\x04\xbf\x04\x04\x18\x1a\x8d\x01\x20The\x20timestamp\x20of\
+    \x20the\x20cell\x20to\x20which\x20new\x20data\x20should\x20be\x20added.\
+    \x20This\x20must\n\x20be\x20a\x20`raw_timestamp_micros`\x20that\x20match\
+    es\x20the\x20table's\x20`granularity`.\n\n\x0f\n\x07\x04\x0c\x03\x02\x02\
+    \x02\x06\x12\x04\xbf\x04\x04\t\n\x0f\n\x07\x04\x0c\x03\x02\x02\x02\x01\
+    \x12\x04\xbf\x04\n\x13\n\x0f\n\x07\x04\x0c\x03\x02\x02\x02\x03\x12\x04\
+    \xbf\x04\x16\x17\n\xbb\x01\n\x06\x04\x0c\x03\x02\x02\x03\x12\x04\xc4\x04\
+    \x04\x14\x1a\xaa\x01\x20The\x20input\x20value\x20to\x20be\x20merged\x20i\
+    nto\x20the\x20specified\x20cell.\x20This\x20must\x20be\n\x20compatible\
+    \x20with\x20the\x20family's\x20`value_type.state_type`.\x20Merging\x20`N\
+    ULL`\x20is\n\x20allowed,\x20but\x20has\x20no\x20effect.\n\n\x0f\n\x07\
+    \x04\x0c\x03\x02\x02\x03\x06\x12\x04\xc4\x04\x04\t\n\x0f\n\x07\x04\x0c\
+    \x03\x02\x02\x03\x01\x12\x04\xc4\x04\n\x0f\n\x0f\n\x07\x04\x0c\x03\x02\
+    \x02\x03\x03\x12\x04\xc4\x04\x12\x13\n\x8d\x01\n\x04\x04\x0c\x03\x03\x12\
+    \x06\xc9\x04\x02\xd4\x04\x03\x1a}\x20A\x20Mutation\x20which\x20deletes\
+    \x20cells\x20from\x20the\x20specified\x20column,\x20optionally\n\x20rest\
+    ricting\x20the\x20deletions\x20to\x20a\x20given\x20timestamp\x20range.\n\
+    \n\r\n\x05\x04\x0c\x03\x03\x01\x12\x04\xc9\x04\n\x1a\nj\n\x06\x04\x0c\
+    \x03\x03\x02\0\x12\x04\xcc\x04\x04\x1b\x1aZ\x20The\x20name\x20of\x20the\
     \x20family\x20from\x20which\x20cells\x20should\x20be\x20deleted.\n\x20Mu\
-    st\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\n\x03\x02\x02\0\x05\
-    \x12\x04\xe4\x03\x04\n\n\x0f\n\x07\x04\n\x03\x02\x02\0\x01\x12\x04\xe4\
-    \x03\x0b\x16\n\x0f\n\x07\x04\n\x03\x02\x02\0\x03\x12\x04\xe4\x03\x19\x1a\
-    \nM\n\x04\x04\n\x03\x03\x12\x06\xe8\x03\x02\xea\x03\x03\x1a=\x20A\x20Mut\
-    ation\x20which\x20deletes\x20all\x20cells\x20from\x20the\x20containing\
-    \x20row.\n\n\r\n\x05\x04\n\x03\x03\x01\x12\x04\xe8\x03\n\x17\n@\n\x04\
-    \x04\n\x08\0\x12\x06\xed\x03\x02\xf9\x03\x03\x1a0\x20Which\x20of\x20the\
-    \x20possible\x20Mutation\x20types\x20to\x20apply.\n\n\r\n\x05\x04\n\x08\
-    \0\x01\x12\x04\xed\x03\x08\x10\n#\n\x04\x04\n\x02\0\x12\x04\xef\x03\x04\
-    \x19\x1a\x15\x20Set\x20a\x20cell's\x20value.\n\n\r\n\x05\x04\n\x02\0\x06\
-    \x12\x04\xef\x03\x04\x0b\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xef\x03\x0c\
-    \x14\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xef\x03\x17\x18\n,\n\x04\x04\n\
-    \x02\x01\x12\x04\xf2\x03\x04,\x1a\x1e\x20Deletes\x20cells\x20from\x20a\
-    \x20column.\n\n\r\n\x05\x04\n\x02\x01\x06\x12\x04\xf2\x03\x04\x14\n\r\n\
-    \x05\x04\n\x02\x01\x01\x12\x04\xf2\x03\x15'\n\r\n\x05\x04\n\x02\x01\x03\
-    \x12\x04\xf2\x03*+\n3\n\x04\x04\n\x02\x02\x12\x04\xf5\x03\x04,\x1a%\x20D\
-    eletes\x20cells\x20from\x20a\x20column\x20family.\n\n\r\n\x05\x04\n\x02\
-    \x02\x06\x12\x04\xf5\x03\x04\x14\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xf5\
-    \x03\x15'\n\r\n\x05\x04\n\x02\x02\x03\x12\x04\xf5\x03*+\n2\n\x04\x04\n\
-    \x02\x03\x12\x04\xf8\x03\x04&\x1a$\x20Deletes\x20cells\x20from\x20the\
-    \x20entire\x20row.\n\n\r\n\x05\x04\n\x02\x03\x06\x12\x04\xf8\x03\x04\x11\
-    \n\r\n\x05\x04\n\x02\x03\x01\x12\x04\xf8\x03\x12!\n\r\n\x05\x04\n\x02\
-    \x03\x03\x12\x04\xf8\x03$%\nm\n\x02\x04\x0b\x12\x06\xfe\x03\0\x96\x04\
-    \x01\x1a_\x20Specifies\x20an\x20atomic\x20read/modify/write\x20operation\
-    \x20on\x20the\x20latest\x20value\x20of\x20the\n\x20specified\x20column.\
-    \n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xfe\x03\x08\x1b\nv\n\x04\x04\x0b\x02\
-    \0\x12\x04\x81\x04\x02\x19\x1ah\x20The\x20name\x20of\x20the\x20family\
-    \x20to\x20which\x20the\x20read/modify/write\x20should\x20be\x20applied.\
-    \n\x20Must\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\r\n\x05\x04\x0b\x02\0\x05\
-    \x12\x04\x81\x04\x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\x81\x04\t\
-    \x14\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\x81\x04\x17\x18\n\x94\x01\n\x04\
-    \x04\x0b\x02\x01\x12\x04\x86\x04\x02\x1d\x1a\x85\x01\x20The\x20qualifier\
-    \x20of\x20the\x20column\x20to\x20which\x20the\x20read/modify/write\x20sh\
-    ould\x20be\n\x20applied.\n\x20Can\x20be\x20any\x20byte\x20string,\x20inc\
-    luding\x20the\x20empty\x20string.\n\n\r\n\x05\x04\x0b\x02\x01\x05\x12\
-    \x04\x86\x04\x02\x07\n\r\n\x05\x04\x0b\x02\x01\x01\x12\x04\x86\x04\x08\
-    \x18\n\r\n\x05\x04\x0b\x02\x01\x03\x12\x04\x86\x04\x1b\x1c\nj\n\x04\x04\
-    \x0b\x08\0\x12\x06\x8a\x04\x02\x95\x04\x03\x1aZ\x20The\x20rule\x20used\
-    \x20to\x20determine\x20the\x20column's\x20new\x20latest\x20value\x20from\
-    \x20its\x20current\n\x20latest\x20value.\n\n\r\n\x05\x04\x0b\x08\0\x01\
-    \x12\x04\x8a\x04\x08\x0c\n\xab\x01\n\x04\x04\x0b\x02\x02\x12\x04\x8e\x04\
-    \x04\x1b\x1a\x9c\x01\x20Rule\x20specifying\x20that\x20`append_value`\x20\
-    be\x20appended\x20to\x20the\x20existing\x20value.\n\x20If\x20the\x20targ\
-    eted\x20cell\x20is\x20unset,\x20it\x20will\x20be\x20treated\x20as\x20con\
-    taining\x20the\n\x20empty\x20string.\n\n\r\n\x05\x04\x0b\x02\x02\x05\x12\
-    \x04\x8e\x04\x04\t\n\r\n\x05\x04\x0b\x02\x02\x01\x12\x04\x8e\x04\n\x16\n\
-    \r\n\x05\x04\x0b\x02\x02\x03\x12\x04\x8e\x04\x19\x1a\n\xb3\x02\n\x04\x04\
-    \x0b\x02\x03\x12\x04\x94\x04\x04\x1f\x1a\xa4\x02\x20Rule\x20specifying\
-    \x20that\x20`increment_amount`\x20be\x20added\x20to\x20the\x20existing\
-    \x20value.\n\x20If\x20the\x20targeted\x20cell\x20is\x20unset,\x20it\x20w\
-    ill\x20be\x20treated\x20as\x20containing\x20a\x20zero.\n\x20Otherwise,\
-    \x20the\x20targeted\x20cell\x20must\x20contain\x20an\x208-byte\x20value\
-    \x20(interpreted\n\x20as\x20a\x2064-bit\x20big-endian\x20signed\x20integ\
-    er),\x20or\x20the\x20entire\x20request\x20will\x20fail.\n\n\r\n\x05\x04\
-    \x0b\x02\x03\x05\x12\x04\x94\x04\x04\t\n\r\n\x05\x04\x0b\x02\x03\x01\x12\
-    \x04\x94\x04\n\x1a\n\r\n\x05\x04\x0b\x02\x03\x03\x12\x04\x94\x04\x1d\x1e\
-    b\x06proto3\
+    st\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\x0f\n\x07\x04\x0c\x03\x03\x02\0\x05\
+    \x12\x04\xcc\x04\x04\n\n\x0f\n\x07\x04\x0c\x03\x03\x02\0\x01\x12\x04\xcc\
+    \x04\x0b\x16\n\x0f\n\x07\x04\x0c\x03\x03\x02\0\x03\x12\x04\xcc\x04\x19\
+    \x1a\n\x86\x01\n\x06\x04\x0c\x03\x03\x02\x01\x12\x04\xd0\x04\x04\x1f\x1a\
+    v\x20The\x20qualifier\x20of\x20the\x20column\x20from\x20which\x20cells\
+    \x20should\x20be\x20deleted.\n\x20Can\x20be\x20any\x20byte\x20string,\
+    \x20including\x20the\x20empty\x20string.\n\n\x0f\n\x07\x04\x0c\x03\x03\
+    \x02\x01\x05\x12\x04\xd0\x04\x04\t\n\x0f\n\x07\x04\x0c\x03\x03\x02\x01\
+    \x01\x12\x04\xd0\x04\n\x1a\n\x0f\n\x07\x04\x0c\x03\x03\x02\x01\x03\x12\
+    \x04\xd0\x04\x1d\x1e\nO\n\x06\x04\x0c\x03\x03\x02\x02\x12\x04\xd3\x04\
+    \x04\"\x1a?\x20The\x20range\x20of\x20timestamps\x20within\x20which\x20ce\
+    lls\x20should\x20be\x20deleted.\n\n\x0f\n\x07\x04\x0c\x03\x03\x02\x02\
+    \x06\x12\x04\xd3\x04\x04\x12\n\x0f\n\x07\x04\x0c\x03\x03\x02\x02\x01\x12\
+    \x04\xd3\x04\x13\x1d\n\x0f\n\x07\x04\x0c\x03\x03\x02\x02\x03\x12\x04\xd3\
+    \x04\x20!\nV\n\x04\x04\x0c\x03\x04\x12\x06\xd7\x04\x02\xdb\x04\x03\x1aF\
+    \x20A\x20Mutation\x20which\x20deletes\x20all\x20cells\x20from\x20the\x20\
+    specified\x20column\x20family.\n\n\r\n\x05\x04\x0c\x03\x04\x01\x12\x04\
+    \xd7\x04\n\x1a\nj\n\x06\x04\x0c\x03\x04\x02\0\x12\x04\xda\x04\x04\x1b\
+    \x1aZ\x20The\x20name\x20of\x20the\x20family\x20from\x20which\x20cells\
+    \x20should\x20be\x20deleted.\n\x20Must\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\
+    \x0f\n\x07\x04\x0c\x03\x04\x02\0\x05\x12\x04\xda\x04\x04\n\n\x0f\n\x07\
+    \x04\x0c\x03\x04\x02\0\x01\x12\x04\xda\x04\x0b\x16\n\x0f\n\x07\x04\x0c\
+    \x03\x04\x02\0\x03\x12\x04\xda\x04\x19\x1a\nK\n\x04\x04\x0c\x03\x05\x12\
+    \x04\xde\x04\x02\x1a\x1a=\x20A\x20Mutation\x20which\x20deletes\x20all\
+    \x20cells\x20from\x20the\x20containing\x20row.\n\n\r\n\x05\x04\x0c\x03\
+    \x05\x01\x12\x04\xde\x04\n\x17\n@\n\x04\x04\x0c\x08\0\x12\x06\xe1\x04\
+    \x02\xf3\x04\x03\x1a0\x20Which\x20of\x20the\x20possible\x20Mutation\x20t\
+    ypes\x20to\x20apply.\n\n\r\n\x05\x04\x0c\x08\0\x01\x12\x04\xe1\x04\x08\
+    \x10\n#\n\x04\x04\x0c\x02\0\x12\x04\xe3\x04\x04\x19\x1a\x15\x20Set\x20a\
+    \x20cell's\x20value.\n\n\r\n\x05\x04\x0c\x02\0\x06\x12\x04\xe3\x04\x04\
+    \x0b\n\r\n\x05\x04\x0c\x02\0\x01\x12\x04\xe3\x04\x0c\x14\n\r\n\x05\x04\
+    \x0c\x02\0\x03\x12\x04\xe3\x04\x17\x18\n:\n\x04\x04\x0c\x02\x01\x12\x04\
+    \xe6\x04\x04\x1e\x1a,\x20Incrementally\x20updates\x20an\x20`Aggregate`\
+    \x20cell.\n\n\r\n\x05\x04\x0c\x02\x01\x06\x12\x04\xe6\x04\x04\r\n\r\n\
+    \x05\x04\x0c\x02\x01\x01\x12\x04\xe6\x04\x0e\x19\n\r\n\x05\x04\x0c\x02\
+    \x01\x03\x12\x04\xe6\x04\x1c\x1d\n@\n\x04\x04\x0c\x02\x02\x12\x04\xe9\
+    \x04\x04\"\x1a2\x20Merges\x20accumulated\x20state\x20to\x20an\x20`Aggreg\
+    ate`\x20cell.\n\n\r\n\x05\x04\x0c\x02\x02\x06\x12\x04\xe9\x04\x04\x0f\n\
+    \r\n\x05\x04\x0c\x02\x02\x01\x12\x04\xe9\x04\x10\x1d\n\r\n\x05\x04\x0c\
+    \x02\x02\x03\x12\x04\xe9\x04\x20!\n,\n\x04\x04\x0c\x02\x03\x12\x04\xec\
+    \x04\x04,\x1a\x1e\x20Deletes\x20cells\x20from\x20a\x20column.\n\n\r\n\
+    \x05\x04\x0c\x02\x03\x06\x12\x04\xec\x04\x04\x14\n\r\n\x05\x04\x0c\x02\
+    \x03\x01\x12\x04\xec\x04\x15'\n\r\n\x05\x04\x0c\x02\x03\x03\x12\x04\xec\
+    \x04*+\n3\n\x04\x04\x0c\x02\x04\x12\x04\xef\x04\x04,\x1a%\x20Deletes\x20\
+    cells\x20from\x20a\x20column\x20family.\n\n\r\n\x05\x04\x0c\x02\x04\x06\
+    \x12\x04\xef\x04\x04\x14\n\r\n\x05\x04\x0c\x02\x04\x01\x12\x04\xef\x04\
+    \x15'\n\r\n\x05\x04\x0c\x02\x04\x03\x12\x04\xef\x04*+\n2\n\x04\x04\x0c\
+    \x02\x05\x12\x04\xf2\x04\x04&\x1a$\x20Deletes\x20cells\x20from\x20the\
+    \x20entire\x20row.\n\n\r\n\x05\x04\x0c\x02\x05\x06\x12\x04\xf2\x04\x04\
+    \x11\n\r\n\x05\x04\x0c\x02\x05\x01\x12\x04\xf2\x04\x12!\n\r\n\x05\x04\
+    \x0c\x02\x05\x03\x12\x04\xf2\x04$%\nm\n\x02\x04\r\x12\x06\xf8\x04\0\x90\
+    \x05\x01\x1a_\x20Specifies\x20an\x20atomic\x20read/modify/write\x20opera\
+    tion\x20on\x20the\x20latest\x20value\x20of\x20the\n\x20specified\x20colu\
+    mn.\n\n\x0b\n\x03\x04\r\x01\x12\x04\xf8\x04\x08\x1b\nv\n\x04\x04\r\x02\0\
+    \x12\x04\xfb\x04\x02\x19\x1ah\x20The\x20name\x20of\x20the\x20family\x20t\
+    o\x20which\x20the\x20read/modify/write\x20should\x20be\x20applied.\n\x20\
+    Must\x20match\x20`[-_.a-zA-Z0-9]+`\n\n\r\n\x05\x04\r\x02\0\x05\x12\x04\
+    \xfb\x04\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xfb\x04\t\x14\n\r\n\
+    \x05\x04\r\x02\0\x03\x12\x04\xfb\x04\x17\x18\n\x94\x01\n\x04\x04\r\x02\
+    \x01\x12\x04\x80\x05\x02\x1d\x1a\x85\x01\x20The\x20qualifier\x20of\x20th\
+    e\x20column\x20to\x20which\x20the\x20read/modify/write\x20should\x20be\n\
+    \x20applied.\n\x20Can\x20be\x20any\x20byte\x20string,\x20including\x20th\
+    e\x20empty\x20string.\n\n\r\n\x05\x04\r\x02\x01\x05\x12\x04\x80\x05\x02\
+    \x07\n\r\n\x05\x04\r\x02\x01\x01\x12\x04\x80\x05\x08\x18\n\r\n\x05\x04\r\
+    \x02\x01\x03\x12\x04\x80\x05\x1b\x1c\nj\n\x04\x04\r\x08\0\x12\x06\x84\
+    \x05\x02\x8f\x05\x03\x1aZ\x20The\x20rule\x20used\x20to\x20determine\x20t\
+    he\x20column's\x20new\x20latest\x20value\x20from\x20its\x20current\n\x20\
+    latest\x20value.\n\n\r\n\x05\x04\r\x08\0\x01\x12\x04\x84\x05\x08\x0c\n\
+    \xab\x01\n\x04\x04\r\x02\x02\x12\x04\x88\x05\x04\x1b\x1a\x9c\x01\x20Rule\
+    \x20specifying\x20that\x20`append_value`\x20be\x20appended\x20to\x20the\
+    \x20existing\x20value.\n\x20If\x20the\x20targeted\x20cell\x20is\x20unset\
+    ,\x20it\x20will\x20be\x20treated\x20as\x20containing\x20the\n\x20empty\
+    \x20string.\n\n\r\n\x05\x04\r\x02\x02\x05\x12\x04\x88\x05\x04\t\n\r\n\
+    \x05\x04\r\x02\x02\x01\x12\x04\x88\x05\n\x16\n\r\n\x05\x04\r\x02\x02\x03\
+    \x12\x04\x88\x05\x19\x1a\n\xb3\x02\n\x04\x04\r\x02\x03\x12\x04\x8e\x05\
+    \x04\x1f\x1a\xa4\x02\x20Rule\x20specifying\x20that\x20`increment_amount`\
+    \x20be\x20added\x20to\x20the\x20existing\x20value.\n\x20If\x20the\x20tar\
+    geted\x20cell\x20is\x20unset,\x20it\x20will\x20be\x20treated\x20as\x20co\
+    ntaining\x20a\x20zero.\n\x20Otherwise,\x20the\x20targeted\x20cell\x20mus\
+    t\x20contain\x20an\x208-byte\x20value\x20(interpreted\n\x20as\x20a\x2064\
+    -bit\x20big-endian\x20signed\x20integer),\x20or\x20the\x20entire\x20requ\
+    est\x20will\x20fail.\n\n\r\n\x05\x04\r\x02\x03\x05\x12\x04\x8e\x05\x04\t\
+    \n\r\n\x05\x04\r\x02\x03\x01\x12\x04\x8e\x05\n\x1a\n\r\n\x05\x04\r\x02\
+    \x03\x03\x12\x04\x8e\x05\x1d\x1e\nq\n\x02\x04\x0e\x12\x06\x94\x05\0\x98\
+    \x05\x01\x1ac\x20NOTE:\x20This\x20API\x20is\x20intended\x20to\x20be\x20u\
+    sed\x20by\x20Apache\x20Beam\x20BigtableIO.\n\x20A\x20partition\x20of\x20\
+    a\x20change\x20stream.\n\n\x0b\n\x03\x04\x0e\x01\x12\x04\x94\x05\x08\x17\
+    \nr\n\x04\x04\x0e\x02\0\x12\x04\x97\x05\x02\x19\x1ad\x20The\x20row\x20ra\
+    nge\x20covered\x20by\x20this\x20partition\x20and\x20is\x20specified\x20b\
+    y\n\x20[`start_key_closed`,\x20`end_key_open`).\n\n\r\n\x05\x04\x0e\x02\
+    \0\x06\x12\x04\x97\x05\x02\n\n\r\n\x05\x04\x0e\x02\0\x01\x12\x04\x97\x05\
+    \x0b\x14\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\x97\x05\x17\x18\n\xcf\x01\n\
+    \x02\x04\x0f\x12\x06\x9d\x05\0\xa0\x05\x01\x1a\xc0\x01\x20NOTE:\x20This\
+    \x20API\x20is\x20intended\x20to\x20be\x20used\x20by\x20Apache\x20Beam\
+    \x20BigtableIO.\n\x20The\x20information\x20required\x20to\x20continue\
+    \x20reading\x20the\x20data\x20from\x20multiple\n\x20`StreamPartitions`\
+    \x20from\x20where\x20a\x20previous\x20read\x20left\x20off.\n\n\x0b\n\x03\
+    \x04\x0f\x01\x12\x04\x9d\x05\x08\x20\n,\n\x04\x04\x0f\x02\0\x12\x04\x9f\
+    \x05\x02.\x1a\x1e\x20List\x20of\x20continuation\x20tokens.\n\n\r\n\x05\
+    \x04\x0f\x02\0\x04\x12\x04\x9f\x05\x02\n\n\r\n\x05\x04\x0f\x02\0\x06\x12\
+    \x04\x9f\x05\x0b\"\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\x9f\x05#)\n\r\n\
+    \x05\x04\x0f\x02\0\x03\x12\x04\x9f\x05,-\n\xc7\x01\n\x02\x04\x10\x12\x06\
+    \xa5\x05\0\xab\x05\x01\x1a\xb8\x01\x20NOTE:\x20This\x20API\x20is\x20inte\
+    nded\x20to\x20be\x20used\x20by\x20Apache\x20Beam\x20BigtableIO.\n\x20The\
+    \x20information\x20required\x20to\x20continue\x20reading\x20the\x20data\
+    \x20from\x20a\n\x20`StreamPartition`\x20from\x20where\x20a\x20previous\
+    \x20read\x20left\x20off.\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xa5\x05\x08\
+    \x1f\n9\n\x04\x04\x10\x02\0\x12\x04\xa7\x05\x02\x20\x1a+\x20The\x20parti\
+    tion\x20that\x20this\x20token\x20applies\x20to.\n\n\r\n\x05\x04\x10\x02\
+    \0\x06\x12\x04\xa7\x05\x02\x11\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\xa7\
+    \x05\x12\x1b\n\r\n\x05\x04\x10\x02\0\x03\x12\x04\xa7\x05\x1e\x1f\nJ\n\
+    \x04\x04\x10\x02\x01\x12\x04\xaa\x05\x02\x13\x1a<\x20An\x20encoded\x20po\
+    sition\x20in\x20the\x20stream\x20to\x20restart\x20reading\x20from.\n\n\r\
+    \n\x05\x04\x10\x02\x01\x05\x12\x04\xaa\x05\x02\x08\n\r\n\x05\x04\x10\x02\
+    \x01\x01\x12\x04\xaa\x05\t\x0e\n\r\n\x05\x04\x10\x02\x01\x03\x12\x04\xaa\
+    \x05\x11\x12\ne\n\x02\x04\x11\x12\x04\xaf\x05\0\x16\x1aY\x20Protocol\x20\
+    buffers\x20format\x20descriptor,\x20as\x20described\x20by\x20Messages\
+    \x20ProtoSchema\x20and\n\x20ProtoRows\n\n\x0b\n\x03\x04\x11\x01\x12\x04\
+    \xaf\x05\x08\x13\nK\n\x02\x04\x12\x12\x06\xb2\x05\0\xb8\x05\x01\x1a=\x20\
+    Describes\x20a\x20column\x20in\x20a\x20Bigtable\x20Query\x20Language\x20\
+    result\x20set.\n\n\x0b\n\x03\x04\x12\x01\x12\x04\xb2\x05\x08\x16\n'\n\
+    \x04\x04\x12\x02\0\x12\x04\xb4\x05\x02\x12\x1a\x19\x20The\x20name\x20of\
+    \x20the\x20column.\n\n\r\n\x05\x04\x12\x02\0\x05\x12\x04\xb4\x05\x02\x08\
+    \n\r\n\x05\x04\x12\x02\0\x01\x12\x04\xb4\x05\t\r\n\r\n\x05\x04\x12\x02\0\
+    \x03\x12\x04\xb4\x05\x10\x11\n'\n\x04\x04\x12\x02\x01\x12\x04\xb7\x05\
+    \x02\x10\x1a\x19\x20The\x20type\x20of\x20the\x20column.\n\n\r\n\x05\x04\
+    \x12\x02\x01\x06\x12\x04\xb7\x05\x02\x06\n\r\n\x05\x04\x12\x02\x01\x01\
+    \x12\x04\xb7\x05\x07\x0b\n\r\n\x05\x04\x12\x02\x01\x03\x12\x04\xb7\x05\
+    \x0e\x0f\n0\n\x02\x04\x13\x12\x06\xbb\x05\0\xbe\x05\x01\x1a\"\x20ResultS\
+    et\x20schema\x20in\x20proto\x20format\n\n\x0b\n\x03\x04\x13\x01\x12\x04\
+    \xbb\x05\x08\x13\n.\n\x04\x04\x13\x02\0\x12\x04\xbd\x05\x02&\x1a\x20\x20\
+    The\x20columns\x20in\x20the\x20result\x20set.\n\n\r\n\x05\x04\x13\x02\0\
+    \x04\x12\x04\xbd\x05\x02\n\n\r\n\x05\x04\x13\x02\0\x06\x12\x04\xbd\x05\
+    \x0b\x19\n\r\n\x05\x04\x13\x02\0\x01\x12\x04\xbd\x05\x1a!\n\r\n\x05\x04\
+    \x13\x02\0\x03\x12\x04\xbd\x05$%\nA\n\x02\x04\x14\x12\x06\xc1\x05\0\xc8\
+    \x05\x01\x1a3\x20Describes\x20the\x20structure\x20of\x20a\x20Bigtable\
+    \x20result\x20set.\n\n\x0b\n\x03\x04\x14\x01\x12\x04\xc1\x05\x08\x19\n`\
+    \n\x04\x04\x14\x08\0\x12\x06\xc4\x05\x02\xc7\x05\x03\x1aP\x20The\x20sche\
+    ma\x20of\x20the\x20ResultSet,\x20contains\x20ordered\x20list\x20of\x20co\
+    lumn\x20names\n\x20with\x20types\n\n\r\n\x05\x04\x14\x08\0\x01\x12\x04\
+    \xc4\x05\x08\x0e\n&\n\x04\x04\x14\x02\0\x12\x04\xc6\x05\x04!\x1a\x18\x20\
+    Schema\x20in\x20proto\x20format\n\n\r\n\x05\x04\x14\x02\0\x06\x12\x04\
+    \xc6\x05\x04\x0f\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\xc6\x05\x10\x1c\n\r\
+    \n\x05\x04\x14\x02\0\x03\x12\x04\xc6\x05\x1f\x20\n\xd8\x01\n\x02\x04\x15\
+    \x12\x06\xcf\x05\0\xd4\x05\x01\x1a\xc9\x01\x20Rows\x20represented\x20in\
+    \x20proto\x20format.\n\n\x20This\x20should\x20be\x20constructed\x20by\
+    \x20concatenating\x20the\x20`batch_data`\x20from\x20each\n\x20of\x20the\
+    \x20relevant\x20`ProtoRowsBatch`\x20messages\x20and\x20parsing\x20the\
+    \x20result\x20as\x20a\n\x20`ProtoRows`\x20message.\n\n\x0b\n\x03\x04\x15\
+    \x01\x12\x04\xcf\x05\x08\x11\n\xe4\x01\n\x04\x04\x15\x02\0\x12\x04\xd3\
+    \x05\x02\x1c\x1a\xd5\x01\x20A\x20proto\x20rows\x20message\x20consists\
+    \x20of\x20a\x20list\x20of\x20values.\x20Every\x20N\x20complete\x20values\
+    \n\x20defines\x20a\x20row,\x20where\x20N\x20is\x20equal\x20to\x20the\x20\
+    \x20number\x20of\x20entries\x20in\x20the\n\x20`metadata.proto_schema.col\
+    umns`\x20value\x20received\x20in\x20the\x20first\x20response.\n\n\r\n\
+    \x05\x04\x15\x02\0\x04\x12\x04\xd3\x05\x02\n\n\r\n\x05\x04\x15\x02\0\x06\
+    \x12\x04\xd3\x05\x0b\x10\n\r\n\x05\x04\x15\x02\0\x01\x12\x04\xd3\x05\x11\
+    \x17\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\xd3\x05\x1a\x1b\n.\n\x02\x04\
+    \x16\x12\x06\xd7\x05\0\xdb\x05\x01\x1a\x20\x20Batch\x20of\x20serialized\
+    \x20ProtoRows.\n\n\x0b\n\x03\x04\x16\x01\x12\x04\xd7\x05\x08\x16\n}\n\
+    \x04\x04\x16\x02\0\x12\x04\xda\x05\x02\x17\x1ao\x20Merge\x20partial\x20r\
+    esults\x20by\x20concatenating\x20these\x20bytes,\x20then\x20parsing\x20t\
+    he\n\x20overall\x20value\x20as\x20a\x20`ProtoRows`\x20message.\n\n\r\n\
+    \x05\x04\x16\x02\0\x05\x12\x04\xda\x05\x02\x07\n\r\n\x05\x04\x16\x02\0\
+    \x01\x12\x04\xda\x05\x08\x12\n\r\n\x05\x04\x16\x02\0\x03\x12\x04\xda\x05\
+    \x15\x16\n\x9c\x01\n\x02\x04\x17\x12\x06\xe0\x05\0\x88\x06\x01\x1a\x8d\
+    \x01\x20A\x20partial\x20result\x20set\x20from\x20the\x20streaming\x20que\
+    ry\x20API.\n\x20CBT\x20client\x20will\x20buffer\x20partial_rows\x20from\
+    \x20result_sets\x20until\x20it\x20gets\x20a\n\x20resumption_token.\n\n\
+    \x0b\n\x03\x04\x17\x01\x12\x04\xe0\x05\x08\x18\n\xfe\x02\n\x04\x04\x17\
+    \x08\0\x12\x06\xe6\x05\x02\xe9\x05\x03\x1a\xed\x02\x20Partial\x20Rows\
+    \x20in\x20one\x20of\x20the\x20supported\x20formats.\x20It\x20may\x20requ\
+    ire\x20many\n\x20PartialResultSets\x20to\x20stream\x20a\x20batch\x20of\
+    \x20rows\x20that\x20can\x20decoded\x20on\x20the\x20client.\n\x20The\x20c\
+    lient\x20should\x20buffer\x20partial_rows\x20until\x20it\x20gets\x20a\
+    \x20`resume_token`,\n\x20at\x20which\x20point\x20the\x20batch\x20is\x20c\
+    omplete\x20and\x20can\x20be\x20decoded\x20and\x20yielded\x20to\x20the\n\
+    \x20user.\x20Each\x20sub-message\x20documents\x20the\x20appropriate\x20w\
+    ay\x20to\x20combine\x20results.\n\n\r\n\x05\x04\x17\x08\0\x01\x12\x04\
+    \xe6\x05\x08\x14\n<\n\x04\x04\x17\x02\0\x12\x04\xe8\x05\x04(\x1a.\x20Par\
+    tial\x20rows\x20in\x20serialized\x20ProtoRows\x20format.\n\n\r\n\x05\x04\
+    \x17\x02\0\x06\x12\x04\xe8\x05\x04\x12\n\r\n\x05\x04\x17\x02\0\x01\x12\
+    \x04\xe8\x05\x13#\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xe8\x05&'\n\xcb\
+    \x07\n\x04\x04\x17\x02\x01\x12\x04\xfd\x05\x02\x19\x1a\xbc\x07\x20An\x20\
+    opaque\x20token\x20sent\x20by\x20the\x20server\x20to\x20allow\x20query\
+    \x20resumption\x20and\x20signal\n\x20the\x20client\x20to\x20accumulate\
+    \x20`partial_rows`\x20since\x20the\x20last\x20non-empty\n\x20`resume_tok\
+    en`.\x20On\x20resumption,\x20the\x20resumed\x20query\x20will\x20return\
+    \x20the\x20remaining\n\x20rows\x20for\x20this\x20query.\n\n\x20If\x20the\
+    re\x20is\x20a\x20batch\x20in\x20progress,\x20a\x20non-empty\x20`resume_t\
+    oken`\n\x20means\x20that\x20that\x20the\x20batch\x20of\x20`partial_rows`\
+    \x20will\x20be\x20complete\x20after\x20merging\n\x20the\x20`partial_rows\
+    `\x20from\x20this\x20response.\x20The\x20client\x20must\x20only\x20yield\
+    \n\x20completed\x20batches\x20to\x20the\x20application,\x20and\x20must\
+    \x20ensure\x20that\x20any\x20future\n\x20retries\x20send\x20the\x20lates\
+    t\x20token\x20to\x20avoid\x20returning\x20duplicate\x20data.\n\n\x20The\
+    \x20server\x20may\x20set\x20'resume_token'\x20without\x20a\x20'partial_r\
+    ows'.\x20If\x20there\x20is\x20a\n\x20batch\x20in\x20progress\x20the\x20c\
+    lient\x20should\x20yield\x20it.\n\n\x20The\x20server\x20will\x20also\x20\
+    send\x20a\x20sentinel\x20`resume_token`\x20when\x20last\x20batch\x20of\n\
+    \x20`partial_rows`\x20is\x20sent.\x20If\x20the\x20client\x20retries\x20t\
+    he\x20ExecuteQueryRequest\x20with\n\x20the\x20sentinel\x20`resume_token`\
+    ,\x20the\x20server\x20will\x20emit\x20it\x20again\x20without\x20any\n\
+    \x20`partial_rows`,\x20then\x20return\x20OK.\n\n\r\n\x05\x04\x17\x02\x01\
+    \x05\x12\x04\xfd\x05\x02\x07\n\r\n\x05\x04\x17\x02\x01\x01\x12\x04\xfd\
+    \x05\x08\x14\n\r\n\x05\x04\x17\x02\x01\x03\x12\x04\xfd\x05\x17\x18\n\x93\
+    \x03\n\x04\x04\x17\x02\x02\x12\x04\x87\x06\x02!\x1a\x84\x03\x20Estimated\
+    \x20size\x20of\x20a\x20new\x20batch.\x20The\x20server\x20will\x20always\
+    \x20set\x20this\x20when\n\x20returning\x20the\x20first\x20`partial_rows`\
+    \x20of\x20a\x20batch,\x20and\x20will\x20not\x20set\x20it\x20at\x20any\n\
+    \x20other\x20time.\n\n\x20The\x20client\x20can\x20use\x20this\x20estimat\
+    e\x20to\x20allocate\x20an\x20initial\x20buffer\x20for\x20the\n\x20batche\
+    d\x20results.\x20This\x20helps\x20minimize\x20the\x20number\x20of\x20all\
+    ocations\x20required,\n\x20though\x20the\x20buffer\x20size\x20may\x20sti\
+    ll\x20need\x20to\x20be\x20increased\x20if\x20the\x20estimate\x20is\n\x20\
+    too\x20low.\n\n\r\n\x05\x04\x17\x02\x02\x05\x12\x04\x87\x06\x02\x07\n\r\
+    \n\x05\x04\x17\x02\x02\x01\x12\x04\x87\x06\x08\x1c\n\r\n\x05\x04\x17\x02\
+    \x02\x03\x12\x04\x87\x06\x1f\x20b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -6055,12 +9316,18 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(19);
+            let mut deps = ::std::vec::Vec::with_capacity(4);
+            deps.push(super::field_behavior::file_descriptor().clone());
+            deps.push(super::types::file_descriptor().clone());
+            deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
+            deps.push(super::date::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(33);
             messages.push(Row::generated_message_descriptor_data());
             messages.push(Family::generated_message_descriptor_data());
             messages.push(Column::generated_message_descriptor_data());
             messages.push(Cell::generated_message_descriptor_data());
+            messages.push(Value::generated_message_descriptor_data());
+            messages.push(ArrayValue::generated_message_descriptor_data());
             messages.push(RowRange::generated_message_descriptor_data());
             messages.push(RowSet::generated_message_descriptor_data());
             messages.push(ColumnRange::generated_message_descriptor_data());
@@ -6069,10 +9336,22 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(RowFilter::generated_message_descriptor_data());
             messages.push(Mutation::generated_message_descriptor_data());
             messages.push(ReadModifyWriteRule::generated_message_descriptor_data());
+            messages.push(StreamPartition::generated_message_descriptor_data());
+            messages.push(StreamContinuationTokens::generated_message_descriptor_data());
+            messages.push(StreamContinuationToken::generated_message_descriptor_data());
+            messages.push(ProtoFormat::generated_message_descriptor_data());
+            messages.push(ColumnMetadata::generated_message_descriptor_data());
+            messages.push(ProtoSchema::generated_message_descriptor_data());
+            messages.push(ResultSetMetadata::generated_message_descriptor_data());
+            messages.push(ProtoRows::generated_message_descriptor_data());
+            messages.push(ProtoRowsBatch::generated_message_descriptor_data());
+            messages.push(PartialResultSet::generated_message_descriptor_data());
             messages.push(row_filter::Chain::generated_message_descriptor_data());
             messages.push(row_filter::Interleave::generated_message_descriptor_data());
             messages.push(row_filter::Condition::generated_message_descriptor_data());
             messages.push(mutation::SetCell::generated_message_descriptor_data());
+            messages.push(mutation::AddToCell::generated_message_descriptor_data());
+            messages.push(mutation::MergeToCell::generated_message_descriptor_data());
             messages.push(mutation::DeleteFromColumn::generated_message_descriptor_data());
             messages.push(mutation::DeleteFromFamily::generated_message_descriptor_data());
             messages.push(mutation::DeleteFromRow::generated_message_descriptor_data());

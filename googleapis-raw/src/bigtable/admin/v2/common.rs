@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -24,6 +24,173 @@
 /// Generated files are compatible only with the same version
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
+
+///  Encapsulates progress related information for a Cloud Bigtable long
+///  running operation.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.OperationProgress)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct OperationProgress {
+    // message fields
+    ///  Percent completion of the operation.
+    ///  Values are between 0 and 100 inclusive.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.OperationProgress.progress_percent)
+    pub progress_percent: i32,
+    ///  Time the request was received.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.OperationProgress.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  If set, the time at which this operation failed or was completed
+    ///  successfully.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.OperationProgress.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.OperationProgress.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a OperationProgress {
+    fn default() -> &'a OperationProgress {
+        <OperationProgress as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl OperationProgress {
+    pub fn new() -> OperationProgress {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "progress_percent",
+            |m: &OperationProgress| { &m.progress_percent },
+            |m: &mut OperationProgress| { &mut m.progress_percent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &OperationProgress| { &m.start_time },
+            |m: &mut OperationProgress| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &OperationProgress| { &m.end_time },
+            |m: &mut OperationProgress| { &mut m.end_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OperationProgress>(
+            "OperationProgress",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for OperationProgress {
+    const NAME: &'static str = "OperationProgress";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.progress_percent = is.read_int32()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.progress_percent != 0 {
+            my_size += ::protobuf::rt::int32_size(1, self.progress_percent);
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.progress_percent != 0 {
+            os.write_int32(1, self.progress_percent)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> OperationProgress {
+        OperationProgress::new()
+    }
+
+    fn clear(&mut self) {
+        self.progress_percent = 0;
+        self.start_time.clear();
+        self.end_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static OperationProgress {
+        static instance: OperationProgress = OperationProgress {
+            progress_percent: 0,
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for OperationProgress {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("OperationProgress").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for OperationProgress {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for OperationProgress {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
 
 ///  Storage media types for persisting Bigtable data.
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
@@ -95,43 +262,61 @@ impl StorageType {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n%google/bigtable/admin/v2/common.proto\x12\x18google.bigtable.admin.v2\
-    \x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.pr\
-    oto*=\n\x0bStorageType\x12\x1c\n\x18STORAGE_TYPE_UNSPECIFIED\x10\0\x12\
-    \x07\n\x03SSD\x10\x01\x12\x07\n\x03HDD\x10\x02B\xae\x01\n\x1ccom.google.\
-    bigtable.admin.v2B\x0bCommonProtoP\x01Z=google.golang.org/genproto/googl\
-    eapis/bigtable/admin/v2;admin\xaa\x02\x1eGoogle.Cloud.Bigtable.Admin.V2\
-    \xca\x02\x1eGoogle\\Cloud\\Bigtable\\Admin\\V2J\xb2\x08\n\x06\x12\x04\
-    \x0f\0'\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Copyright\
-    \x202018\x20Google\x20LLC.\n\n\x20Licensed\x20under\x20the\x20Apache\x20\
-    License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20n\
-    ot\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\
-    \x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20Lice\
-    nse\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-\
-    2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\
-    \x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
-    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
-    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
-    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
-    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
-    tations\x20under\x20the\x20License.\n\n\n\x08\n\x01\x02\x12\x03\x11\0!\n\
-    \t\n\x02\x03\0\x12\x03\x13\0&\n\t\n\x02\x03\x01\x12\x03\x14\0)\n\x08\n\
-    \x01\x08\x12\x03\x16\0;\n\t\n\x02\x08%\x12\x03\x16\0;\n\x08\n\x01\x08\
-    \x12\x03\x17\0T\n\t\n\x02\x08\x0b\x12\x03\x17\0T\n\x08\n\x01\x08\x12\x03\
-    \x18\0\"\n\t\n\x02\x08\n\x12\x03\x18\0\"\n\x08\n\x01\x08\x12\x03\x19\0,\
-    \n\t\n\x02\x08\x08\x12\x03\x19\0,\n\x08\n\x01\x08\x12\x03\x1a\05\n\t\n\
-    \x02\x08\x01\x12\x03\x1a\05\n\x08\n\x01\x08\x12\x03\x1b\0<\n\t\n\x02\x08\
-    )\x12\x03\x1b\0<\n?\n\x02\x05\0\x12\x04\x1e\0'\x01\x1a3\x20Storage\x20me\
-    dia\x20types\x20for\x20persisting\x20Bigtable\x20data.\n\n\n\n\x03\x05\0\
-    \x01\x12\x03\x1e\x05\x10\n7\n\x04\x05\0\x02\0\x12\x03\x20\x02\x1f\x1a*\
-    \x20The\x20user\x20did\x20not\x20specify\x20a\x20storage\x20type.\n\n\
-    \x0c\n\x05\x05\0\x02\0\x01\x12\x03\x20\x02\x1a\n\x0c\n\x05\x05\0\x02\0\
-    \x02\x12\x03\x20\x1d\x1e\n2\n\x04\x05\0\x02\x01\x12\x03#\x02\n\x1a%\x20F\
-    lash\x20(SSD)\x20storage\x20should\x20be\x20used.\n\n\x0c\n\x05\x05\0\
-    \x02\x01\x01\x12\x03#\x02\x05\n\x0c\n\x05\x05\0\x02\x01\x02\x12\x03#\x08\
-    \t\n;\n\x04\x05\0\x02\x02\x12\x03&\x02\n\x1a.\x20Magnetic\x20drive\x20(H\
-    DD)\x20storage\x20should\x20be\x20used.\n\n\x0c\n\x05\x05\0\x02\x02\x01\
-    \x12\x03&\x02\x05\n\x0c\n\x05\x05\0\x02\x02\x02\x12\x03&\x08\tb\x06proto\
-    3\
+    \x1a\x1fgoogle/protobuf/timestamp.proto\"\xb0\x01\n\x11OperationProgress\
+    \x12)\n\x10progress_percent\x18\x01\x20\x01(\x05R\x0fprogressPercent\x12\
+    9\n\nstart_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tst\
+    artTime\x125\n\x08end_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.Tim\
+    estampR\x07endTime*=\n\x0bStorageType\x12\x1c\n\x18STORAGE_TYPE_UNSPECIF\
+    IED\x10\0\x12\x07\n\x03SSD\x10\x01\x12\x07\n\x03HDD\x10\x02B\xce\x01\n\
+    \x1ccom.google.bigtable.admin.v2B\x0bCommonProtoP\x01Z8cloud.google.com/\
+    go/bigtable/admin/apiv2/adminpb;adminpb\xaa\x02\x1eGoogle.Cloud.Bigtable\
+    .Admin.V2\xca\x02\x1eGoogle\\Cloud\\Bigtable\\Admin\\V2\xea\x02\"Google:\
+    :Cloud::Bigtable::Admin::V2J\x98\x0c\n\x06\x12\x04\x0e\05\x01\n\xbc\x04\
+    \n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\x20\
+    LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x20\
+    2.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20fi\
+    le\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20\
+    may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\
+    \x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20requ\
+    ired\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\
+    \x20software\n\x20distributed\x20under\x20the\x20License\x20is\x20distri\
+    buted\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\
+    \x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\
+    \x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20lan\
+    guage\x20governing\x20permissions\x20and\n\x20limitations\x20under\x20th\
+    e\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0!\n\t\n\x02\x03\0\x12\x03\
+    \x12\0)\n\x08\n\x01\x08\x12\x03\x14\0;\n\t\n\x02\x08%\x12\x03\x14\0;\n\
+    \x08\n\x01\x08\x12\x03\x15\0O\n\t\n\x02\x08\x0b\x12\x03\x15\0O\n\x08\n\
+    \x01\x08\x12\x03\x16\0\"\n\t\n\x02\x08\n\x12\x03\x16\0\"\n\x08\n\x01\x08\
+    \x12\x03\x17\0,\n\t\n\x02\x08\x08\x12\x03\x17\0,\n\x08\n\x01\x08\x12\x03\
+    \x18\05\n\t\n\x02\x08\x01\x12\x03\x18\05\n\x08\n\x01\x08\x12\x03\x19\0<\
+    \n\t\n\x02\x08)\x12\x03\x19\0<\n\x08\n\x01\x08\x12\x03\x1a\0;\n\t\n\x02\
+    \x08-\x12\x03\x1a\0;\n?\n\x02\x05\0\x12\x04\x1d\0&\x01\x1a3\x20Storage\
+    \x20media\x20types\x20for\x20persisting\x20Bigtable\x20data.\n\n\n\n\x03\
+    \x05\0\x01\x12\x03\x1d\x05\x10\n7\n\x04\x05\0\x02\0\x12\x03\x1f\x02\x1f\
+    \x1a*\x20The\x20user\x20did\x20not\x20specify\x20a\x20storage\x20type.\n\
+    \n\x0c\n\x05\x05\0\x02\0\x01\x12\x03\x1f\x02\x1a\n\x0c\n\x05\x05\0\x02\0\
+    \x02\x12\x03\x1f\x1d\x1e\n2\n\x04\x05\0\x02\x01\x12\x03\"\x02\n\x1a%\x20\
+    Flash\x20(SSD)\x20storage\x20should\x20be\x20used.\n\n\x0c\n\x05\x05\0\
+    \x02\x01\x01\x12\x03\"\x02\x05\n\x0c\n\x05\x05\0\x02\x01\x02\x12\x03\"\
+    \x08\t\n;\n\x04\x05\0\x02\x02\x12\x03%\x02\n\x1a.\x20Magnetic\x20drive\
+    \x20(HDD)\x20storage\x20should\x20be\x20used.\n\n\x0c\n\x05\x05\0\x02\
+    \x02\x01\x12\x03%\x02\x05\n\x0c\n\x05\x05\0\x02\x02\x02\x12\x03%\x08\t\n\
+    e\n\x02\x04\0\x12\x04*\05\x01\x1aY\x20Encapsulates\x20progress\x20relate\
+    d\x20information\x20for\x20a\x20Cloud\x20Bigtable\x20long\n\x20running\
+    \x20operation.\n\n\n\n\x03\x04\0\x01\x12\x03*\x08\x19\n\\\n\x04\x04\0\
+    \x02\0\x12\x03-\x02\x1d\x1aO\x20Percent\x20completion\x20of\x20the\x20op\
+    eration.\n\x20Values\x20are\x20between\x200\x20and\x20100\x20inclusive.\
+    \n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03-\x02\x07\n\x0c\n\x05\x04\0\x02\0\
+    \x01\x12\x03-\x08\x18\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03-\x1b\x1c\n-\n\
+    \x04\x04\0\x02\x01\x12\x030\x02+\x1a\x20\x20Time\x20the\x20request\x20wa\
+    s\x20received.\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x030\x02\x1b\n\x0c\n\
+    \x05\x04\0\x02\x01\x01\x12\x030\x1c&\n\x0c\n\x05\x04\0\x02\x01\x03\x12\
+    \x030)*\n^\n\x04\x04\0\x02\x02\x12\x034\x02)\x1aQ\x20If\x20set,\x20the\
+    \x20time\x20at\x20which\x20this\x20operation\x20failed\x20or\x20was\x20c\
+    ompleted\n\x20successfully.\n\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x034\x02\
+    \x1b\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x034\x1c$\n\x0c\n\x05\x04\0\x02\
+    \x02\x03\x12\x034'(b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -148,10 +333,10 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(2);
-            deps.push(super::annotations::file_descriptor().clone());
+            let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(0);
+            let mut messages = ::std::vec::Vec::with_capacity(1);
+            messages.push(OperationProgress::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(1);
             enums.push(StorageType::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(

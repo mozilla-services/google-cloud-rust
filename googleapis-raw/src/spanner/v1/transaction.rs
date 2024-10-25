@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -28,6 +28,23 @@ const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 // @@protoc_insertion_point(message:google.spanner.v1.TransactionOptions)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct TransactionOptions {
+    // message fields
+    ///  When `exclude_txn_from_change_streams` is set to `true`:
+    ///   * Mutations from this transaction will not be recorded in change streams
+    ///   with DDL option `allow_txn_exclusion=true` that are tracking columns
+    ///   modified by these transactions.
+    ///   * Mutations from this transaction will be recorded in change streams with
+    ///   DDL option `allow_txn_exclusion=false or not set` that are tracking
+    ///   columns modified by these transactions.
+    ///
+    ///  When `exclude_txn_from_change_streams` is set to `false` or not set,
+    ///  mutations from this transaction will be recorded in all change streams that
+    ///  are tracking columns modified by these transactions.
+    ///  `exclude_txn_from_change_streams` may only be specified for read-write or
+    ///  partitioned-dml transactions, otherwise the API will return an
+    ///  `INVALID_ARGUMENT` error.
+    // @@protoc_insertion_point(field:google.spanner.v1.TransactionOptions.exclude_txn_from_change_streams)
+    pub exclude_txn_from_change_streams: bool,
     // message oneof groups
     pub mode: ::std::option::Option<transaction_options::Mode>,
     // special fields
@@ -194,7 +211,7 @@ impl TransactionOptions {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, transaction_options::ReadWrite>(
             "read_write",
@@ -216,6 +233,11 @@ impl TransactionOptions {
             TransactionOptions::read_only,
             TransactionOptions::mut_read_only,
             TransactionOptions::set_read_only,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "exclude_txn_from_change_streams",
+            |m: &TransactionOptions| { &m.exclude_txn_from_change_streams },
+            |m: &mut TransactionOptions| { &mut m.exclude_txn_from_change_streams },
         ));
         oneofs.push(transaction_options::Mode::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TransactionOptions>(
@@ -245,6 +267,9 @@ impl ::protobuf::Message for TransactionOptions {
                 18 => {
                     self.mode = ::std::option::Option::Some(transaction_options::Mode::ReadOnly(is.read_message()?));
                 },
+                40 => {
+                    self.exclude_txn_from_change_streams = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -257,6 +282,9 @@ impl ::protobuf::Message for TransactionOptions {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
+        if self.exclude_txn_from_change_streams != false {
+            my_size += 1 + 1;
+        }
         if let ::std::option::Option::Some(ref v) = self.mode {
             match v {
                 &transaction_options::Mode::ReadWrite(ref v) => {
@@ -279,6 +307,9 @@ impl ::protobuf::Message for TransactionOptions {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.exclude_txn_from_change_streams != false {
+            os.write_bool(5, self.exclude_txn_from_change_streams)?;
+        }
         if let ::std::option::Option::Some(ref v) = self.mode {
             match v {
                 &transaction_options::Mode::ReadWrite(ref v) => {
@@ -312,11 +343,13 @@ impl ::protobuf::Message for TransactionOptions {
         self.mode = ::std::option::Option::None;
         self.mode = ::std::option::Option::None;
         self.mode = ::std::option::Option::None;
+        self.exclude_txn_from_change_streams = false;
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static TransactionOptions {
         static instance: TransactionOptions = TransactionOptions {
+            exclude_txn_from_change_streams: false,
             mode: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -376,6 +409,17 @@ pub mod transaction_options {
     // @@protoc_insertion_point(message:google.spanner.v1.TransactionOptions.ReadWrite)
     #[derive(PartialEq,Clone,Default,Debug)]
     pub struct ReadWrite {
+        // message fields
+        ///  Read lock mode for the transaction.
+        // @@protoc_insertion_point(field:google.spanner.v1.TransactionOptions.ReadWrite.read_lock_mode)
+        pub read_lock_mode: ::protobuf::EnumOrUnknown<read_write::ReadLockMode>,
+        ///  Optional. Clients should pass the transaction ID of the previous
+        ///  transaction attempt that was aborted if this transaction is being
+        ///  executed on a multiplexed session.
+        ///  This feature is not yet supported and will result in an UNIMPLEMENTED
+        ///  error.
+        // @@protoc_insertion_point(field:google.spanner.v1.TransactionOptions.ReadWrite.multiplexed_session_previous_transaction_id)
+        pub multiplexed_session_previous_transaction_id: ::std::vec::Vec<u8>,
         // special fields
         // @@protoc_insertion_point(special_field:google.spanner.v1.TransactionOptions.ReadWrite.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -393,8 +437,18 @@ pub mod transaction_options {
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(0);
+            let mut fields = ::std::vec::Vec::with_capacity(2);
             let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "read_lock_mode",
+                |m: &ReadWrite| { &m.read_lock_mode },
+                |m: &mut ReadWrite| { &mut m.read_lock_mode },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "multiplexed_session_previous_transaction_id",
+                |m: &ReadWrite| { &m.multiplexed_session_previous_transaction_id },
+                |m: &mut ReadWrite| { &mut m.multiplexed_session_previous_transaction_id },
+            ));
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ReadWrite>(
                 "TransactionOptions.ReadWrite",
                 fields,
@@ -413,6 +467,12 @@ pub mod transaction_options {
         fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
             while let Some(tag) = is.read_raw_tag_or_eof()? {
                 match tag {
+                    8 => {
+                        self.read_lock_mode = is.read_enum_or_unknown()?;
+                    },
+                    18 => {
+                        self.multiplexed_session_previous_transaction_id = is.read_bytes()?;
+                    },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                     },
@@ -425,12 +485,24 @@ pub mod transaction_options {
         #[allow(unused_variables)]
         fn compute_size(&self) -> u64 {
             let mut my_size = 0;
+            if self.read_lock_mode != ::protobuf::EnumOrUnknown::new(read_write::ReadLockMode::READ_LOCK_MODE_UNSPECIFIED) {
+                my_size += ::protobuf::rt::int32_size(1, self.read_lock_mode.value());
+            }
+            if !self.multiplexed_session_previous_transaction_id.is_empty() {
+                my_size += ::protobuf::rt::bytes_size(2, &self.multiplexed_session_previous_transaction_id);
+            }
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
             self.special_fields.cached_size().set(my_size as u32);
             my_size
         }
 
         fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.read_lock_mode != ::protobuf::EnumOrUnknown::new(read_write::ReadLockMode::READ_LOCK_MODE_UNSPECIFIED) {
+                os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.read_lock_mode))?;
+            }
+            if !self.multiplexed_session_previous_transaction_id.is_empty() {
+                os.write_bytes(2, &self.multiplexed_session_previous_transaction_id)?;
+            }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
         }
@@ -448,11 +520,15 @@ pub mod transaction_options {
         }
 
         fn clear(&mut self) {
+            self.read_lock_mode = ::protobuf::EnumOrUnknown::new(read_write::ReadLockMode::READ_LOCK_MODE_UNSPECIFIED);
+            self.multiplexed_session_previous_transaction_id.clear();
             self.special_fields.clear();
         }
 
         fn default_instance() -> &'static ReadWrite {
             static instance: ReadWrite = ReadWrite {
+                read_lock_mode: ::protobuf::EnumOrUnknown::from_i32(0),
+                multiplexed_session_previous_transaction_id: ::std::vec::Vec::new(),
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
@@ -474,6 +550,78 @@ pub mod transaction_options {
 
     impl ::protobuf::reflect::ProtobufValue for ReadWrite {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `ReadWrite`
+    pub mod read_write {
+        ///  `ReadLockMode` is used to set the read lock mode for read-write
+        ///  transactions.
+        #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+        // @@protoc_insertion_point(enum:google.spanner.v1.TransactionOptions.ReadWrite.ReadLockMode)
+        pub enum ReadLockMode {
+            // @@protoc_insertion_point(enum_value:google.spanner.v1.TransactionOptions.ReadWrite.ReadLockMode.READ_LOCK_MODE_UNSPECIFIED)
+            READ_LOCK_MODE_UNSPECIFIED = 0,
+            // @@protoc_insertion_point(enum_value:google.spanner.v1.TransactionOptions.ReadWrite.ReadLockMode.PESSIMISTIC)
+            PESSIMISTIC = 1,
+            // @@protoc_insertion_point(enum_value:google.spanner.v1.TransactionOptions.ReadWrite.ReadLockMode.OPTIMISTIC)
+            OPTIMISTIC = 2,
+        }
+
+        impl ::protobuf::Enum for ReadLockMode {
+            const NAME: &'static str = "ReadLockMode";
+
+            fn value(&self) -> i32 {
+                *self as i32
+            }
+
+            fn from_i32(value: i32) -> ::std::option::Option<ReadLockMode> {
+                match value {
+                    0 => ::std::option::Option::Some(ReadLockMode::READ_LOCK_MODE_UNSPECIFIED),
+                    1 => ::std::option::Option::Some(ReadLockMode::PESSIMISTIC),
+                    2 => ::std::option::Option::Some(ReadLockMode::OPTIMISTIC),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            fn from_str(str: &str) -> ::std::option::Option<ReadLockMode> {
+                match str {
+                    "READ_LOCK_MODE_UNSPECIFIED" => ::std::option::Option::Some(ReadLockMode::READ_LOCK_MODE_UNSPECIFIED),
+                    "PESSIMISTIC" => ::std::option::Option::Some(ReadLockMode::PESSIMISTIC),
+                    "OPTIMISTIC" => ::std::option::Option::Some(ReadLockMode::OPTIMISTIC),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            const VALUES: &'static [ReadLockMode] = &[
+                ReadLockMode::READ_LOCK_MODE_UNSPECIFIED,
+                ReadLockMode::PESSIMISTIC,
+                ReadLockMode::OPTIMISTIC,
+            ];
+        }
+
+        impl ::protobuf::EnumFull for ReadLockMode {
+            fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().enum_by_package_relative_name("TransactionOptions.ReadWrite.ReadLockMode").unwrap()).clone()
+            }
+
+            fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+                let index = *self as usize;
+                Self::enum_descriptor().value_by_index(index)
+            }
+        }
+
+        impl ::std::default::Default for ReadLockMode {
+            fn default() -> Self {
+                ReadLockMode::READ_LOCK_MODE_UNSPECIFIED
+            }
+        }
+
+        impl ReadLockMode {
+            pub(in super::super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+                ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ReadLockMode>("TransactionOptions.ReadWrite.ReadLockMode")
+            }
+        }
     }
 
     ///  Message type to initiate a Partitioned DML transaction.
@@ -586,7 +734,8 @@ pub mod transaction_options {
     pub struct ReadOnly {
         // message fields
         ///  If true, the Cloud Spanner-selected read timestamp is included in
-        ///  the [Transaction][google.spanner.v1.Transaction] message that describes the transaction.
+        ///  the [Transaction][google.spanner.v1.Transaction] message that describes
+        ///  the transaction.
         // @@protoc_insertion_point(field:google.spanner.v1.TransactionOptions.ReadOnly.return_read_timestamp)
         pub return_read_timestamp: bool,
         // message oneof groups
@@ -1086,6 +1235,17 @@ pub struct Transaction {
     ///  Example: `"2014-10-02T15:01:23.045123456Z"`.
     // @@protoc_insertion_point(field:google.spanner.v1.Transaction.read_timestamp)
     pub read_timestamp: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  A precommit token will be included in the response of a BeginTransaction
+    ///  request if the read-write transaction is on a multiplexed session and
+    ///  a mutation_key was specified in the
+    ///  [BeginTransaction][google.spanner.v1.BeginTransactionRequest].
+    ///  The precommit token with the highest sequence number from this transaction
+    ///  attempt should be passed to the [Commit][google.spanner.v1.Spanner.Commit]
+    ///  request for this transaction.
+    ///  This feature is not yet supported and will result in an UNIMPLEMENTED
+    ///  error.
+    // @@protoc_insertion_point(field:google.spanner.v1.Transaction.precommit_token)
+    pub precommit_token: ::protobuf::MessageField<MultiplexedSessionPrecommitToken>,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.v1.Transaction.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1103,7 +1263,7 @@ impl Transaction {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "id",
@@ -1114,6 +1274,11 @@ impl Transaction {
             "read_timestamp",
             |m: &Transaction| { &m.read_timestamp },
             |m: &mut Transaction| { &mut m.read_timestamp },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, MultiplexedSessionPrecommitToken>(
+            "precommit_token",
+            |m: &Transaction| { &m.precommit_token },
+            |m: &mut Transaction| { &mut m.precommit_token },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Transaction>(
             "Transaction",
@@ -1139,6 +1304,9 @@ impl ::protobuf::Message for Transaction {
                 18 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.read_timestamp)?;
                 },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.precommit_token)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1158,6 +1326,10 @@ impl ::protobuf::Message for Transaction {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.precommit_token.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1169,6 +1341,9 @@ impl ::protobuf::Message for Transaction {
         }
         if let Some(v) = self.read_timestamp.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.precommit_token.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1189,6 +1364,7 @@ impl ::protobuf::Message for Transaction {
     fn clear(&mut self) {
         self.id.clear();
         self.read_timestamp.clear();
+        self.precommit_token.clear();
         self.special_fields.clear();
     }
 
@@ -1196,6 +1372,7 @@ impl ::protobuf::Message for Transaction {
         static instance: Transaction = Transaction {
             id: ::std::vec::Vec::new(),
             read_timestamp: ::protobuf::MessageField::none(),
+            precommit_token: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1223,7 +1400,8 @@ impl ::protobuf::reflect::ProtobufValue for Transaction {
 ///  [Read][google.spanner.v1.Spanner.Read] or
 ///  [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql] call runs.
 ///
-///  See [TransactionOptions][google.spanner.v1.TransactionOptions] for more information about transactions.
+///  See [TransactionOptions][google.spanner.v1.TransactionOptions] for more
+///  information about transactions.
 // @@protoc_insertion_point(message:google.spanner.v1.TransactionSelector)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct TransactionSelector {
@@ -1570,297 +1748,507 @@ pub mod transaction_selector {
     }
 }
 
+///  When a read-write transaction is executed on a multiplexed session,
+///  this precommit token is sent back to the client
+///  as a part of the [Transaction] message in the BeginTransaction response and
+///  also as a part of the [ResultSet] and [PartialResultSet] responses.
+// @@protoc_insertion_point(message:google.spanner.v1.MultiplexedSessionPrecommitToken)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct MultiplexedSessionPrecommitToken {
+    // message fields
+    ///  Opaque precommit token.
+    // @@protoc_insertion_point(field:google.spanner.v1.MultiplexedSessionPrecommitToken.precommit_token)
+    pub precommit_token: ::std::vec::Vec<u8>,
+    ///  An incrementing seq number is generated on every precommit token
+    ///  that is returned. Clients should remember the precommit token with the
+    ///  highest sequence number from the current transaction attempt.
+    // @@protoc_insertion_point(field:google.spanner.v1.MultiplexedSessionPrecommitToken.seq_num)
+    pub seq_num: i32,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.spanner.v1.MultiplexedSessionPrecommitToken.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a MultiplexedSessionPrecommitToken {
+    fn default() -> &'a MultiplexedSessionPrecommitToken {
+        <MultiplexedSessionPrecommitToken as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MultiplexedSessionPrecommitToken {
+    pub fn new() -> MultiplexedSessionPrecommitToken {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "precommit_token",
+            |m: &MultiplexedSessionPrecommitToken| { &m.precommit_token },
+            |m: &mut MultiplexedSessionPrecommitToken| { &mut m.precommit_token },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "seq_num",
+            |m: &MultiplexedSessionPrecommitToken| { &m.seq_num },
+            |m: &mut MultiplexedSessionPrecommitToken| { &mut m.seq_num },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MultiplexedSessionPrecommitToken>(
+            "MultiplexedSessionPrecommitToken",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for MultiplexedSessionPrecommitToken {
+    const NAME: &'static str = "MultiplexedSessionPrecommitToken";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.precommit_token = is.read_bytes()?;
+                },
+                16 => {
+                    self.seq_num = is.read_int32()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.precommit_token.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(1, &self.precommit_token);
+        }
+        if self.seq_num != 0 {
+            my_size += ::protobuf::rt::int32_size(2, self.seq_num);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.precommit_token.is_empty() {
+            os.write_bytes(1, &self.precommit_token)?;
+        }
+        if self.seq_num != 0 {
+            os.write_int32(2, self.seq_num)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> MultiplexedSessionPrecommitToken {
+        MultiplexedSessionPrecommitToken::new()
+    }
+
+    fn clear(&mut self) {
+        self.precommit_token.clear();
+        self.seq_num = 0;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static MultiplexedSessionPrecommitToken {
+        static instance: MultiplexedSessionPrecommitToken = MultiplexedSessionPrecommitToken {
+            precommit_token: ::std::vec::Vec::new(),
+            seq_num: 0,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for MultiplexedSessionPrecommitToken {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("MultiplexedSessionPrecommitToken").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for MultiplexedSessionPrecommitToken {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MultiplexedSessionPrecommitToken {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n#google/spanner/v1/transaction.proto\x12\x11google.spanner.v1\x1a\x1eg\
-    oogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\
-    \x1cgoogle/api/annotations.proto\"\xc4\x05\n\x12TransactionOptions\x12P\
-    \n\nread_write\x18\x01\x20\x01(\x0b2/.google.spanner.v1.TransactionOptio\
-    ns.ReadWriteH\0R\treadWrite\x12_\n\x0fpartitioned_dml\x18\x03\x20\x01(\
-    \x0b24.google.spanner.v1.TransactionOptions.PartitionedDmlH\0R\x0epartit\
-    ionedDml\x12M\n\tread_only\x18\x02\x20\x01(\x0b2..google.spanner.v1.Tran\
-    sactionOptions.ReadOnlyH\0R\x08readOnly\x1a\x0b\n\tReadWrite\x1a\x10\n\
-    \x0ePartitionedDml\x1a\x84\x03\n\x08ReadOnly\x12\x18\n\x06strong\x18\x01\
-    \x20\x01(\x08H\0R\x06strong\x12J\n\x12min_read_timestamp\x18\x02\x20\x01\
-    (\x0b2\x1a.google.protobuf.TimestampH\0R\x10minReadTimestamp\x12@\n\rmax\
-    _staleness\x18\x03\x20\x01(\x0b2\x19.google.protobuf.DurationH\0R\x0cmax\
-    Staleness\x12C\n\x0eread_timestamp\x18\x04\x20\x01(\x0b2\x1a.google.prot\
-    obuf.TimestampH\0R\rreadTimestamp\x12D\n\x0fexact_staleness\x18\x05\x20\
-    \x01(\x0b2\x19.google.protobuf.DurationH\0R\x0eexactStaleness\x122\n\x15\
-    return_read_timestamp\x18\x06\x20\x01(\x08R\x13returnReadTimestampB\x11\
-    \n\x0ftimestamp_boundB\x06\n\x04mode\"`\n\x0bTransaction\x12\x0e\n\x02id\
-    \x18\x01\x20\x01(\x0cR\x02id\x12A\n\x0eread_timestamp\x18\x02\x20\x01(\
-    \x0b2\x1a.google.protobuf.TimestampR\rreadTimestamp\"\xba\x01\n\x13Trans\
-    actionSelector\x12F\n\nsingle_use\x18\x01\x20\x01(\x0b2%.google.spanner.\
-    v1.TransactionOptionsH\0R\tsingleUse\x12\x10\n\x02id\x18\x02\x20\x01(\
-    \x0cH\0R\x02id\x12=\n\x05begin\x18\x03\x20\x01(\x0b2%.google.spanner.v1.\
-    TransactionOptionsH\0R\x05beginB\n\n\x08selectorB\x99\x01\n\x15com.googl\
-    e.spanner.v1B\x10TransactionProtoP\x01Z8google.golang.org/genproto/googl\
-    eapis/spanner/v1;spanner\xaa\x02\x17Google.Cloud.Spanner.V1\xca\x02\x17G\
-    oogle\\Cloud\\Spanner\\V1J\x9b\x99\x01\n\x07\x12\x05\x0f\0\xc7\x03\x01\n\
-    \xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Go\
-    ogle\x20LLC.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Ve\
-    rsion\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20t\
-    his\x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\
-    \x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\
-    \x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Un\
-    less\x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\
-    \x20writing,\x20software\n\x20distributed\x20under\x20the\x20License\x20\
-    is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20\
-    WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20expres\
-    s\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
-    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
-    r\x20the\x20License.\n\n\n\x08\n\x01\x02\x12\x03\x11\0\x1a\n\t\n\x02\x03\
-    \0\x12\x03\x13\0(\n\t\n\x02\x03\x01\x12\x03\x14\0)\n\t\n\x02\x03\x02\x12\
-    \x03\x15\0&\n\x08\n\x01\x08\x12\x03\x17\04\n\t\n\x02\x08%\x12\x03\x17\04\
-    \n\x08\n\x01\x08\x12\x03\x18\0O\n\t\n\x02\x08\x0b\x12\x03\x18\0O\n\x08\n\
-    \x01\x08\x12\x03\x19\0\"\n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\x01\x08\
-    \x12\x03\x1a\01\n\t\n\x02\x08\x08\x12\x03\x1a\01\n\x08\n\x01\x08\x12\x03\
-    \x1b\0.\n\t\n\x02\x08\x01\x12\x03\x1b\0.\n\x08\n\x01\x08\x12\x03\x1c\04\
-    \n\t\n\x02\x08)\x12\x03\x1c\04\n\x80e\n\x02\x04\0\x12\x06\xb3\x02\0\x9a\
-    \x03\x01\x1a\xf1d\x20#\x20Transactions\n\n\n\x20Each\x20session\x20can\
-    \x20have\x20at\x20most\x20one\x20active\x20transaction\x20at\x20a\x20tim\
-    e.\x20After\x20the\n\x20active\x20transaction\x20is\x20completed,\x20the\
-    \x20session\x20can\x20immediately\x20be\n\x20re-used\x20for\x20the\x20ne\
-    xt\x20transaction.\x20It\x20is\x20not\x20necessary\x20to\x20create\x20a\
-    \n\x20new\x20session\x20for\x20each\x20transaction.\n\n\x20#\x20Transact\
-    ion\x20Modes\n\n\x20Cloud\x20Spanner\x20supports\x20three\x20transaction\
-    \x20modes:\n\n\x20\x20\x201.\x20Locking\x20read-write.\x20This\x20type\
-    \x20of\x20transaction\x20is\x20the\x20only\x20way\n\x20\x20\x20\x20\x20\
-    \x20to\x20write\x20data\x20into\x20Cloud\x20Spanner.\x20These\x20transac\
-    tions\x20rely\x20on\n\x20\x20\x20\x20\x20\x20pessimistic\x20locking\x20a\
-    nd,\x20if\x20necessary,\x20two-phase\x20commit.\n\x20\x20\x20\x20\x20\
-    \x20Locking\x20read-write\x20transactions\x20may\x20abort,\x20requiring\
-    \x20the\n\x20\x20\x20\x20\x20\x20application\x20to\x20retry.\n\n\x20\x20\
-    \x202.\x20Snapshot\x20read-only.\x20This\x20transaction\x20type\x20provi\
-    des\x20guaranteed\n\x20\x20\x20\x20\x20\x20consistency\x20across\x20seve\
-    ral\x20reads,\x20but\x20does\x20not\x20allow\n\x20\x20\x20\x20\x20\x20wr\
-    ites.\x20Snapshot\x20read-only\x20transactions\x20can\x20be\x20configure\
-    d\x20to\n\x20\x20\x20\x20\x20\x20read\x20at\x20timestamps\x20in\x20the\
-    \x20past.\x20Snapshot\x20read-only\n\x20\x20\x20\x20\x20\x20transactions\
-    \x20do\x20not\x20need\x20to\x20be\x20committed.\n\n\x20\x20\x203.\x20Par\
-    titioned\x20DML.\x20This\x20type\x20of\x20transaction\x20is\x20used\x20t\
-    o\x20execute\n\x20\x20\x20\x20\x20\x20a\x20single\x20Partitioned\x20DML\
-    \x20statement.\x20Partitioned\x20DML\x20partitions\n\x20\x20\x20\x20\x20\
-    \x20the\x20key\x20space\x20and\x20runs\x20the\x20DML\x20statement\x20ove\
-    r\x20each\x20partition\n\x20\x20\x20\x20\x20\x20in\x20parallel\x20using\
-    \x20separate,\x20internal\x20transactions\x20that\x20commit\n\x20\x20\
-    \x20\x20\x20\x20independently.\x20Partitioned\x20DML\x20transactions\x20\
-    do\x20not\x20need\x20to\x20be\n\x20\x20\x20\x20\x20\x20committed.\n\n\
-    \x20For\x20transactions\x20that\x20only\x20read,\x20snapshot\x20read-onl\
-    y\x20transactions\n\x20provide\x20simpler\x20semantics\x20and\x20are\x20\
-    almost\x20always\x20faster.\x20In\n\x20particular,\x20read-only\x20trans\
-    actions\x20do\x20not\x20take\x20locks,\x20so\x20they\x20do\n\x20not\x20c\
-    onflict\x20with\x20read-write\x20transactions.\x20As\x20a\x20consequence\
-    \x20of\x20not\n\x20taking\x20locks,\x20they\x20also\x20do\x20not\x20abor\
-    t,\x20so\x20retry\x20loops\x20are\x20not\x20needed.\n\n\x20Transactions\
-    \x20may\x20only\x20read/write\x20data\x20in\x20a\x20single\x20database.\
-    \x20They\n\x20may,\x20however,\x20read/write\x20data\x20in\x20different\
-    \x20tables\x20within\x20that\n\x20database.\n\n\x20##\x20Locking\x20Read\
-    -Write\x20Transactions\n\n\x20Locking\x20transactions\x20may\x20be\x20us\
-    ed\x20to\x20atomically\x20read-modify-write\n\x20data\x20anywhere\x20in\
-    \x20a\x20database.\x20This\x20type\x20of\x20transaction\x20is\x20externa\
-    lly\n\x20consistent.\n\n\x20Clients\x20should\x20attempt\x20to\x20minimi\
-    ze\x20the\x20amount\x20of\x20time\x20a\x20transaction\n\x20is\x20active.\
-    \x20Faster\x20transactions\x20commit\x20with\x20higher\x20probability\n\
-    \x20and\x20cause\x20less\x20contention.\x20Cloud\x20Spanner\x20attempts\
-    \x20to\x20keep\x20read\x20locks\n\x20active\x20as\x20long\x20as\x20the\
-    \x20transaction\x20continues\x20to\x20do\x20reads,\x20and\x20the\n\x20tr\
-    ansaction\x20has\x20not\x20been\x20terminated\x20by\n\x20[Commit][google\
-    .spanner.v1.Spanner.Commit]\x20or\n\x20[Rollback][google.spanner.v1.Span\
-    ner.Rollback].\x20\x20Long\x20periods\x20of\n\x20inactivity\x20at\x20the\
-    \x20client\x20may\x20cause\x20Cloud\x20Spanner\x20to\x20release\x20a\n\
-    \x20transaction's\x20locks\x20and\x20abort\x20it.\n\n\x20Conceptually,\
-    \x20a\x20read-write\x20transaction\x20consists\x20of\x20zero\x20or\x20mo\
-    re\n\x20reads\x20or\x20SQL\x20statements\x20followed\x20by\n\x20[Commit]\
-    [google.spanner.v1.Spanner.Commit].\x20At\x20any\x20time\x20before\n\x20\
-    [Commit][google.spanner.v1.Spanner.Commit],\x20the\x20client\x20can\x20s\
-    end\x20a\n\x20[Rollback][google.spanner.v1.Spanner.Rollback]\x20request\
-    \x20to\x20abort\x20the\n\x20transaction.\n\n\x20###\x20Semantics\n\n\x20\
-    Cloud\x20Spanner\x20can\x20commit\x20the\x20transaction\x20if\x20all\x20\
-    read\x20locks\x20it\x20acquired\n\x20are\x20still\x20valid\x20at\x20comm\
-    it\x20time,\x20and\x20it\x20is\x20able\x20to\x20acquire\x20write\n\x20lo\
-    cks\x20for\x20all\x20writes.\x20Cloud\x20Spanner\x20can\x20abort\x20the\
-    \x20transaction\x20for\x20any\n\x20reason.\x20If\x20a\x20commit\x20attem\
-    pt\x20returns\x20`ABORTED`,\x20Cloud\x20Spanner\x20guarantees\n\x20that\
-    \x20the\x20transaction\x20has\x20not\x20modified\x20any\x20user\x20data\
-    \x20in\x20Cloud\x20Spanner.\n\n\x20Unless\x20the\x20transaction\x20commi\
-    ts,\x20Cloud\x20Spanner\x20makes\x20no\x20guarantees\x20about\n\x20how\
-    \x20long\x20the\x20transaction's\x20locks\x20were\x20held\x20for.\x20It\
-    \x20is\x20an\x20error\x20to\n\x20use\x20Cloud\x20Spanner\x20locks\x20for\
-    \x20any\x20sort\x20of\x20mutual\x20exclusion\x20other\x20than\n\x20betwe\
-    en\x20Cloud\x20Spanner\x20transactions\x20themselves.\n\n\x20###\x20Retr\
-    ying\x20Aborted\x20Transactions\n\n\x20When\x20a\x20transaction\x20abort\
-    s,\x20the\x20application\x20can\x20choose\x20to\x20retry\x20the\n\x20who\
-    le\x20transaction\x20again.\x20To\x20maximize\x20the\x20chances\x20of\
-    \x20successfully\n\x20committing\x20the\x20retry,\x20the\x20client\x20sh\
-    ould\x20execute\x20the\x20retry\x20in\x20the\n\x20same\x20session\x20as\
-    \x20the\x20original\x20attempt.\x20The\x20original\x20session's\x20lock\
-    \n\x20priority\x20increases\x20with\x20each\x20consecutive\x20abort,\x20\
-    meaning\x20that\x20each\n\x20attempt\x20has\x20a\x20slightly\x20better\
-    \x20chance\x20of\x20success\x20than\x20the\x20previous.\n\n\x20Under\x20\
-    some\x20circumstances\x20(e.g.,\x20many\x20transactions\x20attempting\
-    \x20to\n\x20modify\x20the\x20same\x20row(s)),\x20a\x20transaction\x20can\
-    \x20abort\x20many\x20times\x20in\x20a\n\x20short\x20period\x20before\x20\
-    successfully\x20committing.\x20Thus,\x20it\x20is\x20not\x20a\x20good\n\
-    \x20idea\x20to\x20cap\x20the\x20number\x20of\x20retries\x20a\x20transact\
-    ion\x20can\x20attempt;\n\x20instead,\x20it\x20is\x20better\x20to\x20limi\
-    t\x20the\x20total\x20amount\x20of\x20wall\x20time\x20spent\n\x20retrying\
-    .\n\n\x20###\x20Idle\x20Transactions\n\n\x20A\x20transaction\x20is\x20co\
-    nsidered\x20idle\x20if\x20it\x20has\x20no\x20outstanding\x20reads\x20or\
-    \n\x20SQL\x20queries\x20and\x20has\x20not\x20started\x20a\x20read\x20or\
-    \x20SQL\x20query\x20within\x20the\x20last\x2010\n\x20seconds.\x20Idle\
-    \x20transactions\x20can\x20be\x20aborted\x20by\x20Cloud\x20Spanner\x20so\
-    \x20that\x20they\n\x20don't\x20hold\x20on\x20to\x20locks\x20indefinitely\
-    .\x20In\x20that\x20case,\x20the\x20commit\x20will\n\x20fail\x20with\x20e\
-    rror\x20`ABORTED`.\n\n\x20If\x20this\x20behavior\x20is\x20undesirable,\
-    \x20periodically\x20executing\x20a\x20simple\n\x20SQL\x20query\x20in\x20\
-    the\x20transaction\x20(e.g.,\x20`SELECT\x201`)\x20prevents\x20the\n\x20t\
-    ransaction\x20from\x20becoming\x20idle.\n\n\x20##\x20Snapshot\x20Read-On\
-    ly\x20Transactions\n\n\x20Snapshot\x20read-only\x20transactions\x20provi\
-    des\x20a\x20simpler\x20method\x20than\n\x20locking\x20read-write\x20tran\
-    sactions\x20for\x20doing\x20several\x20consistent\n\x20reads.\x20However\
-    ,\x20this\x20type\x20of\x20transaction\x20does\x20not\x20support\x20writ\
-    es.\n\n\x20Snapshot\x20transactions\x20do\x20not\x20take\x20locks.\x20In\
-    stead,\x20they\x20work\x20by\n\x20choosing\x20a\x20Cloud\x20Spanner\x20t\
-    imestamp,\x20then\x20executing\x20all\x20reads\x20at\x20that\n\x20timest\
-    amp.\x20Since\x20they\x20do\x20not\x20acquire\x20locks,\x20they\x20do\
-    \x20not\x20block\n\x20concurrent\x20read-write\x20transactions.\n\n\x20U\
-    nlike\x20locking\x20read-write\x20transactions,\x20snapshot\x20read-only\
-    \n\x20transactions\x20never\x20abort.\x20They\x20can\x20fail\x20if\x20th\
-    e\x20chosen\x20read\n\x20timestamp\x20is\x20garbage\x20collected;\x20how\
-    ever,\x20the\x20default\x20garbage\n\x20collection\x20policy\x20is\x20ge\
-    nerous\x20enough\x20that\x20most\x20applications\x20do\x20not\n\x20need\
-    \x20to\x20worry\x20about\x20this\x20in\x20practice.\n\n\x20Snapshot\x20r\
-    ead-only\x20transactions\x20do\x20not\x20need\x20to\x20call\n\x20[Commit\
-    ][google.spanner.v1.Spanner.Commit]\x20or\n\x20[Rollback][google.spanner\
-    .v1.Spanner.Rollback]\x20(and\x20in\x20fact\x20are\x20not\n\x20permitted\
-    \x20to\x20do\x20so).\n\n\x20To\x20execute\x20a\x20snapshot\x20transactio\
-    n,\x20the\x20client\x20specifies\x20a\x20timestamp\n\x20bound,\x20which\
-    \x20tells\x20Cloud\x20Spanner\x20how\x20to\x20choose\x20a\x20read\x20tim\
-    estamp.\n\n\x20The\x20types\x20of\x20timestamp\x20bound\x20are:\n\n\x20\
-    \x20\x20-\x20Strong\x20(the\x20default).\n\x20\x20\x20-\x20Bounded\x20st\
-    aleness.\n\x20\x20\x20-\x20Exact\x20staleness.\n\n\x20If\x20the\x20Cloud\
-    \x20Spanner\x20database\x20to\x20be\x20read\x20is\x20geographically\x20d\
-    istributed,\n\x20stale\x20read-only\x20transactions\x20can\x20execute\
-    \x20more\x20quickly\x20than\x20strong\n\x20or\x20read-write\x20transacti\
-    on,\x20because\x20they\x20are\x20able\x20to\x20execute\x20far\n\x20from\
-    \x20the\x20leader\x20replica.\n\n\x20Each\x20type\x20of\x20timestamp\x20\
-    bound\x20is\x20discussed\x20in\x20detail\x20below.\n\n\x20###\x20Strong\
-    \n\n\x20Strong\x20reads\x20are\x20guaranteed\x20to\x20see\x20the\x20effe\
-    cts\x20of\x20all\x20transactions\n\x20that\x20have\x20committed\x20befor\
-    e\x20the\x20start\x20of\x20the\x20read.\x20Furthermore,\x20all\n\x20rows\
-    \x20yielded\x20by\x20a\x20single\x20read\x20are\x20consistent\x20with\
-    \x20each\x20other\x20--\x20if\n\x20any\x20part\x20of\x20the\x20read\x20o\
-    bserves\x20a\x20transaction,\x20all\x20parts\x20of\x20the\x20read\n\x20s\
-    ee\x20the\x20transaction.\n\n\x20Strong\x20reads\x20are\x20not\x20repeat\
-    able:\x20two\x20consecutive\x20strong\x20read-only\n\x20transactions\x20\
-    might\x20return\x20inconsistent\x20results\x20if\x20there\x20are\n\x20co\
-    ncurrent\x20writes.\x20If\x20consistency\x20across\x20reads\x20is\x20req\
-    uired,\x20the\n\x20reads\x20should\x20be\x20executed\x20within\x20a\x20t\
-    ransaction\x20or\x20at\x20an\x20exact\x20read\n\x20timestamp.\n\n\x20See\
-    \x20[TransactionOptions.ReadOnly.strong][google.spanner.v1.TransactionOp\
-    tions.ReadOnly.strong].\n\n\x20###\x20Exact\x20Staleness\n\n\x20These\
-    \x20timestamp\x20bounds\x20execute\x20reads\x20at\x20a\x20user-specified\
-    \n\x20timestamp.\x20Reads\x20at\x20a\x20timestamp\x20are\x20guaranteed\
-    \x20to\x20see\x20a\x20consistent\n\x20prefix\x20of\x20the\x20global\x20t\
-    ransaction\x20history:\x20they\x20observe\n\x20modifications\x20done\x20\
-    by\x20all\x20transactions\x20with\x20a\x20commit\x20timestamp\x20<=\n\
-    \x20the\x20read\x20timestamp,\x20and\x20observe\x20none\x20of\x20the\x20\
-    modifications\x20done\x20by\n\x20transactions\x20with\x20a\x20larger\x20\
-    commit\x20timestamp.\x20They\x20will\x20block\x20until\n\x20all\x20confl\
-    icting\x20transactions\x20that\x20may\x20be\x20assigned\x20commit\x20tim\
-    estamps\n\x20<=\x20the\x20read\x20timestamp\x20have\x20finished.\n\n\x20\
-    The\x20timestamp\x20can\x20either\x20be\x20expressed\x20as\x20an\x20abso\
-    lute\x20Cloud\x20Spanner\x20commit\n\x20timestamp\x20or\x20a\x20stalenes\
-    s\x20relative\x20to\x20the\x20current\x20time.\n\n\x20These\x20modes\x20\
-    do\x20not\x20require\x20a\x20\"negotiation\x20phase\"\x20to\x20pick\x20a\
-    \n\x20timestamp.\x20As\x20a\x20result,\x20they\x20execute\x20slightly\
-    \x20faster\x20than\x20the\n\x20equivalent\x20boundedly\x20stale\x20concu\
-    rrency\x20modes.\x20On\x20the\x20other\x20hand,\n\x20boundedly\x20stale\
-    \x20reads\x20usually\x20return\x20fresher\x20results.\n\n\x20See\x20[Tra\
-    nsactionOptions.ReadOnly.read_timestamp][google.spanner.v1.TransactionOp\
-    tions.ReadOnly.read_timestamp]\x20and\n\x20[TransactionOptions.ReadOnly.\
-    exact_staleness][google.spanner.v1.TransactionOptions.ReadOnly.exact_sta\
-    leness].\n\n\x20###\x20Bounded\x20Staleness\n\n\x20Bounded\x20staleness\
-    \x20modes\x20allow\x20Cloud\x20Spanner\x20to\x20pick\x20the\x20read\x20t\
-    imestamp,\n\x20subject\x20to\x20a\x20user-provided\x20staleness\x20bound\
-    .\x20Cloud\x20Spanner\x20chooses\x20the\n\x20newest\x20timestamp\x20with\
-    in\x20the\x20staleness\x20bound\x20that\x20allows\x20execution\n\x20of\
-    \x20the\x20reads\x20at\x20the\x20closest\x20available\x20replica\x20with\
-    out\x20blocking.\n\n\x20All\x20rows\x20yielded\x20are\x20consistent\x20w\
-    ith\x20each\x20other\x20--\x20if\x20any\x20part\x20of\n\x20the\x20read\
-    \x20observes\x20a\x20transaction,\x20all\x20parts\x20of\x20the\x20read\
-    \x20see\x20the\n\x20transaction.\x20Boundedly\x20stale\x20reads\x20are\
-    \x20not\x20repeatable:\x20two\x20stale\n\x20reads,\x20even\x20if\x20they\
-    \x20use\x20the\x20same\x20staleness\x20bound,\x20can\x20execute\x20at\n\
-    \x20different\x20timestamps\x20and\x20thus\x20return\x20inconsistent\x20\
-    results.\n\n\x20Boundedly\x20stale\x20reads\x20execute\x20in\x20two\x20p\
-    hases:\x20the\x20first\x20phase\n\x20negotiates\x20a\x20timestamp\x20amo\
-    ng\x20all\x20replicas\x20needed\x20to\x20serve\x20the\n\x20read.\x20In\
-    \x20the\x20second\x20phase,\x20reads\x20are\x20executed\x20at\x20the\x20\
-    negotiated\n\x20timestamp.\n\n\x20As\x20a\x20result\x20of\x20the\x20two\
-    \x20phase\x20execution,\x20bounded\x20staleness\x20reads\x20are\n\x20usu\
-    ally\x20a\x20little\x20slower\x20than\x20comparable\x20exact\x20stalenes\
-    s\n\x20reads.\x20However,\x20they\x20are\x20typically\x20able\x20to\x20r\
-    eturn\x20fresher\n\x20results,\x20and\x20are\x20more\x20likely\x20to\x20\
-    execute\x20at\x20the\x20closest\x20replica.\n\n\x20Because\x20the\x20tim\
-    estamp\x20negotiation\x20requires\x20up-front\x20knowledge\x20of\n\x20wh\
-    ich\x20rows\x20will\x20be\x20read,\x20it\x20can\x20only\x20be\x20used\
-    \x20with\x20single-use\n\x20read-only\x20transactions.\n\n\x20See\x20[Tr\
-    ansactionOptions.ReadOnly.max_staleness][google.spanner.v1.TransactionOp\
-    tions.ReadOnly.max_staleness]\x20and\n\x20[TransactionOptions.ReadOnly.m\
-    in_read_timestamp][google.spanner.v1.TransactionOptions.ReadOnly.min_rea\
-    d_timestamp].\n\n\x20###\x20Old\x20Read\x20Timestamps\x20and\x20Garbage\
-    \x20Collection\n\n\x20Cloud\x20Spanner\x20continuously\x20garbage\x20col\
-    lects\x20deleted\x20and\x20overwritten\x20data\n\x20in\x20the\x20backgro\
-    und\x20to\x20reclaim\x20storage\x20space.\x20This\x20process\x20is\x20kn\
-    own\n\x20as\x20\"version\x20GC\".\x20By\x20default,\x20version\x20GC\x20\
-    reclaims\x20versions\x20after\x20they\n\x20are\x20one\x20hour\x20old.\
-    \x20Because\x20of\x20this,\x20Cloud\x20Spanner\x20cannot\x20perform\x20r\
-    eads\n\x20at\x20read\x20timestamps\x20more\x20than\x20one\x20hour\x20in\
-    \x20the\x20past.\x20This\n\x20restriction\x20also\x20applies\x20to\x20in\
-    -progress\x20reads\x20and/or\x20SQL\x20queries\x20whose\n\x20timestamp\
-    \x20become\x20too\x20old\x20while\x20executing.\x20Reads\x20and\x20SQL\
-    \x20queries\x20with\n\x20too-old\x20read\x20timestamps\x20fail\x20with\
-    \x20the\x20error\x20`FAILED_PRECONDITION`.\n\n\x20##\x20Partitioned\x20D\
-    ML\x20Transactions\n\n\x20Partitioned\x20DML\x20transactions\x20are\x20u\
-    sed\x20to\x20execute\x20DML\x20statements\x20with\x20a\n\x20different\
-    \x20execution\x20strategy\x20that\x20provides\x20different,\x20and\x20of\
-    ten\x20better,\n\x20scalability\x20properties\x20for\x20large,\x20table-\
-    wide\x20operations\x20than\x20DML\x20in\x20a\n\x20ReadWrite\x20transacti\
-    on.\x20Smaller\x20scoped\x20statements,\x20such\x20as\x20an\x20OLTP\x20w\
-    orkload,\n\x20should\x20prefer\x20using\x20ReadWrite\x20transactions.\n\
-    \n\x20Partitioned\x20DML\x20partitions\x20the\x20keyspace\x20and\x20runs\
-    \x20the\x20DML\x20statement\x20on\x20each\n\x20partition\x20in\x20separa\
-    te,\x20internal\x20transactions.\x20These\x20transactions\x20commit\n\
-    \x20automatically\x20when\x20complete,\x20and\x20run\x20independently\
-    \x20from\x20one\x20another.\n\n\x20To\x20reduce\x20lock\x20contention,\
-    \x20this\x20execution\x20strategy\x20only\x20acquires\x20read\x20locks\n\
-    \x20on\x20rows\x20that\x20match\x20the\x20WHERE\x20clause\x20of\x20the\
-    \x20statement.\x20Additionally,\x20the\n\x20smaller\x20per-partition\x20\
-    transactions\x20hold\x20locks\x20for\x20less\x20time.\n\n\x20That\x20sai\
-    d,\x20Partitioned\x20DML\x20is\x20not\x20a\x20drop-in\x20replacement\x20\
-    for\x20standard\x20DML\x20used\n\x20in\x20ReadWrite\x20transactions.\n\n\
-    \x20\x20-\x20The\x20DML\x20statement\x20must\x20be\x20fully-partitionabl\
-    e.\x20Specifically,\x20the\x20statement\n\x20\x20\x20\x20must\x20be\x20e\
-    xpressible\x20as\x20the\x20union\x20of\x20many\x20statements\x20which\
-    \x20each\x20access\x20only\n\x20\x20\x20\x20a\x20single\x20row\x20of\x20\
-    the\x20table.\n\n\x20\x20-\x20The\x20statement\x20is\x20not\x20applied\
-    \x20atomically\x20to\x20all\x20rows\x20of\x20the\x20table.\x20Rather,\n\
-    \x20\x20\x20\x20the\x20statement\x20is\x20applied\x20atomically\x20to\
-    \x20partitions\x20of\x20the\x20table,\x20in\n\x20\x20\x20\x20independent\
-    \x20transactions.\x20Secondary\x20index\x20rows\x20are\x20updated\x20ato\
-    mically\n\x20\x20\x20\x20with\x20the\x20base\x20table\x20rows.\n\n\x20\
-    \x20-\x20Partitioned\x20DML\x20does\x20not\x20guarantee\x20exactly-once\
-    \x20execution\x20semantics\n\x20\x20\x20\x20against\x20a\x20partition.\
-    \x20The\x20statement\x20will\x20be\x20applied\x20at\x20least\x20once\x20\
-    to\x20each\n\x20\x20\x20\x20partition.\x20It\x20is\x20strongly\x20recomm\
-    ended\x20that\x20the\x20DML\x20statement\x20should\x20be\n\x20\x20\x20\
-    \x20idempotent\x20to\x20avoid\x20unexpected\x20results.\x20For\x20instan\
-    ce,\x20it\x20is\x20potentially\n\x20\x20\x20\x20dangerous\x20to\x20run\
-    \x20a\x20statement\x20such\x20as\n\x20\x20\x20\x20`UPDATE\x20table\x20SE\
-    T\x20column\x20=\x20column\x20+\x201`\x20as\x20it\x20could\x20be\x20run\
-    \x20multiple\x20times\n\x20\x20\x20\x20against\x20some\x20rows.\n\n\x20\
+    \n#google/spanner/v1/transaction.proto\x12\x11google.spanner.v1\x1a\x1fg\
+    oogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\
+    \x1fgoogle/protobuf/timestamp.proto\"\xa3\x08\n\x12TransactionOptions\
+    \x12P\n\nread_write\x18\x01\x20\x01(\x0b2/.google.spanner.v1.Transaction\
+    Options.ReadWriteH\0R\treadWrite\x12_\n\x0fpartitioned_dml\x18\x03\x20\
+    \x01(\x0b24.google.spanner.v1.TransactionOptions.PartitionedDmlH\0R\x0ep\
+    artitionedDml\x12M\n\tread_only\x18\x02\x20\x01(\x0b2..google.spanner.v1\
+    .TransactionOptions.ReadOnlyH\0R\x08readOnly\x12D\n\x1fexclude_txn_from_\
+    change_streams\x18\x05\x20\x01(\x08R\x1bexcludeTxnFromChangeStreams\x1a\
+    \xa3\x02\n\tReadWrite\x12b\n\x0eread_lock_mode\x18\x01\x20\x01(\x0e2<.go\
+    ogle.spanner.v1.TransactionOptions.ReadWrite.ReadLockModeR\x0creadLockMo\
+    de\x12a\n+multiplexed_session_previous_transaction_id\x18\x02\x20\x01(\
+    \x0cR'multiplexedSessionPreviousTransactionIdB\x03\xe0A\x01\"O\n\x0cRead\
+    LockMode\x12\x1e\n\x1aREAD_LOCK_MODE_UNSPECIFIED\x10\0\x12\x0f\n\x0bPESS\
+    IMISTIC\x10\x01\x12\x0e\n\nOPTIMISTIC\x10\x02\x1a\x10\n\x0ePartitionedDm\
+    l\x1a\x84\x03\n\x08ReadOnly\x12\x18\n\x06strong\x18\x01\x20\x01(\x08H\0R\
+    \x06strong\x12J\n\x12min_read_timestamp\x18\x02\x20\x01(\x0b2\x1a.google\
+    .protobuf.TimestampH\0R\x10minReadTimestamp\x12@\n\rmax_staleness\x18\
+    \x03\x20\x01(\x0b2\x19.google.protobuf.DurationH\0R\x0cmaxStaleness\x12C\
+    \n\x0eread_timestamp\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.Timestamp\
+    H\0R\rreadTimestamp\x12D\n\x0fexact_staleness\x18\x05\x20\x01(\x0b2\x19.\
+    google.protobuf.DurationH\0R\x0eexactStaleness\x122\n\x15return_read_tim\
+    estamp\x18\x06\x20\x01(\x08R\x13returnReadTimestampB\x11\n\x0ftimestamp_\
+    boundB\x06\n\x04mode\"\xbe\x01\n\x0bTransaction\x12\x0e\n\x02id\x18\x01\
+    \x20\x01(\x0cR\x02id\x12A\n\x0eread_timestamp\x18\x02\x20\x01(\x0b2\x1a.\
+    google.protobuf.TimestampR\rreadTimestamp\x12\\\n\x0fprecommit_token\x18\
+    \x03\x20\x01(\x0b23.google.spanner.v1.MultiplexedSessionPrecommitTokenR\
+    \x0eprecommitToken\"\xba\x01\n\x13TransactionSelector\x12F\n\nsingle_use\
+    \x18\x01\x20\x01(\x0b2%.google.spanner.v1.TransactionOptionsH\0R\tsingle\
+    Use\x12\x10\n\x02id\x18\x02\x20\x01(\x0cH\0R\x02id\x12=\n\x05begin\x18\
+    \x03\x20\x01(\x0b2%.google.spanner.v1.TransactionOptionsH\0R\x05beginB\n\
+    \n\x08selector\"d\n\x20MultiplexedSessionPrecommitToken\x12'\n\x0fprecom\
+    mit_token\x18\x01\x20\x01(\x0cR\x0eprecommitToken\x12\x17\n\x07seq_num\
+    \x18\x02\x20\x01(\x05R\x06seqNumB\xb3\x01\n\x15com.google.spanner.v1B\
+    \x10TransactionProtoP\x01Z5cloud.google.com/go/spanner/apiv1/spannerpb;s\
+    pannerpb\xaa\x02\x17Google.Cloud.Spanner.V1\xca\x02\x17Google\\Cloud\\Sp\
+    anner\\V1\xea\x02\x1aGoogle::Cloud::Spanner::V1J\xff\xc4\x01\n\x07\x12\
+    \x05\x0e\0\xbe\x04\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\
+    \x20Copyright\x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\
+    \x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20y\
+    ou\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\
+    \x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\
+    \x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/li\
+    censes/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\
+    \x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
+    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
+    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
+    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
+    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
+    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\
+    \x12\x03\x10\0\x1a\n\t\n\x02\x03\0\x12\x03\x12\0)\n\t\n\x02\x03\x01\x12\
+    \x03\x13\0(\n\t\n\x02\x03\x02\x12\x03\x14\0)\n\x08\n\x01\x08\x12\x03\x16\
+    \04\n\t\n\x02\x08%\x12\x03\x16\04\n\x08\n\x01\x08\x12\x03\x17\0L\n\t\n\
+    \x02\x08\x0b\x12\x03\x17\0L\n\x08\n\x01\x08\x12\x03\x18\0\"\n\t\n\x02\
+    \x08\n\x12\x03\x18\0\"\n\x08\n\x01\x08\x12\x03\x19\01\n\t\n\x02\x08\x08\
+    \x12\x03\x19\01\n\x08\n\x01\x08\x12\x03\x1a\0.\n\t\n\x02\x08\x01\x12\x03\
+    \x1a\0.\n\x08\n\x01\x08\x12\x03\x1b\04\n\t\n\x02\x08)\x12\x03\x1b\04\n\
+    \x08\n\x01\x08\x12\x03\x1c\03\n\t\n\x02\x08-\x12\x03\x1c\03\n\xcew\n\x02\
+    \x04\0\x12\x06\xe2\x02\0\xf6\x03\x01\x1a\xbfw\x20Transactions:\n\n\x20Ea\
+    ch\x20session\x20can\x20have\x20at\x20most\x20one\x20active\x20transacti\
+    on\x20at\x20a\x20time\x20(note\x20that\n\x20standalone\x20reads\x20and\
+    \x20queries\x20use\x20a\x20transaction\x20internally\x20and\x20do\x20cou\
+    nt\n\x20towards\x20the\x20one\x20transaction\x20limit).\x20After\x20the\
+    \x20active\x20transaction\x20is\n\x20completed,\x20the\x20session\x20can\
+    \x20immediately\x20be\x20re-used\x20for\x20the\x20next\x20transaction.\n\
+    \x20It\x20is\x20not\x20necessary\x20to\x20create\x20a\x20new\x20session\
+    \x20for\x20each\x20transaction.\n\n\x20Transaction\x20modes:\n\n\x20Clou\
+    d\x20Spanner\x20supports\x20three\x20transaction\x20modes:\n\n\x20\x20\
+    \x201.\x20Locking\x20read-write.\x20This\x20type\x20of\x20transaction\
+    \x20is\x20the\x20only\x20way\n\x20\x20\x20\x20\x20\x20to\x20write\x20dat\
+    a\x20into\x20Cloud\x20Spanner.\x20These\x20transactions\x20rely\x20on\n\
+    \x20\x20\x20\x20\x20\x20pessimistic\x20locking\x20and,\x20if\x20necessar\
+    y,\x20two-phase\x20commit.\n\x20\x20\x20\x20\x20\x20Locking\x20read-writ\
+    e\x20transactions\x20may\x20abort,\x20requiring\x20the\n\x20\x20\x20\x20\
+    \x20\x20application\x20to\x20retry.\n\n\x20\x20\x202.\x20Snapshot\x20rea\
+    d-only.\x20Snapshot\x20read-only\x20transactions\x20provide\x20guarantee\
+    d\n\x20\x20\x20\x20\x20\x20consistency\x20across\x20several\x20reads,\
+    \x20but\x20do\x20not\x20allow\n\x20\x20\x20\x20\x20\x20writes.\x20Snapsh\
+    ot\x20read-only\x20transactions\x20can\x20be\x20configured\x20to\x20read\
+    \x20at\n\x20\x20\x20\x20\x20\x20timestamps\x20in\x20the\x20past,\x20or\
+    \x20configured\x20to\x20perform\x20a\x20strong\x20read\n\x20\x20\x20\x20\
+    \x20\x20(where\x20Spanner\x20will\x20select\x20a\x20timestamp\x20such\
+    \x20that\x20the\x20read\x20is\n\x20\x20\x20\x20\x20\x20guaranteed\x20to\
+    \x20see\x20the\x20effects\x20of\x20all\x20transactions\x20that\x20have\
+    \x20committed\n\x20\x20\x20\x20\x20\x20before\x20the\x20start\x20of\x20t\
+    he\x20read).\x20Snapshot\x20read-only\x20transactions\x20do\x20not\n\x20\
+    \x20\x20\x20\x20\x20need\x20to\x20be\x20committed.\n\n\x20\x20\x20\x20\
+    \x20\x20Queries\x20on\x20change\x20streams\x20must\x20be\x20performed\
+    \x20with\x20the\x20snapshot\x20read-only\n\x20\x20\x20\x20\x20\x20transa\
+    ction\x20mode,\x20specifying\x20a\x20strong\x20read.\x20Please\x20see\n\
+    \x20\x20\x20\x20\x20\x20[TransactionOptions.ReadOnly.strong][google.span\
+    ner.v1.TransactionOptions.ReadOnly.strong]\n\x20\x20\x20\x20\x20\x20for\
+    \x20more\x20details.\n\n\x20\x20\x203.\x20Partitioned\x20DML.\x20This\
+    \x20type\x20of\x20transaction\x20is\x20used\x20to\x20execute\n\x20\x20\
+    \x20\x20\x20\x20a\x20single\x20Partitioned\x20DML\x20statement.\x20Parti\
+    tioned\x20DML\x20partitions\n\x20\x20\x20\x20\x20\x20the\x20key\x20space\
+    \x20and\x20runs\x20the\x20DML\x20statement\x20over\x20each\x20partition\
+    \n\x20\x20\x20\x20\x20\x20in\x20parallel\x20using\x20separate,\x20intern\
+    al\x20transactions\x20that\x20commit\n\x20\x20\x20\x20\x20\x20independen\
+    tly.\x20Partitioned\x20DML\x20transactions\x20do\x20not\x20need\x20to\
+    \x20be\n\x20\x20\x20\x20\x20\x20committed.\n\n\x20For\x20transactions\
+    \x20that\x20only\x20read,\x20snapshot\x20read-only\x20transactions\n\x20\
+    provide\x20simpler\x20semantics\x20and\x20are\x20almost\x20always\x20fas\
+    ter.\x20In\n\x20particular,\x20read-only\x20transactions\x20do\x20not\
+    \x20take\x20locks,\x20so\x20they\x20do\n\x20not\x20conflict\x20with\x20r\
+    ead-write\x20transactions.\x20As\x20a\x20consequence\x20of\x20not\n\x20t\
+    aking\x20locks,\x20they\x20also\x20do\x20not\x20abort,\x20so\x20retry\
+    \x20loops\x20are\x20not\x20needed.\n\n\x20Transactions\x20may\x20only\
+    \x20read-write\x20data\x20in\x20a\x20single\x20database.\x20They\n\x20ma\
+    y,\x20however,\x20read-write\x20data\x20in\x20different\x20tables\x20wit\
+    hin\x20that\n\x20database.\n\n\x20Locking\x20read-write\x20transactions:\
+    \n\n\x20Locking\x20transactions\x20may\x20be\x20used\x20to\x20atomically\
+    \x20read-modify-write\n\x20data\x20anywhere\x20in\x20a\x20database.\x20T\
+    his\x20type\x20of\x20transaction\x20is\x20externally\n\x20consistent.\n\
+    \n\x20Clients\x20should\x20attempt\x20to\x20minimize\x20the\x20amount\
+    \x20of\x20time\x20a\x20transaction\n\x20is\x20active.\x20Faster\x20trans\
+    actions\x20commit\x20with\x20higher\x20probability\n\x20and\x20cause\x20\
+    less\x20contention.\x20Cloud\x20Spanner\x20attempts\x20to\x20keep\x20rea\
+    d\x20locks\n\x20active\x20as\x20long\x20as\x20the\x20transaction\x20cont\
+    inues\x20to\x20do\x20reads,\x20and\x20the\n\x20transaction\x20has\x20not\
+    \x20been\x20terminated\x20by\n\x20[Commit][google.spanner.v1.Spanner.Com\
+    mit]\x20or\n\x20[Rollback][google.spanner.v1.Spanner.Rollback].\x20Long\
+    \x20periods\x20of\n\x20inactivity\x20at\x20the\x20client\x20may\x20cause\
+    \x20Cloud\x20Spanner\x20to\x20release\x20a\n\x20transaction's\x20locks\
+    \x20and\x20abort\x20it.\n\n\x20Conceptually,\x20a\x20read-write\x20trans\
+    action\x20consists\x20of\x20zero\x20or\x20more\n\x20reads\x20or\x20SQL\
+    \x20statements\x20followed\x20by\n\x20[Commit][google.spanner.v1.Spanner\
+    .Commit].\x20At\x20any\x20time\x20before\n\x20[Commit][google.spanner.v1\
+    .Spanner.Commit],\x20the\x20client\x20can\x20send\x20a\n\x20[Rollback][g\
+    oogle.spanner.v1.Spanner.Rollback]\x20request\x20to\x20abort\x20the\n\
+    \x20transaction.\n\n\x20Semantics:\n\n\x20Cloud\x20Spanner\x20can\x20com\
+    mit\x20the\x20transaction\x20if\x20all\x20read\x20locks\x20it\x20acquire\
+    d\n\x20are\x20still\x20valid\x20at\x20commit\x20time,\x20and\x20it\x20is\
+    \x20able\x20to\x20acquire\x20write\n\x20locks\x20for\x20all\x20writes.\
+    \x20Cloud\x20Spanner\x20can\x20abort\x20the\x20transaction\x20for\x20any\
+    \n\x20reason.\x20If\x20a\x20commit\x20attempt\x20returns\x20`ABORTED`,\
+    \x20Cloud\x20Spanner\x20guarantees\n\x20that\x20the\x20transaction\x20ha\
+    s\x20not\x20modified\x20any\x20user\x20data\x20in\x20Cloud\x20Spanner.\n\
+    \n\x20Unless\x20the\x20transaction\x20commits,\x20Cloud\x20Spanner\x20ma\
+    kes\x20no\x20guarantees\x20about\n\x20how\x20long\x20the\x20transaction'\
+    s\x20locks\x20were\x20held\x20for.\x20It\x20is\x20an\x20error\x20to\n\
+    \x20use\x20Cloud\x20Spanner\x20locks\x20for\x20any\x20sort\x20of\x20mutu\
+    al\x20exclusion\x20other\x20than\n\x20between\x20Cloud\x20Spanner\x20tra\
+    nsactions\x20themselves.\n\n\x20Retrying\x20aborted\x20transactions:\n\n\
+    \x20When\x20a\x20transaction\x20aborts,\x20the\x20application\x20can\x20\
+    choose\x20to\x20retry\x20the\n\x20whole\x20transaction\x20again.\x20To\
+    \x20maximize\x20the\x20chances\x20of\x20successfully\n\x20committing\x20\
+    the\x20retry,\x20the\x20client\x20should\x20execute\x20the\x20retry\x20i\
+    n\x20the\n\x20same\x20session\x20as\x20the\x20original\x20attempt.\x20Th\
+    e\x20original\x20session's\x20lock\n\x20priority\x20increases\x20with\
+    \x20each\x20consecutive\x20abort,\x20meaning\x20that\x20each\n\x20attemp\
+    t\x20has\x20a\x20slightly\x20better\x20chance\x20of\x20success\x20than\
+    \x20the\x20previous.\n\n\x20Under\x20some\x20circumstances\x20(for\x20ex\
+    ample,\x20many\x20transactions\x20attempting\x20to\n\x20modify\x20the\
+    \x20same\x20row(s)),\x20a\x20transaction\x20can\x20abort\x20many\x20time\
+    s\x20in\x20a\n\x20short\x20period\x20before\x20successfully\x20committin\
+    g.\x20Thus,\x20it\x20is\x20not\x20a\x20good\n\x20idea\x20to\x20cap\x20th\
+    e\x20number\x20of\x20retries\x20a\x20transaction\x20can\x20attempt;\n\
+    \x20instead,\x20it\x20is\x20better\x20to\x20limit\x20the\x20total\x20amo\
+    unt\x20of\x20time\x20spent\n\x20retrying.\n\n\x20Idle\x20transactions:\n\
+    \n\x20A\x20transaction\x20is\x20considered\x20idle\x20if\x20it\x20has\
+    \x20no\x20outstanding\x20reads\x20or\n\x20SQL\x20queries\x20and\x20has\
+    \x20not\x20started\x20a\x20read\x20or\x20SQL\x20query\x20within\x20the\
+    \x20last\x2010\n\x20seconds.\x20Idle\x20transactions\x20can\x20be\x20abo\
+    rted\x20by\x20Cloud\x20Spanner\x20so\x20that\x20they\n\x20don't\x20hold\
+    \x20on\x20to\x20locks\x20indefinitely.\x20If\x20an\x20idle\x20transactio\
+    n\x20is\x20aborted,\x20the\n\x20commit\x20will\x20fail\x20with\x20error\
+    \x20`ABORTED`.\n\n\x20If\x20this\x20behavior\x20is\x20undesirable,\x20pe\
+    riodically\x20executing\x20a\x20simple\n\x20SQL\x20query\x20in\x20the\
+    \x20transaction\x20(for\x20example,\x20`SELECT\x201`)\x20prevents\x20the\
+    \n\x20transaction\x20from\x20becoming\x20idle.\n\n\x20Snapshot\x20read-o\
+    nly\x20transactions:\n\n\x20Snapshot\x20read-only\x20transactions\x20pro\
+    vides\x20a\x20simpler\x20method\x20than\n\x20locking\x20read-write\x20tr\
+    ansactions\x20for\x20doing\x20several\x20consistent\n\x20reads.\x20Howev\
+    er,\x20this\x20type\x20of\x20transaction\x20does\x20not\x20support\x20wr\
+    ites.\n\n\x20Snapshot\x20transactions\x20do\x20not\x20take\x20locks.\x20\
+    Instead,\x20they\x20work\x20by\n\x20choosing\x20a\x20Cloud\x20Spanner\
+    \x20timestamp,\x20then\x20executing\x20all\x20reads\x20at\x20that\n\x20t\
+    imestamp.\x20Since\x20they\x20do\x20not\x20acquire\x20locks,\x20they\x20\
+    do\x20not\x20block\n\x20concurrent\x20read-write\x20transactions.\n\n\
+    \x20Unlike\x20locking\x20read-write\x20transactions,\x20snapshot\x20read\
+    -only\n\x20transactions\x20never\x20abort.\x20They\x20can\x20fail\x20if\
+    \x20the\x20chosen\x20read\n\x20timestamp\x20is\x20garbage\x20collected;\
+    \x20however,\x20the\x20default\x20garbage\n\x20collection\x20policy\x20i\
+    s\x20generous\x20enough\x20that\x20most\x20applications\x20do\x20not\n\
+    \x20need\x20to\x20worry\x20about\x20this\x20in\x20practice.\n\n\x20Snaps\
+    hot\x20read-only\x20transactions\x20do\x20not\x20need\x20to\x20call\n\
+    \x20[Commit][google.spanner.v1.Spanner.Commit]\x20or\n\x20[Rollback][goo\
+    gle.spanner.v1.Spanner.Rollback]\x20(and\x20in\x20fact\x20are\x20not\n\
+    \x20permitted\x20to\x20do\x20so).\n\n\x20To\x20execute\x20a\x20snapshot\
+    \x20transaction,\x20the\x20client\x20specifies\x20a\x20timestamp\n\x20bo\
+    und,\x20which\x20tells\x20Cloud\x20Spanner\x20how\x20to\x20choose\x20a\
+    \x20read\x20timestamp.\n\n\x20The\x20types\x20of\x20timestamp\x20bound\
+    \x20are:\n\n\x20\x20\x20-\x20Strong\x20(the\x20default).\n\x20\x20\x20-\
+    \x20Bounded\x20staleness.\n\x20\x20\x20-\x20Exact\x20staleness.\n\n\x20I\
+    f\x20the\x20Cloud\x20Spanner\x20database\x20to\x20be\x20read\x20is\x20ge\
+    ographically\x20distributed,\n\x20stale\x20read-only\x20transactions\x20\
+    can\x20execute\x20more\x20quickly\x20than\x20strong\n\x20or\x20read-writ\
+    e\x20transactions,\x20because\x20they\x20are\x20able\x20to\x20execute\
+    \x20far\n\x20from\x20the\x20leader\x20replica.\n\n\x20Each\x20type\x20of\
+    \x20timestamp\x20bound\x20is\x20discussed\x20in\x20detail\x20below.\n\n\
+    \x20Strong:\x20Strong\x20reads\x20are\x20guaranteed\x20to\x20see\x20the\
+    \x20effects\x20of\x20all\x20transactions\n\x20that\x20have\x20committed\
+    \x20before\x20the\x20start\x20of\x20the\x20read.\x20Furthermore,\x20all\
+    \n\x20rows\x20yielded\x20by\x20a\x20single\x20read\x20are\x20consistent\
+    \x20with\x20each\x20other\x20--\x20if\n\x20any\x20part\x20of\x20the\x20r\
+    ead\x20observes\x20a\x20transaction,\x20all\x20parts\x20of\x20the\x20rea\
+    d\n\x20see\x20the\x20transaction.\n\n\x20Strong\x20reads\x20are\x20not\
+    \x20repeatable:\x20two\x20consecutive\x20strong\x20read-only\n\x20transa\
+    ctions\x20might\x20return\x20inconsistent\x20results\x20if\x20there\x20a\
+    re\n\x20concurrent\x20writes.\x20If\x20consistency\x20across\x20reads\
+    \x20is\x20required,\x20the\n\x20reads\x20should\x20be\x20executed\x20wit\
+    hin\x20a\x20transaction\x20or\x20at\x20an\x20exact\x20read\n\x20timestam\
+    p.\n\n\x20Queries\x20on\x20change\x20streams\x20(see\x20below\x20for\x20\
+    more\x20details)\x20must\x20also\x20specify\n\x20the\x20strong\x20read\
+    \x20timestamp\x20bound.\n\n\x20See\n\x20[TransactionOptions.ReadOnly.str\
+    ong][google.spanner.v1.TransactionOptions.ReadOnly.strong].\n\n\x20Exact\
+    \x20staleness:\n\n\x20These\x20timestamp\x20bounds\x20execute\x20reads\
+    \x20at\x20a\x20user-specified\n\x20timestamp.\x20Reads\x20at\x20a\x20tim\
+    estamp\x20are\x20guaranteed\x20to\x20see\x20a\x20consistent\n\x20prefix\
+    \x20of\x20the\x20global\x20transaction\x20history:\x20they\x20observe\n\
+    \x20modifications\x20done\x20by\x20all\x20transactions\x20with\x20a\x20c\
+    ommit\x20timestamp\x20less\x20than\x20or\n\x20equal\x20to\x20the\x20read\
+    \x20timestamp,\x20and\x20observe\x20none\x20of\x20the\x20modifications\
+    \x20done\x20by\n\x20transactions\x20with\x20a\x20larger\x20commit\x20tim\
+    estamp.\x20They\x20will\x20block\x20until\n\x20all\x20conflicting\x20tra\
+    nsactions\x20that\x20may\x20be\x20assigned\x20commit\x20timestamps\n\x20\
+    <=\x20the\x20read\x20timestamp\x20have\x20finished.\n\n\x20The\x20timest\
+    amp\x20can\x20either\x20be\x20expressed\x20as\x20an\x20absolute\x20Cloud\
+    \x20Spanner\x20commit\n\x20timestamp\x20or\x20a\x20staleness\x20relative\
+    \x20to\x20the\x20current\x20time.\n\n\x20These\x20modes\x20do\x20not\x20\
+    require\x20a\x20\"negotiation\x20phase\"\x20to\x20pick\x20a\n\x20timesta\
+    mp.\x20As\x20a\x20result,\x20they\x20execute\x20slightly\x20faster\x20th\
+    an\x20the\n\x20equivalent\x20boundedly\x20stale\x20concurrency\x20modes.\
+    \x20On\x20the\x20other\x20hand,\n\x20boundedly\x20stale\x20reads\x20usua\
+    lly\x20return\x20fresher\x20results.\n\n\x20See\n\x20[TransactionOptions\
+    .ReadOnly.read_timestamp][google.spanner.v1.TransactionOptions.ReadOnly.\
+    read_timestamp]\n\x20and\n\x20[TransactionOptions.ReadOnly.exact_stalene\
+    ss][google.spanner.v1.TransactionOptions.ReadOnly.exact_staleness].\n\n\
+    \x20Bounded\x20staleness:\n\n\x20Bounded\x20staleness\x20modes\x20allow\
+    \x20Cloud\x20Spanner\x20to\x20pick\x20the\x20read\x20timestamp,\n\x20sub\
+    ject\x20to\x20a\x20user-provided\x20staleness\x20bound.\x20Cloud\x20Span\
+    ner\x20chooses\x20the\n\x20newest\x20timestamp\x20within\x20the\x20stale\
+    ness\x20bound\x20that\x20allows\x20execution\n\x20of\x20the\x20reads\x20\
+    at\x20the\x20closest\x20available\x20replica\x20without\x20blocking.\n\n\
+    \x20All\x20rows\x20yielded\x20are\x20consistent\x20with\x20each\x20other\
+    \x20--\x20if\x20any\x20part\x20of\n\x20the\x20read\x20observes\x20a\x20t\
+    ransaction,\x20all\x20parts\x20of\x20the\x20read\x20see\x20the\n\x20tran\
+    saction.\x20Boundedly\x20stale\x20reads\x20are\x20not\x20repeatable:\x20\
+    two\x20stale\n\x20reads,\x20even\x20if\x20they\x20use\x20the\x20same\x20\
+    staleness\x20bound,\x20can\x20execute\x20at\n\x20different\x20timestamps\
+    \x20and\x20thus\x20return\x20inconsistent\x20results.\n\n\x20Boundedly\
+    \x20stale\x20reads\x20execute\x20in\x20two\x20phases:\x20the\x20first\
+    \x20phase\n\x20negotiates\x20a\x20timestamp\x20among\x20all\x20replicas\
+    \x20needed\x20to\x20serve\x20the\n\x20read.\x20In\x20the\x20second\x20ph\
+    ase,\x20reads\x20are\x20executed\x20at\x20the\x20negotiated\n\x20timesta\
+    mp.\n\n\x20As\x20a\x20result\x20of\x20the\x20two\x20phase\x20execution,\
+    \x20bounded\x20staleness\x20reads\x20are\n\x20usually\x20a\x20little\x20\
+    slower\x20than\x20comparable\x20exact\x20staleness\n\x20reads.\x20Howeve\
+    r,\x20they\x20are\x20typically\x20able\x20to\x20return\x20fresher\n\x20r\
+    esults,\x20and\x20are\x20more\x20likely\x20to\x20execute\x20at\x20the\
+    \x20closest\x20replica.\n\n\x20Because\x20the\x20timestamp\x20negotiatio\
+    n\x20requires\x20up-front\x20knowledge\x20of\n\x20which\x20rows\x20will\
+    \x20be\x20read,\x20it\x20can\x20only\x20be\x20used\x20with\x20single-use\
+    \n\x20read-only\x20transactions.\n\n\x20See\n\x20[TransactionOptions.Rea\
+    dOnly.max_staleness][google.spanner.v1.TransactionOptions.ReadOnly.max_s\
+    taleness]\n\x20and\n\x20[TransactionOptions.ReadOnly.min_read_timestamp]\
+    [google.spanner.v1.TransactionOptions.ReadOnly.min_read_timestamp].\n\n\
+    \x20Old\x20read\x20timestamps\x20and\x20garbage\x20collection:\n\n\x20Cl\
+    oud\x20Spanner\x20continuously\x20garbage\x20collects\x20deleted\x20and\
+    \x20overwritten\x20data\n\x20in\x20the\x20background\x20to\x20reclaim\
+    \x20storage\x20space.\x20This\x20process\x20is\x20known\n\x20as\x20\"ver\
+    sion\x20GC\".\x20By\x20default,\x20version\x20GC\x20reclaims\x20versions\
+    \x20after\x20they\n\x20are\x20one\x20hour\x20old.\x20Because\x20of\x20th\
+    is,\x20Cloud\x20Spanner\x20cannot\x20perform\x20reads\n\x20at\x20read\
+    \x20timestamps\x20more\x20than\x20one\x20hour\x20in\x20the\x20past.\x20T\
+    his\n\x20restriction\x20also\x20applies\x20to\x20in-progress\x20reads\
+    \x20and/or\x20SQL\x20queries\x20whose\n\x20timestamp\x20become\x20too\
+    \x20old\x20while\x20executing.\x20Reads\x20and\x20SQL\x20queries\x20with\
+    \n\x20too-old\x20read\x20timestamps\x20fail\x20with\x20the\x20error\x20`\
+    FAILED_PRECONDITION`.\n\n\x20You\x20can\x20configure\x20and\x20extend\
+    \x20the\x20`VERSION_RETENTION_PERIOD`\x20of\x20a\n\x20database\x20up\x20\
+    to\x20a\x20period\x20as\x20long\x20as\x20one\x20week,\x20which\x20allows\
+    \x20Cloud\x20Spanner\n\x20to\x20perform\x20reads\x20up\x20to\x20one\x20w\
+    eek\x20in\x20the\x20past.\n\n\x20Querying\x20change\x20Streams:\n\n\x20A\
+    \x20Change\x20Stream\x20is\x20a\x20schema\x20object\x20that\x20can\x20be\
+    \x20configured\x20to\x20watch\x20data\n\x20changes\x20on\x20the\x20entir\
+    e\x20database,\x20a\x20set\x20of\x20tables,\x20or\x20a\x20set\x20of\x20c\
+    olumns\n\x20in\x20a\x20database.\n\n\x20When\x20a\x20change\x20stream\
+    \x20is\x20created,\x20Spanner\x20automatically\x20defines\x20a\n\x20corr\
+    esponding\x20SQL\x20Table-Valued\x20Function\x20(TVF)\x20that\x20can\x20\
+    be\x20used\x20to\x20query\n\x20the\x20change\x20records\x20in\x20the\x20\
+    associated\x20change\x20stream\x20using\x20the\n\x20ExecuteStreamingSql\
+    \x20API.\x20The\x20name\x20of\x20the\x20TVF\x20for\x20a\x20change\x20str\
+    eam\x20is\n\x20generated\x20from\x20the\x20name\x20of\x20the\x20change\
+    \x20stream:\x20READ_<change_stream_name>.\n\n\x20All\x20queries\x20on\
+    \x20change\x20stream\x20TVFs\x20must\x20be\x20executed\x20using\x20the\n\
+    \x20ExecuteStreamingSql\x20API\x20with\x20a\x20single-use\x20read-only\
+    \x20transaction\x20with\x20a\n\x20strong\x20read-only\x20timestamp_bound\
+    .\x20The\x20change\x20stream\x20TVF\x20allows\x20users\x20to\n\x20specif\
+    y\x20the\x20start_timestamp\x20and\x20end_timestamp\x20for\x20the\x20tim\
+    e\x20range\x20of\n\x20interest.\x20All\x20change\x20records\x20within\
+    \x20the\x20retention\x20period\x20is\x20accessible\n\x20using\x20the\x20\
+    strong\x20read-only\x20timestamp_bound.\x20All\x20other\x20TransactionOp\
+    tions\n\x20are\x20invalid\x20for\x20change\x20stream\x20queries.\n\n\x20\
+    In\x20addition,\x20if\x20TransactionOptions.read_only.return_read_timest\
+    amp\x20is\x20set\n\x20to\x20true,\x20a\x20special\x20value\x20of\x202^63\
+    \x20-\x202\x20will\x20be\x20returned\x20in\x20the\n\x20[Transaction][goo\
+    gle.spanner.v1.Transaction]\x20message\x20that\x20describes\x20the\n\x20\
+    transaction,\x20instead\x20of\x20a\x20valid\x20read\x20timestamp.\x20Thi\
+    s\x20special\x20value\x20should\x20be\n\x20discarded\x20and\x20not\x20us\
+    ed\x20for\x20any\x20subsequent\x20queries.\n\n\x20Please\x20see\x20https\
+    ://cloud.google.com/spanner/docs/change-streams\n\x20for\x20more\x20deta\
+    ils\x20on\x20how\x20to\x20query\x20the\x20change\x20stream\x20TVFs.\n\n\
+    \x20Partitioned\x20DML\x20transactions:\n\n\x20Partitioned\x20DML\x20tra\
+    nsactions\x20are\x20used\x20to\x20execute\x20DML\x20statements\x20with\
+    \x20a\n\x20different\x20execution\x20strategy\x20that\x20provides\x20dif\
+    ferent,\x20and\x20often\x20better,\n\x20scalability\x20properties\x20for\
+    \x20large,\x20table-wide\x20operations\x20than\x20DML\x20in\x20a\n\x20Re\
+    adWrite\x20transaction.\x20Smaller\x20scoped\x20statements,\x20such\x20a\
+    s\x20an\x20OLTP\x20workload,\n\x20should\x20prefer\x20using\x20ReadWrite\
+    \x20transactions.\n\n\x20Partitioned\x20DML\x20partitions\x20the\x20keys\
+    pace\x20and\x20runs\x20the\x20DML\x20statement\x20on\x20each\n\x20partit\
+    ion\x20in\x20separate,\x20internal\x20transactions.\x20These\x20transact\
+    ions\x20commit\n\x20automatically\x20when\x20complete,\x20and\x20run\x20\
+    independently\x20from\x20one\x20another.\n\n\x20To\x20reduce\x20lock\x20\
+    contention,\x20this\x20execution\x20strategy\x20only\x20acquires\x20read\
+    \x20locks\n\x20on\x20rows\x20that\x20match\x20the\x20WHERE\x20clause\x20\
+    of\x20the\x20statement.\x20Additionally,\x20the\n\x20smaller\x20per-part\
+    ition\x20transactions\x20hold\x20locks\x20for\x20less\x20time.\n\n\x20Th\
+    at\x20said,\x20Partitioned\x20DML\x20is\x20not\x20a\x20drop-in\x20replac\
+    ement\x20for\x20standard\x20DML\x20used\n\x20in\x20ReadWrite\x20transact\
+    ions.\n\n\x20\x20-\x20The\x20DML\x20statement\x20must\x20be\x20fully-par\
+    titionable.\x20Specifically,\x20the\x20statement\n\x20\x20\x20\x20must\
+    \x20be\x20expressible\x20as\x20the\x20union\x20of\x20many\x20statements\
+    \x20which\x20each\x20access\x20only\n\x20\x20\x20\x20a\x20single\x20row\
+    \x20of\x20the\x20table.\n\n\x20\x20-\x20The\x20statement\x20is\x20not\
+    \x20applied\x20atomically\x20to\x20all\x20rows\x20of\x20the\x20table.\
+    \x20Rather,\n\x20\x20\x20\x20the\x20statement\x20is\x20applied\x20atomic\
+    ally\x20to\x20partitions\x20of\x20the\x20table,\x20in\n\x20\x20\x20\x20i\
+    ndependent\x20transactions.\x20Secondary\x20index\x20rows\x20are\x20upda\
+    ted\x20atomically\n\x20\x20\x20\x20with\x20the\x20base\x20table\x20rows.\
+    \n\n\x20\x20-\x20Partitioned\x20DML\x20does\x20not\x20guarantee\x20exact\
+    ly-once\x20execution\x20semantics\n\x20\x20\x20\x20against\x20a\x20parti\
+    tion.\x20The\x20statement\x20will\x20be\x20applied\x20at\x20least\x20onc\
+    e\x20to\x20each\n\x20\x20\x20\x20partition.\x20It\x20is\x20strongly\x20r\
+    ecommended\x20that\x20the\x20DML\x20statement\x20should\x20be\n\x20\x20\
+    \x20\x20idempotent\x20to\x20avoid\x20unexpected\x20results.\x20For\x20in\
+    stance,\x20it\x20is\x20potentially\n\x20\x20\x20\x20dangerous\x20to\x20r\
+    un\x20a\x20statement\x20such\x20as\n\x20\x20\x20\x20`UPDATE\x20table\x20\
+    SET\x20column\x20=\x20column\x20+\x201`\x20as\x20it\x20could\x20be\x20ru\
+    n\x20multiple\x20times\n\x20\x20\x20\x20against\x20some\x20rows.\n\n\x20\
     \x20-\x20The\x20partitions\x20are\x20committed\x20automatically\x20-\x20\
     there\x20is\x20no\x20support\x20for\n\x20\x20\x20\x20Commit\x20or\x20Rol\
     lback.\x20If\x20the\x20call\x20returns\x20an\x20error,\x20or\x20if\x20th\
@@ -1885,110 +2273,162 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ove,\x20Partitioned\x20DML\x20is\x20good\x20fit\x20for\x20large,\x20data\
     base-wide,\n\x20operations\x20that\x20are\x20idempotent,\x20such\x20as\
     \x20deleting\x20old\x20rows\x20from\x20a\x20very\x20large\n\x20table.\n\
-    \n\x0b\n\x03\x04\0\x01\x12\x04\xb3\x02\x08\x1a\nu\n\x04\x04\0\x03\0\x12\
-    \x06\xb6\x02\x02\xb8\x02\x03\x1ae\x20Message\x20type\x20to\x20initiate\
+    \n\x0b\n\x03\x04\0\x01\x12\x04\xe2\x02\x08\x1a\nu\n\x04\x04\0\x03\0\x12\
+    \x06\xe5\x02\x02\x85\x03\x03\x1ae\x20Message\x20type\x20to\x20initiate\
     \x20a\x20read-write\x20transaction.\x20Currently\x20this\n\x20transactio\
     n\x20type\x20has\x20no\x20options.\n\n\r\n\x05\x04\0\x03\0\x01\x12\x04\
-    \xb6\x02\n\x13\nI\n\x04\x04\0\x03\x01\x12\x06\xbb\x02\x02\xbd\x02\x03\
-    \x1a9\x20Message\x20type\x20to\x20initiate\x20a\x20Partitioned\x20DML\
-    \x20transaction.\n\n\r\n\x05\x04\0\x03\x01\x01\x12\x04\xbb\x02\n\x18\nC\
-    \n\x04\x04\0\x03\x02\x12\x06\xc0\x02\x02\x81\x03\x03\x1a3\x20Message\x20\
-    type\x20to\x20initiate\x20a\x20read-only\x20transaction.\n\n\r\n\x05\x04\
-    \0\x03\x02\x01\x12\x04\xc0\x02\n\x12\nN\n\x06\x04\0\x03\x02\x08\0\x12\
-    \x06\xc2\x02\x04\xfc\x02\x05\x1a<\x20How\x20to\x20choose\x20the\x20times\
-    tamp\x20for\x20the\x20read-only\x20transaction.\n\n\x0f\n\x07\x04\0\x03\
-    \x02\x08\0\x01\x12\x04\xc2\x02\n\x19\n_\n\x06\x04\0\x03\x02\x02\0\x12\
-    \x04\xc5\x02\x06\x16\x1aO\x20Read\x20at\x20a\x20timestamp\x20where\x20al\
-    l\x20previously\x20committed\x20transactions\n\x20are\x20visible.\n\n\
-    \x0f\n\x07\x04\0\x03\x02\x02\0\x05\x12\x04\xc5\x02\x06\n\n\x0f\n\x07\x04\
-    \0\x03\x02\x02\0\x01\x12\x04\xc5\x02\x0b\x11\n\x0f\n\x07\x04\0\x03\x02\
-    \x02\0\x03\x12\x04\xc5\x02\x14\x15\n\xc6\x03\n\x06\x04\0\x03\x02\x02\x01\
-    \x12\x04\xd1\x02\x067\x1a\xb5\x03\x20Executes\x20all\x20reads\x20at\x20a\
-    \x20timestamp\x20>=\x20`min_read_timestamp`.\n\n\x20This\x20is\x20useful\
-    \x20for\x20requesting\x20fresher\x20data\x20than\x20some\x20previous\n\
-    \x20read,\x20or\x20data\x20that\x20is\x20fresh\x20enough\x20to\x20observ\
-    e\x20the\x20effects\x20of\x20some\n\x20previously\x20committed\x20transa\
-    ction\x20whose\x20timestamp\x20is\x20known.\n\n\x20Note\x20that\x20this\
-    \x20option\x20can\x20only\x20be\x20used\x20in\x20single-use\x20transacti\
-    ons.\n\n\x20A\x20timestamp\x20in\x20RFC3339\x20UTC\x20\\\"Zulu\\\"\x20fo\
-    rmat,\x20accurate\x20to\x20nanoseconds.\n\x20Example:\x20`\"2014-10-02T1\
-    5:01:23.045123456Z\"`.\n\n\x0f\n\x07\x04\0\x03\x02\x02\x01\x06\x12\x04\
-    \xd1\x02\x06\x1f\n\x0f\n\x07\x04\0\x03\x02\x02\x01\x01\x12\x04\xd1\x02\
-    \x202\n\x0f\n\x07\x04\0\x03\x02\x02\x01\x03\x12\x04\xd1\x0256\n\xba\x04\
-    \n\x06\x04\0\x03\x02\x02\x02\x12\x04\xe0\x02\x061\x1a\xa9\x04\x20Read\
-    \x20data\x20at\x20a\x20timestamp\x20>=\x20`NOW\x20-\x20max_staleness`\n\
-    \x20seconds.\x20Guarantees\x20that\x20all\x20writes\x20that\x20have\x20c\
-    ommitted\x20more\n\x20than\x20the\x20specified\x20number\x20of\x20second\
-    s\x20ago\x20are\x20visible.\x20Because\n\x20Cloud\x20Spanner\x20chooses\
-    \x20the\x20exact\x20timestamp,\x20this\x20mode\x20works\x20even\x20if\n\
-    \x20the\x20client's\x20local\x20clock\x20is\x20substantially\x20skewed\
-    \x20from\x20Cloud\x20Spanner\n\x20commit\x20timestamps.\n\n\x20Useful\
-    \x20for\x20reading\x20the\x20freshest\x20data\x20available\x20at\x20a\
-    \x20nearby\n\x20replica,\x20while\x20bounding\x20the\x20possible\x20stal\
-    eness\x20if\x20the\x20local\n\x20replica\x20has\x20fallen\x20behind.\n\n\
-    \x20Note\x20that\x20this\x20option\x20can\x20only\x20be\x20used\x20in\
-    \x20single-use\n\x20transactions.\n\n\x0f\n\x07\x04\0\x03\x02\x02\x02\
-    \x06\x12\x04\xe0\x02\x06\x1e\n\x0f\n\x07\x04\0\x03\x02\x02\x02\x01\x12\
-    \x04\xe0\x02\x1f,\n\x0f\n\x07\x04\0\x03\x02\x02\x02\x03\x12\x04\xe0\x02/\
-    0\n\xb6\x04\n\x06\x04\0\x03\x02\x02\x03\x12\x04\xee\x02\x063\x1a\xa5\x04\
-    \x20Executes\x20all\x20reads\x20at\x20the\x20given\x20timestamp.\x20Unli\
-    ke\x20other\x20modes,\n\x20reads\x20at\x20a\x20specific\x20timestamp\x20\
-    are\x20repeatable;\x20the\x20same\x20read\x20at\n\x20the\x20same\x20time\
-    stamp\x20always\x20returns\x20the\x20same\x20data.\x20If\x20the\n\x20tim\
-    estamp\x20is\x20in\x20the\x20future,\x20the\x20read\x20will\x20block\x20\
-    until\x20the\n\x20specified\x20timestamp,\x20modulo\x20the\x20read's\x20\
-    deadline.\n\n\x20Useful\x20for\x20large\x20scale\x20consistent\x20reads\
-    \x20such\x20as\x20mapreduces,\x20or\n\x20for\x20coordinating\x20many\x20\
-    reads\x20against\x20a\x20consistent\x20snapshot\x20of\x20the\n\x20data.\
-    \n\n\x20A\x20timestamp\x20in\x20RFC3339\x20UTC\x20\\\"Zulu\\\"\x20format\
-    ,\x20accurate\x20to\x20nanoseconds.\n\x20Example:\x20`\"2014-10-02T15:01\
-    :23.045123456Z\"`.\n\n\x0f\n\x07\x04\0\x03\x02\x02\x03\x06\x12\x04\xee\
-    \x02\x06\x1f\n\x0f\n\x07\x04\0\x03\x02\x02\x03\x01\x12\x04\xee\x02\x20.\
-    \n\x0f\n\x07\x04\0\x03\x02\x02\x03\x03\x12\x04\xee\x0212\n\x92\x04\n\x06\
-    \x04\0\x03\x02\x02\x04\x12\x04\xfb\x02\x063\x1a\x81\x04\x20Executes\x20a\
-    ll\x20reads\x20at\x20a\x20timestamp\x20that\x20is\x20`exact_staleness`\n\
-    \x20old.\x20The\x20timestamp\x20is\x20chosen\x20soon\x20after\x20the\x20\
-    read\x20is\x20started.\n\n\x20Guarantees\x20that\x20all\x20writes\x20tha\
-    t\x20have\x20committed\x20more\x20than\x20the\n\x20specified\x20number\
-    \x20of\x20seconds\x20ago\x20are\x20visible.\x20Because\x20Cloud\x20Spann\
-    er\n\x20chooses\x20the\x20exact\x20timestamp,\x20this\x20mode\x20works\
-    \x20even\x20if\x20the\x20client's\n\x20local\x20clock\x20is\x20substanti\
-    ally\x20skewed\x20from\x20Cloud\x20Spanner\x20commit\n\x20timestamps.\n\
-    \n\x20Useful\x20for\x20reading\x20at\x20nearby\x20replicas\x20without\
-    \x20the\x20distributed\n\x20timestamp\x20negotiation\x20overhead\x20of\
-    \x20`max_staleness`.\n\n\x0f\n\x07\x04\0\x03\x02\x02\x04\x06\x12\x04\xfb\
-    \x02\x06\x1e\n\x0f\n\x07\x04\0\x03\x02\x02\x04\x01\x12\x04\xfb\x02\x1f.\
-    \n\x0f\n\x07\x04\0\x03\x02\x02\x04\x03\x12\x04\xfb\x0212\n\xae\x01\n\x06\
-    \x04\0\x03\x02\x02\x05\x12\x04\x80\x03\x04#\x1a\x9d\x01\x20If\x20true,\
-    \x20the\x20Cloud\x20Spanner-selected\x20read\x20timestamp\x20is\x20inclu\
-    ded\x20in\n\x20the\x20[Transaction][google.spanner.v1.Transaction]\x20me\
-    ssage\x20that\x20describes\x20the\x20transaction.\n\n\x0f\n\x07\x04\0\
-    \x03\x02\x02\x05\x05\x12\x04\x80\x03\x04\x08\n\x0f\n\x07\x04\0\x03\x02\
-    \x02\x05\x01\x12\x04\x80\x03\t\x1e\n\x0f\n\x07\x04\0\x03\x02\x02\x05\x03\
-    \x12\x04\x80\x03!\"\n4\n\x04\x04\0\x08\0\x12\x06\x84\x03\x02\x99\x03\x03\
-    \x1a$\x20Required.\x20The\x20type\x20of\x20transaction.\n\n\r\n\x05\x04\
-    \0\x08\0\x01\x12\x04\x84\x03\x08\x0c\n\xc2\x01\n\x04\x04\0\x02\0\x12\x04\
-    \x8a\x03\x04\x1d\x1a\xb3\x01\x20Transaction\x20may\x20write.\n\n\x20Auth\
-    orization\x20to\x20begin\x20a\x20read-write\x20transaction\x20requires\n\
-    \x20`spanner.databases.beginOrRollbackReadWriteTransaction`\x20permissio\
-    n\n\x20on\x20the\x20`session`\x20resource.\n\n\r\n\x05\x04\0\x02\0\x06\
-    \x12\x04\x8a\x03\x04\r\n\r\n\x05\x04\0\x02\0\x01\x12\x04\x8a\x03\x0e\x18\
-    \n\r\n\x05\x04\0\x02\0\x03\x12\x04\x8a\x03\x1b\x1c\n\xc8\x01\n\x04\x04\0\
-    \x02\x01\x12\x04\x91\x03\x04'\x1a\xb9\x01\x20Partitioned\x20DML\x20trans\
-    action.\n\n\x20Authorization\x20to\x20begin\x20a\x20Partitioned\x20DML\
-    \x20transaction\x20requires\n\x20`spanner.databases.beginPartitionedDmlT\
-    ransaction`\x20permission\n\x20on\x20the\x20`session`\x20resource.\n\n\r\
-    \n\x05\x04\0\x02\x01\x06\x12\x04\x91\x03\x04\x12\n\r\n\x05\x04\0\x02\x01\
-    \x01\x12\x04\x91\x03\x13\"\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\x91\x03%&\
-    \n\xbb\x01\n\x04\x04\0\x02\x02\x12\x04\x98\x03\x04\x1b\x1a\xac\x01\x20Tr\
-    ansaction\x20will\x20not\x20write.\n\n\x20Authorization\x20to\x20begin\
-    \x20a\x20read-only\x20transaction\x20requires\n\x20`spanner.databases.be\
-    ginReadOnlyTransaction`\x20permission\n\x20on\x20the\x20`session`\x20res\
-    ource.\n\n\r\n\x05\x04\0\x02\x02\x06\x12\x04\x98\x03\x04\x0c\n\r\n\x05\
-    \x04\0\x02\x02\x01\x12\x04\x98\x03\r\x16\n\r\n\x05\x04\0\x02\x02\x03\x12\
-    \x04\x98\x03\x19\x1a\n\x1e\n\x02\x04\x01\x12\x06\x9d\x03\0\xaf\x03\x01\
-    \x1a\x10\x20A\x20transaction.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\x9d\x03\
-    \x08\x13\n\x88\x03\n\x04\x04\x01\x02\0\x12\x04\xa6\x03\x02\x0f\x1a\xf9\
+    \xe5\x02\n\x13\nb\n\x06\x04\0\x03\0\x04\0\x12\x06\xe8\x02\x04\xf9\x02\
+    \x05\x1aP\x20`ReadLockMode`\x20is\x20used\x20to\x20set\x20the\x20read\
+    \x20lock\x20mode\x20for\x20read-write\n\x20transactions.\n\n\x0f\n\x07\
+    \x04\0\x03\0\x04\0\x01\x12\x04\xe8\x02\t\x15\nf\n\x08\x04\0\x03\0\x04\0\
+    \x02\0\x12\x04\xec\x02\x06%\x1aT\x20Default\x20value.\n\n\x20If\x20the\
+    \x20value\x20is\x20not\x20specified,\x20the\x20pessimistic\x20read\x20lo\
+    ck\x20is\x20used.\n\n\x11\n\t\x04\0\x03\0\x04\0\x02\0\x01\x12\x04\xec\
+    \x02\x06\x20\n\x11\n\t\x04\0\x03\0\x04\0\x02\0\x02\x12\x04\xec\x02#$\nY\
+    \n\x08\x04\0\x03\0\x04\0\x02\x01\x12\x04\xf1\x02\x06\x16\x1aG\x20Pessimi\
+    stic\x20lock\x20mode.\n\n\x20Read\x20locks\x20are\x20acquired\x20immedia\
+    tely\x20on\x20read.\n\n\x11\n\t\x04\0\x03\0\x04\0\x02\x01\x01\x12\x04\
+    \xf1\x02\x06\x11\n\x11\n\t\x04\0\x03\0\x04\0\x02\x01\x02\x12\x04\xf1\x02\
+    \x14\x15\n\xec\x01\n\x08\x04\0\x03\0\x04\0\x02\x02\x12\x04\xf8\x02\x06\
+    \x15\x1a\xd9\x01\x20Optimistic\x20lock\x20mode.\n\n\x20Locks\x20for\x20r\
+    eads\x20within\x20the\x20transaction\x20are\x20not\x20acquired\x20on\x20\
+    read.\n\x20Instead\x20the\x20locks\x20are\x20acquired\x20on\x20a\x20comm\
+    it\x20to\x20validate\x20that\n\x20read/queried\x20data\x20has\x20not\x20\
+    changed\x20since\x20the\x20transaction\x20started.\n\n\x11\n\t\x04\0\x03\
+    \0\x04\0\x02\x02\x01\x12\x04\xf8\x02\x06\x10\n\x11\n\t\x04\0\x03\0\x04\0\
+    \x02\x02\x02\x12\x04\xf8\x02\x13\x14\n5\n\x06\x04\0\x03\0\x02\0\x12\x04\
+    \xfc\x02\x04$\x1a%\x20Read\x20lock\x20mode\x20for\x20the\x20transaction.\
+    \n\n\x0f\n\x07\x04\0\x03\0\x02\0\x06\x12\x04\xfc\x02\x04\x10\n\x0f\n\x07\
+    \x04\0\x03\0\x02\0\x01\x12\x04\xfc\x02\x11\x1f\n\x0f\n\x07\x04\0\x03\0\
+    \x02\0\x03\x12\x04\xfc\x02\"#\n\x8b\x02\n\x06\x04\0\x03\0\x02\x01\x12\
+    \x06\x83\x03\x04\x84\x031\x1a\xf8\x01\x20Optional.\x20Clients\x20should\
+    \x20pass\x20the\x20transaction\x20ID\x20of\x20the\x20previous\n\x20trans\
+    action\x20attempt\x20that\x20was\x20aborted\x20if\x20this\x20transaction\
+    \x20is\x20being\n\x20executed\x20on\x20a\x20multiplexed\x20session.\n\
+    \x20This\x20feature\x20is\x20not\x20yet\x20supported\x20and\x20will\x20r\
+    esult\x20in\x20an\x20UNIMPLEMENTED\n\x20error.\n\n\x0f\n\x07\x04\0\x03\0\
+    \x02\x01\x05\x12\x04\x83\x03\x04\t\n\x0f\n\x07\x04\0\x03\0\x02\x01\x01\
+    \x12\x04\x83\x03\n5\n\x0f\n\x07\x04\0\x03\0\x02\x01\x03\x12\x04\x83\x038\
+    9\n\x0f\n\x07\x04\0\x03\0\x02\x01\x08\x12\x04\x84\x03\x080\n\x12\n\n\x04\
+    \0\x03\0\x02\x01\x08\x9c\x08\0\x12\x04\x84\x03\t/\nG\n\x04\x04\0\x03\x01\
+    \x12\x04\x88\x03\x02\x1b\x1a9\x20Message\x20type\x20to\x20initiate\x20a\
+    \x20Partitioned\x20DML\x20transaction.\n\n\r\n\x05\x04\0\x03\x01\x01\x12\
+    \x04\x88\x03\n\x18\nC\n\x04\x04\0\x03\x02\x12\x06\x8b\x03\x02\xcd\x03\
+    \x03\x1a3\x20Message\x20type\x20to\x20initiate\x20a\x20read-only\x20tran\
+    saction.\n\n\r\n\x05\x04\0\x03\x02\x01\x12\x04\x8b\x03\n\x12\nN\n\x06\
+    \x04\0\x03\x02\x08\0\x12\x06\x8d\x03\x04\xc7\x03\x05\x1a<\x20How\x20to\
+    \x20choose\x20the\x20timestamp\x20for\x20the\x20read-only\x20transaction\
+    .\n\n\x0f\n\x07\x04\0\x03\x02\x08\0\x01\x12\x04\x8d\x03\n\x19\n_\n\x06\
+    \x04\0\x03\x02\x02\0\x12\x04\x90\x03\x06\x16\x1aO\x20Read\x20at\x20a\x20\
+    timestamp\x20where\x20all\x20previously\x20committed\x20transactions\n\
+    \x20are\x20visible.\n\n\x0f\n\x07\x04\0\x03\x02\x02\0\x05\x12\x04\x90\
+    \x03\x06\n\n\x0f\n\x07\x04\0\x03\x02\x02\0\x01\x12\x04\x90\x03\x0b\x11\n\
+    \x0f\n\x07\x04\0\x03\x02\x02\0\x03\x12\x04\x90\x03\x14\x15\n\xc6\x03\n\
+    \x06\x04\0\x03\x02\x02\x01\x12\x04\x9c\x03\x067\x1a\xb5\x03\x20Executes\
+    \x20all\x20reads\x20at\x20a\x20timestamp\x20>=\x20`min_read_timestamp`.\
+    \n\n\x20This\x20is\x20useful\x20for\x20requesting\x20fresher\x20data\x20\
+    than\x20some\x20previous\n\x20read,\x20or\x20data\x20that\x20is\x20fresh\
+    \x20enough\x20to\x20observe\x20the\x20effects\x20of\x20some\n\x20previou\
+    sly\x20committed\x20transaction\x20whose\x20timestamp\x20is\x20known.\n\
+    \n\x20Note\x20that\x20this\x20option\x20can\x20only\x20be\x20used\x20in\
+    \x20single-use\x20transactions.\n\n\x20A\x20timestamp\x20in\x20RFC3339\
+    \x20UTC\x20\\\"Zulu\\\"\x20format,\x20accurate\x20to\x20nanoseconds.\n\
+    \x20Example:\x20`\"2014-10-02T15:01:23.045123456Z\"`.\n\n\x0f\n\x07\x04\
+    \0\x03\x02\x02\x01\x06\x12\x04\x9c\x03\x06\x1f\n\x0f\n\x07\x04\0\x03\x02\
+    \x02\x01\x01\x12\x04\x9c\x03\x202\n\x0f\n\x07\x04\0\x03\x02\x02\x01\x03\
+    \x12\x04\x9c\x0356\n\xba\x04\n\x06\x04\0\x03\x02\x02\x02\x12\x04\xab\x03\
+    \x061\x1a\xa9\x04\x20Read\x20data\x20at\x20a\x20timestamp\x20>=\x20`NOW\
+    \x20-\x20max_staleness`\n\x20seconds.\x20Guarantees\x20that\x20all\x20wr\
+    ites\x20that\x20have\x20committed\x20more\n\x20than\x20the\x20specified\
+    \x20number\x20of\x20seconds\x20ago\x20are\x20visible.\x20Because\n\x20Cl\
+    oud\x20Spanner\x20chooses\x20the\x20exact\x20timestamp,\x20this\x20mode\
+    \x20works\x20even\x20if\n\x20the\x20client's\x20local\x20clock\x20is\x20\
+    substantially\x20skewed\x20from\x20Cloud\x20Spanner\n\x20commit\x20times\
+    tamps.\n\n\x20Useful\x20for\x20reading\x20the\x20freshest\x20data\x20ava\
+    ilable\x20at\x20a\x20nearby\n\x20replica,\x20while\x20bounding\x20the\
+    \x20possible\x20staleness\x20if\x20the\x20local\n\x20replica\x20has\x20f\
+    allen\x20behind.\n\n\x20Note\x20that\x20this\x20option\x20can\x20only\
+    \x20be\x20used\x20in\x20single-use\n\x20transactions.\n\n\x0f\n\x07\x04\
+    \0\x03\x02\x02\x02\x06\x12\x04\xab\x03\x06\x1e\n\x0f\n\x07\x04\0\x03\x02\
+    \x02\x02\x01\x12\x04\xab\x03\x1f,\n\x0f\n\x07\x04\0\x03\x02\x02\x02\x03\
+    \x12\x04\xab\x03/0\n\xb6\x04\n\x06\x04\0\x03\x02\x02\x03\x12\x04\xb9\x03\
+    \x063\x1a\xa5\x04\x20Executes\x20all\x20reads\x20at\x20the\x20given\x20t\
+    imestamp.\x20Unlike\x20other\x20modes,\n\x20reads\x20at\x20a\x20specific\
+    \x20timestamp\x20are\x20repeatable;\x20the\x20same\x20read\x20at\n\x20th\
+    e\x20same\x20timestamp\x20always\x20returns\x20the\x20same\x20data.\x20I\
+    f\x20the\n\x20timestamp\x20is\x20in\x20the\x20future,\x20the\x20read\x20\
+    will\x20block\x20until\x20the\n\x20specified\x20timestamp,\x20modulo\x20\
+    the\x20read's\x20deadline.\n\n\x20Useful\x20for\x20large\x20scale\x20con\
+    sistent\x20reads\x20such\x20as\x20mapreduces,\x20or\n\x20for\x20coordina\
+    ting\x20many\x20reads\x20against\x20a\x20consistent\x20snapshot\x20of\
+    \x20the\n\x20data.\n\n\x20A\x20timestamp\x20in\x20RFC3339\x20UTC\x20\\\"\
+    Zulu\\\"\x20format,\x20accurate\x20to\x20nanoseconds.\n\x20Example:\x20`\
+    \"2014-10-02T15:01:23.045123456Z\"`.\n\n\x0f\n\x07\x04\0\x03\x02\x02\x03\
+    \x06\x12\x04\xb9\x03\x06\x1f\n\x0f\n\x07\x04\0\x03\x02\x02\x03\x01\x12\
+    \x04\xb9\x03\x20.\n\x0f\n\x07\x04\0\x03\x02\x02\x03\x03\x12\x04\xb9\x031\
+    2\n\x92\x04\n\x06\x04\0\x03\x02\x02\x04\x12\x04\xc6\x03\x063\x1a\x81\x04\
+    \x20Executes\x20all\x20reads\x20at\x20a\x20timestamp\x20that\x20is\x20`e\
+    xact_staleness`\n\x20old.\x20The\x20timestamp\x20is\x20chosen\x20soon\
+    \x20after\x20the\x20read\x20is\x20started.\n\n\x20Guarantees\x20that\x20\
+    all\x20writes\x20that\x20have\x20committed\x20more\x20than\x20the\n\x20s\
+    pecified\x20number\x20of\x20seconds\x20ago\x20are\x20visible.\x20Because\
+    \x20Cloud\x20Spanner\n\x20chooses\x20the\x20exact\x20timestamp,\x20this\
+    \x20mode\x20works\x20even\x20if\x20the\x20client's\n\x20local\x20clock\
+    \x20is\x20substantially\x20skewed\x20from\x20Cloud\x20Spanner\x20commit\
+    \n\x20timestamps.\n\n\x20Useful\x20for\x20reading\x20at\x20nearby\x20rep\
+    licas\x20without\x20the\x20distributed\n\x20timestamp\x20negotiation\x20\
+    overhead\x20of\x20`max_staleness`.\n\n\x0f\n\x07\x04\0\x03\x02\x02\x04\
+    \x06\x12\x04\xc6\x03\x06\x1e\n\x0f\n\x07\x04\0\x03\x02\x02\x04\x01\x12\
+    \x04\xc6\x03\x1f.\n\x0f\n\x07\x04\0\x03\x02\x02\x04\x03\x12\x04\xc6\x031\
+    2\n\xaf\x01\n\x06\x04\0\x03\x02\x02\x05\x12\x04\xcc\x03\x04#\x1a\x9e\x01\
+    \x20If\x20true,\x20the\x20Cloud\x20Spanner-selected\x20read\x20timestamp\
+    \x20is\x20included\x20in\n\x20the\x20[Transaction][google.spanner.v1.Tra\
+    nsaction]\x20message\x20that\x20describes\n\x20the\x20transaction.\n\n\
+    \x0f\n\x07\x04\0\x03\x02\x02\x05\x05\x12\x04\xcc\x03\x04\x08\n\x0f\n\x07\
+    \x04\0\x03\x02\x02\x05\x01\x12\x04\xcc\x03\t\x1e\n\x0f\n\x07\x04\0\x03\
+    \x02\x02\x05\x03\x12\x04\xcc\x03!\"\n4\n\x04\x04\0\x08\0\x12\x06\xd0\x03\
+    \x02\xe5\x03\x03\x1a$\x20Required.\x20The\x20type\x20of\x20transaction.\
+    \n\n\r\n\x05\x04\0\x08\0\x01\x12\x04\xd0\x03\x08\x0c\n\xc2\x01\n\x04\x04\
+    \0\x02\0\x12\x04\xd6\x03\x04\x1d\x1a\xb3\x01\x20Transaction\x20may\x20wr\
+    ite.\n\n\x20Authorization\x20to\x20begin\x20a\x20read-write\x20transacti\
+    on\x20requires\n\x20`spanner.databases.beginOrRollbackReadWriteTransacti\
+    on`\x20permission\n\x20on\x20the\x20`session`\x20resource.\n\n\r\n\x05\
+    \x04\0\x02\0\x06\x12\x04\xd6\x03\x04\r\n\r\n\x05\x04\0\x02\0\x01\x12\x04\
+    \xd6\x03\x0e\x18\n\r\n\x05\x04\0\x02\0\x03\x12\x04\xd6\x03\x1b\x1c\n\xc8\
+    \x01\n\x04\x04\0\x02\x01\x12\x04\xdd\x03\x04'\x1a\xb9\x01\x20Partitioned\
+    \x20DML\x20transaction.\n\n\x20Authorization\x20to\x20begin\x20a\x20Part\
+    itioned\x20DML\x20transaction\x20requires\n\x20`spanner.databases.beginP\
+    artitionedDmlTransaction`\x20permission\n\x20on\x20the\x20`session`\x20r\
+    esource.\n\n\r\n\x05\x04\0\x02\x01\x06\x12\x04\xdd\x03\x04\x12\n\r\n\x05\
+    \x04\0\x02\x01\x01\x12\x04\xdd\x03\x13\"\n\r\n\x05\x04\0\x02\x01\x03\x12\
+    \x04\xdd\x03%&\n\xbb\x01\n\x04\x04\0\x02\x02\x12\x04\xe4\x03\x04\x1b\x1a\
+    \xac\x01\x20Transaction\x20will\x20not\x20write.\n\n\x20Authorization\
+    \x20to\x20begin\x20a\x20read-only\x20transaction\x20requires\n\x20`spann\
+    er.databases.beginReadOnlyTransaction`\x20permission\n\x20on\x20the\x20`\
+    session`\x20resource.\n\n\r\n\x05\x04\0\x02\x02\x06\x12\x04\xe4\x03\x04\
+    \x0c\n\r\n\x05\x04\0\x02\x02\x01\x12\x04\xe4\x03\r\x16\n\r\n\x05\x04\0\
+    \x02\x02\x03\x12\x04\xe4\x03\x19\x1a\n\xa9\x06\n\x04\x04\0\x02\x03\x12\
+    \x04\xf5\x03\x02+\x1a\x9a\x06\x20When\x20`exclude_txn_from_change_stream\
+    s`\x20is\x20set\x20to\x20`true`:\n\x20\x20*\x20Mutations\x20from\x20this\
+    \x20transaction\x20will\x20not\x20be\x20recorded\x20in\x20change\x20stre\
+    ams\n\x20\x20with\x20DDL\x20option\x20`allow_txn_exclusion=true`\x20that\
+    \x20are\x20tracking\x20columns\n\x20\x20modified\x20by\x20these\x20trans\
+    actions.\n\x20\x20*\x20Mutations\x20from\x20this\x20transaction\x20will\
+    \x20be\x20recorded\x20in\x20change\x20streams\x20with\n\x20\x20DDL\x20op\
+    tion\x20`allow_txn_exclusion=false\x20or\x20not\x20set`\x20that\x20are\
+    \x20tracking\n\x20\x20columns\x20modified\x20by\x20these\x20transactions\
+    .\n\n\x20When\x20`exclude_txn_from_change_streams`\x20is\x20set\x20to\
+    \x20`false`\x20or\x20not\x20set,\n\x20mutations\x20from\x20this\x20trans\
+    action\x20will\x20be\x20recorded\x20in\x20all\x20change\x20streams\x20th\
+    at\n\x20are\x20tracking\x20columns\x20modified\x20by\x20these\x20transac\
+    tions.\n\x20`exclude_txn_from_change_streams`\x20may\x20only\x20be\x20sp\
+    ecified\x20for\x20read-write\x20or\n\x20partitioned-dml\x20transactions,\
+    \x20otherwise\x20the\x20API\x20will\x20return\x20an\n\x20`INVALID_ARGUME\
+    NT`\x20error.\n\n\r\n\x05\x04\0\x02\x03\x05\x12\x04\xf5\x03\x02\x06\n\r\
+    \n\x05\x04\0\x02\x03\x01\x12\x04\xf5\x03\x07&\n\r\n\x05\x04\0\x02\x03\
+    \x03\x12\x04\xf5\x03)*\n\x1e\n\x02\x04\x01\x12\x06\xf9\x03\0\x96\x04\x01\
+    \x1a\x10\x20A\x20transaction.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\xf9\x03\
+    \x08\x13\n\x88\x03\n\x04\x04\x01\x02\0\x12\x04\x82\x04\x02\x0f\x1a\xf9\
     \x02\x20`id`\x20may\x20be\x20used\x20to\x20identify\x20the\x20transactio\
     n\x20in\x20subsequent\n\x20[Read][google.spanner.v1.Spanner.Read],\n\x20\
     [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql],\n\x20[Commit][google\
@@ -1996,47 +2436,78 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     nner.Rollback]\x20calls.\n\n\x20Single-use\x20read-only\x20transactions\
     \x20do\x20not\x20have\x20IDs,\x20because\n\x20single-use\x20transactions\
     \x20do\x20not\x20support\x20multiple\x20requests.\n\n\r\n\x05\x04\x01\
-    \x02\0\x05\x12\x04\xa6\x03\x02\x07\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\
-    \xa6\x03\x08\n\n\r\n\x05\x04\x01\x02\0\x03\x12\x04\xa6\x03\r\x0e\n\xf2\
-    \x02\n\x04\x04\x01\x02\x01\x12\x04\xae\x03\x02/\x1a\xe3\x02\x20For\x20sn\
+    \x02\0\x05\x12\x04\x82\x04\x02\x07\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\
+    \x82\x04\x08\n\n\r\n\x05\x04\x01\x02\0\x03\x12\x04\x82\x04\r\x0e\n\xf2\
+    \x02\n\x04\x04\x01\x02\x01\x12\x04\x8a\x04\x02/\x1a\xe3\x02\x20For\x20sn\
     apshot\x20read-only\x20transactions,\x20the\x20read\x20timestamp\x20chos\
     en\n\x20for\x20the\x20transaction.\x20Not\x20returned\x20by\x20default:\
     \x20see\n\x20[TransactionOptions.ReadOnly.return_read_timestamp][google.\
     spanner.v1.TransactionOptions.ReadOnly.return_read_timestamp].\n\n\x20A\
     \x20timestamp\x20in\x20RFC3339\x20UTC\x20\\\"Zulu\\\"\x20format,\x20accu\
     rate\x20to\x20nanoseconds.\n\x20Example:\x20`\"2014-10-02T15:01:23.04512\
-    3456Z\"`.\n\n\r\n\x05\x04\x01\x02\x01\x06\x12\x04\xae\x03\x02\x1b\n\r\n\
-    \x05\x04\x01\x02\x01\x01\x12\x04\xae\x03\x1c*\n\r\n\x05\x04\x01\x02\x01\
-    \x03\x12\x04\xae\x03-.\n\x9e\x02\n\x02\x04\x02\x12\x06\xb6\x03\0\xc7\x03\
-    \x01\x1a\x8f\x02\x20This\x20message\x20is\x20used\x20to\x20select\x20the\
-    \x20transaction\x20in\x20which\x20a\n\x20[Read][google.spanner.v1.Spanne\
-    r.Read]\x20or\n\x20[ExecuteSql][google.spanner.v1.Spanner.ExecuteSql]\
-    \x20call\x20runs.\n\n\x20See\x20[TransactionOptions][google.spanner.v1.T\
-    ransactionOptions]\x20for\x20more\x20information\x20about\x20transaction\
-    s.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xb6\x03\x08\x1b\ni\n\x04\x04\x02\
-    \x08\0\x12\x06\xb9\x03\x02\xc6\x03\x03\x1aY\x20If\x20no\x20fields\x20are\
-    \x20set,\x20the\x20default\x20is\x20a\x20single\x20use\x20transaction\n\
-    \x20with\x20strong\x20concurrency.\n\n\r\n\x05\x04\x02\x08\0\x01\x12\x04\
-    \xb9\x03\x08\x10\n\xa9\x01\n\x04\x04\x02\x02\0\x12\x04\xbd\x03\x04&\x1a\
-    \x9a\x01\x20Execute\x20the\x20read\x20or\x20SQL\x20query\x20in\x20a\x20t\
-    emporary\x20transaction.\n\x20This\x20is\x20the\x20most\x20efficient\x20\
-    way\x20to\x20execute\x20a\x20transaction\x20that\n\x20consists\x20of\x20\
-    a\x20single\x20SQL\x20query.\n\n\r\n\x05\x04\x02\x02\0\x06\x12\x04\xbd\
-    \x03\x04\x16\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xbd\x03\x17!\n\r\n\x05\
-    \x04\x02\x02\0\x03\x12\x04\xbd\x03$%\nR\n\x04\x04\x02\x02\x01\x12\x04\
-    \xc0\x03\x04\x11\x1aD\x20Execute\x20the\x20read\x20or\x20SQL\x20query\
-    \x20in\x20a\x20previously-started\x20transaction.\n\n\r\n\x05\x04\x02\
-    \x02\x01\x05\x12\x04\xc0\x03\x04\t\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\
-    \xc0\x03\n\x0c\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xc0\x03\x0f\x10\n\
-    \x98\x02\n\x04\x04\x02\x02\x02\x12\x04\xc5\x03\x04!\x1a\x89\x02\x20Begin\
-    \x20a\x20new\x20transaction\x20and\x20execute\x20this\x20read\x20or\x20S\
-    QL\x20query\x20in\n\x20it.\x20The\x20transaction\x20ID\x20of\x20the\x20n\
-    ew\x20transaction\x20is\x20returned\x20in\n\x20[ResultSetMetadata.transa\
-    ction][google.spanner.v1.ResultSetMetadata.transaction],\x20which\x20is\
-    \x20a\x20[Transaction][google.spanner.v1.Transaction].\n\n\r\n\x05\x04\
-    \x02\x02\x02\x06\x12\x04\xc5\x03\x04\x16\n\r\n\x05\x04\x02\x02\x02\x01\
-    \x12\x04\xc5\x03\x17\x1c\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xc5\x03\
-    \x1f\x20b\x06proto3\
+    3456Z\"`.\n\n\r\n\x05\x04\x01\x02\x01\x06\x12\x04\x8a\x04\x02\x1b\n\r\n\
+    \x05\x04\x01\x02\x01\x01\x12\x04\x8a\x04\x1c*\n\r\n\x05\x04\x01\x02\x01\
+    \x03\x12\x04\x8a\x04-.\n\x8b\x04\n\x04\x04\x01\x02\x02\x12\x04\x95\x04\
+    \x027\x1a\xfc\x03\x20A\x20precommit\x20token\x20will\x20be\x20included\
+    \x20in\x20the\x20response\x20of\x20a\x20BeginTransaction\n\x20request\
+    \x20if\x20the\x20read-write\x20transaction\x20is\x20on\x20a\x20multiplex\
+    ed\x20session\x20and\n\x20a\x20mutation_key\x20was\x20specified\x20in\
+    \x20the\n\x20[BeginTransaction][google.spanner.v1.BeginTransactionReques\
+    t].\n\x20The\x20precommit\x20token\x20with\x20the\x20highest\x20sequence\
+    \x20number\x20from\x20this\x20transaction\n\x20attempt\x20should\x20be\
+    \x20passed\x20to\x20the\x20[Commit][google.spanner.v1.Spanner.Commit]\n\
+    \x20request\x20for\x20this\x20transaction.\n\x20This\x20feature\x20is\
+    \x20not\x20yet\x20supported\x20and\x20will\x20result\x20in\x20an\x20UNIM\
+    PLEMENTED\n\x20error.\n\n\r\n\x05\x04\x01\x02\x02\x06\x12\x04\x95\x04\
+    \x02\"\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\x95\x04#2\n\r\n\x05\x04\x01\
+    \x02\x02\x03\x12\x04\x95\x0456\n\x9f\x02\n\x02\x04\x02\x12\x06\x9e\x04\0\
+    \xb0\x04\x01\x1a\x90\x02\x20This\x20message\x20is\x20used\x20to\x20selec\
+    t\x20the\x20transaction\x20in\x20which\x20a\n\x20[Read][google.spanner.v\
+    1.Spanner.Read]\x20or\n\x20[ExecuteSql][google.spanner.v1.Spanner.Execut\
+    eSql]\x20call\x20runs.\n\n\x20See\x20[TransactionOptions][google.spanner\
+    .v1.TransactionOptions]\x20for\x20more\n\x20information\x20about\x20tran\
+    sactions.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\x9e\x04\x08\x1b\ni\n\x04\x04\
+    \x02\x08\0\x12\x06\xa1\x04\x02\xaf\x04\x03\x1aY\x20If\x20no\x20fields\
+    \x20are\x20set,\x20the\x20default\x20is\x20a\x20single\x20use\x20transac\
+    tion\n\x20with\x20strong\x20concurrency.\n\n\r\n\x05\x04\x02\x08\0\x01\
+    \x12\x04\xa1\x04\x08\x10\n\xa9\x01\n\x04\x04\x02\x02\0\x12\x04\xa5\x04\
+    \x04&\x1a\x9a\x01\x20Execute\x20the\x20read\x20or\x20SQL\x20query\x20in\
+    \x20a\x20temporary\x20transaction.\n\x20This\x20is\x20the\x20most\x20eff\
+    icient\x20way\x20to\x20execute\x20a\x20transaction\x20that\n\x20consists\
+    \x20of\x20a\x20single\x20SQL\x20query.\n\n\r\n\x05\x04\x02\x02\0\x06\x12\
+    \x04\xa5\x04\x04\x16\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xa5\x04\x17!\n\
+    \r\n\x05\x04\x02\x02\0\x03\x12\x04\xa5\x04$%\nR\n\x04\x04\x02\x02\x01\
+    \x12\x04\xa8\x04\x04\x11\x1aD\x20Execute\x20the\x20read\x20or\x20SQL\x20\
+    query\x20in\x20a\x20previously-started\x20transaction.\n\n\r\n\x05\x04\
+    \x02\x02\x01\x05\x12\x04\xa8\x04\x04\t\n\r\n\x05\x04\x02\x02\x01\x01\x12\
+    \x04\xa8\x04\n\x0c\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xa8\x04\x0f\x10\
+    \n\x99\x02\n\x04\x04\x02\x02\x02\x12\x04\xae\x04\x04!\x1a\x8a\x02\x20Beg\
+    in\x20a\x20new\x20transaction\x20and\x20execute\x20this\x20read\x20or\
+    \x20SQL\x20query\x20in\n\x20it.\x20The\x20transaction\x20ID\x20of\x20the\
+    \x20new\x20transaction\x20is\x20returned\x20in\n\x20[ResultSetMetadata.t\
+    ransaction][google.spanner.v1.ResultSetMetadata.transaction],\n\x20which\
+    \x20is\x20a\x20[Transaction][google.spanner.v1.Transaction].\n\n\r\n\x05\
+    \x04\x02\x02\x02\x06\x12\x04\xae\x04\x04\x16\n\r\n\x05\x04\x02\x02\x02\
+    \x01\x12\x04\xae\x04\x17\x1c\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xae\
+    \x04\x1f\x20\n\x97\x02\n\x02\x04\x03\x12\x06\xb6\x04\0\xbe\x04\x01\x1a\
+    \x88\x02\x20When\x20a\x20read-write\x20transaction\x20is\x20executed\x20\
+    on\x20a\x20multiplexed\x20session,\n\x20this\x20precommit\x20token\x20is\
+    \x20sent\x20back\x20to\x20the\x20client\n\x20as\x20a\x20part\x20of\x20th\
+    e\x20[Transaction]\x20message\x20in\x20the\x20BeginTransaction\x20respon\
+    se\x20and\n\x20also\x20as\x20a\x20part\x20of\x20the\x20[ResultSet]\x20an\
+    d\x20[PartialResultSet]\x20responses.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\
+    \xb6\x04\x08(\n'\n\x04\x04\x03\x02\0\x12\x04\xb8\x04\x02\x1c\x1a\x19\x20\
+    Opaque\x20precommit\x20token.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\xb8\
+    \x04\x02\x07\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xb8\x04\x08\x17\n\r\n\
+    \x05\x04\x03\x02\0\x03\x12\x04\xb8\x04\x1a\x1b\n\xd8\x01\n\x04\x04\x03\
+    \x02\x01\x12\x04\xbd\x04\x02\x14\x1a\xc9\x01\x20An\x20incrementing\x20se\
+    q\x20number\x20is\x20generated\x20on\x20every\x20precommit\x20token\n\
+    \x20that\x20is\x20returned.\x20Clients\x20should\x20remember\x20the\x20p\
+    recommit\x20token\x20with\x20the\n\x20highest\x20sequence\x20number\x20f\
+    rom\x20the\x20current\x20transaction\x20attempt.\n\n\r\n\x05\x04\x03\x02\
+    \x01\x05\x12\x04\xbd\x04\x02\x07\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\
+    \xbd\x04\x08\x0f\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xbd\x04\x12\x13b\
+    \x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -2054,17 +2525,19 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(3);
+            deps.push(super::field_behavior::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::duration::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            deps.push(super::annotations::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(6);
+            let mut messages = ::std::vec::Vec::with_capacity(7);
             messages.push(TransactionOptions::generated_message_descriptor_data());
             messages.push(Transaction::generated_message_descriptor_data());
             messages.push(TransactionSelector::generated_message_descriptor_data());
+            messages.push(MultiplexedSessionPrecommitToken::generated_message_descriptor_data());
             messages.push(transaction_options::ReadWrite::generated_message_descriptor_data());
             messages.push(transaction_options::PartitionedDml::generated_message_descriptor_data());
             messages.push(transaction_options::ReadOnly::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(0);
+            let mut enums = ::std::vec::Vec::with_capacity(1);
+            enums.push(transaction_options::read_write::ReadLockMode::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -25,17 +25,18 @@
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 
-///  Selects and configures the service controller used by the service.  The
-///  service controller handles features like abuse, quota, billing, logging,
-///  monitoring, etc.
 // @@protoc_insertion_point(message:google.api.Control)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Control {
     // message fields
-    ///  The service control environment to use. If empty, no control plane
-    ///  feature (like quota and billing) will be enabled.
+    ///  The service controller environment to use. If empty, no control plane
+    ///  feature (like quota and billing) will be enabled. The recommended value for
+    ///  most services is servicecontrol.googleapis.com
     // @@protoc_insertion_point(field:google.api.Control.environment)
     pub environment: ::std::string::String,
+    ///  Defines policies applying to the API methods of the service.
+    // @@protoc_insertion_point(field:google.api.Control.method_policies)
+    pub method_policies: ::std::vec::Vec<super::policy::MethodPolicy>,
     // special fields
     // @@protoc_insertion_point(special_field:google.api.Control.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -53,12 +54,17 @@ impl Control {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "environment",
             |m: &Control| { &m.environment },
             |m: &mut Control| { &mut m.environment },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "method_policies",
+            |m: &Control| { &m.method_policies },
+            |m: &mut Control| { &mut m.method_policies },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Control>(
             "Control",
@@ -81,6 +87,9 @@ impl ::protobuf::Message for Control {
                 10 => {
                     self.environment = is.read_string()?;
                 },
+                34 => {
+                    self.method_policies.push(is.read_message()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -96,6 +105,10 @@ impl ::protobuf::Message for Control {
         if !self.environment.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.environment);
         }
+        for value in &self.method_policies {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -105,6 +118,9 @@ impl ::protobuf::Message for Control {
         if !self.environment.is_empty() {
             os.write_string(1, &self.environment)?;
         }
+        for v in &self.method_policies {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -123,12 +139,14 @@ impl ::protobuf::Message for Control {
 
     fn clear(&mut self) {
         self.environment.clear();
+        self.method_policies.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static Control {
         static instance: Control = Control {
             environment: ::std::string::String::new(),
+            method_policies: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -153,38 +171,46 @@ impl ::protobuf::reflect::ProtobufValue for Control {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x18google/api/control.proto\x12\ngoogle.api\"+\n\x07Control\x12\x20\n\
-    \x0benvironment\x18\x01\x20\x01(\tR\x0benvironmentBn\n\x0ecom.google.api\
-    B\x0cControlProtoP\x01ZEgoogle.golang.org/genproto/googleapis/api/servic\
-    econfig;serviceconfig\xa2\x02\x04GAPIJ\xae\x08\n\x06\x12\x04\x0f\0\x20\
-    \x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\
-    \x20Google\x20LLC.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\
-    \x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20us\
-    e\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\x20Licens\
-    e.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\
-    \n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\
-    \x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\
-    \x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\x20Licen\
-    se\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHO\
-    UT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20\
-    express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20sp\
-    ecific\x20language\x20governing\x20permissions\x20and\n\x20limitations\
-    \x20under\x20the\x20License.\n\n\n\x08\n\x01\x02\x12\x03\x11\0\x13\n\x08\
-    \n\x01\x08\x12\x03\x13\0\\\n\t\n\x02\x08\x0b\x12\x03\x13\0\\\n\x08\n\x01\
-    \x08\x12\x03\x14\0\"\n\t\n\x02\x08\n\x12\x03\x14\0\"\n\x08\n\x01\x08\x12\
-    \x03\x15\0-\n\t\n\x02\x08\x08\x12\x03\x15\0-\n\x08\n\x01\x08\x12\x03\x16\
-    \0'\n\t\n\x02\x08\x01\x12\x03\x16\0'\n\x08\n\x01\x08\x12\x03\x17\0\"\n\t\
-    \n\x02\x08$\x12\x03\x17\0\"\n\xb2\x01\n\x02\x04\0\x12\x04\x1c\0\x20\x01\
-    \x1a\xa5\x01\x20Selects\x20and\x20configures\x20the\x20service\x20contro\
-    ller\x20used\x20by\x20the\x20service.\x20\x20The\n\x20service\x20control\
-    ler\x20handles\x20features\x20like\x20abuse,\x20quota,\x20billing,\x20lo\
-    gging,\n\x20monitoring,\x20etc.\n\n\n\n\x03\x04\0\x01\x12\x03\x1c\x08\
-    \x0f\n\x84\x01\n\x04\x04\0\x02\0\x12\x03\x1f\x02\x19\x1aw\x20The\x20serv\
-    ice\x20control\x20environment\x20to\x20use.\x20If\x20empty,\x20no\x20con\
+    \n\x18google/api/control.proto\x12\ngoogle.api\x1a\x17google/api/policy.\
+    proto\"n\n\x07Control\x12\x20\n\x0benvironment\x18\x01\x20\x01(\tR\x0ben\
+    vironment\x12A\n\x0fmethod_policies\x18\x04\x20\x03(\x0b2\x18.google.api\
+    .MethodPolicyR\x0emethodPoliciesBn\n\x0ecom.google.apiB\x0cControlProtoP\
+    \x01ZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;servicecon\
+    fig\xa2\x02\x04GAPIJ\xf5\t\n\x06\x12\x04\x0e\0(\x01\n\xbc\x04\n\x01\x0c\
+    \x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\n\
+    \x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20\
+    (the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20e\
+    xcept\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20\
+    obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\
+    \x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\
+    \x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20s\
+    oftware\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\
+    \x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\
+    \x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20impli\
+    ed.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20\
+    governing\x20permissions\x20and\n\x20limitations\x20under\x20the\x20Lice\
+    nse.\n\n\x08\n\x01\x02\x12\x03\x10\0\x13\n\t\n\x02\x03\0\x12\x03\x12\0!\
+    \n\x08\n\x01\x08\x12\x03\x14\0\\\n\t\n\x02\x08\x0b\x12\x03\x14\0\\\n\x08\
+    \n\x01\x08\x12\x03\x15\0\"\n\t\n\x02\x08\n\x12\x03\x15\0\"\n\x08\n\x01\
+    \x08\x12\x03\x16\0-\n\t\n\x02\x08\x08\x12\x03\x16\0-\n\x08\n\x01\x08\x12\
+    \x03\x17\0'\n\t\n\x02\x08\x01\x12\x03\x17\0'\n\x08\n\x01\x08\x12\x03\x18\
+    \0\"\n\t\n\x02\x08$\x12\x03\x18\0\"\n\x9d\x01\n\x02\x04\0\x12\x04\x20\0(\
+    \x01\x1a\x90\x01\x20Selects\x20and\x20configures\x20the\x20service\x20co\
+    ntroller\x20used\x20by\x20the\x20service.\n\n\x20Example:\n\n\x20\x20\
+    \x20\x20\x20control:\n\x20\x20\x20\x20\x20\x20\x20environment:\x20servic\
+    econtrol.googleapis.com\n\n\n\n\x03\x04\0\x01\x12\x03\x20\x08\x0f\n\xd2\
+    \x01\n\x04\x04\0\x02\0\x12\x03$\x02\x19\x1a\xc4\x01\x20The\x20service\
+    \x20controller\x20environment\x20to\x20use.\x20If\x20empty,\x20no\x20con\
     trol\x20plane\n\x20feature\x20(like\x20quota\x20and\x20billing)\x20will\
-    \x20be\x20enabled.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x1f\x02\x08\n\
-    \x0c\n\x05\x04\0\x02\0\x01\x12\x03\x1f\t\x14\n\x0c\n\x05\x04\0\x02\0\x03\
-    \x12\x03\x1f\x17\x18b\x06proto3\
+    \x20be\x20enabled.\x20The\x20recommended\x20value\x20for\n\x20most\x20se\
+    rvices\x20is\x20servicecontrol.googleapis.com\n\n\x0c\n\x05\x04\0\x02\0\
+    \x05\x12\x03$\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03$\t\x14\n\x0c\n\
+    \x05\x04\0\x02\0\x03\x12\x03$\x17\x18\nK\n\x04\x04\0\x02\x01\x12\x03'\
+    \x02,\x1a>\x20Defines\x20policies\x20applying\x20to\x20the\x20API\x20met\
+    hods\x20of\x20the\x20service.\n\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03'\
+    \x02\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x03'\x0b\x17\n\x0c\n\x05\x04\0\
+    \x02\x01\x01\x12\x03'\x18'\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03'*+b\x06\
+    proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -201,7 +227,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(0);
+            let mut deps = ::std::vec::Vec::with_capacity(1);
+            deps.push(super::policy::file_descriptor().clone());
             let mut messages = ::std::vec::Vec::with_capacity(1);
             messages.push(Control::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(0);

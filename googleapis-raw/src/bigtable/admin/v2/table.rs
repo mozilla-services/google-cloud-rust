@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -25,38 +25,415 @@
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 
+///  Information about a table restore.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.RestoreInfo)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreInfo {
+    // message fields
+    ///  The type of the restore source.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreInfo.source_type)
+    pub source_type: ::protobuf::EnumOrUnknown<RestoreSourceType>,
+    // message oneof groups
+    pub source_info: ::std::option::Option<restore_info::Source_info>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.RestoreInfo.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreInfo {
+    fn default() -> &'a RestoreInfo {
+        <RestoreInfo as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreInfo {
+    pub fn new() -> RestoreInfo {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.BackupInfo backup_info = 2;
+
+    pub fn backup_info(&self) -> &BackupInfo {
+        match self.source_info {
+            ::std::option::Option::Some(restore_info::Source_info::BackupInfo(ref v)) => v,
+            _ => <BackupInfo as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_backup_info(&mut self) {
+        self.source_info = ::std::option::Option::None;
+    }
+
+    pub fn has_backup_info(&self) -> bool {
+        match self.source_info {
+            ::std::option::Option::Some(restore_info::Source_info::BackupInfo(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backup_info(&mut self, v: BackupInfo) {
+        self.source_info = ::std::option::Option::Some(restore_info::Source_info::BackupInfo(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_backup_info(&mut self) -> &mut BackupInfo {
+        if let ::std::option::Option::Some(restore_info::Source_info::BackupInfo(_)) = self.source_info {
+        } else {
+            self.source_info = ::std::option::Option::Some(restore_info::Source_info::BackupInfo(BackupInfo::new()));
+        }
+        match self.source_info {
+            ::std::option::Option::Some(restore_info::Source_info::BackupInfo(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_backup_info(&mut self) -> BackupInfo {
+        if self.has_backup_info() {
+            match self.source_info.take() {
+                ::std::option::Option::Some(restore_info::Source_info::BackupInfo(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            BackupInfo::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_type",
+            |m: &RestoreInfo| { &m.source_type },
+            |m: &mut RestoreInfo| { &mut m.source_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, BackupInfo>(
+            "backup_info",
+            RestoreInfo::has_backup_info,
+            RestoreInfo::backup_info,
+            RestoreInfo::mut_backup_info,
+            RestoreInfo::set_backup_info,
+        ));
+        oneofs.push(restore_info::Source_info::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreInfo>(
+            "RestoreInfo",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreInfo {
+    const NAME: &'static str = "RestoreInfo";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.source_type = is.read_enum_or_unknown()?;
+                },
+                18 => {
+                    self.source_info = ::std::option::Option::Some(restore_info::Source_info::BackupInfo(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.source_type != ::protobuf::EnumOrUnknown::new(RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(1, self.source_type.value());
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_info::Source_info::BackupInfo(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.source_type != ::protobuf::EnumOrUnknown::new(RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED) {
+            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.source_type))?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_info::Source_info::BackupInfo(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreInfo {
+        RestoreInfo::new()
+    }
+
+    fn clear(&mut self) {
+        self.source_type = ::protobuf::EnumOrUnknown::new(RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED);
+        self.source_info = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreInfo {
+        static instance: RestoreInfo = RestoreInfo {
+            source_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            source_info: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreInfo {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreInfo").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreInfo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreInfo {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreInfo`
+pub mod restore_info {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.RestoreInfo.source_info)
+    pub enum Source_info {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.RestoreInfo.backup_info)
+        BackupInfo(super::BackupInfo),
+    }
+
+    impl ::protobuf::Oneof for Source_info {
+    }
+
+    impl ::protobuf::OneofFull for Source_info {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::RestoreInfo as ::protobuf::MessageFull>::descriptor().oneof_by_name("source_info").unwrap()).clone()
+        }
+    }
+
+    impl Source_info {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Source_info>("source_info")
+        }
+    }
+}
+
+///  Change stream configuration.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.ChangeStreamConfig)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ChangeStreamConfig {
+    // message fields
+    ///  How long the change stream should be retained. Change stream data older
+    ///  than the retention period will not be returned when reading the change
+    ///  stream from the table.
+    ///  Values must be at least 1 day and at most 7 days, and will be truncated to
+    ///  microsecond granularity.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ChangeStreamConfig.retention_period)
+    pub retention_period: ::protobuf::MessageField<::protobuf::well_known_types::duration::Duration>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ChangeStreamConfig.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ChangeStreamConfig {
+    fn default() -> &'a ChangeStreamConfig {
+        <ChangeStreamConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ChangeStreamConfig {
+    pub fn new() -> ChangeStreamConfig {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::duration::Duration>(
+            "retention_period",
+            |m: &ChangeStreamConfig| { &m.retention_period },
+            |m: &mut ChangeStreamConfig| { &mut m.retention_period },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ChangeStreamConfig>(
+            "ChangeStreamConfig",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ChangeStreamConfig {
+    const NAME: &'static str = "ChangeStreamConfig";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.retention_period)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.retention_period.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.retention_period.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ChangeStreamConfig {
+        ChangeStreamConfig::new()
+    }
+
+    fn clear(&mut self) {
+        self.retention_period.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ChangeStreamConfig {
+        static instance: ChangeStreamConfig = ChangeStreamConfig {
+            retention_period: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ChangeStreamConfig {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ChangeStreamConfig").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ChangeStreamConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ChangeStreamConfig {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  A collection of user data indexed by row, column, and timestamp.
 ///  Each table is served using the resources of its parent cluster.
 // @@protoc_insertion_point(message:google.bigtable.admin.v2.Table)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Table {
     // message fields
-    ///  (`OutputOnly`)
     ///  The unique name of the table. Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.
+    ///  `projects/{project}/instances/{instance}/tables/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.
     ///  Views: `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.name)
     pub name: ::std::string::String,
-    ///  (`OutputOnly`)
-    ///  Map from cluster ID to per-cluster table state.
+    ///  Output only. Map from cluster ID to per-cluster table state.
     ///  If it could not be determined whether or not the table has data in a
     ///  particular cluster (for example, if its zone is unavailable), then
     ///  there will be an entry for the cluster with UNKNOWN `replication_status`.
-    ///  Views: `REPLICATION_VIEW`, `FULL`
+    ///  Views: `REPLICATION_VIEW`, `ENCRYPTION_VIEW`, `FULL`
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.cluster_states)
     pub cluster_states: ::std::collections::HashMap<::std::string::String, table::ClusterState>,
-    ///  (`CreationOnly`)
     ///  The column families configured for this table, mapped by column family ID.
-    ///  Views: `SCHEMA_VIEW`, `FULL`
+    ///  Views: `SCHEMA_VIEW`, `STATS_VIEW`, `FULL`
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.column_families)
     pub column_families: ::std::collections::HashMap<::std::string::String, ColumnFamily>,
-    ///  (`CreationOnly`)
-    ///  The granularity (i.e. `MILLIS`) at which timestamps are stored in
-    ///  this table. Timestamps not matching the granularity will be rejected.
-    ///  If unspecified at creation time, the value will be set to `MILLIS`.
-    ///  Views: `SCHEMA_VIEW`, `FULL`
+    ///  Immutable. The granularity (i.e. `MILLIS`) at which timestamps are stored
+    ///  in this table. Timestamps not matching the granularity will be rejected. If
+    ///  unspecified at creation time, the value will be set to `MILLIS`. Views:
+    ///  `SCHEMA_VIEW`, `FULL`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.granularity)
     pub granularity: ::protobuf::EnumOrUnknown<table::TimestampGranularity>,
+    ///  Output only. If this table was restored from another data source (e.g. a
+    ///  backup), this field will be populated with information about the restore.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.restore_info)
+    pub restore_info: ::protobuf::MessageField<RestoreInfo>,
+    ///  If specified, enable the change stream on this table.
+    ///  Otherwise, the change stream is disabled and the change stream is not
+    ///  retained.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.change_stream_config)
+    pub change_stream_config: ::protobuf::MessageField<ChangeStreamConfig>,
+    ///  Set to true to make the table protected against data loss. i.e. deleting
+    ///  the following resources through Admin APIs are prohibited:
+    ///
+    ///  * The table.
+    ///  * The column families in the table.
+    ///  * The instance containing the table.
+    ///
+    ///  Note one can still delete the data stored in the table through Data APIs.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.deletion_protection)
+    pub deletion_protection: bool,
+    // message oneof groups
+    pub automated_backup_config: ::std::option::Option<table::Automated_backup_config>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Table.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -73,9 +450,58 @@ impl Table {
         ::std::default::Default::default()
     }
 
+    // .google.bigtable.admin.v2.Table.AutomatedBackupPolicy automated_backup_policy = 13;
+
+    pub fn automated_backup_policy(&self) -> &table::AutomatedBackupPolicy {
+        match self.automated_backup_config {
+            ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(ref v)) => v,
+            _ => <table::AutomatedBackupPolicy as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_automated_backup_policy(&mut self) {
+        self.automated_backup_config = ::std::option::Option::None;
+    }
+
+    pub fn has_automated_backup_policy(&self) -> bool {
+        match self.automated_backup_config {
+            ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_automated_backup_policy(&mut self, v: table::AutomatedBackupPolicy) {
+        self.automated_backup_config = ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_automated_backup_policy(&mut self) -> &mut table::AutomatedBackupPolicy {
+        if let ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(_)) = self.automated_backup_config {
+        } else {
+            self.automated_backup_config = ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(table::AutomatedBackupPolicy::new()));
+        }
+        match self.automated_backup_config {
+            ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_automated_backup_policy(&mut self) -> table::AutomatedBackupPolicy {
+        if self.has_automated_backup_policy() {
+            match self.automated_backup_config.take() {
+                ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            table::AutomatedBackupPolicy::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(8);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
             |m: &Table| { &m.name },
@@ -96,6 +522,29 @@ impl Table {
             |m: &Table| { &m.granularity },
             |m: &mut Table| { &mut m.granularity },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RestoreInfo>(
+            "restore_info",
+            |m: &Table| { &m.restore_info },
+            |m: &mut Table| { &mut m.restore_info },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ChangeStreamConfig>(
+            "change_stream_config",
+            |m: &Table| { &m.change_stream_config },
+            |m: &mut Table| { &mut m.change_stream_config },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "deletion_protection",
+            |m: &Table| { &m.deletion_protection },
+            |m: &mut Table| { &mut m.deletion_protection },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, table::AutomatedBackupPolicy>(
+            "automated_backup_policy",
+            Table::has_automated_backup_policy,
+            Table::automated_backup_policy,
+            Table::mut_automated_backup_policy,
+            Table::set_automated_backup_policy,
+        ));
+        oneofs.push(table::Automated_backup_config::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Table>(
             "Table",
             fields,
@@ -150,6 +599,18 @@ impl ::protobuf::Message for Table {
                 32 => {
                     self.granularity = is.read_enum_or_unknown()?;
                 },
+                50 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.restore_info)?;
+                },
+                66 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.change_stream_config)?;
+                },
+                72 => {
+                    self.deletion_protection = is.read_bool()?;
+                },
+                106 => {
+                    self.automated_backup_config = ::std::option::Option::Some(table::Automated_backup_config::AutomatedBackupPolicy(is.read_message()?));
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -181,6 +642,25 @@ impl ::protobuf::Message for Table {
         };
         if self.granularity != ::protobuf::EnumOrUnknown::new(table::TimestampGranularity::TIMESTAMP_GRANULARITY_UNSPECIFIED) {
             my_size += ::protobuf::rt::int32_size(4, self.granularity.value());
+        }
+        if let Some(v) = self.restore_info.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.change_stream_config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.deletion_protection != false {
+            my_size += 1 + 1;
+        }
+        if let ::std::option::Option::Some(ref v) = self.automated_backup_config {
+            match v {
+                &table::Automated_backup_config::AutomatedBackupPolicy(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -214,6 +694,22 @@ impl ::protobuf::Message for Table {
         if self.granularity != ::protobuf::EnumOrUnknown::new(table::TimestampGranularity::TIMESTAMP_GRANULARITY_UNSPECIFIED) {
             os.write_enum(4, ::protobuf::EnumOrUnknown::value(&self.granularity))?;
         }
+        if let Some(v) = self.restore_info.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+        }
+        if let Some(v) = self.change_stream_config.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
+        }
+        if self.deletion_protection != false {
+            os.write_bool(9, self.deletion_protection)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.automated_backup_config {
+            match v {
+                &table::Automated_backup_config::AutomatedBackupPolicy(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
+                },
+            };
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -235,6 +731,10 @@ impl ::protobuf::Message for Table {
         self.cluster_states.clear();
         self.column_families.clear();
         self.granularity = ::protobuf::EnumOrUnknown::new(table::TimestampGranularity::TIMESTAMP_GRANULARITY_UNSPECIFIED);
+        self.restore_info.clear();
+        self.change_stream_config.clear();
+        self.deletion_protection = false;
+        self.automated_backup_config = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -263,15 +763,45 @@ impl ::protobuf::reflect::ProtobufValue for Table {
 
 /// Nested message and enums of message `Table`
 pub mod table {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.Table.automated_backup_config)
+    pub enum Automated_backup_config {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.Table.automated_backup_policy)
+        AutomatedBackupPolicy(AutomatedBackupPolicy),
+    }
+
+    impl ::protobuf::Oneof for Automated_backup_config {
+    }
+
+    impl ::protobuf::OneofFull for Automated_backup_config {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::Table as ::protobuf::MessageFull>::descriptor().oneof_by_name("automated_backup_config").unwrap()).clone()
+        }
+    }
+
+    impl Automated_backup_config {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Automated_backup_config>("automated_backup_config")
+        }
+    }
     ///  The state of a table's data in a particular cluster.
     // @@protoc_insertion_point(message:google.bigtable.admin.v2.Table.ClusterState)
     #[derive(PartialEq,Clone,Default,Debug)]
     pub struct ClusterState {
         // message fields
-        ///  (`OutputOnly`)
-        ///  The state of replication for the table in this cluster.
+        ///  Output only. The state of replication for the table in this cluster.
         // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.ClusterState.replication_state)
         pub replication_state: ::protobuf::EnumOrUnknown<cluster_state::ReplicationState>,
+        ///  Output only. The encryption information for the table in this cluster.
+        ///  If the encryption key protecting this resource is customer managed, then
+        ///  its version can be rotated in Cloud Key Management Service (Cloud KMS).
+        ///  The primary version of the key and its status will be reflected here when
+        ///  changes propagate from Cloud KMS.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.ClusterState.encryption_info)
+        pub encryption_info: ::std::vec::Vec<super::EncryptionInfo>,
         // special fields
         // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Table.ClusterState.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -289,12 +819,17 @@ pub mod table {
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut fields = ::std::vec::Vec::with_capacity(2);
             let mut oneofs = ::std::vec::Vec::with_capacity(0);
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
                 "replication_state",
                 |m: &ClusterState| { &m.replication_state },
                 |m: &mut ClusterState| { &mut m.replication_state },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "encryption_info",
+                |m: &ClusterState| { &m.encryption_info },
+                |m: &mut ClusterState| { &mut m.encryption_info },
             ));
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ClusterState>(
                 "Table.ClusterState",
@@ -317,6 +852,9 @@ pub mod table {
                     8 => {
                         self.replication_state = is.read_enum_or_unknown()?;
                     },
+                    18 => {
+                        self.encryption_info.push(is.read_message()?);
+                    },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                     },
@@ -332,6 +870,10 @@ pub mod table {
             if self.replication_state != ::protobuf::EnumOrUnknown::new(cluster_state::ReplicationState::STATE_NOT_KNOWN) {
                 my_size += ::protobuf::rt::int32_size(1, self.replication_state.value());
             }
+            for value in &self.encryption_info {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
             self.special_fields.cached_size().set(my_size as u32);
             my_size
@@ -341,6 +883,9 @@ pub mod table {
             if self.replication_state != ::protobuf::EnumOrUnknown::new(cluster_state::ReplicationState::STATE_NOT_KNOWN) {
                 os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.replication_state))?;
             }
+            for v in &self.encryption_info {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
         }
@@ -359,12 +904,14 @@ pub mod table {
 
         fn clear(&mut self) {
             self.replication_state = ::protobuf::EnumOrUnknown::new(cluster_state::ReplicationState::STATE_NOT_KNOWN);
+            self.encryption_info.clear();
             self.special_fields.clear();
         }
 
         fn default_instance() -> &'static ClusterState {
             static instance: ClusterState = ClusterState {
                 replication_state: ::protobuf::EnumOrUnknown::from_i32(0),
+                encryption_info: ::std::vec::Vec::new(),
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
@@ -404,6 +951,8 @@ pub mod table {
             UNPLANNED_MAINTENANCE = 3,
             // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Table.ClusterState.ReplicationState.READY)
             READY = 4,
+            // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Table.ClusterState.ReplicationState.READY_OPTIMIZING)
+            READY_OPTIMIZING = 5,
         }
 
         impl ::protobuf::Enum for ReplicationState {
@@ -420,6 +969,7 @@ pub mod table {
                     2 => ::std::option::Option::Some(ReplicationState::PLANNED_MAINTENANCE),
                     3 => ::std::option::Option::Some(ReplicationState::UNPLANNED_MAINTENANCE),
                     4 => ::std::option::Option::Some(ReplicationState::READY),
+                    5 => ::std::option::Option::Some(ReplicationState::READY_OPTIMIZING),
                     _ => ::std::option::Option::None
                 }
             }
@@ -431,6 +981,7 @@ pub mod table {
                     "PLANNED_MAINTENANCE" => ::std::option::Option::Some(ReplicationState::PLANNED_MAINTENANCE),
                     "UNPLANNED_MAINTENANCE" => ::std::option::Option::Some(ReplicationState::UNPLANNED_MAINTENANCE),
                     "READY" => ::std::option::Option::Some(ReplicationState::READY),
+                    "READY_OPTIMIZING" => ::std::option::Option::Some(ReplicationState::READY_OPTIMIZING),
                     _ => ::std::option::Option::None
                 }
             }
@@ -441,6 +992,7 @@ pub mod table {
                 ReplicationState::PLANNED_MAINTENANCE,
                 ReplicationState::UNPLANNED_MAINTENANCE,
                 ReplicationState::READY,
+                ReplicationState::READY_OPTIMIZING,
             ];
         }
 
@@ -467,6 +1019,153 @@ pub mod table {
                 ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ReplicationState>("Table.ClusterState.ReplicationState")
             }
         }
+    }
+
+    ///  Defines an automated backup policy for a table
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.Table.AutomatedBackupPolicy)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct AutomatedBackupPolicy {
+        // message fields
+        ///  Required. How long the automated backups should be retained. The only
+        ///  supported value at this time is 3 days.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.AutomatedBackupPolicy.retention_period)
+        pub retention_period: ::protobuf::MessageField<::protobuf::well_known_types::duration::Duration>,
+        ///  Required. How frequently automated backups should occur. The only
+        ///  supported value at this time is 24 hours.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.Table.AutomatedBackupPolicy.frequency)
+        pub frequency: ::protobuf::MessageField<::protobuf::well_known_types::duration::Duration>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Table.AutomatedBackupPolicy.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a AutomatedBackupPolicy {
+        fn default() -> &'a AutomatedBackupPolicy {
+            <AutomatedBackupPolicy as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl AutomatedBackupPolicy {
+        pub fn new() -> AutomatedBackupPolicy {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::duration::Duration>(
+                "retention_period",
+                |m: &AutomatedBackupPolicy| { &m.retention_period },
+                |m: &mut AutomatedBackupPolicy| { &mut m.retention_period },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::duration::Duration>(
+                "frequency",
+                |m: &AutomatedBackupPolicy| { &m.frequency },
+                |m: &mut AutomatedBackupPolicy| { &mut m.frequency },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AutomatedBackupPolicy>(
+                "Table.AutomatedBackupPolicy",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for AutomatedBackupPolicy {
+        const NAME: &'static str = "AutomatedBackupPolicy";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.retention_period)?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.frequency)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.retention_period.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.frequency.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.retention_period.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            if let Some(v) = self.frequency.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> AutomatedBackupPolicy {
+            AutomatedBackupPolicy::new()
+        }
+
+        fn clear(&mut self) {
+            self.retention_period.clear();
+            self.frequency.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static AutomatedBackupPolicy {
+            static instance: AutomatedBackupPolicy = AutomatedBackupPolicy {
+                retention_period: ::protobuf::MessageField::none(),
+                frequency: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for AutomatedBackupPolicy {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Table.AutomatedBackupPolicy").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for AutomatedBackupPolicy {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for AutomatedBackupPolicy {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 
     ///  Possible timestamp granularities to use when keeping multiple versions
@@ -545,6 +1244,8 @@ pub mod table {
         SCHEMA_VIEW = 2,
         // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Table.View.REPLICATION_VIEW)
         REPLICATION_VIEW = 3,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Table.View.ENCRYPTION_VIEW)
+        ENCRYPTION_VIEW = 5,
         // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Table.View.FULL)
         FULL = 4,
     }
@@ -562,6 +1263,7 @@ pub mod table {
                 1 => ::std::option::Option::Some(View::NAME_ONLY),
                 2 => ::std::option::Option::Some(View::SCHEMA_VIEW),
                 3 => ::std::option::Option::Some(View::REPLICATION_VIEW),
+                5 => ::std::option::Option::Some(View::ENCRYPTION_VIEW),
                 4 => ::std::option::Option::Some(View::FULL),
                 _ => ::std::option::Option::None
             }
@@ -573,6 +1275,7 @@ pub mod table {
                 "NAME_ONLY" => ::std::option::Option::Some(View::NAME_ONLY),
                 "SCHEMA_VIEW" => ::std::option::Option::Some(View::SCHEMA_VIEW),
                 "REPLICATION_VIEW" => ::std::option::Option::Some(View::REPLICATION_VIEW),
+                "ENCRYPTION_VIEW" => ::std::option::Option::Some(View::ENCRYPTION_VIEW),
                 "FULL" => ::std::option::Option::Some(View::FULL),
                 _ => ::std::option::Option::None
             }
@@ -583,6 +1286,7 @@ pub mod table {
             View::NAME_ONLY,
             View::SCHEMA_VIEW,
             View::REPLICATION_VIEW,
+            View::ENCRYPTION_VIEW,
             View::FULL,
         ];
     }
@@ -594,7 +1298,14 @@ pub mod table {
         }
 
         fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
+            let index = match self {
+                View::VIEW_UNSPECIFIED => 0,
+                View::NAME_ONLY => 1,
+                View::SCHEMA_VIEW => 2,
+                View::REPLICATION_VIEW => 3,
+                View::ENCRYPTION_VIEW => 4,
+                View::FULL => 5,
+            };
             Self::enum_descriptor().value_by_index(index)
         }
     }
@@ -612,6 +1323,666 @@ pub mod table {
     }
 }
 
+///  AuthorizedViews represent subsets of a particular Cloud Bigtable table. Users
+///  can configure access to each Authorized View independently from the table and
+///  use the existing Data APIs to access the subset of data.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.AuthorizedView)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct AuthorizedView {
+    // message fields
+    ///  Identifier. The name of this AuthorizedView.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.name)
+    pub name: ::std::string::String,
+    ///  The etag for this AuthorizedView.
+    ///  If this is provided on update, it must match the server's etag. The server
+    ///  returns ABORTED error on a mismatched etag.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.etag)
+    pub etag: ::std::string::String,
+    ///  Set to true to make the AuthorizedView protected against deletion.
+    ///  The parent Table and containing Instance cannot be deleted if an
+    ///  AuthorizedView has this bit set.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.deletion_protection)
+    pub deletion_protection: bool,
+    // message oneof groups
+    pub authorized_view: ::std::option::Option<authorized_view::Authorized_view>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AuthorizedView.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AuthorizedView {
+    fn default() -> &'a AuthorizedView {
+        <AuthorizedView as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AuthorizedView {
+    pub fn new() -> AuthorizedView {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.AuthorizedView.SubsetView subset_view = 2;
+
+    pub fn subset_view(&self) -> &authorized_view::SubsetView {
+        match self.authorized_view {
+            ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(ref v)) => v,
+            _ => <authorized_view::SubsetView as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_subset_view(&mut self) {
+        self.authorized_view = ::std::option::Option::None;
+    }
+
+    pub fn has_subset_view(&self) -> bool {
+        match self.authorized_view {
+            ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_subset_view(&mut self, v: authorized_view::SubsetView) {
+        self.authorized_view = ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_subset_view(&mut self) -> &mut authorized_view::SubsetView {
+        if let ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(_)) = self.authorized_view {
+        } else {
+            self.authorized_view = ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(authorized_view::SubsetView::new()));
+        }
+        match self.authorized_view {
+            ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_subset_view(&mut self) -> authorized_view::SubsetView {
+        if self.has_subset_view() {
+            match self.authorized_view.take() {
+                ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            authorized_view::SubsetView::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &AuthorizedView| { &m.name },
+            |m: &mut AuthorizedView| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, authorized_view::SubsetView>(
+            "subset_view",
+            AuthorizedView::has_subset_view,
+            AuthorizedView::subset_view,
+            AuthorizedView::mut_subset_view,
+            AuthorizedView::set_subset_view,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "etag",
+            |m: &AuthorizedView| { &m.etag },
+            |m: &mut AuthorizedView| { &mut m.etag },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "deletion_protection",
+            |m: &AuthorizedView| { &m.deletion_protection },
+            |m: &mut AuthorizedView| { &mut m.deletion_protection },
+        ));
+        oneofs.push(authorized_view::Authorized_view::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AuthorizedView>(
+            "AuthorizedView",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AuthorizedView {
+    const NAME: &'static str = "AuthorizedView";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.authorized_view = ::std::option::Option::Some(authorized_view::Authorized_view::SubsetView(is.read_message()?));
+                },
+                26 => {
+                    self.etag = is.read_string()?;
+                },
+                32 => {
+                    self.deletion_protection = is.read_bool()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.etag.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.etag);
+        }
+        if self.deletion_protection != false {
+            my_size += 1 + 1;
+        }
+        if let ::std::option::Option::Some(ref v) = self.authorized_view {
+            match v {
+                &authorized_view::Authorized_view::SubsetView(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.etag.is_empty() {
+            os.write_string(3, &self.etag)?;
+        }
+        if self.deletion_protection != false {
+            os.write_bool(4, self.deletion_protection)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.authorized_view {
+            match v {
+                &authorized_view::Authorized_view::SubsetView(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AuthorizedView {
+        AuthorizedView::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.authorized_view = ::std::option::Option::None;
+        self.etag.clear();
+        self.deletion_protection = false;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AuthorizedView {
+        static instance: AuthorizedView = AuthorizedView {
+            name: ::std::string::String::new(),
+            etag: ::std::string::String::new(),
+            deletion_protection: false,
+            authorized_view: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AuthorizedView {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AuthorizedView").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AuthorizedView {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AuthorizedView {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `AuthorizedView`
+pub mod authorized_view {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.AuthorizedView.authorized_view)
+    pub enum Authorized_view {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.AuthorizedView.subset_view)
+        SubsetView(SubsetView),
+    }
+
+    impl ::protobuf::Oneof for Authorized_view {
+    }
+
+    impl ::protobuf::OneofFull for Authorized_view {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::AuthorizedView as ::protobuf::MessageFull>::descriptor().oneof_by_name("authorized_view").unwrap()).clone()
+        }
+    }
+
+    impl Authorized_view {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Authorized_view>("authorized_view")
+        }
+    }
+    ///  Subsets of a column family that are included in this AuthorizedView.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.AuthorizedView.FamilySubsets)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct FamilySubsets {
+        // message fields
+        ///  Individual exact column qualifiers to be included in the AuthorizedView.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.FamilySubsets.qualifiers)
+        pub qualifiers: ::std::vec::Vec<::std::vec::Vec<u8>>,
+        ///  Prefixes for qualifiers to be included in the AuthorizedView. Every
+        ///  qualifier starting with one of these prefixes is included in the
+        ///  AuthorizedView. To provide access to all qualifiers, include the empty
+        ///  string as a prefix
+        ///  ("").
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.FamilySubsets.qualifier_prefixes)
+        pub qualifier_prefixes: ::std::vec::Vec<::std::vec::Vec<u8>>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AuthorizedView.FamilySubsets.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a FamilySubsets {
+        fn default() -> &'a FamilySubsets {
+            <FamilySubsets as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl FamilySubsets {
+        pub fn new() -> FamilySubsets {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "qualifiers",
+                |m: &FamilySubsets| { &m.qualifiers },
+                |m: &mut FamilySubsets| { &mut m.qualifiers },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "qualifier_prefixes",
+                |m: &FamilySubsets| { &m.qualifier_prefixes },
+                |m: &mut FamilySubsets| { &mut m.qualifier_prefixes },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FamilySubsets>(
+                "AuthorizedView.FamilySubsets",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for FamilySubsets {
+        const NAME: &'static str = "FamilySubsets";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.qualifiers.push(is.read_bytes()?);
+                    },
+                    18 => {
+                        self.qualifier_prefixes.push(is.read_bytes()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            for value in &self.qualifiers {
+                my_size += ::protobuf::rt::bytes_size(1, &value);
+            };
+            for value in &self.qualifier_prefixes {
+                my_size += ::protobuf::rt::bytes_size(2, &value);
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.qualifiers {
+                os.write_bytes(1, &v)?;
+            };
+            for v in &self.qualifier_prefixes {
+                os.write_bytes(2, &v)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> FamilySubsets {
+            FamilySubsets::new()
+        }
+
+        fn clear(&mut self) {
+            self.qualifiers.clear();
+            self.qualifier_prefixes.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static FamilySubsets {
+            static instance: FamilySubsets = FamilySubsets {
+                qualifiers: ::std::vec::Vec::new(),
+                qualifier_prefixes: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for FamilySubsets {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("AuthorizedView.FamilySubsets").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for FamilySubsets {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for FamilySubsets {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  Defines a simple AuthorizedView that is a subset of the underlying Table.
+    // @@protoc_insertion_point(message:google.bigtable.admin.v2.AuthorizedView.SubsetView)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct SubsetView {
+        // message fields
+        ///  Row prefixes to be included in the AuthorizedView.
+        ///  To provide access to all rows, include the empty string as a prefix ("").
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.SubsetView.row_prefixes)
+        pub row_prefixes: ::std::vec::Vec<::std::vec::Vec<u8>>,
+        ///  Map from column family name to the columns in this family to be included
+        ///  in the AuthorizedView.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.AuthorizedView.SubsetView.family_subsets)
+        pub family_subsets: ::std::collections::HashMap<::std::string::String, FamilySubsets>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.AuthorizedView.SubsetView.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a SubsetView {
+        fn default() -> &'a SubsetView {
+            <SubsetView as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl SubsetView {
+        pub fn new() -> SubsetView {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "row_prefixes",
+                |m: &SubsetView| { &m.row_prefixes },
+                |m: &mut SubsetView| { &mut m.row_prefixes },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_map_simpler_accessor::<_, _, _>(
+                "family_subsets",
+                |m: &SubsetView| { &m.family_subsets },
+                |m: &mut SubsetView| { &mut m.family_subsets },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SubsetView>(
+                "AuthorizedView.SubsetView",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for SubsetView {
+        const NAME: &'static str = "SubsetView";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.row_prefixes.push(is.read_bytes()?);
+                    },
+                    18 => {
+                        let len = is.read_raw_varint32()?;
+                        let old_limit = is.push_limit(len as u64)?;
+                        let mut key = ::std::default::Default::default();
+                        let mut value = ::std::default::Default::default();
+                        while let Some(tag) = is.read_raw_tag_or_eof()? {
+                            match tag {
+                                10 => key = is.read_string()?,
+                                18 => value = is.read_message()?,
+                                _ => ::protobuf::rt::skip_field_for_tag(tag, is)?,
+                            };
+                        }
+                        is.pop_limit(old_limit);
+                        self.family_subsets.insert(key, value);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            for value in &self.row_prefixes {
+                my_size += ::protobuf::rt::bytes_size(1, &value);
+            };
+            for (k, v) in &self.family_subsets {
+                let mut entry_size = 0;
+                entry_size += ::protobuf::rt::string_size(1, &k);
+                let len = v.compute_size();
+                entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.row_prefixes {
+                os.write_bytes(1, &v)?;
+            };
+            for (k, v) in &self.family_subsets {
+                let mut entry_size = 0;
+                entry_size += ::protobuf::rt::string_size(1, &k);
+                let len = v.cached_size() as u64;
+                entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                os.write_raw_varint32(18)?; // Tag.
+                os.write_raw_varint32(entry_size as u32)?;
+                os.write_string(1, &k)?;
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> SubsetView {
+            SubsetView::new()
+        }
+
+        fn clear(&mut self) {
+            self.row_prefixes.clear();
+            self.family_subsets.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static SubsetView {
+            static instance: ::protobuf::rt::Lazy<SubsetView> = ::protobuf::rt::Lazy::new();
+            instance.get(SubsetView::new)
+        }
+    }
+
+    impl ::protobuf::MessageFull for SubsetView {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("AuthorizedView.SubsetView").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for SubsetView {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for SubsetView {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    ///  Defines a subset of an AuthorizedView's fields.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.admin.v2.AuthorizedView.ResponseView)
+    pub enum ResponseView {
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AuthorizedView.ResponseView.RESPONSE_VIEW_UNSPECIFIED)
+        RESPONSE_VIEW_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AuthorizedView.ResponseView.NAME_ONLY)
+        NAME_ONLY = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AuthorizedView.ResponseView.BASIC)
+        BASIC = 2,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.AuthorizedView.ResponseView.FULL)
+        FULL = 3,
+    }
+
+    impl ::protobuf::Enum for ResponseView {
+        const NAME: &'static str = "ResponseView";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<ResponseView> {
+            match value {
+                0 => ::std::option::Option::Some(ResponseView::RESPONSE_VIEW_UNSPECIFIED),
+                1 => ::std::option::Option::Some(ResponseView::NAME_ONLY),
+                2 => ::std::option::Option::Some(ResponseView::BASIC),
+                3 => ::std::option::Option::Some(ResponseView::FULL),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<ResponseView> {
+            match str {
+                "RESPONSE_VIEW_UNSPECIFIED" => ::std::option::Option::Some(ResponseView::RESPONSE_VIEW_UNSPECIFIED),
+                "NAME_ONLY" => ::std::option::Option::Some(ResponseView::NAME_ONLY),
+                "BASIC" => ::std::option::Option::Some(ResponseView::BASIC),
+                "FULL" => ::std::option::Option::Some(ResponseView::FULL),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [ResponseView] = &[
+            ResponseView::RESPONSE_VIEW_UNSPECIFIED,
+            ResponseView::NAME_ONLY,
+            ResponseView::BASIC,
+            ResponseView::FULL,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for ResponseView {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("AuthorizedView.ResponseView").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for ResponseView {
+        fn default() -> Self {
+            ResponseView::RESPONSE_VIEW_UNSPECIFIED
+        }
+    }
+
+    impl ResponseView {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ResponseView>("AuthorizedView.ResponseView")
+        }
+    }
+}
+
 ///  A set of columns within a table which share a common configuration.
 // @@protoc_insertion_point(message:google.bigtable.admin.v2.ColumnFamily)
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -625,6 +1996,18 @@ pub struct ColumnFamily {
     ///  GC expression for its family.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ColumnFamily.gc_rule)
     pub gc_rule: ::protobuf::MessageField<GcRule>,
+    ///  The type of data stored in each of this family's cell values, including its
+    ///  full encoding. If omitted, the family only serves raw untyped bytes.
+    ///
+    ///  For now, only the `Aggregate` type is supported.
+    ///
+    ///  `Aggregate` can only be set at family creation and is immutable afterwards.
+    ///
+    ///
+    ///  If `value_type` is `Aggregate`, written data must be compatible with:
+    ///   * `value_type.input_type` for `AddInput` mutations
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ColumnFamily.value_type)
+    pub value_type: ::protobuf::MessageField<super::types::Type>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ColumnFamily.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -642,12 +2025,17 @@ impl ColumnFamily {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, GcRule>(
             "gc_rule",
             |m: &ColumnFamily| { &m.gc_rule },
             |m: &mut ColumnFamily| { &mut m.gc_rule },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::types::Type>(
+            "value_type",
+            |m: &ColumnFamily| { &m.value_type },
+            |m: &mut ColumnFamily| { &mut m.value_type },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColumnFamily>(
             "ColumnFamily",
@@ -670,6 +2058,9 @@ impl ::protobuf::Message for ColumnFamily {
                 10 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.gc_rule)?;
                 },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.value_type)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -686,6 +2077,10 @@ impl ::protobuf::Message for ColumnFamily {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.value_type.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -694,6 +2089,9 @@ impl ::protobuf::Message for ColumnFamily {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if let Some(v) = self.gc_rule.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.value_type.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -713,12 +2111,14 @@ impl ::protobuf::Message for ColumnFamily {
 
     fn clear(&mut self) {
         self.gc_rule.clear();
+        self.value_type.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static ColumnFamily {
         static instance: ColumnFamily = ColumnFamily {
             gc_rule: ::protobuf::MessageField::none(),
+            value_type: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1383,6 +2783,246 @@ pub mod gc_rule {
     }
 }
 
+///  Encryption information for a given resource.
+///  If this resource is protected with customer managed encryption, the in-use
+///  Cloud Key Management Service (Cloud KMS) key version is specified along with
+///  its status.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.EncryptionInfo)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct EncryptionInfo {
+    // message fields
+    ///  Output only. The type of encryption used to protect this resource.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.EncryptionInfo.encryption_type)
+    pub encryption_type: ::protobuf::EnumOrUnknown<encryption_info::EncryptionType>,
+    ///  Output only. The status of encrypt/decrypt calls on underlying data for
+    ///  this resource. Regardless of status, the existing data is always encrypted
+    ///  at rest.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.EncryptionInfo.encryption_status)
+    pub encryption_status: ::protobuf::MessageField<super::status::Status>,
+    ///  Output only. The version of the Cloud KMS key specified in the parent
+    ///  cluster that is in use for the data underlying this table.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.EncryptionInfo.kms_key_version)
+    pub kms_key_version: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.EncryptionInfo.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a EncryptionInfo {
+    fn default() -> &'a EncryptionInfo {
+        <EncryptionInfo as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl EncryptionInfo {
+    pub fn new() -> EncryptionInfo {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "encryption_type",
+            |m: &EncryptionInfo| { &m.encryption_type },
+            |m: &mut EncryptionInfo| { &mut m.encryption_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::status::Status>(
+            "encryption_status",
+            |m: &EncryptionInfo| { &m.encryption_status },
+            |m: &mut EncryptionInfo| { &mut m.encryption_status },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "kms_key_version",
+            |m: &EncryptionInfo| { &m.kms_key_version },
+            |m: &mut EncryptionInfo| { &mut m.kms_key_version },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EncryptionInfo>(
+            "EncryptionInfo",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for EncryptionInfo {
+    const NAME: &'static str = "EncryptionInfo";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                24 => {
+                    self.encryption_type = is.read_enum_or_unknown()?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.encryption_status)?;
+                },
+                18 => {
+                    self.kms_key_version = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.encryption_type != ::protobuf::EnumOrUnknown::new(encryption_info::EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(3, self.encryption_type.value());
+        }
+        if let Some(v) = self.encryption_status.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.kms_key_version.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.kms_key_version);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.encryption_type != ::protobuf::EnumOrUnknown::new(encryption_info::EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED) {
+            os.write_enum(3, ::protobuf::EnumOrUnknown::value(&self.encryption_type))?;
+        }
+        if let Some(v) = self.encryption_status.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if !self.kms_key_version.is_empty() {
+            os.write_string(2, &self.kms_key_version)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> EncryptionInfo {
+        EncryptionInfo::new()
+    }
+
+    fn clear(&mut self) {
+        self.encryption_type = ::protobuf::EnumOrUnknown::new(encryption_info::EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED);
+        self.encryption_status.clear();
+        self.kms_key_version.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static EncryptionInfo {
+        static instance: EncryptionInfo = EncryptionInfo {
+            encryption_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            encryption_status: ::protobuf::MessageField::none(),
+            kms_key_version: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for EncryptionInfo {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("EncryptionInfo").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for EncryptionInfo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for EncryptionInfo {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `EncryptionInfo`
+pub mod encryption_info {
+    ///  Possible encryption types for a resource.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.admin.v2.EncryptionInfo.EncryptionType)
+    pub enum EncryptionType {
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.EncryptionInfo.EncryptionType.ENCRYPTION_TYPE_UNSPECIFIED)
+        ENCRYPTION_TYPE_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.EncryptionInfo.EncryptionType.GOOGLE_DEFAULT_ENCRYPTION)
+        GOOGLE_DEFAULT_ENCRYPTION = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.EncryptionInfo.EncryptionType.CUSTOMER_MANAGED_ENCRYPTION)
+        CUSTOMER_MANAGED_ENCRYPTION = 2,
+    }
+
+    impl ::protobuf::Enum for EncryptionType {
+        const NAME: &'static str = "EncryptionType";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<EncryptionType> {
+            match value {
+                0 => ::std::option::Option::Some(EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED),
+                1 => ::std::option::Option::Some(EncryptionType::GOOGLE_DEFAULT_ENCRYPTION),
+                2 => ::std::option::Option::Some(EncryptionType::CUSTOMER_MANAGED_ENCRYPTION),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<EncryptionType> {
+            match str {
+                "ENCRYPTION_TYPE_UNSPECIFIED" => ::std::option::Option::Some(EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED),
+                "GOOGLE_DEFAULT_ENCRYPTION" => ::std::option::Option::Some(EncryptionType::GOOGLE_DEFAULT_ENCRYPTION),
+                "CUSTOMER_MANAGED_ENCRYPTION" => ::std::option::Option::Some(EncryptionType::CUSTOMER_MANAGED_ENCRYPTION),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [EncryptionType] = &[
+            EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED,
+            EncryptionType::GOOGLE_DEFAULT_ENCRYPTION,
+            EncryptionType::CUSTOMER_MANAGED_ENCRYPTION,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for EncryptionType {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("EncryptionInfo.EncryptionType").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for EncryptionType {
+        fn default() -> Self {
+            EncryptionType::ENCRYPTION_TYPE_UNSPECIFIED
+        }
+    }
+
+    impl EncryptionType {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<EncryptionType>("EncryptionInfo.EncryptionType")
+        }
+    }
+}
+
 ///  A snapshot of a table at a particular time. A snapshot can be used as a
 ///  checkpoint for data restoration or a data source for a new table.
 ///
@@ -1394,37 +3034,31 @@ pub mod gc_rule {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Snapshot {
     // message fields
-    ///  (`OutputOnly`)
     ///  The unique name of the snapshot.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/snapshots/<snapshot>`.
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.name)
     pub name: ::std::string::String,
-    ///  (`OutputOnly`)
-    ///  The source table at the time the snapshot was taken.
+    ///  Output only. The source table at the time the snapshot was taken.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.source_table)
     pub source_table: ::protobuf::MessageField<Table>,
-    ///  (`OutputOnly`)
-    ///  The size of the data in the source table at the time the snapshot was
-    ///  taken. In some cases, this value may be computed asynchronously via a
-    ///  background process and a placeholder of 0 will be used in the meantime.
+    ///  Output only. The size of the data in the source table at the time the
+    ///  snapshot was taken. In some cases, this value may be computed
+    ///  asynchronously via a background process and a placeholder of 0 will be used
+    ///  in the meantime.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.data_size_bytes)
     pub data_size_bytes: i64,
-    ///  (`OutputOnly`)
-    ///  The time when the snapshot is created.
+    ///  Output only. The time when the snapshot is created.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.create_time)
     pub create_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
-    ///  (`OutputOnly`)
     ///  The time when the snapshot will be deleted. The maximum amount of time a
     ///  snapshot can stay active is 365 days. If 'ttl' is not specified,
     ///  the default maximum of 365 days will be used.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.delete_time)
     pub delete_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
-    ///  (`OutputOnly`)
-    ///  The current state of the snapshot.
+    ///  Output only. The current state of the snapshot.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.state)
     pub state: ::protobuf::EnumOrUnknown<snapshot::State>,
-    ///  (`OutputOnly`)
     ///  Description of the snapshot.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.Snapshot.description)
     pub description: ::std::string::String,
@@ -1714,223 +3348,1311 @@ pub mod snapshot {
     }
 }
 
+///  A backup of a Cloud Bigtable table.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.Backup)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct Backup {
+    // message fields
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.name)
+    pub name: ::std::string::String,
+    ///  Required. Immutable. Name of the table from which this backup was created.
+    ///  This needs to be in the same instance as the backup. Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{source_table}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.source_table)
+    pub source_table: ::std::string::String,
+    ///  Output only. Name of the backup from which this backup was copied. If a
+    ///  backup is not created by copying a backup, this field will be empty. Values
+    ///  are of the form:
+    ///  projects/<project>/instances/<instance>/clusters/<cluster>/backups/<backup>
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.source_backup)
+    pub source_backup: ::std::string::String,
+    ///  Required. The expiration time of the backup.
+    ///  When creating a backup or updating its `expire_time`, the value must be
+    ///  greater than the backup creation time by:
+    ///  - At least 6 hours
+    ///  - At most 90 days
+    ///
+    ///  Once the `expire_time` has passed, Cloud Bigtable will delete the backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.expire_time)
+    pub expire_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. `start_time` is the time that the backup was started
+    ///  (i.e. approximately the time the
+    ///  [CreateBackup][google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup]
+    ///  request is received).  The row data in this backup will be no older than
+    ///  this timestamp.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. `end_time` is the time that the backup was finished. The row
+    ///  data in the backup will be no newer than this timestamp.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. Size of the backup in bytes.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.size_bytes)
+    pub size_bytes: i64,
+    ///  Output only. The current state of the backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.state)
+    pub state: ::protobuf::EnumOrUnknown<backup::State>,
+    ///  Output only. The encryption information for the backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.encryption_info)
+    pub encryption_info: ::protobuf::MessageField<EncryptionInfo>,
+    ///  Indicates the backup type of the backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.backup_type)
+    pub backup_type: ::protobuf::EnumOrUnknown<backup::BackupType>,
+    ///  The time at which the hot backup will be converted to a standard backup.
+    ///  Once the `hot_to_standard_time` has passed, Cloud Bigtable will convert the
+    ///  hot backup to a standard backup. This value must be greater than the backup
+    ///  creation time by:
+    ///  - At least 24 hours
+    ///
+    ///  This field only applies for hot backups. When creating or updating a
+    ///  standard backup, attempting to set this field will fail the request.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.Backup.hot_to_standard_time)
+    pub hot_to_standard_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.Backup.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a Backup {
+    fn default() -> &'a Backup {
+        <Backup as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Backup {
+    pub fn new() -> Backup {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(11);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &Backup| { &m.name },
+            |m: &mut Backup| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_table",
+            |m: &Backup| { &m.source_table },
+            |m: &mut Backup| { &mut m.source_table },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_backup",
+            |m: &Backup| { &m.source_backup },
+            |m: &mut Backup| { &mut m.source_backup },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "expire_time",
+            |m: &Backup| { &m.expire_time },
+            |m: &mut Backup| { &mut m.expire_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &Backup| { &m.start_time },
+            |m: &mut Backup| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &Backup| { &m.end_time },
+            |m: &mut Backup| { &mut m.end_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "size_bytes",
+            |m: &Backup| { &m.size_bytes },
+            |m: &mut Backup| { &mut m.size_bytes },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "state",
+            |m: &Backup| { &m.state },
+            |m: &mut Backup| { &mut m.state },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, EncryptionInfo>(
+            "encryption_info",
+            |m: &Backup| { &m.encryption_info },
+            |m: &mut Backup| { &mut m.encryption_info },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "backup_type",
+            |m: &Backup| { &m.backup_type },
+            |m: &mut Backup| { &mut m.backup_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "hot_to_standard_time",
+            |m: &Backup| { &m.hot_to_standard_time },
+            |m: &mut Backup| { &mut m.hot_to_standard_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Backup>(
+            "Backup",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for Backup {
+    const NAME: &'static str = "Backup";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.source_table = is.read_string()?;
+                },
+                82 => {
+                    self.source_backup = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.expire_time)?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                48 => {
+                    self.size_bytes = is.read_int64()?;
+                },
+                56 => {
+                    self.state = is.read_enum_or_unknown()?;
+                },
+                74 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.encryption_info)?;
+                },
+                88 => {
+                    self.backup_type = is.read_enum_or_unknown()?;
+                },
+                98 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.hot_to_standard_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.source_table.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.source_table);
+        }
+        if !self.source_backup.is_empty() {
+            my_size += ::protobuf::rt::string_size(10, &self.source_backup);
+        }
+        if let Some(v) = self.expire_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.size_bytes != 0 {
+            my_size += ::protobuf::rt::int64_size(6, self.size_bytes);
+        }
+        if self.state != ::protobuf::EnumOrUnknown::new(backup::State::STATE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(7, self.state.value());
+        }
+        if let Some(v) = self.encryption_info.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.backup_type != ::protobuf::EnumOrUnknown::new(backup::BackupType::BACKUP_TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(11, self.backup_type.value());
+        }
+        if let Some(v) = self.hot_to_standard_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.source_table.is_empty() {
+            os.write_string(2, &self.source_table)?;
+        }
+        if !self.source_backup.is_empty() {
+            os.write_string(10, &self.source_backup)?;
+        }
+        if let Some(v) = self.expire_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        }
+        if self.size_bytes != 0 {
+            os.write_int64(6, self.size_bytes)?;
+        }
+        if self.state != ::protobuf::EnumOrUnknown::new(backup::State::STATE_UNSPECIFIED) {
+            os.write_enum(7, ::protobuf::EnumOrUnknown::value(&self.state))?;
+        }
+        if let Some(v) = self.encryption_info.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(9, v, os)?;
+        }
+        if self.backup_type != ::protobuf::EnumOrUnknown::new(backup::BackupType::BACKUP_TYPE_UNSPECIFIED) {
+            os.write_enum(11, ::protobuf::EnumOrUnknown::value(&self.backup_type))?;
+        }
+        if let Some(v) = self.hot_to_standard_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> Backup {
+        Backup::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.source_table.clear();
+        self.source_backup.clear();
+        self.expire_time.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.size_bytes = 0;
+        self.state = ::protobuf::EnumOrUnknown::new(backup::State::STATE_UNSPECIFIED);
+        self.encryption_info.clear();
+        self.backup_type = ::protobuf::EnumOrUnknown::new(backup::BackupType::BACKUP_TYPE_UNSPECIFIED);
+        self.hot_to_standard_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static Backup {
+        static instance: Backup = Backup {
+            name: ::std::string::String::new(),
+            source_table: ::std::string::String::new(),
+            source_backup: ::std::string::String::new(),
+            expire_time: ::protobuf::MessageField::none(),
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            size_bytes: 0,
+            state: ::protobuf::EnumOrUnknown::from_i32(0),
+            encryption_info: ::protobuf::MessageField::none(),
+            backup_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            hot_to_standard_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for Backup {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("Backup").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for Backup {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Backup {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `Backup`
+pub mod backup {
+    ///  Indicates the current state of the backup.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.admin.v2.Backup.State)
+    pub enum State {
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Backup.State.STATE_UNSPECIFIED)
+        STATE_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Backup.State.CREATING)
+        CREATING = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Backup.State.READY)
+        READY = 2,
+    }
+
+    impl ::protobuf::Enum for State {
+        const NAME: &'static str = "State";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<State> {
+            match value {
+                0 => ::std::option::Option::Some(State::STATE_UNSPECIFIED),
+                1 => ::std::option::Option::Some(State::CREATING),
+                2 => ::std::option::Option::Some(State::READY),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<State> {
+            match str {
+                "STATE_UNSPECIFIED" => ::std::option::Option::Some(State::STATE_UNSPECIFIED),
+                "CREATING" => ::std::option::Option::Some(State::CREATING),
+                "READY" => ::std::option::Option::Some(State::READY),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [State] = &[
+            State::STATE_UNSPECIFIED,
+            State::CREATING,
+            State::READY,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for State {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("Backup.State").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for State {
+        fn default() -> Self {
+            State::STATE_UNSPECIFIED
+        }
+    }
+
+    impl State {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<State>("Backup.State")
+        }
+    }
+
+    ///  The type of the backup.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.admin.v2.Backup.BackupType)
+    pub enum BackupType {
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Backup.BackupType.BACKUP_TYPE_UNSPECIFIED)
+        BACKUP_TYPE_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Backup.BackupType.STANDARD)
+        STANDARD = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.Backup.BackupType.HOT)
+        HOT = 2,
+    }
+
+    impl ::protobuf::Enum for BackupType {
+        const NAME: &'static str = "BackupType";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<BackupType> {
+            match value {
+                0 => ::std::option::Option::Some(BackupType::BACKUP_TYPE_UNSPECIFIED),
+                1 => ::std::option::Option::Some(BackupType::STANDARD),
+                2 => ::std::option::Option::Some(BackupType::HOT),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<BackupType> {
+            match str {
+                "BACKUP_TYPE_UNSPECIFIED" => ::std::option::Option::Some(BackupType::BACKUP_TYPE_UNSPECIFIED),
+                "STANDARD" => ::std::option::Option::Some(BackupType::STANDARD),
+                "HOT" => ::std::option::Option::Some(BackupType::HOT),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [BackupType] = &[
+            BackupType::BACKUP_TYPE_UNSPECIFIED,
+            BackupType::STANDARD,
+            BackupType::HOT,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for BackupType {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("Backup.BackupType").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for BackupType {
+        fn default() -> Self {
+            BackupType::BACKUP_TYPE_UNSPECIFIED
+        }
+    }
+
+    impl BackupType {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<BackupType>("Backup.BackupType")
+        }
+    }
+}
+
+///  Information about a backup.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.BackupInfo)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct BackupInfo {
+    // message fields
+    ///  Output only. Name of the backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.BackupInfo.backup)
+    pub backup: ::std::string::String,
+    ///  Output only. The time that the backup was started. Row data in the backup
+    ///  will be no older than this timestamp.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.BackupInfo.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. This time that the backup was finished. Row data in the
+    ///  backup will be no newer than this timestamp.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.BackupInfo.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  Output only. Name of the table the backup was created from.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.BackupInfo.source_table)
+    pub source_table: ::std::string::String,
+    ///  Output only. Name of the backup from which this backup was copied. If a
+    ///  backup is not created by copying a backup, this field will be empty. Values
+    ///  are of the form:
+    ///  projects/<project>/instances/<instance>/clusters/<cluster>/backups/<backup>
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.BackupInfo.source_backup)
+    pub source_backup: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.BackupInfo.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a BackupInfo {
+    fn default() -> &'a BackupInfo {
+        <BackupInfo as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl BackupInfo {
+    pub fn new() -> BackupInfo {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "backup",
+            |m: &BackupInfo| { &m.backup },
+            |m: &mut BackupInfo| { &mut m.backup },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &BackupInfo| { &m.start_time },
+            |m: &mut BackupInfo| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &BackupInfo| { &m.end_time },
+            |m: &mut BackupInfo| { &mut m.end_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_table",
+            |m: &BackupInfo| { &m.source_table },
+            |m: &mut BackupInfo| { &mut m.source_table },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_backup",
+            |m: &BackupInfo| { &m.source_backup },
+            |m: &mut BackupInfo| { &mut m.source_backup },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<BackupInfo>(
+            "BackupInfo",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for BackupInfo {
+    const NAME: &'static str = "BackupInfo";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.backup = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                34 => {
+                    self.source_table = is.read_string()?;
+                },
+                82 => {
+                    self.source_backup = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.backup.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.backup);
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.source_table.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.source_table);
+        }
+        if !self.source_backup.is_empty() {
+            my_size += ::protobuf::rt::string_size(10, &self.source_backup);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.backup.is_empty() {
+            os.write_string(1, &self.backup)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if !self.source_table.is_empty() {
+            os.write_string(4, &self.source_table)?;
+        }
+        if !self.source_backup.is_empty() {
+            os.write_string(10, &self.source_backup)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> BackupInfo {
+        BackupInfo::new()
+    }
+
+    fn clear(&mut self) {
+        self.backup.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.source_table.clear();
+        self.source_backup.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static BackupInfo {
+        static instance: BackupInfo = BackupInfo {
+            backup: ::std::string::String::new(),
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            source_table: ::std::string::String::new(),
+            source_backup: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for BackupInfo {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("BackupInfo").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for BackupInfo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BackupInfo {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Indicates the type of the restore source.
+#[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+// @@protoc_insertion_point(enum:google.bigtable.admin.v2.RestoreSourceType)
+pub enum RestoreSourceType {
+    // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.RestoreSourceType.RESTORE_SOURCE_TYPE_UNSPECIFIED)
+    RESTORE_SOURCE_TYPE_UNSPECIFIED = 0,
+    // @@protoc_insertion_point(enum_value:google.bigtable.admin.v2.RestoreSourceType.BACKUP)
+    BACKUP = 1,
+}
+
+impl ::protobuf::Enum for RestoreSourceType {
+    const NAME: &'static str = "RestoreSourceType";
+
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<RestoreSourceType> {
+        match value {
+            0 => ::std::option::Option::Some(RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED),
+            1 => ::std::option::Option::Some(RestoreSourceType::BACKUP),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn from_str(str: &str) -> ::std::option::Option<RestoreSourceType> {
+        match str {
+            "RESTORE_SOURCE_TYPE_UNSPECIFIED" => ::std::option::Option::Some(RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED),
+            "BACKUP" => ::std::option::Option::Some(RestoreSourceType::BACKUP),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    const VALUES: &'static [RestoreSourceType] = &[
+        RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED,
+        RestoreSourceType::BACKUP,
+    ];
+}
+
+impl ::protobuf::EnumFull for RestoreSourceType {
+    fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().enum_by_package_relative_name("RestoreSourceType").unwrap()).clone()
+    }
+
+    fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+        let index = *self as usize;
+        Self::enum_descriptor().value_by_index(index)
+    }
+}
+
+impl ::std::default::Default for RestoreSourceType {
+    fn default() -> Self {
+        RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED
+    }
+}
+
+impl RestoreSourceType {
+    fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+        ::protobuf::reflect::GeneratedEnumDescriptorData::new::<RestoreSourceType>("RestoreSourceType")
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n$google/bigtable/admin/v2/table.proto\x12\x18google.bigtable.admin.v2\
-    \x1a\x1cgoogle/api/annotations.proto\x1a\x1egoogle/protobuf/duration.pro\
-    to\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa7\x07\n\x05Table\x12\x12\n\
-    \x04name\x18\x01\x20\x01(\tR\x04name\x12Y\n\x0ecluster_states\x18\x02\
-    \x20\x03(\x0b22.google.bigtable.admin.v2.Table.ClusterStatesEntryR\rclus\
-    terStates\x12\\\n\x0fcolumn_families\x18\x03\x20\x03(\x0b23.google.bigta\
-    ble.admin.v2.Table.ColumnFamiliesEntryR\x0ecolumnFamilies\x12V\n\x0bgran\
-    ularity\x18\x04\x20\x01(\x0e24.google.bigtable.admin.v2.Table.TimestampG\
-    ranularityR\x0bgranularity\x1a\xf4\x01\n\x0cClusterState\x12j\n\x11repli\
-    cation_state\x18\x01\x20\x01(\x0e2=.google.bigtable.admin.v2.Table.Clust\
-    erState.ReplicationStateR\x10replicationState\"x\n\x10ReplicationState\
-    \x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\x10\n\x0cINITIALIZING\x10\x01\
-    \x12\x17\n\x13PLANNED_MAINTENANCE\x10\x02\x12\x19\n\x15UNPLANNED_MAINTEN\
-    ANCE\x10\x03\x12\t\n\x05READY\x10\x04\x1an\n\x12ClusterStatesEntry\x12\
-    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12B\n\x05value\x18\x02\x20\x01\
-    (\x0b2,.google.bigtable.admin.v2.Table.ClusterStateR\x05value:\x028\x01\
-    \x1ai\n\x13ColumnFamiliesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03k\
-    ey\x12<\n\x05value\x18\x02\x20\x01(\x0b2&.google.bigtable.admin.v2.Colum\
-    nFamilyR\x05value:\x028\x01\"I\n\x14TimestampGranularity\x12%\n!TIMESTAM\
-    P_GRANULARITY_UNSPECIFIED\x10\0\x12\n\n\x06MILLIS\x10\x01\"\\\n\x04View\
-    \x12\x14\n\x10VIEW_UNSPECIFIED\x10\0\x12\r\n\tNAME_ONLY\x10\x01\x12\x0f\
-    \n\x0bSCHEMA_VIEW\x10\x02\x12\x14\n\x10REPLICATION_VIEW\x10\x03\x12\x08\
-    \n\x04FULL\x10\x04\"I\n\x0cColumnFamily\x129\n\x07gc_rule\x18\x01\x20\
-    \x01(\x0b2\x20.google.bigtable.admin.v2.GcRuleR\x06gcRule\"\x90\x03\n\
-    \x06GcRule\x12*\n\x10max_num_versions\x18\x01\x20\x01(\x05H\0R\x0emaxNum\
-    Versions\x124\n\x07max_age\x18\x02\x20\x01(\x0b2\x19.google.protobuf.Dur\
-    ationH\0R\x06maxAge\x12S\n\x0cintersection\x18\x03\x20\x01(\x0b2-.google\
-    .bigtable.admin.v2.GcRule.IntersectionH\0R\x0cintersection\x12>\n\x05uni\
-    on\x18\x04\x20\x01(\x0b2&.google.bigtable.admin.v2.GcRule.UnionH\0R\x05u\
-    nion\x1aF\n\x0cIntersection\x126\n\x05rules\x18\x01\x20\x03(\x0b2\x20.go\
-    ogle.bigtable.admin.v2.GcRuleR\x05rules\x1a?\n\x05Union\x126\n\x05rules\
-    \x18\x01\x20\x03(\x0b2\x20.google.bigtable.admin.v2.GcRuleR\x05rulesB\
-    \x06\n\x04rule\"\x9d\x03\n\x08Snapshot\x12\x12\n\x04name\x18\x01\x20\x01\
-    (\tR\x04name\x12B\n\x0csource_table\x18\x02\x20\x01(\x0b2\x1f.google.big\
-    table.admin.v2.TableR\x0bsourceTable\x12&\n\x0fdata_size_bytes\x18\x03\
-    \x20\x01(\x03R\rdataSizeBytes\x12;\n\x0bcreate_time\x18\x04\x20\x01(\x0b\
-    2\x1a.google.protobuf.TimestampR\ncreateTime\x12;\n\x0bdelete_time\x18\
-    \x05\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\ndeleteTime\x12>\n\x05\
-    state\x18\x06\x20\x01(\x0e2(.google.bigtable.admin.v2.Snapshot.StateR\
-    \x05state\x12\x20\n\x0bdescription\x18\x07\x20\x01(\tR\x0bdescription\"5\
-    \n\x05State\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\t\n\x05READY\x10\x01\
-    \x12\x0c\n\x08CREATING\x10\x02B\xad\x01\n\x1ccom.google.bigtable.admin.v\
-    2B\nTableProtoP\x01Z=google.golang.org/genproto/googleapis/bigtable/admi\
-    n/v2;admin\xaa\x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\\
-    Cloud\\Bigtable\\Admin\\V2J\xe0?\n\x07\x12\x05\x0f\0\xdb\x01\x01\n\xbe\
-    \x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202018\x20Google\
-    \x20LLC.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Versio\
-    n\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\
-    \x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20Y\
-    ou\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\
-    \x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\
-    \x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20w\
-    riting,\x20software\n\x20distributed\x20under\x20the\x20License\x20is\
-    \x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WA\
-    RRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\
-    \x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
-    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
-    r\x20the\x20License.\n\n\n\x08\n\x01\x02\x12\x03\x11\0!\n\t\n\x02\x03\0\
-    \x12\x03\x13\0&\n\t\n\x02\x03\x01\x12\x03\x14\0(\n\t\n\x02\x03\x02\x12\
-    \x03\x15\0)\n\x08\n\x01\x08\x12\x03\x17\0;\n\t\n\x02\x08%\x12\x03\x17\0;\
-    \n\x08\n\x01\x08\x12\x03\x18\0T\n\t\n\x02\x08\x0b\x12\x03\x18\0T\n\x08\n\
-    \x01\x08\x12\x03\x19\0\"\n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\x01\x08\
-    \x12\x03\x1a\0+\n\t\n\x02\x08\x08\x12\x03\x1a\0+\n\x08\n\x01\x08\x12\x03\
-    \x1b\05\n\t\n\x02\x08\x01\x12\x03\x1b\05\n\x08\n\x01\x08\x12\x03\x1c\0<\
-    \n\t\n\x02\x08)\x12\x03\x1c\0<\n\x90\x01\n\x02\x04\0\x12\x04\x20\0w\x01\
-    \x1a\x83\x01\x20A\x20collection\x20of\x20user\x20data\x20indexed\x20by\
-    \x20row,\x20column,\x20and\x20timestamp.\n\x20Each\x20table\x20is\x20ser\
-    ved\x20using\x20the\x20resources\x20of\x20its\x20parent\x20cluster.\n\n\
-    \n\n\x03\x04\0\x01\x12\x03\x20\x08\r\nD\n\x04\x04\0\x03\0\x12\x04\"\x02>\
-    \x03\x1a6\x20The\x20state\x20of\x20a\x20table's\x20data\x20in\x20a\x20pa\
-    rticular\x20cluster.\n\n\x0c\n\x05\x04\0\x03\0\x01\x12\x03\"\n\x16\n+\n\
-    \x06\x04\0\x03\0\x04\0\x12\x04$\x049\x05\x1a\x1b\x20Table\x20replication\
-    \x20states.\n\n\x0e\n\x07\x04\0\x03\0\x04\0\x01\x12\x03$\t\x19\nQ\n\x08\
-    \x04\0\x03\0\x04\0\x02\0\x12\x03&\x06\x1a\x1a@\x20The\x20replication\x20\
-    state\x20of\x20the\x20table\x20is\x20unknown\x20in\x20this\x20cluster.\n\
-    \n\x10\n\t\x04\0\x03\0\x04\0\x02\0\x01\x12\x03&\x06\x15\n\x10\n\t\x04\0\
-    \x03\0\x04\0\x02\0\x02\x12\x03&\x18\x19\n\xda\x01\n\x08\x04\0\x03\0\x04\
-    \0\x02\x01\x12\x03+\x06\x17\x1a\xc8\x01\x20The\x20cluster\x20was\x20rece\
-    ntly\x20created,\x20and\x20the\x20table\x20must\x20finish\x20copying\n\
-    \x20over\x20pre-existing\x20data\x20from\x20other\x20clusters\x20before\
-    \x20it\x20can\x20begin\n\x20receiving\x20live\x20replication\x20updates\
-    \x20and\x20serving\x20Data\x20API\x20requests.\n\n\x10\n\t\x04\0\x03\0\
-    \x04\0\x02\x01\x01\x12\x03+\x06\x12\n\x10\n\t\x04\0\x03\0\x04\0\x02\x01\
-    \x02\x12\x03+\x15\x16\n\x85\x01\n\x08\x04\0\x03\0\x04\0\x02\x02\x12\x03/\
-    \x06\x1e\x1at\x20The\x20table\x20is\x20temporarily\x20unable\x20to\x20se\
-    rve\x20Data\x20API\x20requests\x20from\x20this\n\x20cluster\x20due\x20to\
-    \x20planned\x20internal\x20maintenance.\n\n\x10\n\t\x04\0\x03\0\x04\0\
-    \x02\x02\x01\x12\x03/\x06\x19\n\x10\n\t\x04\0\x03\0\x04\0\x02\x02\x02\
-    \x12\x03/\x1c\x1d\n\x8b\x01\n\x08\x04\0\x03\0\x04\0\x02\x03\x12\x033\x06\
-    \x20\x1az\x20The\x20table\x20is\x20temporarily\x20unable\x20to\x20serve\
-    \x20Data\x20API\x20requests\x20from\x20this\n\x20cluster\x20due\x20to\
-    \x20unplanned\x20or\x20emergency\x20maintenance.\n\n\x10\n\t\x04\0\x03\0\
-    \x04\0\x02\x03\x01\x12\x033\x06\x1b\n\x10\n\t\x04\0\x03\0\x04\0\x02\x03\
-    \x02\x12\x033\x1e\x1f\n\xba\x01\n\x08\x04\0\x03\0\x04\0\x02\x04\x12\x038\
-    \x06\x10\x1a\xa8\x01\x20The\x20table\x20can\x20serve\x20Data\x20API\x20r\
-    equests\x20from\x20this\x20cluster.\x20Depending\x20on\n\x20replication\
-    \x20delay,\x20reads\x20may\x20not\x20immediately\x20reflect\x20the\x20st\
-    ate\x20of\x20the\n\x20table\x20in\x20other\x20clusters.\n\n\x10\n\t\x04\
-    \0\x03\0\x04\0\x02\x04\x01\x12\x038\x06\x0b\n\x10\n\t\x04\0\x03\0\x04\0\
-    \x02\x04\x02\x12\x038\x0e\x0f\nX\n\x06\x04\0\x03\0\x02\0\x12\x03=\x04+\
-    \x1aI\x20(`OutputOnly`)\n\x20The\x20state\x20of\x20replication\x20for\
-    \x20the\x20table\x20in\x20this\x20cluster.\n\n\x0e\n\x07\x04\0\x03\0\x02\
-    \0\x06\x12\x03=\x04\x14\n\x0e\n\x07\x04\0\x03\0\x02\0\x01\x12\x03=\x15&\
-    \n\x0e\n\x07\x04\0\x03\0\x02\0\x03\x12\x03=)*\nk\n\x04\x04\0\x04\0\x12\
-    \x04B\x02I\x03\x1a]\x20Possible\x20timestamp\x20granularities\x20to\x20u\
-    se\x20when\x20keeping\x20multiple\x20versions\n\x20of\x20data\x20in\x20a\
-    \x20table.\n\n\x0c\n\x05\x04\0\x04\0\x01\x12\x03B\x07\x1b\n\x8c\x01\n\
-    \x06\x04\0\x04\0\x02\0\x12\x03E\x04*\x1a}\x20The\x20user\x20did\x20not\
-    \x20specify\x20a\x20granularity.\x20Should\x20not\x20be\x20returned.\n\
-    \x20When\x20specified\x20during\x20table\x20creation,\x20MILLIS\x20will\
-    \x20be\x20used.\n\n\x0e\n\x07\x04\0\x04\0\x02\0\x01\x12\x03E\x04%\n\x0e\
-    \n\x07\x04\0\x04\0\x02\0\x02\x12\x03E()\nH\n\x06\x04\0\x04\0\x02\x01\x12\
-    \x03H\x04\x0f\x1a9\x20The\x20table\x20keeps\x20data\x20versioned\x20at\
-    \x20a\x20granularity\x20of\x201ms.\n\n\x0e\n\x07\x04\0\x04\0\x02\x01\x01\
-    \x12\x03H\x04\n\n\x0e\n\x07\x04\0\x04\0\x02\x01\x02\x12\x03H\r\x0e\n5\n\
-    \x04\x04\0\x04\x01\x12\x04L\x02\\\x03\x1a'\x20Defines\x20a\x20view\x20ov\
-    er\x20a\x20table's\x20fields.\n\n\x0c\n\x05\x04\0\x04\x01\x01\x12\x03L\
-    \x07\x0b\nT\n\x06\x04\0\x04\x01\x02\0\x12\x03N\x04\x19\x1aE\x20Uses\x20t\
-    he\x20default\x20view\x20for\x20each\x20method\x20as\x20documented\x20in\
-    \x20its\x20request.\n\n\x0e\n\x07\x04\0\x04\x01\x02\0\x01\x12\x03N\x04\
-    \x14\n\x0e\n\x07\x04\0\x04\x01\x02\0\x02\x12\x03N\x17\x18\n'\n\x06\x04\0\
-    \x04\x01\x02\x01\x12\x03Q\x04\x12\x1a\x18\x20Only\x20populates\x20`name`\
-    .\n\n\x0e\n\x07\x04\0\x04\x01\x02\x01\x01\x12\x03Q\x04\r\n\x0e\n\x07\x04\
-    \0\x04\x01\x02\x01\x02\x12\x03Q\x10\x11\nP\n\x06\x04\0\x04\x01\x02\x02\
-    \x12\x03T\x04\x14\x1aA\x20Only\x20populates\x20`name`\x20and\x20fields\
-    \x20related\x20to\x20the\x20table's\x20schema.\n\n\x0e\n\x07\x04\0\x04\
-    \x01\x02\x02\x01\x12\x03T\x04\x0f\n\x0e\n\x07\x04\0\x04\x01\x02\x02\x02\
-    \x12\x03T\x12\x13\n\\\n\x06\x04\0\x04\x01\x02\x03\x12\x03X\x04\x19\x1aM\
-    \x20Only\x20populates\x20`name`\x20and\x20fields\x20related\x20to\x20the\
-    \x20table's\n\x20replication\x20state.\n\n\x0e\n\x07\x04\0\x04\x01\x02\
-    \x03\x01\x12\x03X\x04\x14\n\x0e\n\x07\x04\0\x04\x01\x02\x03\x02\x12\x03X\
-    \x17\x18\n&\n\x06\x04\0\x04\x01\x02\x04\x12\x03[\x04\r\x1a\x17\x20Popula\
-    tes\x20all\x20fields.\n\n\x0e\n\x07\x04\0\x04\x01\x02\x04\x01\x12\x03[\
-    \x04\x08\n\x0e\n\x07\x04\0\x04\x01\x02\x04\x02\x12\x03[\x0b\x0c\n\xe2\
-    \x01\n\x04\x04\0\x02\0\x12\x03b\x02\x12\x1a\xd4\x01\x20(`OutputOnly`)\n\
-    \x20The\x20unique\x20name\x20of\x20the\x20table.\x20Values\x20are\x20of\
-    \x20the\x20form\n\x20`projects/<project>/instances/<instance>/tables/[_a\
-    -zA-Z0-9][-_.a-zA-Z0-9]*`.\n\x20Views:\x20`NAME_ONLY`,\x20`SCHEMA_VIEW`,\
-    \x20`REPLICATION_VIEW`,\x20`FULL`\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03b\
-    \x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03b\t\r\n\x0c\n\x05\x04\0\x02\
-    \0\x03\x12\x03b\x10\x11\n\xc7\x02\n\x04\x04\0\x02\x01\x12\x03j\x02/\x1a\
-    \xb9\x02\x20(`OutputOnly`)\n\x20Map\x20from\x20cluster\x20ID\x20to\x20pe\
-    r-cluster\x20table\x20state.\n\x20If\x20it\x20could\x20not\x20be\x20dete\
-    rmined\x20whether\x20or\x20not\x20the\x20table\x20has\x20data\x20in\x20a\
-    \n\x20particular\x20cluster\x20(for\x20example,\x20if\x20its\x20zone\x20\
-    is\x20unavailable),\x20then\n\x20there\x20will\x20be\x20an\x20entry\x20f\
-    or\x20the\x20cluster\x20with\x20UNKNOWN\x20`replication_status`.\n\x20Vi\
-    ews:\x20`REPLICATION_VIEW`,\x20`FULL`\n\n\x0c\n\x05\x04\0\x02\x01\x06\
-    \x12\x03j\x02\x1b\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03j\x1c*\n\x0c\n\
-    \x05\x04\0\x02\x01\x03\x12\x03j-.\n\x89\x01\n\x04\x04\0\x02\x02\x12\x03o\
-    \x020\x1a|\x20(`CreationOnly`)\n\x20The\x20column\x20families\x20configu\
-    red\x20for\x20this\x20table,\x20mapped\x20by\x20column\x20family\x20ID.\
-    \n\x20Views:\x20`SCHEMA_VIEW`,\x20`FULL`\n\n\x0c\n\x05\x04\0\x02\x02\x06\
-    \x12\x03o\x02\x1b\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03o\x1c+\n\x0c\n\
-    \x05\x04\0\x02\x02\x03\x12\x03o./\n\x8d\x02\n\x04\x04\0\x02\x03\x12\x03v\
-    \x02'\x1a\xff\x01\x20(`CreationOnly`)\n\x20The\x20granularity\x20(i.e.\
-    \x20`MILLIS`)\x20at\x20which\x20timestamps\x20are\x20stored\x20in\n\x20t\
-    his\x20table.\x20Timestamps\x20not\x20matching\x20the\x20granularity\x20\
-    will\x20be\x20rejected.\n\x20If\x20unspecified\x20at\x20creation\x20time\
-    ,\x20the\x20value\x20will\x20be\x20set\x20to\x20`MILLIS`.\n\x20Views:\
-    \x20`SCHEMA_VIEW`,\x20`FULL`\n\n\x0c\n\x05\x04\0\x02\x03\x06\x12\x03v\
-    \x02\x16\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03v\x17\"\n\x0c\n\x05\x04\0\
-    \x02\x03\x03\x12\x03v%&\nR\n\x02\x04\x01\x12\x05z\0\x82\x01\x01\x1aE\x20\
-    A\x20set\x20of\x20columns\x20within\x20a\x20table\x20which\x20share\x20a\
-    \x20common\x20configuration.\n\n\n\n\x03\x04\x01\x01\x12\x03z\x08\x14\n\
-    \x9e\x02\n\x04\x04\x01\x02\0\x12\x04\x81\x01\x02\x15\x1a\x8f\x02\x20Garb\
-    age\x20collection\x20rule\x20specified\x20as\x20a\x20protobuf.\n\x20Must\
-    \x20serialize\x20to\x20at\x20most\x20500\x20bytes.\n\n\x20NOTE:\x20Garba\
-    ge\x20collection\x20executes\x20opportunistically\x20in\x20the\x20backgr\
-    ound,\x20and\n\x20so\x20it's\x20possible\x20for\x20reads\x20to\x20return\
-    \x20a\x20cell\x20even\x20if\x20it\x20matches\x20the\x20active\n\x20GC\
-    \x20expression\x20for\x20its\x20family.\n\n\r\n\x05\x04\x01\x02\0\x06\
-    \x12\x04\x81\x01\x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x81\x01\t\
-    \x10\n\r\n\x05\x04\x01\x02\0\x03\x12\x04\x81\x01\x13\x14\nU\n\x02\x04\
-    \x02\x12\x06\x85\x01\0\xa2\x01\x01\x1aG\x20Rule\x20for\x20determining\
-    \x20which\x20cells\x20to\x20delete\x20during\x20garbage\x20collection.\n\
-    \n\x0b\n\x03\x04\x02\x01\x12\x04\x85\x01\x08\x0e\nO\n\x04\x04\x02\x03\0\
-    \x12\x06\x87\x01\x02\x8a\x01\x03\x1a?\x20A\x20GcRule\x20which\x20deletes\
-    \x20cells\x20matching\x20all\x20of\x20the\x20given\x20rules.\n\n\r\n\x05\
-    \x04\x02\x03\0\x01\x12\x04\x87\x01\n\x16\nW\n\x06\x04\x02\x03\0\x02\0\
-    \x12\x04\x89\x01\x04\x1e\x1aG\x20Only\x20delete\x20cells\x20which\x20wou\
-    ld\x20be\x20deleted\x20by\x20every\x20element\x20of\x20`rules`.\n\n\x0f\
-    \n\x07\x04\x02\x03\0\x02\0\x04\x12\x04\x89\x01\x04\x0c\n\x0f\n\x07\x04\
-    \x02\x03\0\x02\0\x06\x12\x04\x89\x01\r\x13\n\x0f\n\x07\x04\x02\x03\0\x02\
-    \0\x01\x12\x04\x89\x01\x14\x19\n\x0f\n\x07\x04\x02\x03\0\x02\0\x03\x12\
-    \x04\x89\x01\x1c\x1d\nO\n\x04\x04\x02\x03\x01\x12\x06\x8d\x01\x02\x90\
-    \x01\x03\x1a?\x20A\x20GcRule\x20which\x20deletes\x20cells\x20matching\
-    \x20any\x20of\x20the\x20given\x20rules.\n\n\r\n\x05\x04\x02\x03\x01\x01\
-    \x12\x04\x8d\x01\n\x0f\nP\n\x06\x04\x02\x03\x01\x02\0\x12\x04\x8f\x01\
-    \x04\x1e\x1a@\x20Delete\x20cells\x20which\x20would\x20be\x20deleted\x20b\
-    y\x20any\x20element\x20of\x20`rules`.\n\n\x0f\n\x07\x04\x02\x03\x01\x02\
-    \0\x04\x12\x04\x8f\x01\x04\x0c\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x06\x12\
-    \x04\x8f\x01\r\x13\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x01\x12\x04\x8f\x01\
-    \x14\x19\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x03\x12\x04\x8f\x01\x1c\x1d\n\
-    +\n\x04\x04\x02\x08\0\x12\x06\x93\x01\x02\xa1\x01\x03\x1a\x1b\x20Garbage\
-    \x20collection\x20rules.\n\n\r\n\x05\x04\x02\x08\0\x01\x12\x04\x93\x01\
-    \x08\x0c\nF\n\x04\x04\x02\x02\0\x12\x04\x95\x01\x04\x1f\x1a8\x20Delete\
-    \x20all\x20cells\x20in\x20a\x20column\x20except\x20the\x20most\x20recent\
-    \x20N.\n\n\r\n\x05\x04\x02\x02\0\x05\x12\x04\x95\x01\x04\t\n\r\n\x05\x04\
-    \x02\x02\0\x01\x12\x04\x95\x01\n\x1a\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\
-    \x95\x01\x1d\x1e\n\xa0\x01\n\x04\x04\x02\x02\x01\x12\x04\x9a\x01\x04)\
-    \x1a\x91\x01\x20Delete\x20cells\x20in\x20a\x20column\x20older\x20than\
-    \x20the\x20given\x20age.\n\x20Values\x20must\x20be\x20at\x20least\x20one\
-    \x20millisecond,\x20and\x20will\x20be\x20truncated\x20to\n\x20microsecon\
-    d\x20granularity.\n\n\r\n\x05\x04\x02\x02\x01\x06\x12\x04\x9a\x01\x04\
-    \x1c\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\x9a\x01\x1d$\n\r\n\x05\x04\
-    \x02\x02\x01\x03\x12\x04\x9a\x01'(\nH\n\x04\x04\x02\x02\x02\x12\x04\x9d\
-    \x01\x04\"\x1a:\x20Delete\x20cells\x20that\x20would\x20be\x20deleted\x20\
-    by\x20every\x20nested\x20rule.\n\n\r\n\x05\x04\x02\x02\x02\x06\x12\x04\
-    \x9d\x01\x04\x10\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\x9d\x01\x11\x1d\n\
-    \r\n\x05\x04\x02\x02\x02\x03\x12\x04\x9d\x01\x20!\nF\n\x04\x04\x02\x02\
-    \x03\x12\x04\xa0\x01\x04\x14\x1a8\x20Delete\x20cells\x20that\x20would\
-    \x20be\x20deleted\x20by\x20any\x20nested\x20rule.\n\n\r\n\x05\x04\x02\
-    \x02\x03\x06\x12\x04\xa0\x01\x04\t\n\r\n\x05\x04\x02\x02\x03\x01\x12\x04\
-    \xa0\x01\n\x0f\n\r\n\x05\x04\x02\x02\x03\x03\x12\x04\xa0\x01\x12\x13\n\
-    \xc8\x03\n\x02\x04\x03\x12\x06\xab\x01\0\xdb\x01\x01\x1a\xb9\x03\x20A\
+    \x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\
+    \x1a$google/bigtable/admin/v2/types.proto\x1a\x1egoogle/protobuf/duratio\
+    n.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/rpc/status.\
+    proto\"\xb3\x01\n\x0bRestoreInfo\x12L\n\x0bsource_type\x18\x01\x20\x01(\
+    \x0e2+.google.bigtable.admin.v2.RestoreSourceTypeR\nsourceType\x12G\n\
+    \x0bbackup_info\x18\x02\x20\x01(\x0b2$.google.bigtable.admin.v2.BackupIn\
+    foH\0R\nbackupInfoB\r\n\x0bsource_info\"Z\n\x12ChangeStreamConfig\x12D\n\
+    \x10retention_period\x18\x01\x20\x01(\x0b2\x19.google.protobuf.DurationR\
+    \x0fretentionPeriod\"\xaa\r\n\x05Table\x12\x12\n\x04name\x18\x01\x20\x01\
+    (\tR\x04name\x12^\n\x0ecluster_states\x18\x02\x20\x03(\x0b22.google.bigt\
+    able.admin.v2.Table.ClusterStatesEntryR\rclusterStatesB\x03\xe0A\x03\x12\
+    \\\n\x0fcolumn_families\x18\x03\x20\x03(\x0b23.google.bigtable.admin.v2.\
+    Table.ColumnFamiliesEntryR\x0ecolumnFamilies\x12[\n\x0bgranularity\x18\
+    \x04\x20\x01(\x0e24.google.bigtable.admin.v2.Table.TimestampGranularityR\
+    \x0bgranularityB\x03\xe0A\x05\x12M\n\x0crestore_info\x18\x06\x20\x01(\
+    \x0b2%.google.bigtable.admin.v2.RestoreInfoR\x0brestoreInfoB\x03\xe0A\
+    \x03\x12^\n\x14change_stream_config\x18\x08\x20\x01(\x0b2,.google.bigtab\
+    le.admin.v2.ChangeStreamConfigR\x12changeStreamConfig\x12/\n\x13deletion\
+    _protection\x18\t\x20\x01(\x08R\x12deletionProtection\x12o\n\x17automate\
+    d_backup_policy\x18\r\x20\x01(\x0b25.google.bigtable.admin.v2.Table.Auto\
+    matedBackupPolicyH\0R\x15automatedBackupPolicy\x1a\xe8\x02\n\x0cClusterS\
+    tate\x12o\n\x11replication_state\x18\x01\x20\x01(\x0e2=.google.bigtable.\
+    admin.v2.Table.ClusterState.ReplicationStateR\x10replicationStateB\x03\
+    \xe0A\x03\x12V\n\x0fencryption_info\x18\x02\x20\x03(\x0b2(.google.bigtab\
+    le.admin.v2.EncryptionInfoR\x0eencryptionInfoB\x03\xe0A\x03\"\x8e\x01\n\
+    \x10ReplicationState\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\x10\n\x0cINI\
+    TIALIZING\x10\x01\x12\x17\n\x13PLANNED_MAINTENANCE\x10\x02\x12\x19\n\x15\
+    UNPLANNED_MAINTENANCE\x10\x03\x12\t\n\x05READY\x10\x04\x12\x14\n\x10READ\
+    Y_OPTIMIZING\x10\x05\x1a\xa0\x01\n\x15AutomatedBackupPolicy\x12I\n\x10re\
+    tention_period\x18\x01\x20\x01(\x0b2\x19.google.protobuf.DurationR\x0fre\
+    tentionPeriodB\x03\xe0A\x02\x12<\n\tfrequency\x18\x02\x20\x01(\x0b2\x19.\
+    google.protobuf.DurationR\tfrequencyB\x03\xe0A\x02\x1an\n\x12ClusterStat\
+    esEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12B\n\x05value\x18\
+    \x02\x20\x01(\x0b2,.google.bigtable.admin.v2.Table.ClusterStateR\x05valu\
+    e:\x028\x01\x1ai\n\x13ColumnFamiliesEntry\x12\x10\n\x03key\x18\x01\x20\
+    \x01(\tR\x03key\x12<\n\x05value\x18\x02\x20\x01(\x0b2&.google.bigtable.a\
+    dmin.v2.ColumnFamilyR\x05value:\x028\x01\"I\n\x14TimestampGranularity\
+    \x12%\n!TIMESTAMP_GRANULARITY_UNSPECIFIED\x10\0\x12\n\n\x06MILLIS\x10\
+    \x01\"q\n\x04View\x12\x14\n\x10VIEW_UNSPECIFIED\x10\0\x12\r\n\tNAME_ONLY\
+    \x10\x01\x12\x0f\n\x0bSCHEMA_VIEW\x10\x02\x12\x14\n\x10REPLICATION_VIEW\
+    \x10\x03\x12\x13\n\x0fENCRYPTION_VIEW\x10\x05\x12\x08\n\x04FULL\x10\x04B\
+    \x19\n\x17automated_backup_config:_\xeaA\\\n\"bigtableadmin.googleapis.c\
+    om/Table\x126projects/{project}/instances/{instance}/tables/{table}\"\
+    \xd6\x06\n\x0eAuthorizedView\x12\x17\n\x04name\x18\x01\x20\x01(\tR\x04na\
+    meB\x03\xe0A\x08\x12V\n\x0bsubset_view\x18\x02\x20\x01(\x0b23.google.big\
+    table.admin.v2.AuthorizedView.SubsetViewH\0R\nsubsetView\x12\x12\n\x04et\
+    ag\x18\x03\x20\x01(\tR\x04etag\x12/\n\x13deletion_protection\x18\x04\x20\
+    \x01(\x08R\x12deletionProtection\x1a^\n\rFamilySubsets\x12\x1e\n\nqualif\
+    iers\x18\x01\x20\x03(\x0cR\nqualifiers\x12-\n\x12qualifier_prefixes\x18\
+    \x02\x20\x03(\x0cR\x11qualifierPrefixes\x1a\x98\x02\n\nSubsetView\x12!\n\
+    \x0crow_prefixes\x18\x01\x20\x03(\x0cR\x0browPrefixes\x12m\n\x0efamily_s\
+    ubsets\x18\x02\x20\x03(\x0b2F.google.bigtable.admin.v2.AuthorizedView.Su\
+    bsetView.FamilySubsetsEntryR\rfamilySubsets\x1ax\n\x12FamilySubsetsEntry\
+    \x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12L\n\x05value\x18\x02\x20\
+    \x01(\x0b26.google.bigtable.admin.v2.AuthorizedView.FamilySubsetsR\x05va\
+    lue:\x028\x01\"Q\n\x0cResponseView\x12\x1d\n\x19RESPONSE_VIEW_UNSPECIFIE\
+    D\x10\0\x12\r\n\tNAME_ONLY\x10\x01\x12\t\n\x05BASIC\x10\x02\x12\x08\n\
+    \x04FULL\x10\x03B\x11\n\x0fauthorized_view:\xac\x01\xeaA\xa8\x01\n+bigta\
+    bleadmin.googleapis.com/AuthorizedView\x12Xprojects/{project}/instances/\
+    {instance}/tables/{table}/authorizedViews/{authorized_view}*\x0fauthoriz\
+    edViews2\x0eauthorizedView\"\x88\x01\n\x0cColumnFamily\x129\n\x07gc_rule\
+    \x18\x01\x20\x01(\x0b2\x20.google.bigtable.admin.v2.GcRuleR\x06gcRule\
+    \x12=\n\nvalue_type\x18\x03\x20\x01(\x0b2\x1e.google.bigtable.admin.v2.T\
+    ypeR\tvalueType\"\x90\x03\n\x06GcRule\x12*\n\x10max_num_versions\x18\x01\
+    \x20\x01(\x05H\0R\x0emaxNumVersions\x124\n\x07max_age\x18\x02\x20\x01(\
+    \x0b2\x19.google.protobuf.DurationH\0R\x06maxAge\x12S\n\x0cintersection\
+    \x18\x03\x20\x01(\x0b2-.google.bigtable.admin.v2.GcRule.IntersectionH\0R\
+    \x0cintersection\x12>\n\x05union\x18\x04\x20\x01(\x0b2&.google.bigtable.\
+    admin.v2.GcRule.UnionH\0R\x05union\x1aF\n\x0cIntersection\x126\n\x05rule\
+    s\x18\x01\x20\x03(\x0b2\x20.google.bigtable.admin.v2.GcRuleR\x05rules\
+    \x1a?\n\x05Union\x126\n\x05rules\x18\x01\x20\x03(\x0b2\x20.google.bigtab\
+    le.admin.v2.GcRuleR\x05rulesB\x06\n\x04rule\"\x8a\x03\n\x0eEncryptionInf\
+    o\x12e\n\x0fencryption_type\x18\x03\x20\x01(\x0e27.google.bigtable.admin\
+    .v2.EncryptionInfo.EncryptionTypeR\x0eencryptionTypeB\x03\xe0A\x03\x12D\
+    \n\x11encryption_status\x18\x04\x20\x01(\x0b2\x12.google.rpc.StatusR\x10\
+    encryptionStatusB\x03\xe0A\x03\x12X\n\x0fkms_key_version\x18\x02\x20\x01\
+    (\tR\rkmsKeyVersionB0\xfaA*\n(cloudkms.googleapis.com/CryptoKeyVersion\
+    \xe0A\x03\"q\n\x0eEncryptionType\x12\x1f\n\x1bENCRYPTION_TYPE_UNSPECIFIE\
+    D\x10\0\x12\x1d\n\x19GOOGLE_DEFAULT_ENCRYPTION\x10\x01\x12\x1f\n\x1bCUST\
+    OMER_MANAGED_ENCRYPTION\x10\x02\"\xae\x04\n\x08Snapshot\x12\x12\n\x04nam\
+    e\x18\x01\x20\x01(\tR\x04name\x12G\n\x0csource_table\x18\x02\x20\x01(\
+    \x0b2\x1f.google.bigtable.admin.v2.TableR\x0bsourceTableB\x03\xe0A\x03\
+    \x12+\n\x0fdata_size_bytes\x18\x03\x20\x01(\x03R\rdataSizeBytesB\x03\xe0\
+    A\x03\x12@\n\x0bcreate_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.Ti\
+    mestampR\ncreateTimeB\x03\xe0A\x03\x12;\n\x0bdelete_time\x18\x05\x20\x01\
+    (\x0b2\x1a.google.protobuf.TimestampR\ndeleteTime\x12C\n\x05state\x18\
+    \x06\x20\x01(\x0e2(.google.bigtable.admin.v2.Snapshot.StateR\x05stateB\
+    \x03\xe0A\x03\x12\x20\n\x0bdescription\x18\x07\x20\x01(\tR\x0bdescriptio\
+    n\"5\n\x05State\x12\x13\n\x0fSTATE_NOT_KNOWN\x10\0\x12\t\n\x05READY\x10\
+    \x01\x12\x0c\n\x08CREATING\x10\x02:{\xeaAx\n%bigtableadmin.googleapis.co\
+    m/Snapshot\x12Oprojects/{project}/instances/{instance}/clusters/{cluster\
+    }/snapshots/{snapshot}\"\xfb\x06\n\x06Backup\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x12)\n\x0csource_table\x18\x02\x20\x01(\tR\x0bsourc\
+    eTableB\x06\xe0A\x05\xe0A\x02\x12(\n\rsource_backup\x18\n\x20\x01(\tR\
+    \x0csourceBackupB\x03\xe0A\x03\x12@\n\x0bexpire_time\x18\x03\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\nexpireTimeB\x03\xe0A\x02\x12>\n\ns\
+    tart_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTim\
+    eB\x03\xe0A\x03\x12:\n\x08end_time\x18\x05\x20\x01(\x0b2\x1a.google.prot\
+    obuf.TimestampR\x07endTimeB\x03\xe0A\x03\x12\"\n\nsize_bytes\x18\x06\x20\
+    \x01(\x03R\tsizeBytesB\x03\xe0A\x03\x12A\n\x05state\x18\x07\x20\x01(\x0e\
+    2&.google.bigtable.admin.v2.Backup.StateR\x05stateB\x03\xe0A\x03\x12V\n\
+    \x0fencryption_info\x18\t\x20\x01(\x0b2(.google.bigtable.admin.v2.Encryp\
+    tionInfoR\x0eencryptionInfoB\x03\xe0A\x03\x12L\n\x0bbackup_type\x18\x0b\
+    \x20\x01(\x0e2+.google.bigtable.admin.v2.Backup.BackupTypeR\nbackupType\
+    \x12K\n\x14hot_to_standard_time\x18\x0c\x20\x01(\x0b2\x1a.google.protobu\
+    f.TimestampR\x11hotToStandardTime\"7\n\x05State\x12\x15\n\x11STATE_UNSPE\
+    CIFIED\x10\0\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\"@\n\
+    \nBackupType\x12\x1b\n\x17BACKUP_TYPE_UNSPECIFIED\x10\0\x12\x0c\n\x08STA\
+    NDARD\x10\x01\x12\x07\n\x03HOT\x10\x02:u\xeaAr\n#bigtableadmin.googleapi\
+    s.com/Backup\x12Kprojects/{project}/instances/{instance}/clusters/{clust\
+    er}/backups/{backup}\"\xf7\x01\n\nBackupInfo\x12\x1b\n\x06backup\x18\x01\
+    \x20\x01(\tR\x06backupB\x03\xe0A\x03\x12>\n\nstart_time\x18\x02\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\tstartTimeB\x03\xe0A\x03\x12:\n\x08\
+    end_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07endTime\
+    B\x03\xe0A\x03\x12&\n\x0csource_table\x18\x04\x20\x01(\tR\x0bsourceTable\
+    B\x03\xe0A\x03\x12(\n\rsource_backup\x18\n\x20\x01(\tR\x0csourceBackupB\
+    \x03\xe0A\x03*D\n\x11RestoreSourceType\x12#\n\x1fRESTORE_SOURCE_TYPE_UNS\
+    PECIFIED\x10\0\x12\n\n\x06BACKUP\x10\x01B\xf7\x02\n\x1ccom.google.bigtab\
+    le.admin.v2B\nTableProtoP\x01Z8cloud.google.com/go/bigtable/admin/apiv2/\
+    adminpb;adminpb\xaa\x02\x1eGoogle.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoo\
+    gle\\Cloud\\Bigtable\\Admin\\V2\xea\x02\"Google::Cloud::Bigtable::Admin:\
+    :V2\xeaA\xa6\x01\n(cloudkms.googleapis.com/CryptoKeyVersion\x12zprojects\
+    /{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_k\
+    ey}/cryptoKeyVersions/{crypto_key_version}J\xfc\xad\x01\n\x07\x12\x05\
+    \x0e\0\xc4\x04\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Cop\
+    yright\x202024\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apach\
+    e\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\
+    \x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20\
+    the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20L\
+    icense\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICEN\
+    SE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agr\
+    eed\x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
+    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
+    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
+    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
+    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
+    tations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0!\n\t\
+    \n\x02\x03\0\x12\x03\x12\0)\n\t\n\x02\x03\x01\x12\x03\x13\0#\n\t\n\x02\
+    \x03\x02\x12\x03\x14\0.\n\t\n\x02\x03\x03\x12\x03\x15\0(\n\t\n\x02\x03\
+    \x04\x12\x03\x16\0)\n\t\n\x02\x03\x05\x12\x03\x17\0!\n\x08\n\x01\x08\x12\
+    \x03\x19\0;\n\t\n\x02\x08%\x12\x03\x19\0;\n\x08\n\x01\x08\x12\x03\x1a\0O\
+    \n\t\n\x02\x08\x0b\x12\x03\x1a\0O\n\x08\n\x01\x08\x12\x03\x1b\0\"\n\t\n\
+    \x02\x08\n\x12\x03\x1b\0\"\n\x08\n\x01\x08\x12\x03\x1c\0+\n\t\n\x02\x08\
+    \x08\x12\x03\x1c\0+\n\x08\n\x01\x08\x12\x03\x1d\05\n\t\n\x02\x08\x01\x12\
+    \x03\x1d\05\n\x08\n\x01\x08\x12\x03\x1e\0<\n\t\n\x02\x08)\x12\x03\x1e\0<\
+    \n\x08\n\x01\x08\x12\x03\x1f\0;\n\t\n\x02\x08-\x12\x03\x1f\0;\n\t\n\x01\
+    \x08\x12\x04\x20\0#\x02\n\x0c\n\x04\x08\x9d\x08\0\x12\x04\x20\0#\x02\n0\
+    \n\x02\x04\0\x12\x04&\00\x01\x1a$\x20Information\x20about\x20a\x20table\
+    \x20restore.\n\n\n\n\x03\x04\0\x01\x12\x03&\x08\x13\n.\n\x04\x04\0\x02\0\
+    \x12\x03(\x02$\x1a!\x20The\x20type\x20of\x20the\x20restore\x20source.\n\
+    \n\x0c\n\x05\x04\0\x02\0\x06\x12\x03(\x02\x13\n\x0c\n\x05\x04\0\x02\0\
+    \x01\x12\x03(\x14\x1f\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03(\"#\nG\n\x04\
+    \x04\0\x08\0\x12\x04+\x02/\x03\x1a9\x20Information\x20about\x20the\x20so\
+    urce\x20used\x20to\x20restore\x20the\x20table.\n\n\x0c\n\x05\x04\0\x08\0\
+    \x01\x12\x03+\x08\x13\ng\n\x04\x04\0\x02\x01\x12\x03.\x04\x1f\x1aZ\x20In\
+    formation\x20about\x20the\x20backup\x20used\x20to\x20restore\x20the\x20t\
+    able.\x20The\x20backup\n\x20may\x20no\x20longer\x20exist.\n\n\x0c\n\x05\
+    \x04\0\x02\x01\x06\x12\x03.\x04\x0e\n\x0c\n\x05\x04\0\x02\x01\x01\x12\
+    \x03.\x0f\x1a\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03.\x1d\x1e\n*\n\x02\
+    \x04\x01\x12\x043\0:\x01\x1a\x1e\x20Change\x20stream\x20configuration.\n\
+    \n\n\n\x03\x04\x01\x01\x12\x033\x08\x1a\n\x9d\x02\n\x04\x04\x01\x02\0\
+    \x12\x039\x020\x1a\x8f\x02\x20How\x20long\x20the\x20change\x20stream\x20\
+    should\x20be\x20retained.\x20Change\x20stream\x20data\x20older\n\x20than\
+    \x20the\x20retention\x20period\x20will\x20not\x20be\x20returned\x20when\
+    \x20reading\x20the\x20change\n\x20stream\x20from\x20the\x20table.\n\x20V\
+    alues\x20must\x20be\x20at\x20least\x201\x20day\x20and\x20at\x20most\x207\
+    \x20days,\x20and\x20will\x20be\x20truncated\x20to\n\x20microsecond\x20gr\
+    anularity.\n\n\x0c\n\x05\x04\x01\x02\0\x06\x12\x039\x02\x1a\n\x0c\n\x05\
+    \x04\x01\x02\0\x01\x12\x039\x1b+\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x039.\
+    /\n\x91\x01\n\x02\x04\x02\x12\x05>\0\xce\x01\x01\x1a\x83\x01\x20A\x20col\
+    lection\x20of\x20user\x20data\x20indexed\x20by\x20row,\x20column,\x20and\
+    \x20timestamp.\n\x20Each\x20table\x20is\x20served\x20using\x20the\x20res\
+    ources\x20of\x20its\x20parent\x20cluster.\n\n\n\n\x03\x04\x02\x01\x12\
+    \x03>\x08\r\n\x0b\n\x03\x04\x02\x07\x12\x04?\x02B\x04\n\r\n\x05\x04\x02\
+    \x07\x9d\x08\x12\x04?\x02B\x04\nD\n\x04\x04\x02\x03\0\x12\x04E\x02n\x03\
+    \x1a6\x20The\x20state\x20of\x20a\x20table's\x20data\x20in\x20a\x20partic\
+    ular\x20cluster.\n\n\x0c\n\x05\x04\x02\x03\0\x01\x12\x03E\n\x16\n+\n\x06\
+    \x04\x02\x03\0\x04\0\x12\x04G\x04a\x05\x1a\x1b\x20Table\x20replication\
+    \x20states.\n\n\x0e\n\x07\x04\x02\x03\0\x04\0\x01\x12\x03G\t\x19\nQ\n\
+    \x08\x04\x02\x03\0\x04\0\x02\0\x12\x03I\x06\x1a\x1a@\x20The\x20replicati\
+    on\x20state\x20of\x20the\x20table\x20is\x20unknown\x20in\x20this\x20clus\
+    ter.\n\n\x10\n\t\x04\x02\x03\0\x04\0\x02\0\x01\x12\x03I\x06\x15\n\x10\n\
+    \t\x04\x02\x03\0\x04\0\x02\0\x02\x12\x03I\x18\x19\n\xda\x01\n\x08\x04\
+    \x02\x03\0\x04\0\x02\x01\x12\x03N\x06\x17\x1a\xc8\x01\x20The\x20cluster\
+    \x20was\x20recently\x20created,\x20and\x20the\x20table\x20must\x20finish\
+    \x20copying\n\x20over\x20pre-existing\x20data\x20from\x20other\x20cluste\
+    rs\x20before\x20it\x20can\x20begin\n\x20receiving\x20live\x20replication\
+    \x20updates\x20and\x20serving\x20Data\x20API\x20requests.\n\n\x10\n\t\
+    \x04\x02\x03\0\x04\0\x02\x01\x01\x12\x03N\x06\x12\n\x10\n\t\x04\x02\x03\
+    \0\x04\0\x02\x01\x02\x12\x03N\x15\x16\n\x85\x01\n\x08\x04\x02\x03\0\x04\
+    \0\x02\x02\x12\x03R\x06\x1e\x1at\x20The\x20table\x20is\x20temporarily\
+    \x20unable\x20to\x20serve\x20Data\x20API\x20requests\x20from\x20this\n\
+    \x20cluster\x20due\x20to\x20planned\x20internal\x20maintenance.\n\n\x10\
+    \n\t\x04\x02\x03\0\x04\0\x02\x02\x01\x12\x03R\x06\x19\n\x10\n\t\x04\x02\
+    \x03\0\x04\0\x02\x02\x02\x12\x03R\x1c\x1d\n\x8b\x01\n\x08\x04\x02\x03\0\
+    \x04\0\x02\x03\x12\x03V\x06\x20\x1az\x20The\x20table\x20is\x20temporaril\
+    y\x20unable\x20to\x20serve\x20Data\x20API\x20requests\x20from\x20this\n\
+    \x20cluster\x20due\x20to\x20unplanned\x20or\x20emergency\x20maintenance.\
+    \n\n\x10\n\t\x04\x02\x03\0\x04\0\x02\x03\x01\x12\x03V\x06\x1b\n\x10\n\t\
+    \x04\x02\x03\0\x04\0\x02\x03\x02\x12\x03V\x1e\x1f\n\xba\x01\n\x08\x04\
+    \x02\x03\0\x04\0\x02\x04\x12\x03[\x06\x10\x1a\xa8\x01\x20The\x20table\
+    \x20can\x20serve\x20Data\x20API\x20requests\x20from\x20this\x20cluster.\
+    \x20Depending\x20on\n\x20replication\x20delay,\x20reads\x20may\x20not\
+    \x20immediately\x20reflect\x20the\x20state\x20of\x20the\n\x20table\x20in\
+    \x20other\x20clusters.\n\n\x10\n\t\x04\x02\x03\0\x04\0\x02\x04\x01\x12\
+    \x03[\x06\x0b\n\x10\n\t\x04\x02\x03\0\x04\0\x02\x04\x02\x12\x03[\x0e\x0f\
+    \n\xc8\x01\n\x08\x04\x02\x03\0\x04\0\x02\x05\x12\x03`\x06\x1b\x1a\xb6\
+    \x01\x20The\x20table\x20is\x20fully\x20created\x20and\x20ready\x20for\
+    \x20use\x20after\x20a\x20restore,\x20and\x20is\n\x20being\x20optimized\
+    \x20for\x20performance.\x20When\x20optimizations\x20are\x20complete,\x20\
+    the\n\x20table\x20will\x20transition\x20to\x20`READY`\x20state.\n\n\x10\
+    \n\t\x04\x02\x03\0\x04\0\x02\x05\x01\x12\x03`\x06\x16\n\x10\n\t\x04\x02\
+    \x03\0\x04\0\x02\x05\x02\x12\x03`\x19\x1a\nV\n\x06\x04\x02\x03\0\x02\0\
+    \x12\x04d\x04e4\x1aF\x20Output\x20only.\x20The\x20state\x20of\x20replica\
+    tion\x20for\x20the\x20table\x20in\x20this\x20cluster.\n\n\x0e\n\x07\x04\
+    \x02\x03\0\x02\0\x06\x12\x03d\x04\x14\n\x0e\n\x07\x04\x02\x03\0\x02\0\
+    \x01\x12\x03d\x15&\n\x0e\n\x07\x04\x02\x03\0\x02\0\x03\x12\x03d)*\n\x0e\
+    \n\x07\x04\x02\x03\0\x02\0\x08\x12\x03e\x083\n\x11\n\n\x04\x02\x03\0\x02\
+    \0\x08\x9c\x08\0\x12\x03e\t2\n\xda\x02\n\x06\x04\x02\x03\0\x02\x01\x12\
+    \x04l\x04m4\x1a\xc9\x02\x20Output\x20only.\x20The\x20encryption\x20infor\
+    mation\x20for\x20the\x20table\x20in\x20this\x20cluster.\n\x20If\x20the\
+    \x20encryption\x20key\x20protecting\x20this\x20resource\x20is\x20custome\
+    r\x20managed,\x20then\n\x20its\x20version\x20can\x20be\x20rotated\x20in\
+    \x20Cloud\x20Key\x20Management\x20Service\x20(Cloud\x20KMS).\n\x20The\
+    \x20primary\x20version\x20of\x20the\x20key\x20and\x20its\x20status\x20wi\
+    ll\x20be\x20reflected\x20here\x20when\n\x20changes\x20propagate\x20from\
+    \x20Cloud\x20KMS.\n\n\x0e\n\x07\x04\x02\x03\0\x02\x01\x04\x12\x03l\x04\
+    \x0c\n\x0e\n\x07\x04\x02\x03\0\x02\x01\x06\x12\x03l\r\x1b\n\x0e\n\x07\
+    \x04\x02\x03\0\x02\x01\x01\x12\x03l\x1c+\n\x0e\n\x07\x04\x02\x03\0\x02\
+    \x01\x03\x12\x03l./\n\x0e\n\x07\x04\x02\x03\0\x02\x01\x08\x12\x03m\x083\
+    \n\x11\n\n\x04\x02\x03\0\x02\x01\x08\x9c\x08\0\x12\x03m\t2\nk\n\x04\x04\
+    \x02\x04\0\x12\x04r\x02y\x03\x1a]\x20Possible\x20timestamp\x20granularit\
+    ies\x20to\x20use\x20when\x20keeping\x20multiple\x20versions\n\x20of\x20d\
+    ata\x20in\x20a\x20table.\n\n\x0c\n\x05\x04\x02\x04\0\x01\x12\x03r\x07\
+    \x1b\n\x8c\x01\n\x06\x04\x02\x04\0\x02\0\x12\x03u\x04*\x1a}\x20The\x20us\
+    er\x20did\x20not\x20specify\x20a\x20granularity.\x20Should\x20not\x20be\
+    \x20returned.\n\x20When\x20specified\x20during\x20table\x20creation,\x20\
+    MILLIS\x20will\x20be\x20used.\n\n\x0e\n\x07\x04\x02\x04\0\x02\0\x01\x12\
+    \x03u\x04%\n\x0e\n\x07\x04\x02\x04\0\x02\0\x02\x12\x03u()\nH\n\x06\x04\
+    \x02\x04\0\x02\x01\x12\x03x\x04\x0f\x1a9\x20The\x20table\x20keeps\x20dat\
+    a\x20versioned\x20at\x20a\x20granularity\x20of\x201ms.\n\n\x0e\n\x07\x04\
+    \x02\x04\0\x02\x01\x01\x12\x03x\x04\n\n\x0e\n\x07\x04\x02\x04\0\x02\x01\
+    \x02\x12\x03x\r\x0e\n6\n\x04\x04\x02\x04\x01\x12\x05|\x02\x8f\x01\x03\
+    \x1a'\x20Defines\x20a\x20view\x20over\x20a\x20table's\x20fields.\n\n\x0c\
+    \n\x05\x04\x02\x04\x01\x01\x12\x03|\x07\x0b\nT\n\x06\x04\x02\x04\x01\x02\
+    \0\x12\x03~\x04\x19\x1aE\x20Uses\x20the\x20default\x20view\x20for\x20eac\
+    h\x20method\x20as\x20documented\x20in\x20its\x20request.\n\n\x0e\n\x07\
+    \x04\x02\x04\x01\x02\0\x01\x12\x03~\x04\x14\n\x0e\n\x07\x04\x02\x04\x01\
+    \x02\0\x02\x12\x03~\x17\x18\n(\n\x06\x04\x02\x04\x01\x02\x01\x12\x04\x81\
+    \x01\x04\x12\x1a\x18\x20Only\x20populates\x20`name`.\n\n\x0f\n\x07\x04\
+    \x02\x04\x01\x02\x01\x01\x12\x04\x81\x01\x04\r\n\x0f\n\x07\x04\x02\x04\
+    \x01\x02\x01\x02\x12\x04\x81\x01\x10\x11\nQ\n\x06\x04\x02\x04\x01\x02\
+    \x02\x12\x04\x84\x01\x04\x14\x1aA\x20Only\x20populates\x20`name`\x20and\
+    \x20fields\x20related\x20to\x20the\x20table's\x20schema.\n\n\x0f\n\x07\
+    \x04\x02\x04\x01\x02\x02\x01\x12\x04\x84\x01\x04\x0f\n\x0f\n\x07\x04\x02\
+    \x04\x01\x02\x02\x02\x12\x04\x84\x01\x12\x13\n]\n\x06\x04\x02\x04\x01\
+    \x02\x03\x12\x04\x88\x01\x04\x19\x1aM\x20Only\x20populates\x20`name`\x20\
+    and\x20fields\x20related\x20to\x20the\x20table's\x20replication\n\x20sta\
+    te.\n\n\x0f\n\x07\x04\x02\x04\x01\x02\x03\x01\x12\x04\x88\x01\x04\x14\n\
+    \x0f\n\x07\x04\x02\x04\x01\x02\x03\x02\x12\x04\x88\x01\x17\x18\n[\n\x06\
+    \x04\x02\x04\x01\x02\x04\x12\x04\x8b\x01\x04\x18\x1aK\x20Only\x20populat\
+    es\x20`name`\x20and\x20fields\x20related\x20to\x20the\x20table's\x20encr\
+    yption\x20state.\n\n\x0f\n\x07\x04\x02\x04\x01\x02\x04\x01\x12\x04\x8b\
+    \x01\x04\x13\n\x0f\n\x07\x04\x02\x04\x01\x02\x04\x02\x12\x04\x8b\x01\x16\
+    \x17\n'\n\x06\x04\x02\x04\x01\x02\x05\x12\x04\x8e\x01\x04\r\x1a\x17\x20P\
+    opulates\x20all\x20fields.\n\n\x0f\n\x07\x04\x02\x04\x01\x02\x05\x01\x12\
+    \x04\x8e\x01\x04\x08\n\x0f\n\x07\x04\x02\x04\x01\x02\x05\x02\x12\x04\x8e\
+    \x01\x0b\x0c\n@\n\x04\x04\x02\x03\x01\x12\x06\x92\x01\x02\x9c\x01\x03\
+    \x1a0\x20Defines\x20an\x20automated\x20backup\x20policy\x20for\x20a\x20t\
+    able\n\n\r\n\x05\x04\x02\x03\x01\x01\x12\x04\x92\x01\n\x1f\n\x82\x01\n\
+    \x06\x04\x02\x03\x01\x02\0\x12\x06\x95\x01\x04\x96\x011\x1ap\x20Required\
+    .\x20How\x20long\x20the\x20automated\x20backups\x20should\x20be\x20retai\
+    ned.\x20The\x20only\n\x20supported\x20value\x20at\x20this\x20time\x20is\
+    \x203\x20days.\n\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x06\x12\x04\x95\x01\
+    \x04\x1c\n\x0f\n\x07\x04\x02\x03\x01\x02\0\x01\x12\x04\x95\x01\x1d-\n\
+    \x0f\n\x07\x04\x02\x03\x01\x02\0\x03\x12\x04\x95\x0101\n\x0f\n\x07\x04\
+    \x02\x03\x01\x02\0\x08\x12\x04\x96\x01\x080\n\x12\n\n\x04\x02\x03\x01\
+    \x02\0\x08\x9c\x08\0\x12\x04\x96\x01\t/\n\x80\x01\n\x06\x04\x02\x03\x01\
+    \x02\x01\x12\x06\x9a\x01\x04\x9b\x011\x1an\x20Required.\x20How\x20freque\
+    ntly\x20automated\x20backups\x20should\x20occur.\x20The\x20only\n\x20sup\
+    ported\x20value\x20at\x20this\x20time\x20is\x2024\x20hours.\n\n\x0f\n\
+    \x07\x04\x02\x03\x01\x02\x01\x06\x12\x04\x9a\x01\x04\x1c\n\x0f\n\x07\x04\
+    \x02\x03\x01\x02\x01\x01\x12\x04\x9a\x01\x1d&\n\x0f\n\x07\x04\x02\x03\
+    \x01\x02\x01\x03\x12\x04\x9a\x01)*\n\x0f\n\x07\x04\x02\x03\x01\x02\x01\
+    \x08\x12\x04\x9b\x01\x080\n\x12\n\n\x04\x02\x03\x01\x02\x01\x08\x9c\x08\
+    \0\x12\x04\x9b\x01\t/\n\xd3\x01\n\x04\x04\x02\x02\0\x12\x04\xa1\x01\x02\
+    \x12\x1a\xc4\x01\x20The\x20unique\x20name\x20of\x20the\x20table.\x20Valu\
+    es\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{insta\
+    nce}/tables/[_a-zA-Z0-9][-_.a-zA-Z0-9]*`.\n\x20Views:\x20`NAME_ONLY`,\
+    \x20`SCHEMA_VIEW`,\x20`REPLICATION_VIEW`,\x20`FULL`\n\n\r\n\x05\x04\x02\
+    \x02\0\x05\x12\x04\xa1\x01\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\
+    \xa1\x01\t\r\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xa1\x01\x10\x11\n\xda\
+    \x02\n\x04\x04\x02\x02\x01\x12\x06\xa8\x01\x02\xa9\x012\x1a\xc9\x02\x20O\
+    utput\x20only.\x20Map\x20from\x20cluster\x20ID\x20to\x20per-cluster\x20t\
+    able\x20state.\n\x20If\x20it\x20could\x20not\x20be\x20determined\x20whet\
+    her\x20or\x20not\x20the\x20table\x20has\x20data\x20in\x20a\n\x20particul\
+    ar\x20cluster\x20(for\x20example,\x20if\x20its\x20zone\x20is\x20unavaila\
+    ble),\x20then\n\x20there\x20will\x20be\x20an\x20entry\x20for\x20the\x20c\
+    luster\x20with\x20UNKNOWN\x20`replication_status`.\n\x20Views:\x20`REPLI\
+    CATION_VIEW`,\x20`ENCRYPTION_VIEW`,\x20`FULL`\n\n\r\n\x05\x04\x02\x02\
+    \x01\x06\x12\x04\xa8\x01\x02\x1b\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\
+    \xa8\x01\x1c*\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xa8\x01-.\n\r\n\x05\
+    \x04\x02\x02\x01\x08\x12\x04\xa9\x01\x061\n\x10\n\x08\x04\x02\x02\x01\
+    \x08\x9c\x08\0\x12\x04\xa9\x01\x070\n\x86\x01\n\x04\x04\x02\x02\x02\x12\
+    \x04\xad\x01\x020\x1ax\x20The\x20column\x20families\x20configured\x20for\
+    \x20this\x20table,\x20mapped\x20by\x20column\x20family\x20ID.\n\x20Views\
+    :\x20`SCHEMA_VIEW`,\x20`STATS_VIEW`,\x20`FULL`\n\n\r\n\x05\x04\x02\x02\
+    \x02\x06\x12\x04\xad\x01\x02\x1b\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\
+    \xad\x01\x1c+\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xad\x01./\n\x8a\x02\
+    \n\x04\x04\x02\x02\x03\x12\x06\xb3\x01\x02\xb4\x010\x1a\xf9\x01\x20Immut\
+    able.\x20The\x20granularity\x20(i.e.\x20`MILLIS`)\x20at\x20which\x20time\
+    stamps\x20are\x20stored\n\x20in\x20this\x20table.\x20Timestamps\x20not\
+    \x20matching\x20the\x20granularity\x20will\x20be\x20rejected.\x20If\n\
+    \x20unspecified\x20at\x20creation\x20time,\x20the\x20value\x20will\x20be\
+    \x20set\x20to\x20`MILLIS`.\x20Views:\n\x20`SCHEMA_VIEW`,\x20`FULL`.\n\n\
+    \r\n\x05\x04\x02\x02\x03\x06\x12\x04\xb3\x01\x02\x16\n\r\n\x05\x04\x02\
+    \x02\x03\x01\x12\x04\xb3\x01\x17\"\n\r\n\x05\x04\x02\x02\x03\x03\x12\x04\
+    \xb3\x01%&\n\r\n\x05\x04\x02\x02\x03\x08\x12\x04\xb4\x01\x06/\n\x10\n\
+    \x08\x04\x02\x02\x03\x08\x9c\x08\0\x12\x04\xb4\x01\x07.\n\xa4\x01\n\x04\
+    \x04\x02\x02\x04\x12\x04\xb8\x01\x02K\x1a\x95\x01\x20Output\x20only.\x20\
+    If\x20this\x20table\x20was\x20restored\x20from\x20another\x20data\x20sou\
+    rce\x20(e.g.\x20a\n\x20backup),\x20this\x20field\x20will\x20be\x20popula\
+    ted\x20with\x20information\x20about\x20the\x20restore.\n\n\r\n\x05\x04\
+    \x02\x02\x04\x06\x12\x04\xb8\x01\x02\r\n\r\n\x05\x04\x02\x02\x04\x01\x12\
+    \x04\xb8\x01\x0e\x1a\n\r\n\x05\x04\x02\x02\x04\x03\x12\x04\xb8\x01\x1d\
+    \x1e\n\r\n\x05\x04\x02\x02\x04\x08\x12\x04\xb8\x01\x1fJ\n\x10\n\x08\x04\
+    \x02\x02\x04\x08\x9c\x08\0\x12\x04\xb8\x01\x20I\n\x98\x01\n\x04\x04\x02\
+    \x02\x05\x12\x04\xbd\x01\x02.\x1a\x89\x01\x20If\x20specified,\x20enable\
+    \x20the\x20change\x20stream\x20on\x20this\x20table.\n\x20Otherwise,\x20t\
+    he\x20change\x20stream\x20is\x20disabled\x20and\x20the\x20change\x20stre\
+    am\x20is\x20not\n\x20retained.\n\n\r\n\x05\x04\x02\x02\x05\x06\x12\x04\
+    \xbd\x01\x02\x14\n\r\n\x05\x04\x02\x02\x05\x01\x12\x04\xbd\x01\x15)\n\r\
+    \n\x05\x04\x02\x02\x05\x03\x12\x04\xbd\x01,-\n\xbb\x02\n\x04\x04\x02\x02\
+    \x06\x12\x04\xc7\x01\x02\x1f\x1a\xac\x02\x20Set\x20to\x20true\x20to\x20m\
+    ake\x20the\x20table\x20protected\x20against\x20data\x20loss.\x20i.e.\x20\
+    deleting\n\x20the\x20following\x20resources\x20through\x20Admin\x20APIs\
+    \x20are\x20prohibited:\n\n\x20*\x20The\x20table.\n\x20*\x20The\x20column\
+    \x20families\x20in\x20the\x20table.\n\x20*\x20The\x20instance\x20contain\
+    ing\x20the\x20table.\n\n\x20Note\x20one\x20can\x20still\x20delete\x20the\
+    \x20data\x20stored\x20in\x20the\x20table\x20through\x20Data\x20APIs.\n\n\
+    \r\n\x05\x04\x02\x02\x06\x05\x12\x04\xc7\x01\x02\x06\n\r\n\x05\x04\x02\
+    \x02\x06\x01\x12\x04\xc7\x01\x07\x1a\n\r\n\x05\x04\x02\x02\x06\x03\x12\
+    \x04\xc7\x01\x1d\x1e\n\x0e\n\x04\x04\x02\x08\0\x12\x06\xc9\x01\x02\xcd\
+    \x01\x03\n\r\n\x05\x04\x02\x08\0\x01\x12\x04\xc9\x01\x08\x1f\nw\n\x04\
+    \x04\x02\x02\x07\x12\x04\xcc\x01\x047\x1ai\x20If\x20specified,\x20automa\
+    ted\x20backups\x20are\x20enabled\x20for\x20this\x20table.\n\x20Otherwise\
+    ,\x20automated\x20backups\x20are\x20disabled.\n\n\r\n\x05\x04\x02\x02\
+    \x07\x06\x12\x04\xcc\x01\x04\x19\n\r\n\x05\x04\x02\x02\x07\x01\x12\x04\
+    \xcc\x01\x1a1\n\r\n\x05\x04\x02\x02\x07\x03\x12\x04\xcc\x0146\n\xe7\x01\
+    \n\x02\x04\x03\x12\x06\xd3\x01\0\x97\x02\x01\x1a\xd8\x01\x20AuthorizedVi\
+    ews\x20represent\x20subsets\x20of\x20a\x20particular\x20Cloud\x20Bigtabl\
+    e\x20table.\x20Users\n\x20can\x20configure\x20access\x20to\x20each\x20Au\
+    thorized\x20View\x20independently\x20from\x20the\x20table\x20and\n\x20us\
+    e\x20the\x20existing\x20Data\x20APIs\x20to\x20access\x20the\x20subset\
+    \x20of\x20data.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\xd3\x01\x08\x16\n\r\n\
+    \x03\x04\x03\x07\x12\x06\xd4\x01\x02\xd9\x01\x04\n\x0f\n\x05\x04\x03\x07\
+    \x9d\x08\x12\x06\xd4\x01\x02\xd9\x01\x04\nV\n\x04\x04\x03\x03\0\x12\x06\
+    \xdc\x01\x02\xe6\x01\x03\x1aF\x20Subsets\x20of\x20a\x20column\x20family\
+    \x20that\x20are\x20included\x20in\x20this\x20AuthorizedView.\n\n\r\n\x05\
+    \x04\x03\x03\0\x01\x12\x04\xdc\x01\n\x17\nZ\n\x06\x04\x03\x03\0\x02\0\
+    \x12\x04\xde\x01\x04\"\x1aJ\x20Individual\x20exact\x20column\x20qualifie\
+    rs\x20to\x20be\x20included\x20in\x20the\x20AuthorizedView.\n\n\x0f\n\x07\
+    \x04\x03\x03\0\x02\0\x04\x12\x04\xde\x01\x04\x0c\n\x0f\n\x07\x04\x03\x03\
+    \0\x02\0\x05\x12\x04\xde\x01\r\x12\n\x0f\n\x07\x04\x03\x03\0\x02\0\x01\
+    \x12\x04\xde\x01\x13\x1d\n\x0f\n\x07\x04\x03\x03\0\x02\0\x03\x12\x04\xde\
+    \x01\x20!\n\xfb\x01\n\x06\x04\x03\x03\0\x02\x01\x12\x04\xe5\x01\x04*\x1a\
+    \xea\x01\x20Prefixes\x20for\x20qualifiers\x20to\x20be\x20included\x20in\
+    \x20the\x20AuthorizedView.\x20Every\n\x20qualifier\x20starting\x20with\
+    \x20one\x20of\x20these\x20prefixes\x20is\x20included\x20in\x20the\n\x20A\
+    uthorizedView.\x20To\x20provide\x20access\x20to\x20all\x20qualifiers,\
+    \x20include\x20the\x20empty\n\x20string\x20as\x20a\x20prefix\n\x20(\"\")\
+    .\n\n\x0f\n\x07\x04\x03\x03\0\x02\x01\x04\x12\x04\xe5\x01\x04\x0c\n\x0f\
+    \n\x07\x04\x03\x03\0\x02\x01\x05\x12\x04\xe5\x01\r\x12\n\x0f\n\x07\x04\
+    \x03\x03\0\x02\x01\x01\x12\x04\xe5\x01\x13%\n\x0f\n\x07\x04\x03\x03\0\
+    \x02\x01\x03\x12\x04\xe5\x01()\n[\n\x04\x04\x03\x03\x01\x12\x06\xe9\x01\
+    \x02\xf1\x01\x03\x1aK\x20Defines\x20a\x20simple\x20AuthorizedView\x20tha\
+    t\x20is\x20a\x20subset\x20of\x20the\x20underlying\x20Table.\n\n\r\n\x05\
+    \x04\x03\x03\x01\x01\x12\x04\xe9\x01\n\x14\n\x8f\x01\n\x06\x04\x03\x03\
+    \x01\x02\0\x12\x04\xec\x01\x04$\x1a\x7f\x20Row\x20prefixes\x20to\x20be\
+    \x20included\x20in\x20the\x20AuthorizedView.\n\x20To\x20provide\x20acces\
+    s\x20to\x20all\x20rows,\x20include\x20the\x20empty\x20string\x20as\x20a\
+    \x20prefix\x20(\"\").\n\n\x0f\n\x07\x04\x03\x03\x01\x02\0\x04\x12\x04\
+    \xec\x01\x04\x0c\n\x0f\n\x07\x04\x03\x03\x01\x02\0\x05\x12\x04\xec\x01\r\
+    \x12\n\x0f\n\x07\x04\x03\x03\x01\x02\0\x01\x12\x04\xec\x01\x13\x1f\n\x0f\
+    \n\x07\x04\x03\x03\x01\x02\0\x03\x12\x04\xec\x01\"#\nr\n\x06\x04\x03\x03\
+    \x01\x02\x01\x12\x04\xf0\x01\x042\x1ab\x20Map\x20from\x20column\x20famil\
+    y\x20name\x20to\x20the\x20columns\x20in\x20this\x20family\x20to\x20be\
+    \x20included\n\x20in\x20the\x20AuthorizedView.\n\n\x0f\n\x07\x04\x03\x03\
+    \x01\x02\x01\x06\x12\x04\xf0\x01\x04\x1e\n\x0f\n\x07\x04\x03\x03\x01\x02\
+    \x01\x01\x12\x04\xf0\x01\x1f-\n\x0f\n\x07\x04\x03\x03\x01\x02\x01\x03\
+    \x12\x04\xf0\x0101\nA\n\x04\x04\x03\x04\0\x12\x06\xf4\x01\x02\x81\x02\
+    \x03\x1a1\x20Defines\x20a\x20subset\x20of\x20an\x20AuthorizedView's\x20f\
+    ields.\n\n\r\n\x05\x04\x03\x04\0\x01\x12\x04\xf4\x01\x07\x13\nU\n\x06\
+    \x04\x03\x04\0\x02\0\x12\x04\xf6\x01\x04\"\x1aE\x20Uses\x20the\x20defaul\
+    t\x20view\x20for\x20each\x20method\x20as\x20documented\x20in\x20the\x20r\
+    equest.\n\n\x0f\n\x07\x04\x03\x04\0\x02\0\x01\x12\x04\xf6\x01\x04\x1d\n\
+    \x0f\n\x07\x04\x03\x04\0\x02\0\x02\x12\x04\xf6\x01\x20!\n(\n\x06\x04\x03\
+    \x04\0\x02\x01\x12\x04\xf9\x01\x04\x12\x1a\x18\x20Only\x20populates\x20`\
+    name`.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x01\x12\x04\xf9\x01\x04\r\n\
+    \x0f\n\x07\x04\x03\x04\0\x02\x01\x02\x12\x04\xf9\x01\x10\x11\nv\n\x06\
+    \x04\x03\x04\0\x02\x02\x12\x04\xfd\x01\x04\x0e\x1af\x20Only\x20populates\
+    \x20the\x20AuthorizedView's\x20basic\x20metadata.\x20This\x20includes:\n\
+    \x20name,\x20deletion_protection,\x20etag.\n\n\x0f\n\x07\x04\x03\x04\0\
+    \x02\x02\x01\x12\x04\xfd\x01\x04\t\n\x0f\n\x07\x04\x03\x04\0\x02\x02\x02\
+    \x12\x04\xfd\x01\x0c\r\n)\n\x06\x04\x03\x04\0\x02\x03\x12\x04\x80\x02\
+    \x04\r\x1a\x19\x20Populates\x20every\x20fields.\n\n\x0f\n\x07\x04\x03\
+    \x04\0\x02\x03\x01\x12\x04\x80\x02\x04\x08\n\x0f\n\x07\x04\x03\x04\0\x02\
+    \x03\x02\x12\x04\x80\x02\x0b\x0c\n\xb1\x01\n\x04\x04\x03\x02\0\x12\x04\
+    \x86\x02\x02=\x1a\xa2\x01\x20Identifier.\x20The\x20name\x20of\x20this\
+    \x20AuthorizedView.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projec\
+    ts/{project}/instances/{instance}/tables/{table}/authorizedViews/{author\
+    ized_view}`\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\x86\x02\x02\x08\n\r\n\
+    \x05\x04\x03\x02\0\x01\x12\x04\x86\x02\t\r\n\r\n\x05\x04\x03\x02\0\x03\
+    \x12\x04\x86\x02\x10\x11\n\r\n\x05\x04\x03\x02\0\x08\x12\x04\x86\x02\x12\
+    <\n\x10\n\x08\x04\x03\x02\0\x08\x9c\x08\0\x12\x04\x86\x02\x13;\n2\n\x04\
+    \x04\x03\x08\0\x12\x06\x89\x02\x02\x8c\x02\x03\x1a\"\x20The\x20type\x20o\
+    f\x20this\x20AuthorizedView.\n\n\r\n\x05\x04\x03\x08\0\x01\x12\x04\x89\
+    \x02\x08\x17\nU\n\x04\x04\x03\x02\x01\x12\x04\x8b\x02\x04\x1f\x1aG\x20An\
+    \x20AuthorizedView\x20permitting\x20access\x20to\x20an\x20explicit\x20su\
+    bset\x20of\x20a\x20Table.\n\n\r\n\x05\x04\x03\x02\x01\x06\x12\x04\x8b\
+    \x02\x04\x0e\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\x8b\x02\x0f\x1a\n\r\n\
+    \x05\x04\x03\x02\x01\x03\x12\x04\x8b\x02\x1d\x1e\n\xab\x01\n\x04\x04\x03\
+    \x02\x02\x12\x04\x91\x02\x02\x12\x1a\x9c\x01\x20The\x20etag\x20for\x20th\
+    is\x20AuthorizedView.\n\x20If\x20this\x20is\x20provided\x20on\x20update,\
+    \x20it\x20must\x20match\x20the\x20server's\x20etag.\x20The\x20server\n\
+    \x20returns\x20ABORTED\x20error\x20on\x20a\x20mismatched\x20etag.\n\n\r\
+    \n\x05\x04\x03\x02\x02\x05\x12\x04\x91\x02\x02\x08\n\r\n\x05\x04\x03\x02\
+    \x02\x01\x12\x04\x91\x02\t\r\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\x91\
+    \x02\x10\x11\n\xb7\x01\n\x04\x04\x03\x02\x03\x12\x04\x96\x02\x02\x1f\x1a\
+    \xa8\x01\x20Set\x20to\x20true\x20to\x20make\x20the\x20AuthorizedView\x20\
+    protected\x20against\x20deletion.\n\x20The\x20parent\x20Table\x20and\x20\
+    containing\x20Instance\x20cannot\x20be\x20deleted\x20if\x20an\n\x20Autho\
+    rizedView\x20has\x20this\x20bit\x20set.\n\n\r\n\x05\x04\x03\x02\x03\x05\
+    \x12\x04\x96\x02\x02\x06\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\x96\x02\
+    \x07\x1a\n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\x96\x02\x1d\x1e\nS\n\x02\
+    \x04\x04\x12\x06\x9a\x02\0\xae\x02\x01\x1aE\x20A\x20set\x20of\x20columns\
+    \x20within\x20a\x20table\x20which\x20share\x20a\x20common\x20configurati\
+    on.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\x9a\x02\x08\x14\n\x9e\x02\n\x04\
+    \x04\x04\x02\0\x12\x04\xa1\x02\x02\x15\x1a\x8f\x02\x20Garbage\x20collect\
+    ion\x20rule\x20specified\x20as\x20a\x20protobuf.\n\x20Must\x20serialize\
+    \x20to\x20at\x20most\x20500\x20bytes.\n\n\x20NOTE:\x20Garbage\x20collect\
+    ion\x20executes\x20opportunistically\x20in\x20the\x20background,\x20and\
+    \n\x20so\x20it's\x20possible\x20for\x20reads\x20to\x20return\x20a\x20cel\
+    l\x20even\x20if\x20it\x20matches\x20the\x20active\n\x20GC\x20expression\
+    \x20for\x20its\x20family.\n\n\r\n\x05\x04\x04\x02\0\x06\x12\x04\xa1\x02\
+    \x02\x08\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\xa1\x02\t\x10\n\r\n\x05\x04\
+    \x04\x02\0\x03\x12\x04\xa1\x02\x13\x14\n\xa1\x03\n\x04\x04\x04\x02\x01\
+    \x12\x04\xad\x02\x02\x16\x1a\x92\x03\x20The\x20type\x20of\x20data\x20sto\
+    red\x20in\x20each\x20of\x20this\x20family's\x20cell\x20values,\x20includ\
+    ing\x20its\n\x20full\x20encoding.\x20If\x20omitted,\x20the\x20family\x20\
+    only\x20serves\x20raw\x20untyped\x20bytes.\n\n\x20For\x20now,\x20only\
+    \x20the\x20`Aggregate`\x20type\x20is\x20supported.\n\n\x20`Aggregate`\
+    \x20can\x20only\x20be\x20set\x20at\x20family\x20creation\x20and\x20is\
+    \x20immutable\x20afterwards.\n\n\n\x20If\x20`value_type`\x20is\x20`Aggre\
+    gate`,\x20written\x20data\x20must\x20be\x20compatible\x20with:\n\x20\x20\
+    *\x20`value_type.input_type`\x20for\x20`AddInput`\x20mutations\n\n\r\n\
+    \x05\x04\x04\x02\x01\x06\x12\x04\xad\x02\x02\x06\n\r\n\x05\x04\x04\x02\
+    \x01\x01\x12\x04\xad\x02\x07\x11\n\r\n\x05\x04\x04\x02\x01\x03\x12\x04\
+    \xad\x02\x14\x15\nU\n\x02\x04\x05\x12\x06\xb1\x02\0\xce\x02\x01\x1aG\x20\
+    Rule\x20for\x20determining\x20which\x20cells\x20to\x20delete\x20during\
+    \x20garbage\x20collection.\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xb1\x02\x08\
+    \x0e\nO\n\x04\x04\x05\x03\0\x12\x06\xb3\x02\x02\xb6\x02\x03\x1a?\x20A\
+    \x20GcRule\x20which\x20deletes\x20cells\x20matching\x20all\x20of\x20the\
+    \x20given\x20rules.\n\n\r\n\x05\x04\x05\x03\0\x01\x12\x04\xb3\x02\n\x16\
+    \nW\n\x06\x04\x05\x03\0\x02\0\x12\x04\xb5\x02\x04\x1e\x1aG\x20Only\x20de\
+    lete\x20cells\x20which\x20would\x20be\x20deleted\x20by\x20every\x20eleme\
+    nt\x20of\x20`rules`.\n\n\x0f\n\x07\x04\x05\x03\0\x02\0\x04\x12\x04\xb5\
+    \x02\x04\x0c\n\x0f\n\x07\x04\x05\x03\0\x02\0\x06\x12\x04\xb5\x02\r\x13\n\
+    \x0f\n\x07\x04\x05\x03\0\x02\0\x01\x12\x04\xb5\x02\x14\x19\n\x0f\n\x07\
+    \x04\x05\x03\0\x02\0\x03\x12\x04\xb5\x02\x1c\x1d\nO\n\x04\x04\x05\x03\
+    \x01\x12\x06\xb9\x02\x02\xbc\x02\x03\x1a?\x20A\x20GcRule\x20which\x20del\
+    etes\x20cells\x20matching\x20any\x20of\x20the\x20given\x20rules.\n\n\r\n\
+    \x05\x04\x05\x03\x01\x01\x12\x04\xb9\x02\n\x0f\nP\n\x06\x04\x05\x03\x01\
+    \x02\0\x12\x04\xbb\x02\x04\x1e\x1a@\x20Delete\x20cells\x20which\x20would\
+    \x20be\x20deleted\x20by\x20any\x20element\x20of\x20`rules`.\n\n\x0f\n\
+    \x07\x04\x05\x03\x01\x02\0\x04\x12\x04\xbb\x02\x04\x0c\n\x0f\n\x07\x04\
+    \x05\x03\x01\x02\0\x06\x12\x04\xbb\x02\r\x13\n\x0f\n\x07\x04\x05\x03\x01\
+    \x02\0\x01\x12\x04\xbb\x02\x14\x19\n\x0f\n\x07\x04\x05\x03\x01\x02\0\x03\
+    \x12\x04\xbb\x02\x1c\x1d\n+\n\x04\x04\x05\x08\0\x12\x06\xbf\x02\x02\xcd\
+    \x02\x03\x1a\x1b\x20Garbage\x20collection\x20rules.\n\n\r\n\x05\x04\x05\
+    \x08\0\x01\x12\x04\xbf\x02\x08\x0c\nF\n\x04\x04\x05\x02\0\x12\x04\xc1\
+    \x02\x04\x1f\x1a8\x20Delete\x20all\x20cells\x20in\x20a\x20column\x20exce\
+    pt\x20the\x20most\x20recent\x20N.\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\
+    \xc1\x02\x04\t\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xc1\x02\n\x1a\n\r\n\
+    \x05\x04\x05\x02\0\x03\x12\x04\xc1\x02\x1d\x1e\n\xa0\x01\n\x04\x04\x05\
+    \x02\x01\x12\x04\xc6\x02\x04)\x1a\x91\x01\x20Delete\x20cells\x20in\x20a\
+    \x20column\x20older\x20than\x20the\x20given\x20age.\n\x20Values\x20must\
+    \x20be\x20at\x20least\x20one\x20millisecond,\x20and\x20will\x20be\x20tru\
+    ncated\x20to\n\x20microsecond\x20granularity.\n\n\r\n\x05\x04\x05\x02\
+    \x01\x06\x12\x04\xc6\x02\x04\x1c\n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\
+    \xc6\x02\x1d$\n\r\n\x05\x04\x05\x02\x01\x03\x12\x04\xc6\x02'(\nH\n\x04\
+    \x04\x05\x02\x02\x12\x04\xc9\x02\x04\"\x1a:\x20Delete\x20cells\x20that\
+    \x20would\x20be\x20deleted\x20by\x20every\x20nested\x20rule.\n\n\r\n\x05\
+    \x04\x05\x02\x02\x06\x12\x04\xc9\x02\x04\x10\n\r\n\x05\x04\x05\x02\x02\
+    \x01\x12\x04\xc9\x02\x11\x1d\n\r\n\x05\x04\x05\x02\x02\x03\x12\x04\xc9\
+    \x02\x20!\nF\n\x04\x04\x05\x02\x03\x12\x04\xcc\x02\x04\x14\x1a8\x20Delet\
+    e\x20cells\x20that\x20would\x20be\x20deleted\x20by\x20any\x20nested\x20r\
+    ule.\n\n\r\n\x05\x04\x05\x02\x03\x06\x12\x04\xcc\x02\x04\t\n\r\n\x05\x04\
+    \x05\x02\x03\x01\x12\x04\xcc\x02\n\x0f\n\r\n\x05\x04\x05\x02\x03\x03\x12\
+    \x04\xcc\x02\x12\x13\n\xe4\x01\n\x02\x04\x06\x12\x06\xd4\x02\0\xfb\x02\
+    \x01\x1a\xd5\x01\x20Encryption\x20information\x20for\x20a\x20given\x20re\
+    source.\n\x20If\x20this\x20resource\x20is\x20protected\x20with\x20custom\
+    er\x20managed\x20encryption,\x20the\x20in-use\n\x20Cloud\x20Key\x20Manag\
+    ement\x20Service\x20(Cloud\x20KMS)\x20key\x20version\x20is\x20specified\
+    \x20along\x20with\n\x20its\x20status.\n\n\x0b\n\x03\x04\x06\x01\x12\x04\
+    \xd4\x02\x08\x16\n;\n\x04\x04\x06\x04\0\x12\x06\xd6\x02\x02\xe7\x02\x03\
+    \x1a+\x20Possible\x20encryption\x20types\x20for\x20a\x20resource.\n\n\r\
+    \n\x05\x04\x06\x04\0\x01\x12\x04\xd6\x02\x07\x15\n[\n\x06\x04\x06\x04\0\
+    \x02\0\x12\x04\xd8\x02\x04$\x1aK\x20Encryption\x20type\x20was\x20not\x20\
+    specified,\x20though\x20data\x20at\x20rest\x20remains\x20encrypted.\n\n\
+    \x0f\n\x07\x04\x06\x04\0\x02\0\x01\x12\x04\xd8\x02\x04\x1f\n\x0f\n\x07\
+    \x04\x06\x04\0\x02\0\x02\x12\x04\xd8\x02\"#\n\xbb\x01\n\x06\x04\x06\x04\
+    \0\x02\x01\x12\x04\xdd\x02\x04\"\x1a\xaa\x01\x20The\x20data\x20backing\
+    \x20this\x20resource\x20is\x20encrypted\x20at\x20rest\x20with\x20a\x20ke\
+    y\x20that\x20is\n\x20fully\x20managed\x20by\x20Google.\x20No\x20key\x20v\
+    ersion\x20or\x20status\x20will\x20be\x20populated.\n\x20This\x20is\x20th\
+    e\x20default\x20state.\n\n\x0f\n\x07\x04\x06\x04\0\x02\x01\x01\x12\x04\
+    \xdd\x02\x04\x1d\n\x0f\n\x07\x04\x06\x04\0\x02\x01\x02\x12\x04\xdd\x02\
+    \x20!\n\x8f\x03\n\x06\x04\x06\x04\0\x02\x02\x12\x04\xe6\x02\x04$\x1a\xfe\
+    \x02\x20The\x20data\x20backing\x20this\x20resource\x20is\x20encrypted\
+    \x20at\x20rest\x20with\x20a\x20key\x20that\x20is\n\x20managed\x20by\x20t\
+    he\x20customer.\n\x20The\x20in-use\x20version\x20of\x20the\x20key\x20and\
+    \x20its\x20status\x20are\x20populated\x20for\n\x20CMEK-protected\x20tabl\
+    es.\n\x20CMEK-protected\x20backups\x20are\x20pinned\x20to\x20the\x20key\
+    \x20version\x20that\x20was\x20in\x20use\x20at\n\x20the\x20time\x20the\
+    \x20backup\x20was\x20taken.\x20This\x20key\x20version\x20is\x20populated\
+    \x20but\x20its\n\x20status\x20is\x20not\x20tracked\x20and\x20is\x20repor\
+    ted\x20as\x20`UNKNOWN`.\n\n\x0f\n\x07\x04\x06\x04\0\x02\x02\x01\x12\x04\
+    \xe6\x02\x04\x1f\n\x0f\n\x07\x04\x06\x04\0\x02\x02\x02\x12\x04\xe6\x02\"\
+    #\nT\n\x04\x04\x06\x02\0\x12\x06\xea\x02\x02\xeb\x022\x1aD\x20Output\x20\
+    only.\x20The\x20type\x20of\x20encryption\x20used\x20to\x20protect\x20thi\
+    s\x20resource.\n\n\r\n\x05\x04\x06\x02\0\x06\x12\x04\xea\x02\x02\x10\n\r\
+    \n\x05\x04\x06\x02\0\x01\x12\x04\xea\x02\x11\x20\n\r\n\x05\x04\x06\x02\0\
+    \x03\x12\x04\xea\x02#$\n\r\n\x05\x04\x06\x02\0\x08\x12\x04\xeb\x02\x061\
+    \n\x10\n\x08\x04\x06\x02\0\x08\x9c\x08\0\x12\x04\xeb\x02\x070\n\xb0\x01\
+    \n\x04\x04\x06\x02\x01\x12\x06\xf0\x02\x02\xf1\x022\x1a\x9f\x01\x20Outpu\
+    t\x20only.\x20The\x20status\x20of\x20encrypt/decrypt\x20calls\x20on\x20u\
+    nderlying\x20data\x20for\n\x20this\x20resource.\x20Regardless\x20of\x20s\
+    tatus,\x20the\x20existing\x20data\x20is\x20always\x20encrypted\n\x20at\
+    \x20rest.\n\n\r\n\x05\x04\x06\x02\x01\x06\x12\x04\xf0\x02\x02\x13\n\r\n\
+    \x05\x04\x06\x02\x01\x01\x12\x04\xf0\x02\x14%\n\r\n\x05\x04\x06\x02\x01\
+    \x03\x12\x04\xf0\x02()\n\r\n\x05\x04\x06\x02\x01\x08\x12\x04\xf1\x02\x06\
+    1\n\x10\n\x08\x04\x06\x02\x01\x08\x9c\x08\0\x12\x04\xf1\x02\x070\n\x94\
+    \x01\n\x04\x04\x06\x02\x02\x12\x06\xf5\x02\x02\xfa\x02\x04\x1a\x83\x01\
+    \x20Output\x20only.\x20The\x20version\x20of\x20the\x20Cloud\x20KMS\x20ke\
+    y\x20specified\x20in\x20the\x20parent\n\x20cluster\x20that\x20is\x20in\
+    \x20use\x20for\x20the\x20data\x20underlying\x20this\x20table.\n\n\r\n\
+    \x05\x04\x06\x02\x02\x05\x12\x04\xf5\x02\x02\x08\n\r\n\x05\x04\x06\x02\
+    \x02\x01\x12\x04\xf5\x02\t\x18\n\r\n\x05\x04\x06\x02\x02\x03\x12\x04\xf5\
+    \x02\x1b\x1c\n\x0f\n\x05\x04\x06\x02\x02\x08\x12\x06\xf5\x02\x1d\xfa\x02\
+    \x03\n\x10\n\x08\x04\x06\x02\x02\x08\x9c\x08\0\x12\x04\xf6\x02\x04-\n\
+    \x11\n\x07\x04\x06\x02\x02\x08\x9f\x08\x12\x06\xf7\x02\x04\xf9\x02\x05\n\
+    \xc8\x03\n\x02\x04\x07\x12\x06\x84\x03\0\xb4\x03\x01\x1a\xb9\x03\x20A\
     \x20snapshot\x20of\x20a\x20table\x20at\x20a\x20particular\x20time.\x20A\
     \x20snapshot\x20can\x20be\x20used\x20as\x20a\n\x20checkpoint\x20for\x20d\
     ata\x20restoration\x20or\x20a\x20data\x20source\x20for\x20a\x20new\x20ta\
@@ -1940,63 +4662,244 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     rs.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-inc\
     ompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20product\
     ion\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20d\
-    eprecation\x20policy.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\xab\x01\x08\x10\
-    \n0\n\x04\x04\x03\x04\0\x12\x06\xad\x01\x02\xb8\x01\x03\x1a\x20\x20Possi\
-    ble\x20states\x20of\x20a\x20snapshot.\n\n\r\n\x05\x04\x03\x04\0\x01\x12\
-    \x04\xad\x01\x07\x0c\nD\n\x06\x04\x03\x04\0\x02\0\x12\x04\xaf\x01\x04\
-    \x18\x1a4\x20The\x20state\x20of\x20the\x20snapshot\x20could\x20not\x20be\
-    \x20determined.\n\n\x0f\n\x07\x04\x03\x04\0\x02\0\x01\x12\x04\xaf\x01\
-    \x04\x13\n\x0f\n\x07\x04\x03\x04\0\x02\0\x02\x12\x04\xaf\x01\x16\x17\nX\
-    \n\x06\x04\x03\x04\0\x02\x01\x12\x04\xb2\x01\x04\x0e\x1aH\x20The\x20snap\
-    shot\x20has\x20been\x20successfully\x20created\x20and\x20can\x20serve\
-    \x20all\x20requests.\n\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x01\x12\x04\xb2\
-    \x01\x04\t\n\x0f\n\x07\x04\x03\x04\0\x02\x01\x02\x12\x04\xb2\x01\x0c\r\n\
-    \xc4\x01\n\x06\x04\x03\x04\0\x02\x02\x12\x04\xb7\x01\x04\x11\x1a\xb3\x01\
-    \x20The\x20snapshot\x20is\x20currently\x20being\x20created,\x20and\x20ma\
-    y\x20be\x20destroyed\x20if\x20the\n\x20creation\x20process\x20encounters\
-    \x20an\x20error.\x20A\x20snapshot\x20may\x20not\x20be\x20restored\x20to\
-    \x20a\n\x20table\x20while\x20it\x20is\x20being\x20created.\n\n\x0f\n\x07\
-    \x04\x03\x04\0\x02\x02\x01\x12\x04\xb7\x01\x04\x0c\n\x0f\n\x07\x04\x03\
-    \x04\0\x02\x02\x02\x12\x04\xb7\x01\x0f\x10\n\xad\x01\n\x04\x04\x03\x02\0\
-    \x12\x04\xbe\x01\x02\x12\x1a\x9e\x01\x20(`OutputOnly`)\n\x20The\x20uniqu\
-    e\x20name\x20of\x20the\x20snapshot.\n\x20Values\x20are\x20of\x20the\x20f\
-    orm\n\x20`projects/<project>/instances/<instance>/clusters/<cluster>/sna\
-    pshots/<snapshot>`.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\xbe\x01\x02\
-    \x08\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xbe\x01\t\r\n\r\n\x05\x04\x03\
-    \x02\0\x03\x12\x04\xbe\x01\x10\x11\nT\n\x04\x04\x03\x02\x01\x12\x04\xc2\
-    \x01\x02\x19\x1aF\x20(`OutputOnly`)\n\x20The\x20source\x20table\x20at\
-    \x20the\x20time\x20the\x20snapshot\x20was\x20taken.\n\n\r\n\x05\x04\x03\
-    \x02\x01\x06\x12\x04\xc2\x01\x02\x07\n\r\n\x05\x04\x03\x02\x01\x01\x12\
-    \x04\xc2\x01\x08\x14\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xc2\x01\x17\
-    \x18\n\xf6\x01\n\x04\x04\x03\x02\x02\x12\x04\xc8\x01\x02\x1c\x1a\xe7\x01\
-    \x20(`OutputOnly`)\n\x20The\x20size\x20of\x20the\x20data\x20in\x20the\
-    \x20source\x20table\x20at\x20the\x20time\x20the\x20snapshot\x20was\n\x20\
-    taken.\x20In\x20some\x20cases,\x20this\x20value\x20may\x20be\x20computed\
-    \x20asynchronously\x20via\x20a\n\x20background\x20process\x20and\x20a\
-    \x20placeholder\x20of\x200\x20will\x20be\x20used\x20in\x20the\x20meantim\
-    e.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\xc8\x01\x02\x07\n\r\n\x05\x04\
-    \x03\x02\x02\x01\x12\x04\xc8\x01\x08\x17\n\r\n\x05\x04\x03\x02\x02\x03\
-    \x12\x04\xc8\x01\x1a\x1b\nF\n\x04\x04\x03\x02\x03\x12\x04\xcc\x01\x02,\
-    \x1a8\x20(`OutputOnly`)\n\x20The\x20time\x20when\x20the\x20snapshot\x20i\
-    s\x20created.\n\n\r\n\x05\x04\x03\x02\x03\x06\x12\x04\xcc\x01\x02\x1b\n\
-    \r\n\x05\x04\x03\x02\x03\x01\x12\x04\xcc\x01\x1c'\n\r\n\x05\x04\x03\x02\
-    \x03\x03\x12\x04\xcc\x01*+\n\xda\x01\n\x04\x04\x03\x02\x04\x12\x04\xd2\
-    \x01\x02,\x1a\xcb\x01\x20(`OutputOnly`)\n\x20The\x20time\x20when\x20the\
-    \x20snapshot\x20will\x20be\x20deleted.\x20The\x20maximum\x20amount\x20of\
-    \x20time\x20a\n\x20snapshot\x20can\x20stay\x20active\x20is\x20365\x20day\
-    s.\x20If\x20'ttl'\x20is\x20not\x20specified,\n\x20the\x20default\x20maxi\
-    mum\x20of\x20365\x20days\x20will\x20be\x20used.\n\n\r\n\x05\x04\x03\x02\
-    \x04\x06\x12\x04\xd2\x01\x02\x1b\n\r\n\x05\x04\x03\x02\x04\x01\x12\x04\
-    \xd2\x01\x1c'\n\r\n\x05\x04\x03\x02\x04\x03\x12\x04\xd2\x01*+\nB\n\x04\
-    \x04\x03\x02\x05\x12\x04\xd6\x01\x02\x12\x1a4\x20(`OutputOnly`)\n\x20The\
-    \x20current\x20state\x20of\x20the\x20snapshot.\n\n\r\n\x05\x04\x03\x02\
-    \x05\x06\x12\x04\xd6\x01\x02\x07\n\r\n\x05\x04\x03\x02\x05\x01\x12\x04\
-    \xd6\x01\x08\r\n\r\n\x05\x04\x03\x02\x05\x03\x12\x04\xd6\x01\x10\x11\n<\
-    \n\x04\x04\x03\x02\x06\x12\x04\xda\x01\x02\x19\x1a.\x20(`OutputOnly`)\n\
-    \x20Description\x20of\x20the\x20snapshot.\n\n\r\n\x05\x04\x03\x02\x06\
-    \x05\x12\x04\xda\x01\x02\x08\n\r\n\x05\x04\x03\x02\x06\x01\x12\x04\xda\
-    \x01\t\x14\n\r\n\x05\x04\x03\x02\x06\x03\x12\x04\xda\x01\x17\x18b\x06pro\
-    to3\
+    eprecation\x20policy.\n\n\x0b\n\x03\x04\x07\x01\x12\x04\x84\x03\x08\x10\
+    \n\r\n\x03\x04\x07\x07\x12\x06\x85\x03\x02\x88\x03\x04\n\x0f\n\x05\x04\
+    \x07\x07\x9d\x08\x12\x06\x85\x03\x02\x88\x03\x04\n0\n\x04\x04\x07\x04\0\
+    \x12\x06\x8b\x03\x02\x96\x03\x03\x1a\x20\x20Possible\x20states\x20of\x20\
+    a\x20snapshot.\n\n\r\n\x05\x04\x07\x04\0\x01\x12\x04\x8b\x03\x07\x0c\nD\
+    \n\x06\x04\x07\x04\0\x02\0\x12\x04\x8d\x03\x04\x18\x1a4\x20The\x20state\
+    \x20of\x20the\x20snapshot\x20could\x20not\x20be\x20determined.\n\n\x0f\n\
+    \x07\x04\x07\x04\0\x02\0\x01\x12\x04\x8d\x03\x04\x13\n\x0f\n\x07\x04\x07\
+    \x04\0\x02\0\x02\x12\x04\x8d\x03\x16\x17\nX\n\x06\x04\x07\x04\0\x02\x01\
+    \x12\x04\x90\x03\x04\x0e\x1aH\x20The\x20snapshot\x20has\x20been\x20succe\
+    ssfully\x20created\x20and\x20can\x20serve\x20all\x20requests.\n\n\x0f\n\
+    \x07\x04\x07\x04\0\x02\x01\x01\x12\x04\x90\x03\x04\t\n\x0f\n\x07\x04\x07\
+    \x04\0\x02\x01\x02\x12\x04\x90\x03\x0c\r\n\xc4\x01\n\x06\x04\x07\x04\0\
+    \x02\x02\x12\x04\x95\x03\x04\x11\x1a\xb3\x01\x20The\x20snapshot\x20is\
+    \x20currently\x20being\x20created,\x20and\x20may\x20be\x20destroyed\x20i\
+    f\x20the\n\x20creation\x20process\x20encounters\x20an\x20error.\x20A\x20\
+    snapshot\x20may\x20not\x20be\x20restored\x20to\x20a\n\x20table\x20while\
+    \x20it\x20is\x20being\x20created.\n\n\x0f\n\x07\x04\x07\x04\0\x02\x02\
+    \x01\x12\x04\x95\x03\x04\x0c\n\x0f\n\x07\x04\x07\x04\0\x02\x02\x02\x12\
+    \x04\x95\x03\x0f\x10\n\x9d\x01\n\x04\x04\x07\x02\0\x12\x04\x9b\x03\x02\
+    \x12\x1a\x8e\x01\x20The\x20unique\x20name\x20of\x20the\x20snapshot.\n\
+    \x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instance\
+    s/{instance}/clusters/{cluster}/snapshots/{snapshot}`.\n\n\r\n\x05\x04\
+    \x07\x02\0\x05\x12\x04\x9b\x03\x02\x08\n\r\n\x05\x04\x07\x02\0\x01\x12\
+    \x04\x9b\x03\t\r\n\r\n\x05\x04\x07\x02\0\x03\x12\x04\x9b\x03\x10\x11\nQ\
+    \n\x04\x04\x07\x02\x01\x12\x04\x9e\x03\x02E\x1aC\x20Output\x20only.\x20T\
+    he\x20source\x20table\x20at\x20the\x20time\x20the\x20snapshot\x20was\x20\
+    taken.\n\n\r\n\x05\x04\x07\x02\x01\x06\x12\x04\x9e\x03\x02\x07\n\r\n\x05\
+    \x04\x07\x02\x01\x01\x12\x04\x9e\x03\x08\x14\n\r\n\x05\x04\x07\x02\x01\
+    \x03\x12\x04\x9e\x03\x17\x18\n\r\n\x05\x04\x07\x02\x01\x08\x12\x04\x9e\
+    \x03\x19D\n\x10\n\x08\x04\x07\x02\x01\x08\x9c\x08\0\x12\x04\x9e\x03\x1aC\
+    \n\xf4\x01\n\x04\x04\x07\x02\x02\x12\x04\xa4\x03\x02H\x1a\xe5\x01\x20Out\
+    put\x20only.\x20The\x20size\x20of\x20the\x20data\x20in\x20the\x20source\
+    \x20table\x20at\x20the\x20time\x20the\n\x20snapshot\x20was\x20taken.\x20\
+    In\x20some\x20cases,\x20this\x20value\x20may\x20be\x20computed\n\x20asyn\
+    chronously\x20via\x20a\x20background\x20process\x20and\x20a\x20placehold\
+    er\x20of\x200\x20will\x20be\x20used\n\x20in\x20the\x20meantime.\n\n\r\n\
+    \x05\x04\x07\x02\x02\x05\x12\x04\xa4\x03\x02\x07\n\r\n\x05\x04\x07\x02\
+    \x02\x01\x12\x04\xa4\x03\x08\x17\n\r\n\x05\x04\x07\x02\x02\x03\x12\x04\
+    \xa4\x03\x1a\x1b\n\r\n\x05\x04\x07\x02\x02\x08\x12\x04\xa4\x03\x1cG\n\
+    \x10\n\x08\x04\x07\x02\x02\x08\x9c\x08\0\x12\x04\xa4\x03\x1dF\nE\n\x04\
+    \x04\x07\x02\x03\x12\x06\xa7\x03\x02\xa8\x032\x1a5\x20Output\x20only.\
+    \x20The\x20time\x20when\x20the\x20snapshot\x20is\x20created.\n\n\r\n\x05\
+    \x04\x07\x02\x03\x06\x12\x04\xa7\x03\x02\x1b\n\r\n\x05\x04\x07\x02\x03\
+    \x01\x12\x04\xa7\x03\x1c'\n\r\n\x05\x04\x07\x02\x03\x03\x12\x04\xa7\x03*\
+    +\n\r\n\x05\x04\x07\x02\x03\x08\x12\x04\xa8\x03\x061\n\x10\n\x08\x04\x07\
+    \x02\x03\x08\x9c\x08\0\x12\x04\xa8\x03\x070\n\xca\x01\n\x04\x04\x07\x02\
+    \x04\x12\x04\xad\x03\x02,\x1a\xbb\x01\x20The\x20time\x20when\x20the\x20s\
+    napshot\x20will\x20be\x20deleted.\x20The\x20maximum\x20amount\x20of\x20t\
+    ime\x20a\n\x20snapshot\x20can\x20stay\x20active\x20is\x20365\x20days.\
+    \x20If\x20'ttl'\x20is\x20not\x20specified,\n\x20the\x20default\x20maximu\
+    m\x20of\x20365\x20days\x20will\x20be\x20used.\n\n\r\n\x05\x04\x07\x02\
+    \x04\x06\x12\x04\xad\x03\x02\x1b\n\r\n\x05\x04\x07\x02\x04\x01\x12\x04\
+    \xad\x03\x1c'\n\r\n\x05\x04\x07\x02\x04\x03\x12\x04\xad\x03*+\n?\n\x04\
+    \x04\x07\x02\x05\x12\x04\xb0\x03\x02>\x1a1\x20Output\x20only.\x20The\x20\
+    current\x20state\x20of\x20the\x20snapshot.\n\n\r\n\x05\x04\x07\x02\x05\
+    \x06\x12\x04\xb0\x03\x02\x07\n\r\n\x05\x04\x07\x02\x05\x01\x12\x04\xb0\
+    \x03\x08\r\n\r\n\x05\x04\x07\x02\x05\x03\x12\x04\xb0\x03\x10\x11\n\r\n\
+    \x05\x04\x07\x02\x05\x08\x12\x04\xb0\x03\x12=\n\x10\n\x08\x04\x07\x02\
+    \x05\x08\x9c\x08\0\x12\x04\xb0\x03\x13<\n,\n\x04\x04\x07\x02\x06\x12\x04\
+    \xb3\x03\x02\x19\x1a\x1e\x20Description\x20of\x20the\x20snapshot.\n\n\r\
+    \n\x05\x04\x07\x02\x06\x05\x12\x04\xb3\x03\x02\x08\n\r\n\x05\x04\x07\x02\
+    \x06\x01\x12\x04\xb3\x03\t\x14\n\r\n\x05\x04\x07\x02\x06\x03\x12\x04\xb3\
+    \x03\x17\x18\n3\n\x02\x04\x08\x12\x06\xb7\x03\0\xa2\x04\x01\x1a%\x20A\
+    \x20backup\x20of\x20a\x20Cloud\x20Bigtable\x20table.\n\n\x0b\n\x03\x04\
+    \x08\x01\x12\x04\xb7\x03\x08\x0e\n\r\n\x03\x04\x08\x07\x12\x06\xb8\x03\
+    \x02\xbb\x03\x04\n\x0f\n\x05\x04\x08\x07\x9d\x08\x12\x06\xb8\x03\x02\xbb\
+    \x03\x04\n<\n\x04\x04\x08\x04\0\x12\x06\xbe\x03\x02\xc8\x03\x03\x1a,\x20\
+    Indicates\x20the\x20current\x20state\x20of\x20the\x20backup.\n\n\r\n\x05\
+    \x04\x08\x04\0\x01\x12\x04\xbe\x03\x07\x0c\n\x20\n\x06\x04\x08\x04\0\x02\
+    \0\x12\x04\xc0\x03\x04\x1a\x1a\x10\x20Not\x20specified.\n\n\x0f\n\x07\
+    \x04\x08\x04\0\x02\0\x01\x12\x04\xc0\x03\x04\x15\n\x0f\n\x07\x04\x08\x04\
+    \0\x02\0\x02\x12\x04\xc0\x03\x18\x19\n\x89\x01\n\x06\x04\x08\x04\0\x02\
+    \x01\x12\x04\xc4\x03\x04\x11\x1ay\x20The\x20pending\x20backup\x20is\x20s\
+    till\x20being\x20created.\x20Operations\x20on\x20the\n\x20backup\x20may\
+    \x20fail\x20with\x20`FAILED_PRECONDITION`\x20in\x20this\x20state.\n\n\
+    \x0f\n\x07\x04\x08\x04\0\x02\x01\x01\x12\x04\xc4\x03\x04\x0c\n\x0f\n\x07\
+    \x04\x08\x04\0\x02\x01\x02\x12\x04\xc4\x03\x0f\x10\n;\n\x06\x04\x08\x04\
+    \0\x02\x02\x12\x04\xc7\x03\x04\x0e\x1a+\x20The\x20backup\x20is\x20comple\
+    te\x20and\x20ready\x20for\x20use.\n\n\x0f\n\x07\x04\x08\x04\0\x02\x02\
+    \x01\x12\x04\xc7\x03\x04\t\n\x0f\n\x07\x04\x08\x04\0\x02\x02\x02\x12\x04\
+    \xc7\x03\x0c\r\n)\n\x04\x04\x08\x04\x01\x12\x06\xcb\x03\x02\xd9\x03\x03\
+    \x1a\x19\x20The\x20type\x20of\x20the\x20backup.\n\n\r\n\x05\x04\x08\x04\
+    \x01\x01\x12\x04\xcb\x03\x07\x11\n\x20\n\x06\x04\x08\x04\x01\x02\0\x12\
+    \x04\xcd\x03\x04\x20\x1a\x10\x20Not\x20specified.\n\n\x0f\n\x07\x04\x08\
+    \x04\x01\x02\0\x01\x12\x04\xcd\x03\x04\x1b\n\x0f\n\x07\x04\x08\x04\x01\
+    \x02\0\x02\x12\x04\xcd\x03\x1e\x1f\n\xc9\x01\n\x06\x04\x08\x04\x01\x02\
+    \x01\x12\x04\xd2\x03\x04\x11\x1a\xb8\x01\x20The\x20default\x20type\x20fo\
+    r\x20Cloud\x20Bigtable\x20managed\x20backups.\x20Supported\x20for\n\x20b\
+    ackups\x20created\x20in\x20both\x20HDD\x20and\x20SSD\x20instances.\x20Re\
+    quires\x20optimization\x20when\n\x20restored\x20to\x20a\x20table\x20in\
+    \x20an\x20SSD\x20instance.\n\n\x0f\n\x07\x04\x08\x04\x01\x02\x01\x01\x12\
+    \x04\xd2\x03\x04\x0c\n\x0f\n\x07\x04\x08\x04\x01\x02\x01\x02\x12\x04\xd2\
+    \x03\x0f\x10\n\xef\x01\n\x06\x04\x08\x04\x01\x02\x02\x12\x04\xd8\x03\x04\
+    \x0c\x1a\xde\x01\x20A\x20backup\x20type\x20with\x20faster\x20restore\x20\
+    to\x20SSD\x20performance.\x20Only\x20supported\x20for\n\x20backups\x20cr\
+    eated\x20in\x20SSD\x20instances.\x20A\x20new\x20SSD\x20table\x20restored\
+    \x20from\x20a\x20hot\n\x20backup\x20reaches\x20production\x20performance\
+    \x20more\x20quickly\x20than\x20a\x20standard\n\x20backup.\n\n\x0f\n\x07\
+    \x04\x08\x04\x01\x02\x02\x01\x12\x04\xd8\x03\x04\x07\n\x0f\n\x07\x04\x08\
+    \x04\x01\x02\x02\x02\x12\x04\xd8\x03\n\x0b\n\xc1\x03\n\x04\x04\x08\x02\0\
+    \x12\x04\xe5\x03\x02\x12\x1a\xb2\x03\x20A\x20globally\x20unique\x20ident\
+    ifier\x20for\x20the\x20backup\x20which\x20cannot\x20be\n\x20changed.\x20\
+    Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{i\
+    nstance}/clusters/{cluster}/\n\x20\x20\x20\x20backups/[_a-zA-Z0-9][-_.a-\
+    zA-Z0-9]*`\n\x20The\x20final\x20segment\x20of\x20the\x20name\x20must\x20\
+    be\x20between\x201\x20and\x2050\x20characters\n\x20in\x20length.\n\n\x20\
+    The\x20backup\x20is\x20stored\x20in\x20the\x20cluster\x20identified\x20b\
+    y\x20the\x20prefix\x20of\x20the\x20backup\n\x20name\x20of\x20the\x20form\
+    \n\x20`projects/{project}/instances/{instance}/clusters/{cluster}`.\n\n\
+    \r\n\x05\x04\x08\x02\0\x05\x12\x04\xe5\x03\x02\x08\n\r\n\x05\x04\x08\x02\
+    \0\x01\x12\x04\xe5\x03\t\r\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\xe5\x03\
+    \x10\x11\n\xec\x01\n\x04\x04\x08\x02\x01\x12\x06\xea\x03\x02\xed\x03\x04\
+    \x1a\xdb\x01\x20Required.\x20Immutable.\x20Name\x20of\x20the\x20table\
+    \x20from\x20which\x20this\x20backup\x20was\x20created.\n\x20This\x20need\
+    s\x20to\x20be\x20in\x20the\x20same\x20instance\x20as\x20the\x20backup.\
+    \x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instance\
+    s/{instance}/tables/{source_table}`.\n\n\r\n\x05\x04\x08\x02\x01\x05\x12\
+    \x04\xea\x03\x02\x08\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\xea\x03\t\x15\
+    \n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xea\x03\x18\x19\n\x0f\n\x05\x04\
+    \x08\x02\x01\x08\x12\x06\xea\x03\x1a\xed\x03\x03\n\x10\n\x08\x04\x08\x02\
+    \x01\x08\x9c\x08\0\x12\x04\xeb\x03\x04+\n\x10\n\x08\x04\x08\x02\x01\x08\
+    \x9c\x08\x01\x12\x04\xec\x03\x04*\n\x84\x02\n\x04\x04\x08\x02\x02\x12\
+    \x04\xf3\x03\x02H\x1a\xf5\x01\x20Output\x20only.\x20Name\x20of\x20the\
+    \x20backup\x20from\x20which\x20this\x20backup\x20was\x20copied.\x20If\
+    \x20a\n\x20backup\x20is\x20not\x20created\x20by\x20copying\x20a\x20backu\
+    p,\x20this\x20field\x20will\x20be\x20empty.\x20Values\n\x20are\x20of\x20\
+    the\x20form:\n\x20projects/<project>/instances/<instance>/clusters/<clus\
+    ter>/backups/<backup>\n\n\r\n\x05\x04\x08\x02\x02\x05\x12\x04\xf3\x03\
+    \x02\x08\n\r\n\x05\x04\x08\x02\x02\x01\x12\x04\xf3\x03\t\x16\n\r\n\x05\
+    \x04\x08\x02\x02\x03\x12\x04\xf3\x03\x19\x1b\n\r\n\x05\x04\x08\x02\x02\
+    \x08\x12\x04\xf3\x03\x1cG\n\x10\n\x08\x04\x08\x02\x02\x08\x9c\x08\0\x12\
+    \x04\xf3\x03\x1dF\n\xa6\x02\n\x04\x04\x08\x02\x03\x12\x06\xfc\x03\x02\
+    \xfd\x03/\x1a\x95\x02\x20Required.\x20The\x20expiration\x20time\x20of\
+    \x20the\x20backup.\n\x20When\x20creating\x20a\x20backup\x20or\x20updatin\
+    g\x20its\x20`expire_time`,\x20the\x20value\x20must\x20be\n\x20greater\
+    \x20than\x20the\x20backup\x20creation\x20time\x20by:\n\x20-\x20At\x20lea\
+    st\x206\x20hours\n\x20-\x20At\x20most\x2090\x20days\n\n\x20Once\x20the\
+    \x20`expire_time`\x20has\x20passed,\x20Cloud\x20Bigtable\x20will\x20dele\
+    te\x20the\x20backup.\n\n\r\n\x05\x04\x08\x02\x03\x06\x12\x04\xfc\x03\x02\
+    \x1b\n\r\n\x05\x04\x08\x02\x03\x01\x12\x04\xfc\x03\x1c'\n\r\n\x05\x04\
+    \x08\x02\x03\x03\x12\x04\xfc\x03*+\n\r\n\x05\x04\x08\x02\x03\x08\x12\x04\
+    \xfd\x03\x06.\n\x10\n\x08\x04\x08\x02\x03\x08\x9c\x08\0\x12\x04\xfd\x03\
+    \x07-\n\x9b\x02\n\x04\x04\x08\x02\x04\x12\x06\x84\x04\x02\x85\x042\x1a\
+    \x8a\x02\x20Output\x20only.\x20`start_time`\x20is\x20the\x20time\x20that\
+    \x20the\x20backup\x20was\x20started\n\x20(i.e.\x20approximately\x20the\
+    \x20time\x20the\n\x20[CreateBackup][google.bigtable.admin.v2.BigtableTab\
+    leAdmin.CreateBackup]\n\x20request\x20is\x20received).\x20\x20The\x20row\
+    \x20data\x20in\x20this\x20backup\x20will\x20be\x20no\x20older\x20than\n\
+    \x20this\x20timestamp.\n\n\r\n\x05\x04\x08\x02\x04\x06\x12\x04\x84\x04\
+    \x02\x1b\n\r\n\x05\x04\x08\x02\x04\x01\x12\x04\x84\x04\x1c&\n\r\n\x05\
+    \x04\x08\x02\x04\x03\x12\x04\x84\x04)*\n\r\n\x05\x04\x08\x02\x04\x08\x12\
+    \x04\x85\x04\x061\n\x10\n\x08\x04\x08\x02\x04\x08\x9c\x08\0\x12\x04\x85\
+    \x04\x070\n\x96\x01\n\x04\x04\x08\x02\x05\x12\x06\x89\x04\x02\x8a\x042\
+    \x1a\x85\x01\x20Output\x20only.\x20`end_time`\x20is\x20the\x20time\x20th\
+    at\x20the\x20backup\x20was\x20finished.\x20The\x20row\n\x20data\x20in\
+    \x20the\x20backup\x20will\x20be\x20no\x20newer\x20than\x20this\x20timest\
+    amp.\n\n\r\n\x05\x04\x08\x02\x05\x06\x12\x04\x89\x04\x02\x1b\n\r\n\x05\
+    \x04\x08\x02\x05\x01\x12\x04\x89\x04\x1c$\n\r\n\x05\x04\x08\x02\x05\x03\
+    \x12\x04\x89\x04'(\n\r\n\x05\x04\x08\x02\x05\x08\x12\x04\x8a\x04\x061\n\
+    \x10\n\x08\x04\x08\x02\x05\x08\x9c\x08\0\x12\x04\x8a\x04\x070\n9\n\x04\
+    \x04\x08\x02\x06\x12\x04\x8d\x04\x02C\x1a+\x20Output\x20only.\x20Size\
+    \x20of\x20the\x20backup\x20in\x20bytes.\n\n\r\n\x05\x04\x08\x02\x06\x05\
+    \x12\x04\x8d\x04\x02\x07\n\r\n\x05\x04\x08\x02\x06\x01\x12\x04\x8d\x04\
+    \x08\x12\n\r\n\x05\x04\x08\x02\x06\x03\x12\x04\x8d\x04\x15\x16\n\r\n\x05\
+    \x04\x08\x02\x06\x08\x12\x04\x8d\x04\x17B\n\x10\n\x08\x04\x08\x02\x06\
+    \x08\x9c\x08\0\x12\x04\x8d\x04\x18A\n=\n\x04\x04\x08\x02\x07\x12\x04\x90\
+    \x04\x02>\x1a/\x20Output\x20only.\x20The\x20current\x20state\x20of\x20th\
+    e\x20backup.\n\n\r\n\x05\x04\x08\x02\x07\x06\x12\x04\x90\x04\x02\x07\n\r\
+    \n\x05\x04\x08\x02\x07\x01\x12\x04\x90\x04\x08\r\n\r\n\x05\x04\x08\x02\
+    \x07\x03\x12\x04\x90\x04\x10\x11\n\r\n\x05\x04\x08\x02\x07\x08\x12\x04\
+    \x90\x04\x12=\n\x10\n\x08\x04\x08\x02\x07\x08\x9c\x08\0\x12\x04\x90\x04\
+    \x13<\nI\n\x04\x04\x08\x02\x08\x12\x06\x93\x04\x02\x94\x042\x1a9\x20Outp\
+    ut\x20only.\x20The\x20encryption\x20information\x20for\x20the\x20backup.\
+    \n\n\r\n\x05\x04\x08\x02\x08\x06\x12\x04\x93\x04\x02\x10\n\r\n\x05\x04\
+    \x08\x02\x08\x01\x12\x04\x93\x04\x11\x20\n\r\n\x05\x04\x08\x02\x08\x03\
+    \x12\x04\x93\x04#$\n\r\n\x05\x04\x08\x02\x08\x08\x12\x04\x94\x04\x061\n\
+    \x10\n\x08\x04\x08\x02\x08\x08\x9c\x08\0\x12\x04\x94\x04\x070\n8\n\x04\
+    \x04\x08\x02\t\x12\x04\x97\x04\x02\x1e\x1a*\x20Indicates\x20the\x20backu\
+    p\x20type\x20of\x20the\x20backup.\n\n\r\n\x05\x04\x08\x02\t\x06\x12\x04\
+    \x97\x04\x02\x0c\n\r\n\x05\x04\x08\x02\t\x01\x12\x04\x97\x04\r\x18\n\r\n\
+    \x05\x04\x08\x02\t\x03\x12\x04\x97\x04\x1b\x1d\n\xa8\x03\n\x04\x04\x08\
+    \x02\n\x12\x04\xa1\x04\x026\x1a\x99\x03\x20The\x20time\x20at\x20which\
+    \x20the\x20hot\x20backup\x20will\x20be\x20converted\x20to\x20a\x20standa\
+    rd\x20backup.\n\x20Once\x20the\x20`hot_to_standard_time`\x20has\x20passe\
+    d,\x20Cloud\x20Bigtable\x20will\x20convert\x20the\n\x20hot\x20backup\x20\
+    to\x20a\x20standard\x20backup.\x20This\x20value\x20must\x20be\x20greater\
+    \x20than\x20the\x20backup\n\x20creation\x20time\x20by:\n\x20-\x20At\x20l\
+    east\x2024\x20hours\n\n\x20This\x20field\x20only\x20applies\x20for\x20ho\
+    t\x20backups.\x20When\x20creating\x20or\x20updating\x20a\n\x20standard\
+    \x20backup,\x20attempting\x20to\x20set\x20this\x20field\x20will\x20fail\
+    \x20the\x20request.\n\n\r\n\x05\x04\x08\x02\n\x06\x12\x04\xa1\x04\x02\
+    \x1b\n\r\n\x05\x04\x08\x02\n\x01\x12\x04\xa1\x04\x1c0\n\r\n\x05\x04\x08\
+    \x02\n\x03\x12\x04\xa1\x0435\n+\n\x02\x04\t\x12\x06\xa5\x04\0\xbb\x04\
+    \x01\x1a\x1d\x20Information\x20about\x20a\x20backup.\n\n\x0b\n\x03\x04\t\
+    \x01\x12\x04\xa5\x04\x08\x12\n0\n\x04\x04\t\x02\0\x12\x04\xa7\x04\x02@\
+    \x1a\"\x20Output\x20only.\x20Name\x20of\x20the\x20backup.\n\n\r\n\x05\
+    \x04\t\x02\0\x05\x12\x04\xa7\x04\x02\x08\n\r\n\x05\x04\t\x02\0\x01\x12\
+    \x04\xa7\x04\t\x0f\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xa7\x04\x12\x13\n\r\
+    \n\x05\x04\t\x02\0\x08\x12\x04\xa7\x04\x14?\n\x10\n\x08\x04\t\x02\0\x08\
+    \x9c\x08\0\x12\x04\xa7\x04\x15>\n\x82\x01\n\x04\x04\t\x02\x01\x12\x06\
+    \xab\x04\x02\xac\x042\x1ar\x20Output\x20only.\x20The\x20time\x20that\x20\
+    the\x20backup\x20was\x20started.\x20Row\x20data\x20in\x20the\x20backup\n\
+    \x20will\x20be\x20no\x20older\x20than\x20this\x20timestamp.\n\n\r\n\x05\
+    \x04\t\x02\x01\x06\x12\x04\xab\x04\x02\x1b\n\r\n\x05\x04\t\x02\x01\x01\
+    \x12\x04\xab\x04\x1c&\n\r\n\x05\x04\t\x02\x01\x03\x12\x04\xab\x04)*\n\r\
+    \n\x05\x04\t\x02\x01\x08\x12\x04\xac\x04\x061\n\x10\n\x08\x04\t\x02\x01\
+    \x08\x9c\x08\0\x12\x04\xac\x04\x070\n\x84\x01\n\x04\x04\t\x02\x02\x12\
+    \x06\xb0\x04\x02\xb1\x042\x1at\x20Output\x20only.\x20This\x20time\x20tha\
+    t\x20the\x20backup\x20was\x20finished.\x20Row\x20data\x20in\x20the\n\x20\
+    backup\x20will\x20be\x20no\x20newer\x20than\x20this\x20timestamp.\n\n\r\
+    \n\x05\x04\t\x02\x02\x06\x12\x04\xb0\x04\x02\x1b\n\r\n\x05\x04\t\x02\x02\
+    \x01\x12\x04\xb0\x04\x1c$\n\r\n\x05\x04\t\x02\x02\x03\x12\x04\xb0\x04'(\
+    \n\r\n\x05\x04\t\x02\x02\x08\x12\x04\xb1\x04\x061\n\x10\n\x08\x04\t\x02\
+    \x02\x08\x9c\x08\0\x12\x04\xb1\x04\x070\nK\n\x04\x04\t\x02\x03\x12\x04\
+    \xb4\x04\x02F\x1a=\x20Output\x20only.\x20Name\x20of\x20the\x20table\x20t\
+    he\x20backup\x20was\x20created\x20from.\n\n\r\n\x05\x04\t\x02\x03\x05\
+    \x12\x04\xb4\x04\x02\x08\n\r\n\x05\x04\t\x02\x03\x01\x12\x04\xb4\x04\t\
+    \x15\n\r\n\x05\x04\t\x02\x03\x03\x12\x04\xb4\x04\x18\x19\n\r\n\x05\x04\t\
+    \x02\x03\x08\x12\x04\xb4\x04\x1aE\n\x10\n\x08\x04\t\x02\x03\x08\x9c\x08\
+    \0\x12\x04\xb4\x04\x1bD\n\x84\x02\n\x04\x04\t\x02\x04\x12\x04\xba\x04\
+    \x02H\x1a\xf5\x01\x20Output\x20only.\x20Name\x20of\x20the\x20backup\x20f\
+    rom\x20which\x20this\x20backup\x20was\x20copied.\x20If\x20a\n\x20backup\
+    \x20is\x20not\x20created\x20by\x20copying\x20a\x20backup,\x20this\x20fie\
+    ld\x20will\x20be\x20empty.\x20Values\n\x20are\x20of\x20the\x20form:\n\
+    \x20projects/<project>/instances/<instance>/clusters/<cluster>/backups/<\
+    backup>\n\n\r\n\x05\x04\t\x02\x04\x05\x12\x04\xba\x04\x02\x08\n\r\n\x05\
+    \x04\t\x02\x04\x01\x12\x04\xba\x04\t\x16\n\r\n\x05\x04\t\x02\x04\x03\x12\
+    \x04\xba\x04\x19\x1b\n\r\n\x05\x04\t\x02\x04\x08\x12\x04\xba\x04\x1cG\n\
+    \x10\n\x08\x04\t\x02\x04\x08\x9c\x08\0\x12\x04\xba\x04\x1dF\n9\n\x02\x05\
+    \0\x12\x06\xbe\x04\0\xc4\x04\x01\x1a+\x20Indicates\x20the\x20type\x20of\
+    \x20the\x20restore\x20source.\n\n\x0b\n\x03\x05\0\x01\x12\x04\xbe\x04\
+    \x05\x16\n&\n\x04\x05\0\x02\0\x12\x04\xc0\x04\x02&\x1a\x18\x20No\x20rest\
+    ore\x20associated.\n\n\r\n\x05\x05\0\x02\0\x01\x12\x04\xc0\x04\x02!\n\r\
+    \n\x05\x05\0\x02\0\x02\x12\x04\xc0\x04$%\n?\n\x04\x05\0\x02\x01\x12\x04\
+    \xc3\x04\x02\r\x1a1\x20A\x20backup\x20was\x20used\x20as\x20the\x20source\
+    \x20of\x20the\x20restore.\n\n\r\n\x05\x05\0\x02\x01\x01\x12\x04\xc3\x04\
+    \x02\x08\n\r\n\x05\x05\0\x02\x01\x02\x12\x04\xc3\x04\x0b\x0cb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -2013,23 +4916,40 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(3);
-            deps.push(super::annotations::file_descriptor().clone());
+            let mut deps = ::std::vec::Vec::with_capacity(6);
+            deps.push(super::field_behavior::file_descriptor().clone());
+            deps.push(super::resource::file_descriptor().clone());
+            deps.push(super::types::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::duration::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(7);
+            deps.push(super::status::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(16);
+            messages.push(RestoreInfo::generated_message_descriptor_data());
+            messages.push(ChangeStreamConfig::generated_message_descriptor_data());
             messages.push(Table::generated_message_descriptor_data());
+            messages.push(AuthorizedView::generated_message_descriptor_data());
             messages.push(ColumnFamily::generated_message_descriptor_data());
             messages.push(GcRule::generated_message_descriptor_data());
+            messages.push(EncryptionInfo::generated_message_descriptor_data());
             messages.push(Snapshot::generated_message_descriptor_data());
+            messages.push(Backup::generated_message_descriptor_data());
+            messages.push(BackupInfo::generated_message_descriptor_data());
             messages.push(table::ClusterState::generated_message_descriptor_data());
+            messages.push(table::AutomatedBackupPolicy::generated_message_descriptor_data());
+            messages.push(authorized_view::FamilySubsets::generated_message_descriptor_data());
+            messages.push(authorized_view::SubsetView::generated_message_descriptor_data());
             messages.push(gc_rule::Intersection::generated_message_descriptor_data());
             messages.push(gc_rule::Union::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(4);
+            let mut enums = ::std::vec::Vec::with_capacity(9);
+            enums.push(RestoreSourceType::generated_enum_descriptor_data());
             enums.push(table::TimestampGranularity::generated_enum_descriptor_data());
             enums.push(table::View::generated_enum_descriptor_data());
             enums.push(table::cluster_state::ReplicationState::generated_enum_descriptor_data());
+            enums.push(authorized_view::ResponseView::generated_enum_descriptor_data());
+            enums.push(encryption_info::EncryptionType::generated_enum_descriptor_data());
             enums.push(snapshot::State::generated_enum_descriptor_data());
+            enums.push(backup::State::generated_enum_descriptor_data());
+            enums.push(backup::BackupType::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

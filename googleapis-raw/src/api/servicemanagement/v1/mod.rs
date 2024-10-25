@@ -1,9 +1,9 @@
 // @generated
 use crate::{
-    api::{annotations, config_change, metric, service},
+    api::{annotations, client, config_change, field_behavior, service},
     longrunning::operations,
-    rpc::status,
 };
+
 pub mod resources;
 pub mod servicemanager;
 pub mod servicemanager_grpc;

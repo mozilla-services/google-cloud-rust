@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -29,34 +29,30 @@ const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Service {
     // message fields
-    ///  The semantic version of the service configuration. The config version
-    ///  affects the interpretation of the service configuration. For example,
-    ///  certain features are enabled by default for certain config versions.
-    ///  The latest config version is `3`.
-    // @@protoc_insertion_point(field:google.api.Service.config_version)
-    pub config_version: ::protobuf::MessageField<::protobuf::well_known_types::wrappers::UInt32Value>,
     ///  The service name, which is a DNS-like logical identifier for the
     ///  service, such as `calendar.googleapis.com`. The service name
     ///  typically goes through DNS verification to make sure the owner
     ///  of the service also owns the DNS name.
     // @@protoc_insertion_point(field:google.api.Service.name)
     pub name: ::std::string::String,
-    ///  A unique ID for a specific instance of this message, typically assigned
-    ///  by the client for tracking purpose. If empty, the server may choose to
-    ///  generate one instead. Must be no longer than 60 characters.
-    // @@protoc_insertion_point(field:google.api.Service.id)
-    pub id: ::std::string::String,
-    ///  The product title for this service.
+    ///  The product title for this service, it is the name displayed in Google
+    ///  Cloud Console.
     // @@protoc_insertion_point(field:google.api.Service.title)
     pub title: ::std::string::String,
     ///  The Google project that owns this service.
     // @@protoc_insertion_point(field:google.api.Service.producer_project_id)
     pub producer_project_id: ::std::string::String,
+    ///  A unique ID for a specific instance of this message, typically assigned
+    ///  by the client for tracking purpose. Must be no longer than 63 characters
+    ///  and only lower case letters, digits, '.', '_' and '-' are allowed. If
+    ///  empty, the server may choose to generate one instead.
+    // @@protoc_insertion_point(field:google.api.Service.id)
+    pub id: ::std::string::String,
     ///  A list of API interfaces exported by this service. Only the `name` field
-    ///  of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
-    ///  author, as the remaining fields will be derived from the IDL during the
-    ///  normalization process. It is an error to specify an API interface here
-    ///  which cannot be resolved against the associated IDL files.
+    ///  of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+    ///  the configuration author, as the remaining fields will be derived from the
+    ///  IDL during the normalization process. It is an error to specify an API
+    ///  interface here which cannot be resolved against the associated IDL files.
     // @@protoc_insertion_point(field:google.api.Service.apis)
     pub apis: ::std::vec::Vec<::protobuf::well_known_types::api::Api>,
     // @@protoc_insertion_point(field:google.api.Service.types)
@@ -99,7 +95,8 @@ pub struct Service {
     // @@protoc_insertion_point(field:google.api.Service.metrics)
     pub metrics: ::std::vec::Vec<super::metric::MetricDescriptor>,
     ///  Defines the monitored resources used by this service. This is required
-    ///  by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
+    ///  by the [Service.monitoring][google.api.Service.monitoring] and
+    ///  [Service.logging][google.api.Service.logging] configurations.
     // @@protoc_insertion_point(field:google.api.Service.monitored_resources)
     pub monitored_resources: ::std::vec::Vec<super::monitored_resource::MonitoredResourceDescriptor>,
     ///  Billing configuration.
@@ -117,6 +114,17 @@ pub struct Service {
     ///  Output only. The source information for this configuration if available.
     // @@protoc_insertion_point(field:google.api.Service.source_info)
     pub source_info: ::protobuf::MessageField<super::source_info::SourceInfo>,
+    ///  Settings for [Google Cloud Client
+    ///  libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+    ///  generated from APIs defined as protocol buffers.
+    // @@protoc_insertion_point(field:google.api.Service.publishing)
+    pub publishing: ::protobuf::MessageField<super::client::Publishing>,
+    ///  Obsolete. Do not use.
+    ///
+    ///  This field has no semantic meaning. The service config compiler always
+    ///  sets this field to `3`.
+    // @@protoc_insertion_point(field:google.api.Service.config_version)
+    pub config_version: ::protobuf::MessageField<::protobuf::well_known_types::wrappers::UInt32Value>,
     // special fields
     // @@protoc_insertion_point(special_field:google.api.Service.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -134,22 +142,12 @@ impl Service {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(25);
+        let mut fields = ::std::vec::Vec::with_capacity(26);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::wrappers::UInt32Value>(
-            "config_version",
-            |m: &Service| { &m.config_version },
-            |m: &mut Service| { &mut m.config_version },
-        ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
             |m: &Service| { &m.name },
             |m: &mut Service| { &mut m.name },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "id",
-            |m: &Service| { &m.id },
-            |m: &mut Service| { &mut m.id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "title",
@@ -160,6 +158,11 @@ impl Service {
             "producer_project_id",
             |m: &Service| { &m.producer_project_id },
             |m: &mut Service| { &mut m.producer_project_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "id",
+            |m: &Service| { &m.id },
+            |m: &mut Service| { &mut m.id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "apis",
@@ -261,6 +264,16 @@ impl Service {
             |m: &Service| { &m.source_info },
             |m: &mut Service| { &mut m.source_info },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::client::Publishing>(
+            "publishing",
+            |m: &Service| { &m.publishing },
+            |m: &mut Service| { &mut m.publishing },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::wrappers::UInt32Value>(
+            "config_version",
+            |m: &Service| { &m.config_version },
+            |m: &mut Service| { &mut m.config_version },
+        ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Service>(
             "Service",
             fields,
@@ -279,20 +292,17 @@ impl ::protobuf::Message for Service {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
-                162 => {
-                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.config_version)?;
-                },
                 10 => {
                     self.name = is.read_string()?;
-                },
-                266 => {
-                    self.id = is.read_string()?;
                 },
                 18 => {
                     self.title = is.read_string()?;
                 },
                 178 => {
                     self.producer_project_id = is.read_string()?;
+                },
+                266 => {
+                    self.id = is.read_string()?;
                 },
                 26 => {
                     self.apis.push(is.read_message()?);
@@ -354,6 +364,12 @@ impl ::protobuf::Message for Service {
                 298 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.source_info)?;
                 },
+                362 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.publishing)?;
+                },
+                162 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.config_version)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -366,21 +382,17 @@ impl ::protobuf::Message for Service {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if let Some(v) = self.config_version.as_ref() {
-            let len = v.compute_size();
-            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-        }
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
-        }
-        if !self.id.is_empty() {
-            my_size += ::protobuf::rt::string_size(33, &self.id);
         }
         if !self.title.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.title);
         }
         if !self.producer_project_id.is_empty() {
             my_size += ::protobuf::rt::string_size(22, &self.producer_project_id);
+        }
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(33, &self.id);
         }
         for value in &self.apis {
             let len = value.compute_size();
@@ -462,26 +474,31 @@ impl ::protobuf::Message for Service {
             let len = v.compute_size();
             my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.publishing.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.config_version.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if let Some(v) = self.config_version.as_ref() {
-            ::protobuf::rt::write_message_field_with_cached_size(20, v, os)?;
-        }
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
-        }
-        if !self.id.is_empty() {
-            os.write_string(33, &self.id)?;
         }
         if !self.title.is_empty() {
             os.write_string(2, &self.title)?;
         }
         if !self.producer_project_id.is_empty() {
             os.write_string(22, &self.producer_project_id)?;
+        }
+        if !self.id.is_empty() {
+            os.write_string(33, &self.id)?;
         }
         for v in &self.apis {
             ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
@@ -543,6 +560,12 @@ impl ::protobuf::Message for Service {
         if let Some(v) = self.source_info.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(37, v, os)?;
         }
+        if let Some(v) = self.publishing.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(45, v, os)?;
+        }
+        if let Some(v) = self.config_version.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(20, v, os)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -560,11 +583,10 @@ impl ::protobuf::Message for Service {
     }
 
     fn clear(&mut self) {
-        self.config_version.clear();
         self.name.clear();
-        self.id.clear();
         self.title.clear();
         self.producer_project_id.clear();
+        self.id.clear();
         self.apis.clear();
         self.types.clear();
         self.enums.clear();
@@ -585,16 +607,17 @@ impl ::protobuf::Message for Service {
         self.monitoring.clear();
         self.system_parameters.clear();
         self.source_info.clear();
+        self.publishing.clear();
+        self.config_version.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static Service {
         static instance: Service = Service {
-            config_version: ::protobuf::MessageField::none(),
             name: ::std::string::String::new(),
-            id: ::std::string::String::new(),
             title: ::std::string::String::new(),
             producer_project_id: ::std::string::String::new(),
+            id: ::std::string::String::new(),
             apis: ::std::vec::Vec::new(),
             types: ::std::vec::Vec::new(),
             enums: ::std::vec::Vec::new(),
@@ -615,6 +638,8 @@ impl ::protobuf::Message for Service {
             monitoring: ::protobuf::MessageField::none(),
             system_parameters: ::protobuf::MessageField::none(),
             source_info: ::protobuf::MessageField::none(),
+            publishing: ::protobuf::MessageField::none(),
+            config_version: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -641,222 +666,235 @@ impl ::protobuf::reflect::ProtobufValue for Service {
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x18google/api/service.proto\x12\ngoogle.api\x1a\x15google/api/auth.pr\
     oto\x1a\x18google/api/backend.proto\x1a\x18google/api/billing.proto\x1a\
-    \x18google/api/context.proto\x1a\x18google/api/control.proto\x1a\x1egoog\
-    le/api/documentation.proto\x1a\x19google/api/endpoint.proto\x1a\x15googl\
-    e/api/http.proto\x1a\x16google/api/label.proto\x1a\x14google/api/log.pro\
-    to\x1a\x18google/api/logging.proto\x1a\x17google/api/metric.proto\x1a#go\
-    ogle/api/monitored_resource.proto\x1a\x1bgoogle/api/monitoring.proto\x1a\
-    \x16google/api/quota.proto\x1a\x19google/api/resource.proto\x1a\x1cgoogl\
-    e/api/source_info.proto\x1a!google/api/system_parameter.proto\x1a\x16goo\
-    gle/api/usage.proto\x1a\x19google/protobuf/any.proto\x1a\x19google/proto\
-    buf/api.proto\x1a\x1agoogle/protobuf/type.proto\x1a\x1egoogle/protobuf/w\
-    rappers.proto\"\xd5\t\n\x07Service\x12C\n\x0econfig_version\x18\x14\x20\
-    \x01(\x0b2\x1c.google.protobuf.UInt32ValueR\rconfigVersion\x12\x12\n\x04\
-    name\x18\x01\x20\x01(\tR\x04name\x12\x0e\n\x02id\x18!\x20\x01(\tR\x02id\
-    \x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\x12.\n\x13producer_proj\
-    ect_id\x18\x16\x20\x01(\tR\x11producerProjectId\x12(\n\x04apis\x18\x03\
-    \x20\x03(\x0b2\x14.google.protobuf.ApiR\x04apis\x12+\n\x05types\x18\x04\
-    \x20\x03(\x0b2\x15.google.protobuf.TypeR\x05types\x12+\n\x05enums\x18\
-    \x05\x20\x03(\x0b2\x15.google.protobuf.EnumR\x05enums\x12?\n\rdocumentat\
-    ion\x18\x06\x20\x01(\x0b2\x19.google.api.DocumentationR\rdocumentation\
-    \x12-\n\x07backend\x18\x08\x20\x01(\x0b2\x13.google.api.BackendR\x07back\
-    end\x12$\n\x04http\x18\t\x20\x01(\x0b2\x10.google.api.HttpR\x04http\x12'\
-    \n\x05quota\x18\n\x20\x01(\x0b2\x11.google.api.QuotaR\x05quota\x12B\n\
-    \x0eauthentication\x18\x0b\x20\x01(\x0b2\x1a.google.api.AuthenticationR\
-    \x0eauthentication\x12-\n\x07context\x18\x0c\x20\x01(\x0b2\x13.google.ap\
-    i.ContextR\x07context\x12'\n\x05usage\x18\x0f\x20\x01(\x0b2\x11.google.a\
-    pi.UsageR\x05usage\x122\n\tendpoints\x18\x12\x20\x03(\x0b2\x14.google.ap\
-    i.EndpointR\tendpoints\x12-\n\x07control\x18\x15\x20\x01(\x0b2\x13.googl\
-    e.api.ControlR\x07control\x12-\n\x04logs\x18\x17\x20\x03(\x0b2\x19.googl\
-    e.api.LogDescriptorR\x04logs\x126\n\x07metrics\x18\x18\x20\x03(\x0b2\x1c\
-    .google.api.MetricDescriptorR\x07metrics\x12X\n\x13monitored_resources\
-    \x18\x19\x20\x03(\x0b2'.google.api.MonitoredResourceDescriptorR\x12monit\
-    oredResources\x12-\n\x07billing\x18\x1a\x20\x01(\x0b2\x13.google.api.Bil\
-    lingR\x07billing\x12-\n\x07logging\x18\x1b\x20\x01(\x0b2\x13.google.api.\
-    LoggingR\x07logging\x126\n\nmonitoring\x18\x1c\x20\x01(\x0b2\x16.google.\
-    api.MonitoringR\nmonitoring\x12I\n\x11system_parameters\x18\x1d\x20\x01(\
-    \x0b2\x1c.google.api.SystemParametersR\x10systemParameters\x127\n\x0bsou\
-    rce_info\x18%\x20\x01(\x0b2\x16.google.api.SourceInfoR\nsourceInfoBn\n\
-    \x0ecom.google.apiB\x0cServiceProtoP\x01ZEgoogle.golang.org/genproto/goo\
-    gleapis/api/serviceconfig;serviceconfig\xa2\x02\x04GAPIJ\xba/\n\x07\x12\
-    \x05\x0f\0\xaf\x01\x01\n\xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\
-    \x20Copyright\x202019\x20Google\x20LLC.\n\n\x20Licensed\x20under\x20the\
-    \x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\");\n\x20y\
-    ou\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20compliance\
-    \x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\
-    \x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/li\
-    censes/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\x20law\
-    \x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distributed\
-    \x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20\
-    IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20A\
-    NY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\x20Li\
-    cense\x20for\x20the\x20specific\x20language\x20governing\x20permissions\
-    \x20and\n\x20limitations\x20under\x20the\x20License.\n\n\n\x08\n\x01\x02\
-    \x12\x03\x11\0\x13\n\t\n\x02\x03\0\x12\x03\x13\0\x1f\n\t\n\x02\x03\x01\
-    \x12\x03\x14\0\"\n\t\n\x02\x03\x02\x12\x03\x15\0\"\n\t\n\x02\x03\x03\x12\
-    \x03\x16\0\"\n\t\n\x02\x03\x04\x12\x03\x17\0\"\n\t\n\x02\x03\x05\x12\x03\
-    \x18\0(\n\t\n\x02\x03\x06\x12\x03\x19\0#\n\t\n\x02\x03\x07\x12\x03\x1a\0\
-    \x1f\n\t\n\x02\x03\x08\x12\x03\x1b\0\x20\n\t\n\x02\x03\t\x12\x03\x1c\0\
-    \x1e\n\t\n\x02\x03\n\x12\x03\x1d\0\"\n\t\n\x02\x03\x0b\x12\x03\x1e\0!\n\
-    \t\n\x02\x03\x0c\x12\x03\x1f\0-\n\t\n\x02\x03\r\x12\x03\x20\0%\n\t\n\x02\
-    \x03\x0e\x12\x03!\0\x20\n\t\n\x02\x03\x0f\x12\x03\"\0#\n\t\n\x02\x03\x10\
-    \x12\x03#\0&\n\t\n\x02\x03\x11\x12\x03$\0+\n\t\n\x02\x03\x12\x12\x03%\0\
-    \x20\n\t\n\x02\x03\x13\x12\x03&\0#\n\t\n\x02\x03\x14\x12\x03'\0#\n\t\n\
-    \x02\x03\x15\x12\x03(\0$\n\t\n\x02\x03\x16\x12\x03)\0(\n\x08\n\x01\x08\
-    \x12\x03+\0\\\n\t\n\x02\x08\x0b\x12\x03+\0\\\n\x08\n\x01\x08\x12\x03,\0\
-    \"\n\t\n\x02\x08\n\x12\x03,\0\"\n\x08\n\x01\x08\x12\x03-\0-\n\t\n\x02\
-    \x08\x08\x12\x03-\0-\n\x08\n\x01\x08\x12\x03.\0'\n\t\n\x02\x08\x01\x12\
-    \x03.\0'\n\x08\n\x01\x08\x12\x03/\0\"\n\t\n\x02\x08$\x12\x03/\0\"\n\xd4\
-    \x06\n\x02\x04\0\x12\x05H\0\xaf\x01\x01\x1a\xc6\x06\x20`Service`\x20is\
-    \x20the\x20root\x20object\x20of\x20Google\x20service\x20configuration\
-    \x20schema.\x20It\n\x20describes\x20basic\x20information\x20about\x20a\
-    \x20service,\x20such\x20as\x20the\x20name\x20and\x20the\n\x20title,\x20a\
-    nd\x20delegates\x20other\x20aspects\x20to\x20sub-sections.\x20Each\x20su\
-    b-section\x20is\n\x20either\x20a\x20proto\x20message\x20or\x20a\x20repea\
-    ted\x20proto\x20message\x20that\x20configures\x20a\n\x20specific\x20aspe\
-    ct,\x20such\x20as\x20auth.\x20See\x20each\x20proto\x20message\x20definit\
-    ion\x20for\x20details.\n\n\x20Example:\n\n\x20\x20\x20\x20\x20type:\x20g\
-    oogle.api.Service\n\x20\x20\x20\x20\x20config_version:\x203\n\x20\x20\
-    \x20\x20\x20name:\x20calendar.googleapis.com\n\x20\x20\x20\x20\x20title:\
-    \x20Google\x20Calendar\x20API\n\x20\x20\x20\x20\x20apis:\n\x20\x20\x20\
-    \x20\x20-\x20name:\x20google.calendar.v3.Calendar\n\x20\x20\x20\x20\x20a\
-    uthentication:\n\x20\x20\x20\x20\x20\x20\x20providers:\n\x20\x20\x20\x20\
-    \x20\x20\x20-\x20id:\x20google_calendar_auth\n\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20jwks_uri:\x20https://www.googleapis.com/oauth2/v1/certs\n\
-    \x20\x20\x20\x20\x20\x20\x20\x20\x20issuer:\x20https://securetoken.googl\
-    e.com\n\x20\x20\x20\x20\x20\x20\x20rules:\n\x20\x20\x20\x20\x20\x20\x20-\
-    \x20selector:\x20\"*\"\n\x20\x20\x20\x20\x20\x20\x20\x20\x20requirements\
-    :\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20provider_id:\x20google_ca\
-    lendar_auth\n\n\n\n\x03\x04\0\x01\x12\x03H\x08\x0f\n\x85\x02\n\x04\x04\0\
-    \x02\0\x12\x03M\x022\x1a\xf7\x01\x20The\x20semantic\x20version\x20of\x20\
-    the\x20service\x20configuration.\x20The\x20config\x20version\n\x20affect\
-    s\x20the\x20interpretation\x20of\x20the\x20service\x20configuration.\x20\
-    For\x20example,\n\x20certain\x20features\x20are\x20enabled\x20by\x20defa\
-    ult\x20for\x20certain\x20config\x20versions.\n\x20The\x20latest\x20confi\
-    g\x20version\x20is\x20`3`.\n\n\x0c\n\x05\x04\0\x02\0\x06\x12\x03M\x02\
-    \x1d\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03M\x1e,\n\x0c\n\x05\x04\0\x02\0\
-    \x03\x12\x03M/1\n\xf6\x01\n\x04\x04\0\x02\x01\x12\x03S\x02\x12\x1a\xe8\
-    \x01\x20The\x20service\x20name,\x20which\x20is\x20a\x20DNS-like\x20logic\
-    al\x20identifier\x20for\x20the\n\x20service,\x20such\x20as\x20`calendar.\
-    googleapis.com`.\x20The\x20service\x20name\n\x20typically\x20goes\x20thr\
-    ough\x20DNS\x20verification\x20to\x20make\x20sure\x20the\x20owner\n\x20o\
-    f\x20the\x20service\x20also\x20owns\x20the\x20DNS\x20name.\n\n\x0c\n\x05\
-    \x04\0\x02\x01\x05\x12\x03S\x02\x08\n\x0c\n\x05\x04\0\x02\x01\x01\x12\
-    \x03S\t\r\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03S\x10\x11\n\xdc\x01\n\x04\
-    \x04\0\x02\x02\x12\x03X\x02\x11\x1a\xce\x01\x20A\x20unique\x20ID\x20for\
-    \x20a\x20specific\x20instance\x20of\x20this\x20message,\x20typically\x20\
-    assigned\n\x20by\x20the\x20client\x20for\x20tracking\x20purpose.\x20If\
-    \x20empty,\x20the\x20server\x20may\x20choose\x20to\n\x20generate\x20one\
-    \x20instead.\x20Must\x20be\x20no\x20longer\x20than\x2060\x20characters.\
-    \n\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03X\x02\x08\n\x0c\n\x05\x04\0\x02\
-    \x02\x01\x12\x03X\t\x0b\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03X\x0e\x10\n\
-    2\n\x04\x04\0\x02\x03\x12\x03[\x02\x13\x1a%\x20The\x20product\x20title\
-    \x20for\x20this\x20service.\n\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03[\x02\
-    \x08\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03[\t\x0e\n\x0c\n\x05\x04\0\x02\
-    \x03\x03\x12\x03[\x11\x12\n9\n\x04\x04\0\x02\x04\x12\x03^\x02\"\x1a,\x20\
-    The\x20Google\x20project\x20that\x20owns\x20this\x20service.\n\n\x0c\n\
-    \x05\x04\0\x02\x04\x05\x12\x03^\x02\x08\n\x0c\n\x05\x04\0\x02\x04\x01\
-    \x12\x03^\t\x1c\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03^\x1f!\n\x82\x03\n\
-    \x04\x04\0\x02\x05\x12\x03e\x02(\x1a\xf4\x02\x20A\x20list\x20of\x20API\
-    \x20interfaces\x20exported\x20by\x20this\x20service.\x20Only\x20the\x20`\
-    name`\x20field\n\x20of\x20the\x20[google.protobuf.Api][google.protobuf.A\
-    pi]\x20needs\x20to\x20be\x20provided\x20by\x20the\x20configuration\n\x20\
-    author,\x20as\x20the\x20remaining\x20fields\x20will\x20be\x20derived\x20\
-    from\x20the\x20IDL\x20during\x20the\n\x20normalization\x20process.\x20It\
-    \x20is\x20an\x20error\x20to\x20specify\x20an\x20API\x20interface\x20here\
-    \n\x20which\x20cannot\x20be\x20resolved\x20against\x20the\x20associated\
-    \x20IDL\x20files.\n\n\x0c\n\x05\x04\0\x02\x05\x04\x12\x03e\x02\n\n\x0c\n\
-    \x05\x04\0\x02\x05\x06\x12\x03e\x0b\x1e\n\x0c\n\x05\x04\0\x02\x05\x01\
-    \x12\x03e\x1f#\n\x0c\n\x05\x04\0\x02\x05\x03\x12\x03e&'\n\xed\x02\n\x04\
-    \x04\0\x02\x06\x12\x03o\x02*\x1a\xdf\x02\x20A\x20list\x20of\x20all\x20pr\
-    oto\x20message\x20types\x20included\x20in\x20this\x20API\x20service.\n\
-    \x20Types\x20referenced\x20directly\x20or\x20indirectly\x20by\x20the\x20\
-    `apis`\x20are\n\x20automatically\x20included.\x20\x20Messages\x20which\
-    \x20are\x20not\x20referenced\x20but\n\x20shall\x20be\x20included,\x20suc\
-    h\x20as\x20types\x20used\x20by\x20the\x20`google.protobuf.Any`\x20type,\
-    \n\x20should\x20be\x20listed\x20here\x20by\x20name.\x20Example:\n\n\x20\
+    \x17google/api/client.proto\x1a\x18google/api/context.proto\x1a\x18googl\
+    e/api/control.proto\x1a\x1egoogle/api/documentation.proto\x1a\x19google/\
+    api/endpoint.proto\x1a\x15google/api/http.proto\x1a\x14google/api/log.pr\
+    oto\x1a\x18google/api/logging.proto\x1a\x17google/api/metric.proto\x1a#g\
+    oogle/api/monitored_resource.proto\x1a\x1bgoogle/api/monitoring.proto\
+    \x1a\x16google/api/quota.proto\x1a\x1cgoogle/api/source_info.proto\x1a!g\
+    oogle/api/system_parameter.proto\x1a\x16google/api/usage.proto\x1a\x19go\
+    ogle/protobuf/api.proto\x1a\x1agoogle/protobuf/type.proto\x1a\x1egoogle/\
+    protobuf/wrappers.proto\"\x8d\n\n\x07Service\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\x12\
+    .\n\x13producer_project_id\x18\x16\x20\x01(\tR\x11producerProjectId\x12\
+    \x0e\n\x02id\x18!\x20\x01(\tR\x02id\x12(\n\x04apis\x18\x03\x20\x03(\x0b2\
+    \x14.google.protobuf.ApiR\x04apis\x12+\n\x05types\x18\x04\x20\x03(\x0b2\
+    \x15.google.protobuf.TypeR\x05types\x12+\n\x05enums\x18\x05\x20\x03(\x0b\
+    2\x15.google.protobuf.EnumR\x05enums\x12?\n\rdocumentation\x18\x06\x20\
+    \x01(\x0b2\x19.google.api.DocumentationR\rdocumentation\x12-\n\x07backen\
+    d\x18\x08\x20\x01(\x0b2\x13.google.api.BackendR\x07backend\x12$\n\x04htt\
+    p\x18\t\x20\x01(\x0b2\x10.google.api.HttpR\x04http\x12'\n\x05quota\x18\n\
+    \x20\x01(\x0b2\x11.google.api.QuotaR\x05quota\x12B\n\x0eauthentication\
+    \x18\x0b\x20\x01(\x0b2\x1a.google.api.AuthenticationR\x0eauthentication\
+    \x12-\n\x07context\x18\x0c\x20\x01(\x0b2\x13.google.api.ContextR\x07cont\
+    ext\x12'\n\x05usage\x18\x0f\x20\x01(\x0b2\x11.google.api.UsageR\x05usage\
+    \x122\n\tendpoints\x18\x12\x20\x03(\x0b2\x14.google.api.EndpointR\tendpo\
+    ints\x12-\n\x07control\x18\x15\x20\x01(\x0b2\x13.google.api.ControlR\x07\
+    control\x12-\n\x04logs\x18\x17\x20\x03(\x0b2\x19.google.api.LogDescripto\
+    rR\x04logs\x126\n\x07metrics\x18\x18\x20\x03(\x0b2\x1c.google.api.Metric\
+    DescriptorR\x07metrics\x12X\n\x13monitored_resources\x18\x19\x20\x03(\
+    \x0b2'.google.api.MonitoredResourceDescriptorR\x12monitoredResources\x12\
+    -\n\x07billing\x18\x1a\x20\x01(\x0b2\x13.google.api.BillingR\x07billing\
+    \x12-\n\x07logging\x18\x1b\x20\x01(\x0b2\x13.google.api.LoggingR\x07logg\
+    ing\x126\n\nmonitoring\x18\x1c\x20\x01(\x0b2\x16.google.api.MonitoringR\
+    \nmonitoring\x12I\n\x11system_parameters\x18\x1d\x20\x01(\x0b2\x1c.googl\
+    e.api.SystemParametersR\x10systemParameters\x127\n\x0bsource_info\x18%\
+    \x20\x01(\x0b2\x16.google.api.SourceInfoR\nsourceInfo\x126\n\npublishing\
+    \x18-\x20\x01(\x0b2\x16.google.api.PublishingR\npublishing\x12C\n\x0econ\
+    fig_version\x18\x14\x20\x01(\x0b2\x1c.google.protobuf.UInt32ValueR\rconf\
+    igVersionBn\n\x0ecom.google.apiB\x0cServiceProtoP\x01ZEgoogle.golang.org\
+    /genproto/googleapis/api/serviceconfig;serviceconfig\xa2\x02\x04GAPIJ\
+    \xad3\n\x07\x12\x05\x0e\0\xbe\x01\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\
+    \x122\xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\n\x20Licensed\x20u\
+    nder\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\x20\"License\
+    \");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20except\x20in\x20co\
+    mpliance\x20with\x20the\x20License.\n\x20You\x20may\x20obtain\x20a\x20co\
+    py\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20http://www.apach\
+    e.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\x20applicable\
+    \x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20software\n\x20distrib\
+    uted\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20\"AS\
+    \x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\
+    \x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\x20See\x20the\
+    \x20License\x20for\x20the\x20specific\x20language\x20governing\x20permis\
+    sions\x20and\n\x20limitations\x20under\x20the\x20License.\n\n\x08\n\x01\
+    \x02\x12\x03\x10\0\x13\n\t\n\x02\x03\0\x12\x03\x12\0\x1f\n\t\n\x02\x03\
+    \x01\x12\x03\x13\0\"\n\t\n\x02\x03\x02\x12\x03\x14\0\"\n\t\n\x02\x03\x03\
+    \x12\x03\x15\0!\n\t\n\x02\x03\x04\x12\x03\x16\0\"\n\t\n\x02\x03\x05\x12\
+    \x03\x17\0\"\n\t\n\x02\x03\x06\x12\x03\x18\0(\n\t\n\x02\x03\x07\x12\x03\
+    \x19\0#\n\t\n\x02\x03\x08\x12\x03\x1a\0\x1f\n\t\n\x02\x03\t\x12\x03\x1b\
+    \0\x1e\n\t\n\x02\x03\n\x12\x03\x1c\0\"\n\t\n\x02\x03\x0b\x12\x03\x1d\0!\
+    \n\t\n\x02\x03\x0c\x12\x03\x1e\0-\n\t\n\x02\x03\r\x12\x03\x1f\0%\n\t\n\
+    \x02\x03\x0e\x12\x03\x20\0\x20\n\t\n\x02\x03\x0f\x12\x03!\0&\n\t\n\x02\
+    \x03\x10\x12\x03\"\0+\n\t\n\x02\x03\x11\x12\x03#\0\x20\n\t\n\x02\x03\x12\
+    \x12\x03$\0#\n\t\n\x02\x03\x13\x12\x03%\0$\n\t\n\x02\x03\x14\x12\x03&\0(\
+    \n\x08\n\x01\x08\x12\x03(\0\\\n\t\n\x02\x08\x0b\x12\x03(\0\\\n\x08\n\x01\
+    \x08\x12\x03)\0\"\n\t\n\x02\x08\n\x12\x03)\0\"\n\x08\n\x01\x08\x12\x03*\
+    \0-\n\t\n\x02\x08\x08\x12\x03*\0-\n\x08\n\x01\x08\x12\x03+\0'\n\t\n\x02\
+    \x08\x01\x12\x03+\0'\n\x08\n\x01\x08\x12\x03,\0\"\n\t\n\x02\x08$\x12\x03\
+    ,\0\"\n\xcc\x08\n\x02\x04\0\x12\x05O\0\xbe\x01\x01\x1a\xbe\x08\x20`Servi\
+    ce`\x20is\x20the\x20root\x20object\x20of\x20Google\x20API\x20service\x20\
+    configuration\x20(service\n\x20config).\x20It\x20describes\x20the\x20bas\
+    ic\x20information\x20about\x20a\x20logical\x20service,\n\x20such\x20as\
+    \x20the\x20service\x20name\x20and\x20the\x20user-facing\x20title,\x20and\
+    \x20delegates\x20other\n\x20aspects\x20to\x20sub-sections.\x20Each\x20su\
+    b-section\x20is\x20either\x20a\x20proto\x20message\x20or\x20a\n\x20repea\
+    ted\x20proto\x20message\x20that\x20configures\x20a\x20specific\x20aspect\
+    ,\x20such\x20as\x20auth.\n\x20For\x20more\x20information,\x20see\x20each\
+    \x20proto\x20message\x20definition.\n\n\x20Example:\n\n\x20\x20\x20\x20\
+    \x20type:\x20google.api.Service\n\x20\x20\x20\x20\x20name:\x20calendar.g\
+    oogleapis.com\n\x20\x20\x20\x20\x20title:\x20Google\x20Calendar\x20API\n\
+    \x20\x20\x20\x20\x20apis:\n\x20\x20\x20\x20\x20-\x20name:\x20google.cale\
+    ndar.v3.Calendar\n\n\x20\x20\x20\x20\x20visibility:\n\x20\x20\x20\x20\
+    \x20\x20\x20rules:\n\x20\x20\x20\x20\x20\x20\x20-\x20selector:\x20\"goog\
+    le.calendar.v3.*\"\n\x20\x20\x20\x20\x20\x20\x20\x20\x20restriction:\x20\
+    PREVIEW\n\x20\x20\x20\x20\x20backend:\n\x20\x20\x20\x20\x20\x20\x20rules\
+    :\n\x20\x20\x20\x20\x20\x20\x20-\x20selector:\x20\"google.calendar.v3.*\
+    \"\n\x20\x20\x20\x20\x20\x20\x20\x20\x20address:\x20calendar.example.com\
+    \n\n\x20\x20\x20\x20\x20authentication:\n\x20\x20\x20\x20\x20\x20\x20pro\
+    viders:\n\x20\x20\x20\x20\x20\x20\x20-\x20id:\x20google_calendar_auth\n\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20jwks_uri:\x20https://www.googleapis.\
+    com/oauth2/v1/certs\n\x20\x20\x20\x20\x20\x20\x20\x20\x20issuer:\x20http\
+    s://securetoken.google.com\n\x20\x20\x20\x20\x20\x20\x20rules:\n\x20\x20\
+    \x20\x20\x20\x20\x20-\x20selector:\x20\"*\"\n\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20requirements:\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20p\
+    rovider_id:\x20google_calendar_auth\n\n\n\n\x03\x04\0\x01\x12\x03O\x08\
+    \x0f\n\xf6\x01\n\x04\x04\0\x02\0\x12\x03T\x02\x12\x1a\xe8\x01\x20The\x20\
+    service\x20name,\x20which\x20is\x20a\x20DNS-like\x20logical\x20identifie\
+    r\x20for\x20the\n\x20service,\x20such\x20as\x20`calendar.googleapis.com`\
+    .\x20The\x20service\x20name\n\x20typically\x20goes\x20through\x20DNS\x20\
+    verification\x20to\x20make\x20sure\x20the\x20owner\n\x20of\x20the\x20ser\
+    vice\x20also\x20owns\x20the\x20DNS\x20name.\n\n\x0c\n\x05\x04\0\x02\0\
+    \x05\x12\x03T\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03T\t\r\n\x0c\n\
+    \x05\x04\0\x02\0\x03\x12\x03T\x10\x11\ne\n\x04\x04\0\x02\x01\x12\x03X\
+    \x02\x13\x1aX\x20The\x20product\x20title\x20for\x20this\x20service,\x20i\
+    t\x20is\x20the\x20name\x20displayed\x20in\x20Google\n\x20Cloud\x20Consol\
+    e.\n\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03X\x02\x08\n\x0c\n\x05\x04\0\
+    \x02\x01\x01\x12\x03X\t\x0e\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03X\x11\
+    \x12\n9\n\x04\x04\0\x02\x02\x12\x03[\x02\"\x1a,\x20The\x20Google\x20proj\
+    ect\x20that\x20owns\x20this\x20service.\n\n\x0c\n\x05\x04\0\x02\x02\x05\
+    \x12\x03[\x02\x08\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03[\t\x1c\n\x0c\n\
+    \x05\x04\0\x02\x02\x03\x12\x03[\x1f!\n\x9f\x02\n\x04\x04\0\x02\x03\x12\
+    \x03a\x02\x11\x1a\x91\x02\x20A\x20unique\x20ID\x20for\x20a\x20specific\
+    \x20instance\x20of\x20this\x20message,\x20typically\x20assigned\n\x20by\
+    \x20the\x20client\x20for\x20tracking\x20purpose.\x20Must\x20be\x20no\x20\
+    longer\x20than\x2063\x20characters\n\x20and\x20only\x20lower\x20case\x20\
+    letters,\x20digits,\x20'.',\x20'_'\x20and\x20'-'\x20are\x20allowed.\x20I\
+    f\n\x20empty,\x20the\x20server\x20may\x20choose\x20to\x20generate\x20one\
+    \x20instead.\n\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03a\x02\x08\n\x0c\n\
+    \x05\x04\0\x02\x03\x01\x12\x03a\t\x0b\n\x0c\n\x05\x04\0\x02\x03\x03\x12\
+    \x03a\x0e\x10\n\x82\x03\n\x04\x04\0\x02\x04\x12\x03h\x02(\x1a\xf4\x02\
+    \x20A\x20list\x20of\x20API\x20interfaces\x20exported\x20by\x20this\x20se\
+    rvice.\x20Only\x20the\x20`name`\x20field\n\x20of\x20the\x20[google.proto\
+    buf.Api][google.protobuf.Api]\x20needs\x20to\x20be\x20provided\x20by\n\
+    \x20the\x20configuration\x20author,\x20as\x20the\x20remaining\x20fields\
+    \x20will\x20be\x20derived\x20from\x20the\n\x20IDL\x20during\x20the\x20no\
+    rmalization\x20process.\x20It\x20is\x20an\x20error\x20to\x20specify\x20a\
+    n\x20API\n\x20interface\x20here\x20which\x20cannot\x20be\x20resolved\x20\
+    against\x20the\x20associated\x20IDL\x20files.\n\n\x0c\n\x05\x04\0\x02\
+    \x04\x04\x12\x03h\x02\n\n\x0c\n\x05\x04\0\x02\x04\x06\x12\x03h\x0b\x1e\n\
+    \x0c\n\x05\x04\0\x02\x04\x01\x12\x03h\x1f#\n\x0c\n\x05\x04\0\x02\x04\x03\
+    \x12\x03h&'\n\x89\x03\n\x04\x04\0\x02\x05\x12\x03r\x02*\x1a\xfb\x02\x20A\
+    \x20list\x20of\x20all\x20proto\x20message\x20types\x20included\x20in\x20\
+    this\x20API\x20service.\n\x20Types\x20referenced\x20directly\x20or\x20in\
+    directly\x20by\x20the\x20`apis`\x20are\x20automatically\n\x20included.\
+    \x20\x20Messages\x20which\x20are\x20not\x20referenced\x20but\x20shall\
+    \x20be\x20included,\x20such\x20as\n\x20types\x20used\x20by\x20the\x20`go\
+    ogle.protobuf.Any`\x20type,\x20should\x20be\x20listed\x20here\x20by\n\
+    \x20name\x20by\x20the\x20configuration\x20author.\x20Example:\n\n\x20\
     \x20\x20\x20\x20types:\n\x20\x20\x20\x20\x20-\x20name:\x20google.protobu\
-    f.Int32\n\n\x0c\n\x05\x04\0\x02\x06\x04\x12\x03o\x02\n\n\x0c\n\x05\x04\0\
-    \x02\x06\x06\x12\x03o\x0b\x1f\n\x0c\n\x05\x04\0\x02\x06\x01\x12\x03o\x20\
-    %\n\x0c\n\x05\x04\0\x02\x06\x03\x12\x03o()\n\xaf\x02\n\x04\x04\0\x02\x07\
-    \x12\x03x\x02*\x1a\xa1\x02\x20A\x20list\x20of\x20all\x20enum\x20types\
-    \x20included\x20in\x20this\x20API\x20service.\x20\x20Enums\n\x20referenc\
-    ed\x20directly\x20or\x20indirectly\x20by\x20the\x20`apis`\x20are\x20auto\
-    matically\n\x20included.\x20\x20Enums\x20which\x20are\x20not\x20referenc\
-    ed\x20but\x20shall\x20be\x20included\n\x20should\x20be\x20listed\x20here\
-    \x20by\x20name.\x20Example:\n\n\x20\x20\x20\x20\x20enums:\n\x20\x20\x20\
-    \x20\x20-\x20name:\x20google.someapi.v1.SomeEnum\n\n\x0c\n\x05\x04\0\x02\
-    \x07\x04\x12\x03x\x02\n\n\x0c\n\x05\x04\0\x02\x07\x06\x12\x03x\x0b\x1f\n\
-    \x0c\n\x05\x04\0\x02\x07\x01\x12\x03x\x20%\n\x0c\n\x05\x04\0\x02\x07\x03\
-    \x12\x03x()\n,\n\x04\x04\0\x02\x08\x12\x03{\x02\"\x1a\x1f\x20Additional\
-    \x20API\x20documentation.\n\n\x0c\n\x05\x04\0\x02\x08\x06\x12\x03{\x02\
-    \x0f\n\x0c\n\x05\x04\0\x02\x08\x01\x12\x03{\x10\x1d\n\x0c\n\x05\x04\0\
-    \x02\x08\x03\x12\x03{\x20!\n)\n\x04\x04\0\x02\t\x12\x03~\x02\x16\x1a\x1c\
-    \x20API\x20backend\x20configuration.\n\n\x0c\n\x05\x04\0\x02\t\x06\x12\
-    \x03~\x02\t\n\x0c\n\x05\x04\0\x02\t\x01\x12\x03~\n\x11\n\x0c\n\x05\x04\0\
-    \x02\t\x03\x12\x03~\x14\x15\n#\n\x04\x04\0\x02\n\x12\x04\x81\x01\x02\x10\
-    \x1a\x15\x20HTTP\x20configuration.\n\n\r\n\x05\x04\0\x02\n\x06\x12\x04\
-    \x81\x01\x02\x06\n\r\n\x05\x04\0\x02\n\x01\x12\x04\x81\x01\x07\x0b\n\r\n\
-    \x05\x04\0\x02\n\x03\x12\x04\x81\x01\x0e\x0f\n$\n\x04\x04\0\x02\x0b\x12\
-    \x04\x84\x01\x02\x13\x1a\x16\x20Quota\x20configuration.\n\n\r\n\x05\x04\
-    \0\x02\x0b\x06\x12\x04\x84\x01\x02\x07\n\r\n\x05\x04\0\x02\x0b\x01\x12\
-    \x04\x84\x01\x08\r\n\r\n\x05\x04\0\x02\x0b\x03\x12\x04\x84\x01\x10\x12\n\
-    #\n\x04\x04\0\x02\x0c\x12\x04\x87\x01\x02%\x1a\x15\x20Auth\x20configurat\
-    ion.\n\n\r\n\x05\x04\0\x02\x0c\x06\x12\x04\x87\x01\x02\x10\n\r\n\x05\x04\
-    \0\x02\x0c\x01\x12\x04\x87\x01\x11\x1f\n\r\n\x05\x04\0\x02\x0c\x03\x12\
-    \x04\x87\x01\"$\n&\n\x04\x04\0\x02\r\x12\x04\x8a\x01\x02\x17\x1a\x18\x20\
-    Context\x20configuration.\n\n\r\n\x05\x04\0\x02\r\x06\x12\x04\x8a\x01\
-    \x02\t\n\r\n\x05\x04\0\x02\r\x01\x12\x04\x8a\x01\n\x11\n\r\n\x05\x04\0\
-    \x02\r\x03\x12\x04\x8a\x01\x14\x16\n@\n\x04\x04\0\x02\x0e\x12\x04\x8d\
-    \x01\x02\x13\x1a2\x20Configuration\x20controlling\x20usage\x20of\x20this\
-    \x20service.\n\n\r\n\x05\x04\0\x02\x0e\x06\x12\x04\x8d\x01\x02\x07\n\r\n\
-    \x05\x04\0\x02\x0e\x01\x12\x04\x8d\x01\x08\r\n\r\n\x05\x04\0\x02\x0e\x03\
-    \x12\x04\x8d\x01\x10\x12\n\xb5\x01\n\x04\x04\0\x02\x0f\x12\x04\x92\x01\
+    f.Int32\n\n\x0c\n\x05\x04\0\x02\x05\x04\x12\x03r\x02\n\n\x0c\n\x05\x04\0\
+    \x02\x05\x06\x12\x03r\x0b\x1f\n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03r\x20\
+    %\n\x0c\n\x05\x04\0\x02\x05\x03\x12\x03r()\n\xcb\x02\n\x04\x04\0\x02\x06\
+    \x12\x03{\x02*\x1a\xbd\x02\x20A\x20list\x20of\x20all\x20enum\x20types\
+    \x20included\x20in\x20this\x20API\x20service.\x20\x20Enums\x20referenced\
+    \n\x20directly\x20or\x20indirectly\x20by\x20the\x20`apis`\x20are\x20auto\
+    matically\x20included.\x20\x20Enums\n\x20which\x20are\x20not\x20referenc\
+    ed\x20but\x20shall\x20be\x20included\x20should\x20be\x20listed\x20here\
+    \x20by\n\x20name\x20by\x20the\x20configuration\x20author.\x20Example:\n\
+    \n\x20\x20\x20\x20\x20enums:\n\x20\x20\x20\x20\x20-\x20name:\x20google.s\
+    omeapi.v1.SomeEnum\n\n\x0c\n\x05\x04\0\x02\x06\x04\x12\x03{\x02\n\n\x0c\
+    \n\x05\x04\0\x02\x06\x06\x12\x03{\x0b\x1f\n\x0c\n\x05\x04\0\x02\x06\x01\
+    \x12\x03{\x20%\n\x0c\n\x05\x04\0\x02\x06\x03\x12\x03{()\n,\n\x04\x04\0\
+    \x02\x07\x12\x03~\x02\"\x1a\x1f\x20Additional\x20API\x20documentation.\n\
+    \n\x0c\n\x05\x04\0\x02\x07\x06\x12\x03~\x02\x0f\n\x0c\n\x05\x04\0\x02\
+    \x07\x01\x12\x03~\x10\x1d\n\x0c\n\x05\x04\0\x02\x07\x03\x12\x03~\x20!\n*\
+    \n\x04\x04\0\x02\x08\x12\x04\x81\x01\x02\x16\x1a\x1c\x20API\x20backend\
+    \x20configuration.\n\n\r\n\x05\x04\0\x02\x08\x06\x12\x04\x81\x01\x02\t\n\
+    \r\n\x05\x04\0\x02\x08\x01\x12\x04\x81\x01\n\x11\n\r\n\x05\x04\0\x02\x08\
+    \x03\x12\x04\x81\x01\x14\x15\n#\n\x04\x04\0\x02\t\x12\x04\x84\x01\x02\
+    \x10\x1a\x15\x20HTTP\x20configuration.\n\n\r\n\x05\x04\0\x02\t\x06\x12\
+    \x04\x84\x01\x02\x06\n\r\n\x05\x04\0\x02\t\x01\x12\x04\x84\x01\x07\x0b\n\
+    \r\n\x05\x04\0\x02\t\x03\x12\x04\x84\x01\x0e\x0f\n$\n\x04\x04\0\x02\n\
+    \x12\x04\x87\x01\x02\x13\x1a\x16\x20Quota\x20configuration.\n\n\r\n\x05\
+    \x04\0\x02\n\x06\x12\x04\x87\x01\x02\x07\n\r\n\x05\x04\0\x02\n\x01\x12\
+    \x04\x87\x01\x08\r\n\r\n\x05\x04\0\x02\n\x03\x12\x04\x87\x01\x10\x12\n#\
+    \n\x04\x04\0\x02\x0b\x12\x04\x8a\x01\x02%\x1a\x15\x20Auth\x20configurati\
+    on.\n\n\r\n\x05\x04\0\x02\x0b\x06\x12\x04\x8a\x01\x02\x10\n\r\n\x05\x04\
+    \0\x02\x0b\x01\x12\x04\x8a\x01\x11\x1f\n\r\n\x05\x04\0\x02\x0b\x03\x12\
+    \x04\x8a\x01\"$\n&\n\x04\x04\0\x02\x0c\x12\x04\x8d\x01\x02\x17\x1a\x18\
+    \x20Context\x20configuration.\n\n\r\n\x05\x04\0\x02\x0c\x06\x12\x04\x8d\
+    \x01\x02\t\n\r\n\x05\x04\0\x02\x0c\x01\x12\x04\x8d\x01\n\x11\n\r\n\x05\
+    \x04\0\x02\x0c\x03\x12\x04\x8d\x01\x14\x16\n@\n\x04\x04\0\x02\r\x12\x04\
+    \x90\x01\x02\x13\x1a2\x20Configuration\x20controlling\x20usage\x20of\x20\
+    this\x20service.\n\n\r\n\x05\x04\0\x02\r\x06\x12\x04\x90\x01\x02\x07\n\r\
+    \n\x05\x04\0\x02\r\x01\x12\x04\x90\x01\x08\r\n\r\n\x05\x04\0\x02\r\x03\
+    \x12\x04\x90\x01\x10\x12\n\xb5\x01\n\x04\x04\0\x02\x0e\x12\x04\x95\x01\
     \x02#\x1a\xa6\x01\x20Configuration\x20for\x20network\x20endpoints.\x20\
     \x20If\x20this\x20is\x20empty,\x20then\x20an\x20endpoint\n\x20with\x20th\
     e\x20same\x20name\x20as\x20the\x20service\x20is\x20automatically\x20gene\
     rated\x20to\x20service\x20all\n\x20defined\x20APIs.\n\n\r\n\x05\x04\0\
-    \x02\x0f\x04\x12\x04\x92\x01\x02\n\n\r\n\x05\x04\0\x02\x0f\x06\x12\x04\
-    \x92\x01\x0b\x13\n\r\n\x05\x04\0\x02\x0f\x01\x12\x04\x92\x01\x14\x1d\n\r\
-    \n\x05\x04\0\x02\x0f\x03\x12\x04\x92\x01\x20\"\n<\n\x04\x04\0\x02\x10\
-    \x12\x04\x95\x01\x02\x17\x1a.\x20Configuration\x20for\x20the\x20service\
-    \x20control\x20plane.\n\n\r\n\x05\x04\0\x02\x10\x06\x12\x04\x95\x01\x02\
-    \t\n\r\n\x05\x04\0\x02\x10\x01\x12\x04\x95\x01\n\x11\n\r\n\x05\x04\0\x02\
-    \x10\x03\x12\x04\x95\x01\x14\x16\n6\n\x04\x04\0\x02\x11\x12\x04\x98\x01\
+    \x02\x0e\x04\x12\x04\x95\x01\x02\n\n\r\n\x05\x04\0\x02\x0e\x06\x12\x04\
+    \x95\x01\x0b\x13\n\r\n\x05\x04\0\x02\x0e\x01\x12\x04\x95\x01\x14\x1d\n\r\
+    \n\x05\x04\0\x02\x0e\x03\x12\x04\x95\x01\x20\"\n<\n\x04\x04\0\x02\x0f\
+    \x12\x04\x98\x01\x02\x17\x1a.\x20Configuration\x20for\x20the\x20service\
+    \x20control\x20plane.\n\n\r\n\x05\x04\0\x02\x0f\x06\x12\x04\x98\x01\x02\
+    \t\n\r\n\x05\x04\0\x02\x0f\x01\x12\x04\x98\x01\n\x11\n\r\n\x05\x04\0\x02\
+    \x0f\x03\x12\x04\x98\x01\x14\x16\n6\n\x04\x04\0\x02\x10\x12\x04\x9b\x01\
     \x02#\x1a(\x20Defines\x20the\x20logs\x20used\x20by\x20this\x20service.\n\
-    \n\r\n\x05\x04\0\x02\x11\x04\x12\x04\x98\x01\x02\n\n\r\n\x05\x04\0\x02\
-    \x11\x06\x12\x04\x98\x01\x0b\x18\n\r\n\x05\x04\0\x02\x11\x01\x12\x04\x98\
-    \x01\x19\x1d\n\r\n\x05\x04\0\x02\x11\x03\x12\x04\x98\x01\x20\"\n9\n\x04\
-    \x04\0\x02\x12\x12\x04\x9b\x01\x02)\x1a+\x20Defines\x20the\x20metrics\
-    \x20used\x20by\x20this\x20service.\n\n\r\n\x05\x04\0\x02\x12\x04\x12\x04\
-    \x9b\x01\x02\n\n\r\n\x05\x04\0\x02\x12\x06\x12\x04\x9b\x01\x0b\x1b\n\r\n\
-    \x05\x04\0\x02\x12\x01\x12\x04\x9b\x01\x1c#\n\r\n\x05\x04\0\x02\x12\x03\
-    \x12\x04\x9b\x01&(\n\xd5\x01\n\x04\x04\0\x02\x13\x12\x04\x9f\x01\x02@\
-    \x1a\xc6\x01\x20Defines\x20the\x20monitored\x20resources\x20used\x20by\
+    \n\r\n\x05\x04\0\x02\x10\x04\x12\x04\x9b\x01\x02\n\n\r\n\x05\x04\0\x02\
+    \x10\x06\x12\x04\x9b\x01\x0b\x18\n\r\n\x05\x04\0\x02\x10\x01\x12\x04\x9b\
+    \x01\x19\x1d\n\r\n\x05\x04\0\x02\x10\x03\x12\x04\x9b\x01\x20\"\n9\n\x04\
+    \x04\0\x02\x11\x12\x04\x9e\x01\x02)\x1a+\x20Defines\x20the\x20metrics\
+    \x20used\x20by\x20this\x20service.\n\n\r\n\x05\x04\0\x02\x11\x04\x12\x04\
+    \x9e\x01\x02\n\n\r\n\x05\x04\0\x02\x11\x06\x12\x04\x9e\x01\x0b\x1b\n\r\n\
+    \x05\x04\0\x02\x11\x01\x12\x04\x9e\x01\x1c#\n\r\n\x05\x04\0\x02\x11\x03\
+    \x12\x04\x9e\x01&(\n\xd6\x01\n\x04\x04\0\x02\x12\x12\x04\xa3\x01\x02@\
+    \x1a\xc7\x01\x20Defines\x20the\x20monitored\x20resources\x20used\x20by\
     \x20this\x20service.\x20This\x20is\x20required\n\x20by\x20the\x20[Servic\
-    e.monitoring][google.api.Service.monitoring]\x20and\x20[Service.logging]\
-    [google.api.Service.logging]\x20configurations.\n\n\r\n\x05\x04\0\x02\
-    \x13\x04\x12\x04\x9f\x01\x02\n\n\r\n\x05\x04\0\x02\x13\x06\x12\x04\x9f\
-    \x01\x0b&\n\r\n\x05\x04\0\x02\x13\x01\x12\x04\x9f\x01':\n\r\n\x05\x04\0\
-    \x02\x13\x03\x12\x04\x9f\x01=?\n&\n\x04\x04\0\x02\x14\x12\x04\xa2\x01\
-    \x02\x17\x1a\x18\x20Billing\x20configuration.\n\n\r\n\x05\x04\0\x02\x14\
-    \x06\x12\x04\xa2\x01\x02\t\n\r\n\x05\x04\0\x02\x14\x01\x12\x04\xa2\x01\n\
-    \x11\n\r\n\x05\x04\0\x02\x14\x03\x12\x04\xa2\x01\x14\x16\n&\n\x04\x04\0\
-    \x02\x15\x12\x04\xa5\x01\x02\x17\x1a\x18\x20Logging\x20configuration.\n\
-    \n\r\n\x05\x04\0\x02\x15\x06\x12\x04\xa5\x01\x02\t\n\r\n\x05\x04\0\x02\
-    \x15\x01\x12\x04\xa5\x01\n\x11\n\r\n\x05\x04\0\x02\x15\x03\x12\x04\xa5\
-    \x01\x14\x16\n)\n\x04\x04\0\x02\x16\x12\x04\xa8\x01\x02\x1d\x1a\x1b\x20M\
-    onitoring\x20configuration.\n\n\r\n\x05\x04\0\x02\x16\x06\x12\x04\xa8\
-    \x01\x02\x0c\n\r\n\x05\x04\0\x02\x16\x01\x12\x04\xa8\x01\r\x17\n\r\n\x05\
-    \x04\0\x02\x16\x03\x12\x04\xa8\x01\x1a\x1c\n/\n\x04\x04\0\x02\x17\x12\
-    \x04\xab\x01\x02*\x1a!\x20System\x20parameter\x20configuration.\n\n\r\n\
-    \x05\x04\0\x02\x17\x06\x12\x04\xab\x01\x02\x12\n\r\n\x05\x04\0\x02\x17\
-    \x01\x12\x04\xab\x01\x13$\n\r\n\x05\x04\0\x02\x17\x03\x12\x04\xab\x01')\
-    \nX\n\x04\x04\0\x02\x18\x12\x04\xae\x01\x02\x1e\x1aJ\x20Output\x20only.\
+    e.monitoring][google.api.Service.monitoring]\x20and\n\x20[Service.loggin\
+    g][google.api.Service.logging]\x20configurations.\n\n\r\n\x05\x04\0\x02\
+    \x12\x04\x12\x04\xa3\x01\x02\n\n\r\n\x05\x04\0\x02\x12\x06\x12\x04\xa3\
+    \x01\x0b&\n\r\n\x05\x04\0\x02\x12\x01\x12\x04\xa3\x01':\n\r\n\x05\x04\0\
+    \x02\x12\x03\x12\x04\xa3\x01=?\n&\n\x04\x04\0\x02\x13\x12\x04\xa6\x01\
+    \x02\x17\x1a\x18\x20Billing\x20configuration.\n\n\r\n\x05\x04\0\x02\x13\
+    \x06\x12\x04\xa6\x01\x02\t\n\r\n\x05\x04\0\x02\x13\x01\x12\x04\xa6\x01\n\
+    \x11\n\r\n\x05\x04\0\x02\x13\x03\x12\x04\xa6\x01\x14\x16\n&\n\x04\x04\0\
+    \x02\x14\x12\x04\xa9\x01\x02\x17\x1a\x18\x20Logging\x20configuration.\n\
+    \n\r\n\x05\x04\0\x02\x14\x06\x12\x04\xa9\x01\x02\t\n\r\n\x05\x04\0\x02\
+    \x14\x01\x12\x04\xa9\x01\n\x11\n\r\n\x05\x04\0\x02\x14\x03\x12\x04\xa9\
+    \x01\x14\x16\n)\n\x04\x04\0\x02\x15\x12\x04\xac\x01\x02\x1d\x1a\x1b\x20M\
+    onitoring\x20configuration.\n\n\r\n\x05\x04\0\x02\x15\x06\x12\x04\xac\
+    \x01\x02\x0c\n\r\n\x05\x04\0\x02\x15\x01\x12\x04\xac\x01\r\x17\n\r\n\x05\
+    \x04\0\x02\x15\x03\x12\x04\xac\x01\x1a\x1c\n/\n\x04\x04\0\x02\x16\x12\
+    \x04\xaf\x01\x02*\x1a!\x20System\x20parameter\x20configuration.\n\n\r\n\
+    \x05\x04\0\x02\x16\x06\x12\x04\xaf\x01\x02\x12\n\r\n\x05\x04\0\x02\x16\
+    \x01\x12\x04\xaf\x01\x13$\n\r\n\x05\x04\0\x02\x16\x03\x12\x04\xaf\x01')\
+    \nX\n\x04\x04\0\x02\x17\x12\x04\xb2\x01\x02\x1e\x1aJ\x20Output\x20only.\
     \x20The\x20source\x20information\x20for\x20this\x20configuration\x20if\
-    \x20available.\n\n\r\n\x05\x04\0\x02\x18\x06\x12\x04\xae\x01\x02\x0c\n\r\
-    \n\x05\x04\0\x02\x18\x01\x12\x04\xae\x01\r\x18\n\r\n\x05\x04\0\x02\x18\
-    \x03\x12\x04\xae\x01\x1b\x1db\x06proto3\
+    \x20available.\n\n\r\n\x05\x04\0\x02\x17\x06\x12\x04\xb2\x01\x02\x0c\n\r\
+    \n\x05\x04\0\x02\x17\x01\x12\x04\xb2\x01\r\x18\n\r\n\x05\x04\0\x02\x17\
+    \x03\x12\x04\xb2\x01\x1b\x1d\n\xab\x01\n\x04\x04\0\x02\x18\x12\x04\xb7\
+    \x01\x02\x1d\x1a\x9c\x01\x20Settings\x20for\x20[Google\x20Cloud\x20Clien\
+    t\n\x20libraries](https://cloud.google.com/apis/docs/cloud-client-librar\
+    ies)\n\x20generated\x20from\x20APIs\x20defined\x20as\x20protocol\x20buff\
+    ers.\n\n\r\n\x05\x04\0\x02\x18\x06\x12\x04\xb7\x01\x02\x0c\n\r\n\x05\x04\
+    \0\x02\x18\x01\x12\x04\xb7\x01\r\x17\n\r\n\x05\x04\0\x02\x18\x03\x12\x04\
+    \xb7\x01\x1a\x1c\n\x87\x01\n\x04\x04\0\x02\x19\x12\x04\xbd\x01\x022\x1ay\
+    \x20Obsolete.\x20Do\x20not\x20use.\n\n\x20This\x20field\x20has\x20no\x20\
+    semantic\x20meaning.\x20The\x20service\x20config\x20compiler\x20always\n\
+    \x20sets\x20this\x20field\x20to\x20`3`.\n\n\r\n\x05\x04\0\x02\x19\x06\
+    \x12\x04\xbd\x01\x02\x1d\n\r\n\x05\x04\0\x02\x19\x01\x12\x04\xbd\x01\x1e\
+    ,\n\r\n\x05\x04\0\x02\x19\x03\x12\x04\xbd\x01/1b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -873,27 +911,25 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(23);
+            let mut deps = ::std::vec::Vec::with_capacity(21);
             deps.push(super::auth::file_descriptor().clone());
             deps.push(super::backend::file_descriptor().clone());
             deps.push(super::billing::file_descriptor().clone());
+            deps.push(super::client::file_descriptor().clone());
             deps.push(super::context::file_descriptor().clone());
             deps.push(super::control::file_descriptor().clone());
             deps.push(super::documentation::file_descriptor().clone());
             deps.push(super::endpoint::file_descriptor().clone());
             deps.push(super::http::file_descriptor().clone());
-            deps.push(super::label::file_descriptor().clone());
             deps.push(super::log::file_descriptor().clone());
             deps.push(super::logging::file_descriptor().clone());
             deps.push(super::metric::file_descriptor().clone());
             deps.push(super::monitored_resource::file_descriptor().clone());
             deps.push(super::monitoring::file_descriptor().clone());
             deps.push(super::quota::file_descriptor().clone());
-            deps.push(super::resource::file_descriptor().clone());
             deps.push(super::source_info::file_descriptor().clone());
             deps.push(super::system_parameter::file_descriptor().clone());
             deps.push(super::usage::file_descriptor().clone());
-            deps.push(::protobuf::well_known_types::any::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::api::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::type_::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::wrappers::file_descriptor().clone());

@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -30,26 +30,39 @@ const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct ReadRowsRequest {
     // message fields
-    ///  Required. The unique name of the table from which to read.
+    ///  Optional. The unique name of the table from which to read.
+    ///
     ///  Values are of the form
     ///  `projects/<project>/instances/<instance>/tables/<table>`.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.table_name)
     pub table_name: ::std::string::String,
+    ///  Optional. The unique name of the AuthorizedView from which to read.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.authorized_view_name)
+    pub authorized_view_name: ::std::string::String,
     ///  This value specifies routing for replication. If not specified, the
     ///  "default" application profile will be used.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.app_profile_id)
     pub app_profile_id: ::std::string::String,
-    ///  The row keys and/or ranges to read. If not specified, reads from all rows.
+    ///  The row keys and/or ranges to read sequentially. If not specified, reads
+    ///  from all rows.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.rows)
     pub rows: ::protobuf::MessageField<super::data::RowSet>,
     ///  The filter to apply to the contents of the specified row(s). If unset,
     ///  reads the entirety of each row.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.filter)
     pub filter: ::protobuf::MessageField<super::data::RowFilter>,
-    ///  The read will terminate after committing to N rows' worth of results. The
+    ///  The read will stop after committing to N rows' worth of results. The
     ///  default (zero) is to return all results.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.rows_limit)
     pub rows_limit: i64,
+    ///  The view into RequestStats, as described above.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.request_stats_view)
+    pub request_stats_view: ::protobuf::EnumOrUnknown<read_rows_request::RequestStatsView>,
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsRequest.reversed)
+    pub reversed: bool,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadRowsRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -67,12 +80,17 @@ impl ReadRowsRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut fields = ::std::vec::Vec::with_capacity(8);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "table_name",
             |m: &ReadRowsRequest| { &m.table_name },
             |m: &mut ReadRowsRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_name",
+            |m: &ReadRowsRequest| { &m.authorized_view_name },
+            |m: &mut ReadRowsRequest| { &mut m.authorized_view_name },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "app_profile_id",
@@ -93,6 +111,16 @@ impl ReadRowsRequest {
             "rows_limit",
             |m: &ReadRowsRequest| { &m.rows_limit },
             |m: &mut ReadRowsRequest| { &mut m.rows_limit },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "request_stats_view",
+            |m: &ReadRowsRequest| { &m.request_stats_view },
+            |m: &mut ReadRowsRequest| { &mut m.request_stats_view },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "reversed",
+            |m: &ReadRowsRequest| { &m.reversed },
+            |m: &mut ReadRowsRequest| { &mut m.reversed },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ReadRowsRequest>(
             "ReadRowsRequest",
@@ -115,6 +143,9 @@ impl ::protobuf::Message for ReadRowsRequest {
                 10 => {
                     self.table_name = is.read_string()?;
                 },
+                74 => {
+                    self.authorized_view_name = is.read_string()?;
+                },
                 42 => {
                     self.app_profile_id = is.read_string()?;
                 },
@@ -126,6 +157,12 @@ impl ::protobuf::Message for ReadRowsRequest {
                 },
                 32 => {
                     self.rows_limit = is.read_int64()?;
+                },
+                48 => {
+                    self.request_stats_view = is.read_enum_or_unknown()?;
+                },
+                56 => {
+                    self.reversed = is.read_bool()?;
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -142,6 +179,9 @@ impl ::protobuf::Message for ReadRowsRequest {
         if !self.table_name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.table_name);
         }
+        if !self.authorized_view_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(9, &self.authorized_view_name);
+        }
         if !self.app_profile_id.is_empty() {
             my_size += ::protobuf::rt::string_size(5, &self.app_profile_id);
         }
@@ -156,6 +196,12 @@ impl ::protobuf::Message for ReadRowsRequest {
         if self.rows_limit != 0 {
             my_size += ::protobuf::rt::int64_size(4, self.rows_limit);
         }
+        if self.request_stats_view != ::protobuf::EnumOrUnknown::new(read_rows_request::RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(6, self.request_stats_view.value());
+        }
+        if self.reversed != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -164,6 +210,9 @@ impl ::protobuf::Message for ReadRowsRequest {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if !self.table_name.is_empty() {
             os.write_string(1, &self.table_name)?;
+        }
+        if !self.authorized_view_name.is_empty() {
+            os.write_string(9, &self.authorized_view_name)?;
         }
         if !self.app_profile_id.is_empty() {
             os.write_string(5, &self.app_profile_id)?;
@@ -176,6 +225,12 @@ impl ::protobuf::Message for ReadRowsRequest {
         }
         if self.rows_limit != 0 {
             os.write_int64(4, self.rows_limit)?;
+        }
+        if self.request_stats_view != ::protobuf::EnumOrUnknown::new(read_rows_request::RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED) {
+            os.write_enum(6, ::protobuf::EnumOrUnknown::value(&self.request_stats_view))?;
+        }
+        if self.reversed != false {
+            os.write_bool(7, self.reversed)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -195,20 +250,26 @@ impl ::protobuf::Message for ReadRowsRequest {
 
     fn clear(&mut self) {
         self.table_name.clear();
+        self.authorized_view_name.clear();
         self.app_profile_id.clear();
         self.rows.clear();
         self.filter.clear();
         self.rows_limit = 0;
+        self.request_stats_view = ::protobuf::EnumOrUnknown::new(read_rows_request::RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED);
+        self.reversed = false;
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static ReadRowsRequest {
         static instance: ReadRowsRequest = ReadRowsRequest {
             table_name: ::std::string::String::new(),
+            authorized_view_name: ::std::string::String::new(),
             app_profile_id: ::std::string::String::new(),
             rows: ::protobuf::MessageField::none(),
             filter: ::protobuf::MessageField::none(),
             rows_limit: 0,
+            request_stats_view: ::protobuf::EnumOrUnknown::from_i32(0),
+            reversed: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -232,6 +293,79 @@ impl ::protobuf::reflect::ProtobufValue for ReadRowsRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+/// Nested message and enums of message `ReadRowsRequest`
+pub mod read_rows_request {
+    ///  The desired view into RequestStats that should be returned in the response.
+    ///
+    ///  See also: RequestStats message.
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:google.bigtable.v2.ReadRowsRequest.RequestStatsView)
+    pub enum RequestStatsView {
+        // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadRowsRequest.RequestStatsView.REQUEST_STATS_VIEW_UNSPECIFIED)
+        REQUEST_STATS_VIEW_UNSPECIFIED = 0,
+        // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadRowsRequest.RequestStatsView.REQUEST_STATS_NONE)
+        REQUEST_STATS_NONE = 1,
+        // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadRowsRequest.RequestStatsView.REQUEST_STATS_FULL)
+        REQUEST_STATS_FULL = 2,
+    }
+
+    impl ::protobuf::Enum for RequestStatsView {
+        const NAME: &'static str = "RequestStatsView";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<RequestStatsView> {
+            match value {
+                0 => ::std::option::Option::Some(RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED),
+                1 => ::std::option::Option::Some(RequestStatsView::REQUEST_STATS_NONE),
+                2 => ::std::option::Option::Some(RequestStatsView::REQUEST_STATS_FULL),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        fn from_str(str: &str) -> ::std::option::Option<RequestStatsView> {
+            match str {
+                "REQUEST_STATS_VIEW_UNSPECIFIED" => ::std::option::Option::Some(RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED),
+                "REQUEST_STATS_NONE" => ::std::option::Option::Some(RequestStatsView::REQUEST_STATS_NONE),
+                "REQUEST_STATS_FULL" => ::std::option::Option::Some(RequestStatsView::REQUEST_STATS_FULL),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [RequestStatsView] = &[
+            RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED,
+            RequestStatsView::REQUEST_STATS_NONE,
+            RequestStatsView::REQUEST_STATS_FULL,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for RequestStatsView {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("ReadRowsRequest.RequestStatsView").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for RequestStatsView {
+        fn default() -> Self {
+            RequestStatsView::REQUEST_STATS_VIEW_UNSPECIFIED
+        }
+    }
+
+    impl RequestStatsView {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<RequestStatsView>("ReadRowsRequest.RequestStatsView")
+        }
+    }
+}
+
 ///  Response message for Bigtable.ReadRows.
 // @@protoc_insertion_point(message:google.bigtable.v2.ReadRowsResponse)
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -249,6 +383,8 @@ pub struct ReadRowsResponse {
     ///  key, allowing the client to skip that work on a retry.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsResponse.last_scanned_row_key)
     pub last_scanned_row_key: ::std::vec::Vec<u8>,
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsResponse.request_stats)
+    pub request_stats: ::protobuf::MessageField<super::request_stats::RequestStats>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadRowsResponse.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -266,7 +402,7 @@ impl ReadRowsResponse {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "chunks",
@@ -277,6 +413,11 @@ impl ReadRowsResponse {
             "last_scanned_row_key",
             |m: &ReadRowsResponse| { &m.last_scanned_row_key },
             |m: &mut ReadRowsResponse| { &mut m.last_scanned_row_key },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::request_stats::RequestStats>(
+            "request_stats",
+            |m: &ReadRowsResponse| { &m.request_stats },
+            |m: &mut ReadRowsResponse| { &mut m.request_stats },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ReadRowsResponse>(
             "ReadRowsResponse",
@@ -302,6 +443,9 @@ impl ::protobuf::Message for ReadRowsResponse {
                 18 => {
                     self.last_scanned_row_key = is.read_bytes()?;
                 },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.request_stats)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -321,6 +465,10 @@ impl ::protobuf::Message for ReadRowsResponse {
         if !self.last_scanned_row_key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(2, &self.last_scanned_row_key);
         }
+        if let Some(v) = self.request_stats.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -332,6 +480,9 @@ impl ::protobuf::Message for ReadRowsResponse {
         };
         if !self.last_scanned_row_key.is_empty() {
             os.write_bytes(2, &self.last_scanned_row_key)?;
+        }
+        if let Some(v) = self.request_stats.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -352,6 +503,7 @@ impl ::protobuf::Message for ReadRowsResponse {
     fn clear(&mut self) {
         self.chunks.clear();
         self.last_scanned_row_key.clear();
+        self.request_stats.clear();
         self.special_fields.clear();
     }
 
@@ -359,6 +511,7 @@ impl ::protobuf::Message for ReadRowsResponse {
         static instance: ReadRowsResponse = ReadRowsResponse {
             chunks: ::std::vec::Vec::new(),
             last_scanned_row_key: ::std::vec::Vec::new(),
+            request_stats: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -394,9 +547,6 @@ pub mod read_rows_response {
         ///  this CellChunk is a continuation of the same row as the previous
         ///  CellChunk in the response stream, even if that CellChunk was in a
         ///  previous ReadRowsResponse message.
-        ///
-        ///  Classified as IDENTIFYING_ID to provide context around data accesses for
-        ///  auditing systems.
         // @@protoc_insertion_point(field:google.bigtable.v2.ReadRowsResponse.CellChunk.row_key)
         pub row_key: ::std::vec::Vec<u8>,
         ///  The column family name for this chunk of data.  If this message
@@ -786,11 +936,19 @@ pub mod read_rows_response {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct SampleRowKeysRequest {
     // message fields
-    ///  Required. The unique name of the table from which to sample row keys.
+    ///  Optional. The unique name of the table from which to sample row keys.
+    ///
     ///  Values are of the form
     ///  `projects/<project>/instances/<instance>/tables/<table>`.
     // @@protoc_insertion_point(field:google.bigtable.v2.SampleRowKeysRequest.table_name)
     pub table_name: ::std::string::String,
+    ///  Optional. The unique name of the AuthorizedView from which to sample row
+    ///  keys.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.SampleRowKeysRequest.authorized_view_name)
+    pub authorized_view_name: ::std::string::String,
     ///  This value specifies routing for replication. If not specified, the
     ///  "default" application profile will be used.
     // @@protoc_insertion_point(field:google.bigtable.v2.SampleRowKeysRequest.app_profile_id)
@@ -812,12 +970,17 @@ impl SampleRowKeysRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "table_name",
             |m: &SampleRowKeysRequest| { &m.table_name },
             |m: &mut SampleRowKeysRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_name",
+            |m: &SampleRowKeysRequest| { &m.authorized_view_name },
+            |m: &mut SampleRowKeysRequest| { &mut m.authorized_view_name },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "app_profile_id",
@@ -845,6 +1008,9 @@ impl ::protobuf::Message for SampleRowKeysRequest {
                 10 => {
                     self.table_name = is.read_string()?;
                 },
+                34 => {
+                    self.authorized_view_name = is.read_string()?;
+                },
                 18 => {
                     self.app_profile_id = is.read_string()?;
                 },
@@ -863,6 +1029,9 @@ impl ::protobuf::Message for SampleRowKeysRequest {
         if !self.table_name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.table_name);
         }
+        if !self.authorized_view_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.authorized_view_name);
+        }
         if !self.app_profile_id.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.app_profile_id);
         }
@@ -874,6 +1043,9 @@ impl ::protobuf::Message for SampleRowKeysRequest {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if !self.table_name.is_empty() {
             os.write_string(1, &self.table_name)?;
+        }
+        if !self.authorized_view_name.is_empty() {
+            os.write_string(4, &self.authorized_view_name)?;
         }
         if !self.app_profile_id.is_empty() {
             os.write_string(2, &self.app_profile_id)?;
@@ -896,6 +1068,7 @@ impl ::protobuf::Message for SampleRowKeysRequest {
 
     fn clear(&mut self) {
         self.table_name.clear();
+        self.authorized_view_name.clear();
         self.app_profile_id.clear();
         self.special_fields.clear();
     }
@@ -903,6 +1076,7 @@ impl ::protobuf::Message for SampleRowKeysRequest {
     fn default_instance() -> &'static SampleRowKeysRequest {
         static instance: SampleRowKeysRequest = SampleRowKeysRequest {
             table_name: ::std::string::String::new(),
+            authorized_view_name: ::std::string::String::new(),
             app_profile_id: ::std::string::String::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -939,9 +1113,6 @@ pub struct SampleRowKeysResponse {
     ///  Note that row keys in this list may not have ever been written to or read
     ///  from, and users should therefore not make any assumptions about the row key
     ///  structure that are specific to their use case.
-    ///
-    ///  Classified as IDENTIFYING_ID to provide context around data accesses for
-    ///  auditing systems.
     // @@protoc_insertion_point(field:google.bigtable.v2.SampleRowKeysResponse.row_key)
     pub row_key: ::std::vec::Vec<u8>,
     ///  Approximate total storage space used by all rows in the table which precede
@@ -1087,24 +1258,30 @@ impl ::protobuf::reflect::ProtobufValue for SampleRowKeysResponse {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct MutateRowRequest {
     // message fields
-    ///  Required. The unique name of the table to which the mutation should be applied.
+    ///  Optional. The unique name of the table to which the mutation should be
+    ///  applied.
+    ///
     ///  Values are of the form
     ///  `projects/<project>/instances/<instance>/tables/<table>`.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowRequest.table_name)
     pub table_name: ::std::string::String,
+    ///  Optional. The unique name of the AuthorizedView to which the mutation
+    ///  should be applied.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowRequest.authorized_view_name)
+    pub authorized_view_name: ::std::string::String,
     ///  This value specifies routing for replication. If not specified, the
     ///  "default" application profile will be used.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowRequest.app_profile_id)
     pub app_profile_id: ::std::string::String,
     ///  Required. The key of the row to which the mutation should be applied.
-    ///
-    ///  Classified as IDENTIFYING_ID to provide context around data accesses for
-    ///  auditing systems.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowRequest.row_key)
     pub row_key: ::std::vec::Vec<u8>,
-    ///  Required. Changes to be atomically applied to the specified row. Entries are applied
-    ///  in order, meaning that earlier mutations can be masked by later ones.
-    ///  Must contain at least one entry and at most 100000.
+    ///  Required. Changes to be atomically applied to the specified row. Entries
+    ///  are applied in order, meaning that earlier mutations can be masked by later
+    ///  ones. Must contain at least one entry and at most 100000.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowRequest.mutations)
     pub mutations: ::std::vec::Vec<super::data::Mutation>,
     // special fields
@@ -1124,12 +1301,17 @@ impl MutateRowRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "table_name",
             |m: &MutateRowRequest| { &m.table_name },
             |m: &mut MutateRowRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_name",
+            |m: &MutateRowRequest| { &m.authorized_view_name },
+            |m: &mut MutateRowRequest| { &mut m.authorized_view_name },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "app_profile_id",
@@ -1167,6 +1349,9 @@ impl ::protobuf::Message for MutateRowRequest {
                 10 => {
                     self.table_name = is.read_string()?;
                 },
+                50 => {
+                    self.authorized_view_name = is.read_string()?;
+                },
                 34 => {
                     self.app_profile_id = is.read_string()?;
                 },
@@ -1191,6 +1376,9 @@ impl ::protobuf::Message for MutateRowRequest {
         if !self.table_name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.table_name);
         }
+        if !self.authorized_view_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.authorized_view_name);
+        }
         if !self.app_profile_id.is_empty() {
             my_size += ::protobuf::rt::string_size(4, &self.app_profile_id);
         }
@@ -1209,6 +1397,9 @@ impl ::protobuf::Message for MutateRowRequest {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if !self.table_name.is_empty() {
             os.write_string(1, &self.table_name)?;
+        }
+        if !self.authorized_view_name.is_empty() {
+            os.write_string(6, &self.authorized_view_name)?;
         }
         if !self.app_profile_id.is_empty() {
             os.write_string(4, &self.app_profile_id)?;
@@ -1237,6 +1428,7 @@ impl ::protobuf::Message for MutateRowRequest {
 
     fn clear(&mut self) {
         self.table_name.clear();
+        self.authorized_view_name.clear();
         self.app_profile_id.clear();
         self.row_key.clear();
         self.mutations.clear();
@@ -1246,6 +1438,7 @@ impl ::protobuf::Message for MutateRowRequest {
     fn default_instance() -> &'static MutateRowRequest {
         static instance: MutateRowRequest = MutateRowRequest {
             table_name: ::std::string::String::new(),
+            authorized_view_name: ::std::string::String::new(),
             app_profile_id: ::std::string::String::new(),
             row_key: ::std::vec::Vec::new(),
             mutations: ::std::vec::Vec::new(),
@@ -1381,9 +1574,20 @@ impl ::protobuf::reflect::ProtobufValue for MutateRowResponse {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct MutateRowsRequest {
     // message fields
-    ///  Required. The unique name of the table to which the mutations should be applied.
+    ///  Optional. The unique name of the table to which the mutations should be
+    ///  applied.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>`.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsRequest.table_name)
     pub table_name: ::std::string::String,
+    ///  Optional. The unique name of the AuthorizedView to which the mutations
+    ///  should be applied.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsRequest.authorized_view_name)
+    pub authorized_view_name: ::std::string::String,
     ///  This value specifies routing for replication. If not specified, the
     ///  "default" application profile will be used.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsRequest.app_profile_id)
@@ -1412,12 +1616,17 @@ impl MutateRowsRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "table_name",
             |m: &MutateRowsRequest| { &m.table_name },
             |m: &mut MutateRowsRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_name",
+            |m: &MutateRowsRequest| { &m.authorized_view_name },
+            |m: &mut MutateRowsRequest| { &mut m.authorized_view_name },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "app_profile_id",
@@ -1450,6 +1659,9 @@ impl ::protobuf::Message for MutateRowsRequest {
                 10 => {
                     self.table_name = is.read_string()?;
                 },
+                42 => {
+                    self.authorized_view_name = is.read_string()?;
+                },
                 26 => {
                     self.app_profile_id = is.read_string()?;
                 },
@@ -1471,6 +1683,9 @@ impl ::protobuf::Message for MutateRowsRequest {
         if !self.table_name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.table_name);
         }
+        if !self.authorized_view_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.authorized_view_name);
+        }
         if !self.app_profile_id.is_empty() {
             my_size += ::protobuf::rt::string_size(3, &self.app_profile_id);
         }
@@ -1486,6 +1701,9 @@ impl ::protobuf::Message for MutateRowsRequest {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if !self.table_name.is_empty() {
             os.write_string(1, &self.table_name)?;
+        }
+        if !self.authorized_view_name.is_empty() {
+            os.write_string(5, &self.authorized_view_name)?;
         }
         if !self.app_profile_id.is_empty() {
             os.write_string(3, &self.app_profile_id)?;
@@ -1511,6 +1729,7 @@ impl ::protobuf::Message for MutateRowsRequest {
 
     fn clear(&mut self) {
         self.table_name.clear();
+        self.authorized_view_name.clear();
         self.app_profile_id.clear();
         self.entries.clear();
         self.special_fields.clear();
@@ -1519,6 +1738,7 @@ impl ::protobuf::Message for MutateRowsRequest {
     fn default_instance() -> &'static MutateRowsRequest {
         static instance: MutateRowsRequest = MutateRowsRequest {
             table_name: ::std::string::String::new(),
+            authorized_view_name: ::std::string::String::new(),
             app_profile_id: ::std::string::String::new(),
             entries: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
@@ -1552,15 +1772,11 @@ pub mod mutate_rows_request {
     pub struct Entry {
         // message fields
         ///  The key of the row to which the `mutations` should be applied.
-        ///
-        ///  Classified as IDENTIFYING_ID to provide context around data accesses for
-        ///  auditing systems.
         // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsRequest.Entry.row_key)
         pub row_key: ::std::vec::Vec<u8>,
-        ///  Required. Changes to be atomically applied to the specified row. Mutations are
-        ///  applied in order, meaning that earlier mutations can be masked by
-        ///  later ones.
-        ///  You must specify at least one mutation.
+        ///  Required. Changes to be atomically applied to the specified row.
+        ///  Mutations are applied in order, meaning that earlier mutations can be
+        ///  masked by later ones. You must specify at least one mutation.
         // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsRequest.Entry.mutations)
         pub mutations: ::std::vec::Vec<super::super::data::Mutation>,
         // special fields
@@ -1705,6 +1921,11 @@ pub struct MutateRowsResponse {
     ///  One or more results for Entries from the batch request.
     // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsResponse.entries)
     pub entries: ::std::vec::Vec<mutate_rows_response::Entry>,
+    ///  Information about how client should limit the rate (QPS). Primirily used by
+    ///  supported official Cloud Bigtable clients. If unset, the rate limit info is
+    ///  not provided by the server.
+    // @@protoc_insertion_point(field:google.bigtable.v2.MutateRowsResponse.rate_limit_info)
+    pub rate_limit_info: ::protobuf::MessageField<RateLimitInfo>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.v2.MutateRowsResponse.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1722,12 +1943,17 @@ impl MutateRowsResponse {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "entries",
             |m: &MutateRowsResponse| { &m.entries },
             |m: &mut MutateRowsResponse| { &mut m.entries },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, RateLimitInfo>(
+            "rate_limit_info",
+            |m: &MutateRowsResponse| { &m.rate_limit_info },
+            |m: &mut MutateRowsResponse| { &mut m.rate_limit_info },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MutateRowsResponse>(
             "MutateRowsResponse",
@@ -1750,6 +1976,9 @@ impl ::protobuf::Message for MutateRowsResponse {
                 10 => {
                     self.entries.push(is.read_message()?);
                 },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.rate_limit_info)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1766,6 +1995,10 @@ impl ::protobuf::Message for MutateRowsResponse {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
+        if let Some(v) = self.rate_limit_info.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1775,6 +2008,9 @@ impl ::protobuf::Message for MutateRowsResponse {
         for v in &self.entries {
             ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
         };
+        if let Some(v) = self.rate_limit_info.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1793,12 +2029,14 @@ impl ::protobuf::Message for MutateRowsResponse {
 
     fn clear(&mut self) {
         self.entries.clear();
+        self.rate_limit_info.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static MutateRowsResponse {
         static instance: MutateRowsResponse = MutateRowsResponse {
             entries: ::std::vec::Vec::new(),
+            rate_limit_info: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1973,25 +2211,188 @@ pub mod mutate_rows_response {
     }
 }
 
+///  Information about how client should adjust the load to Bigtable.
+// @@protoc_insertion_point(message:google.bigtable.v2.RateLimitInfo)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RateLimitInfo {
+    // message fields
+    ///  Time that clients should wait before adjusting the target rate again.
+    ///  If clients adjust rate too frequently, the impact of the previous
+    ///  adjustment may not have been taken into account and may
+    ///  over-throttle or under-throttle. If clients adjust rate too slowly, they
+    ///  will not be responsive to load changes on server side, and may
+    ///  over-throttle or under-throttle.
+    // @@protoc_insertion_point(field:google.bigtable.v2.RateLimitInfo.period)
+    pub period: ::protobuf::MessageField<::protobuf::well_known_types::duration::Duration>,
+    ///  If it has been at least one `period` since the last load adjustment, the
+    ///  client should multiply the current load by this value to get the new target
+    ///  load. For example, if the current load is 100 and `factor` is 0.8, the new
+    ///  target load should be 80. After adjusting, the client should ignore
+    ///  `factor` until another `period` has passed.
+    ///
+    ///  The client can measure its load using any unit that's comparable over time
+    ///  For example, QPS can be used as long as each request involves a similar
+    ///  amount of work.
+    // @@protoc_insertion_point(field:google.bigtable.v2.RateLimitInfo.factor)
+    pub factor: f64,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.RateLimitInfo.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RateLimitInfo {
+    fn default() -> &'a RateLimitInfo {
+        <RateLimitInfo as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RateLimitInfo {
+    pub fn new() -> RateLimitInfo {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::duration::Duration>(
+            "period",
+            |m: &RateLimitInfo| { &m.period },
+            |m: &mut RateLimitInfo| { &mut m.period },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "factor",
+            |m: &RateLimitInfo| { &m.factor },
+            |m: &mut RateLimitInfo| { &mut m.factor },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RateLimitInfo>(
+            "RateLimitInfo",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RateLimitInfo {
+    const NAME: &'static str = "RateLimitInfo";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.period)?;
+                },
+                17 => {
+                    self.factor = is.read_double()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.period.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.factor != 0. {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.period.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if self.factor != 0. {
+            os.write_double(2, self.factor)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RateLimitInfo {
+        RateLimitInfo::new()
+    }
+
+    fn clear(&mut self) {
+        self.period.clear();
+        self.factor = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RateLimitInfo {
+        static instance: RateLimitInfo = RateLimitInfo {
+            period: ::protobuf::MessageField::none(),
+            factor: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RateLimitInfo {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RateLimitInfo").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RateLimitInfo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RateLimitInfo {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  Request message for Bigtable.CheckAndMutateRow.
 // @@protoc_insertion_point(message:google.bigtable.v2.CheckAndMutateRowRequest)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct CheckAndMutateRowRequest {
     // message fields
-    ///  Required. The unique name of the table to which the conditional mutation should be
-    ///  applied.
+    ///  Optional. The unique name of the table to which the conditional mutation
+    ///  should be applied.
+    ///
     ///  Values are of the form
     ///  `projects/<project>/instances/<instance>/tables/<table>`.
     // @@protoc_insertion_point(field:google.bigtable.v2.CheckAndMutateRowRequest.table_name)
     pub table_name: ::std::string::String,
+    ///  Optional. The unique name of the AuthorizedView to which the conditional
+    ///  mutation should be applied.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.CheckAndMutateRowRequest.authorized_view_name)
+    pub authorized_view_name: ::std::string::String,
     ///  This value specifies routing for replication. If not specified, the
     ///  "default" application profile will be used.
     // @@protoc_insertion_point(field:google.bigtable.v2.CheckAndMutateRowRequest.app_profile_id)
     pub app_profile_id: ::std::string::String,
-    ///  Required. The key of the row to which the conditional mutation should be applied.
-    ///
-    ///  Classified as IDENTIFYING_ID to provide context around data accesses for
-    ///  auditing systems.
+    ///  Required. The key of the row to which the conditional mutation should be
+    ///  applied.
     // @@protoc_insertion_point(field:google.bigtable.v2.CheckAndMutateRowRequest.row_key)
     pub row_key: ::std::vec::Vec<u8>,
     ///  The filter to be applied to the contents of the specified row. Depending
@@ -2031,12 +2432,17 @@ impl CheckAndMutateRowRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut fields = ::std::vec::Vec::with_capacity(7);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "table_name",
             |m: &CheckAndMutateRowRequest| { &m.table_name },
             |m: &mut CheckAndMutateRowRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_name",
+            |m: &CheckAndMutateRowRequest| { &m.authorized_view_name },
+            |m: &mut CheckAndMutateRowRequest| { &mut m.authorized_view_name },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "app_profile_id",
@@ -2084,6 +2490,9 @@ impl ::protobuf::Message for CheckAndMutateRowRequest {
                 10 => {
                     self.table_name = is.read_string()?;
                 },
+                74 => {
+                    self.authorized_view_name = is.read_string()?;
+                },
                 58 => {
                     self.app_profile_id = is.read_string()?;
                 },
@@ -2114,6 +2523,9 @@ impl ::protobuf::Message for CheckAndMutateRowRequest {
         if !self.table_name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.table_name);
         }
+        if !self.authorized_view_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(9, &self.authorized_view_name);
+        }
         if !self.app_profile_id.is_empty() {
             my_size += ::protobuf::rt::string_size(7, &self.app_profile_id);
         }
@@ -2140,6 +2552,9 @@ impl ::protobuf::Message for CheckAndMutateRowRequest {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if !self.table_name.is_empty() {
             os.write_string(1, &self.table_name)?;
+        }
+        if !self.authorized_view_name.is_empty() {
+            os.write_string(9, &self.authorized_view_name)?;
         }
         if !self.app_profile_id.is_empty() {
             os.write_string(7, &self.app_profile_id)?;
@@ -2174,6 +2589,7 @@ impl ::protobuf::Message for CheckAndMutateRowRequest {
 
     fn clear(&mut self) {
         self.table_name.clear();
+        self.authorized_view_name.clear();
         self.app_profile_id.clear();
         self.row_key.clear();
         self.predicate_filter.clear();
@@ -2185,6 +2601,7 @@ impl ::protobuf::Message for CheckAndMutateRowRequest {
     fn default_instance() -> &'static CheckAndMutateRowRequest {
         static instance: CheckAndMutateRowRequest = CheckAndMutateRowRequest {
             table_name: ::std::string::String::new(),
+            authorized_view_name: ::std::string::String::new(),
             app_profile_id: ::std::string::String::new(),
             row_key: ::std::vec::Vec::new(),
             predicate_filter: ::protobuf::MessageField::none(),
@@ -2338,30 +2755,286 @@ impl ::protobuf::reflect::ProtobufValue for CheckAndMutateRowResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  Request message for client connection keep-alive and warming.
+// @@protoc_insertion_point(message:google.bigtable.v2.PingAndWarmRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct PingAndWarmRequest {
+    // message fields
+    ///  Required. The unique name of the instance to check permissions for as well
+    ///  as respond. Values are of the form
+    ///  `projects/<project>/instances/<instance>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.PingAndWarmRequest.name)
+    pub name: ::std::string::String,
+    ///  This value specifies routing for replication. If not specified, the
+    ///  "default" application profile will be used.
+    // @@protoc_insertion_point(field:google.bigtable.v2.PingAndWarmRequest.app_profile_id)
+    pub app_profile_id: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.PingAndWarmRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a PingAndWarmRequest {
+    fn default() -> &'a PingAndWarmRequest {
+        <PingAndWarmRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PingAndWarmRequest {
+    pub fn new() -> PingAndWarmRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &PingAndWarmRequest| { &m.name },
+            |m: &mut PingAndWarmRequest| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "app_profile_id",
+            |m: &PingAndWarmRequest| { &m.app_profile_id },
+            |m: &mut PingAndWarmRequest| { &mut m.app_profile_id },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PingAndWarmRequest>(
+            "PingAndWarmRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for PingAndWarmRequest {
+    const NAME: &'static str = "PingAndWarmRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.app_profile_id = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.app_profile_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.app_profile_id);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.app_profile_id.is_empty() {
+            os.write_string(2, &self.app_profile_id)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> PingAndWarmRequest {
+        PingAndWarmRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.app_profile_id.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static PingAndWarmRequest {
+        static instance: PingAndWarmRequest = PingAndWarmRequest {
+            name: ::std::string::String::new(),
+            app_profile_id: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for PingAndWarmRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("PingAndWarmRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for PingAndWarmRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PingAndWarmRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Response message for Bigtable.PingAndWarm connection keepalive and warming.
+// @@protoc_insertion_point(message:google.bigtable.v2.PingAndWarmResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct PingAndWarmResponse {
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.PingAndWarmResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a PingAndWarmResponse {
+    fn default() -> &'a PingAndWarmResponse {
+        <PingAndWarmResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PingAndWarmResponse {
+    pub fn new() -> PingAndWarmResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PingAndWarmResponse>(
+            "PingAndWarmResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for PingAndWarmResponse {
+    const NAME: &'static str = "PingAndWarmResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> PingAndWarmResponse {
+        PingAndWarmResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static PingAndWarmResponse {
+        static instance: PingAndWarmResponse = PingAndWarmResponse {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for PingAndWarmResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("PingAndWarmResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for PingAndWarmResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PingAndWarmResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  Request message for Bigtable.ReadModifyWriteRow.
 // @@protoc_insertion_point(message:google.bigtable.v2.ReadModifyWriteRowRequest)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct ReadModifyWriteRowRequest {
     // message fields
-    ///  Required. The unique name of the table to which the read/modify/write rules should be
-    ///  applied.
+    ///  Optional. The unique name of the table to which the read/modify/write rules
+    ///  should be applied.
+    ///
     ///  Values are of the form
     ///  `projects/<project>/instances/<instance>/tables/<table>`.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadModifyWriteRowRequest.table_name)
     pub table_name: ::std::string::String,
+    ///  Optional. The unique name of the AuthorizedView to which the
+    ///  read/modify/write rules should be applied.
+    ///
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>`.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadModifyWriteRowRequest.authorized_view_name)
+    pub authorized_view_name: ::std::string::String,
     ///  This value specifies routing for replication. If not specified, the
     ///  "default" application profile will be used.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadModifyWriteRowRequest.app_profile_id)
     pub app_profile_id: ::std::string::String,
-    ///  Required. The key of the row to which the read/modify/write rules should be applied.
-    ///
-    ///  Classified as IDENTIFYING_ID to provide context around data accesses for
-    ///  auditing systems.
+    ///  Required. The key of the row to which the read/modify/write rules should be
+    ///  applied.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadModifyWriteRowRequest.row_key)
     pub row_key: ::std::vec::Vec<u8>,
-    ///  Required. Rules specifying how the specified row's contents are to be transformed
-    ///  into writes. Entries are applied in order, meaning that earlier rules will
-    ///  affect the results of later ones.
+    ///  Required. Rules specifying how the specified row's contents are to be
+    ///  transformed into writes. Entries are applied in order, meaning that earlier
+    ///  rules will affect the results of later ones.
     // @@protoc_insertion_point(field:google.bigtable.v2.ReadModifyWriteRowRequest.rules)
     pub rules: ::std::vec::Vec<super::data::ReadModifyWriteRule>,
     // special fields
@@ -2381,12 +3054,17 @@ impl ReadModifyWriteRowRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "table_name",
             |m: &ReadModifyWriteRowRequest| { &m.table_name },
             |m: &mut ReadModifyWriteRowRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_name",
+            |m: &ReadModifyWriteRowRequest| { &m.authorized_view_name },
+            |m: &mut ReadModifyWriteRowRequest| { &mut m.authorized_view_name },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "app_profile_id",
@@ -2424,6 +3102,9 @@ impl ::protobuf::Message for ReadModifyWriteRowRequest {
                 10 => {
                     self.table_name = is.read_string()?;
                 },
+                50 => {
+                    self.authorized_view_name = is.read_string()?;
+                },
                 34 => {
                     self.app_profile_id = is.read_string()?;
                 },
@@ -2448,6 +3129,9 @@ impl ::protobuf::Message for ReadModifyWriteRowRequest {
         if !self.table_name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.table_name);
         }
+        if !self.authorized_view_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.authorized_view_name);
+        }
         if !self.app_profile_id.is_empty() {
             my_size += ::protobuf::rt::string_size(4, &self.app_profile_id);
         }
@@ -2466,6 +3150,9 @@ impl ::protobuf::Message for ReadModifyWriteRowRequest {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if !self.table_name.is_empty() {
             os.write_string(1, &self.table_name)?;
+        }
+        if !self.authorized_view_name.is_empty() {
+            os.write_string(6, &self.authorized_view_name)?;
         }
         if !self.app_profile_id.is_empty() {
             os.write_string(4, &self.app_profile_id)?;
@@ -2494,6 +3181,7 @@ impl ::protobuf::Message for ReadModifyWriteRowRequest {
 
     fn clear(&mut self) {
         self.table_name.clear();
+        self.authorized_view_name.clear();
         self.app_profile_id.clear();
         self.row_key.clear();
         self.rules.clear();
@@ -2503,6 +3191,7 @@ impl ::protobuf::Message for ReadModifyWriteRowRequest {
     fn default_instance() -> &'static ReadModifyWriteRowRequest {
         static instance: ReadModifyWriteRowRequest = ReadModifyWriteRowRequest {
             table_name: ::std::string::String::new(),
+            authorized_view_name: ::std::string::String::new(),
             app_profile_id: ::std::string::String::new(),
             row_key: ::std::vec::Vec::new(),
             rules: ::std::vec::Vec::new(),
@@ -2654,20 +3343,2684 @@ impl ::protobuf::reflect::ProtobufValue for ReadModifyWriteRowResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  Request message for Bigtable.GenerateInitialChangeStreamPartitions.
+// @@protoc_insertion_point(message:google.bigtable.v2.GenerateInitialChangeStreamPartitionsRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct GenerateInitialChangeStreamPartitionsRequest {
+    // message fields
+    ///  Required. The unique name of the table from which to get change stream
+    ///  partitions. Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  Change streaming must be enabled on the table.
+    // @@protoc_insertion_point(field:google.bigtable.v2.GenerateInitialChangeStreamPartitionsRequest.table_name)
+    pub table_name: ::std::string::String,
+    ///  This value specifies routing for replication. If not specified, the
+    ///  "default" application profile will be used.
+    ///  Single cluster routing must be configured on the profile.
+    // @@protoc_insertion_point(field:google.bigtable.v2.GenerateInitialChangeStreamPartitionsRequest.app_profile_id)
+    pub app_profile_id: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.GenerateInitialChangeStreamPartitionsRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a GenerateInitialChangeStreamPartitionsRequest {
+    fn default() -> &'a GenerateInitialChangeStreamPartitionsRequest {
+        <GenerateInitialChangeStreamPartitionsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GenerateInitialChangeStreamPartitionsRequest {
+    pub fn new() -> GenerateInitialChangeStreamPartitionsRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "table_name",
+            |m: &GenerateInitialChangeStreamPartitionsRequest| { &m.table_name },
+            |m: &mut GenerateInitialChangeStreamPartitionsRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "app_profile_id",
+            |m: &GenerateInitialChangeStreamPartitionsRequest| { &m.app_profile_id },
+            |m: &mut GenerateInitialChangeStreamPartitionsRequest| { &mut m.app_profile_id },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GenerateInitialChangeStreamPartitionsRequest>(
+            "GenerateInitialChangeStreamPartitionsRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for GenerateInitialChangeStreamPartitionsRequest {
+    const NAME: &'static str = "GenerateInitialChangeStreamPartitionsRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.table_name = is.read_string()?;
+                },
+                18 => {
+                    self.app_profile_id = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.table_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.table_name);
+        }
+        if !self.app_profile_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.app_profile_id);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.table_name.is_empty() {
+            os.write_string(1, &self.table_name)?;
+        }
+        if !self.app_profile_id.is_empty() {
+            os.write_string(2, &self.app_profile_id)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> GenerateInitialChangeStreamPartitionsRequest {
+        GenerateInitialChangeStreamPartitionsRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.table_name.clear();
+        self.app_profile_id.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static GenerateInitialChangeStreamPartitionsRequest {
+        static instance: GenerateInitialChangeStreamPartitionsRequest = GenerateInitialChangeStreamPartitionsRequest {
+            table_name: ::std::string::String::new(),
+            app_profile_id: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for GenerateInitialChangeStreamPartitionsRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("GenerateInitialChangeStreamPartitionsRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for GenerateInitialChangeStreamPartitionsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GenerateInitialChangeStreamPartitionsRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  Response message for Bigtable.GenerateInitialChangeStreamPartitions.
+// @@protoc_insertion_point(message:google.bigtable.v2.GenerateInitialChangeStreamPartitionsResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct GenerateInitialChangeStreamPartitionsResponse {
+    // message fields
+    ///  A partition of the change stream.
+    // @@protoc_insertion_point(field:google.bigtable.v2.GenerateInitialChangeStreamPartitionsResponse.partition)
+    pub partition: ::protobuf::MessageField<super::data::StreamPartition>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.GenerateInitialChangeStreamPartitionsResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a GenerateInitialChangeStreamPartitionsResponse {
+    fn default() -> &'a GenerateInitialChangeStreamPartitionsResponse {
+        <GenerateInitialChangeStreamPartitionsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GenerateInitialChangeStreamPartitionsResponse {
+    pub fn new() -> GenerateInitialChangeStreamPartitionsResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::data::StreamPartition>(
+            "partition",
+            |m: &GenerateInitialChangeStreamPartitionsResponse| { &m.partition },
+            |m: &mut GenerateInitialChangeStreamPartitionsResponse| { &mut m.partition },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GenerateInitialChangeStreamPartitionsResponse>(
+            "GenerateInitialChangeStreamPartitionsResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for GenerateInitialChangeStreamPartitionsResponse {
+    const NAME: &'static str = "GenerateInitialChangeStreamPartitionsResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.partition)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.partition.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> GenerateInitialChangeStreamPartitionsResponse {
+        GenerateInitialChangeStreamPartitionsResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.partition.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static GenerateInitialChangeStreamPartitionsResponse {
+        static instance: GenerateInitialChangeStreamPartitionsResponse = GenerateInitialChangeStreamPartitionsResponse {
+            partition: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for GenerateInitialChangeStreamPartitionsResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("GenerateInitialChangeStreamPartitionsResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for GenerateInitialChangeStreamPartitionsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GenerateInitialChangeStreamPartitionsResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  Request message for Bigtable.ReadChangeStream.
+// @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ReadChangeStreamRequest {
+    // message fields
+    ///  Required. The unique name of the table from which to read a change stream.
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  Change streaming must be enabled on the table.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamRequest.table_name)
+    pub table_name: ::std::string::String,
+    ///  This value specifies routing for replication. If not specified, the
+    ///  "default" application profile will be used.
+    ///  Single cluster routing must be configured on the profile.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamRequest.app_profile_id)
+    pub app_profile_id: ::std::string::String,
+    ///  The partition to read changes from.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamRequest.partition)
+    pub partition: ::protobuf::MessageField<super::data::StreamPartition>,
+    ///  If specified, OK will be returned when the stream advances beyond
+    ///  this time. Otherwise, changes will be continuously delivered on the stream.
+    ///  This value is inclusive and will be truncated to microsecond granularity.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamRequest.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  If specified, the duration between `Heartbeat` messages on the stream.
+    ///  Otherwise, defaults to 5 seconds.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamRequest.heartbeat_duration)
+    pub heartbeat_duration: ::protobuf::MessageField<::protobuf::well_known_types::duration::Duration>,
+    // message oneof groups
+    pub start_from: ::std::option::Option<read_change_stream_request::Start_from>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ReadChangeStreamRequest {
+    fn default() -> &'a ReadChangeStreamRequest {
+        <ReadChangeStreamRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ReadChangeStreamRequest {
+    pub fn new() -> ReadChangeStreamRequest {
+        ::std::default::Default::default()
+    }
+
+    // .google.protobuf.Timestamp start_time = 4;
+
+    pub fn start_time(&self) -> &::protobuf::well_known_types::timestamp::Timestamp {
+        match self.start_from {
+            ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(ref v)) => v,
+            _ => <::protobuf::well_known_types::timestamp::Timestamp as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_start_time(&mut self) {
+        self.start_from = ::std::option::Option::None;
+    }
+
+    pub fn has_start_time(&self) -> bool {
+        match self.start_from {
+            ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_time(&mut self, v: ::protobuf::well_known_types::timestamp::Timestamp) {
+        self.start_from = ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_start_time(&mut self) -> &mut ::protobuf::well_known_types::timestamp::Timestamp {
+        if let ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(_)) = self.start_from {
+        } else {
+            self.start_from = ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(::protobuf::well_known_types::timestamp::Timestamp::new()));
+        }
+        match self.start_from {
+            ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_start_time(&mut self) -> ::protobuf::well_known_types::timestamp::Timestamp {
+        if self.has_start_time() {
+            match self.start_from.take() {
+                ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::protobuf::well_known_types::timestamp::Timestamp::new()
+        }
+    }
+
+    // .google.bigtable.v2.StreamContinuationTokens continuation_tokens = 6;
+
+    pub fn continuation_tokens(&self) -> &super::data::StreamContinuationTokens {
+        match self.start_from {
+            ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(ref v)) => v,
+            _ => <super::data::StreamContinuationTokens as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_continuation_tokens(&mut self) {
+        self.start_from = ::std::option::Option::None;
+    }
+
+    pub fn has_continuation_tokens(&self) -> bool {
+        match self.start_from {
+            ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_continuation_tokens(&mut self, v: super::data::StreamContinuationTokens) {
+        self.start_from = ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_continuation_tokens(&mut self) -> &mut super::data::StreamContinuationTokens {
+        if let ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(_)) = self.start_from {
+        } else {
+            self.start_from = ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(super::data::StreamContinuationTokens::new()));
+        }
+        match self.start_from {
+            ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_continuation_tokens(&mut self) -> super::data::StreamContinuationTokens {
+        if self.has_continuation_tokens() {
+            match self.start_from.take() {
+                ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::data::StreamContinuationTokens::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "table_name",
+            |m: &ReadChangeStreamRequest| { &m.table_name },
+            |m: &mut ReadChangeStreamRequest| { &mut m.table_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "app_profile_id",
+            |m: &ReadChangeStreamRequest| { &m.app_profile_id },
+            |m: &mut ReadChangeStreamRequest| { &mut m.app_profile_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::data::StreamPartition>(
+            "partition",
+            |m: &ReadChangeStreamRequest| { &m.partition },
+            |m: &mut ReadChangeStreamRequest| { &mut m.partition },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            ReadChangeStreamRequest::has_start_time,
+            ReadChangeStreamRequest::start_time,
+            ReadChangeStreamRequest::mut_start_time,
+            ReadChangeStreamRequest::set_start_time,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::data::StreamContinuationTokens>(
+            "continuation_tokens",
+            ReadChangeStreamRequest::has_continuation_tokens,
+            ReadChangeStreamRequest::continuation_tokens,
+            ReadChangeStreamRequest::mut_continuation_tokens,
+            ReadChangeStreamRequest::set_continuation_tokens,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &ReadChangeStreamRequest| { &m.end_time },
+            |m: &mut ReadChangeStreamRequest| { &mut m.end_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::duration::Duration>(
+            "heartbeat_duration",
+            |m: &ReadChangeStreamRequest| { &m.heartbeat_duration },
+            |m: &mut ReadChangeStreamRequest| { &mut m.heartbeat_duration },
+        ));
+        oneofs.push(read_change_stream_request::Start_from::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ReadChangeStreamRequest>(
+            "ReadChangeStreamRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ReadChangeStreamRequest {
+    const NAME: &'static str = "ReadChangeStreamRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.table_name = is.read_string()?;
+                },
+                18 => {
+                    self.app_profile_id = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.partition)?;
+                },
+                34 => {
+                    self.start_from = ::std::option::Option::Some(read_change_stream_request::Start_from::StartTime(is.read_message()?));
+                },
+                50 => {
+                    self.start_from = ::std::option::Option::Some(read_change_stream_request::Start_from::ContinuationTokens(is.read_message()?));
+                },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                58 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.heartbeat_duration)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.table_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.table_name);
+        }
+        if !self.app_profile_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.app_profile_id);
+        }
+        if let Some(v) = self.partition.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.heartbeat_duration.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.start_from {
+            match v {
+                &read_change_stream_request::Start_from::StartTime(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &read_change_stream_request::Start_from::ContinuationTokens(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.table_name.is_empty() {
+            os.write_string(1, &self.table_name)?;
+        }
+        if !self.app_profile_id.is_empty() {
+            os.write_string(2, &self.app_profile_id)?;
+        }
+        if let Some(v) = self.partition.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        }
+        if let Some(v) = self.heartbeat_duration.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.start_from {
+            match v {
+                &read_change_stream_request::Start_from::StartTime(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+                },
+                &read_change_stream_request::Start_from::ContinuationTokens(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ReadChangeStreamRequest {
+        ReadChangeStreamRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.table_name.clear();
+        self.app_profile_id.clear();
+        self.partition.clear();
+        self.start_from = ::std::option::Option::None;
+        self.start_from = ::std::option::Option::None;
+        self.end_time.clear();
+        self.heartbeat_duration.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ReadChangeStreamRequest {
+        static instance: ReadChangeStreamRequest = ReadChangeStreamRequest {
+            table_name: ::std::string::String::new(),
+            app_profile_id: ::std::string::String::new(),
+            partition: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            heartbeat_duration: ::protobuf::MessageField::none(),
+            start_from: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ReadChangeStreamRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ReadChangeStreamRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ReadChangeStreamRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ReadChangeStreamRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ReadChangeStreamRequest`
+pub mod read_change_stream_request {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.ReadChangeStreamRequest.start_from)
+    pub enum Start_from {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ReadChangeStreamRequest.start_time)
+        StartTime(::protobuf::well_known_types::timestamp::Timestamp),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ReadChangeStreamRequest.continuation_tokens)
+        ContinuationTokens(super::super::data::StreamContinuationTokens),
+    }
+
+    impl ::protobuf::Oneof for Start_from {
+    }
+
+    impl ::protobuf::OneofFull for Start_from {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::ReadChangeStreamRequest as ::protobuf::MessageFull>::descriptor().oneof_by_name("start_from").unwrap()).clone()
+        }
+    }
+
+    impl Start_from {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Start_from>("start_from")
+        }
+    }
+}
+
+///  NOTE: This API is intended to be used by Apache Beam BigtableIO.
+///  Response message for Bigtable.ReadChangeStream.
+// @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ReadChangeStreamResponse {
+    // message oneof groups
+    pub stream_record: ::std::option::Option<read_change_stream_response::Stream_record>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ReadChangeStreamResponse {
+    fn default() -> &'a ReadChangeStreamResponse {
+        <ReadChangeStreamResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ReadChangeStreamResponse {
+    pub fn new() -> ReadChangeStreamResponse {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.ReadChangeStreamResponse.DataChange data_change = 1;
+
+    pub fn data_change(&self) -> &read_change_stream_response::DataChange {
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(ref v)) => v,
+            _ => <read_change_stream_response::DataChange as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_data_change(&mut self) {
+        self.stream_record = ::std::option::Option::None;
+    }
+
+    pub fn has_data_change(&self) -> bool {
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_data_change(&mut self, v: read_change_stream_response::DataChange) {
+        self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_data_change(&mut self) -> &mut read_change_stream_response::DataChange {
+        if let ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(_)) = self.stream_record {
+        } else {
+            self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(read_change_stream_response::DataChange::new()));
+        }
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_data_change(&mut self) -> read_change_stream_response::DataChange {
+        if self.has_data_change() {
+            match self.stream_record.take() {
+                ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            read_change_stream_response::DataChange::new()
+        }
+    }
+
+    // .google.bigtable.v2.ReadChangeStreamResponse.Heartbeat heartbeat = 2;
+
+    pub fn heartbeat(&self) -> &read_change_stream_response::Heartbeat {
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(ref v)) => v,
+            _ => <read_change_stream_response::Heartbeat as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_heartbeat(&mut self) {
+        self.stream_record = ::std::option::Option::None;
+    }
+
+    pub fn has_heartbeat(&self) -> bool {
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_heartbeat(&mut self, v: read_change_stream_response::Heartbeat) {
+        self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_heartbeat(&mut self) -> &mut read_change_stream_response::Heartbeat {
+        if let ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(_)) = self.stream_record {
+        } else {
+            self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(read_change_stream_response::Heartbeat::new()));
+        }
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_heartbeat(&mut self) -> read_change_stream_response::Heartbeat {
+        if self.has_heartbeat() {
+            match self.stream_record.take() {
+                ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            read_change_stream_response::Heartbeat::new()
+        }
+    }
+
+    // .google.bigtable.v2.ReadChangeStreamResponse.CloseStream close_stream = 3;
+
+    pub fn close_stream(&self) -> &read_change_stream_response::CloseStream {
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(ref v)) => v,
+            _ => <read_change_stream_response::CloseStream as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_close_stream(&mut self) {
+        self.stream_record = ::std::option::Option::None;
+    }
+
+    pub fn has_close_stream(&self) -> bool {
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_close_stream(&mut self, v: read_change_stream_response::CloseStream) {
+        self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_close_stream(&mut self) -> &mut read_change_stream_response::CloseStream {
+        if let ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(_)) = self.stream_record {
+        } else {
+            self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(read_change_stream_response::CloseStream::new()));
+        }
+        match self.stream_record {
+            ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_close_stream(&mut self) -> read_change_stream_response::CloseStream {
+        if self.has_close_stream() {
+            match self.stream_record.take() {
+                ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            read_change_stream_response::CloseStream::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, read_change_stream_response::DataChange>(
+            "data_change",
+            ReadChangeStreamResponse::has_data_change,
+            ReadChangeStreamResponse::data_change,
+            ReadChangeStreamResponse::mut_data_change,
+            ReadChangeStreamResponse::set_data_change,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, read_change_stream_response::Heartbeat>(
+            "heartbeat",
+            ReadChangeStreamResponse::has_heartbeat,
+            ReadChangeStreamResponse::heartbeat,
+            ReadChangeStreamResponse::mut_heartbeat,
+            ReadChangeStreamResponse::set_heartbeat,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, read_change_stream_response::CloseStream>(
+            "close_stream",
+            ReadChangeStreamResponse::has_close_stream,
+            ReadChangeStreamResponse::close_stream,
+            ReadChangeStreamResponse::mut_close_stream,
+            ReadChangeStreamResponse::set_close_stream,
+        ));
+        oneofs.push(read_change_stream_response::Stream_record::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ReadChangeStreamResponse>(
+            "ReadChangeStreamResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ReadChangeStreamResponse {
+    const NAME: &'static str = "ReadChangeStreamResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::DataChange(is.read_message()?));
+                },
+                18 => {
+                    self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::Heartbeat(is.read_message()?));
+                },
+                26 => {
+                    self.stream_record = ::std::option::Option::Some(read_change_stream_response::Stream_record::CloseStream(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.stream_record {
+            match v {
+                &read_change_stream_response::Stream_record::DataChange(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &read_change_stream_response::Stream_record::Heartbeat(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &read_change_stream_response::Stream_record::CloseStream(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let ::std::option::Option::Some(ref v) = self.stream_record {
+            match v {
+                &read_change_stream_response::Stream_record::DataChange(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                },
+                &read_change_stream_response::Stream_record::Heartbeat(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+                &read_change_stream_response::Stream_record::CloseStream(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ReadChangeStreamResponse {
+        ReadChangeStreamResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.stream_record = ::std::option::Option::None;
+        self.stream_record = ::std::option::Option::None;
+        self.stream_record = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ReadChangeStreamResponse {
+        static instance: ReadChangeStreamResponse = ReadChangeStreamResponse {
+            stream_record: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ReadChangeStreamResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ReadChangeStreamResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ReadChangeStreamResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ReadChangeStreamResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ReadChangeStreamResponse`
+pub mod read_change_stream_response {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.ReadChangeStreamResponse.stream_record)
+    pub enum Stream_record {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ReadChangeStreamResponse.data_change)
+        DataChange(DataChange),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ReadChangeStreamResponse.heartbeat)
+        Heartbeat(Heartbeat),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ReadChangeStreamResponse.close_stream)
+        CloseStream(CloseStream),
+    }
+
+    impl ::protobuf::Oneof for Stream_record {
+    }
+
+    impl ::protobuf::OneofFull for Stream_record {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::ReadChangeStreamResponse as ::protobuf::MessageFull>::descriptor().oneof_by_name("stream_record").unwrap()).clone()
+        }
+    }
+
+    impl Stream_record {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Stream_record>("stream_record")
+        }
+    }
+    ///  A partial or complete mutation.
+    // @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct MutationChunk {
+        // message fields
+        ///  If set, then the mutation is a `SetCell` with a chunked value across
+        ///  multiple messages.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.chunk_info)
+        pub chunk_info: ::protobuf::MessageField<mutation_chunk::ChunkInfo>,
+        ///  If this is a continuation of a chunked message (`chunked_value_offset` >
+        ///  0), ignore all fields except the `SetCell`'s value and merge it with
+        ///  the previous message by concatenating the value fields.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.mutation)
+        pub mutation: ::protobuf::MessageField<super::super::data::Mutation>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a MutationChunk {
+        fn default() -> &'a MutationChunk {
+            <MutationChunk as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl MutationChunk {
+        pub fn new() -> MutationChunk {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, mutation_chunk::ChunkInfo>(
+                "chunk_info",
+                |m: &MutationChunk| { &m.chunk_info },
+                |m: &mut MutationChunk| { &mut m.chunk_info },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::super::data::Mutation>(
+                "mutation",
+                |m: &MutationChunk| { &m.mutation },
+                |m: &mut MutationChunk| { &mut m.mutation },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MutationChunk>(
+                "ReadChangeStreamResponse.MutationChunk",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for MutationChunk {
+        const NAME: &'static str = "MutationChunk";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.chunk_info)?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.mutation)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.chunk_info.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.mutation.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.chunk_info.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            if let Some(v) = self.mutation.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> MutationChunk {
+            MutationChunk::new()
+        }
+
+        fn clear(&mut self) {
+            self.chunk_info.clear();
+            self.mutation.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static MutationChunk {
+            static instance: MutationChunk = MutationChunk {
+                chunk_info: ::protobuf::MessageField::none(),
+                mutation: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for MutationChunk {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ReadChangeStreamResponse.MutationChunk").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for MutationChunk {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for MutationChunk {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `MutationChunk`
+    pub mod mutation_chunk {
+        ///  Information about the chunking of this mutation.
+        ///  Only `SetCell` mutations can be chunked, and all chunks for a `SetCell`
+        ///  will be delivered contiguously with no other mutation types interleaved.
+        // @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.ChunkInfo)
+        #[derive(PartialEq,Clone,Default,Debug)]
+        pub struct ChunkInfo {
+            // message fields
+            ///  The total value size of all the chunks that make up the `SetCell`.
+            // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.ChunkInfo.chunked_value_size)
+            pub chunked_value_size: i32,
+            ///  The byte offset of this chunk into the total value size of the
+            ///  mutation.
+            // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.ChunkInfo.chunked_value_offset)
+            pub chunked_value_offset: i32,
+            ///  When true, this is the last chunk of a chunked `SetCell`.
+            // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.ChunkInfo.last_chunk)
+            pub last_chunk: bool,
+            // special fields
+            // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamResponse.MutationChunk.ChunkInfo.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a ChunkInfo {
+            fn default() -> &'a ChunkInfo {
+                <ChunkInfo as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl ChunkInfo {
+            pub fn new() -> ChunkInfo {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(3);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "chunked_value_size",
+                    |m: &ChunkInfo| { &m.chunked_value_size },
+                    |m: &mut ChunkInfo| { &mut m.chunked_value_size },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "chunked_value_offset",
+                    |m: &ChunkInfo| { &m.chunked_value_offset },
+                    |m: &mut ChunkInfo| { &mut m.chunked_value_offset },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "last_chunk",
+                    |m: &ChunkInfo| { &m.last_chunk },
+                    |m: &mut ChunkInfo| { &mut m.last_chunk },
+                ));
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ChunkInfo>(
+                    "ReadChangeStreamResponse.MutationChunk.ChunkInfo",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for ChunkInfo {
+            const NAME: &'static str = "ChunkInfo";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        8 => {
+                            self.chunked_value_size = is.read_int32()?;
+                        },
+                        16 => {
+                            self.chunked_value_offset = is.read_int32()?;
+                        },
+                        24 => {
+                            self.last_chunk = is.read_bool()?;
+                        },
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                if self.chunked_value_size != 0 {
+                    my_size += ::protobuf::rt::int32_size(1, self.chunked_value_size);
+                }
+                if self.chunked_value_offset != 0 {
+                    my_size += ::protobuf::rt::int32_size(2, self.chunked_value_offset);
+                }
+                if self.last_chunk != false {
+                    my_size += 1 + 1;
+                }
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                if self.chunked_value_size != 0 {
+                    os.write_int32(1, self.chunked_value_size)?;
+                }
+                if self.chunked_value_offset != 0 {
+                    os.write_int32(2, self.chunked_value_offset)?;
+                }
+                if self.last_chunk != false {
+                    os.write_bool(3, self.last_chunk)?;
+                }
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> ChunkInfo {
+                ChunkInfo::new()
+            }
+
+            fn clear(&mut self) {
+                self.chunked_value_size = 0;
+                self.chunked_value_offset = 0;
+                self.last_chunk = false;
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static ChunkInfo {
+                static instance: ChunkInfo = ChunkInfo {
+                    chunked_value_size: 0,
+                    chunked_value_offset: 0,
+                    last_chunk: false,
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for ChunkInfo {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("ReadChangeStreamResponse.MutationChunk.ChunkInfo").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for ChunkInfo {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for ChunkInfo {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+    }
+
+    ///  A message corresponding to one or more mutations to the partition
+    ///  being streamed. A single logical `DataChange` message may also be split
+    ///  across a sequence of multiple individual messages. Messages other than
+    ///  the first in a sequence will only have the `type` and `chunks` fields
+    ///  populated, with the final message in the sequence also containing `done`
+    ///  set to true.
+    // @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamResponse.DataChange)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct DataChange {
+        // message fields
+        ///  The type of the mutation.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.type)
+        pub type_: ::protobuf::EnumOrUnknown<data_change::Type>,
+        ///  The cluster where the mutation was applied.
+        ///  Not set when `type` is `GARBAGE_COLLECTION`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.source_cluster_id)
+        pub source_cluster_id: ::std::string::String,
+        ///  The row key for all mutations that are part of this `DataChange`.
+        ///  If the `DataChange` is chunked across multiple messages, then this field
+        ///  will only be set for the first message.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.row_key)
+        pub row_key: ::std::vec::Vec<u8>,
+        ///  The timestamp at which the mutation was applied on the Bigtable server.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.commit_timestamp)
+        pub commit_timestamp: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+        ///  A value that lets stream consumers reconstruct Bigtable's
+        ///  conflict resolution semantics.
+        ///  https://cloud.google.com/bigtable/docs/writes#conflict-resolution
+        ///  In the event that the same row key, column family, column qualifier,
+        ///  timestamp are modified on different clusters at the same
+        ///  `commit_timestamp`, the mutation with the larger `tiebreaker` will be the
+        ///  one chosen for the eventually consistent state of the system.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.tiebreaker)
+        pub tiebreaker: i32,
+        ///  The mutations associated with this change to the partition.
+        ///  May contain complete mutations or chunks of a multi-message chunked
+        ///  `DataChange` record.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.chunks)
+        pub chunks: ::std::vec::Vec<MutationChunk>,
+        ///  When true, indicates that the entire `DataChange` has been read
+        ///  and the client can safely process the message.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.done)
+        pub done: bool,
+        ///  An encoded position for this stream's partition to restart reading from.
+        ///  This token is for the StreamPartition from the request.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.token)
+        pub token: ::std::string::String,
+        ///  An estimate of the commit timestamp that is usually lower than or equal
+        ///  to any timestamp for a record that will be delivered in the future on the
+        ///  stream. It is possible that, under particular circumstances that a future
+        ///  record has a timestamp is is lower than a previously seen timestamp. For
+        ///  an example usage see
+        ///  https://beam.apache.org/documentation/basics/#watermarks
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.estimated_low_watermark)
+        pub estimated_low_watermark: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamResponse.DataChange.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a DataChange {
+        fn default() -> &'a DataChange {
+            <DataChange as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl DataChange {
+        pub fn new() -> DataChange {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(9);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "type",
+                |m: &DataChange| { &m.type_ },
+                |m: &mut DataChange| { &mut m.type_ },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "source_cluster_id",
+                |m: &DataChange| { &m.source_cluster_id },
+                |m: &mut DataChange| { &mut m.source_cluster_id },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "row_key",
+                |m: &DataChange| { &m.row_key },
+                |m: &mut DataChange| { &mut m.row_key },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+                "commit_timestamp",
+                |m: &DataChange| { &m.commit_timestamp },
+                |m: &mut DataChange| { &mut m.commit_timestamp },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "tiebreaker",
+                |m: &DataChange| { &m.tiebreaker },
+                |m: &mut DataChange| { &mut m.tiebreaker },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "chunks",
+                |m: &DataChange| { &m.chunks },
+                |m: &mut DataChange| { &mut m.chunks },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "done",
+                |m: &DataChange| { &m.done },
+                |m: &mut DataChange| { &mut m.done },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "token",
+                |m: &DataChange| { &m.token },
+                |m: &mut DataChange| { &mut m.token },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+                "estimated_low_watermark",
+                |m: &DataChange| { &m.estimated_low_watermark },
+                |m: &mut DataChange| { &mut m.estimated_low_watermark },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DataChange>(
+                "ReadChangeStreamResponse.DataChange",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for DataChange {
+        const NAME: &'static str = "DataChange";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.type_ = is.read_enum_or_unknown()?;
+                    },
+                    18 => {
+                        self.source_cluster_id = is.read_string()?;
+                    },
+                    26 => {
+                        self.row_key = is.read_bytes()?;
+                    },
+                    34 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.commit_timestamp)?;
+                    },
+                    40 => {
+                        self.tiebreaker = is.read_int32()?;
+                    },
+                    50 => {
+                        self.chunks.push(is.read_message()?);
+                    },
+                    64 => {
+                        self.done = is.read_bool()?;
+                    },
+                    74 => {
+                        self.token = is.read_string()?;
+                    },
+                    82 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.estimated_low_watermark)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.type_ != ::protobuf::EnumOrUnknown::new(data_change::Type::TYPE_UNSPECIFIED) {
+                my_size += ::protobuf::rt::int32_size(1, self.type_.value());
+            }
+            if !self.source_cluster_id.is_empty() {
+                my_size += ::protobuf::rt::string_size(2, &self.source_cluster_id);
+            }
+            if !self.row_key.is_empty() {
+                my_size += ::protobuf::rt::bytes_size(3, &self.row_key);
+            }
+            if let Some(v) = self.commit_timestamp.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if self.tiebreaker != 0 {
+                my_size += ::protobuf::rt::int32_size(5, self.tiebreaker);
+            }
+            for value in &self.chunks {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            if self.done != false {
+                my_size += 1 + 1;
+            }
+            if !self.token.is_empty() {
+                my_size += ::protobuf::rt::string_size(9, &self.token);
+            }
+            if let Some(v) = self.estimated_low_watermark.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.type_ != ::protobuf::EnumOrUnknown::new(data_change::Type::TYPE_UNSPECIFIED) {
+                os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.type_))?;
+            }
+            if !self.source_cluster_id.is_empty() {
+                os.write_string(2, &self.source_cluster_id)?;
+            }
+            if !self.row_key.is_empty() {
+                os.write_bytes(3, &self.row_key)?;
+            }
+            if let Some(v) = self.commit_timestamp.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+            }
+            if self.tiebreaker != 0 {
+                os.write_int32(5, self.tiebreaker)?;
+            }
+            for v in &self.chunks {
+                ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+            };
+            if self.done != false {
+                os.write_bool(8, self.done)?;
+            }
+            if !self.token.is_empty() {
+                os.write_string(9, &self.token)?;
+            }
+            if let Some(v) = self.estimated_low_watermark.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(10, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> DataChange {
+            DataChange::new()
+        }
+
+        fn clear(&mut self) {
+            self.type_ = ::protobuf::EnumOrUnknown::new(data_change::Type::TYPE_UNSPECIFIED);
+            self.source_cluster_id.clear();
+            self.row_key.clear();
+            self.commit_timestamp.clear();
+            self.tiebreaker = 0;
+            self.chunks.clear();
+            self.done = false;
+            self.token.clear();
+            self.estimated_low_watermark.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static DataChange {
+            static instance: DataChange = DataChange {
+                type_: ::protobuf::EnumOrUnknown::from_i32(0),
+                source_cluster_id: ::std::string::String::new(),
+                row_key: ::std::vec::Vec::new(),
+                commit_timestamp: ::protobuf::MessageField::none(),
+                tiebreaker: 0,
+                chunks: ::std::vec::Vec::new(),
+                done: false,
+                token: ::std::string::String::new(),
+                estimated_low_watermark: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for DataChange {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ReadChangeStreamResponse.DataChange").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for DataChange {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for DataChange {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `DataChange`
+    pub mod data_change {
+        ///  The type of mutation.
+        #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+        // @@protoc_insertion_point(enum:google.bigtable.v2.ReadChangeStreamResponse.DataChange.Type)
+        pub enum Type {
+            // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadChangeStreamResponse.DataChange.Type.TYPE_UNSPECIFIED)
+            TYPE_UNSPECIFIED = 0,
+            // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadChangeStreamResponse.DataChange.Type.USER)
+            USER = 1,
+            // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadChangeStreamResponse.DataChange.Type.GARBAGE_COLLECTION)
+            GARBAGE_COLLECTION = 2,
+            // @@protoc_insertion_point(enum_value:google.bigtable.v2.ReadChangeStreamResponse.DataChange.Type.CONTINUATION)
+            CONTINUATION = 3,
+        }
+
+        impl ::protobuf::Enum for Type {
+            const NAME: &'static str = "Type";
+
+            fn value(&self) -> i32 {
+                *self as i32
+            }
+
+            fn from_i32(value: i32) -> ::std::option::Option<Type> {
+                match value {
+                    0 => ::std::option::Option::Some(Type::TYPE_UNSPECIFIED),
+                    1 => ::std::option::Option::Some(Type::USER),
+                    2 => ::std::option::Option::Some(Type::GARBAGE_COLLECTION),
+                    3 => ::std::option::Option::Some(Type::CONTINUATION),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            fn from_str(str: &str) -> ::std::option::Option<Type> {
+                match str {
+                    "TYPE_UNSPECIFIED" => ::std::option::Option::Some(Type::TYPE_UNSPECIFIED),
+                    "USER" => ::std::option::Option::Some(Type::USER),
+                    "GARBAGE_COLLECTION" => ::std::option::Option::Some(Type::GARBAGE_COLLECTION),
+                    "CONTINUATION" => ::std::option::Option::Some(Type::CONTINUATION),
+                    _ => ::std::option::Option::None
+                }
+            }
+
+            const VALUES: &'static [Type] = &[
+                Type::TYPE_UNSPECIFIED,
+                Type::USER,
+                Type::GARBAGE_COLLECTION,
+                Type::CONTINUATION,
+            ];
+        }
+
+        impl ::protobuf::EnumFull for Type {
+            fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().enum_by_package_relative_name("ReadChangeStreamResponse.DataChange.Type").unwrap()).clone()
+            }
+
+            fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+                let index = *self as usize;
+                Self::enum_descriptor().value_by_index(index)
+            }
+        }
+
+        impl ::std::default::Default for Type {
+            fn default() -> Self {
+                Type::TYPE_UNSPECIFIED
+            }
+        }
+
+        impl Type {
+            pub(in super::super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+                ::protobuf::reflect::GeneratedEnumDescriptorData::new::<Type>("ReadChangeStreamResponse.DataChange.Type")
+            }
+        }
+    }
+
+    ///  A periodic message with information that can be used to checkpoint
+    ///  the state of a stream.
+    // @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamResponse.Heartbeat)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct Heartbeat {
+        // message fields
+        ///  A token that can be provided to a subsequent `ReadChangeStream` call
+        ///  to pick up reading at the current stream position.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.Heartbeat.continuation_token)
+        pub continuation_token: ::protobuf::MessageField<super::super::data::StreamContinuationToken>,
+        ///  An estimate of the commit timestamp that is usually lower than or equal
+        ///  to any timestamp for a record that will be delivered in the future on the
+        ///  stream. It is possible that, under particular circumstances that a future
+        ///  record has a timestamp is is lower than a previously seen timestamp. For
+        ///  an example usage see
+        ///  https://beam.apache.org/documentation/basics/#watermarks
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.Heartbeat.estimated_low_watermark)
+        pub estimated_low_watermark: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamResponse.Heartbeat.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a Heartbeat {
+        fn default() -> &'a Heartbeat {
+            <Heartbeat as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl Heartbeat {
+        pub fn new() -> Heartbeat {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::super::data::StreamContinuationToken>(
+                "continuation_token",
+                |m: &Heartbeat| { &m.continuation_token },
+                |m: &mut Heartbeat| { &mut m.continuation_token },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+                "estimated_low_watermark",
+                |m: &Heartbeat| { &m.estimated_low_watermark },
+                |m: &mut Heartbeat| { &mut m.estimated_low_watermark },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Heartbeat>(
+                "ReadChangeStreamResponse.Heartbeat",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for Heartbeat {
+        const NAME: &'static str = "Heartbeat";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.continuation_token)?;
+                    },
+                    18 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.estimated_low_watermark)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.continuation_token.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            if let Some(v) = self.estimated_low_watermark.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.continuation_token.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            if let Some(v) = self.estimated_low_watermark.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Heartbeat {
+            Heartbeat::new()
+        }
+
+        fn clear(&mut self) {
+            self.continuation_token.clear();
+            self.estimated_low_watermark.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Heartbeat {
+            static instance: Heartbeat = Heartbeat {
+                continuation_token: ::protobuf::MessageField::none(),
+                estimated_low_watermark: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for Heartbeat {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ReadChangeStreamResponse.Heartbeat").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Heartbeat {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Heartbeat {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    // @@protoc_insertion_point(message:google.bigtable.v2.ReadChangeStreamResponse.CloseStream)
+    #[derive(PartialEq,Clone,Default,Debug)]
+    pub struct CloseStream {
+        // message fields
+        ///  The status of the stream.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.CloseStream.status)
+        pub status: ::protobuf::MessageField<super::super::status::Status>,
+        ///  If non-empty, contains the information needed to resume reading their
+        ///  associated partitions.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.CloseStream.continuation_tokens)
+        pub continuation_tokens: ::std::vec::Vec<super::super::data::StreamContinuationToken>,
+        ///  If non-empty, contains the new partitions to start reading from, which
+        ///  are related to but not necessarily identical to the partitions for the
+        ///  above `continuation_tokens`.
+        // @@protoc_insertion_point(field:google.bigtable.v2.ReadChangeStreamResponse.CloseStream.new_partitions)
+        pub new_partitions: ::std::vec::Vec<super::super::data::StreamPartition>,
+        // special fields
+        // @@protoc_insertion_point(special_field:google.bigtable.v2.ReadChangeStreamResponse.CloseStream.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a CloseStream {
+        fn default() -> &'a CloseStream {
+            <CloseStream as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl CloseStream {
+        pub fn new() -> CloseStream {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(3);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::super::status::Status>(
+                "status",
+                |m: &CloseStream| { &m.status },
+                |m: &mut CloseStream| { &mut m.status },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "continuation_tokens",
+                |m: &CloseStream| { &m.continuation_tokens },
+                |m: &mut CloseStream| { &mut m.continuation_tokens },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "new_partitions",
+                |m: &CloseStream| { &m.new_partitions },
+                |m: &mut CloseStream| { &mut m.new_partitions },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CloseStream>(
+                "ReadChangeStreamResponse.CloseStream",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for CloseStream {
+        const NAME: &'static str = "CloseStream";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.status)?;
+                    },
+                    18 => {
+                        self.continuation_tokens.push(is.read_message()?);
+                    },
+                    26 => {
+                        self.new_partitions.push(is.read_message()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.status.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            for value in &self.continuation_tokens {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            for value in &self.new_partitions {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.status.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            for v in &self.continuation_tokens {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            for v in &self.new_partitions {
+                ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> CloseStream {
+            CloseStream::new()
+        }
+
+        fn clear(&mut self) {
+            self.status.clear();
+            self.continuation_tokens.clear();
+            self.new_partitions.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static CloseStream {
+            static instance: CloseStream = CloseStream {
+                status: ::protobuf::MessageField::none(),
+                continuation_tokens: ::std::vec::Vec::new(),
+                new_partitions: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for CloseStream {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ReadChangeStreamResponse.CloseStream").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for CloseStream {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for CloseStream {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+}
+
+///  Request message for Bigtable.ExecuteQuery
+// @@protoc_insertion_point(message:google.bigtable.v2.ExecuteQueryRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ExecuteQueryRequest {
+    // message fields
+    ///  Required. The unique name of the instance against which the query should be
+    ///  executed.
+    ///  Values are of the form `projects/<project>/instances/<instance>`
+    // @@protoc_insertion_point(field:google.bigtable.v2.ExecuteQueryRequest.instance_name)
+    pub instance_name: ::std::string::String,
+    ///  Optional. This value specifies routing for replication. If not specified,
+    ///  the `default` application profile will be used.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ExecuteQueryRequest.app_profile_id)
+    pub app_profile_id: ::std::string::String,
+    ///  Required. The query string.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ExecuteQueryRequest.query)
+    pub query: ::std::string::String,
+    ///  Optional. If this request is resuming a previously interrupted query
+    ///  execution, `resume_token` should be copied from the last
+    ///  PartialResultSet yielded before the interruption. Doing this
+    ///  enables the query execution to resume where the last one left
+    ///  off.
+    ///  The rest of the request parameters must exactly match the
+    ///  request that yielded this token. Otherwise the request will fail.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ExecuteQueryRequest.resume_token)
+    pub resume_token: ::std::vec::Vec<u8>,
+    ///  Required. params contains string type keys and Bigtable type values that
+    ///  bind to placeholders in the query string. In query string, a parameter
+    ///  placeholder consists of the
+    ///  `@` character followed by the parameter name (for example, `@firstName`) in
+    ///  the query string.
+    ///
+    ///  For example, if
+    ///  `params["firstName"] = bytes_value: "foo" type {bytes_type {}}`
+    ///   then `@firstName` will be replaced with googlesql bytes value "foo" in the
+    ///   query string during query evaluation.
+    ///
+    ///  In case of Value.kind is not set, it will be set to corresponding null
+    ///  value in googlesql.
+    ///   `params["firstName"] =  type {string_type {}}`
+    ///   then `@firstName` will be replaced with googlesql null string.
+    ///
+    ///  Value.type should always be set and no inference of type will be made from
+    ///  Value.kind. If Value.type is not set, we will return INVALID_ARGUMENT
+    ///  error.
+    // @@protoc_insertion_point(field:google.bigtable.v2.ExecuteQueryRequest.params)
+    pub params: ::std::collections::HashMap<::std::string::String, super::data::Value>,
+    // message oneof groups
+    pub data_format: ::std::option::Option<execute_query_request::Data_format>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ExecuteQueryRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ExecuteQueryRequest {
+    fn default() -> &'a ExecuteQueryRequest {
+        <ExecuteQueryRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ExecuteQueryRequest {
+    pub fn new() -> ExecuteQueryRequest {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.ProtoFormat proto_format = 4;
+
+    pub fn proto_format(&self) -> &super::data::ProtoFormat {
+        match self.data_format {
+            ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(ref v)) => v,
+            _ => <super::data::ProtoFormat as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_proto_format(&mut self) {
+        self.data_format = ::std::option::Option::None;
+    }
+
+    pub fn has_proto_format(&self) -> bool {
+        match self.data_format {
+            ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_proto_format(&mut self, v: super::data::ProtoFormat) {
+        self.data_format = ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_proto_format(&mut self) -> &mut super::data::ProtoFormat {
+        if let ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(_)) = self.data_format {
+        } else {
+            self.data_format = ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(super::data::ProtoFormat::new()));
+        }
+        match self.data_format {
+            ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_proto_format(&mut self) -> super::data::ProtoFormat {
+        if self.has_proto_format() {
+            match self.data_format.take() {
+                ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::data::ProtoFormat::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "instance_name",
+            |m: &ExecuteQueryRequest| { &m.instance_name },
+            |m: &mut ExecuteQueryRequest| { &mut m.instance_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "app_profile_id",
+            |m: &ExecuteQueryRequest| { &m.app_profile_id },
+            |m: &mut ExecuteQueryRequest| { &mut m.app_profile_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "query",
+            |m: &ExecuteQueryRequest| { &m.query },
+            |m: &mut ExecuteQueryRequest| { &mut m.query },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::data::ProtoFormat>(
+            "proto_format",
+            ExecuteQueryRequest::has_proto_format,
+            ExecuteQueryRequest::proto_format,
+            ExecuteQueryRequest::mut_proto_format,
+            ExecuteQueryRequest::set_proto_format,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "resume_token",
+            |m: &ExecuteQueryRequest| { &m.resume_token },
+            |m: &mut ExecuteQueryRequest| { &mut m.resume_token },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_map_simpler_accessor::<_, _, _>(
+            "params",
+            |m: &ExecuteQueryRequest| { &m.params },
+            |m: &mut ExecuteQueryRequest| { &mut m.params },
+        ));
+        oneofs.push(execute_query_request::Data_format::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ExecuteQueryRequest>(
+            "ExecuteQueryRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ExecuteQueryRequest {
+    const NAME: &'static str = "ExecuteQueryRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.instance_name = is.read_string()?;
+                },
+                18 => {
+                    self.app_profile_id = is.read_string()?;
+                },
+                26 => {
+                    self.query = is.read_string()?;
+                },
+                34 => {
+                    self.data_format = ::std::option::Option::Some(execute_query_request::Data_format::ProtoFormat(is.read_message()?));
+                },
+                66 => {
+                    self.resume_token = is.read_bytes()?;
+                },
+                58 => {
+                    let len = is.read_raw_varint32()?;
+                    let old_limit = is.push_limit(len as u64)?;
+                    let mut key = ::std::default::Default::default();
+                    let mut value = ::std::default::Default::default();
+                    while let Some(tag) = is.read_raw_tag_or_eof()? {
+                        match tag {
+                            10 => key = is.read_string()?,
+                            18 => value = is.read_message()?,
+                            _ => ::protobuf::rt::skip_field_for_tag(tag, is)?,
+                        };
+                    }
+                    is.pop_limit(old_limit);
+                    self.params.insert(key, value);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.instance_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.instance_name);
+        }
+        if !self.app_profile_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.app_profile_id);
+        }
+        if !self.query.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.query);
+        }
+        if !self.resume_token.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(8, &self.resume_token);
+        }
+        for (k, v) in &self.params {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            let len = v.compute_size();
+            entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
+        };
+        if let ::std::option::Option::Some(ref v) = self.data_format {
+            match v {
+                &execute_query_request::Data_format::ProtoFormat(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.instance_name.is_empty() {
+            os.write_string(1, &self.instance_name)?;
+        }
+        if !self.app_profile_id.is_empty() {
+            os.write_string(2, &self.app_profile_id)?;
+        }
+        if !self.query.is_empty() {
+            os.write_string(3, &self.query)?;
+        }
+        if !self.resume_token.is_empty() {
+            os.write_bytes(8, &self.resume_token)?;
+        }
+        for (k, v) in &self.params {
+            let mut entry_size = 0;
+            entry_size += ::protobuf::rt::string_size(1, &k);
+            let len = v.cached_size() as u64;
+            entry_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            os.write_raw_varint32(58)?; // Tag.
+            os.write_raw_varint32(entry_size as u32)?;
+            os.write_string(1, &k)?;
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        };
+        if let ::std::option::Option::Some(ref v) = self.data_format {
+            match v {
+                &execute_query_request::Data_format::ProtoFormat(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ExecuteQueryRequest {
+        ExecuteQueryRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.instance_name.clear();
+        self.app_profile_id.clear();
+        self.query.clear();
+        self.data_format = ::std::option::Option::None;
+        self.resume_token.clear();
+        self.params.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ExecuteQueryRequest {
+        static instance: ::protobuf::rt::Lazy<ExecuteQueryRequest> = ::protobuf::rt::Lazy::new();
+        instance.get(ExecuteQueryRequest::new)
+    }
+}
+
+impl ::protobuf::MessageFull for ExecuteQueryRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ExecuteQueryRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ExecuteQueryRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ExecuteQueryRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ExecuteQueryRequest`
+pub mod execute_query_request {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.ExecuteQueryRequest.data_format)
+    pub enum Data_format {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ExecuteQueryRequest.proto_format)
+        ProtoFormat(super::super::data::ProtoFormat),
+    }
+
+    impl ::protobuf::Oneof for Data_format {
+    }
+
+    impl ::protobuf::OneofFull for Data_format {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::ExecuteQueryRequest as ::protobuf::MessageFull>::descriptor().oneof_by_name("data_format").unwrap()).clone()
+        }
+    }
+
+    impl Data_format {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Data_format>("data_format")
+        }
+    }
+}
+
+///  Response message for Bigtable.ExecuteQuery
+// @@protoc_insertion_point(message:google.bigtable.v2.ExecuteQueryResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ExecuteQueryResponse {
+    // message oneof groups
+    pub response: ::std::option::Option<execute_query_response::Response>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.v2.ExecuteQueryResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ExecuteQueryResponse {
+    fn default() -> &'a ExecuteQueryResponse {
+        <ExecuteQueryResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ExecuteQueryResponse {
+    pub fn new() -> ExecuteQueryResponse {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.v2.ResultSetMetadata metadata = 1;
+
+    pub fn metadata(&self) -> &super::data::ResultSetMetadata {
+        match self.response {
+            ::std::option::Option::Some(execute_query_response::Response::Metadata(ref v)) => v,
+            _ => <super::data::ResultSetMetadata as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_metadata(&mut self) {
+        self.response = ::std::option::Option::None;
+    }
+
+    pub fn has_metadata(&self) -> bool {
+        match self.response {
+            ::std::option::Option::Some(execute_query_response::Response::Metadata(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_metadata(&mut self, v: super::data::ResultSetMetadata) {
+        self.response = ::std::option::Option::Some(execute_query_response::Response::Metadata(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_metadata(&mut self) -> &mut super::data::ResultSetMetadata {
+        if let ::std::option::Option::Some(execute_query_response::Response::Metadata(_)) = self.response {
+        } else {
+            self.response = ::std::option::Option::Some(execute_query_response::Response::Metadata(super::data::ResultSetMetadata::new()));
+        }
+        match self.response {
+            ::std::option::Option::Some(execute_query_response::Response::Metadata(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_metadata(&mut self) -> super::data::ResultSetMetadata {
+        if self.has_metadata() {
+            match self.response.take() {
+                ::std::option::Option::Some(execute_query_response::Response::Metadata(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::data::ResultSetMetadata::new()
+        }
+    }
+
+    // .google.bigtable.v2.PartialResultSet results = 2;
+
+    pub fn results(&self) -> &super::data::PartialResultSet {
+        match self.response {
+            ::std::option::Option::Some(execute_query_response::Response::Results(ref v)) => v,
+            _ => <super::data::PartialResultSet as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_results(&mut self) {
+        self.response = ::std::option::Option::None;
+    }
+
+    pub fn has_results(&self) -> bool {
+        match self.response {
+            ::std::option::Option::Some(execute_query_response::Response::Results(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_results(&mut self, v: super::data::PartialResultSet) {
+        self.response = ::std::option::Option::Some(execute_query_response::Response::Results(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_results(&mut self) -> &mut super::data::PartialResultSet {
+        if let ::std::option::Option::Some(execute_query_response::Response::Results(_)) = self.response {
+        } else {
+            self.response = ::std::option::Option::Some(execute_query_response::Response::Results(super::data::PartialResultSet::new()));
+        }
+        match self.response {
+            ::std::option::Option::Some(execute_query_response::Response::Results(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_results(&mut self) -> super::data::PartialResultSet {
+        if self.has_results() {
+            match self.response.take() {
+                ::std::option::Option::Some(execute_query_response::Response::Results(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::data::PartialResultSet::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::data::ResultSetMetadata>(
+            "metadata",
+            ExecuteQueryResponse::has_metadata,
+            ExecuteQueryResponse::metadata,
+            ExecuteQueryResponse::mut_metadata,
+            ExecuteQueryResponse::set_metadata,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::data::PartialResultSet>(
+            "results",
+            ExecuteQueryResponse::has_results,
+            ExecuteQueryResponse::results,
+            ExecuteQueryResponse::mut_results,
+            ExecuteQueryResponse::set_results,
+        ));
+        oneofs.push(execute_query_response::Response::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ExecuteQueryResponse>(
+            "ExecuteQueryResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ExecuteQueryResponse {
+    const NAME: &'static str = "ExecuteQueryResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.response = ::std::option::Option::Some(execute_query_response::Response::Metadata(is.read_message()?));
+                },
+                18 => {
+                    self.response = ::std::option::Option::Some(execute_query_response::Response::Results(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.response {
+            match v {
+                &execute_query_response::Response::Metadata(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &execute_query_response::Response::Results(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let ::std::option::Option::Some(ref v) = self.response {
+            match v {
+                &execute_query_response::Response::Metadata(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                },
+                &execute_query_response::Response::Results(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ExecuteQueryResponse {
+        ExecuteQueryResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.response = ::std::option::Option::None;
+        self.response = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ExecuteQueryResponse {
+        static instance: ExecuteQueryResponse = ExecuteQueryResponse {
+            response: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ExecuteQueryResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ExecuteQueryResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ExecuteQueryResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ExecuteQueryResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ExecuteQueryResponse`
+pub mod execute_query_response {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.v2.ExecuteQueryResponse.response)
+    pub enum Response {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ExecuteQueryResponse.metadata)
+        Metadata(super::super::data::ResultSetMetadata),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.v2.ExecuteQueryResponse.results)
+        Results(super::super::data::PartialResultSet),
+    }
+
+    impl ::protobuf::Oneof for Response {
+    }
+
+    impl ::protobuf::OneofFull for Response {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::ExecuteQueryResponse as ::protobuf::MessageFull>::descriptor().oneof_by_name("response").unwrap()).clone()
+        }
+    }
+
+    impl Response {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Response>("response")
+        }
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n!google/bigtable/v2/bigtable.proto\x12\x12google.bigtable.v2\x1a\x1cgo\
     ogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/\
-    api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1dgoogle/\
-    bigtable/v2/data.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17goog\
-    le/rpc/status.proto\"\x83\x02\n\x0fReadRowsRequest\x12D\n\ntable_name\
-    \x18\x01\x20\x01(\tR\ttableNameB%\xfaA\x1f\n\x1dbigtable.googleapis.com/\
-    Table\xe0A\x02\x12$\n\x0eapp_profile_id\x18\x05\x20\x01(\tR\x0cappProfil\
-    eId\x12.\n\x04rows\x18\x02\x20\x01(\x0b2\x1a.google.bigtable.v2.RowSetR\
-    \x04rows\x125\n\x06filter\x18\x03\x20\x01(\x0b2\x1d.google.bigtable.v2.R\
-    owFilterR\x06filter\x12\x1d\n\nrows_limit\x18\x04\x20\x01(\x03R\trowsLim\
-    it\"\xf2\x03\n\x10ReadRowsResponse\x12F\n\x06chunks\x18\x01\x20\x03(\x0b\
-    2..google.bigtable.v2.ReadRowsResponse.CellChunkR\x06chunks\x12/\n\x14la\
-    st_scanned_row_key\x18\x02\x20\x01(\x0cR\x11lastScannedRowKey\x1a\xe4\
+    api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x18google/\
+    api/routing.proto\x1a\x1dgoogle/bigtable/v2/data.proto\x1a&google/bigtab\
+    le/v2/request_stats.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fg\
+    oogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\
+    \x17google/rpc/status.proto\"\xd7\x04\n\x0fReadRowsRequest\x12I\n\ntable\
+    _name\x18\x01\x20\x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.googleapis\
+    .com/Table\xe0A\x01\x12e\n\x14authorized_view_name\x18\t\x20\x01(\tR\x12\
+    authorizedViewNameB3\xfaA-\n+bigtableadmin.googleapis.com/AuthorizedView\
+    \xe0A\x01\x12$\n\x0eapp_profile_id\x18\x05\x20\x01(\tR\x0cappProfileId\
+    \x12.\n\x04rows\x18\x02\x20\x01(\x0b2\x1a.google.bigtable.v2.RowSetR\x04\
+    rows\x125\n\x06filter\x18\x03\x20\x01(\x0b2\x1d.google.bigtable.v2.RowFi\
+    lterR\x06filter\x12\x1d\n\nrows_limit\x18\x04\x20\x01(\x03R\trowsLimit\
+    \x12b\n\x12request_stats_view\x18\x06\x20\x01(\x0e24.google.bigtable.v2.\
+    ReadRowsRequest.RequestStatsViewR\x10requestStatsView\x12\x1a\n\x08rever\
+    sed\x18\x07\x20\x01(\x08R\x08reversed\"f\n\x10RequestStatsView\x12\"\n\
+    \x1eREQUEST_STATS_VIEW_UNSPECIFIED\x10\0\x12\x16\n\x12REQUEST_STATS_NONE\
+    \x10\x01\x12\x16\n\x12REQUEST_STATS_FULL\x10\x02\"\xb9\x04\n\x10ReadRows\
+    Response\x12F\n\x06chunks\x18\x01\x20\x03(\x0b2..google.bigtable.v2.Read\
+    RowsResponse.CellChunkR\x06chunks\x12/\n\x14last_scanned_row_key\x18\x02\
+    \x20\x01(\x0cR\x11lastScannedRowKey\x12E\n\rrequest_stats\x18\x03\x20\
+    \x01(\x0b2\x20.google.bigtable.v2.RequestStatsR\x0crequestStats\x1a\xe4\
     \x02\n\tCellChunk\x12\x17\n\x07row_key\x18\x01\x20\x01(\x0cR\x06rowKey\
     \x12=\n\x0bfamily_name\x18\x02\x20\x01(\x0b2\x1c.google.protobuf.StringV\
     alueR\nfamilyName\x129\n\tqualifier\x18\x03\x20\x01(\x0b2\x1b.google.pro\
@@ -2676,84 +6029,214 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ls\x12\x14\n\x05value\x18\x06\x20\x01(\x0cR\x05value\x12\x1d\n\nvalue_si\
     ze\x18\x07\x20\x01(\x05R\tvalueSize\x12\x1d\n\treset_row\x18\x08\x20\x01\
     (\x08H\0R\x08resetRow\x12\x1f\n\ncommit_row\x18\t\x20\x01(\x08H\0R\tcomm\
-    itRowB\x0c\n\nrow_status\"\x82\x01\n\x14SampleRowKeysRequest\x12D\n\ntab\
-    le_name\x18\x01\x20\x01(\tR\ttableNameB%\xfaA\x1f\n\x1dbigtable.googleap\
-    is.com/Table\xe0A\x02\x12$\n\x0eapp_profile_id\x18\x02\x20\x01(\tR\x0cap\
-    pProfileId\"S\n\x15SampleRowKeysResponse\x12\x17\n\x07row_key\x18\x01\
-    \x20\x01(\x0cR\x06rowKey\x12!\n\x0coffset_bytes\x18\x02\x20\x01(\x03R\
-    \x0boffsetBytes\"\xdd\x01\n\x10MutateRowRequest\x12D\n\ntable_name\x18\
-    \x01\x20\x01(\tR\ttableNameB%\xfaA\x1f\n\x1dbigtable.googleapis.com/Tabl\
-    e\xe0A\x02\x12$\n\x0eapp_profile_id\x18\x04\x20\x01(\tR\x0cappProfileId\
-    \x12\x1c\n\x07row_key\x18\x02\x20\x01(\x0cR\x06rowKeyB\x03\xe0A\x02\x12?\
-    \n\tmutations\x18\x03\x20\x03(\x0b2\x1c.google.bigtable.v2.MutationR\tmu\
-    tationsB\x03\xe0A\x02\"\x13\n\x11MutateRowResponse\"\xae\x02\n\x11Mutate\
-    RowsRequest\x12D\n\ntable_name\x18\x01\x20\x01(\tR\ttableNameB%\xfaA\x1f\
-    \n\x1dbigtable.googleapis.com/Table\xe0A\x02\x12$\n\x0eapp_profile_id\
-    \x18\x03\x20\x01(\tR\x0cappProfileId\x12J\n\x07entries\x18\x02\x20\x03(\
-    \x0b2+.google.bigtable.v2.MutateRowsRequest.EntryR\x07entriesB\x03\xe0A\
-    \x02\x1aa\n\x05Entry\x12\x17\n\x07row_key\x18\x01\x20\x01(\x0cR\x06rowKe\
-    y\x12?\n\tmutations\x18\x02\x20\x03(\x0b2\x1c.google.bigtable.v2.Mutatio\
-    nR\tmutationsB\x03\xe0A\x02\"\xa7\x01\n\x12MutateRowsResponse\x12F\n\x07\
-    entries\x18\x01\x20\x03(\x0b2,.google.bigtable.v2.MutateRowsResponse.Ent\
-    ryR\x07entries\x1aI\n\x05Entry\x12\x14\n\x05index\x18\x01\x20\x01(\x03R\
-    \x05index\x12*\n\x06status\x18\x02\x20\x01(\x0b2\x12.google.rpc.StatusR\
-    \x06status\"\xfa\x02\n\x18CheckAndMutateRowRequest\x12D\n\ntable_name\
-    \x18\x01\x20\x01(\tR\ttableNameB%\xfaA\x1f\n\x1dbigtable.googleapis.com/\
-    Table\xe0A\x02\x12$\n\x0eapp_profile_id\x18\x07\x20\x01(\tR\x0cappProfil\
-    eId\x12\x1c\n\x07row_key\x18\x02\x20\x01(\x0cR\x06rowKeyB\x03\xe0A\x02\
-    \x12H\n\x10predicate_filter\x18\x06\x20\x01(\x0b2\x1d.google.bigtable.v2\
-    .RowFilterR\x0fpredicateFilter\x12C\n\x0etrue_mutations\x18\x04\x20\x03(\
-    \x0b2\x1c.google.bigtable.v2.MutationR\rtrueMutations\x12E\n\x0ffalse_mu\
-    tations\x18\x05\x20\x03(\x0b2\x1c.google.bigtable.v2.MutationR\x0efalseM\
-    utations\"H\n\x19CheckAndMutateRowResponse\x12+\n\x11predicate_matched\
-    \x18\x01\x20\x01(\x08R\x10predicateMatched\"\xe9\x01\n\x19ReadModifyWrit\
-    eRowRequest\x12D\n\ntable_name\x18\x01\x20\x01(\tR\ttableNameB%\xfaA\x1f\
-    \n\x1dbigtable.googleapis.com/Table\xe0A\x02\x12$\n\x0eapp_profile_id\
-    \x18\x04\x20\x01(\tR\x0cappProfileId\x12\x1c\n\x07row_key\x18\x02\x20\
-    \x01(\x0cR\x06rowKeyB\x03\xe0A\x02\x12B\n\x05rules\x18\x03\x20\x03(\x0b2\
-    '.google.bigtable.v2.ReadModifyWriteRuleR\x05rulesB\x03\xe0A\x02\"G\n\
-    \x1aReadModifyWriteRowResponse\x12)\n\x03row\x18\x01\x20\x01(\x0b2\x17.g\
-    oogle.bigtable.v2.RowR\x03row2\xc4\x0e\n\x08Bigtable\x12\xc6\x01\n\x08Re\
-    adRows\x12#.google.bigtable.v2.ReadRowsRequest\x1a$.google.bigtable.v2.R\
-    eadRowsResponse\"m\x82\xd3\xe4\x93\x02>\"9/v2/{table_name=projects/*/ins\
-    tances/*/tables/*}:readRows:\x01*\xdaA\ntable_name\xdaA\x19table_name,ap\
-    p_profile_id0\x01\x12\xd7\x01\n\rSampleRowKeys\x12(.google.bigtable.v2.S\
-    ampleRowKeysRequest\x1a).google.bigtable.v2.SampleRowKeysResponse\"o\x82\
-    \xd3\xe4\x93\x02@\x12>/v2/{table_name=projects/*/instances/*/tables/*}:s\
-    ampleRowKeys\xdaA\ntable_name\xdaA\x19table_name,app_profile_id0\x01\x12\
-    \xed\x01\n\tMutateRow\x12$.google.bigtable.v2.MutateRowRequest\x1a%.goog\
-    le.bigtable.v2.MutateRowResponse\"\x92\x01\x82\xd3\xe4\x93\x02?\":/v2/{t\
-    able_name=projects/*/instances/*/tables/*}:mutateRow:\x01*\xdaA\x1ctable\
-    _name,row_key,mutations\xdaA+table_name,row_key,mutations,app_profile_id\
-    \x12\xde\x01\n\nMutateRows\x12%.google.bigtable.v2.MutateRowsRequest\x1a\
-    &.google.bigtable.v2.MutateRowsResponse\"\x7f\x82\xd3\xe4\x93\x02@\";/v2\
-    /{table_name=projects/*/instances/*/tables/*}:mutateRows:\x01*\xdaA\x12t\
-    able_name,entries\xdaA!table_name,entries,app_profile_id0\x01\x12\xd9\
-    \x02\n\x11CheckAndMutateRow\x12,.google.bigtable.v2.CheckAndMutateRowReq\
-    uest\x1a-.google.bigtable.v2.CheckAndMutateRowResponse\"\xe6\x01\x82\xd3\
-    \xe4\x93\x02G\"B/v2/{table_name=projects/*/instances/*/tables/*}:checkAn\
-    dMutateRow:\x01*\xdaABtable_name,row_key,predicate_filter,true_mutations\
-    ,false_mutations\xdaAQtable_name,row_key,predicate_filter,true_mutations\
-    ,false_mutations,app_profile_id\x12\x89\x02\n\x12ReadModifyWriteRow\x12-\
-    .google.bigtable.v2.ReadModifyWriteRowRequest\x1a..google.bigtable.v2.Re\
-    adModifyWriteRowResponse\"\x93\x01\x82\xd3\xe4\x93\x02H\"C/v2/{table_nam\
-    e=projects/*/instances/*/tables/*}:readModifyWriteRow:\x01*\xdaA\x18tabl\
-    e_name,row_key,rules\xdaA'table_name,row_key,rules,app_profile_id\x1a\
-    \xdb\x02\xd2A\xbd\x02https://www.googleapis.com/auth/bigtable.data,https\
-    ://www.googleapis.com/auth/bigtable.data.readonly,https://www.googleapis\
-    .com/auth/cloud-bigtable.data,https://www.googleapis.com/auth/cloud-bigt\
-    able.data.readonly,https://www.googleapis.com/auth/cloud-platform,https:\
-    //www.googleapis.com/auth/cloud-platform.read-only\xcaA\x17bigtable.goog\
-    leapis.comB\xf5\x01\n\x16com.google.bigtable.v2B\rBigtableProtoP\x01Z:go\
-    ogle.golang.org/genproto/googleapis/bigtable/v2;bigtable\xaa\x02\x18Goog\
-    le.Cloud.Bigtable.V2\xca\x02\x18Google\\Cloud\\Bigtable\\V2\xeaAW\n\x1db\
-    igtable.googleapis.com/Table\x126projects/{project}/instances/{instance}\
-    /tables/{table}J\xd2\x81\x01\n\x07\x12\x05\x0e\0\xbb\x03\x01\n\xbd\x04\n\
-    \x01\x0c\x12\x03\x0e\0\x122\xb2\x04\x20Copyright\x202019\x20Google\x20LL\
-    C.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202\
-    .0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20fil\
-    e\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20m\
-    ay\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\
+    itRowB\x0c\n\nrow_status\"\xee\x01\n\x14SampleRowKeysRequest\x12I\n\ntab\
+    le_name\x18\x01\x20\x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.googleap\
+    is.com/Table\xe0A\x01\x12e\n\x14authorized_view_name\x18\x04\x20\x01(\tR\
+    \x12authorizedViewNameB3\xfaA-\n+bigtableadmin.googleapis.com/Authorized\
+    View\xe0A\x01\x12$\n\x0eapp_profile_id\x18\x02\x20\x01(\tR\x0cappProfile\
+    Id\"S\n\x15SampleRowKeysResponse\x12\x17\n\x07row_key\x18\x01\x20\x01(\
+    \x0cR\x06rowKey\x12!\n\x0coffset_bytes\x18\x02\x20\x01(\x03R\x0boffsetBy\
+    tes\"\xc9\x02\n\x10MutateRowRequest\x12I\n\ntable_name\x18\x01\x20\x01(\
+    \tR\ttableNameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\x01\
+    \x12e\n\x14authorized_view_name\x18\x06\x20\x01(\tR\x12authorizedViewNam\
+    eB3\xfaA-\n+bigtableadmin.googleapis.com/AuthorizedView\xe0A\x01\x12$\n\
+    \x0eapp_profile_id\x18\x04\x20\x01(\tR\x0cappProfileId\x12\x1c\n\x07row_\
+    key\x18\x02\x20\x01(\x0cR\x06rowKeyB\x03\xe0A\x02\x12?\n\tmutations\x18\
+    \x03\x20\x03(\x0b2\x1c.google.bigtable.v2.MutationR\tmutationsB\x03\xe0A\
+    \x02\"\x13\n\x11MutateRowResponse\"\x9a\x03\n\x11MutateRowsRequest\x12I\
+    \n\ntable_name\x18\x01\x20\x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.g\
+    oogleapis.com/Table\xe0A\x01\x12e\n\x14authorized_view_name\x18\x05\x20\
+    \x01(\tR\x12authorizedViewNameB3\xfaA-\n+bigtableadmin.googleapis.com/Au\
+    thorizedView\xe0A\x01\x12$\n\x0eapp_profile_id\x18\x03\x20\x01(\tR\x0cap\
+    pProfileId\x12J\n\x07entries\x18\x02\x20\x03(\x0b2+.google.bigtable.v2.M\
+    utateRowsRequest.EntryR\x07entriesB\x03\xe0A\x02\x1aa\n\x05Entry\x12\x17\
+    \n\x07row_key\x18\x01\x20\x01(\x0cR\x06rowKey\x12?\n\tmutations\x18\x02\
+    \x20\x03(\x0b2\x1c.google.bigtable.v2.MutationR\tmutationsB\x03\xe0A\x02\
+    \"\x8b\x02\n\x12MutateRowsResponse\x12F\n\x07entries\x18\x01\x20\x03(\
+    \x0b2,.google.bigtable.v2.MutateRowsResponse.EntryR\x07entries\x12N\n\
+    \x0frate_limit_info\x18\x03\x20\x01(\x0b2!.google.bigtable.v2.RateLimitI\
+    nfoH\0R\rrateLimitInfo\x88\x01\x01\x1aI\n\x05Entry\x12\x14\n\x05index\
+    \x18\x01\x20\x01(\x03R\x05index\x12*\n\x06status\x18\x02\x20\x01(\x0b2\
+    \x12.google.rpc.StatusR\x06statusB\x12\n\x10_rate_limit_info\"Z\n\rRateL\
+    imitInfo\x121\n\x06period\x18\x01\x20\x01(\x0b2\x19.google.protobuf.Dura\
+    tionR\x06period\x12\x16\n\x06factor\x18\x02\x20\x01(\x01R\x06factor\"\
+    \xe6\x03\n\x18CheckAndMutateRowRequest\x12I\n\ntable_name\x18\x01\x20\
+    \x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\
+    \x01\x12e\n\x14authorized_view_name\x18\t\x20\x01(\tR\x12authorizedViewN\
+    ameB3\xfaA-\n+bigtableadmin.googleapis.com/AuthorizedView\xe0A\x01\x12$\
+    \n\x0eapp_profile_id\x18\x07\x20\x01(\tR\x0cappProfileId\x12\x1c\n\x07ro\
+    w_key\x18\x02\x20\x01(\x0cR\x06rowKeyB\x03\xe0A\x02\x12H\n\x10predicate_\
+    filter\x18\x06\x20\x01(\x0b2\x1d.google.bigtable.v2.RowFilterR\x0fpredic\
+    ateFilter\x12C\n\x0etrue_mutations\x18\x04\x20\x03(\x0b2\x1c.google.bigt\
+    able.v2.MutationR\rtrueMutations\x12E\n\x0ffalse_mutations\x18\x05\x20\
+    \x03(\x0b2\x1c.google.bigtable.v2.MutationR\x0efalseMutations\"H\n\x19Ch\
+    eckAndMutateRowResponse\x12+\n\x11predicate_matched\x18\x01\x20\x01(\x08\
+    R\x10predicateMatched\"}\n\x12PingAndWarmRequest\x12A\n\x04name\x18\x01\
+    \x20\x01(\tR\x04nameB-\xfaA'\n%bigtableadmin.googleapis.com/Instance\xe0\
+    A\x02\x12$\n\x0eapp_profile_id\x18\x02\x20\x01(\tR\x0cappProfileId\"\x15\
+    \n\x13PingAndWarmResponse\"\xd5\x02\n\x19ReadModifyWriteRowRequest\x12I\
+    \n\ntable_name\x18\x01\x20\x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.g\
+    oogleapis.com/Table\xe0A\x01\x12e\n\x14authorized_view_name\x18\x06\x20\
+    \x01(\tR\x12authorizedViewNameB3\xfaA-\n+bigtableadmin.googleapis.com/Au\
+    thorizedView\xe0A\x01\x12$\n\x0eapp_profile_id\x18\x04\x20\x01(\tR\x0cap\
+    pProfileId\x12\x1c\n\x07row_key\x18\x02\x20\x01(\x0cR\x06rowKeyB\x03\xe0\
+    A\x02\x12B\n\x05rules\x18\x03\x20\x03(\x0b2'.google.bigtable.v2.ReadModi\
+    fyWriteRuleR\x05rulesB\x03\xe0A\x02\"G\n\x1aReadModifyWriteRowResponse\
+    \x12)\n\x03row\x18\x01\x20\x01(\x0b2\x17.google.bigtable.v2.RowR\x03row\
+    \"\x9f\x01\n,GenerateInitialChangeStreamPartitionsRequest\x12I\n\ntable_\
+    name\x18\x01\x20\x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.googleapis.\
+    com/Table\xe0A\x02\x12$\n\x0eapp_profile_id\x18\x02\x20\x01(\tR\x0cappPr\
+    ofileId\"r\n-GenerateInitialChangeStreamPartitionsResponse\x12A\n\tparti\
+    tion\x18\x01\x20\x01(\x0b2#.google.bigtable.v2.StreamPartitionR\tpartiti\
+    on\"\xfa\x03\n\x17ReadChangeStreamRequest\x12I\n\ntable_name\x18\x01\x20\
+    \x01(\tR\ttableNameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\
+    \x02\x12$\n\x0eapp_profile_id\x18\x02\x20\x01(\tR\x0cappProfileId\x12A\n\
+    \tpartition\x18\x03\x20\x01(\x0b2#.google.bigtable.v2.StreamPartitionR\t\
+    partition\x12;\n\nstart_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.T\
+    imestampH\0R\tstartTime\x12_\n\x13continuation_tokens\x18\x06\x20\x01(\
+    \x0b2,.google.bigtable.v2.StreamContinuationTokensH\0R\x12continuationTo\
+    kens\x125\n\x08end_time\x18\x05\x20\x01(\x0b2\x1a.google.protobuf.Timest\
+    ampR\x07endTime\x12H\n\x12heartbeat_duration\x18\x07\x20\x01(\x0b2\x19.g\
+    oogle.protobuf.DurationR\x11heartbeatDurationB\x0c\n\nstart_from\"\xd1\
+    \x0c\n\x18ReadChangeStreamResponse\x12Z\n\x0bdata_change\x18\x01\x20\x01\
+    (\x0b27.google.bigtable.v2.ReadChangeStreamResponse.DataChangeH\0R\ndata\
+    Change\x12V\n\theartbeat\x18\x02\x20\x01(\x0b26.google.bigtable.v2.ReadC\
+    hangeStreamResponse.HeartbeatH\0R\theartbeat\x12]\n\x0cclose_stream\x18\
+    \x03\x20\x01(\x0b28.google.bigtable.v2.ReadChangeStreamResponse.CloseStr\
+    eamH\0R\x0bcloseStream\x1a\xbb\x02\n\rMutationChunk\x12c\n\nchunk_info\
+    \x18\x01\x20\x01(\x0b2D.google.bigtable.v2.ReadChangeStreamResponse.Muta\
+    tionChunk.ChunkInfoR\tchunkInfo\x128\n\x08mutation\x18\x02\x20\x01(\x0b2\
+    \x1c.google.bigtable.v2.MutationR\x08mutation\x1a\x8a\x01\n\tChunkInfo\
+    \x12,\n\x12chunked_value_size\x18\x01\x20\x01(\x05R\x10chunkedValueSize\
+    \x120\n\x14chunked_value_offset\x18\x02\x20\x01(\x05R\x12chunkedValueOff\
+    set\x12\x1d\n\nlast_chunk\x18\x03\x20\x01(\x08R\tlastChunk\x1a\xae\x04\n\
+    \nDataChange\x12P\n\x04type\x18\x01\x20\x01(\x0e2<.google.bigtable.v2.Re\
+    adChangeStreamResponse.DataChange.TypeR\x04type\x12*\n\x11source_cluster\
+    _id\x18\x02\x20\x01(\tR\x0fsourceClusterId\x12\x17\n\x07row_key\x18\x03\
+    \x20\x01(\x0cR\x06rowKey\x12E\n\x10commit_timestamp\x18\x04\x20\x01(\x0b\
+    2\x1a.google.protobuf.TimestampR\x0fcommitTimestamp\x12\x1e\n\ntiebreake\
+    r\x18\x05\x20\x01(\x05R\ntiebreaker\x12R\n\x06chunks\x18\x06\x20\x03(\
+    \x0b2:.google.bigtable.v2.ReadChangeStreamResponse.MutationChunkR\x06chu\
+    nks\x12\x12\n\x04done\x18\x08\x20\x01(\x08R\x04done\x12\x14\n\x05token\
+    \x18\t\x20\x01(\tR\x05token\x12R\n\x17estimated_low_watermark\x18\n\x20\
+    \x01(\x0b2\x1a.google.protobuf.TimestampR\x15estimatedLowWatermark\"P\n\
+    \x04Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\0\x12\x08\n\x04USER\x10\x01\
+    \x12\x16\n\x12GARBAGE_COLLECTION\x10\x02\x12\x10\n\x0cCONTINUATION\x10\
+    \x03\x1a\xbb\x01\n\tHeartbeat\x12Z\n\x12continuation_token\x18\x01\x20\
+    \x01(\x0b2+.google.bigtable.v2.StreamContinuationTokenR\x11continuationT\
+    oken\x12R\n\x17estimated_low_watermark\x18\x02\x20\x01(\x0b2\x1a.google.\
+    protobuf.TimestampR\x15estimatedLowWatermark\x1a\xe3\x01\n\x0bCloseStrea\
+    m\x12*\n\x06status\x18\x01\x20\x01(\x0b2\x12.google.rpc.StatusR\x06statu\
+    s\x12\\\n\x13continuation_tokens\x18\x02\x20\x03(\x0b2+.google.bigtable.\
+    v2.StreamContinuationTokenR\x12continuationTokens\x12J\n\x0enew_partitio\
+    ns\x18\x03\x20\x03(\x0b2#.google.bigtable.v2.StreamPartitionR\rnewPartit\
+    ionsB\x0f\n\rstream_record\"\xd4\x03\n\x13ExecuteQueryRequest\x12R\n\rin\
+    stance_name\x18\x01\x20\x01(\tR\x0cinstanceNameB-\xfaA'\n%bigtableadmin.\
+    googleapis.com/Instance\xe0A\x02\x12)\n\x0eapp_profile_id\x18\x02\x20\
+    \x01(\tR\x0cappProfileIdB\x03\xe0A\x01\x12\x19\n\x05query\x18\x03\x20\
+    \x01(\tR\x05queryB\x03\xe0A\x02\x12D\n\x0cproto_format\x18\x04\x20\x01(\
+    \x0b2\x1f.google.bigtable.v2.ProtoFormatH\0R\x0bprotoFormat\x12&\n\x0cre\
+    sume_token\x18\x08\x20\x01(\x0cR\x0bresumeTokenB\x03\xe0A\x01\x12P\n\x06\
+    params\x18\x07\x20\x03(\x0b23.google.bigtable.v2.ExecuteQueryRequest.Par\
+    amsEntryR\x06paramsB\x03\xe0A\x02\x1aT\n\x0bParamsEntry\x12\x10\n\x03key\
+    \x18\x01\x20\x01(\tR\x03key\x12/\n\x05value\x18\x02\x20\x01(\x0b2\x19.go\
+    ogle.bigtable.v2.ValueR\x05value:\x028\x01B\r\n\x0bdata_format\"\xa9\x01\
+    \n\x14ExecuteQueryResponse\x12C\n\x08metadata\x18\x01\x20\x01(\x0b2%.goo\
+    gle.bigtable.v2.ResultSetMetadataH\0R\x08metadata\x12@\n\x07results\x18\
+    \x02\x20\x01(\x0b2$.google.bigtable.v2.PartialResultSetH\0R\x07resultsB\
+    \n\n\x08response2\x9d$\n\x08Bigtable\x12\xdb\x03\n\x08ReadRows\x12#.goog\
+    le.bigtable.v2.ReadRowsRequest\x1a$.google.bigtable.v2.ReadRowsResponse\
+    \"\x81\x03\xdaA\ntable_name\xdaA\x19table_name,app_profile_id\x82\xd3\
+    \xe4\x93\x02\x9a\x01\"9/v2/{table_name=projects/*/instances/*/tables/*}:\
+    readRows:\x01*ZZ\"U/v2/{authorized_view_name=projects/*/instances/*/tabl\
+    es/*/authorizedViews/*}:readRows:\x01*\x8a\xd3\xe4\x93\x02\xb0\x01\x12:\
+    \n\ntable_name\x12,{table_name=projects/*/instances/*/tables/*}\x12\x10\
+    \n\x0eapp_profile_id\x12`\n\x14authorized_view_name\x12H{authorized_view\
+    _name=projects/*/instances/*/tables/*/authorizedViews/*}0\x01\x12\xee\
+    \x03\n\rSampleRowKeys\x12(.google.bigtable.v2.SampleRowKeysRequest\x1a).\
+    google.bigtable.v2.SampleRowKeysResponse\"\x85\x03\xdaA\ntable_name\xdaA\
+    \x19table_name,app_profile_id\x82\xd3\xe4\x93\x02\x9e\x01\x12>/v2/{table\
+    _name=projects/*/instances/*/tables/*}:sampleRowKeysZ\\\x12Z/v2/{authori\
+    zed_view_name=projects/*/instances/*/tables/*/authorizedViews/*}:sampleR\
+    owKeys\x8a\xd3\xe4\x93\x02\xb0\x01\x12:\n\ntable_name\x12,{table_name=pr\
+    ojects/*/instances/*/tables/*}\x12\x10\n\x0eapp_profile_id\x12`\n\x14aut\
+    horized_view_name\x12H{authorized_view_name=projects/*/instances/*/table\
+    s/*/authorizedViews/*}0\x01\x12\x82\x04\n\tMutateRow\x12$.google.bigtabl\
+    e.v2.MutateRowRequest\x1a%.google.bigtable.v2.MutateRowResponse\"\xa7\
+    \x03\xdaA\x1ctable_name,row_key,mutations\xdaA+table_name,row_key,mutati\
+    ons,app_profile_id\x82\xd3\xe4\x93\x02\x9c\x01\":/v2/{table_name=project\
+    s/*/instances/*/tables/*}:mutateRow:\x01*Z[\"V/v2/{authorized_view_name=\
+    projects/*/instances/*/tables/*/authorizedViews/*}:mutateRow:\x01*\x8a\
+    \xd3\xe4\x93\x02\xb0\x01\x12:\n\ntable_name\x12,{table_name=projects/*/i\
+    nstances/*/tables/*}\x12\x10\n\x0eapp_profile_id\x12`\n\x14authorized_vi\
+    ew_name\x12H{authorized_view_name=projects/*/instances/*/tables/*/author\
+    izedViews/*}\x12\xf5\x03\n\nMutateRows\x12%.google.bigtable.v2.MutateRow\
+    sRequest\x1a&.google.bigtable.v2.MutateRowsResponse\"\x95\x03\xdaA\x12ta\
+    ble_name,entries\xdaA!table_name,entries,app_profile_id\x82\xd3\xe4\x93\
+    \x02\x9e\x01\";/v2/{table_name=projects/*/instances/*/tables/*}:mutateRo\
+    ws:\x01*Z\\\"W/v2/{authorized_view_name=projects/*/instances/*/tables/*/\
+    authorizedViews/*}:mutateRows:\x01*\x8a\xd3\xe4\x93\x02\xb0\x01\x12:\n\n\
+    table_name\x12,{table_name=projects/*/instances/*/tables/*}\x12\x10\n\
+    \x0eapp_profile_id\x12`\n\x14authorized_view_name\x12H{authorized_view_n\
+    ame=projects/*/instances/*/tables/*/authorizedViews/*}0\x01\x12\xf6\x04\
+    \n\x11CheckAndMutateRow\x12,.google.bigtable.v2.CheckAndMutateRowRequest\
+    \x1a-.google.bigtable.v2.CheckAndMutateRowResponse\"\x83\x04\xdaABtable_\
+    name,row_key,predicate_filter,true_mutations,false_mutations\xdaAQtable_\
+    name,row_key,predicate_filter,true_mutations,false_mutations,app_profile\
+    _id\x82\xd3\xe4\x93\x02\xac\x01\"B/v2/{table_name=projects/*/instances/*\
+    /tables/*}:checkAndMutateRow:\x01*Zc\"^/v2/{authorized_view_name=project\
+    s/*/instances/*/tables/*/authorizedViews/*}:checkAndMutateRow:\x01*\x8a\
+    \xd3\xe4\x93\x02\xb0\x01\x12:\n\ntable_name\x12,{table_name=projects/*/i\
+    nstances/*/tables/*}\x12\x10\n\x0eapp_profile_id\x12`\n\x14authorized_vi\
+    ew_name\x12H{authorized_view_name=projects/*/instances/*/tables/*/author\
+    izedViews/*}\x12\xee\x01\n\x0bPingAndWarm\x12&.google.bigtable.v2.PingAn\
+    dWarmRequest\x1a'.google.bigtable.v2.PingAndWarmResponse\"\x8d\x01\xdaA\
+    \x04name\xdaA\x13name,app_profile_id\x82\xd3\xe4\x93\x02+\"&/v2/{name=pr\
+    ojects/*/instances/*}:ping:\x01*\x8a\xd3\xe4\x93\x029\x12%\n\x04name\x12\
+    \x1d{name=projects/*/instances/*}\x12\x10\n\x0eapp_profile_id\x12\xa7\
+    \x04\n\x12ReadModifyWriteRow\x12-.google.bigtable.v2.ReadModifyWriteRowR\
+    equest\x1a..google.bigtable.v2.ReadModifyWriteRowResponse\"\xb1\x03\xdaA\
+    \x18table_name,row_key,rules\xdaA'table_name,row_key,rules,app_profile_i\
+    d\x82\xd3\xe4\x93\x02\xae\x01\"C/v2/{table_name=projects/*/instances/*/t\
+    ables/*}:readModifyWriteRow:\x01*Zd\"_/v2/{authorized_view_name=projects\
+    /*/instances/*/tables/*/authorizedViews/*}:readModifyWriteRow:\x01*\x8a\
+    \xd3\xe4\x93\x02\xb0\x01\x12:\n\ntable_name\x12,{table_name=projects/*/i\
+    nstances/*/tables/*}\x12\x10\n\x0eapp_profile_id\x12`\n\x14authorized_vi\
+    ew_name\x12H{authorized_view_name=projects/*/instances/*/tables/*/author\
+    izedViews/*}\x12\xbb\x02\n%GenerateInitialChangeStreamPartitions\x12@.go\
+    ogle.bigtable.v2.GenerateInitialChangeStreamPartitionsRequest\x1aA.googl\
+    e.bigtable.v2.GenerateInitialChangeStreamPartitionsResponse\"\x8a\x01\
+    \x82\xd3\xe4\x93\x02[\"V/v2/{table_name=projects/*/instances/*/tables/*}\
+    :generateInitialChangeStreamPartitions:\x01*\xdaA\ntable_name\xdaA\x19ta\
+    ble_name,app_profile_id0\x01\x12\xe6\x01\n\x10ReadChangeStream\x12+.goog\
+    le.bigtable.v2.ReadChangeStreamRequest\x1a,.google.bigtable.v2.ReadChang\
+    eStreamResponse\"u\x82\xd3\xe4\x93\x02F\"A/v2/{table_name=projects/*/ins\
+    tances/*/tables/*}:readChangeStream:\x01*\xdaA\ntable_name\xdaA\x19table\
+    _name,app_profile_id0\x01\x12\xab\x02\n\x0cExecuteQuery\x12'.google.bigt\
+    able.v2.ExecuteQueryRequest\x1a(.google.bigtable.v2.ExecuteQueryResponse\
+    \"\xc5\x01\xdaA\x13instance_name,query\xdaA\"instance_name,query,app_pro\
+    file_id\x82\xd3\xe4\x93\x02<\"7/v2/{instance_name=projects/*/instances/*\
+    }:executeQuery:\x01*\x8a\xd3\xe4\x93\x02B\x12.\n\rinstance_name\x12\x1d{\
+    name=projects/*/instances/*}\x12\x10\n\x0eapp_profile_id0\x01\x1a\xdb\
+    \x02\xd2A\xbd\x02https://www.googleapis.com/auth/bigtable.data,https://w\
+    ww.googleapis.com/auth/bigtable.data.readonly,https://www.googleapis.com\
+    /auth/cloud-bigtable.data,https://www.googleapis.com/auth/cloud-bigtable\
+    .data.readonly,https://www.googleapis.com/auth/cloud-platform,https://ww\
+    w.googleapis.com/auth/cloud-platform.read-only\xcaA\x17bigtable.googleap\
+    is.comB\xf4\x03\n\x16com.google.bigtable.v2B\rBigtableProtoP\x01Z8cloud.\
+    google.com/go/bigtable/apiv2/bigtablepb;bigtablepb\xaa\x02\x18Google.Clo\
+    ud.Bigtable.V2\xca\x02\x18Google\\Cloud\\Bigtable\\V2\xea\x02\x1bGoogle:\
+    :Cloud::Bigtable::V2\xeaAP\n%bigtableadmin.googleapis.com/Instance\x12'p\
+    rojects/{project}/instances/{instance}\xeaA\\\n\"bigtableadmin.googleapi\
+    s.com/Table\x126projects/{project}/instances/{instance}/tables/{table}\
+    \xeaA\x87\x01\n+bigtableadmin.googleapis.com/AuthorizedView\x12Xprojects\
+    /{project}/instances/{instance}/tables/{table}/authorizedViews/{authoriz\
+    ed_view}J\xf2\xa7\x02\n\x07\x12\x05\x0e\0\xcd\x08\x01\n\xbc\x04\n\x01\
+    \x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\
+    \n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\
+    \x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\
+    \x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20ma\
+    y\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\
     \x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20requ\
     ired\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\
     \x20software\n\x20distributed\x20under\x20the\x20License\x20is\x20distri\
@@ -2764,482 +6247,1120 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     e\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0\x1b\n\t\n\x02\x03\0\x12\
     \x03\x12\0&\n\t\n\x02\x03\x01\x12\x03\x13\0!\n\t\n\x02\x03\x02\x12\x03\
     \x14\0)\n\t\n\x02\x03\x03\x12\x03\x15\0#\n\t\n\x02\x03\x04\x12\x03\x16\0\
-    '\n\t\n\x02\x03\x05\x12\x03\x17\0(\n\t\n\x02\x03\x06\x12\x03\x18\0!\n\
-    \x08\n\x01\x08\x12\x03\x1a\05\n\t\n\x02\x08%\x12\x03\x1a\05\n\x08\n\x01\
-    \x08\x12\x03\x1b\0Q\n\t\n\x02\x08\x0b\x12\x03\x1b\0Q\n\x08\n\x01\x08\x12\
-    \x03\x1c\0\"\n\t\n\x02\x08\n\x12\x03\x1c\0\"\n\x08\n\x01\x08\x12\x03\x1d\
-    \0.\n\t\n\x02\x08\x08\x12\x03\x1d\0.\n\x08\n\x01\x08\x12\x03\x1e\0/\n\t\
-    \n\x02\x08\x01\x12\x03\x1e\0/\n\x08\n\x01\x08\x12\x03\x1f\05\n\t\n\x02\
-    \x08)\x12\x03\x1f\05\n\t\n\x01\x08\x12\x04\x20\0#\x02\n\x0c\n\x04\x08\
-    \x9d\x08\0\x12\x04\x20\0#\x02\nO\n\x02\x06\0\x12\x04&\0x\x01\x1aC\x20Ser\
-    vice\x20for\x20reading\x20from\x20and\x20writing\x20to\x20existing\x20Bi\
-    gtable\x20tables.\n\n\n\n\x03\x06\0\x01\x12\x03&\x08\x10\n\n\n\x03\x06\0\
-    \x03\x12\x03'\x02?\n\x0c\n\x05\x06\0\x03\x99\x08\x12\x03'\x02?\n\x0b\n\
-    \x03\x06\0\x03\x12\x04(\x02.A\n\r\n\x05\x06\0\x03\x9a\x08\x12\x04(\x02.A\
-    \n\xc1\x02\n\x04\x06\0\x02\0\x12\x045\x02<\x03\x1a\xb2\x02\x20Streams\
-    \x20back\x20the\x20contents\x20of\x20all\x20requested\x20rows\x20in\x20k\
-    ey\x20order,\x20optionally\n\x20applying\x20the\x20same\x20Reader\x20fil\
-    ter\x20to\x20each.\x20Depending\x20on\x20their\x20size,\n\x20rows\x20and\
-    \x20cells\x20may\x20be\x20broken\x20up\x20across\x20multiple\x20response\
-    s,\x20but\n\x20atomicity\x20of\x20each\x20row\x20will\x20still\x20be\x20\
-    preserved.\x20See\x20the\n\x20ReadRowsResponse\x20documentation\x20for\
-    \x20details.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x035\x06\x0e\n\x0c\n\x05\
-    \x06\0\x02\0\x02\x12\x035\x0f\x1e\n\x0c\n\x05\x06\0\x02\0\x06\x12\x035)/\
-    \n\x0c\n\x05\x06\0\x02\0\x03\x12\x0350@\n\r\n\x05\x06\0\x02\0\x04\x12\
-    \x046\x049\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\xbc\"\x12\x046\x049\x06\
-    \n\x0c\n\x05\x06\0\x02\0\x04\x12\x03:\x048\n\x0f\n\x08\x06\0\x02\0\x04\
-    \x9b\x08\0\x12\x03:\x048\n\x0c\n\x05\x06\0\x02\0\x04\x12\x03;\x04G\n\x0f\
-    \n\x08\x06\0\x02\0\x04\x9b\x08\x01\x12\x03;\x04G\n\xed\x01\n\x04\x06\0\
-    \x02\x01\x12\x04B\x02H\x03\x1a\xde\x01\x20Returns\x20a\x20sample\x20of\
-    \x20row\x20keys\x20in\x20the\x20table.\x20The\x20returned\x20row\x20keys\
-    \x20will\n\x20delimit\x20contiguous\x20sections\x20of\x20the\x20table\
-    \x20of\x20approximately\x20equal\x20size,\n\x20which\x20can\x20be\x20use\
-    d\x20to\x20break\x20up\x20the\x20data\x20for\x20distributed\x20tasks\x20\
-    like\n\x20mapreduces.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03B\x06\x13\n\
-    \x0c\n\x05\x06\0\x02\x01\x02\x12\x03B\x14(\n\x0c\n\x05\x06\0\x02\x01\x06\
-    \x12\x03B39\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03B:O\n\r\n\x05\x06\0\x02\
-    \x01\x04\x12\x04C\x04E\x06\n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\
-    \x04C\x04E\x06\n\x0c\n\x05\x06\0\x02\x01\x04\x12\x03F\x048\n\x0f\n\x08\
-    \x06\0\x02\x01\x04\x9b\x08\0\x12\x03F\x048\n\x0c\n\x05\x06\0\x02\x01\x04\
-    \x12\x03G\x04G\n\x0f\n\x08\x06\0\x02\x01\x04\x9b\x08\x01\x12\x03G\x04G\n\
-    \x87\x01\n\x04\x06\0\x02\x02\x12\x04L\x02S\x03\x1ay\x20Mutates\x20a\x20r\
-    ow\x20atomically.\x20Cells\x20already\x20present\x20in\x20the\x20row\x20\
-    are\x20left\n\x20unchanged\x20unless\x20explicitly\x20changed\x20by\x20`\
-    mutation`.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03L\x06\x0f\n\x0c\n\x05\
-    \x06\0\x02\x02\x02\x12\x03L\x10\x20\n\x0c\n\x05\x06\0\x02\x02\x03\x12\
-    \x03L+<\n\r\n\x05\x06\0\x02\x02\x04\x12\x04M\x04P\x06\n\x11\n\t\x06\0\
-    \x02\x02\x04\xb0\xca\xbc\"\x12\x04M\x04P\x06\n\x0c\n\x05\x06\0\x02\x02\
-    \x04\x12\x03Q\x04J\n\x0f\n\x08\x06\0\x02\x02\x04\x9b\x08\0\x12\x03Q\x04J\
-    \n\x0c\n\x05\x06\0\x02\x02\x04\x12\x03R\x04Y\n\x0f\n\x08\x06\0\x02\x02\
-    \x04\x9b\x08\x01\x12\x03R\x04Y\n\xa0\x01\n\x04\x06\0\x02\x03\x12\x04X\
-    \x02_\x03\x1a\x91\x01\x20Mutates\x20multiple\x20rows\x20in\x20a\x20batch\
-    .\x20Each\x20individual\x20row\x20is\x20mutated\n\x20atomically\x20as\
-    \x20in\x20MutateRow,\x20but\x20the\x20entire\x20batch\x20is\x20not\x20ex\
-    ecuted\n\x20atomically.\n\n\x0c\n\x05\x06\0\x02\x03\x01\x12\x03X\x06\x10\
-    \n\x0c\n\x05\x06\0\x02\x03\x02\x12\x03X\x11\"\n\x0c\n\x05\x06\0\x02\x03\
-    \x06\x12\x03X-3\n\x0c\n\x05\x06\0\x02\x03\x03\x12\x03X4F\n\r\n\x05\x06\0\
-    \x02\x03\x04\x12\x04Y\x04\\\x06\n\x11\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\
-    \"\x12\x04Y\x04\\\x06\n\x0c\n\x05\x06\0\x02\x03\x04\x12\x03]\x04@\n\x0f\
-    \n\x08\x06\0\x02\x03\x04\x9b\x08\0\x12\x03]\x04@\n\x0c\n\x05\x06\0\x02\
-    \x03\x04\x12\x03^\x04O\n\x0f\n\x08\x06\0\x02\x03\x04\x9b\x08\x01\x12\x03\
-    ^\x04O\nZ\n\x04\x06\0\x02\x04\x12\x04b\x02i\x03\x1aL\x20Mutates\x20a\x20\
-    row\x20atomically\x20based\x20on\x20the\x20output\x20of\x20a\x20predicat\
-    e\x20Reader\x20filter.\n\n\x0c\n\x05\x06\0\x02\x04\x01\x12\x03b\x06\x17\
-    \n\x0c\n\x05\x06\0\x02\x04\x02\x12\x03b\x180\n\x0c\n\x05\x06\0\x02\x04\
-    \x03\x12\x03b;T\n\r\n\x05\x06\0\x02\x04\x04\x12\x04c\x04f\x06\n\x11\n\t\
-    \x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\x04c\x04f\x06\n\x0c\n\x05\x06\0\x02\
-    \x04\x04\x12\x03g\x04p\n\x0f\n\x08\x06\0\x02\x04\x04\x9b\x08\0\x12\x03g\
-    \x04p\n\x0c\n\x05\x06\0\x02\x04\x04\x12\x03h\x04\x7f\n\x0f\n\x08\x06\0\
-    \x02\x04\x04\x9b\x08\x01\x12\x03h\x04\x7f\n\xf6\x02\n\x04\x06\0\x02\x05\
-    \x12\x04p\x02w\x03\x1a\xe7\x02\x20Modifies\x20a\x20row\x20atomically\x20\
-    on\x20the\x20server.\x20The\x20method\x20reads\x20the\x20latest\n\x20exi\
-    sting\x20timestamp\x20and\x20value\x20from\x20the\x20specified\x20column\
-    s\x20and\x20writes\x20a\x20new\n\x20entry\x20based\x20on\x20pre-defined\
-    \x20read/modify/write\x20rules.\x20The\x20new\x20value\x20for\x20the\n\
-    \x20timestamp\x20is\x20the\x20greater\x20of\x20the\x20existing\x20timest\
-    amp\x20or\x20the\x20current\x20server\n\x20time.\x20The\x20method\x20ret\
-    urns\x20the\x20new\x20contents\x20of\x20all\x20modified\x20cells.\n\n\
-    \x0c\n\x05\x06\0\x02\x05\x01\x12\x03p\x06\x18\n\x0c\n\x05\x06\0\x02\x05\
-    \x02\x12\x03p\x192\n\x0c\n\x05\x06\0\x02\x05\x03\x12\x03p=W\n\r\n\x05\
-    \x06\0\x02\x05\x04\x12\x04q\x04t\x06\n\x11\n\t\x06\0\x02\x05\x04\xb0\xca\
-    \xbc\"\x12\x04q\x04t\x06\n\x0c\n\x05\x06\0\x02\x05\x04\x12\x03u\x04F\n\
-    \x0f\n\x08\x06\0\x02\x05\x04\x9b\x08\0\x12\x03u\x04F\n\x0c\n\x05\x06\0\
-    \x02\x05\x04\x12\x03v\x04U\n\x0f\n\x08\x06\0\x02\x05\x04\x9b\x08\x01\x12\
-    \x03v\x04U\n5\n\x02\x04\0\x12\x05{\0\x94\x01\x01\x1a(\x20Request\x20mess\
-    age\x20for\x20Bigtable.ReadRows.\n\n\n\n\x03\x04\0\x01\x12\x03{\x08\x17\
-    \n\x9f\x01\n\x04\x04\0\x02\0\x12\x05\x7f\x02\x84\x01\x04\x1a\x8f\x01\x20\
-    Required.\x20The\x20unique\x20name\x20of\x20the\x20table\x20from\x20whic\
-    h\x20to\x20read.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/\
-    <project>/instances/<instance>/tables/<table>`.\n\n\x0c\n\x05\x04\0\x02\
-    \0\x05\x12\x03\x7f\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x7f\t\x13\
-    \n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x7f\x16\x17\n\x0e\n\x05\x04\0\x02\0\
-    \x08\x12\x05\x7f\x18\x84\x01\x03\n\x10\n\x08\x04\0\x02\0\x08\x9c\x08\0\
-    \x12\x04\x80\x01\x04*\n\x11\n\x07\x04\0\x02\0\x08\x9f\x08\x12\x06\x81\
-    \x01\x04\x83\x01\x05\n\x80\x01\n\x04\x04\0\x02\x01\x12\x04\x88\x01\x02\
-    \x1c\x1ar\x20This\x20value\x20specifies\x20routing\x20for\x20replication\
-    .\x20If\x20not\x20specified,\x20the\n\x20\"default\"\x20application\x20p\
-    rofile\x20will\x20be\x20used.\n\n\r\n\x05\x04\0\x02\x01\x05\x12\x04\x88\
-    \x01\x02\x08\n\r\n\x05\x04\0\x02\x01\x01\x12\x04\x88\x01\t\x17\n\r\n\x05\
-    \x04\0\x02\x01\x03\x12\x04\x88\x01\x1a\x1b\nZ\n\x04\x04\0\x02\x02\x12\
-    \x04\x8b\x01\x02\x12\x1aL\x20The\x20row\x20keys\x20and/or\x20ranges\x20t\
-    o\x20read.\x20If\x20not\x20specified,\x20reads\x20from\x20all\x20rows.\n\
-    \n\r\n\x05\x04\0\x02\x02\x06\x12\x04\x8b\x01\x02\x08\n\r\n\x05\x04\0\x02\
-    \x02\x01\x12\x04\x8b\x01\t\r\n\r\n\x05\x04\0\x02\x02\x03\x12\x04\x8b\x01\
-    \x10\x11\nw\n\x04\x04\0\x02\x03\x12\x04\x8f\x01\x02\x17\x1ai\x20The\x20f\
-    ilter\x20to\x20apply\x20to\x20the\x20contents\x20of\x20the\x20specified\
-    \x20row(s).\x20If\x20unset,\n\x20reads\x20the\x20entirety\x20of\x20each\
-    \x20row.\n\n\r\n\x05\x04\0\x02\x03\x06\x12\x04\x8f\x01\x02\x0b\n\r\n\x05\
-    \x04\0\x02\x03\x01\x12\x04\x8f\x01\x0c\x12\n\r\n\x05\x04\0\x02\x03\x03\
-    \x12\x04\x8f\x01\x15\x16\n\x83\x01\n\x04\x04\0\x02\x04\x12\x04\x93\x01\
-    \x02\x17\x1au\x20The\x20read\x20will\x20terminate\x20after\x20committing\
-    \x20to\x20N\x20rows'\x20worth\x20of\x20results.\x20The\n\x20default\x20(\
-    zero)\x20is\x20to\x20return\x20all\x20results.\n\n\r\n\x05\x04\0\x02\x04\
-    \x05\x12\x04\x93\x01\x02\x07\n\r\n\x05\x04\0\x02\x04\x01\x12\x04\x93\x01\
-    \x08\x12\n\r\n\x05\x04\0\x02\x04\x03\x12\x04\x93\x01\x15\x16\n7\n\x02\
-    \x04\x01\x12\x06\x97\x01\0\xe6\x01\x01\x1a)\x20Response\x20message\x20fo\
-    r\x20Bigtable.ReadRows.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\x97\x01\x08\
-    \x18\nf\n\x04\x04\x01\x03\0\x12\x06\x9a\x01\x02\xd9\x01\x03\x1aV\x20Spec\
-    ifies\x20a\x20piece\x20of\x20a\x20row's\x20contents\x20returned\x20as\
-    \x20part\x20of\x20the\x20read\n\x20response\x20stream.\n\n\r\n\x05\x04\
-    \x01\x03\0\x01\x12\x04\x9a\x01\n\x13\n\xd7\x02\n\x06\x04\x01\x03\0\x02\0\
-    \x12\x04\xa2\x01\x04\x16\x1a\xc6\x02\x20The\x20row\x20key\x20for\x20this\
+    \"\n\t\n\x02\x03\x05\x12\x03\x17\0'\n\t\n\x02\x03\x06\x12\x03\x18\00\n\t\
+    \n\x02\x03\x07\x12\x03\x19\0(\n\t\n\x02\x03\x08\x12\x03\x1a\0)\n\t\n\x02\
+    \x03\t\x12\x03\x1b\0(\n\t\n\x02\x03\n\x12\x03\x1c\0!\n\x08\n\x01\x08\x12\
+    \x03\x1e\05\n\t\n\x02\x08%\x12\x03\x1e\05\n\x08\n\x01\x08\x12\x03\x1f\0O\
+    \n\t\n\x02\x08\x0b\x12\x03\x1f\0O\n\x08\n\x01\x08\x12\x03\x20\0\"\n\t\n\
+    \x02\x08\n\x12\x03\x20\0\"\n\x08\n\x01\x08\x12\x03!\0.\n\t\n\x02\x08\x08\
+    \x12\x03!\0.\n\x08\n\x01\x08\x12\x03\"\0/\n\t\n\x02\x08\x01\x12\x03\"\0/\
+    \n\x08\n\x01\x08\x12\x03#\05\n\t\n\x02\x08)\x12\x03#\05\n\x08\n\x01\x08\
+    \x12\x03$\04\n\t\n\x02\x08-\x12\x03$\04\n\t\n\x01\x08\x12\x04%\0(\x02\n\
+    \x0c\n\x04\x08\x9d\x08\0\x12\x04%\0(\x02\n\t\n\x01\x08\x12\x04)\0,\x02\n\
+    \x0c\n\x04\x08\x9d\x08\x01\x12\x04)\0,\x02\n\t\n\x01\x08\x12\x04-\00\x02\
+    \n\x0c\n\x04\x08\x9d\x08\x02\x12\x04-\00\x02\nP\n\x02\x06\0\x12\x053\0\
+    \xa5\x02\x01\x1aC\x20Service\x20for\x20reading\x20from\x20and\x20writing\
+    \x20to\x20existing\x20Bigtable\x20tables.\n\n\n\n\x03\x06\0\x01\x12\x033\
+    \x08\x10\n\n\n\x03\x06\0\x03\x12\x034\x02?\n\x0c\n\x05\x06\0\x03\x99\x08\
+    \x12\x034\x02?\n\x0b\n\x03\x06\0\x03\x12\x045\x02;A\n\r\n\x05\x06\0\x03\
+    \x9a\x08\x12\x045\x02;A\n\xc1\x02\n\x04\x06\0\x02\0\x12\x04B\x02X\x03\
+    \x1a\xb2\x02\x20Streams\x20back\x20the\x20contents\x20of\x20all\x20reque\
+    sted\x20rows\x20in\x20key\x20order,\x20optionally\n\x20applying\x20the\
+    \x20same\x20Reader\x20filter\x20to\x20each.\x20Depending\x20on\x20their\
+    \x20size,\n\x20rows\x20and\x20cells\x20may\x20be\x20broken\x20up\x20acro\
+    ss\x20multiple\x20responses,\x20but\n\x20atomicity\x20of\x20each\x20row\
+    \x20will\x20still\x20be\x20preserved.\x20See\x20the\n\x20ReadRowsRespons\
+    e\x20documentation\x20for\x20details.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\
+    \x03B\x06\x0e\n\x0c\n\x05\x06\0\x02\0\x02\x12\x03B\x0f\x1e\n\x0c\n\x05\
+    \x06\0\x02\0\x06\x12\x03B)/\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03B0@\n\r\n\
+    \x05\x06\0\x02\0\x04\x12\x04C\x04J\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\
+    \xbc\"\x12\x04C\x04J\x06\n\r\n\x05\x06\0\x02\0\x04\x12\x04K\x04U\x06\n\
+    \x11\n\t\x06\0\x02\0\x04\xb1\xca\xbc\"\x12\x04K\x04U\x06\n\x0c\n\x05\x06\
+    \0\x02\0\x04\x12\x03V\x048\n\x0f\n\x08\x06\0\x02\0\x04\x9b\x08\0\x12\x03\
+    V\x048\n\x0c\n\x05\x06\0\x02\0\x04\x12\x03W\x04G\n\x0f\n\x08\x06\0\x02\0\
+    \x04\x9b\x08\x01\x12\x03W\x04G\n\xed\x01\n\x04\x06\0\x02\x01\x12\x04^\
+    \x02s\x03\x1a\xde\x01\x20Returns\x20a\x20sample\x20of\x20row\x20keys\x20\
+    in\x20the\x20table.\x20The\x20returned\x20row\x20keys\x20will\n\x20delim\
+    it\x20contiguous\x20sections\x20of\x20the\x20table\x20of\x20approximatel\
+    y\x20equal\x20size,\n\x20which\x20can\x20be\x20used\x20to\x20break\x20up\
+    \x20the\x20data\x20for\x20distributed\x20tasks\x20like\n\x20mapreduces.\
+    \n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03^\x06\x13\n\x0c\n\x05\x06\0\x02\
+    \x01\x02\x12\x03^\x14(\n\x0c\n\x05\x06\0\x02\x01\x06\x12\x03_\x0f\x15\n\
+    \x0c\n\x05\x06\0\x02\x01\x03\x12\x03_\x16+\n\r\n\x05\x06\0\x02\x01\x04\
+    \x12\x04`\x04e\x06\n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x04`\
+    \x04e\x06\n\r\n\x05\x06\0\x02\x01\x04\x12\x04f\x04p\x06\n\x11\n\t\x06\0\
+    \x02\x01\x04\xb1\xca\xbc\"\x12\x04f\x04p\x06\n\x0c\n\x05\x06\0\x02\x01\
+    \x04\x12\x03q\x048\n\x0f\n\x08\x06\0\x02\x01\x04\x9b\x08\0\x12\x03q\x048\
+    \n\x0c\n\x05\x06\0\x02\x01\x04\x12\x03r\x04G\n\x0f\n\x08\x06\0\x02\x01\
+    \x04\x9b\x08\x01\x12\x03r\x04G\n\x88\x01\n\x04\x06\0\x02\x02\x12\x05w\
+    \x02\x8e\x01\x03\x1ay\x20Mutates\x20a\x20row\x20atomically.\x20Cells\x20\
+    already\x20present\x20in\x20the\x20row\x20are\x20left\n\x20unchanged\x20\
+    unless\x20explicitly\x20changed\x20by\x20`mutation`.\n\n\x0c\n\x05\x06\0\
+    \x02\x02\x01\x12\x03w\x06\x0f\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03w\x10\
+    \x20\n\x0c\n\x05\x06\0\x02\x02\x03\x12\x03w+<\n\r\n\x05\x06\0\x02\x02\
+    \x04\x12\x04x\x04\x7f\x06\n\x11\n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\
+    \x04x\x04\x7f\x06\n\x0f\n\x05\x06\0\x02\x02\x04\x12\x06\x80\x01\x04\x8a\
+    \x01\x06\n\x13\n\t\x06\0\x02\x02\x04\xb1\xca\xbc\"\x12\x06\x80\x01\x04\
+    \x8a\x01\x06\n\r\n\x05\x06\0\x02\x02\x04\x12\x04\x8b\x01\x04J\n\x10\n\
+    \x08\x06\0\x02\x02\x04\x9b\x08\0\x12\x04\x8b\x01\x04J\n\x0f\n\x05\x06\0\
+    \x02\x02\x04\x12\x06\x8c\x01\x04\x8d\x016\n\x12\n\x08\x06\0\x02\x02\x04\
+    \x9b\x08\x01\x12\x06\x8c\x01\x04\x8d\x016\n\xa2\x01\n\x04\x06\0\x02\x03\
+    \x12\x06\x93\x01\x02\xa9\x01\x03\x1a\x91\x01\x20Mutates\x20multiple\x20r\
+    ows\x20in\x20a\x20batch.\x20Each\x20individual\x20row\x20is\x20mutated\n\
+    \x20atomically\x20as\x20in\x20MutateRow,\x20but\x20the\x20entire\x20batc\
+    h\x20is\x20not\x20executed\n\x20atomically.\n\n\r\n\x05\x06\0\x02\x03\
+    \x01\x12\x04\x93\x01\x06\x10\n\r\n\x05\x06\0\x02\x03\x02\x12\x04\x93\x01\
+    \x11\"\n\r\n\x05\x06\0\x02\x03\x06\x12\x04\x93\x01-3\n\r\n\x05\x06\0\x02\
+    \x03\x03\x12\x04\x93\x014F\n\x0f\n\x05\x06\0\x02\x03\x04\x12\x06\x94\x01\
+    \x04\x9b\x01\x06\n\x13\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\"\x12\x06\x94\
+    \x01\x04\x9b\x01\x06\n\x0f\n\x05\x06\0\x02\x03\x04\x12\x06\x9c\x01\x04\
+    \xa6\x01\x06\n\x13\n\t\x06\0\x02\x03\x04\xb1\xca\xbc\"\x12\x06\x9c\x01\
+    \x04\xa6\x01\x06\n\r\n\x05\x06\0\x02\x03\x04\x12\x04\xa7\x01\x04@\n\x10\
+    \n\x08\x06\0\x02\x03\x04\x9b\x08\0\x12\x04\xa7\x01\x04@\n\r\n\x05\x06\0\
+    \x02\x03\x04\x12\x04\xa8\x01\x04O\n\x10\n\x08\x06\0\x02\x03\x04\x9b\x08\
+    \x01\x12\x04\xa8\x01\x04O\n\\\n\x04\x06\0\x02\x04\x12\x06\xac\x01\x02\
+    \xc5\x01\x03\x1aL\x20Mutates\x20a\x20row\x20atomically\x20based\x20on\
+    \x20the\x20output\x20of\x20a\x20predicate\x20Reader\x20filter.\n\n\r\n\
+    \x05\x06\0\x02\x04\x01\x12\x04\xac\x01\x06\x17\n\r\n\x05\x06\0\x02\x04\
+    \x02\x12\x04\xac\x01\x180\n\r\n\x05\x06\0\x02\x04\x03\x12\x04\xad\x01\
+    \x0f(\n\x0f\n\x05\x06\0\x02\x04\x04\x12\x06\xae\x01\x04\xb5\x01\x06\n\
+    \x13\n\t\x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\x06\xae\x01\x04\xb5\x01\x06\
+    \n\x0f\n\x05\x06\0\x02\x04\x04\x12\x06\xb6\x01\x04\xc0\x01\x06\n\x13\n\t\
+    \x06\0\x02\x04\x04\xb1\xca\xbc\"\x12\x06\xb6\x01\x04\xc0\x01\x06\n\x0f\n\
+    \x05\x06\0\x02\x04\x04\x12\x06\xc1\x01\x04\xc2\x01M\n\x12\n\x08\x06\0\
+    \x02\x04\x04\x9b\x08\0\x12\x06\xc1\x01\x04\xc2\x01M\n\x0f\n\x05\x06\0\
+    \x02\x04\x04\x12\x06\xc3\x01\x04\xc4\x01\\\n\x12\n\x08\x06\0\x02\x04\x04\
+    \x9b\x08\x01\x12\x06\xc3\x01\x04\xc4\x01\\\n\x94\x01\n\x04\x06\0\x02\x05\
+    \x12\x06\xc9\x01\x02\xd7\x01\x03\x1a\x83\x01\x20Warm\x20up\x20associated\
+    \x20instance\x20metadata\x20for\x20this\x20connection.\n\x20This\x20call\
+    \x20is\x20not\x20required\x20but\x20may\x20be\x20useful\x20for\x20connec\
+    tion\x20keep-alive.\n\n\r\n\x05\x06\0\x02\x05\x01\x12\x04\xc9\x01\x06\
+    \x11\n\r\n\x05\x06\0\x02\x05\x02\x12\x04\xc9\x01\x12$\n\r\n\x05\x06\0\
+    \x02\x05\x03\x12\x04\xc9\x01/B\n\x0f\n\x05\x06\0\x02\x05\x04\x12\x06\xca\
+    \x01\x04\xcd\x01\x06\n\x13\n\t\x06\0\x02\x05\x04\xb0\xca\xbc\"\x12\x06\
+    \xca\x01\x04\xcd\x01\x06\n\x0f\n\x05\x06\0\x02\x05\x04\x12\x06\xce\x01\
+    \x04\xd4\x01\x06\n\x13\n\t\x06\0\x02\x05\x04\xb1\xca\xbc\"\x12\x06\xce\
+    \x01\x04\xd4\x01\x06\n\r\n\x05\x06\0\x02\x05\x04\x12\x04\xd5\x01\x042\n\
+    \x10\n\x08\x06\0\x02\x05\x04\x9b\x08\0\x12\x04\xd5\x01\x042\n\r\n\x05\
+    \x06\0\x02\x05\x04\x12\x04\xd6\x01\x04A\n\x10\n\x08\x06\0\x02\x05\x04\
+    \x9b\x08\x01\x12\x04\xd6\x01\x04A\n\xf8\x02\n\x04\x06\0\x02\x06\x12\x06\
+    \xde\x01\x02\xf6\x01\x03\x1a\xe7\x02\x20Modifies\x20a\x20row\x20atomical\
+    ly\x20on\x20the\x20server.\x20The\x20method\x20reads\x20the\x20latest\n\
+    \x20existing\x20timestamp\x20and\x20value\x20from\x20the\x20specified\
+    \x20columns\x20and\x20writes\x20a\x20new\n\x20entry\x20based\x20on\x20pr\
+    e-defined\x20read/modify/write\x20rules.\x20The\x20new\x20value\x20for\
+    \x20the\n\x20timestamp\x20is\x20the\x20greater\x20of\x20the\x20existing\
+    \x20timestamp\x20or\x20the\x20current\x20server\n\x20time.\x20The\x20met\
+    hod\x20returns\x20the\x20new\x20contents\x20of\x20all\x20modified\x20cel\
+    ls.\n\n\r\n\x05\x06\0\x02\x06\x01\x12\x04\xde\x01\x06\x18\n\r\n\x05\x06\
+    \0\x02\x06\x02\x12\x04\xde\x01\x192\n\r\n\x05\x06\0\x02\x06\x03\x12\x04\
+    \xdf\x01\x0f)\n\x0f\n\x05\x06\0\x02\x06\x04\x12\x06\xe0\x01\x04\xe7\x01\
+    \x06\n\x13\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\x06\xe0\x01\x04\xe7\
+    \x01\x06\n\x0f\n\x05\x06\0\x02\x06\x04\x12\x06\xe8\x01\x04\xf2\x01\x06\n\
+    \x13\n\t\x06\0\x02\x06\x04\xb1\xca\xbc\"\x12\x06\xe8\x01\x04\xf2\x01\x06\
+    \n\r\n\x05\x06\0\x02\x06\x04\x12\x04\xf3\x01\x04F\n\x10\n\x08\x06\0\x02\
+    \x06\x04\x9b\x08\0\x12\x04\xf3\x01\x04F\n\x0f\n\x05\x06\0\x02\x06\x04\
+    \x12\x06\xf4\x01\x04\xf5\x012\n\x12\n\x08\x06\0\x02\x06\x04\x9b\x08\x01\
+    \x12\x06\xf4\x01\x04\xf5\x012\n\x8d\x02\n\x04\x06\0\x02\x07\x12\x06\xfc\
+    \x01\x02\x85\x02\x03\x1a\xfc\x01\x20NOTE:\x20This\x20API\x20is\x20intend\
+    ed\x20to\x20be\x20used\x20by\x20Apache\x20Beam\x20BigtableIO.\n\x20Retur\
+    ns\x20the\x20current\x20list\x20of\x20partitions\x20that\x20make\x20up\
+    \x20the\x20table's\n\x20change\x20stream.\x20The\x20union\x20of\x20parti\
+    tions\x20will\x20cover\x20the\x20entire\x20keyspace.\n\x20Partitions\x20\
+    can\x20be\x20read\x20with\x20`ReadChangeStream`.\n\n\r\n\x05\x06\0\x02\
+    \x07\x01\x12\x04\xfc\x01\x06+\n\r\n\x05\x06\0\x02\x07\x02\x12\x04\xfd\
+    \x01\x062\n\r\n\x05\x06\0\x02\x07\x06\x12\x04\xfe\x01\x0f\x15\n\r\n\x05\
+    \x06\0\x02\x07\x03\x12\x04\xfe\x01\x16C\n\x0f\n\x05\x06\0\x02\x07\x04\
+    \x12\x06\xff\x01\x04\x82\x02\x06\n\x13\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\
+    \"\x12\x06\xff\x01\x04\x82\x02\x06\n\r\n\x05\x06\0\x02\x07\x04\x12\x04\
+    \x83\x02\x048\n\x10\n\x08\x06\0\x02\x07\x04\x9b\x08\0\x12\x04\x83\x02\
+    \x048\n\r\n\x05\x06\0\x02\x07\x04\x12\x04\x84\x02\x04G\n\x10\n\x08\x06\0\
+    \x02\x07\x04\x9b\x08\x01\x12\x04\x84\x02\x04G\n\xea\x01\n\x04\x06\0\x02\
+    \x08\x12\x06\x8b\x02\x02\x93\x02\x03\x1a\xd9\x01\x20NOTE:\x20This\x20API\
+    \x20is\x20intended\x20to\x20be\x20used\x20by\x20Apache\x20Beam\x20Bigtab\
+    leIO.\n\x20Reads\x20changes\x20from\x20a\x20table's\x20change\x20stream.\
+    \x20Changes\x20will\n\x20reflect\x20both\x20user-initiated\x20mutations\
+    \x20and\x20mutations\x20that\x20are\x20caused\x20by\n\x20garbage\x20coll\
+    ection.\n\n\r\n\x05\x06\0\x02\x08\x01\x12\x04\x8b\x02\x06\x16\n\r\n\x05\
+    \x06\0\x02\x08\x02\x12\x04\x8b\x02\x17.\n\r\n\x05\x06\0\x02\x08\x06\x12\
+    \x04\x8c\x02\x0f\x15\n\r\n\x05\x06\0\x02\x08\x03\x12\x04\x8c\x02\x16.\n\
+    \x0f\n\x05\x06\0\x02\x08\x04\x12\x06\x8d\x02\x04\x90\x02\x06\n\x13\n\t\
+    \x06\0\x02\x08\x04\xb0\xca\xbc\"\x12\x06\x8d\x02\x04\x90\x02\x06\n\r\n\
+    \x05\x06\0\x02\x08\x04\x12\x04\x91\x02\x048\n\x10\n\x08\x06\0\x02\x08\
+    \x04\x9b\x08\0\x12\x04\x91\x02\x048\n\r\n\x05\x06\0\x02\x08\x04\x12\x04\
+    \x92\x02\x04G\n\x10\n\x08\x06\0\x02\x08\x04\x9b\x08\x01\x12\x04\x92\x02\
+    \x04G\nU\n\x04\x06\0\x02\t\x12\x06\x96\x02\x02\xa4\x02\x03\x1aE\x20Execu\
+    tes\x20a\x20BTQL\x20query\x20against\x20a\x20particular\x20Cloud\x20Bigt\
+    able\x20instance.\n\n\r\n\x05\x06\0\x02\t\x01\x12\x04\x96\x02\x06\x12\n\
+    \r\n\x05\x06\0\x02\t\x02\x12\x04\x96\x02\x13&\n\r\n\x05\x06\0\x02\t\x06\
+    \x12\x04\x96\x0217\n\r\n\x05\x06\0\x02\t\x03\x12\x04\x96\x028L\n\x0f\n\
+    \x05\x06\0\x02\t\x04\x12\x06\x97\x02\x04\x9a\x02\x06\n\x13\n\t\x06\0\x02\
+    \t\x04\xb0\xca\xbc\"\x12\x06\x97\x02\x04\x9a\x02\x06\n\x0f\n\x05\x06\0\
+    \x02\t\x04\x12\x06\x9b\x02\x04\xa1\x02\x06\n\x13\n\t\x06\0\x02\t\x04\xb1\
+    \xca\xbc\"\x12\x06\x9b\x02\x04\xa1\x02\x06\n\r\n\x05\x06\0\x02\t\x04\x12\
+    \x04\xa2\x02\x04A\n\x10\n\x08\x06\0\x02\t\x04\x9b\x08\0\x12\x04\xa2\x02\
+    \x04A\n\r\n\x05\x06\0\x02\t\x04\x12\x04\xa3\x02\x04P\n\x10\n\x08\x06\0\
+    \x02\t\x04\x9b\x08\x01\x12\x04\xa3\x02\x04P\n6\n\x02\x04\0\x12\x06\xa8\
+    \x02\0\xef\x02\x01\x1a(\x20Request\x20message\x20for\x20Bigtable.ReadRow\
+    s.\n\n\x0b\n\x03\x04\0\x01\x12\x04\xa8\x02\x08\x17\n\x7f\n\x04\x04\0\x04\
+    \0\x12\x06\xac\x02\x02\xb7\x02\x03\x1ao\x20The\x20desired\x20view\x20int\
+    o\x20RequestStats\x20that\x20should\x20be\x20returned\x20in\x20the\x20re\
+    sponse.\n\n\x20See\x20also:\x20RequestStats\x20message.\n\n\r\n\x05\x04\
+    \0\x04\0\x01\x12\x04\xac\x02\x07\x17\n[\n\x06\x04\0\x04\0\x02\0\x12\x04\
+    \xae\x02\x04'\x1aK\x20The\x20default\x20/\x20unset\x20value.\x20The\x20A\
+    PI\x20will\x20default\x20to\x20the\x20NONE\x20option\x20below.\n\n\x0f\n\
+    \x07\x04\0\x04\0\x02\0\x01\x12\x04\xae\x02\x04\"\n\x0f\n\x07\x04\0\x04\0\
+    \x02\0\x02\x12\x04\xae\x02%&\n\x8c\x01\n\x06\x04\0\x04\0\x02\x01\x12\x04\
+    \xb2\x02\x04\x1b\x1a|\x20Do\x20not\x20include\x20any\x20RequestStats\x20\
+    in\x20the\x20response.\x20This\x20will\x20leave\x20the\n\x20RequestStats\
+    \x20embedded\x20message\x20unset\x20in\x20the\x20response.\n\n\x0f\n\x07\
+    \x04\0\x04\0\x02\x01\x01\x12\x04\xb2\x02\x04\x16\n\x0f\n\x07\x04\0\x04\0\
+    \x02\x01\x02\x12\x04\xb2\x02\x19\x1a\nk\n\x06\x04\0\x04\0\x02\x02\x12\
+    \x04\xb6\x02\x04\x1b\x1a[\x20Include\x20the\x20full\x20set\x20of\x20avai\
+    lable\x20RequestStats\x20in\x20the\x20response,\n\x20applicable\x20to\
+    \x20this\x20read.\n\n\x0f\n\x07\x04\0\x04\0\x02\x02\x01\x12\x04\xb6\x02\
+    \x04\x16\n\x0f\n\x07\x04\0\x04\0\x02\x02\x02\x12\x04\xb6\x02\x19\x1a\n\
+    \xa1\x01\n\x04\x04\0\x02\0\x12\x06\xbd\x02\x02\xc2\x02\x04\x1a\x90\x01\
+    \x20Optional.\x20The\x20unique\x20name\x20of\x20the\x20table\x20from\x20\
+    which\x20to\x20read.\n\n\x20Values\x20are\x20of\x20the\x20form\n\x20`pro\
+    jects/<project>/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\0\
+    \x02\0\x05\x12\x04\xbd\x02\x02\x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xbd\
+    \x02\t\x13\n\r\n\x05\x04\0\x02\0\x03\x12\x04\xbd\x02\x16\x17\n\x0f\n\x05\
+    \x04\0\x02\0\x08\x12\x06\xbd\x02\x18\xc2\x02\x03\n\x10\n\x08\x04\0\x02\0\
+    \x08\x9c\x08\0\x12\x04\xbe\x02\x04*\n\x11\n\x07\x04\0\x02\0\x08\x9f\x08\
+    \x12\x06\xbf\x02\x04\xc1\x02\x05\n\xcc\x01\n\x04\x04\0\x02\x01\x12\x06\
+    \xc8\x02\x02\xcd\x02\x04\x1a\xbb\x01\x20Optional.\x20The\x20unique\x20na\
+    me\x20of\x20the\x20AuthorizedView\x20from\x20which\x20to\x20read.\n\n\
+    \x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instance\
+    s/<instance>/tables/<table>/authorizedViews/<authorized_view>`.\n\n\r\n\
+    \x05\x04\0\x02\x01\x05\x12\x04\xc8\x02\x02\x08\n\r\n\x05\x04\0\x02\x01\
+    \x01\x12\x04\xc8\x02\t\x1d\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\xc8\x02\
+    \x20!\n\x0f\n\x05\x04\0\x02\x01\x08\x12\x06\xc8\x02\"\xcd\x02\x03\n\x10\
+    \n\x08\x04\0\x02\x01\x08\x9c\x08\0\x12\x04\xc9\x02\x04*\n\x11\n\x07\x04\
+    \0\x02\x01\x08\x9f\x08\x12\x06\xca\x02\x04\xcc\x02\x05\n\x80\x01\n\x04\
+    \x04\0\x02\x02\x12\x04\xd1\x02\x02\x1c\x1ar\x20This\x20value\x20specifie\
+    s\x20routing\x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\
+    \x20\"default\"\x20application\x20profile\x20will\x20be\x20used.\n\n\r\n\
+    \x05\x04\0\x02\x02\x05\x12\x04\xd1\x02\x02\x08\n\r\n\x05\x04\0\x02\x02\
+    \x01\x12\x04\xd1\x02\t\x17\n\r\n\x05\x04\0\x02\x02\x03\x12\x04\xd1\x02\
+    \x1a\x1b\nh\n\x04\x04\0\x02\x03\x12\x04\xd5\x02\x02\x12\x1aZ\x20The\x20r\
+    ow\x20keys\x20and/or\x20ranges\x20to\x20read\x20sequentially.\x20If\x20n\
+    ot\x20specified,\x20reads\n\x20from\x20all\x20rows.\n\n\r\n\x05\x04\0\
+    \x02\x03\x06\x12\x04\xd5\x02\x02\x08\n\r\n\x05\x04\0\x02\x03\x01\x12\x04\
+    \xd5\x02\t\r\n\r\n\x05\x04\0\x02\x03\x03\x12\x04\xd5\x02\x10\x11\nw\n\
+    \x04\x04\0\x02\x04\x12\x04\xd9\x02\x02\x17\x1ai\x20The\x20filter\x20to\
+    \x20apply\x20to\x20the\x20contents\x20of\x20the\x20specified\x20row(s).\
+    \x20If\x20unset,\n\x20reads\x20the\x20entirety\x20of\x20each\x20row.\n\n\
+    \r\n\x05\x04\0\x02\x04\x06\x12\x04\xd9\x02\x02\x0b\n\r\n\x05\x04\0\x02\
+    \x04\x01\x12\x04\xd9\x02\x0c\x12\n\r\n\x05\x04\0\x02\x04\x03\x12\x04\xd9\
+    \x02\x15\x16\n~\n\x04\x04\0\x02\x05\x12\x04\xdd\x02\x02\x17\x1ap\x20The\
+    \x20read\x20will\x20stop\x20after\x20committing\x20to\x20N\x20rows'\x20w\
+    orth\x20of\x20results.\x20The\n\x20default\x20(zero)\x20is\x20to\x20retu\
+    rn\x20all\x20results.\n\n\r\n\x05\x04\0\x02\x05\x05\x12\x04\xdd\x02\x02\
+    \x07\n\r\n\x05\x04\0\x02\x05\x01\x12\x04\xdd\x02\x08\x12\n\r\n\x05\x04\0\
+    \x02\x05\x03\x12\x04\xdd\x02\x15\x16\n?\n\x04\x04\0\x02\x06\x12\x04\xe0\
+    \x02\x02*\x1a1\x20The\x20view\x20into\x20RequestStats,\x20as\x20describe\
+    d\x20above.\n\n\r\n\x05\x04\0\x02\x06\x06\x12\x04\xe0\x02\x02\x12\n\r\n\
+    \x05\x04\0\x02\x06\x01\x12\x04\xe0\x02\x13%\n\r\n\x05\x04\0\x02\x06\x03\
+    \x12\x04\xe0\x02()\n\xf9\x02\n\x04\x04\0\x02\x07\x12\x04\xee\x02\x02\x14\
+    \x1a\xea\x02\x20Experimental\x20API\x20-\x20Please\x20note\x20that\x20th\
+    is\x20API\x20is\x20currently\x20experimental\n\x20and\x20can\x20change\
+    \x20in\x20the\x20future.\n\n\x20Return\x20rows\x20in\x20lexiographical\
+    \x20descending\x20order\x20of\x20the\x20row\x20keys.\x20The\x20row\n\x20\
+    contents\x20will\x20not\x20be\x20affected\x20by\x20this\x20flag.\n\n\x20\
+    Example\x20result\x20set:\n\n\x20\x20\x20\x20\x20[\n\x20\x20\x20\x20\x20\
+    \x20\x20{key:\x20\"k2\",\x20\"f:col1\":\x20\"v1\",\x20\"f:col2\":\x20\"v\
+    1\"},\n\x20\x20\x20\x20\x20\x20\x20{key:\x20\"k1\",\x20\"f:col1\":\x20\"\
+    v2\",\x20\"f:col2\":\x20\"v2\"}\n\x20\x20\x20\x20\x20]\n\n\r\n\x05\x04\0\
+    \x02\x07\x05\x12\x04\xee\x02\x02\x06\n\r\n\x05\x04\0\x02\x07\x01\x12\x04\
+    \xee\x02\x07\x0f\n\r\n\x05\x04\0\x02\x07\x03\x12\x04\xee\x02\x12\x13\n7\
+    \n\x02\x04\x01\x12\x06\xf2\x02\0\xd4\x03\x01\x1a)\x20Response\x20message\
+    \x20for\x20Bigtable.ReadRows.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\xf2\x02\
+    \x08\x18\nf\n\x04\x04\x01\x03\0\x12\x06\xf5\x02\x02\xb1\x03\x03\x1aV\x20\
+    Specifies\x20a\x20piece\x20of\x20a\x20row's\x20contents\x20returned\x20a\
+    s\x20part\x20of\x20the\x20read\n\x20response\x20stream.\n\n\r\n\x05\x04\
+    \x01\x03\0\x01\x12\x04\xf5\x02\n\x13\n\xf9\x01\n\x06\x04\x01\x03\0\x02\0\
+    \x12\x04\xfa\x02\x04\x16\x1a\xe8\x01\x20The\x20row\x20key\x20for\x20this\
     \x20chunk\x20of\x20data.\x20\x20If\x20the\x20row\x20key\x20is\x20empty,\
     \n\x20this\x20CellChunk\x20is\x20a\x20continuation\x20of\x20the\x20same\
     \x20row\x20as\x20the\x20previous\n\x20CellChunk\x20in\x20the\x20response\
     \x20stream,\x20even\x20if\x20that\x20CellChunk\x20was\x20in\x20a\n\x20pr\
-    evious\x20ReadRowsResponse\x20message.\n\n\x20Classified\x20as\x20IDENTI\
-    FYING_ID\x20to\x20provide\x20context\x20around\x20data\x20accesses\x20fo\
-    r\n\x20auditing\x20systems.\n\n\x0f\n\x07\x04\x01\x03\0\x02\0\x05\x12\
-    \x04\xa2\x01\x04\t\n\x0f\n\x07\x04\x01\x03\0\x02\0\x01\x12\x04\xa2\x01\n\
-    \x11\n\x0f\n\x07\x04\x01\x03\0\x02\0\x03\x12\x04\xa2\x01\x14\x15\n\xf3\
-    \x02\n\x06\x04\x01\x03\0\x02\x01\x12\x04\xaa\x01\x040\x1a\xe2\x02\x20The\
-    \x20column\x20family\x20name\x20for\x20this\x20chunk\x20of\x20data.\x20\
-    \x20If\x20this\x20message\n\x20is\x20not\x20present\x20this\x20CellChunk\
-    \x20is\x20a\x20continuation\x20of\x20the\x20same\x20column\n\x20family\
-    \x20as\x20the\x20previous\x20CellChunk.\x20\x20The\x20empty\x20string\
-    \x20can\x20occur\x20as\x20a\n\x20column\x20family\x20name\x20in\x20a\x20\
-    response\x20so\x20clients\x20must\x20check\n\x20explicitly\x20for\x20the\
-    \x20presence\x20of\x20this\x20message,\x20not\x20just\x20for\n\x20`famil\
-    y_name.value`\x20being\x20non-empty.\n\n\x0f\n\x07\x04\x01\x03\0\x02\x01\
-    \x06\x12\x04\xaa\x01\x04\x1f\n\x0f\n\x07\x04\x01\x03\0\x02\x01\x01\x12\
-    \x04\xaa\x01\x20+\n\x0f\n\x07\x04\x01\x03\0\x02\x01\x03\x12\x04\xaa\x01.\
-    /\n\xbb\x02\n\x06\x04\x01\x03\0\x02\x02\x12\x04\xb1\x01\x04-\x1a\xaa\x02\
-    \x20The\x20column\x20qualifier\x20for\x20this\x20chunk\x20of\x20data.\
-    \x20\x20If\x20this\x20message\n\x20is\x20not\x20present,\x20this\x20Cell\
-    Chunk\x20is\x20a\x20continuation\x20of\x20the\x20same\x20column\n\x20as\
-    \x20the\x20previous\x20CellChunk.\x20\x20Column\x20qualifiers\x20may\x20\
-    be\x20empty\x20so\n\x20clients\x20must\x20check\x20for\x20the\x20presenc\
-    e\x20of\x20this\x20message,\x20not\x20just\n\x20for\x20`qualifier.value`\
-    \x20being\x20non-empty.\n\n\x0f\n\x07\x04\x01\x03\0\x02\x02\x06\x12\x04\
-    \xb1\x01\x04\x1e\n\x0f\n\x07\x04\x01\x03\0\x02\x02\x01\x12\x04\xb1\x01\
-    \x1f(\n\x0f\n\x07\x04\x01\x03\0\x02\x02\x03\x12\x04\xb1\x01+,\n\xdd\x03\
-    \n\x06\x04\x01\x03\0\x02\x03\x12\x04\xbb\x01\x04\x1f\x1a\xcc\x03\x20The\
-    \x20cell's\x20stored\x20timestamp,\x20which\x20also\x20uniquely\x20ident\
-    ifies\x20it\n\x20within\x20its\x20column.\x20\x20Values\x20are\x20always\
-    \x20expressed\x20in\n\x20microseconds,\x20but\x20individual\x20tables\
-    \x20may\x20set\x20a\x20coarser\n\x20granularity\x20to\x20further\x20rest\
-    rict\x20the\x20allowed\x20values.\x20For\n\x20example,\x20a\x20table\x20\
-    which\x20specifies\x20millisecond\x20granularity\x20will\n\x20only\x20al\
-    low\x20values\x20of\x20`timestamp_micros`\x20which\x20are\x20multiples\
-    \x20of\n\x201000.\x20\x20Timestamps\x20are\x20only\x20set\x20in\x20the\
-    \x20first\x20CellChunk\x20per\x20cell\n\x20(for\x20cells\x20split\x20int\
-    o\x20multiple\x20chunks).\n\n\x0f\n\x07\x04\x01\x03\0\x02\x03\x05\x12\
-    \x04\xbb\x01\x04\t\n\x0f\n\x07\x04\x01\x03\0\x02\x03\x01\x12\x04\xbb\x01\
-    \n\x1a\n\x0f\n\x07\x04\x01\x03\0\x02\x03\x03\x12\x04\xbb\x01\x1d\x1e\n\
-    \x95\x01\n\x06\x04\x01\x03\0\x02\x04\x12\x04\xc0\x01\x04\x1f\x1a\x84\x01\
-    \x20Labels\x20applied\x20to\x20the\x20cell\x20by\x20a\n\x20[RowFilter][g\
-    oogle.bigtable.v2.RowFilter].\x20\x20Labels\x20are\x20only\x20set\n\x20o\
-    n\x20the\x20first\x20CellChunk\x20per\x20cell.\n\n\x0f\n\x07\x04\x01\x03\
-    \0\x02\x04\x04\x12\x04\xc0\x01\x04\x0c\n\x0f\n\x07\x04\x01\x03\0\x02\x04\
-    \x05\x12\x04\xc0\x01\r\x13\n\x0f\n\x07\x04\x01\x03\0\x02\x04\x01\x12\x04\
-    \xc0\x01\x14\x1a\n\x0f\n\x07\x04\x01\x03\0\x02\x04\x03\x12\x04\xc0\x01\
-    \x1d\x1e\n\xbf\x02\n\x06\x04\x01\x03\0\x02\x05\x12\x04\xc7\x01\x04\x14\
-    \x1a\xae\x02\x20The\x20value\x20stored\x20in\x20the\x20cell.\x20\x20Cell\
-    \x20values\x20can\x20be\x20split\x20across\n\x20multiple\x20CellChunks.\
-    \x20\x20In\x20that\x20case\x20only\x20the\x20value\x20field\x20will\x20b\
-    e\n\x20set\x20in\x20CellChunks\x20after\x20the\x20first:\x20the\x20times\
-    tamp\x20and\x20labels\n\x20will\x20only\x20be\x20present\x20in\x20the\
-    \x20first\x20CellChunk,\x20even\x20if\x20the\x20first\n\x20CellChunk\x20\
-    came\x20in\x20a\x20previous\x20ReadRowsResponse.\n\n\x0f\n\x07\x04\x01\
-    \x03\0\x02\x05\x05\x12\x04\xc7\x01\x04\t\n\x0f\n\x07\x04\x01\x03\0\x02\
-    \x05\x01\x12\x04\xc7\x01\n\x0f\n\x0f\n\x07\x04\x01\x03\0\x02\x05\x03\x12\
-    \x04\xc7\x01\x12\x13\n\x85\x02\n\x06\x04\x01\x03\0\x02\x06\x12\x04\xcd\
-    \x01\x04\x19\x1a\xf4\x01\x20If\x20this\x20CellChunk\x20is\x20part\x20of\
-    \x20a\x20chunked\x20cell\x20value\x20and\x20this\x20is\n\x20not\x20the\
-    \x20final\x20chunk\x20of\x20that\x20cell,\x20value_size\x20will\x20be\
-    \x20set\x20to\x20the\n\x20total\x20length\x20of\x20the\x20cell\x20value.\
-    \x20\x20The\x20client\x20can\x20use\x20this\x20size\n\x20to\x20pre-alloc\
-    ate\x20memory\x20to\x20hold\x20the\x20full\x20cell\x20value.\n\n\x0f\n\
-    \x07\x04\x01\x03\0\x02\x06\x05\x12\x04\xcd\x01\x04\t\n\x0f\n\x07\x04\x01\
-    \x03\0\x02\x06\x01\x12\x04\xcd\x01\n\x14\n\x0f\n\x07\x04\x01\x03\0\x02\
-    \x06\x03\x12\x04\xcd\x01\x17\x18\nR\n\x06\x04\x01\x03\0\x08\0\x12\x06\
-    \xd0\x01\x04\xd8\x01\x05\x1a@\x20Signals\x20to\x20the\x20client\x20conce\
-    rning\x20previous\x20CellChunks\x20received.\n\n\x0f\n\x07\x04\x01\x03\0\
-    \x08\0\x01\x12\x04\xd0\x01\n\x14\n\x85\x01\n\x06\x04\x01\x03\0\x02\x07\
-    \x12\x04\xd3\x01\x06\x19\x1au\x20Indicates\x20that\x20the\x20client\x20s\
-    hould\x20drop\x20all\x20previous\x20chunks\x20for\n\x20`row_key`,\x20as\
-    \x20it\x20will\x20be\x20re-read\x20from\x20the\x20beginning.\n\n\x0f\n\
-    \x07\x04\x01\x03\0\x02\x07\x05\x12\x04\xd3\x01\x06\n\n\x0f\n\x07\x04\x01\
-    \x03\0\x02\x07\x01\x12\x04\xd3\x01\x0b\x14\n\x0f\n\x07\x04\x01\x03\0\x02\
-    \x07\x03\x12\x04\xd3\x01\x17\x18\n\x83\x01\n\x06\x04\x01\x03\0\x02\x08\
-    \x12\x04\xd7\x01\x06\x1a\x1as\x20Indicates\x20that\x20the\x20client\x20c\
-    an\x20safely\x20process\x20all\x20previous\x20chunks\x20for\n\x20`row_ke\
-    y`,\x20as\x20its\x20data\x20has\x20been\x20fully\x20read.\n\n\x0f\n\x07\
-    \x04\x01\x03\0\x02\x08\x05\x12\x04\xd7\x01\x06\n\n\x0f\n\x07\x04\x01\x03\
-    \0\x02\x08\x01\x12\x04\xd7\x01\x0b\x15\n\x0f\n\x07\x04\x01\x03\0\x02\x08\
-    \x03\x12\x04\xd7\x01\x18\x19\nM\n\x04\x04\x01\x02\0\x12\x04\xdc\x01\x02\
-    \x20\x1a?\x20A\x20collection\x20of\x20a\x20row's\x20contents\x20as\x20pa\
-    rt\x20of\x20the\x20read\x20request.\n\n\r\n\x05\x04\x01\x02\0\x04\x12\
-    \x04\xdc\x01\x02\n\n\r\n\x05\x04\x01\x02\0\x06\x12\x04\xdc\x01\x0b\x14\n\
-    \r\n\x05\x04\x01\x02\0\x01\x12\x04\xdc\x01\x15\x1b\n\r\n\x05\x04\x01\x02\
-    \0\x03\x12\x04\xdc\x01\x1e\x1f\n\xc5\x03\n\x04\x04\x01\x02\x01\x12\x04\
-    \xe5\x01\x02!\x1a\xb6\x03\x20Optionally\x20the\x20server\x20might\x20ret\
-    urn\x20the\x20row\x20key\x20of\x20the\x20last\x20row\x20it\n\x20has\x20s\
-    canned.\x20\x20The\x20client\x20can\x20use\x20this\x20to\x20construct\
-    \x20a\x20more\n\x20efficient\x20retry\x20request\x20if\x20needed:\x20any\
-    \x20row\x20keys\x20or\x20portions\x20of\n\x20ranges\x20less\x20than\x20t\
-    his\x20row\x20key\x20can\x20be\x20dropped\x20from\x20the\x20request.\n\
-    \x20This\x20is\x20primarily\x20useful\x20for\x20cases\x20where\x20the\
-    \x20server\x20has\x20read\x20a\n\x20lot\x20of\x20data\x20that\x20was\x20\
-    filtered\x20out\x20since\x20the\x20last\x20committed\x20row\n\x20key,\
-    \x20allowing\x20the\x20client\x20to\x20skip\x20that\x20work\x20on\x20a\
-    \x20retry.\n\n\r\n\x05\x04\x01\x02\x01\x05\x12\x04\xe5\x01\x02\x07\n\r\n\
-    \x05\x04\x01\x02\x01\x01\x12\x04\xe5\x01\x08\x1c\n\r\n\x05\x04\x01\x02\
-    \x01\x03\x12\x04\xe5\x01\x1f\x20\n;\n\x02\x04\x02\x12\x06\xe9\x01\0\xf7\
-    \x01\x01\x1a-\x20Request\x20message\x20for\x20Bigtable.SampleRowKeys.\n\
-    \n\x0b\n\x03\x04\x02\x01\x12\x04\xe9\x01\x08\x1c\n\xab\x01\n\x04\x04\x02\
-    \x02\0\x12\x06\xed\x01\x02\xf2\x01\x04\x1a\x9a\x01\x20Required.\x20The\
-    \x20unique\x20name\x20of\x20the\x20table\x20from\x20which\x20to\x20sampl\
-    e\x20row\x20keys.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects\
-    /<project>/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\x02\x02\
-    \0\x05\x12\x04\xed\x01\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xed\
-    \x01\t\x13\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xed\x01\x16\x17\n\x0f\n\
-    \x05\x04\x02\x02\0\x08\x12\x06\xed\x01\x18\xf2\x01\x03\n\x10\n\x08\x04\
-    \x02\x02\0\x08\x9c\x08\0\x12\x04\xee\x01\x04*\n\x11\n\x07\x04\x02\x02\0\
-    \x08\x9f\x08\x12\x06\xef\x01\x04\xf1\x01\x05\n\x80\x01\n\x04\x04\x02\x02\
-    \x01\x12\x04\xf6\x01\x02\x1c\x1ar\x20This\x20value\x20specifies\x20routi\
-    ng\x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\x20\"defau\
-    lt\"\x20application\x20profile\x20will\x20be\x20used.\n\n\r\n\x05\x04\
-    \x02\x02\x01\x05\x12\x04\xf6\x01\x02\x08\n\r\n\x05\x04\x02\x02\x01\x01\
-    \x12\x04\xf6\x01\t\x17\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xf6\x01\x1a\
-    \x1b\n<\n\x02\x04\x03\x12\x06\xfa\x01\0\x8c\x02\x01\x1a.\x20Response\x20\
-    message\x20for\x20Bigtable.SampleRowKeys.\n\n\x0b\n\x03\x04\x03\x01\x12\
-    \x04\xfa\x01\x08\x1d\n\xbe\x04\n\x04\x04\x03\x02\0\x12\x04\x85\x02\x02\
-    \x14\x1a\xaf\x04\x20Sorted\x20streamed\x20sequence\x20of\x20sample\x20ro\
-    w\x20keys\x20in\x20the\x20table.\x20The\x20table\x20might\n\x20have\x20c\
-    ontents\x20before\x20the\x20first\x20row\x20key\x20in\x20the\x20list\x20\
-    and\x20after\x20the\x20last\x20one,\n\x20but\x20a\x20key\x20containing\
+    evious\x20ReadRowsResponse\x20message.\n\n\x0f\n\x07\x04\x01\x03\0\x02\0\
+    \x05\x12\x04\xfa\x02\x04\t\n\x0f\n\x07\x04\x01\x03\0\x02\0\x01\x12\x04\
+    \xfa\x02\n\x11\n\x0f\n\x07\x04\x01\x03\0\x02\0\x03\x12\x04\xfa\x02\x14\
+    \x15\n\xf3\x02\n\x06\x04\x01\x03\0\x02\x01\x12\x04\x82\x03\x040\x1a\xe2\
+    \x02\x20The\x20column\x20family\x20name\x20for\x20this\x20chunk\x20of\
+    \x20data.\x20\x20If\x20this\x20message\n\x20is\x20not\x20present\x20this\
+    \x20CellChunk\x20is\x20a\x20continuation\x20of\x20the\x20same\x20column\
+    \n\x20family\x20as\x20the\x20previous\x20CellChunk.\x20\x20The\x20empty\
+    \x20string\x20can\x20occur\x20as\x20a\n\x20column\x20family\x20name\x20i\
+    n\x20a\x20response\x20so\x20clients\x20must\x20check\n\x20explicitly\x20\
+    for\x20the\x20presence\x20of\x20this\x20message,\x20not\x20just\x20for\n\
+    \x20`family_name.value`\x20being\x20non-empty.\n\n\x0f\n\x07\x04\x01\x03\
+    \0\x02\x01\x06\x12\x04\x82\x03\x04\x1f\n\x0f\n\x07\x04\x01\x03\0\x02\x01\
+    \x01\x12\x04\x82\x03\x20+\n\x0f\n\x07\x04\x01\x03\0\x02\x01\x03\x12\x04\
+    \x82\x03./\n\xbb\x02\n\x06\x04\x01\x03\0\x02\x02\x12\x04\x89\x03\x04-\
+    \x1a\xaa\x02\x20The\x20column\x20qualifier\x20for\x20this\x20chunk\x20of\
+    \x20data.\x20\x20If\x20this\x20message\n\x20is\x20not\x20present,\x20thi\
+    s\x20CellChunk\x20is\x20a\x20continuation\x20of\x20the\x20same\x20column\
+    \n\x20as\x20the\x20previous\x20CellChunk.\x20\x20Column\x20qualifiers\
+    \x20may\x20be\x20empty\x20so\n\x20clients\x20must\x20check\x20for\x20the\
+    \x20presence\x20of\x20this\x20message,\x20not\x20just\n\x20for\x20`quali\
+    fier.value`\x20being\x20non-empty.\n\n\x0f\n\x07\x04\x01\x03\0\x02\x02\
+    \x06\x12\x04\x89\x03\x04\x1e\n\x0f\n\x07\x04\x01\x03\0\x02\x02\x01\x12\
+    \x04\x89\x03\x1f(\n\x0f\n\x07\x04\x01\x03\0\x02\x02\x03\x12\x04\x89\x03+\
+    ,\n\xdd\x03\n\x06\x04\x01\x03\0\x02\x03\x12\x04\x93\x03\x04\x1f\x1a\xcc\
+    \x03\x20The\x20cell's\x20stored\x20timestamp,\x20which\x20also\x20unique\
+    ly\x20identifies\x20it\n\x20within\x20its\x20column.\x20\x20Values\x20ar\
+    e\x20always\x20expressed\x20in\n\x20microseconds,\x20but\x20individual\
+    \x20tables\x20may\x20set\x20a\x20coarser\n\x20granularity\x20to\x20furth\
+    er\x20restrict\x20the\x20allowed\x20values.\x20For\n\x20example,\x20a\
+    \x20table\x20which\x20specifies\x20millisecond\x20granularity\x20will\n\
+    \x20only\x20allow\x20values\x20of\x20`timestamp_micros`\x20which\x20are\
+    \x20multiples\x20of\n\x201000.\x20\x20Timestamps\x20are\x20only\x20set\
+    \x20in\x20the\x20first\x20CellChunk\x20per\x20cell\n\x20(for\x20cells\
+    \x20split\x20into\x20multiple\x20chunks).\n\n\x0f\n\x07\x04\x01\x03\0\
+    \x02\x03\x05\x12\x04\x93\x03\x04\t\n\x0f\n\x07\x04\x01\x03\0\x02\x03\x01\
+    \x12\x04\x93\x03\n\x1a\n\x0f\n\x07\x04\x01\x03\0\x02\x03\x03\x12\x04\x93\
+    \x03\x1d\x1e\n\x95\x01\n\x06\x04\x01\x03\0\x02\x04\x12\x04\x98\x03\x04\
+    \x1f\x1a\x84\x01\x20Labels\x20applied\x20to\x20the\x20cell\x20by\x20a\n\
+    \x20[RowFilter][google.bigtable.v2.RowFilter].\x20\x20Labels\x20are\x20o\
+    nly\x20set\n\x20on\x20the\x20first\x20CellChunk\x20per\x20cell.\n\n\x0f\
+    \n\x07\x04\x01\x03\0\x02\x04\x04\x12\x04\x98\x03\x04\x0c\n\x0f\n\x07\x04\
+    \x01\x03\0\x02\x04\x05\x12\x04\x98\x03\r\x13\n\x0f\n\x07\x04\x01\x03\0\
+    \x02\x04\x01\x12\x04\x98\x03\x14\x1a\n\x0f\n\x07\x04\x01\x03\0\x02\x04\
+    \x03\x12\x04\x98\x03\x1d\x1e\n\xbf\x02\n\x06\x04\x01\x03\0\x02\x05\x12\
+    \x04\x9f\x03\x04\x14\x1a\xae\x02\x20The\x20value\x20stored\x20in\x20the\
+    \x20cell.\x20\x20Cell\x20values\x20can\x20be\x20split\x20across\n\x20mul\
+    tiple\x20CellChunks.\x20\x20In\x20that\x20case\x20only\x20the\x20value\
+    \x20field\x20will\x20be\n\x20set\x20in\x20CellChunks\x20after\x20the\x20\
+    first:\x20the\x20timestamp\x20and\x20labels\n\x20will\x20only\x20be\x20p\
+    resent\x20in\x20the\x20first\x20CellChunk,\x20even\x20if\x20the\x20first\
+    \n\x20CellChunk\x20came\x20in\x20a\x20previous\x20ReadRowsResponse.\n\n\
+    \x0f\n\x07\x04\x01\x03\0\x02\x05\x05\x12\x04\x9f\x03\x04\t\n\x0f\n\x07\
+    \x04\x01\x03\0\x02\x05\x01\x12\x04\x9f\x03\n\x0f\n\x0f\n\x07\x04\x01\x03\
+    \0\x02\x05\x03\x12\x04\x9f\x03\x12\x13\n\x85\x02\n\x06\x04\x01\x03\0\x02\
+    \x06\x12\x04\xa5\x03\x04\x19\x1a\xf4\x01\x20If\x20this\x20CellChunk\x20i\
+    s\x20part\x20of\x20a\x20chunked\x20cell\x20value\x20and\x20this\x20is\n\
+    \x20not\x20the\x20final\x20chunk\x20of\x20that\x20cell,\x20value_size\
+    \x20will\x20be\x20set\x20to\x20the\n\x20total\x20length\x20of\x20the\x20\
+    cell\x20value.\x20\x20The\x20client\x20can\x20use\x20this\x20size\n\x20t\
+    o\x20pre-allocate\x20memory\x20to\x20hold\x20the\x20full\x20cell\x20valu\
+    e.\n\n\x0f\n\x07\x04\x01\x03\0\x02\x06\x05\x12\x04\xa5\x03\x04\t\n\x0f\n\
+    \x07\x04\x01\x03\0\x02\x06\x01\x12\x04\xa5\x03\n\x14\n\x0f\n\x07\x04\x01\
+    \x03\0\x02\x06\x03\x12\x04\xa5\x03\x17\x18\nR\n\x06\x04\x01\x03\0\x08\0\
+    \x12\x06\xa8\x03\x04\xb0\x03\x05\x1a@\x20Signals\x20to\x20the\x20client\
+    \x20concerning\x20previous\x20CellChunks\x20received.\n\n\x0f\n\x07\x04\
+    \x01\x03\0\x08\0\x01\x12\x04\xa8\x03\n\x14\n\x85\x01\n\x06\x04\x01\x03\0\
+    \x02\x07\x12\x04\xab\x03\x06\x19\x1au\x20Indicates\x20that\x20the\x20cli\
+    ent\x20should\x20drop\x20all\x20previous\x20chunks\x20for\n\x20`row_key`\
+    ,\x20as\x20it\x20will\x20be\x20re-read\x20from\x20the\x20beginning.\n\n\
+    \x0f\n\x07\x04\x01\x03\0\x02\x07\x05\x12\x04\xab\x03\x06\n\n\x0f\n\x07\
+    \x04\x01\x03\0\x02\x07\x01\x12\x04\xab\x03\x0b\x14\n\x0f\n\x07\x04\x01\
+    \x03\0\x02\x07\x03\x12\x04\xab\x03\x17\x18\n\x83\x01\n\x06\x04\x01\x03\0\
+    \x02\x08\x12\x04\xaf\x03\x06\x1a\x1as\x20Indicates\x20that\x20the\x20cli\
+    ent\x20can\x20safely\x20process\x20all\x20previous\x20chunks\x20for\n\
+    \x20`row_key`,\x20as\x20its\x20data\x20has\x20been\x20fully\x20read.\n\n\
+    \x0f\n\x07\x04\x01\x03\0\x02\x08\x05\x12\x04\xaf\x03\x06\n\n\x0f\n\x07\
+    \x04\x01\x03\0\x02\x08\x01\x12\x04\xaf\x03\x0b\x15\n\x0f\n\x07\x04\x01\
+    \x03\0\x02\x08\x03\x12\x04\xaf\x03\x18\x19\nM\n\x04\x04\x01\x02\0\x12\
+    \x04\xb4\x03\x02\x20\x1a?\x20A\x20collection\x20of\x20a\x20row's\x20cont\
+    ents\x20as\x20part\x20of\x20the\x20read\x20request.\n\n\r\n\x05\x04\x01\
+    \x02\0\x04\x12\x04\xb4\x03\x02\n\n\r\n\x05\x04\x01\x02\0\x06\x12\x04\xb4\
+    \x03\x0b\x14\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\xb4\x03\x15\x1b\n\r\n\
+    \x05\x04\x01\x02\0\x03\x12\x04\xb4\x03\x1e\x1f\n\xc5\x03\n\x04\x04\x01\
+    \x02\x01\x12\x04\xbd\x03\x02!\x1a\xb6\x03\x20Optionally\x20the\x20server\
+    \x20might\x20return\x20the\x20row\x20key\x20of\x20the\x20last\x20row\x20\
+    it\n\x20has\x20scanned.\x20\x20The\x20client\x20can\x20use\x20this\x20to\
+    \x20construct\x20a\x20more\n\x20efficient\x20retry\x20request\x20if\x20n\
+    eeded:\x20any\x20row\x20keys\x20or\x20portions\x20of\n\x20ranges\x20less\
+    \x20than\x20this\x20row\x20key\x20can\x20be\x20dropped\x20from\x20the\
+    \x20request.\n\x20This\x20is\x20primarily\x20useful\x20for\x20cases\x20w\
+    here\x20the\x20server\x20has\x20read\x20a\n\x20lot\x20of\x20data\x20that\
+    \x20was\x20filtered\x20out\x20since\x20the\x20last\x20committed\x20row\n\
+    \x20key,\x20allowing\x20the\x20client\x20to\x20skip\x20that\x20work\x20o\
+    n\x20a\x20retry.\n\n\r\n\x05\x04\x01\x02\x01\x05\x12\x04\xbd\x03\x02\x07\
+    \n\r\n\x05\x04\x01\x02\x01\x01\x12\x04\xbd\x03\x08\x1c\n\r\n\x05\x04\x01\
+    \x02\x01\x03\x12\x04\xbd\x03\x1f\x20\n\x8c\x07\n\x04\x04\x01\x02\x02\x12\
+    \x04\xd3\x03\x02!\x1a\xfd\x06\n\x20If\x20requested,\x20provide\x20enhanc\
+    ed\x20query\x20performance\x20statistics.\x20The\x20semantics\n\x20dicta\
+    te:\n\x20\x20\x20*\x20request_stats\x20is\x20empty\x20on\x20every\x20(st\
+    reamed)\x20response,\x20except\n\x20\x20\x20*\x20request_stats\x20has\
+    \x20non-empty\x20information\x20after\x20all\x20chunks\x20have\x20been\n\
+    \x20\x20\x20\x20\x20streamed,\x20where\x20the\x20ReadRowsResponse\x20mes\
+    sage\x20only\x20contains\n\x20\x20\x20\x20\x20request_stats.\n\x20\x20\
+    \x20\x20\x20\x20\x20*\x20For\x20example,\x20if\x20a\x20read\x20request\
+    \x20would\x20have\x20returned\x20an\x20empty\n\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20response\x20instead\x20a\x20single\x20ReadRowsResponse\x20is\
+    \x20streamed\x20with\x20empty\n\x20\x20\x20\x20\x20\x20\x20\x20\x20chunk\
+    s\x20and\x20request_stats\x20filled.\n\n\x20Visually,\x20response\x20mes\
+    sages\x20will\x20stream\x20as\x20follows:\n\x20\x20\x20\x20...\x20->\x20\
+    {chunks:\x20[...]}\x20->\x20{chunks:\x20[],\x20request_stats:\x20{...}}\
+    \n\x20\x20\x20\\______________________/\x20\x20\\_______________________\
+    _________/\n\x20\x20\x20\x20\x20\x20\x20Primary\x20response\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20Trailer\x20of\x20RequestStats\x20info\n\n\x20Or\
+    \x20if\x20the\x20read\x20did\x20not\x20return\x20any\x20values:\n\x20\
+    \x20\x20{chunks:\x20[],\x20request_stats:\x20{...}}\n\x20\x20\x20\\_____\
+    ___________________________/\n\x20\x20\x20\x20\x20\x20Trailer\x20of\x20R\
+    equestStats\x20info\n\n\r\n\x05\x04\x01\x02\x02\x06\x12\x04\xd3\x03\x02\
+    \x0e\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\xd3\x03\x0f\x1c\n\r\n\x05\x04\
+    \x01\x02\x02\x03\x12\x04\xd3\x03\x1f\x20\n;\n\x02\x04\x02\x12\x06\xd7\
+    \x03\0\xf2\x03\x01\x1a-\x20Request\x20message\x20for\x20Bigtable.SampleR\
+    owKeys.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xd7\x03\x08\x1c\n\xac\x01\n\
+    \x04\x04\x02\x02\0\x12\x06\xdc\x03\x02\xe1\x03\x04\x1a\x9b\x01\x20Option\
+    al.\x20The\x20unique\x20name\x20of\x20the\x20table\x20from\x20which\x20t\
+    o\x20sample\x20row\x20keys.\n\n\x20Values\x20are\x20of\x20the\x20form\n\
+    \x20`projects/<project>/instances/<instance>/tables/<table>`.\n\n\r\n\
+    \x05\x04\x02\x02\0\x05\x12\x04\xdc\x03\x02\x08\n\r\n\x05\x04\x02\x02\0\
+    \x01\x12\x04\xdc\x03\t\x13\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xdc\x03\
+    \x16\x17\n\x0f\n\x05\x04\x02\x02\0\x08\x12\x06\xdc\x03\x18\xe1\x03\x03\n\
+    \x10\n\x08\x04\x02\x02\0\x08\x9c\x08\0\x12\x04\xdd\x03\x04*\n\x11\n\x07\
+    \x04\x02\x02\0\x08\x9f\x08\x12\x06\xde\x03\x04\xe0\x03\x05\n\xd8\x01\n\
+    \x04\x04\x02\x02\x01\x12\x06\xe8\x03\x02\xed\x03\x04\x1a\xc7\x01\x20Opti\
+    onal.\x20The\x20unique\x20name\x20of\x20the\x20AuthorizedView\x20from\
+    \x20which\x20to\x20sample\x20row\n\x20keys.\n\n\x20Values\x20are\x20of\
+    \x20the\x20form\n\x20`projects/<project>/instances/<instance>/tables/<ta\
+    ble>/authorizedViews/<authorized_view>`.\n\n\r\n\x05\x04\x02\x02\x01\x05\
+    \x12\x04\xe8\x03\x02\x08\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\xe8\x03\t\
+    \x1d\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\xe8\x03\x20!\n\x0f\n\x05\x04\
+    \x02\x02\x01\x08\x12\x06\xe8\x03\"\xed\x03\x03\n\x10\n\x08\x04\x02\x02\
+    \x01\x08\x9c\x08\0\x12\x04\xe9\x03\x04*\n\x11\n\x07\x04\x02\x02\x01\x08\
+    \x9f\x08\x12\x06\xea\x03\x04\xec\x03\x05\n\x80\x01\n\x04\x04\x02\x02\x02\
+    \x12\x04\xf1\x03\x02\x1c\x1ar\x20This\x20value\x20specifies\x20routing\
+    \x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\x20\"default\
+    \"\x20application\x20profile\x20will\x20be\x20used.\n\n\r\n\x05\x04\x02\
+    \x02\x02\x05\x12\x04\xf1\x03\x02\x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\
+    \x04\xf1\x03\t\x17\n\r\n\x05\x04\x02\x02\x02\x03\x12\x04\xf1\x03\x1a\x1b\
+    \n<\n\x02\x04\x03\x12\x06\xf5\x03\0\x84\x04\x01\x1a.\x20Response\x20mess\
+    age\x20for\x20Bigtable.SampleRowKeys.\n\n\x0b\n\x03\x04\x03\x01\x12\x04\
+    \xf5\x03\x08\x1d\n\xe0\x03\n\x04\x04\x03\x02\0\x12\x04\xfd\x03\x02\x14\
+    \x1a\xd1\x03\x20Sorted\x20streamed\x20sequence\x20of\x20sample\x20row\
+    \x20keys\x20in\x20the\x20table.\x20The\x20table\x20might\n\x20have\x20co\
+    ntents\x20before\x20the\x20first\x20row\x20key\x20in\x20the\x20list\x20a\
+    nd\x20after\x20the\x20last\x20one,\n\x20but\x20a\x20key\x20containing\
     \x20the\x20empty\x20string\x20indicates\x20\"end\x20of\x20table\"\x20and\
     \x20will\x20be\n\x20the\x20last\x20response\x20given,\x20if\x20present.\
     \n\x20Note\x20that\x20row\x20keys\x20in\x20this\x20list\x20may\x20not\
     \x20have\x20ever\x20been\x20written\x20to\x20or\x20read\n\x20from,\x20an\
     d\x20users\x20should\x20therefore\x20not\x20make\x20any\x20assumptions\
     \x20about\x20the\x20row\x20key\n\x20structure\x20that\x20are\x20specific\
-    \x20to\x20their\x20use\x20case.\n\n\x20Classified\x20as\x20IDENTIFYING_I\
-    D\x20to\x20provide\x20context\x20around\x20data\x20accesses\x20for\n\x20\
-    auditing\x20systems.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\x85\x02\x02\
-    \x07\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\x85\x02\x08\x0f\n\r\n\x05\x04\
-    \x03\x02\0\x03\x12\x04\x85\x02\x12\x13\n\x80\x02\n\x04\x04\x03\x02\x01\
-    \x12\x04\x8b\x02\x02\x19\x1a\xf1\x01\x20Approximate\x20total\x20storage\
-    \x20space\x20used\x20by\x20all\x20rows\x20in\x20the\x20table\x20which\
-    \x20precede\n\x20`row_key`.\x20Buffering\x20the\x20contents\x20of\x20all\
-    \x20rows\x20between\x20two\x20subsequent\n\x20samples\x20would\x20requir\
-    e\x20space\x20roughly\x20equal\x20to\x20the\x20difference\x20in\x20their\
-    \n\x20`offset_bytes`\x20fields.\n\n\r\n\x05\x04\x03\x02\x01\x05\x12\x04\
-    \x8b\x02\x02\x07\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\x8b\x02\x08\x14\n\
-    \r\n\x05\x04\x03\x02\x01\x03\x12\x04\x8b\x02\x17\x18\n7\n\x02\x04\x04\
-    \x12\x06\x8f\x02\0\xa8\x02\x01\x1a)\x20Request\x20message\x20for\x20Bigt\
-    able.MutateRow.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\x8f\x02\x08\x18\n\xb5\
-    \x01\n\x04\x04\x04\x02\0\x12\x06\x93\x02\x02\x98\x02\x04\x1a\xa4\x01\x20\
-    Required.\x20The\x20unique\x20name\x20of\x20the\x20table\x20to\x20which\
-    \x20the\x20mutation\x20should\x20be\x20applied.\n\x20Values\x20are\x20of\
-    \x20the\x20form\n\x20`projects/<project>/instances/<instance>/tables/<ta\
-    ble>`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\x93\x02\x02\x08\n\r\n\x05\
-    \x04\x04\x02\0\x01\x12\x04\x93\x02\t\x13\n\r\n\x05\x04\x04\x02\0\x03\x12\
-    \x04\x93\x02\x16\x17\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\x93\x02\x18\
-    \x98\x02\x03\n\x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\x04\x94\x02\x04\
-    *\n\x11\n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x06\x95\x02\x04\x97\x02\x05\
-    \n\x80\x01\n\x04\x04\x04\x02\x01\x12\x04\x9c\x02\x02\x1c\x1ar\x20This\
-    \x20value\x20specifies\x20routing\x20for\x20replication.\x20If\x20not\
-    \x20specified,\x20the\n\x20\"default\"\x20application\x20profile\x20will\
-    \x20be\x20used.\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\x9c\x02\x02\x08\
-    \n\r\n\x05\x04\x04\x02\x01\x01\x12\x04\x9c\x02\t\x17\n\r\n\x05\x04\x04\
-    \x02\x01\x03\x12\x04\x9c\x02\x1a\x1b\n\xb4\x01\n\x04\x04\x04\x02\x02\x12\
-    \x04\xa2\x02\x02=\x1a\xa5\x01\x20Required.\x20The\x20key\x20of\x20the\
-    \x20row\x20to\x20which\x20the\x20mutation\x20should\x20be\x20applied.\n\
-    \n\x20Classified\x20as\x20IDENTIFYING_ID\x20to\x20provide\x20context\x20\
-    around\x20data\x20accesses\x20for\n\x20auditing\x20systems.\n\n\r\n\x05\
-    \x04\x04\x02\x02\x05\x12\x04\xa2\x02\x02\x07\n\r\n\x05\x04\x04\x02\x02\
-    \x01\x12\x04\xa2\x02\x08\x0f\n\r\n\x05\x04\x04\x02\x02\x03\x12\x04\xa2\
-    \x02\x12\x13\n\r\n\x05\x04\x04\x02\x02\x08\x12\x04\xa2\x02\x14<\n\x10\n\
-    \x08\x04\x04\x02\x02\x08\x9c\x08\0\x12\x04\xa2\x02\x15;\n\xe1\x01\n\x04\
-    \x04\x04\x02\x03\x12\x04\xa7\x02\x02K\x1a\xd2\x01\x20Required.\x20Change\
-    s\x20to\x20be\x20atomically\x20applied\x20to\x20the\x20specified\x20row.\
-    \x20Entries\x20are\x20applied\n\x20in\x20order,\x20meaning\x20that\x20ea\
-    rlier\x20mutations\x20can\x20be\x20masked\x20by\x20later\x20ones.\n\x20M\
-    ust\x20contain\x20at\x20least\x20one\x20entry\x20and\x20at\x20most\x2010\
-    0000.\n\n\r\n\x05\x04\x04\x02\x03\x04\x12\x04\xa7\x02\x02\n\n\r\n\x05\
-    \x04\x04\x02\x03\x06\x12\x04\xa7\x02\x0b\x13\n\r\n\x05\x04\x04\x02\x03\
-    \x01\x12\x04\xa7\x02\x14\x1d\n\r\n\x05\x04\x04\x02\x03\x03\x12\x04\xa7\
-    \x02\x20!\n\r\n\x05\x04\x04\x02\x03\x08\x12\x04\xa7\x02\"J\n\x10\n\x08\
-    \x04\x04\x02\x03\x08\x9c\x08\0\x12\x04\xa7\x02#I\n8\n\x02\x04\x05\x12\
-    \x06\xab\x02\0\xad\x02\x01\x1a*\x20Response\x20message\x20for\x20Bigtabl\
-    e.MutateRow.\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xab\x02\x08\x19\n?\n\x02\
-    \x04\x06\x12\x06\xb0\x02\0\xd2\x02\x01\x1a1\x20Request\x20message\x20for\
-    \x20BigtableService.MutateRows.\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xb0\
-    \x02\x08\x19\n-\n\x04\x04\x06\x03\0\x12\x06\xb2\x02\x02\xbe\x02\x03\x1a\
-    \x1d\x20A\x20mutation\x20for\x20a\x20given\x20row.\n\n\r\n\x05\x04\x06\
-    \x03\0\x01\x12\x04\xb2\x02\n\x0f\n\xaf\x01\n\x06\x04\x06\x03\0\x02\0\x12\
-    \x04\xb7\x02\x04\x16\x1a\x9e\x01\x20The\x20key\x20of\x20the\x20row\x20to\
-    \x20which\x20the\x20`mutations`\x20should\x20be\x20applied.\n\n\x20Class\
-    ified\x20as\x20IDENTIFYING_ID\x20to\x20provide\x20context\x20around\x20d\
-    ata\x20accesses\x20for\n\x20auditing\x20systems.\n\n\x0f\n\x07\x04\x06\
-    \x03\0\x02\0\x05\x12\x04\xb7\x02\x04\t\n\x0f\n\x07\x04\x06\x03\0\x02\0\
-    \x01\x12\x04\xb7\x02\n\x11\n\x0f\n\x07\x04\x06\x03\0\x02\0\x03\x12\x04\
-    \xb7\x02\x14\x15\n\xda\x01\n\x06\x04\x06\x03\0\x02\x01\x12\x04\xbd\x02\
-    \x04M\x1a\xc9\x01\x20Required.\x20Changes\x20to\x20be\x20atomically\x20a\
-    pplied\x20to\x20the\x20specified\x20row.\x20Mutations\x20are\n\x20applie\
-    d\x20in\x20order,\x20meaning\x20that\x20earlier\x20mutations\x20can\x20b\
-    e\x20masked\x20by\n\x20later\x20ones.\n\x20You\x20must\x20specify\x20at\
-    \x20least\x20one\x20mutation.\n\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x04\
-    \x12\x04\xbd\x02\x04\x0c\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x06\x12\x04\
-    \xbd\x02\r\x15\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x01\x12\x04\xbd\x02\x16\
-    \x1f\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x03\x12\x04\xbd\x02\"#\n\x0f\n\
-    \x07\x04\x06\x03\0\x02\x01\x08\x12\x04\xbd\x02$L\n\x12\n\n\x04\x06\x03\0\
-    \x02\x01\x08\x9c\x08\0\x12\x04\xbd\x02%K\nb\n\x04\x04\x06\x02\0\x12\x06\
-    \xc1\x02\x02\xc6\x02\x04\x1aR\x20Required.\x20The\x20unique\x20name\x20o\
-    f\x20the\x20table\x20to\x20which\x20the\x20mutations\x20should\x20be\x20\
-    applied.\n\n\r\n\x05\x04\x06\x02\0\x05\x12\x04\xc1\x02\x02\x08\n\r\n\x05\
-    \x04\x06\x02\0\x01\x12\x04\xc1\x02\t\x13\n\r\n\x05\x04\x06\x02\0\x03\x12\
-    \x04\xc1\x02\x16\x17\n\x0f\n\x05\x04\x06\x02\0\x08\x12\x06\xc1\x02\x18\
-    \xc6\x02\x03\n\x10\n\x08\x04\x06\x02\0\x08\x9c\x08\0\x12\x04\xc2\x02\x04\
-    *\n\x11\n\x07\x04\x06\x02\0\x08\x9f\x08\x12\x06\xc3\x02\x04\xc5\x02\x05\
-    \n\x80\x01\n\x04\x04\x06\x02\x01\x12\x04\xca\x02\x02\x1c\x1ar\x20This\
-    \x20value\x20specifies\x20routing\x20for\x20replication.\x20If\x20not\
-    \x20specified,\x20the\n\x20\"default\"\x20application\x20profile\x20will\
-    \x20be\x20used.\n\n\r\n\x05\x04\x06\x02\x01\x05\x12\x04\xca\x02\x02\x08\
-    \n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xca\x02\t\x17\n\r\n\x05\x04\x06\
-    \x02\x01\x03\x12\x04\xca\x02\x1a\x1b\n\xcb\x02\n\x04\x04\x06\x02\x02\x12\
-    \x04\xd1\x02\x02F\x1a\xbc\x02\x20Required.\x20The\x20row\x20keys\x20and\
-    \x20corresponding\x20mutations\x20to\x20be\x20applied\x20in\x20bulk.\n\
-    \x20Each\x20entry\x20is\x20applied\x20as\x20an\x20atomic\x20mutation,\
-    \x20but\x20the\x20entries\x20may\x20be\n\x20applied\x20in\x20arbitrary\
-    \x20order\x20(even\x20between\x20entries\x20for\x20the\x20same\x20row).\
-    \n\x20At\x20least\x20one\x20entry\x20must\x20be\x20specified,\x20and\x20\
-    in\x20total\x20the\x20entries\x20can\n\x20contain\x20at\x20most\x2010000\
-    0\x20mutations.\n\n\r\n\x05\x04\x06\x02\x02\x04\x12\x04\xd1\x02\x02\n\n\
-    \r\n\x05\x04\x06\x02\x02\x06\x12\x04\xd1\x02\x0b\x10\n\r\n\x05\x04\x06\
-    \x02\x02\x01\x12\x04\xd1\x02\x11\x18\n\r\n\x05\x04\x06\x02\x02\x03\x12\
-    \x04\xd1\x02\x1b\x1c\n\r\n\x05\x04\x06\x02\x02\x08\x12\x04\xd1\x02\x1dE\
-    \n\x10\n\x08\x04\x06\x02\x02\x08\x9c\x08\0\x12\x04\xd1\x02\x1eD\n@\n\x02\
-    \x04\x07\x12\x06\xd5\x02\0\xe5\x02\x01\x1a2\x20Response\x20message\x20fo\
-    r\x20BigtableService.MutateRows.\n\n\x0b\n\x03\x04\x07\x01\x12\x04\xd5\
-    \x02\x08\x1a\nS\n\x04\x04\x07\x03\0\x12\x06\xd7\x02\x02\xe1\x02\x03\x1aC\
-    \x20The\x20result\x20of\x20applying\x20a\x20passed\x20mutation\x20in\x20\
-    the\x20original\x20request.\n\n\r\n\x05\x04\x07\x03\0\x01\x12\x04\xd7\
-    \x02\n\x0f\nz\n\x06\x04\x07\x03\0\x02\0\x12\x04\xda\x02\x04\x14\x1aj\x20\
-    The\x20index\x20into\x20the\x20original\x20request's\x20`entries`\x20lis\
-    t\x20of\x20the\x20Entry\n\x20for\x20which\x20a\x20result\x20is\x20being\
-    \x20reported.\n\n\x0f\n\x07\x04\x07\x03\0\x02\0\x05\x12\x04\xda\x02\x04\
-    \t\n\x0f\n\x07\x04\x07\x03\0\x02\0\x01\x12\x04\xda\x02\n\x0f\n\x0f\n\x07\
-    \x04\x07\x03\0\x02\0\x03\x12\x04\xda\x02\x12\x13\n\x9e\x02\n\x06\x04\x07\
-    \x03\0\x02\x01\x12\x04\xe0\x02\x04!\x1a\x8d\x02\x20The\x20result\x20of\
-    \x20the\x20request\x20Entry\x20identified\x20by\x20`index`.\n\x20Dependi\
-    ng\x20on\x20how\x20requests\x20are\x20batched\x20during\x20execution,\
-    \x20it\x20is\x20possible\n\x20for\x20one\x20Entry\x20to\x20fail\x20due\
-    \x20to\x20an\x20error\x20with\x20another\x20Entry.\x20In\x20the\x20event\
-    \n\x20that\x20this\x20occurs,\x20the\x20same\x20error\x20will\x20be\x20r\
-    eported\x20for\x20both\x20entries.\n\n\x0f\n\x07\x04\x07\x03\0\x02\x01\
-    \x06\x12\x04\xe0\x02\x04\x15\n\x0f\n\x07\x04\x07\x03\0\x02\x01\x01\x12\
-    \x04\xe0\x02\x16\x1c\n\x0f\n\x07\x04\x07\x03\0\x02\x01\x03\x12\x04\xe0\
-    \x02\x1f\x20\nG\n\x04\x04\x07\x02\0\x12\x04\xe4\x02\x02\x1d\x1a9\x20One\
-    \x20or\x20more\x20results\x20for\x20Entries\x20from\x20the\x20batch\x20r\
-    equest.\n\n\r\n\x05\x04\x07\x02\0\x04\x12\x04\xe4\x02\x02\n\n\r\n\x05\
-    \x04\x07\x02\0\x06\x12\x04\xe4\x02\x0b\x10\n\r\n\x05\x04\x07\x02\0\x01\
-    \x12\x04\xe4\x02\x11\x18\n\r\n\x05\x04\x07\x02\0\x03\x12\x04\xe4\x02\x1b\
-    \x1c\n?\n\x02\x04\x08\x12\x06\xe8\x02\0\x91\x03\x01\x1a1\x20Request\x20m\
-    essage\x20for\x20Bigtable.CheckAndMutateRow.\n\n\x0b\n\x03\x04\x08\x01\
-    \x12\x04\xe8\x02\x08\x20\n\xc2\x01\n\x04\x04\x08\x02\0\x12\x06\xed\x02\
-    \x02\xf2\x02\x04\x1a\xb1\x01\x20Required.\x20The\x20unique\x20name\x20of\
-    \x20the\x20table\x20to\x20which\x20the\x20conditional\x20mutation\x20sho\
-    uld\x20be\n\x20applied.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`pr\
-    ojects/<project>/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\
-    \x08\x02\0\x05\x12\x04\xed\x02\x02\x08\n\r\n\x05\x04\x08\x02\0\x01\x12\
-    \x04\xed\x02\t\x13\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\xed\x02\x16\x17\n\
-    \x0f\n\x05\x04\x08\x02\0\x08\x12\x06\xed\x02\x18\xf2\x02\x03\n\x10\n\x08\
-    \x04\x08\x02\0\x08\x9c\x08\0\x12\x04\xee\x02\x04*\n\x11\n\x07\x04\x08\
-    \x02\0\x08\x9f\x08\x12\x06\xef\x02\x04\xf1\x02\x05\n\x80\x01\n\x04\x04\
-    \x08\x02\x01\x12\x04\xf6\x02\x02\x1c\x1ar\x20This\x20value\x20specifies\
-    \x20routing\x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\
-    \x20\"default\"\x20application\x20profile\x20will\x20be\x20used.\n\n\r\n\
-    \x05\x04\x08\x02\x01\x05\x12\x04\xf6\x02\x02\x08\n\r\n\x05\x04\x08\x02\
-    \x01\x01\x12\x04\xf6\x02\t\x17\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\xf6\
-    \x02\x1a\x1b\n\xc0\x01\n\x04\x04\x08\x02\x02\x12\x04\xfc\x02\x02=\x1a\
-    \xb1\x01\x20Required.\x20The\x20key\x20of\x20the\x20row\x20to\x20which\
-    \x20the\x20conditional\x20mutation\x20should\x20be\x20applied.\n\n\x20Cl\
-    assified\x20as\x20IDENTIFYING_ID\x20to\x20provide\x20context\x20around\
-    \x20data\x20accesses\x20for\n\x20auditing\x20systems.\n\n\r\n\x05\x04\
-    \x08\x02\x02\x05\x12\x04\xfc\x02\x02\x07\n\r\n\x05\x04\x08\x02\x02\x01\
-    \x12\x04\xfc\x02\x08\x0f\n\r\n\x05\x04\x08\x02\x02\x03\x12\x04\xfc\x02\
-    \x12\x13\n\r\n\x05\x04\x08\x02\x02\x08\x12\x04\xfc\x02\x14<\n\x10\n\x08\
-    \x04\x08\x02\x02\x08\x9c\x08\0\x12\x04\xfc\x02\x15;\n\x80\x02\n\x04\x04\
-    \x08\x02\x03\x12\x04\x82\x03\x02!\x1a\xf1\x01\x20The\x20filter\x20to\x20\
-    be\x20applied\x20to\x20the\x20contents\x20of\x20the\x20specified\x20row.\
-    \x20Depending\n\x20on\x20whether\x20or\x20not\x20any\x20results\x20are\
-    \x20yielded,\x20either\x20`true_mutations`\x20or\n\x20`false_mutations`\
-    \x20will\x20be\x20executed.\x20If\x20unset,\x20checks\x20that\x20the\x20\
-    row\x20contains\n\x20any\x20values\x20at\x20all.\n\n\r\n\x05\x04\x08\x02\
-    \x03\x06\x12\x04\x82\x03\x02\x0b\n\r\n\x05\x04\x08\x02\x03\x01\x12\x04\
-    \x82\x03\x0c\x1c\n\r\n\x05\x04\x08\x02\x03\x03\x12\x04\x82\x03\x1f\x20\n\
-    \xc1\x02\n\x04\x04\x08\x02\x04\x12\x04\x89\x03\x02'\x1a\xb2\x02\x20Chang\
+    \x20to\x20their\x20use\x20case.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\
+    \xfd\x03\x02\x07\n\r\n\x05\x04\x03\x02\0\x01\x12\x04\xfd\x03\x08\x0f\n\r\
+    \n\x05\x04\x03\x02\0\x03\x12\x04\xfd\x03\x12\x13\n\x80\x02\n\x04\x04\x03\
+    \x02\x01\x12\x04\x83\x04\x02\x19\x1a\xf1\x01\x20Approximate\x20total\x20\
+    storage\x20space\x20used\x20by\x20all\x20rows\x20in\x20the\x20table\x20w\
+    hich\x20precede\n\x20`row_key`.\x20Buffering\x20the\x20contents\x20of\
+    \x20all\x20rows\x20between\x20two\x20subsequent\n\x20samples\x20would\
+    \x20require\x20space\x20roughly\x20equal\x20to\x20the\x20difference\x20i\
+    n\x20their\n\x20`offset_bytes`\x20fields.\n\n\r\n\x05\x04\x03\x02\x01\
+    \x05\x12\x04\x83\x04\x02\x07\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\x83\
+    \x04\x08\x14\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\x83\x04\x17\x18\n7\n\
+    \x02\x04\x04\x12\x06\x87\x04\0\xab\x04\x01\x1a)\x20Request\x20message\
+    \x20for\x20Bigtable.MutateRow.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\x87\x04\
+    \x08\x18\n\xb7\x01\n\x04\x04\x04\x02\0\x12\x06\x8d\x04\x02\x92\x04\x04\
+    \x1a\xa6\x01\x20Optional.\x20The\x20unique\x20name\x20of\x20the\x20table\
+    \x20to\x20which\x20the\x20mutation\x20should\x20be\n\x20applied.\n\n\x20\
+    Values\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<i\
+    nstance>/tables/<table>`.\n\n\r\n\x05\x04\x04\x02\0\x05\x12\x04\x8d\x04\
+    \x02\x08\n\r\n\x05\x04\x04\x02\0\x01\x12\x04\x8d\x04\t\x13\n\r\n\x05\x04\
+    \x04\x02\0\x03\x12\x04\x8d\x04\x16\x17\n\x0f\n\x05\x04\x04\x02\0\x08\x12\
+    \x06\x8d\x04\x18\x92\x04\x03\n\x10\n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\
+    \x04\x8e\x04\x04*\n\x11\n\x07\x04\x04\x02\0\x08\x9f\x08\x12\x06\x8f\x04\
+    \x04\x91\x04\x05\n\xe2\x01\n\x04\x04\x04\x02\x01\x12\x06\x99\x04\x02\x9e\
+    \x04\x04\x1a\xd1\x01\x20Optional.\x20The\x20unique\x20name\x20of\x20the\
+    \x20AuthorizedView\x20to\x20which\x20the\x20mutation\n\x20should\x20be\
+    \x20applied.\n\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<p\
+    roject>/instances/<instance>/tables/<table>/authorizedViews/<authorized_\
+    view>`.\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\x99\x04\x02\x08\n\r\n\
+    \x05\x04\x04\x02\x01\x01\x12\x04\x99\x04\t\x1d\n\r\n\x05\x04\x04\x02\x01\
+    \x03\x12\x04\x99\x04\x20!\n\x0f\n\x05\x04\x04\x02\x01\x08\x12\x06\x99\
+    \x04\"\x9e\x04\x03\n\x10\n\x08\x04\x04\x02\x01\x08\x9c\x08\0\x12\x04\x9a\
+    \x04\x04*\n\x11\n\x07\x04\x04\x02\x01\x08\x9f\x08\x12\x06\x9b\x04\x04\
+    \x9d\x04\x05\n\x80\x01\n\x04\x04\x04\x02\x02\x12\x04\xa2\x04\x02\x1c\x1a\
+    r\x20This\x20value\x20specifies\x20routing\x20for\x20replication.\x20If\
+    \x20not\x20specified,\x20the\n\x20\"default\"\x20application\x20profile\
+    \x20will\x20be\x20used.\n\n\r\n\x05\x04\x04\x02\x02\x05\x12\x04\xa2\x04\
+    \x02\x08\n\r\n\x05\x04\x04\x02\x02\x01\x12\x04\xa2\x04\t\x17\n\r\n\x05\
+    \x04\x04\x02\x02\x03\x12\x04\xa2\x04\x1a\x1b\nU\n\x04\x04\x04\x02\x03\
+    \x12\x04\xa5\x04\x02=\x1aG\x20Required.\x20The\x20key\x20of\x20the\x20ro\
+    w\x20to\x20which\x20the\x20mutation\x20should\x20be\x20applied.\n\n\r\n\
+    \x05\x04\x04\x02\x03\x05\x12\x04\xa5\x04\x02\x07\n\r\n\x05\x04\x04\x02\
+    \x03\x01\x12\x04\xa5\x04\x08\x0f\n\r\n\x05\x04\x04\x02\x03\x03\x12\x04\
+    \xa5\x04\x12\x13\n\r\n\x05\x04\x04\x02\x03\x08\x12\x04\xa5\x04\x14<\n\
+    \x10\n\x08\x04\x04\x02\x03\x08\x9c\x08\0\x12\x04\xa5\x04\x15;\n\xe1\x01\
+    \n\x04\x04\x04\x02\x04\x12\x04\xaa\x04\x02K\x1a\xd2\x01\x20Required.\x20\
+    Changes\x20to\x20be\x20atomically\x20applied\x20to\x20the\x20specified\
+    \x20row.\x20Entries\n\x20are\x20applied\x20in\x20order,\x20meaning\x20th\
+    at\x20earlier\x20mutations\x20can\x20be\x20masked\x20by\x20later\n\x20on\
+    es.\x20Must\x20contain\x20at\x20least\x20one\x20entry\x20and\x20at\x20mo\
+    st\x20100000.\n\n\r\n\x05\x04\x04\x02\x04\x04\x12\x04\xaa\x04\x02\n\n\r\
+    \n\x05\x04\x04\x02\x04\x06\x12\x04\xaa\x04\x0b\x13\n\r\n\x05\x04\x04\x02\
+    \x04\x01\x12\x04\xaa\x04\x14\x1d\n\r\n\x05\x04\x04\x02\x04\x03\x12\x04\
+    \xaa\x04\x20!\n\r\n\x05\x04\x04\x02\x04\x08\x12\x04\xaa\x04\"J\n\x10\n\
+    \x08\x04\x04\x02\x04\x08\x9c\x08\0\x12\x04\xaa\x04#I\n6\n\x02\x04\x05\
+    \x12\x04\xae\x04\0\x1c\x1a*\x20Response\x20message\x20for\x20Bigtable.Mu\
+    tateRow.\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xae\x04\x08\x19\n?\n\x02\x04\
+    \x06\x12\x06\xb1\x04\0\xdf\x04\x01\x1a1\x20Request\x20message\x20for\x20\
+    BigtableService.MutateRows.\n\n\x0b\n\x03\x04\x06\x01\x12\x04\xb1\x04\
+    \x08\x19\n-\n\x04\x04\x06\x03\0\x12\x06\xb3\x04\x02\xbb\x04\x03\x1a\x1d\
+    \x20A\x20mutation\x20for\x20a\x20given\x20row.\n\n\r\n\x05\x04\x06\x03\0\
+    \x01\x12\x04\xb3\x04\n\x0f\nP\n\x06\x04\x06\x03\0\x02\0\x12\x04\xb5\x04\
+    \x04\x16\x1a@\x20The\x20key\x20of\x20the\x20row\x20to\x20which\x20the\
+    \x20`mutations`\x20should\x20be\x20applied.\n\n\x0f\n\x07\x04\x06\x03\0\
+    \x02\0\x05\x12\x04\xb5\x04\x04\t\n\x0f\n\x07\x04\x06\x03\0\x02\0\x01\x12\
+    \x04\xb5\x04\n\x11\n\x0f\n\x07\x04\x06\x03\0\x02\0\x03\x12\x04\xb5\x04\
+    \x14\x15\n\xd9\x01\n\x06\x04\x06\x03\0\x02\x01\x12\x04\xba\x04\x04M\x1a\
+    \xc8\x01\x20Required.\x20Changes\x20to\x20be\x20atomically\x20applied\
+    \x20to\x20the\x20specified\x20row.\n\x20Mutations\x20are\x20applied\x20i\
+    n\x20order,\x20meaning\x20that\x20earlier\x20mutations\x20can\x20be\n\
+    \x20masked\x20by\x20later\x20ones.\x20You\x20must\x20specify\x20at\x20le\
+    ast\x20one\x20mutation.\n\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x04\x12\x04\
+    \xba\x04\x04\x0c\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x06\x12\x04\xba\x04\r\
+    \x15\n\x0f\n\x07\x04\x06\x03\0\x02\x01\x01\x12\x04\xba\x04\x16\x1f\n\x0f\
+    \n\x07\x04\x06\x03\0\x02\x01\x03\x12\x04\xba\x04\"#\n\x0f\n\x07\x04\x06\
+    \x03\0\x02\x01\x08\x12\x04\xba\x04$L\n\x12\n\n\x04\x06\x03\0\x02\x01\x08\
+    \x9c\x08\0\x12\x04\xba\x04%K\n\xb8\x01\n\x04\x04\x06\x02\0\x12\x06\xc2\
+    \x04\x02\xc7\x04\x04\x1a\xa7\x01\x20Optional.\x20The\x20unique\x20name\
+    \x20of\x20the\x20table\x20to\x20which\x20the\x20mutations\x20should\x20b\
+    e\n\x20applied.\n\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects\
+    /<project>/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\x06\x02\
+    \0\x05\x12\x04\xc2\x04\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\x04\xc2\
+    \x04\t\x13\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xc2\x04\x16\x17\n\x0f\n\
+    \x05\x04\x06\x02\0\x08\x12\x06\xc2\x04\x18\xc7\x04\x03\n\x10\n\x08\x04\
+    \x06\x02\0\x08\x9c\x08\0\x12\x04\xc3\x04\x04*\n\x11\n\x07\x04\x06\x02\0\
+    \x08\x9f\x08\x12\x06\xc4\x04\x04\xc6\x04\x05\n\xe3\x01\n\x04\x04\x06\x02\
+    \x01\x12\x06\xce\x04\x02\xd3\x04\x04\x1a\xd2\x01\x20Optional.\x20The\x20\
+    unique\x20name\x20of\x20the\x20AuthorizedView\x20to\x20which\x20the\x20m\
+    utations\n\x20should\x20be\x20applied.\n\n\x20Values\x20are\x20of\x20the\
+    \x20form\n\x20`projects/<project>/instances/<instance>/tables/<table>/au\
+    thorizedViews/<authorized_view>`.\n\n\r\n\x05\x04\x06\x02\x01\x05\x12\
+    \x04\xce\x04\x02\x08\n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xce\x04\t\x1d\
+    \n\r\n\x05\x04\x06\x02\x01\x03\x12\x04\xce\x04\x20!\n\x0f\n\x05\x04\x06\
+    \x02\x01\x08\x12\x06\xce\x04\"\xd3\x04\x03\n\x10\n\x08\x04\x06\x02\x01\
+    \x08\x9c\x08\0\x12\x04\xcf\x04\x04*\n\x11\n\x07\x04\x06\x02\x01\x08\x9f\
+    \x08\x12\x06\xd0\x04\x04\xd2\x04\x05\n\x80\x01\n\x04\x04\x06\x02\x02\x12\
+    \x04\xd7\x04\x02\x1c\x1ar\x20This\x20value\x20specifies\x20routing\x20fo\
+    r\x20replication.\x20If\x20not\x20specified,\x20the\n\x20\"default\"\x20\
+    application\x20profile\x20will\x20be\x20used.\n\n\r\n\x05\x04\x06\x02\
+    \x02\x05\x12\x04\xd7\x04\x02\x08\n\r\n\x05\x04\x06\x02\x02\x01\x12\x04\
+    \xd7\x04\t\x17\n\r\n\x05\x04\x06\x02\x02\x03\x12\x04\xd7\x04\x1a\x1b\n\
+    \xcb\x02\n\x04\x04\x06\x02\x03\x12\x04\xde\x04\x02F\x1a\xbc\x02\x20Requi\
+    red.\x20The\x20row\x20keys\x20and\x20corresponding\x20mutations\x20to\
+    \x20be\x20applied\x20in\x20bulk.\n\x20Each\x20entry\x20is\x20applied\x20\
+    as\x20an\x20atomic\x20mutation,\x20but\x20the\x20entries\x20may\x20be\n\
+    \x20applied\x20in\x20arbitrary\x20order\x20(even\x20between\x20entries\
+    \x20for\x20the\x20same\x20row).\n\x20At\x20least\x20one\x20entry\x20must\
+    \x20be\x20specified,\x20and\x20in\x20total\x20the\x20entries\x20can\n\
+    \x20contain\x20at\x20most\x20100000\x20mutations.\n\n\r\n\x05\x04\x06\
+    \x02\x03\x04\x12\x04\xde\x04\x02\n\n\r\n\x05\x04\x06\x02\x03\x06\x12\x04\
+    \xde\x04\x0b\x10\n\r\n\x05\x04\x06\x02\x03\x01\x12\x04\xde\x04\x11\x18\n\
+    \r\n\x05\x04\x06\x02\x03\x03\x12\x04\xde\x04\x1b\x1c\n\r\n\x05\x04\x06\
+    \x02\x03\x08\x12\x04\xde\x04\x1dE\n\x10\n\x08\x04\x06\x02\x03\x08\x9c\
+    \x08\0\x12\x04\xde\x04\x1eD\n@\n\x02\x04\x07\x12\x06\xe2\x04\0\xf7\x04\
+    \x01\x1a2\x20Response\x20message\x20for\x20BigtableService.MutateRows.\n\
+    \n\x0b\n\x03\x04\x07\x01\x12\x04\xe2\x04\x08\x1a\nS\n\x04\x04\x07\x03\0\
+    \x12\x06\xe4\x04\x02\xee\x04\x03\x1aC\x20The\x20result\x20of\x20applying\
+    \x20a\x20passed\x20mutation\x20in\x20the\x20original\x20request.\n\n\r\n\
+    \x05\x04\x07\x03\0\x01\x12\x04\xe4\x04\n\x0f\nz\n\x06\x04\x07\x03\0\x02\
+    \0\x12\x04\xe7\x04\x04\x14\x1aj\x20The\x20index\x20into\x20the\x20origin\
+    al\x20request's\x20`entries`\x20list\x20of\x20the\x20Entry\n\x20for\x20w\
+    hich\x20a\x20result\x20is\x20being\x20reported.\n\n\x0f\n\x07\x04\x07\
+    \x03\0\x02\0\x05\x12\x04\xe7\x04\x04\t\n\x0f\n\x07\x04\x07\x03\0\x02\0\
+    \x01\x12\x04\xe7\x04\n\x0f\n\x0f\n\x07\x04\x07\x03\0\x02\0\x03\x12\x04\
+    \xe7\x04\x12\x13\n\x9e\x02\n\x06\x04\x07\x03\0\x02\x01\x12\x04\xed\x04\
+    \x04!\x1a\x8d\x02\x20The\x20result\x20of\x20the\x20request\x20Entry\x20i\
+    dentified\x20by\x20`index`.\n\x20Depending\x20on\x20how\x20requests\x20a\
+    re\x20batched\x20during\x20execution,\x20it\x20is\x20possible\n\x20for\
+    \x20one\x20Entry\x20to\x20fail\x20due\x20to\x20an\x20error\x20with\x20an\
+    other\x20Entry.\x20In\x20the\x20event\n\x20that\x20this\x20occurs,\x20th\
+    e\x20same\x20error\x20will\x20be\x20reported\x20for\x20both\x20entries.\
+    \n\n\x0f\n\x07\x04\x07\x03\0\x02\x01\x06\x12\x04\xed\x04\x04\x15\n\x0f\n\
+    \x07\x04\x07\x03\0\x02\x01\x01\x12\x04\xed\x04\x16\x1c\n\x0f\n\x07\x04\
+    \x07\x03\0\x02\x01\x03\x12\x04\xed\x04\x1f\x20\nG\n\x04\x04\x07\x02\0\
+    \x12\x04\xf1\x04\x02\x1d\x1a9\x20One\x20or\x20more\x20results\x20for\x20\
+    Entries\x20from\x20the\x20batch\x20request.\n\n\r\n\x05\x04\x07\x02\0\
+    \x04\x12\x04\xf1\x04\x02\n\n\r\n\x05\x04\x07\x02\0\x06\x12\x04\xf1\x04\
+    \x0b\x10\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\xf1\x04\x11\x18\n\r\n\x05\
+    \x04\x07\x02\0\x03\x12\x04\xf1\x04\x1b\x1c\n\xc6\x01\n\x04\x04\x07\x02\
+    \x01\x12\x04\xf6\x04\x02-\x1a\xb7\x01\x20Information\x20about\x20how\x20\
+    client\x20should\x20limit\x20the\x20rate\x20(QPS).\x20Primirily\x20used\
+    \x20by\n\x20supported\x20official\x20Cloud\x20Bigtable\x20clients.\x20If\
+    \x20unset,\x20the\x20rate\x20limit\x20info\x20is\n\x20not\x20provided\
+    \x20by\x20the\x20server.\n\n\r\n\x05\x04\x07\x02\x01\x04\x12\x04\xf6\x04\
+    \x02\n\n\r\n\x05\x04\x07\x02\x01\x06\x12\x04\xf6\x04\x0b\x18\n\r\n\x05\
+    \x04\x07\x02\x01\x01\x12\x04\xf6\x04\x19(\n\r\n\x05\x04\x07\x02\x01\x03\
+    \x12\x04\xf6\x04+,\nP\n\x02\x04\x08\x12\x06\xfa\x04\0\x8d\x05\x01\x1aB\
+    \x20Information\x20about\x20how\x20client\x20should\x20adjust\x20the\x20\
+    load\x20to\x20Bigtable.\n\n\x0b\n\x03\x04\x08\x01\x12\x04\xfa\x04\x08\
+    \x15\n\xfe\x02\n\x04\x04\x08\x02\0\x12\x04\x81\x05\x02&\x1a\xef\x02\x20T\
+    ime\x20that\x20clients\x20should\x20wait\x20before\x20adjusting\x20the\
+    \x20target\x20rate\x20again.\n\x20If\x20clients\x20adjust\x20rate\x20too\
+    \x20frequently,\x20the\x20impact\x20of\x20the\x20previous\n\x20adjustmen\
+    t\x20may\x20not\x20have\x20been\x20taken\x20into\x20account\x20and\x20ma\
+    y\n\x20over-throttle\x20or\x20under-throttle.\x20If\x20clients\x20adjust\
+    \x20rate\x20too\x20slowly,\x20they\n\x20will\x20not\x20be\x20responsive\
+    \x20to\x20load\x20changes\x20on\x20server\x20side,\x20and\x20may\n\x20ov\
+    er-throttle\x20or\x20under-throttle.\n\n\r\n\x05\x04\x08\x02\0\x06\x12\
+    \x04\x81\x05\x02\x1a\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\x81\x05\x1b!\n\
+    \r\n\x05\x04\x08\x02\0\x03\x12\x04\x81\x05$%\n\x8b\x04\n\x04\x04\x08\x02\
+    \x01\x12\x04\x8c\x05\x02\x14\x1a\xfc\x03\x20If\x20it\x20has\x20been\x20a\
+    t\x20least\x20one\x20`period`\x20since\x20the\x20last\x20load\x20adjustm\
+    ent,\x20the\n\x20client\x20should\x20multiply\x20the\x20current\x20load\
+    \x20by\x20this\x20value\x20to\x20get\x20the\x20new\x20target\n\x20load.\
+    \x20For\x20example,\x20if\x20the\x20current\x20load\x20is\x20100\x20and\
+    \x20`factor`\x20is\x200.8,\x20the\x20new\n\x20target\x20load\x20should\
+    \x20be\x2080.\x20After\x20adjusting,\x20the\x20client\x20should\x20ignor\
+    e\n\x20`factor`\x20until\x20another\x20`period`\x20has\x20passed.\n\n\
+    \x20The\x20client\x20can\x20measure\x20its\x20load\x20using\x20any\x20un\
+    it\x20that's\x20comparable\x20over\x20time\n\x20For\x20example,\x20QPS\
+    \x20can\x20be\x20used\x20as\x20long\x20as\x20each\x20request\x20involves\
+    \x20a\x20similar\n\x20amount\x20of\x20work.\n\n\r\n\x05\x04\x08\x02\x01\
+    \x05\x12\x04\x8c\x05\x02\x08\n\r\n\x05\x04\x08\x02\x01\x01\x12\x04\x8c\
+    \x05\t\x0f\n\r\n\x05\x04\x08\x02\x01\x03\x12\x04\x8c\x05\x12\x13\n?\n\
+    \x02\x04\t\x12\x06\x90\x05\0\xc4\x05\x01\x1a1\x20Request\x20message\x20f\
+    or\x20Bigtable.CheckAndMutateRow.\n\n\x0b\n\x03\x04\t\x01\x12\x04\x90\
+    \x05\x08\x20\n\xc3\x01\n\x04\x04\t\x02\0\x12\x06\x96\x05\x02\x9b\x05\x04\
+    \x1a\xb2\x01\x20Optional.\x20The\x20unique\x20name\x20of\x20the\x20table\
+    \x20to\x20which\x20the\x20conditional\x20mutation\n\x20should\x20be\x20a\
+    pplied.\n\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<projec\
+    t>/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\t\x02\0\x05\x12\
+    \x04\x96\x05\x02\x08\n\r\n\x05\x04\t\x02\0\x01\x12\x04\x96\x05\t\x13\n\r\
+    \n\x05\x04\t\x02\0\x03\x12\x04\x96\x05\x16\x17\n\x0f\n\x05\x04\t\x02\0\
+    \x08\x12\x06\x96\x05\x18\x9b\x05\x03\n\x10\n\x08\x04\t\x02\0\x08\x9c\x08\
+    \0\x12\x04\x97\x05\x04*\n\x11\n\x07\x04\t\x02\0\x08\x9f\x08\x12\x06\x98\
+    \x05\x04\x9a\x05\x05\n\xee\x01\n\x04\x04\t\x02\x01\x12\x06\xa2\x05\x02\
+    \xa7\x05\x04\x1a\xdd\x01\x20Optional.\x20The\x20unique\x20name\x20of\x20\
+    the\x20AuthorizedView\x20to\x20which\x20the\x20conditional\n\x20mutation\
+    \x20should\x20be\x20applied.\n\n\x20Values\x20are\x20of\x20the\x20form\n\
+    \x20`projects/<project>/instances/<instance>/tables/<table>/authorizedVi\
+    ews/<authorized_view>`.\n\n\r\n\x05\x04\t\x02\x01\x05\x12\x04\xa2\x05\
+    \x02\x08\n\r\n\x05\x04\t\x02\x01\x01\x12\x04\xa2\x05\t\x1d\n\r\n\x05\x04\
+    \t\x02\x01\x03\x12\x04\xa2\x05\x20!\n\x0f\n\x05\x04\t\x02\x01\x08\x12\
+    \x06\xa2\x05\"\xa7\x05\x03\n\x10\n\x08\x04\t\x02\x01\x08\x9c\x08\0\x12\
+    \x04\xa3\x05\x04*\n\x11\n\x07\x04\t\x02\x01\x08\x9f\x08\x12\x06\xa4\x05\
+    \x04\xa6\x05\x05\n\x80\x01\n\x04\x04\t\x02\x02\x12\x04\xab\x05\x02\x1c\
+    \x1ar\x20This\x20value\x20specifies\x20routing\x20for\x20replication.\
+    \x20If\x20not\x20specified,\x20the\n\x20\"default\"\x20application\x20pr\
+    ofile\x20will\x20be\x20used.\n\n\r\n\x05\x04\t\x02\x02\x05\x12\x04\xab\
+    \x05\x02\x08\n\r\n\x05\x04\t\x02\x02\x01\x12\x04\xab\x05\t\x17\n\r\n\x05\
+    \x04\t\x02\x02\x03\x12\x04\xab\x05\x1a\x1b\nb\n\x04\x04\t\x02\x03\x12\
+    \x04\xaf\x05\x02=\x1aT\x20Required.\x20The\x20key\x20of\x20the\x20row\
+    \x20to\x20which\x20the\x20conditional\x20mutation\x20should\x20be\n\x20a\
+    pplied.\n\n\r\n\x05\x04\t\x02\x03\x05\x12\x04\xaf\x05\x02\x07\n\r\n\x05\
+    \x04\t\x02\x03\x01\x12\x04\xaf\x05\x08\x0f\n\r\n\x05\x04\t\x02\x03\x03\
+    \x12\x04\xaf\x05\x12\x13\n\r\n\x05\x04\t\x02\x03\x08\x12\x04\xaf\x05\x14\
+    <\n\x10\n\x08\x04\t\x02\x03\x08\x9c\x08\0\x12\x04\xaf\x05\x15;\n\x80\x02\
+    \n\x04\x04\t\x02\x04\x12\x04\xb5\x05\x02!\x1a\xf1\x01\x20The\x20filter\
+    \x20to\x20be\x20applied\x20to\x20the\x20contents\x20of\x20the\x20specifi\
+    ed\x20row.\x20Depending\n\x20on\x20whether\x20or\x20not\x20any\x20result\
+    s\x20are\x20yielded,\x20either\x20`true_mutations`\x20or\n\x20`false_mut\
+    ations`\x20will\x20be\x20executed.\x20If\x20unset,\x20checks\x20that\x20\
+    the\x20row\x20contains\n\x20any\x20values\x20at\x20all.\n\n\r\n\x05\x04\
+    \t\x02\x04\x06\x12\x04\xb5\x05\x02\x0b\n\r\n\x05\x04\t\x02\x04\x01\x12\
+    \x04\xb5\x05\x0c\x1c\n\r\n\x05\x04\t\x02\x04\x03\x12\x04\xb5\x05\x1f\x20\
+    \n\xc1\x02\n\x04\x04\t\x02\x05\x12\x04\xbc\x05\x02'\x1a\xb2\x02\x20Chang\
     es\x20to\x20be\x20atomically\x20applied\x20to\x20the\x20specified\x20row\
     \x20if\x20`predicate_filter`\n\x20yields\x20at\x20least\x20one\x20cell\
     \x20when\x20applied\x20to\x20`row_key`.\x20Entries\x20are\x20applied\x20\
     in\n\x20order,\x20meaning\x20that\x20earlier\x20mutations\x20can\x20be\
     \x20masked\x20by\x20later\x20ones.\n\x20Must\x20contain\x20at\x20least\
     \x20one\x20entry\x20if\x20`false_mutations`\x20is\x20empty,\x20and\x20at\
-    \x20most\n\x20100000.\n\n\r\n\x05\x04\x08\x02\x04\x04\x12\x04\x89\x03\
-    \x02\n\n\r\n\x05\x04\x08\x02\x04\x06\x12\x04\x89\x03\x0b\x13\n\r\n\x05\
-    \x04\x08\x02\x04\x01\x12\x04\x89\x03\x14\"\n\r\n\x05\x04\x08\x02\x04\x03\
-    \x12\x04\x89\x03%&\n\xc0\x02\n\x04\x04\x08\x02\x05\x12\x04\x90\x03\x02(\
-    \x1a\xb1\x02\x20Changes\x20to\x20be\x20atomically\x20applied\x20to\x20th\
-    e\x20specified\x20row\x20if\x20`predicate_filter`\n\x20does\x20not\x20yi\
-    eld\x20any\x20cells\x20when\x20applied\x20to\x20`row_key`.\x20Entries\
-    \x20are\x20applied\x20in\n\x20order,\x20meaning\x20that\x20earlier\x20mu\
-    tations\x20can\x20be\x20masked\x20by\x20later\x20ones.\n\x20Must\x20cont\
-    ain\x20at\x20least\x20one\x20entry\x20if\x20`true_mutations`\x20is\x20em\
-    pty,\x20and\x20at\x20most\n\x20100000.\n\n\r\n\x05\x04\x08\x02\x05\x04\
-    \x12\x04\x90\x03\x02\n\n\r\n\x05\x04\x08\x02\x05\x06\x12\x04\x90\x03\x0b\
-    \x13\n\r\n\x05\x04\x08\x02\x05\x01\x12\x04\x90\x03\x14#\n\r\n\x05\x04\
-    \x08\x02\x05\x03\x12\x04\x90\x03&'\n@\n\x02\x04\t\x12\x06\x94\x03\0\x98\
-    \x03\x01\x1a2\x20Response\x20message\x20for\x20Bigtable.CheckAndMutateRo\
-    w.\n\n\x0b\n\x03\x04\t\x01\x12\x04\x94\x03\x08!\nk\n\x04\x04\t\x02\0\x12\
-    \x04\x97\x03\x02\x1d\x1a]\x20Whether\x20or\x20not\x20the\x20request's\
-    \x20`predicate_filter`\x20yielded\x20any\x20results\x20for\n\x20the\x20s\
-    pecified\x20row.\n\n\r\n\x05\x04\t\x02\0\x05\x12\x04\x97\x03\x02\x06\n\r\
-    \n\x05\x04\t\x02\0\x01\x12\x04\x97\x03\x07\x18\n\r\n\x05\x04\t\x02\0\x03\
-    \x12\x04\x97\x03\x1b\x1c\n@\n\x02\x04\n\x12\x06\x9b\x03\0\xb5\x03\x01\
-    \x1a2\x20Request\x20message\x20for\x20Bigtable.ReadModifyWriteRow.\n\n\
-    \x0b\n\x03\x04\n\x01\x12\x04\x9b\x03\x08!\n\xc5\x01\n\x04\x04\n\x02\0\
-    \x12\x06\xa0\x03\x02\xa5\x03\x04\x1a\xb4\x01\x20Required.\x20The\x20uniq\
-    ue\x20name\x20of\x20the\x20table\x20to\x20which\x20the\x20read/modify/wr\
-    ite\x20rules\x20should\x20be\n\x20applied.\n\x20Values\x20are\x20of\x20t\
-    he\x20form\n\x20`projects/<project>/instances/<instance>/tables/<table>`\
-    .\n\n\r\n\x05\x04\n\x02\0\x05\x12\x04\xa0\x03\x02\x08\n\r\n\x05\x04\n\
-    \x02\0\x01\x12\x04\xa0\x03\t\x13\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xa0\
-    \x03\x16\x17\n\x0f\n\x05\x04\n\x02\0\x08\x12\x06\xa0\x03\x18\xa5\x03\x03\
-    \n\x10\n\x08\x04\n\x02\0\x08\x9c\x08\0\x12\x04\xa1\x03\x04*\n\x11\n\x07\
-    \x04\n\x02\0\x08\x9f\x08\x12\x06\xa2\x03\x04\xa4\x03\x05\n\x80\x01\n\x04\
-    \x04\n\x02\x01\x12\x04\xa9\x03\x02\x1c\x1ar\x20This\x20value\x20specifie\
-    s\x20routing\x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\
+    \x20most\n\x20100000.\n\n\r\n\x05\x04\t\x02\x05\x04\x12\x04\xbc\x05\x02\
+    \n\n\r\n\x05\x04\t\x02\x05\x06\x12\x04\xbc\x05\x0b\x13\n\r\n\x05\x04\t\
+    \x02\x05\x01\x12\x04\xbc\x05\x14\"\n\r\n\x05\x04\t\x02\x05\x03\x12\x04\
+    \xbc\x05%&\n\xc0\x02\n\x04\x04\t\x02\x06\x12\x04\xc3\x05\x02(\x1a\xb1\
+    \x02\x20Changes\x20to\x20be\x20atomically\x20applied\x20to\x20the\x20spe\
+    cified\x20row\x20if\x20`predicate_filter`\n\x20does\x20not\x20yield\x20a\
+    ny\x20cells\x20when\x20applied\x20to\x20`row_key`.\x20Entries\x20are\x20\
+    applied\x20in\n\x20order,\x20meaning\x20that\x20earlier\x20mutations\x20\
+    can\x20be\x20masked\x20by\x20later\x20ones.\n\x20Must\x20contain\x20at\
+    \x20least\x20one\x20entry\x20if\x20`true_mutations`\x20is\x20empty,\x20a\
+    nd\x20at\x20most\n\x20100000.\n\n\r\n\x05\x04\t\x02\x06\x04\x12\x04\xc3\
+    \x05\x02\n\n\r\n\x05\x04\t\x02\x06\x06\x12\x04\xc3\x05\x0b\x13\n\r\n\x05\
+    \x04\t\x02\x06\x01\x12\x04\xc3\x05\x14#\n\r\n\x05\x04\t\x02\x06\x03\x12\
+    \x04\xc3\x05&'\n@\n\x02\x04\n\x12\x06\xc7\x05\0\xcb\x05\x01\x1a2\x20Resp\
+    onse\x20message\x20for\x20Bigtable.CheckAndMutateRow.\n\n\x0b\n\x03\x04\
+    \n\x01\x12\x04\xc7\x05\x08!\nk\n\x04\x04\n\x02\0\x12\x04\xca\x05\x02\x1d\
+    \x1a]\x20Whether\x20or\x20not\x20the\x20request's\x20`predicate_filter`\
+    \x20yielded\x20any\x20results\x20for\n\x20the\x20specified\x20row.\n\n\r\
+    \n\x05\x04\n\x02\0\x05\x12\x04\xca\x05\x02\x06\n\r\n\x05\x04\n\x02\0\x01\
+    \x12\x04\xca\x05\x07\x18\n\r\n\x05\x04\n\x02\0\x03\x12\x04\xca\x05\x1b\
+    \x1c\nM\n\x02\x04\x0b\x12\x06\xce\x05\0\xdc\x05\x01\x1a?\x20Request\x20m\
+    essage\x20for\x20client\x20connection\x20keep-alive\x20and\x20warming.\n\
+    \n\x0b\n\x03\x04\x0b\x01\x12\x04\xce\x05\x08\x1a\n\xad\x01\n\x04\x04\x0b\
+    \x02\0\x12\x06\xd2\x05\x02\xd7\x05\x04\x1a\x9c\x01\x20Required.\x20The\
+    \x20unique\x20name\x20of\x20the\x20instance\x20to\x20check\x20permission\
+    s\x20for\x20as\x20well\n\x20as\x20respond.\x20Values\x20are\x20of\x20the\
+    \x20form\n\x20`projects/<project>/instances/<instance>`.\n\n\r\n\x05\x04\
+    \x0b\x02\0\x05\x12\x04\xd2\x05\x02\x08\n\r\n\x05\x04\x0b\x02\0\x01\x12\
+    \x04\xd2\x05\t\r\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xd2\x05\x10\x11\n\
+    \x0f\n\x05\x04\x0b\x02\0\x08\x12\x06\xd2\x05\x12\xd7\x05\x03\n\x10\n\x08\
+    \x04\x0b\x02\0\x08\x9c\x08\0\x12\x04\xd3\x05\x04*\n\x11\n\x07\x04\x0b\
+    \x02\0\x08\x9f\x08\x12\x06\xd4\x05\x04\xd6\x05\x05\n\x80\x01\n\x04\x04\
+    \x0b\x02\x01\x12\x04\xdb\x05\x02\x1c\x1ar\x20This\x20value\x20specifies\
+    \x20routing\x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\
     \x20\"default\"\x20application\x20profile\x20will\x20be\x20used.\n\n\r\n\
-    \x05\x04\n\x02\x01\x05\x12\x04\xa9\x03\x02\x08\n\r\n\x05\x04\n\x02\x01\
-    \x01\x12\x04\xa9\x03\t\x17\n\r\n\x05\x04\n\x02\x01\x03\x12\x04\xa9\x03\
-    \x1a\x1b\n\xc3\x01\n\x04\x04\n\x02\x02\x12\x04\xaf\x03\x02=\x1a\xb4\x01\
-    \x20Required.\x20The\x20key\x20of\x20the\x20row\x20to\x20which\x20the\
-    \x20read/modify/write\x20rules\x20should\x20be\x20applied.\n\n\x20Classi\
-    fied\x20as\x20IDENTIFYING_ID\x20to\x20provide\x20context\x20around\x20da\
-    ta\x20accesses\x20for\n\x20auditing\x20systems.\n\n\r\n\x05\x04\n\x02\
-    \x02\x05\x12\x04\xaf\x03\x02\x07\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xaf\
-    \x03\x08\x0f\n\r\n\x05\x04\n\x02\x02\x03\x12\x04\xaf\x03\x12\x13\n\r\n\
-    \x05\x04\n\x02\x02\x08\x12\x04\xaf\x03\x14<\n\x10\n\x08\x04\n\x02\x02\
-    \x08\x9c\x08\0\x12\x04\xaf\x03\x15;\n\xd1\x01\n\x04\x04\n\x02\x03\x12\
-    \x04\xb4\x03\x02R\x1a\xc2\x01\x20Required.\x20Rules\x20specifying\x20how\
-    \x20the\x20specified\x20row's\x20contents\x20are\x20to\x20be\x20transfor\
-    med\n\x20into\x20writes.\x20Entries\x20are\x20applied\x20in\x20order,\
-    \x20meaning\x20that\x20earlier\x20rules\x20will\n\x20affect\x20the\x20re\
-    sults\x20of\x20later\x20ones.\n\n\r\n\x05\x04\n\x02\x03\x04\x12\x04\xb4\
-    \x03\x02\n\n\r\n\x05\x04\n\x02\x03\x06\x12\x04\xb4\x03\x0b\x1e\n\r\n\x05\
-    \x04\n\x02\x03\x01\x12\x04\xb4\x03\x1f$\n\r\n\x05\x04\n\x02\x03\x03\x12\
-    \x04\xb4\x03'(\n\r\n\x05\x04\n\x02\x03\x08\x12\x04\xb4\x03)Q\n\x10\n\x08\
-    \x04\n\x02\x03\x08\x9c\x08\0\x12\x04\xb4\x03*P\nA\n\x02\x04\x0b\x12\x06\
-    \xb8\x03\0\xbb\x03\x01\x1a3\x20Response\x20message\x20for\x20Bigtable.Re\
-    adModifyWriteRow.\n\n\x0b\n\x03\x04\x0b\x01\x12\x04\xb8\x03\x08\"\nW\n\
-    \x04\x04\x0b\x02\0\x12\x04\xba\x03\x02\x0e\x1aI\x20A\x20Row\x20containin\
-    g\x20the\x20new\x20contents\x20of\x20all\x20cells\x20modified\x20by\x20t\
-    he\x20request.\n\n\r\n\x05\x04\x0b\x02\0\x06\x12\x04\xba\x03\x02\x05\n\r\
-    \n\x05\x04\x0b\x02\0\x01\x12\x04\xba\x03\x06\t\n\r\n\x05\x04\x0b\x02\0\
-    \x03\x12\x04\xba\x03\x0c\rb\x06proto3\
+    \x05\x04\x0b\x02\x01\x05\x12\x04\xdb\x05\x02\x08\n\r\n\x05\x04\x0b\x02\
+    \x01\x01\x12\x04\xdb\x05\t\x17\n\r\n\x05\x04\x0b\x02\x01\x03\x12\x04\xdb\
+    \x05\x1a\x1b\nY\n\x02\x04\x0c\x12\x04\xdf\x05\0\x1e\x1aM\x20Response\x20\
+    message\x20for\x20Bigtable.PingAndWarm\x20connection\x20keepalive\x20and\
+    \x20warming.\n\n\x0b\n\x03\x04\x0c\x01\x12\x04\xdf\x05\x08\x1b\n@\n\x02\
+    \x04\r\x12\x06\xe2\x05\0\x88\x06\x01\x1a2\x20Request\x20message\x20for\
+    \x20Bigtable.ReadModifyWriteRow.\n\n\x0b\n\x03\x04\r\x01\x12\x04\xe2\x05\
+    \x08!\n\xc6\x01\n\x04\x04\r\x02\0\x12\x06\xe8\x05\x02\xed\x05\x04\x1a\
+    \xb5\x01\x20Optional.\x20The\x20unique\x20name\x20of\x20the\x20table\x20\
+    to\x20which\x20the\x20read/modify/write\x20rules\n\x20should\x20be\x20ap\
+    plied.\n\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<project\
+    >/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\r\x02\0\x05\x12\
+    \x04\xe8\x05\x02\x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xe8\x05\t\x13\n\r\
+    \n\x05\x04\r\x02\0\x03\x12\x04\xe8\x05\x16\x17\n\x0f\n\x05\x04\r\x02\0\
+    \x08\x12\x06\xe8\x05\x18\xed\x05\x03\n\x10\n\x08\x04\r\x02\0\x08\x9c\x08\
+    \0\x12\x04\xe9\x05\x04*\n\x11\n\x07\x04\r\x02\0\x08\x9f\x08\x12\x06\xea\
+    \x05\x04\xec\x05\x05\n\xf1\x01\n\x04\x04\r\x02\x01\x12\x06\xf4\x05\x02\
+    \xf9\x05\x04\x1a\xe0\x01\x20Optional.\x20The\x20unique\x20name\x20of\x20\
+    the\x20AuthorizedView\x20to\x20which\x20the\n\x20read/modify/write\x20ru\
+    les\x20should\x20be\x20applied.\n\n\x20Values\x20are\x20of\x20the\x20for\
+    m\n\x20`projects/<project>/instances/<instance>/tables/<table>/authorize\
+    dViews/<authorized_view>`.\n\n\r\n\x05\x04\r\x02\x01\x05\x12\x04\xf4\x05\
+    \x02\x08\n\r\n\x05\x04\r\x02\x01\x01\x12\x04\xf4\x05\t\x1d\n\r\n\x05\x04\
+    \r\x02\x01\x03\x12\x04\xf4\x05\x20!\n\x0f\n\x05\x04\r\x02\x01\x08\x12\
+    \x06\xf4\x05\"\xf9\x05\x03\n\x10\n\x08\x04\r\x02\x01\x08\x9c\x08\0\x12\
+    \x04\xf5\x05\x04*\n\x11\n\x07\x04\r\x02\x01\x08\x9f\x08\x12\x06\xf6\x05\
+    \x04\xf8\x05\x05\n\x80\x01\n\x04\x04\r\x02\x02\x12\x04\xfd\x05\x02\x1c\
+    \x1ar\x20This\x20value\x20specifies\x20routing\x20for\x20replication.\
+    \x20If\x20not\x20specified,\x20the\n\x20\"default\"\x20application\x20pr\
+    ofile\x20will\x20be\x20used.\n\n\r\n\x05\x04\r\x02\x02\x05\x12\x04\xfd\
+    \x05\x02\x08\n\r\n\x05\x04\r\x02\x02\x01\x12\x04\xfd\x05\t\x17\n\r\n\x05\
+    \x04\r\x02\x02\x03\x12\x04\xfd\x05\x1a\x1b\ne\n\x04\x04\r\x02\x03\x12\
+    \x04\x81\x06\x02=\x1aW\x20Required.\x20The\x20key\x20of\x20the\x20row\
+    \x20to\x20which\x20the\x20read/modify/write\x20rules\x20should\x20be\n\
+    \x20applied.\n\n\r\n\x05\x04\r\x02\x03\x05\x12\x04\x81\x06\x02\x07\n\r\n\
+    \x05\x04\r\x02\x03\x01\x12\x04\x81\x06\x08\x0f\n\r\n\x05\x04\r\x02\x03\
+    \x03\x12\x04\x81\x06\x12\x13\n\r\n\x05\x04\r\x02\x03\x08\x12\x04\x81\x06\
+    \x14<\n\x10\n\x08\x04\r\x02\x03\x08\x9c\x08\0\x12\x04\x81\x06\x15;\n\xd3\
+    \x01\n\x04\x04\r\x02\x04\x12\x06\x86\x06\x02\x87\x06/\x1a\xc2\x01\x20Req\
+    uired.\x20Rules\x20specifying\x20how\x20the\x20specified\x20row's\x20con\
+    tents\x20are\x20to\x20be\n\x20transformed\x20into\x20writes.\x20Entries\
+    \x20are\x20applied\x20in\x20order,\x20meaning\x20that\x20earlier\n\x20ru\
+    les\x20will\x20affect\x20the\x20results\x20of\x20later\x20ones.\n\n\r\n\
+    \x05\x04\r\x02\x04\x04\x12\x04\x86\x06\x02\n\n\r\n\x05\x04\r\x02\x04\x06\
+    \x12\x04\x86\x06\x0b\x1e\n\r\n\x05\x04\r\x02\x04\x01\x12\x04\x86\x06\x1f\
+    $\n\r\n\x05\x04\r\x02\x04\x03\x12\x04\x86\x06'(\n\r\n\x05\x04\r\x02\x04\
+    \x08\x12\x04\x87\x06\x06.\n\x10\n\x08\x04\r\x02\x04\x08\x9c\x08\0\x12\
+    \x04\x87\x06\x07-\nA\n\x02\x04\x0e\x12\x06\x8b\x06\0\x8e\x06\x01\x1a3\
+    \x20Response\x20message\x20for\x20Bigtable.ReadModifyWriteRow.\n\n\x0b\n\
+    \x03\x04\x0e\x01\x12\x04\x8b\x06\x08\"\nW\n\x04\x04\x0e\x02\0\x12\x04\
+    \x8d\x06\x02\x0e\x1aI\x20A\x20Row\x20containing\x20the\x20new\x20content\
+    s\x20of\x20all\x20cells\x20modified\x20by\x20the\x20request.\n\n\r\n\x05\
+    \x04\x0e\x02\0\x06\x12\x04\x8d\x06\x02\x05\n\r\n\x05\x04\x0e\x02\0\x01\
+    \x12\x04\x8d\x06\x06\t\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\x8d\x06\x0c\r\
+    \n\x96\x01\n\x02\x04\x0f\x12\x06\x92\x06\0\xa2\x06\x01\x1a\x87\x01\x20NO\
+    TE:\x20This\x20API\x20is\x20intended\x20to\x20be\x20used\x20by\x20Apache\
+    \x20Beam\x20BigtableIO.\n\x20Request\x20message\x20for\x20Bigtable.Gener\
+    ateInitialChangeStreamPartitions.\n\n\x0b\n\x03\x04\x0f\x01\x12\x04\x92\
+    \x06\x084\n\xe8\x01\n\x04\x04\x0f\x02\0\x12\x06\x97\x06\x02\x9c\x06\x04\
+    \x1a\xd7\x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20table\
+    \x20from\x20which\x20to\x20get\x20change\x20stream\n\x20partitions.\x20V\
+    alues\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<in\
+    stance>/tables/<table>`.\n\x20Change\x20streaming\x20must\x20be\x20enabl\
+    ed\x20on\x20the\x20table.\n\n\r\n\x05\x04\x0f\x02\0\x05\x12\x04\x97\x06\
+    \x02\x08\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\x97\x06\t\x13\n\r\n\x05\x04\
+    \x0f\x02\0\x03\x12\x04\x97\x06\x16\x17\n\x0f\n\x05\x04\x0f\x02\0\x08\x12\
+    \x06\x97\x06\x18\x9c\x06\x03\n\x10\n\x08\x04\x0f\x02\0\x08\x9c\x08\0\x12\
+    \x04\x98\x06\x04*\n\x11\n\x07\x04\x0f\x02\0\x08\x9f\x08\x12\x06\x99\x06\
+    \x04\x9b\x06\x05\n\xbc\x01\n\x04\x04\x0f\x02\x01\x12\x04\xa1\x06\x02\x1c\
+    \x1a\xad\x01\x20This\x20value\x20specifies\x20routing\x20for\x20replicat\
+    ion.\x20If\x20not\x20specified,\x20the\n\x20\"default\"\x20application\
+    \x20profile\x20will\x20be\x20used.\n\x20Single\x20cluster\x20routing\x20\
+    must\x20be\x20configured\x20on\x20the\x20profile.\n\n\r\n\x05\x04\x0f\
+    \x02\x01\x05\x12\x04\xa1\x06\x02\x08\n\r\n\x05\x04\x0f\x02\x01\x01\x12\
+    \x04\xa1\x06\t\x17\n\r\n\x05\x04\x0f\x02\x01\x03\x12\x04\xa1\x06\x1a\x1b\
+    \n\x97\x01\n\x02\x04\x10\x12\x06\xa6\x06\0\xa9\x06\x01\x1a\x88\x01\x20NO\
+    TE:\x20This\x20API\x20is\x20intended\x20to\x20be\x20used\x20by\x20Apache\
+    \x20Beam\x20BigtableIO.\n\x20Response\x20message\x20for\x20Bigtable.Gene\
+    rateInitialChangeStreamPartitions.\n\n\x0b\n\x03\x04\x10\x01\x12\x04\xa6\
+    \x06\x085\n1\n\x04\x04\x10\x02\0\x12\x04\xa8\x06\x02\x20\x1a#\x20A\x20pa\
+    rtition\x20of\x20the\x20change\x20stream.\n\n\r\n\x05\x04\x10\x02\0\x06\
+    \x12\x04\xa8\x06\x02\x11\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\xa8\x06\x12\
+    \x1b\n\r\n\x05\x04\x10\x02\0\x03\x12\x04\xa8\x06\x1e\x1f\n\x80\x01\n\x02\
+    \x04\x11\x12\x06\xad\x06\0\xde\x06\x01\x1ar\x20NOTE:\x20This\x20API\x20i\
+    s\x20intended\x20to\x20be\x20used\x20by\x20Apache\x20Beam\x20BigtableIO.\
+    \n\x20Request\x20message\x20for\x20Bigtable.ReadChangeStream.\n\n\x0b\n\
+    \x03\x04\x11\x01\x12\x04\xad\x06\x08\x1f\n\xe0\x01\n\x04\x04\x11\x02\0\
+    \x12\x06\xb2\x06\x02\xb7\x06\x04\x1a\xcf\x01\x20Required.\x20The\x20uniq\
+    ue\x20name\x20of\x20the\x20table\x20from\x20which\x20to\x20read\x20a\x20\
+    change\x20stream.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects\
+    /<project>/instances/<instance>/tables/<table>`.\n\x20Change\x20streamin\
+    g\x20must\x20be\x20enabled\x20on\x20the\x20table.\n\n\r\n\x05\x04\x11\
+    \x02\0\x05\x12\x04\xb2\x06\x02\x08\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\
+    \xb2\x06\t\x13\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\xb2\x06\x16\x17\n\x0f\
+    \n\x05\x04\x11\x02\0\x08\x12\x06\xb2\x06\x18\xb7\x06\x03\n\x10\n\x08\x04\
+    \x11\x02\0\x08\x9c\x08\0\x12\x04\xb3\x06\x04*\n\x11\n\x07\x04\x11\x02\0\
+    \x08\x9f\x08\x12\x06\xb4\x06\x04\xb6\x06\x05\n\xbc\x01\n\x04\x04\x11\x02\
+    \x01\x12\x04\xbc\x06\x02\x1c\x1a\xad\x01\x20This\x20value\x20specifies\
+    \x20routing\x20for\x20replication.\x20If\x20not\x20specified,\x20the\n\
+    \x20\"default\"\x20application\x20profile\x20will\x20be\x20used.\n\x20Si\
+    ngle\x20cluster\x20routing\x20must\x20be\x20configured\x20on\x20the\x20p\
+    rofile.\n\n\r\n\x05\x04\x11\x02\x01\x05\x12\x04\xbc\x06\x02\x08\n\r\n\
+    \x05\x04\x11\x02\x01\x01\x12\x04\xbc\x06\t\x17\n\r\n\x05\x04\x11\x02\x01\
+    \x03\x12\x04\xbc\x06\x1a\x1b\n3\n\x04\x04\x11\x02\x02\x12\x04\xbf\x06\
+    \x02\x20\x1a%\x20The\x20partition\x20to\x20read\x20changes\x20from.\n\n\
+    \r\n\x05\x04\x11\x02\x02\x06\x12\x04\xbf\x06\x02\x11\n\r\n\x05\x04\x11\
+    \x02\x02\x01\x12\x04\xbf\x06\x12\x1b\n\r\n\x05\x04\x11\x02\x02\x03\x12\
+    \x04\xbf\x06\x1e\x1f\nX\n\x04\x04\x11\x08\0\x12\x06\xc2\x06\x02\xd4\x06\
+    \x03\x1aH\x20Options\x20for\x20describing\x20where\x20we\x20want\x20to\
+    \x20start\x20reading\x20from\x20the\x20stream.\n\n\r\n\x05\x04\x11\x08\0\
+    \x01\x12\x04\xc2\x06\x08\x12\n\xb4\x02\n\x04\x04\x11\x02\x03\x12\x04\xc7\
+    \x06\x04-\x1a\xa5\x02\x20Start\x20reading\x20the\x20stream\x20at\x20the\
+    \x20specified\x20timestamp.\x20This\x20timestamp\x20must\n\x20be\x20with\
+    in\x20the\x20change\x20stream\x20retention\x20period,\x20less\x20than\
+    \x20or\x20equal\x20to\x20the\n\x20current\x20time,\x20and\x20after\x20ch\
+    ange\x20stream\x20creation,\x20whichever\x20is\x20greater.\n\x20This\x20\
+    value\x20is\x20inclusive\x20and\x20will\x20be\x20truncated\x20to\x20micr\
+    osecond\x20granularity.\n\n\r\n\x05\x04\x11\x02\x03\x06\x12\x04\xc7\x06\
+    \x04\x1d\n\r\n\x05\x04\x11\x02\x03\x01\x12\x04\xc7\x06\x1e(\n\r\n\x05\
+    \x04\x11\x02\x03\x03\x12\x04\xc7\x06+,\n\xb0\x04\n\x04\x04\x11\x02\x04\
+    \x12\x04\xd3\x06\x045\x1a\xa1\x04\x20Tokens\x20that\x20describe\x20how\
+    \x20to\x20resume\x20reading\x20a\x20stream\x20where\x20reading\n\x20prev\
+    iously\x20left\x20off.\x20If\x20specified,\x20changes\x20will\x20be\x20r\
+    ead\x20starting\x20at\x20the\n\x20the\x20position.\x20Tokens\x20are\x20d\
+    elivered\x20on\x20the\x20stream\x20as\x20part\x20of\x20`Heartbeat`\n\x20\
+    and\x20`CloseStream`\x20messages.\n\n\x20If\x20a\x20single\x20token\x20i\
+    s\x20provided,\x20the\x20token\xe2\x80\x99s\x20partition\x20must\x20exac\
+    tly\x20match\n\x20the\x20request\xe2\x80\x99s\x20partition.\x20If\x20mul\
+    tiple\x20tokens\x20are\x20provided,\x20as\x20in\x20the\x20case\n\x20of\
+    \x20a\x20partition\x20merge,\x20the\x20union\x20of\x20the\x20token\x20pa\
+    rtitions\x20must\x20exactly\n\x20cover\x20the\x20request\xe2\x80\x99s\
+    \x20partition.\x20Otherwise,\x20INVALID_ARGUMENT\x20will\x20be\n\x20retu\
+    rned.\n\n\r\n\x05\x04\x11\x02\x04\x06\x12\x04\xd3\x06\x04\x1c\n\r\n\x05\
+    \x04\x11\x02\x04\x01\x12\x04\xd3\x06\x1d0\n\r\n\x05\x04\x11\x02\x04\x03\
+    \x12\x04\xd3\x0634\n\xea\x01\n\x04\x04\x11\x02\x05\x12\x04\xd9\x06\x02)\
+    \x1a\xdb\x01\x20If\x20specified,\x20OK\x20will\x20be\x20returned\x20when\
+    \x20the\x20stream\x20advances\x20beyond\n\x20this\x20time.\x20Otherwise,\
+    \x20changes\x20will\x20be\x20continuously\x20delivered\x20on\x20the\x20s\
+    tream.\n\x20This\x20value\x20is\x20inclusive\x20and\x20will\x20be\x20tru\
+    ncated\x20to\x20microsecond\x20granularity.\n\n\r\n\x05\x04\x11\x02\x05\
+    \x06\x12\x04\xd9\x06\x02\x1b\n\r\n\x05\x04\x11\x02\x05\x01\x12\x04\xd9\
+    \x06\x1c$\n\r\n\x05\x04\x11\x02\x05\x03\x12\x04\xd9\x06'(\ny\n\x04\x04\
+    \x11\x02\x06\x12\x04\xdd\x06\x022\x1ak\x20If\x20specified,\x20the\x20dur\
+    ation\x20between\x20`Heartbeat`\x20messages\x20on\x20the\x20stream.\n\
+    \x20Otherwise,\x20defaults\x20to\x205\x20seconds.\n\n\r\n\x05\x04\x11\
+    \x02\x06\x06\x12\x04\xdd\x06\x02\x1a\n\r\n\x05\x04\x11\x02\x06\x01\x12\
+    \x04\xdd\x06\x1b-\n\r\n\x05\x04\x11\x02\x06\x03\x12\x04\xdd\x0601\n\x81\
+    \x01\n\x02\x04\x12\x12\x06\xe2\x06\0\x80\x08\x01\x1as\x20NOTE:\x20This\
+    \x20API\x20is\x20intended\x20to\x20be\x20used\x20by\x20Apache\x20Beam\
+    \x20BigtableIO.\n\x20Response\x20message\x20for\x20Bigtable.ReadChangeSt\
+    ream.\n\n\x0b\n\x03\x04\x12\x01\x12\x04\xe2\x06\x08\x20\n1\n\x04\x04\x12\
+    \x03\0\x12\x06\xe4\x06\x02\xfc\x06\x03\x1a!\x20A\x20partial\x20or\x20com\
+    plete\x20mutation.\n\n\r\n\x05\x04\x12\x03\0\x01\x12\x04\xe4\x06\n\x17\n\
+    \xd8\x01\n\x06\x04\x12\x03\0\x03\0\x12\x06\xe8\x06\x04\xf2\x06\x05\x1a\
+    \xc5\x01\x20Information\x20about\x20the\x20chunking\x20of\x20this\x20mut\
+    ation.\n\x20Only\x20`SetCell`\x20mutations\x20can\x20be\x20chunked,\x20a\
+    nd\x20all\x20chunks\x20for\x20a\x20`SetCell`\n\x20will\x20be\x20delivere\
+    d\x20contiguously\x20with\x20no\x20other\x20mutation\x20types\x20interle\
+    aved.\n\n\x0f\n\x07\x04\x12\x03\0\x03\0\x01\x12\x04\xe8\x06\x0c\x15\nV\n\
+    \x08\x04\x12\x03\0\x03\0\x02\0\x12\x04\xea\x06\x06#\x1aD\x20The\x20total\
+    \x20value\x20size\x20of\x20all\x20the\x20chunks\x20that\x20make\x20up\
+    \x20the\x20`SetCell`.\n\n\x11\n\t\x04\x12\x03\0\x03\0\x02\0\x05\x12\x04\
+    \xea\x06\x06\x0b\n\x11\n\t\x04\x12\x03\0\x03\0\x02\0\x01\x12\x04\xea\x06\
+    \x0c\x1e\n\x11\n\t\x04\x12\x03\0\x03\0\x02\0\x03\x12\x04\xea\x06!\"\n]\n\
+    \x08\x04\x12\x03\0\x03\0\x02\x01\x12\x04\xee\x06\x06%\x1aK\x20The\x20byt\
+    e\x20offset\x20of\x20this\x20chunk\x20into\x20the\x20total\x20value\x20s\
+    ize\x20of\x20the\n\x20mutation.\n\n\x11\n\t\x04\x12\x03\0\x03\0\x02\x01\
+    \x05\x12\x04\xee\x06\x06\x0b\n\x11\n\t\x04\x12\x03\0\x03\0\x02\x01\x01\
+    \x12\x04\xee\x06\x0c\x20\n\x11\n\t\x04\x12\x03\0\x03\0\x02\x01\x03\x12\
+    \x04\xee\x06#$\nM\n\x08\x04\x12\x03\0\x03\0\x02\x02\x12\x04\xf1\x06\x06\
+    \x1a\x1a;\x20When\x20true,\x20this\x20is\x20the\x20last\x20chunk\x20of\
+    \x20a\x20chunked\x20`SetCell`.\n\n\x11\n\t\x04\x12\x03\0\x03\0\x02\x02\
+    \x05\x12\x04\xf1\x06\x06\n\n\x11\n\t\x04\x12\x03\0\x03\0\x02\x02\x01\x12\
+    \x04\xf1\x06\x0b\x15\n\x11\n\t\x04\x12\x03\0\x03\0\x02\x02\x03\x12\x04\
+    \xf1\x06\x18\x19\nj\n\x06\x04\x12\x03\0\x02\0\x12\x04\xf6\x06\x04\x1d\
+    \x1aZ\x20If\x20set,\x20then\x20the\x20mutation\x20is\x20a\x20`SetCell`\
+    \x20with\x20a\x20chunked\x20value\x20across\n\x20multiple\x20messages.\n\
+    \n\x0f\n\x07\x04\x12\x03\0\x02\0\x06\x12\x04\xf6\x06\x04\r\n\x0f\n\x07\
+    \x04\x12\x03\0\x02\0\x01\x12\x04\xf6\x06\x0e\x18\n\x0f\n\x07\x04\x12\x03\
+    \0\x02\0\x03\x12\x04\xf6\x06\x1b\x1c\n\xda\x01\n\x06\x04\x12\x03\0\x02\
+    \x01\x12\x04\xfb\x06\x04\x1a\x1a\xc9\x01\x20If\x20this\x20is\x20a\x20con\
+    tinuation\x20of\x20a\x20chunked\x20message\x20(`chunked_value_offset`\
+    \x20>\n\x200),\x20ignore\x20all\x20fields\x20except\x20the\x20`SetCell`'\
+    s\x20value\x20and\x20merge\x20it\x20with\n\x20the\x20previous\x20message\
+    \x20by\x20concatenating\x20the\x20value\x20fields.\n\n\x0f\n\x07\x04\x12\
+    \x03\0\x02\x01\x06\x12\x04\xfb\x06\x04\x0c\n\x0f\n\x07\x04\x12\x03\0\x02\
+    \x01\x01\x12\x04\xfb\x06\r\x15\n\x0f\n\x07\x04\x12\x03\0\x02\x01\x03\x12\
+    \x04\xfb\x06\x18\x19\n\x84\x03\n\x04\x04\x12\x03\x01\x12\x06\x84\x07\x02\
+    \xc1\x07\x03\x1a\xf3\x02\x20A\x20message\x20corresponding\x20to\x20one\
+    \x20or\x20more\x20mutations\x20to\x20the\x20partition\n\x20being\x20stre\
+    amed.\x20A\x20single\x20logical\x20`DataChange`\x20message\x20may\x20als\
+    o\x20be\x20split\n\x20across\x20a\x20sequence\x20of\x20multiple\x20indiv\
+    idual\x20messages.\x20Messages\x20other\x20than\n\x20the\x20first\x20in\
+    \x20a\x20sequence\x20will\x20only\x20have\x20the\x20`type`\x20and\x20`ch\
+    unks`\x20fields\n\x20populated,\x20with\x20the\x20final\x20message\x20in\
+    \x20the\x20sequence\x20also\x20containing\x20`done`\n\x20set\x20to\x20tr\
+    ue.\n\n\r\n\x05\x04\x12\x03\x01\x01\x12\x04\x84\x07\n\x14\n)\n\x06\x04\
+    \x12\x03\x01\x04\0\x12\x06\x86\x07\x04\x93\x07\x05\x1a\x17\x20The\x20typ\
+    e\x20of\x20mutation.\n\n\x0f\n\x07\x04\x12\x03\x01\x04\0\x01\x12\x04\x86\
+    \x07\t\r\n,\n\x08\x04\x12\x03\x01\x04\0\x02\0\x12\x04\x88\x07\x06\x1b\
+    \x1a\x1a\x20The\x20type\x20is\x20unspecified.\n\n\x11\n\t\x04\x12\x03\
+    \x01\x04\0\x02\0\x01\x12\x04\x88\x07\x06\x16\n\x11\n\t\x04\x12\x03\x01\
+    \x04\0\x02\0\x02\x12\x04\x88\x07\x19\x1a\n.\n\x08\x04\x12\x03\x01\x04\0\
+    \x02\x01\x12\x04\x8b\x07\x06\x0f\x1a\x1c\x20A\x20user-initiated\x20mutat\
+    ion.\n\n\x11\n\t\x04\x12\x03\x01\x04\0\x02\x01\x01\x12\x04\x8b\x07\x06\n\
+    \n\x11\n\t\x04\x12\x03\x01\x04\0\x02\x01\x02\x12\x04\x8b\x07\r\x0e\n\x89\
+    \x01\n\x08\x04\x12\x03\x01\x04\0\x02\x02\x12\x04\x8f\x07\x06\x1d\x1aw\
+    \x20A\x20system-initiated\x20mutation\x20as\x20part\x20of\x20garbage\x20\
+    collection.\n\x20https://cloud.google.com/bigtable/docs/garbage-collecti\
+    on\n\n\x11\n\t\x04\x12\x03\x01\x04\0\x02\x02\x01\x12\x04\x8f\x07\x06\x18\
+    \n\x11\n\t\x04\x12\x03\x01\x04\0\x02\x02\x02\x12\x04\x8f\x07\x1b\x1c\nE\
+    \n\x08\x04\x12\x03\x01\x04\0\x02\x03\x12\x04\x92\x07\x06\x17\x1a3\x20Thi\
+    s\x20is\x20a\x20continuation\x20of\x20a\x20multi-message\x20change.\n\n\
+    \x11\n\t\x04\x12\x03\x01\x04\0\x02\x03\x01\x12\x04\x92\x07\x06\x12\n\x11\
+    \n\t\x04\x12\x03\x01\x04\0\x02\x03\x02\x12\x04\x92\x07\x15\x16\n+\n\x06\
+    \x04\x12\x03\x01\x02\0\x12\x04\x96\x07\x04\x12\x1a\x1b\x20The\x20type\
+    \x20of\x20the\x20mutation.\n\n\x0f\n\x07\x04\x12\x03\x01\x02\0\x06\x12\
+    \x04\x96\x07\x04\x08\n\x0f\n\x07\x04\x12\x03\x01\x02\0\x01\x12\x04\x96\
+    \x07\t\r\n\x0f\n\x07\x04\x12\x03\x01\x02\0\x03\x12\x04\x96\x07\x10\x11\n\
+    k\n\x06\x04\x12\x03\x01\x02\x01\x12\x04\x9a\x07\x04!\x1a[\x20The\x20clus\
+    ter\x20where\x20the\x20mutation\x20was\x20applied.\n\x20Not\x20set\x20wh\
+    en\x20`type`\x20is\x20`GARBAGE_COLLECTION`.\n\n\x0f\n\x07\x04\x12\x03\
+    \x01\x02\x01\x05\x12\x04\x9a\x07\x04\n\n\x0f\n\x07\x04\x12\x03\x01\x02\
+    \x01\x01\x12\x04\x9a\x07\x0b\x1c\n\x0f\n\x07\x04\x12\x03\x01\x02\x01\x03\
+    \x12\x04\x9a\x07\x1f\x20\n\xc7\x01\n\x06\x04\x12\x03\x01\x02\x02\x12\x04\
+    \x9f\x07\x04\x16\x1a\xb6\x01\x20The\x20row\x20key\x20for\x20all\x20mutat\
+    ions\x20that\x20are\x20part\x20of\x20this\x20`DataChange`.\n\x20If\x20th\
+    e\x20`DataChange`\x20is\x20chunked\x20across\x20multiple\x20messages,\
+    \x20then\x20this\x20field\n\x20will\x20only\x20be\x20set\x20for\x20the\
+    \x20first\x20message.\n\n\x0f\n\x07\x04\x12\x03\x01\x02\x02\x05\x12\x04\
+    \x9f\x07\x04\t\n\x0f\n\x07\x04\x12\x03\x01\x02\x02\x01\x12\x04\x9f\x07\n\
+    \x11\n\x0f\n\x07\x04\x12\x03\x01\x02\x02\x03\x12\x04\x9f\x07\x14\x15\nY\
+    \n\x06\x04\x12\x03\x01\x02\x03\x12\x04\xa2\x07\x043\x1aI\x20The\x20times\
+    tamp\x20at\x20which\x20the\x20mutation\x20was\x20applied\x20on\x20the\
+    \x20Bigtable\x20server.\n\n\x0f\n\x07\x04\x12\x03\x01\x02\x03\x06\x12\
+    \x04\xa2\x07\x04\x1d\n\x0f\n\x07\x04\x12\x03\x01\x02\x03\x01\x12\x04\xa2\
+    \x07\x1e.\n\x0f\n\x07\x04\x12\x03\x01\x02\x03\x03\x12\x04\xa2\x0712\n\
+    \xb9\x03\n\x06\x04\x12\x03\x01\x02\x04\x12\x04\xab\x07\x04\x19\x1a\xa8\
+    \x03\x20A\x20value\x20that\x20lets\x20stream\x20consumers\x20reconstruct\
+    \x20Bigtable's\n\x20conflict\x20resolution\x20semantics.\n\x20https://cl\
+    oud.google.com/bigtable/docs/writes#conflict-resolution\n\x20In\x20the\
+    \x20event\x20that\x20the\x20same\x20row\x20key,\x20column\x20family,\x20\
+    column\x20qualifier,\n\x20timestamp\x20are\x20modified\x20on\x20differen\
+    t\x20clusters\x20at\x20the\x20same\n\x20`commit_timestamp`,\x20the\x20mu\
+    tation\x20with\x20the\x20larger\x20`tiebreaker`\x20will\x20be\x20the\n\
+    \x20one\x20chosen\x20for\x20the\x20eventually\x20consistent\x20state\x20\
+    of\x20the\x20system.\n\n\x0f\n\x07\x04\x12\x03\x01\x02\x04\x05\x12\x04\
+    \xab\x07\x04\t\n\x0f\n\x07\x04\x12\x03\x01\x02\x04\x01\x12\x04\xab\x07\n\
+    \x14\n\x0f\n\x07\x04\x12\x03\x01\x02\x04\x03\x12\x04\xab\x07\x17\x18\n\
+    \xa9\x01\n\x06\x04\x12\x03\x01\x02\x05\x12\x04\xb0\x07\x04&\x1a\x98\x01\
+    \x20The\x20mutations\x20associated\x20with\x20this\x20change\x20to\x20th\
+    e\x20partition.\n\x20May\x20contain\x20complete\x20mutations\x20or\x20ch\
+    unks\x20of\x20a\x20multi-message\x20chunked\n\x20`DataChange`\x20record.\
+    \n\n\x0f\n\x07\x04\x12\x03\x01\x02\x05\x04\x12\x04\xb0\x07\x04\x0c\n\x0f\
+    \n\x07\x04\x12\x03\x01\x02\x05\x06\x12\x04\xb0\x07\r\x1a\n\x0f\n\x07\x04\
+    \x12\x03\x01\x02\x05\x01\x12\x04\xb0\x07\x1b!\n\x0f\n\x07\x04\x12\x03\
+    \x01\x02\x05\x03\x12\x04\xb0\x07$%\n\x81\x01\n\x06\x04\x12\x03\x01\x02\
+    \x06\x12\x04\xb4\x07\x04\x12\x1aq\x20When\x20true,\x20indicates\x20that\
+    \x20the\x20entire\x20`DataChange`\x20has\x20been\x20read\n\x20and\x20the\
+    \x20client\x20can\x20safely\x20process\x20the\x20message.\n\n\x0f\n\x07\
+    \x04\x12\x03\x01\x02\x06\x05\x12\x04\xb4\x07\x04\x08\n\x0f\n\x07\x04\x12\
+    \x03\x01\x02\x06\x01\x12\x04\xb4\x07\t\r\n\x0f\n\x07\x04\x12\x03\x01\x02\
+    \x06\x03\x12\x04\xb4\x07\x10\x11\n\x94\x01\n\x06\x04\x12\x03\x01\x02\x07\
+    \x12\x04\xb8\x07\x04\x15\x1a\x83\x01\x20An\x20encoded\x20position\x20for\
+    \x20this\x20stream's\x20partition\x20to\x20restart\x20reading\x20from.\n\
+    \x20This\x20token\x20is\x20for\x20the\x20StreamPartition\x20from\x20the\
+    \x20request.\n\n\x0f\n\x07\x04\x12\x03\x01\x02\x07\x05\x12\x04\xb8\x07\
+    \x04\n\n\x0f\n\x07\x04\x12\x03\x01\x02\x07\x01\x12\x04\xb8\x07\x0b\x10\n\
+    \x0f\n\x07\x04\x12\x03\x01\x02\x07\x03\x12\x04\xb8\x07\x13\x14\n\x8a\x03\
+    \n\x06\x04\x12\x03\x01\x02\x08\x12\x04\xc0\x07\x04;\x1a\xf9\x02\x20An\
+    \x20estimate\x20of\x20the\x20commit\x20timestamp\x20that\x20is\x20usuall\
+    y\x20lower\x20than\x20or\x20equal\n\x20to\x20any\x20timestamp\x20for\x20\
+    a\x20record\x20that\x20will\x20be\x20delivered\x20in\x20the\x20future\
+    \x20on\x20the\n\x20stream.\x20It\x20is\x20possible\x20that,\x20under\x20\
+    particular\x20circumstances\x20that\x20a\x20future\n\x20record\x20has\
+    \x20a\x20timestamp\x20is\x20is\x20lower\x20than\x20a\x20previously\x20se\
+    en\x20timestamp.\x20For\n\x20an\x20example\x20usage\x20see\n\x20https://\
+    beam.apache.org/documentation/basics/#watermarks\n\n\x0f\n\x07\x04\x12\
+    \x03\x01\x02\x08\x06\x12\x04\xc0\x07\x04\x1d\n\x0f\n\x07\x04\x12\x03\x01\
+    \x02\x08\x01\x12\x04\xc0\x07\x1e5\n\x0f\n\x07\x04\x12\x03\x01\x02\x08\
+    \x03\x12\x04\xc0\x078:\nl\n\x04\x04\x12\x03\x02\x12\x06\xc5\x07\x02\xd1\
+    \x07\x03\x1a\\\x20A\x20periodic\x20message\x20with\x20information\x20tha\
+    t\x20can\x20be\x20used\x20to\x20checkpoint\n\x20the\x20state\x20of\x20a\
+    \x20stream.\n\n\r\n\x05\x04\x12\x03\x02\x01\x12\x04\xc5\x07\n\x13\n\x8a\
+    \x01\n\x06\x04\x12\x03\x02\x02\0\x12\x04\xc8\x07\x043\x1az\x20A\x20token\
+    \x20that\x20can\x20be\x20provided\x20to\x20a\x20subsequent\x20`ReadChang\
+    eStream`\x20call\n\x20to\x20pick\x20up\x20reading\x20at\x20the\x20curren\
+    t\x20stream\x20position.\n\n\x0f\n\x07\x04\x12\x03\x02\x02\0\x06\x12\x04\
+    \xc8\x07\x04\x1b\n\x0f\n\x07\x04\x12\x03\x02\x02\0\x01\x12\x04\xc8\x07\
+    \x1c.\n\x0f\n\x07\x04\x12\x03\x02\x02\0\x03\x12\x04\xc8\x0712\n\x8a\x03\
+    \n\x06\x04\x12\x03\x02\x02\x01\x12\x04\xd0\x07\x04:\x1a\xf9\x02\x20An\
+    \x20estimate\x20of\x20the\x20commit\x20timestamp\x20that\x20is\x20usuall\
+    y\x20lower\x20than\x20or\x20equal\n\x20to\x20any\x20timestamp\x20for\x20\
+    a\x20record\x20that\x20will\x20be\x20delivered\x20in\x20the\x20future\
+    \x20on\x20the\n\x20stream.\x20It\x20is\x20possible\x20that,\x20under\x20\
+    particular\x20circumstances\x20that\x20a\x20future\n\x20record\x20has\
+    \x20a\x20timestamp\x20is\x20is\x20lower\x20than\x20a\x20previously\x20se\
+    en\x20timestamp.\x20For\n\x20an\x20example\x20usage\x20see\n\x20https://\
+    beam.apache.org/documentation/basics/#watermarks\n\n\x0f\n\x07\x04\x12\
+    \x03\x02\x02\x01\x06\x12\x04\xd0\x07\x04\x1d\n\x0f\n\x07\x04\x12\x03\x02\
+    \x02\x01\x01\x12\x04\xd0\x07\x1e5\n\x0f\n\x07\x04\x12\x03\x02\x02\x01\
+    \x03\x12\x04\xd0\x0789\n\xcd\x08\n\x04\x04\x12\x03\x03\x12\x06\xe7\x07\
+    \x02\xf3\x07\x03\x1a\xbc\x08\x20A\x20message\x20indicating\x20that\x20th\
+    e\x20client\x20should\x20stop\x20reading\x20from\x20the\x20stream.\n\x20\
+    If\x20status\x20is\x20OK\x20and\x20`continuation_tokens`\x20&\x20`new_pa\
+    rtitions`\x20are\x20empty,\x20the\n\x20stream\x20has\x20finished\x20(for\
+    \x20example\x20if\x20there\x20was\x20an\x20`end_time`\x20specified).\n\
+    \x20If\x20`continuation_tokens`\x20&\x20`new_partitions`\x20are\x20prese\
+    nt,\x20then\x20a\x20change\x20in\n\x20partitioning\x20requires\x20the\
+    \x20client\x20to\x20open\x20a\x20new\x20stream\x20for\x20each\x20token\
+    \x20to\n\x20resume\x20reading.\x20Example:\n\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20[B,\x20\x20\x20\x20\x20\x20D)\x20end\
+    s\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20v\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20new_partitions:\x20\x20[A,\x20\x20C)\x20[C,\x20\
+    \x20E)\n\x20continuation_tokens.partitions:\x20\x20[B,C)\x20[C,D)\n\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20^---^\x20^--\
+    -^\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20^\
+    \x20\x20\x20\x20\x20^\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20|\x20\x20\x20\x20\x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20|\x20\x20\x20\x20\x20StreamContinuationT\
+    oken\x202\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20|\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+    StreamContinuationToken\x201\n\x20To\x20read\x20the\x20new\x20partition\
+    \x20[A,C),\x20supply\x20the\x20continuation\x20tokens\x20whose\n\x20rang\
+    es\x20cover\x20the\x20new\x20partition,\x20for\x20example\x20Continuatio\
+    nToken[A,B)\x20&\n\x20ContinuationToken[B,C).\n\n\r\n\x05\x04\x12\x03\
+    \x03\x01\x12\x04\xe7\x07\n\x15\n+\n\x06\x04\x12\x03\x03\x02\0\x12\x04\
+    \xe9\x07\x04!\x1a\x1b\x20The\x20status\x20of\x20the\x20stream.\n\n\x0f\n\
+    \x07\x04\x12\x03\x03\x02\0\x06\x12\x04\xe9\x07\x04\x15\n\x0f\n\x07\x04\
+    \x12\x03\x03\x02\0\x01\x12\x04\xe9\x07\x16\x1c\n\x0f\n\x07\x04\x12\x03\
+    \x03\x02\0\x03\x12\x04\xe9\x07\x1f\x20\no\n\x06\x04\x12\x03\x03\x02\x01\
+    \x12\x04\xed\x07\x04=\x1a_\x20If\x20non-empty,\x20contains\x20the\x20inf\
+    ormation\x20needed\x20to\x20resume\x20reading\x20their\n\x20associated\
+    \x20partitions.\n\n\x0f\n\x07\x04\x12\x03\x03\x02\x01\x04\x12\x04\xed\
+    \x07\x04\x0c\n\x0f\n\x07\x04\x12\x03\x03\x02\x01\x06\x12\x04\xed\x07\r$\
+    \n\x0f\n\x07\x04\x12\x03\x03\x02\x01\x01\x12\x04\xed\x07%8\n\x0f\n\x07\
+    \x04\x12\x03\x03\x02\x01\x03\x12\x04\xed\x07;<\n\xbf\x01\n\x06\x04\x12\
+    \x03\x03\x02\x02\x12\x04\xf2\x07\x040\x1a\xae\x01\x20If\x20non-empty,\
+    \x20contains\x20the\x20new\x20partitions\x20to\x20start\x20reading\x20fr\
+    om,\x20which\n\x20are\x20related\x20to\x20but\x20not\x20necessarily\x20i\
+    dentical\x20to\x20the\x20partitions\x20for\x20the\n\x20above\x20`continu\
+    ation_tokens`.\n\n\x0f\n\x07\x04\x12\x03\x03\x02\x02\x04\x12\x04\xf2\x07\
+    \x04\x0c\n\x0f\n\x07\x04\x12\x03\x03\x02\x02\x06\x12\x04\xf2\x07\r\x1c\n\
+    \x0f\n\x07\x04\x12\x03\x03\x02\x02\x01\x12\x04\xf2\x07\x1d+\n\x0f\n\x07\
+    \x04\x12\x03\x03\x02\x02\x03\x12\x04\xf2\x07./\n<\n\x04\x04\x12\x08\0\
+    \x12\x06\xf6\x07\x02\xff\x07\x03\x1a,\x20The\x20data\x20or\x20control\
+    \x20message\x20on\x20the\x20stream.\n\n\r\n\x05\x04\x12\x08\0\x01\x12\
+    \x04\xf6\x07\x08\x15\n,\n\x04\x04\x12\x02\0\x12\x04\xf8\x07\x04\x1f\x1a\
+    \x1e\x20A\x20mutation\x20to\x20the\x20partition.\n\n\r\n\x05\x04\x12\x02\
+    \0\x06\x12\x04\xf8\x07\x04\x0e\n\r\n\x05\x04\x12\x02\0\x01\x12\x04\xf8\
+    \x07\x0f\x1a\n\r\n\x05\x04\x12\x02\0\x03\x12\x04\xf8\x07\x1d\x1e\n-\n\
+    \x04\x04\x12\x02\x01\x12\x04\xfb\x07\x04\x1c\x1a\x1f\x20A\x20periodic\
+    \x20heartbeat\x20message.\n\n\r\n\x05\x04\x12\x02\x01\x06\x12\x04\xfb\
+    \x07\x04\r\n\r\n\x05\x04\x12\x02\x01\x01\x12\x04\xfb\x07\x0e\x17\n\r\n\
+    \x05\x04\x12\x02\x01\x03\x12\x04\xfb\x07\x1a\x1b\n?\n\x04\x04\x12\x02\
+    \x02\x12\x04\xfe\x07\x04!\x1a1\x20An\x20indication\x20that\x20the\x20str\
+    eam\x20should\x20be\x20closed.\n\n\r\n\x05\x04\x12\x02\x02\x06\x12\x04\
+    \xfe\x07\x04\x0f\n\r\n\x05\x04\x12\x02\x02\x01\x12\x04\xfe\x07\x10\x1c\n\
+    \r\n\x05\x04\x12\x02\x02\x03\x12\x04\xfe\x07\x1f\x20\n9\n\x02\x04\x13\
+    \x12\x06\x83\x08\0\xb9\x08\x01\x1a+\x20Request\x20message\x20for\x20Bigt\
+    able.ExecuteQuery\n\n\x0b\n\x03\x04\x13\x01\x12\x04\x83\x08\x08\x1b\n\
+    \xab\x01\n\x04\x04\x13\x02\0\x12\x06\x87\x08\x02\x8c\x08\x04\x1a\x9a\x01\
+    \x20Required.\x20The\x20unique\x20name\x20of\x20the\x20instance\x20again\
+    st\x20which\x20the\x20query\x20should\x20be\n\x20executed.\n\x20Values\
+    \x20are\x20of\x20the\x20form\x20`projects/<project>/instances/<instance>\
+    `\n\n\r\n\x05\x04\x13\x02\0\x05\x12\x04\x87\x08\x02\x08\n\r\n\x05\x04\
+    \x13\x02\0\x01\x12\x04\x87\x08\t\x16\n\r\n\x05\x04\x13\x02\0\x03\x12\x04\
+    \x87\x08\x19\x1a\n\x0f\n\x05\x04\x13\x02\0\x08\x12\x06\x87\x08\x1b\x8c\
+    \x08\x03\n\x10\n\x08\x04\x13\x02\0\x08\x9c\x08\0\x12\x04\x88\x08\x04*\n\
+    \x11\n\x07\x04\x13\x02\0\x08\x9f\x08\x12\x06\x89\x08\x04\x8b\x08\x05\n\
+    \x8a\x01\n\x04\x04\x13\x02\x01\x12\x04\x90\x08\x02E\x1a|\x20Optional.\
+    \x20This\x20value\x20specifies\x20routing\x20for\x20replication.\x20If\
+    \x20not\x20specified,\n\x20the\x20`default`\x20application\x20profile\
+    \x20will\x20be\x20used.\n\n\r\n\x05\x04\x13\x02\x01\x05\x12\x04\x90\x08\
+    \x02\x08\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\x90\x08\t\x17\n\r\n\x05\
+    \x04\x13\x02\x01\x03\x12\x04\x90\x08\x1a\x1b\n\r\n\x05\x04\x13\x02\x01\
+    \x08\x12\x04\x90\x08\x1cD\n\x10\n\x08\x04\x13\x02\x01\x08\x9c\x08\0\x12\
+    \x04\x90\x08\x1dC\n+\n\x04\x04\x13\x02\x02\x12\x04\x93\x08\x02<\x1a\x1d\
+    \x20Required.\x20The\x20query\x20string.\n\n\r\n\x05\x04\x13\x02\x02\x05\
+    \x12\x04\x93\x08\x02\x08\n\r\n\x05\x04\x13\x02\x02\x01\x12\x04\x93\x08\t\
+    \x0e\n\r\n\x05\x04\x13\x02\x02\x03\x12\x04\x93\x08\x11\x12\n\r\n\x05\x04\
+    \x13\x02\x02\x08\x12\x04\x93\x08\x13;\n\x10\n\x08\x04\x13\x02\x02\x08\
+    \x9c\x08\0\x12\x04\x93\x08\x14:\nC\n\x04\x04\x13\x08\0\x12\x06\x96\x08\
+    \x02\x9a\x08\x03\x1a3\x20Required.\x20Requested\x20data\x20format\x20for\
+    \x20the\x20response.\n\n\r\n\x05\x04\x13\x08\0\x01\x12\x04\x96\x08\x08\
+    \x13\n[\n\x04\x04\x13\x02\x03\x12\x04\x99\x08\x04!\x1aM\x20Protocol\x20b\
+    uffer\x20format\x20as\x20described\x20by\x20ProtoSchema\x20and\x20ProtoR\
+    ows\n\x20messages.\n\n\r\n\x05\x04\x13\x02\x03\x06\x12\x04\x99\x08\x04\
+    \x0f\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\x99\x08\x10\x1c\n\r\n\x05\x04\
+    \x13\x02\x03\x03\x12\x04\x99\x08\x1f\x20\n\x90\x03\n\x04\x04\x13\x02\x04\
+    \x12\x04\xa3\x08\x02B\x1a\x81\x03\x20Optional.\x20If\x20this\x20request\
+    \x20is\x20resuming\x20a\x20previously\x20interrupted\x20query\n\x20execu\
+    tion,\x20`resume_token`\x20should\x20be\x20copied\x20from\x20the\x20last\
+    \n\x20PartialResultSet\x20yielded\x20before\x20the\x20interruption.\x20D\
+    oing\x20this\n\x20enables\x20the\x20query\x20execution\x20to\x20resume\
+    \x20where\x20the\x20last\x20one\x20left\n\x20off.\n\x20The\x20rest\x20of\
+    \x20the\x20request\x20parameters\x20must\x20exactly\x20match\x20the\n\
+    \x20request\x20that\x20yielded\x20this\x20token.\x20Otherwise\x20the\x20\
+    request\x20will\x20fail.\n\n\r\n\x05\x04\x13\x02\x04\x05\x12\x04\xa3\x08\
+    \x02\x07\n\r\n\x05\x04\x13\x02\x04\x01\x12\x04\xa3\x08\x08\x14\n\r\n\x05\
+    \x04\x13\x02\x04\x03\x12\x04\xa3\x08\x17\x18\n\r\n\x05\x04\x13\x02\x04\
+    \x08\x12\x04\xa3\x08\x19A\n\x10\n\x08\x04\x13\x02\x04\x08\x9c\x08\0\x12\
+    \x04\xa3\x08\x1a@\n\xd2\x06\n\x04\x04\x13\x02\x05\x12\x04\xb8\x08\x02I\
+    \x1a\xc3\x06\x20Required.\x20params\x20contains\x20string\x20type\x20key\
+    s\x20and\x20Bigtable\x20type\x20values\x20that\n\x20bind\x20to\x20placeh\
+    olders\x20in\x20the\x20query\x20string.\x20In\x20query\x20string,\x20a\
+    \x20parameter\n\x20placeholder\x20consists\x20of\x20the\n\x20`@`\x20char\
+    acter\x20followed\x20by\x20the\x20parameter\x20name\x20(for\x20example,\
+    \x20`@firstName`)\x20in\n\x20the\x20query\x20string.\n\n\x20For\x20examp\
+    le,\x20if\n\x20`params[\"firstName\"]\x20=\x20bytes_value:\x20\"foo\"\
+    \x20type\x20{bytes_type\x20{}}`\n\x20\x20then\x20`@firstName`\x20will\
+    \x20be\x20replaced\x20with\x20googlesql\x20bytes\x20value\x20\"foo\"\x20\
+    in\x20the\n\x20\x20query\x20string\x20during\x20query\x20evaluation.\n\n\
+    \x20In\x20case\x20of\x20Value.kind\x20is\x20not\x20set,\x20it\x20will\
+    \x20be\x20set\x20to\x20corresponding\x20null\n\x20value\x20in\x20googles\
+    ql.\n\x20\x20`params[\"firstName\"]\x20=\x20\x20type\x20{string_type\x20\
+    {}}`\n\x20\x20then\x20`@firstName`\x20will\x20be\x20replaced\x20with\x20\
+    googlesql\x20null\x20string.\n\n\x20Value.type\x20should\x20always\x20be\
+    \x20set\x20and\x20no\x20inference\x20of\x20type\x20will\x20be\x20made\
+    \x20from\n\x20Value.kind.\x20If\x20Value.type\x20is\x20not\x20set,\x20we\
+    \x20will\x20return\x20INVALID_ARGUMENT\n\x20error.\n\n\r\n\x05\x04\x13\
+    \x02\x05\x06\x12\x04\xb8\x08\x02\x14\n\r\n\x05\x04\x13\x02\x05\x01\x12\
+    \x04\xb8\x08\x15\x1b\n\r\n\x05\x04\x13\x02\x05\x03\x12\x04\xb8\x08\x1e\
+    \x1f\n\r\n\x05\x04\x13\x02\x05\x08\x12\x04\xb8\x08\x20H\n\x10\n\x08\x04\
+    \x13\x02\x05\x08\x9c\x08\0\x12\x04\xb8\x08!G\n:\n\x02\x04\x14\x12\x06\
+    \xbc\x08\0\xcd\x08\x01\x1a,\x20Response\x20message\x20for\x20Bigtable.Ex\
+    ecuteQuery\n\n\x0b\n\x03\x04\x14\x01\x12\x04\xbc\x08\x08\x1c\n\xb8\x03\n\
+    \x04\x04\x14\x08\0\x12\x06\xc3\x08\x02\xcc\x08\x03\x1a\xa7\x03\x20The\
+    \x20first\x20response\x20streamed\x20from\x20the\x20server\x20is\x20of\
+    \x20type\x20`ResultSetMetadata`\n\x20and\x20includes\x20information\x20a\
+    bout\x20the\x20columns\x20and\x20types\x20of\x20the\x20result\x20set.\n\
+    \x20From\x20there\x20on,\x20we\x20stream\x20`PartialResultSet`\x20messag\
+    es\x20with\x20no\x20additional\n\x20information.\x20`PartialResultSet`\
+    \x20will\x20contain\x20`resume_token`\x20to\x20restart\x20the\n\x20respo\
+    nse\x20if\x20query\x20interrupts.\x20In\x20case\x20of\x20resumption\x20w\
+    ith\x20`resume_token`,\n\x20the\x20server\x20will\x20not\x20resend\x20th\
+    e\x20ResultSetMetadata.\n\n\r\n\x05\x04\x14\x08\0\x01\x12\x04\xc3\x08\
+    \x08\x10\n\x93\x01\n\x04\x04\x14\x02\0\x12\x04\xc6\x08\x04#\x1a\x84\x01\
+    \x20Structure\x20of\x20rows\x20in\x20this\x20response\x20stream.\x20The\
+    \x20first\x20(and\x20only\x20the\x20first)\n\x20response\x20streamed\x20\
+    from\x20the\x20server\x20will\x20be\x20of\x20this\x20type.\n\n\r\n\x05\
+    \x04\x14\x02\0\x06\x12\x04\xc6\x08\x04\x15\n\r\n\x05\x04\x14\x02\0\x01\
+    \x12\x04\xc6\x08\x16\x1e\n\r\n\x05\x04\x14\x02\0\x03\x12\x04\xc6\x08!\"\
+    \n\xaa\x01\n\x04\x04\x14\x02\x01\x12\x04\xcb\x08\x04!\x1a\x9b\x01\x20A\
+    \x20partial\x20result\x20set\x20with\x20row\x20data\x20potentially\x20in\
+    cluding\x20additional\n\x20instructions\x20on\x20how\x20recent\x20past\
+    \x20and\x20future\x20partial\x20responses\x20should\x20be\n\x20interpret\
+    ed.\n\n\r\n\x05\x04\x14\x02\x01\x06\x12\x04\xcb\x08\x04\x14\n\r\n\x05\
+    \x04\x14\x02\x01\x01\x12\x04\xcb\x08\x15\x1c\n\r\n\x05\x04\x14\x02\x01\
+    \x03\x12\x04\xcb\x08\x1f\x20b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -3256,15 +7377,19 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(7);
+            let mut deps = ::std::vec::Vec::with_capacity(11);
             deps.push(super::annotations::file_descriptor().clone());
             deps.push(super::client::file_descriptor().clone());
             deps.push(super::field_behavior::file_descriptor().clone());
             deps.push(super::resource::file_descriptor().clone());
+            deps.push(super::routing::file_descriptor().clone());
             deps.push(super::data::file_descriptor().clone());
+            deps.push(super::request_stats::file_descriptor().clone());
+            deps.push(::protobuf::well_known_types::duration::file_descriptor().clone());
+            deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::wrappers::file_descriptor().clone());
             deps.push(super::status::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(15);
+            let mut messages = ::std::vec::Vec::with_capacity(29);
             messages.push(ReadRowsRequest::generated_message_descriptor_data());
             messages.push(ReadRowsResponse::generated_message_descriptor_data());
             messages.push(SampleRowKeysRequest::generated_message_descriptor_data());
@@ -3273,14 +7398,30 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(MutateRowResponse::generated_message_descriptor_data());
             messages.push(MutateRowsRequest::generated_message_descriptor_data());
             messages.push(MutateRowsResponse::generated_message_descriptor_data());
+            messages.push(RateLimitInfo::generated_message_descriptor_data());
             messages.push(CheckAndMutateRowRequest::generated_message_descriptor_data());
             messages.push(CheckAndMutateRowResponse::generated_message_descriptor_data());
+            messages.push(PingAndWarmRequest::generated_message_descriptor_data());
+            messages.push(PingAndWarmResponse::generated_message_descriptor_data());
             messages.push(ReadModifyWriteRowRequest::generated_message_descriptor_data());
             messages.push(ReadModifyWriteRowResponse::generated_message_descriptor_data());
+            messages.push(GenerateInitialChangeStreamPartitionsRequest::generated_message_descriptor_data());
+            messages.push(GenerateInitialChangeStreamPartitionsResponse::generated_message_descriptor_data());
+            messages.push(ReadChangeStreamRequest::generated_message_descriptor_data());
+            messages.push(ReadChangeStreamResponse::generated_message_descriptor_data());
+            messages.push(ExecuteQueryRequest::generated_message_descriptor_data());
+            messages.push(ExecuteQueryResponse::generated_message_descriptor_data());
             messages.push(read_rows_response::CellChunk::generated_message_descriptor_data());
             messages.push(mutate_rows_request::Entry::generated_message_descriptor_data());
             messages.push(mutate_rows_response::Entry::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(0);
+            messages.push(read_change_stream_response::MutationChunk::generated_message_descriptor_data());
+            messages.push(read_change_stream_response::DataChange::generated_message_descriptor_data());
+            messages.push(read_change_stream_response::Heartbeat::generated_message_descriptor_data());
+            messages.push(read_change_stream_response::CloseStream::generated_message_descriptor_data());
+            messages.push(read_change_stream_response::mutation_chunk::ChunkInfo::generated_message_descriptor_data());
+            let mut enums = ::std::vec::Vec::with_capacity(2);
+            enums.push(read_rows_request::RequestStatsView::generated_enum_descriptor_data());
+            enums.push(read_change_stream_response::data_change::Type::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

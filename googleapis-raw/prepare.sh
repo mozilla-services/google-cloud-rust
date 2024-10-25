@@ -6,9 +6,8 @@
 #
 #cargo install grpcio-compiler --version 0.13.0
 cargo install grpcio-compiler
-## lock on 2.28.0 until grpcio supports 3+
 #cargo install protobuf-codegen --version 2.28.0
-cargo install protobuf-codegen
+cargo install protobuf-codegen --version 3.4.0
 find src -name "*.rs" -and -not \( -name "mod.rs" -or -name "lib.rs" \) -print -delete
 echo "REMEMBER to: "
 echo " [ ] update 'src/lib.rs' _PROTOBUF_VERSION_CHECK to the latest version number"

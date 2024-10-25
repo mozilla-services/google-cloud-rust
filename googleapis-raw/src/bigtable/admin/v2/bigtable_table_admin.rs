@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -25,21 +25,722 @@
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_4_0;
 
+///  The request for
+///  [RestoreTable][google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.RestoreTableRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreTableRequest {
+    // message fields
+    ///  Required. The name of the instance in which to create the restored
+    ///  table. Values are of the form `projects/<project>/instances/<instance>`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreTableRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Required. The id of the table to create and restore to. This
+    ///  table must not already exist. The `table_id` appended to
+    ///  `parent` forms the full table name of the form
+    ///  `projects/<project>/instances/<instance>/tables/<table_id>`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreTableRequest.table_id)
+    pub table_id: ::std::string::String,
+    // message oneof groups
+    pub source: ::std::option::Option<restore_table_request::Source>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.RestoreTableRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreTableRequest {
+    fn default() -> &'a RestoreTableRequest {
+        <RestoreTableRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreTableRequest {
+    pub fn new() -> RestoreTableRequest {
+        ::std::default::Default::default()
+    }
+
+    // string backup = 3;
+
+    pub fn backup(&self) -> &str {
+        match self.source {
+            ::std::option::Option::Some(restore_table_request::Source::Backup(ref v)) => v,
+            _ => "",
+        }
+    }
+
+    pub fn clear_backup(&mut self) {
+        self.source = ::std::option::Option::None;
+    }
+
+    pub fn has_backup(&self) -> bool {
+        match self.source {
+            ::std::option::Option::Some(restore_table_request::Source::Backup(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backup(&mut self, v: ::std::string::String) {
+        self.source = ::std::option::Option::Some(restore_table_request::Source::Backup(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_backup(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(restore_table_request::Source::Backup(_)) = self.source {
+        } else {
+            self.source = ::std::option::Option::Some(restore_table_request::Source::Backup(::std::string::String::new()));
+        }
+        match self.source {
+            ::std::option::Option::Some(restore_table_request::Source::Backup(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_backup(&mut self) -> ::std::string::String {
+        if self.has_backup() {
+            match self.source.take() {
+                ::std::option::Option::Some(restore_table_request::Source::Backup(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &RestoreTableRequest| { &m.parent },
+            |m: &mut RestoreTableRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "table_id",
+            |m: &RestoreTableRequest| { &m.table_id },
+            |m: &mut RestoreTableRequest| { &mut m.table_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
+            "backup",
+            RestoreTableRequest::has_backup,
+            RestoreTableRequest::backup,
+            RestoreTableRequest::set_backup,
+        ));
+        oneofs.push(restore_table_request::Source::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreTableRequest>(
+            "RestoreTableRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreTableRequest {
+    const NAME: &'static str = "RestoreTableRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.table_id = is.read_string()?;
+                },
+                26 => {
+                    self.source = ::std::option::Option::Some(restore_table_request::Source::Backup(is.read_string()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.table_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.table_id);
+        }
+        if let ::std::option::Option::Some(ref v) = self.source {
+            match v {
+                &restore_table_request::Source::Backup(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.table_id.is_empty() {
+            os.write_string(2, &self.table_id)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source {
+            match v {
+                &restore_table_request::Source::Backup(ref v) => {
+                    os.write_string(3, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreTableRequest {
+        RestoreTableRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.table_id.clear();
+        self.source = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreTableRequest {
+        static instance: RestoreTableRequest = RestoreTableRequest {
+            parent: ::std::string::String::new(),
+            table_id: ::std::string::String::new(),
+            source: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreTableRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreTableRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreTableRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreTableRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreTableRequest`
+pub mod restore_table_request {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.RestoreTableRequest.source)
+    pub enum Source {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.RestoreTableRequest.backup)
+        Backup(::std::string::String),
+    }
+
+    impl ::protobuf::Oneof for Source {
+    }
+
+    impl ::protobuf::OneofFull for Source {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::RestoreTableRequest as ::protobuf::MessageFull>::descriptor().oneof_by_name("source").unwrap()).clone()
+        }
+    }
+
+    impl Source {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Source>("source")
+        }
+    }
+}
+
+///  Metadata type for the long-running operation returned by
+///  [RestoreTable][google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.RestoreTableMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct RestoreTableMetadata {
+    // message fields
+    ///  Name of the table being created and restored to.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreTableMetadata.name)
+    pub name: ::std::string::String,
+    ///  The type of the restore source.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreTableMetadata.source_type)
+    pub source_type: ::protobuf::EnumOrUnknown<super::table::RestoreSourceType>,
+    ///  If exists, the name of the long-running operation that will be used to
+    ///  track the post-restore optimization process to optimize the performance of
+    ///  the restored table. The metadata type of the long-running operation is
+    ///  [OptimizeRestoreTableMetadata][]. The response type is
+    ///  [Empty][google.protobuf.Empty]. This long-running operation may be
+    ///  automatically created by the system if applicable after the
+    ///  RestoreTable long-running operation completes successfully. This operation
+    ///  may not be created if the table is already optimized or the restore was
+    ///  not successful.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreTableMetadata.optimize_table_operation_name)
+    pub optimize_table_operation_name: ::std::string::String,
+    ///  The progress of the
+    ///  [RestoreTable][google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable]
+    ///  operation.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.RestoreTableMetadata.progress)
+    pub progress: ::protobuf::MessageField<super::common::OperationProgress>,
+    // message oneof groups
+    pub source_info: ::std::option::Option<restore_table_metadata::Source_info>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.RestoreTableMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RestoreTableMetadata {
+    fn default() -> &'a RestoreTableMetadata {
+        <RestoreTableMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RestoreTableMetadata {
+    pub fn new() -> RestoreTableMetadata {
+        ::std::default::Default::default()
+    }
+
+    // .google.bigtable.admin.v2.BackupInfo backup_info = 3;
+
+    pub fn backup_info(&self) -> &super::table::BackupInfo {
+        match self.source_info {
+            ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(ref v)) => v,
+            _ => <super::table::BackupInfo as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_backup_info(&mut self) {
+        self.source_info = ::std::option::Option::None;
+    }
+
+    pub fn has_backup_info(&self) -> bool {
+        match self.source_info {
+            ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backup_info(&mut self, v: super::table::BackupInfo) {
+        self.source_info = ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_backup_info(&mut self) -> &mut super::table::BackupInfo {
+        if let ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(_)) = self.source_info {
+        } else {
+            self.source_info = ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(super::table::BackupInfo::new()));
+        }
+        match self.source_info {
+            ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_backup_info(&mut self) -> super::table::BackupInfo {
+        if self.has_backup_info() {
+            match self.source_info.take() {
+                ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::table::BackupInfo::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &RestoreTableMetadata| { &m.name },
+            |m: &mut RestoreTableMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_type",
+            |m: &RestoreTableMetadata| { &m.source_type },
+            |m: &mut RestoreTableMetadata| { &mut m.source_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::table::BackupInfo>(
+            "backup_info",
+            RestoreTableMetadata::has_backup_info,
+            RestoreTableMetadata::backup_info,
+            RestoreTableMetadata::mut_backup_info,
+            RestoreTableMetadata::set_backup_info,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "optimize_table_operation_name",
+            |m: &RestoreTableMetadata| { &m.optimize_table_operation_name },
+            |m: &mut RestoreTableMetadata| { &mut m.optimize_table_operation_name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::OperationProgress>(
+            "progress",
+            |m: &RestoreTableMetadata| { &m.progress },
+            |m: &mut RestoreTableMetadata| { &mut m.progress },
+        ));
+        oneofs.push(restore_table_metadata::Source_info::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RestoreTableMetadata>(
+            "RestoreTableMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RestoreTableMetadata {
+    const NAME: &'static str = "RestoreTableMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                16 => {
+                    self.source_type = is.read_enum_or_unknown()?;
+                },
+                26 => {
+                    self.source_info = ::std::option::Option::Some(restore_table_metadata::Source_info::BackupInfo(is.read_message()?));
+                },
+                34 => {
+                    self.optimize_table_operation_name = is.read_string()?;
+                },
+                42 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.progress)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.source_type != ::protobuf::EnumOrUnknown::new(super::table::RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(2, self.source_type.value());
+        }
+        if !self.optimize_table_operation_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.optimize_table_operation_name);
+        }
+        if let Some(v) = self.progress.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_table_metadata::Source_info::BackupInfo(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.source_type != ::protobuf::EnumOrUnknown::new(super::table::RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED) {
+            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.source_type))?;
+        }
+        if !self.optimize_table_operation_name.is_empty() {
+            os.write_string(4, &self.optimize_table_operation_name)?;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.source_info {
+            match v {
+                &restore_table_metadata::Source_info::BackupInfo(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RestoreTableMetadata {
+        RestoreTableMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.source_type = ::protobuf::EnumOrUnknown::new(super::table::RestoreSourceType::RESTORE_SOURCE_TYPE_UNSPECIFIED);
+        self.source_info = ::std::option::Option::None;
+        self.optimize_table_operation_name.clear();
+        self.progress.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RestoreTableMetadata {
+        static instance: RestoreTableMetadata = RestoreTableMetadata {
+            name: ::std::string::String::new(),
+            source_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            optimize_table_operation_name: ::std::string::String::new(),
+            progress: ::protobuf::MessageField::none(),
+            source_info: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RestoreTableMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RestoreTableMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RestoreTableMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RestoreTableMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `RestoreTableMetadata`
+pub mod restore_table_metadata {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.RestoreTableMetadata.source_info)
+    pub enum Source_info {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.RestoreTableMetadata.backup_info)
+        BackupInfo(super::super::table::BackupInfo),
+    }
+
+    impl ::protobuf::Oneof for Source_info {
+    }
+
+    impl ::protobuf::OneofFull for Source_info {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::RestoreTableMetadata as ::protobuf::MessageFull>::descriptor().oneof_by_name("source_info").unwrap()).clone()
+        }
+    }
+
+    impl Source_info {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Source_info>("source_info")
+        }
+    }
+}
+
+///  Metadata type for the long-running operation used to track the progress
+///  of optimizations performed on a newly restored table. This long-running
+///  operation is automatically created by the system after the successful
+///  completion of a table restore, and cannot be cancelled.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.OptimizeRestoredTableMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct OptimizeRestoredTableMetadata {
+    // message fields
+    ///  Name of the restored table being optimized.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.OptimizeRestoredTableMetadata.name)
+    pub name: ::std::string::String,
+    ///  The progress of the post-restore optimizations.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.OptimizeRestoredTableMetadata.progress)
+    pub progress: ::protobuf::MessageField<super::common::OperationProgress>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.OptimizeRestoredTableMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a OptimizeRestoredTableMetadata {
+    fn default() -> &'a OptimizeRestoredTableMetadata {
+        <OptimizeRestoredTableMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl OptimizeRestoredTableMetadata {
+    pub fn new() -> OptimizeRestoredTableMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &OptimizeRestoredTableMetadata| { &m.name },
+            |m: &mut OptimizeRestoredTableMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::OperationProgress>(
+            "progress",
+            |m: &OptimizeRestoredTableMetadata| { &m.progress },
+            |m: &mut OptimizeRestoredTableMetadata| { &mut m.progress },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OptimizeRestoredTableMetadata>(
+            "OptimizeRestoredTableMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for OptimizeRestoredTableMetadata {
+    const NAME: &'static str = "OptimizeRestoredTableMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.progress)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if let Some(v) = self.progress.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> OptimizeRestoredTableMetadata {
+        OptimizeRestoredTableMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.progress.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static OptimizeRestoredTableMetadata {
+        static instance: OptimizeRestoredTableMetadata = OptimizeRestoredTableMetadata {
+            name: ::std::string::String::new(),
+            progress: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for OptimizeRestoredTableMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("OptimizeRestoredTableMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for OptimizeRestoredTableMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for OptimizeRestoredTableMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  Request message for
 ///  [google.bigtable.admin.v2.BigtableTableAdmin.CreateTable][google.bigtable.admin.v2.BigtableTableAdmin.CreateTable]
 // @@protoc_insertion_point(message:google.bigtable.admin.v2.CreateTableRequest)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct CreateTableRequest {
     // message fields
-    ///  The unique name of the instance in which to create the table.
-    ///  Values are of the form `projects/<project>/instances/<instance>`.
+    ///  Required. The unique name of the instance in which to create the table.
+    ///  Values are of the form `projects/{project}/instances/{instance}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableRequest.parent)
     pub parent: ::std::string::String,
-    ///  The name by which the new table should be referred to within the parent
-    ///  instance, e.g., `foobar` rather than `<parent>/tables/foobar`.
+    ///  Required. The name by which the new table should be referred to within the
+    ///  parent instance, e.g., `foobar` rather than `{parent}/tables/foobar`.
+    ///  Maximum 50 characters.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableRequest.table_id)
     pub table_id: ::std::string::String,
-    ///  The Table to create.
+    ///  Required. The Table to create.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableRequest.table)
     pub table: ::protobuf::MessageField<super::table::Table>,
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableRequest.initial_splits)
@@ -348,18 +1049,18 @@ pub mod create_table_request {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct CreateTableFromSnapshotRequest {
     // message fields
-    ///  The unique name of the instance in which to create the table.
-    ///  Values are of the form `projects/<project>/instances/<instance>`.
+    ///  Required. The unique name of the instance in which to create the table.
+    ///  Values are of the form `projects/{project}/instances/{instance}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableFromSnapshotRequest.parent)
     pub parent: ::std::string::String,
-    ///  The name by which the new table should be referred to within the parent
-    ///  instance, e.g., `foobar` rather than `<parent>/tables/foobar`.
+    ///  Required. The name by which the new table should be referred to within the
+    ///  parent instance, e.g., `foobar` rather than `{parent}/tables/foobar`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableFromSnapshotRequest.table_id)
     pub table_id: ::std::string::String,
-    ///  The unique name of the snapshot from which to restore the table. The
-    ///  snapshot and the table must be in the same instance.
-    ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/snapshots/<snapshot>`.
+    ///  Required. The unique name of the snapshot from which to restore the table.
+    ///  The snapshot and the table must be in the same instance. Values are of the
+    ///  form
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateTableFromSnapshotRequest.source_snapshot)
     pub source_snapshot: ::std::string::String,
     // special fields
@@ -516,9 +1217,9 @@ impl ::protobuf::reflect::ProtobufValue for CreateTableFromSnapshotRequest {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct DropRowRangeRequest {
     // message fields
-    ///  The unique name of the table on which to drop a range of rows.
+    ///  Required. The unique name of the table on which to drop a range of rows.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.DropRowRangeRequest.name)
     pub name: ::std::string::String,
     // message oneof groups
@@ -791,16 +1492,23 @@ pub mod drop_row_range_request {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct ListTablesRequest {
     // message fields
-    ///  The unique name of the instance for which tables should be listed.
-    ///  Values are of the form `projects/<project>/instances/<instance>`.
+    ///  Required. The unique name of the instance for which tables should be
+    ///  listed. Values are of the form `projects/{project}/instances/{instance}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListTablesRequest.parent)
     pub parent: ::std::string::String,
     ///  The view to be applied to the returned tables' fields.
-    ///  Defaults to `NAME_ONLY` if unspecified; no others are currently supported.
+    ///  NAME_ONLY view (default) and REPLICATION_VIEW are supported.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListTablesRequest.view)
     pub view: ::protobuf::EnumOrUnknown<super::table::table::View>,
     ///  Maximum number of results per page.
-    ///  CURRENTLY UNIMPLEMENTED AND IGNORED.
+    ///
+    ///  A page_size of zero lets the server choose the number of items to return.
+    ///  A page_size which is strictly positive will return at most that many items.
+    ///  A negative page_size will cause an error.
+    ///
+    ///  Following the first request, subsequent paginated calls are not required
+    ///  to pass a page_size. If a page_size is set in subsequent calls, it must
+    ///  match the page_size given in the first request.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListTablesRequest.page_size)
     pub page_size: i32,
     ///  The value of `next_page_token` returned by a previous call.
@@ -1123,9 +1831,9 @@ impl ::protobuf::reflect::ProtobufValue for ListTablesResponse {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetTableRequest {
     // message fields
-    ///  The unique name of the requested table.
+    ///  Required. The unique name of the requested table.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.GetTableRequest.name)
     pub name: ::std::string::String,
     ///  The view to be applied to the returned table's fields.
@@ -1264,15 +1972,338 @@ impl ::protobuf::reflect::ProtobufValue for GetTableRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  The request for
+///  [UpdateTable][google.bigtable.admin.v2.BigtableTableAdmin.UpdateTable].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UpdateTableRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateTableRequest {
+    // message fields
+    ///  Required. The table to update.
+    ///  The table's `name` field is used to identify the table to update.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateTableRequest.table)
+    pub table: ::protobuf::MessageField<super::table::Table>,
+    ///  Required. The list of fields to update.
+    ///  A mask specifying which fields (e.g. `change_stream_config`) in the `table`
+    ///  field should be updated. This mask is relative to the `table` field, not to
+    ///  the request message. The wildcard (*) path is currently not supported.
+    ///  Currently UpdateTable is only supported for the following fields:
+    ///
+    ///  * `change_stream_config`
+    ///  * `change_stream_config.retention_period`
+    ///  * `deletion_protection`
+    ///
+    ///  If `column_families` is set in `update_mask`, it will return an
+    ///  UNIMPLEMENTED error.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateTableRequest.update_mask)
+    pub update_mask: ::protobuf::MessageField<::protobuf::well_known_types::field_mask::FieldMask>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UpdateTableRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateTableRequest {
+    fn default() -> &'a UpdateTableRequest {
+        <UpdateTableRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateTableRequest {
+    pub fn new() -> UpdateTableRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::table::Table>(
+            "table",
+            |m: &UpdateTableRequest| { &m.table },
+            |m: &mut UpdateTableRequest| { &mut m.table },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::field_mask::FieldMask>(
+            "update_mask",
+            |m: &UpdateTableRequest| { &m.update_mask },
+            |m: &mut UpdateTableRequest| { &mut m.update_mask },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateTableRequest>(
+            "UpdateTableRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateTableRequest {
+    const NAME: &'static str = "UpdateTableRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.table)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_mask)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.table.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.table.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateTableRequest {
+        UpdateTableRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.table.clear();
+        self.update_mask.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateTableRequest {
+        static instance: UpdateTableRequest = UpdateTableRequest {
+            table: ::protobuf::MessageField::none(),
+            update_mask: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateTableRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateTableRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateTableRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateTableRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Metadata type for the operation returned by
+///  [UpdateTable][google.bigtable.admin.v2.BigtableTableAdmin.UpdateTable].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UpdateTableMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateTableMetadata {
+    // message fields
+    ///  The name of the table being updated.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateTableMetadata.name)
+    pub name: ::std::string::String,
+    ///  The time at which this operation started.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateTableMetadata.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  If set, the time at which this operation finished or was canceled.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateTableMetadata.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UpdateTableMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateTableMetadata {
+    fn default() -> &'a UpdateTableMetadata {
+        <UpdateTableMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateTableMetadata {
+    pub fn new() -> UpdateTableMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &UpdateTableMetadata| { &m.name },
+            |m: &mut UpdateTableMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &UpdateTableMetadata| { &m.start_time },
+            |m: &mut UpdateTableMetadata| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &UpdateTableMetadata| { &m.end_time },
+            |m: &mut UpdateTableMetadata| { &mut m.end_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateTableMetadata>(
+            "UpdateTableMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateTableMetadata {
+    const NAME: &'static str = "UpdateTableMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateTableMetadata {
+        UpdateTableMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateTableMetadata {
+        static instance: UpdateTableMetadata = UpdateTableMetadata {
+            name: ::std::string::String::new(),
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateTableMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateTableMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateTableMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateTableMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 ///  Request message for
 ///  [google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable][google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable]
 // @@protoc_insertion_point(message:google.bigtable.admin.v2.DeleteTableRequest)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct DeleteTableRequest {
     // message fields
-    ///  The unique name of the table to be deleted.
+    ///  Required. The unique name of the table to be deleted.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.DeleteTableRequest.name)
     pub name: ::std::string::String,
     // special fields
@@ -1392,22 +2423,317 @@ impl ::protobuf::reflect::ProtobufValue for DeleteTableRequest {
 }
 
 ///  Request message for
+///  [google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable][google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable]
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UndeleteTableRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UndeleteTableRequest {
+    // message fields
+    ///  Required. The unique name of the table to be restored.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UndeleteTableRequest.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UndeleteTableRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UndeleteTableRequest {
+    fn default() -> &'a UndeleteTableRequest {
+        <UndeleteTableRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UndeleteTableRequest {
+    pub fn new() -> UndeleteTableRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &UndeleteTableRequest| { &m.name },
+            |m: &mut UndeleteTableRequest| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UndeleteTableRequest>(
+            "UndeleteTableRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UndeleteTableRequest {
+    const NAME: &'static str = "UndeleteTableRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UndeleteTableRequest {
+        UndeleteTableRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UndeleteTableRequest {
+        static instance: UndeleteTableRequest = UndeleteTableRequest {
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UndeleteTableRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UndeleteTableRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UndeleteTableRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UndeleteTableRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Metadata type for the operation returned by
+///  [google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable][google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UndeleteTableMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UndeleteTableMetadata {
+    // message fields
+    ///  The name of the table being restored.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UndeleteTableMetadata.name)
+    pub name: ::std::string::String,
+    ///  The time at which this operation started.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UndeleteTableMetadata.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  If set, the time at which this operation finished or was cancelled.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UndeleteTableMetadata.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UndeleteTableMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UndeleteTableMetadata {
+    fn default() -> &'a UndeleteTableMetadata {
+        <UndeleteTableMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UndeleteTableMetadata {
+    pub fn new() -> UndeleteTableMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &UndeleteTableMetadata| { &m.name },
+            |m: &mut UndeleteTableMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &UndeleteTableMetadata| { &m.start_time },
+            |m: &mut UndeleteTableMetadata| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &UndeleteTableMetadata| { &m.end_time },
+            |m: &mut UndeleteTableMetadata| { &mut m.end_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UndeleteTableMetadata>(
+            "UndeleteTableMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UndeleteTableMetadata {
+    const NAME: &'static str = "UndeleteTableMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UndeleteTableMetadata {
+        UndeleteTableMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UndeleteTableMetadata {
+        static instance: UndeleteTableMetadata = UndeleteTableMetadata {
+            name: ::std::string::String::new(),
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UndeleteTableMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UndeleteTableMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UndeleteTableMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UndeleteTableMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Request message for
 ///  [google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies][google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies]
 // @@protoc_insertion_point(message:google.bigtable.admin.v2.ModifyColumnFamiliesRequest)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct ModifyColumnFamiliesRequest {
     // message fields
-    ///  The unique name of the table whose families should be modified.
+    ///  Required. The unique name of the table whose families should be modified.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ModifyColumnFamiliesRequest.name)
     pub name: ::std::string::String,
-    ///  Modifications to be atomically applied to the specified table's families.
-    ///  Entries are applied in order, meaning that earlier modifications can be
-    ///  masked by later ones (in the case of repeated updates to the same family,
-    ///  for example).
+    ///  Required. Modifications to be atomically applied to the specified table's
+    ///  families. Entries are applied in order, meaning that earlier modifications
+    ///  can be masked by later ones (in the case of repeated updates to the same
+    ///  family, for example).
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ModifyColumnFamiliesRequest.modifications)
     pub modifications: ::std::vec::Vec<modify_column_families_request::Modification>,
+    ///  Optional. If true, ignore safety checks when modifying the column families.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ModifyColumnFamiliesRequest.ignore_warnings)
+    pub ignore_warnings: bool,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ModifyColumnFamiliesRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1425,7 +2751,7 @@ impl ModifyColumnFamiliesRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -1436,6 +2762,11 @@ impl ModifyColumnFamiliesRequest {
             "modifications",
             |m: &ModifyColumnFamiliesRequest| { &m.modifications },
             |m: &mut ModifyColumnFamiliesRequest| { &mut m.modifications },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "ignore_warnings",
+            |m: &ModifyColumnFamiliesRequest| { &m.ignore_warnings },
+            |m: &mut ModifyColumnFamiliesRequest| { &mut m.ignore_warnings },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ModifyColumnFamiliesRequest>(
             "ModifyColumnFamiliesRequest",
@@ -1461,6 +2792,9 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
                 18 => {
                     self.modifications.push(is.read_message()?);
                 },
+                24 => {
+                    self.ignore_warnings = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1480,6 +2814,9 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
+        if self.ignore_warnings != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1492,6 +2829,9 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
         for v in &self.modifications {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
         };
+        if self.ignore_warnings != false {
+            os.write_bool(3, self.ignore_warnings)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1511,6 +2851,7 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
     fn clear(&mut self) {
         self.name.clear();
         self.modifications.clear();
+        self.ignore_warnings = false;
         self.special_fields.clear();
     }
 
@@ -1518,6 +2859,7 @@ impl ::protobuf::Message for ModifyColumnFamiliesRequest {
         static instance: ModifyColumnFamiliesRequest = ModifyColumnFamiliesRequest {
             name: ::std::string::String::new(),
             modifications: ::std::vec::Vec::new(),
+            ignore_warnings: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1551,6 +2893,11 @@ pub mod modify_column_families_request {
         ///  The ID of the column family to be modified.
         // @@protoc_insertion_point(field:google.bigtable.admin.v2.ModifyColumnFamiliesRequest.Modification.id)
         pub id: ::std::string::String,
+        ///  Optional. A mask specifying which fields (e.g. `gc_rule`) in the `update`
+        ///  mod should be updated, ignored for other modification types. If unset or
+        ///  empty, we treat it as updating `gc_rule` to be backward compatible.
+        // @@protoc_insertion_point(field:google.bigtable.admin.v2.ModifyColumnFamiliesRequest.Modification.update_mask)
+        pub update_mask: ::protobuf::MessageField<::protobuf::well_known_types::field_mask::FieldMask>,
         // message oneof groups
         pub mod_: ::std::option::Option<modification::Mod>,
         // special fields
@@ -1693,7 +3040,7 @@ pub mod modify_column_families_request {
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(4);
+            let mut fields = ::std::vec::Vec::with_capacity(5);
             let mut oneofs = ::std::vec::Vec::with_capacity(1);
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
                 "id",
@@ -1719,6 +3066,11 @@ pub mod modify_column_families_request {
                 Modification::has_drop,
                 Modification::drop,
                 Modification::set_drop,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::field_mask::FieldMask>(
+                "update_mask",
+                |m: &Modification| { &m.update_mask },
+                |m: &mut Modification| { &mut m.update_mask },
             ));
             oneofs.push(modification::Mod::generated_oneof_descriptor_data());
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Modification>(
@@ -1751,6 +3103,9 @@ pub mod modify_column_families_request {
                     32 => {
                         self.mod_ = ::std::option::Option::Some(modification::Mod::Drop(is.read_bool()?));
                     },
+                    50 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_mask)?;
+                    },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                     },
@@ -1765,6 +3120,10 @@ pub mod modify_column_families_request {
             let mut my_size = 0;
             if !self.id.is_empty() {
                 my_size += ::protobuf::rt::string_size(1, &self.id);
+            }
+            if let Some(v) = self.update_mask.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
             }
             if let ::std::option::Option::Some(ref v) = self.mod_ {
                 match v {
@@ -1789,6 +3148,9 @@ pub mod modify_column_families_request {
         fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
             if !self.id.is_empty() {
                 os.write_string(1, &self.id)?;
+            }
+            if let Some(v) = self.update_mask.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
             }
             if let ::std::option::Option::Some(ref v) = self.mod_ {
                 match v {
@@ -1824,12 +3186,14 @@ pub mod modify_column_families_request {
             self.mod_ = ::std::option::Option::None;
             self.mod_ = ::std::option::Option::None;
             self.mod_ = ::std::option::Option::None;
+            self.update_mask.clear();
             self.special_fields.clear();
         }
 
         fn default_instance() -> &'static Modification {
             static instance: Modification = Modification {
                 id: ::std::string::String::new(),
+                update_mask: ::protobuf::MessageField::none(),
                 mod_: ::std::option::Option::None,
                 special_fields: ::protobuf::SpecialFields::new(),
             };
@@ -1893,9 +3257,9 @@ pub mod modify_column_families_request {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct GenerateConsistencyTokenRequest {
     // message fields
-    ///  The unique name of the Table for which to create a consistency token.
-    ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  Required. The unique name of the Table for which to create a consistency
+    ///  token. Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.GenerateConsistencyTokenRequest.name)
     pub name: ::std::string::String,
     // special fields
@@ -2145,14 +3509,16 @@ impl ::protobuf::reflect::ProtobufValue for GenerateConsistencyTokenResponse {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct CheckConsistencyRequest {
     // message fields
-    ///  The unique name of the Table for which to check replication consistency.
-    ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  Required. The unique name of the Table for which to check replication
+    ///  consistency. Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CheckConsistencyRequest.name)
     pub name: ::std::string::String,
-    ///  The token created using GenerateConsistencyToken for the Table.
+    ///  Required. The token created using GenerateConsistencyToken for the Table.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.CheckConsistencyRequest.consistency_token)
     pub consistency_token: ::std::string::String,
+    // message oneof groups
+    pub mode: ::std::option::Option<check_consistency_request::Mode>,
     // special fields
     // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CheckConsistencyRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -2169,9 +3535,107 @@ impl CheckConsistencyRequest {
         ::std::default::Default::default()
     }
 
+    // .google.bigtable.admin.v2.StandardReadRemoteWrites standard_read_remote_writes = 3;
+
+    pub fn standard_read_remote_writes(&self) -> &StandardReadRemoteWrites {
+        match self.mode {
+            ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(ref v)) => v,
+            _ => <StandardReadRemoteWrites as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_standard_read_remote_writes(&mut self) {
+        self.mode = ::std::option::Option::None;
+    }
+
+    pub fn has_standard_read_remote_writes(&self) -> bool {
+        match self.mode {
+            ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_standard_read_remote_writes(&mut self, v: StandardReadRemoteWrites) {
+        self.mode = ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_standard_read_remote_writes(&mut self) -> &mut StandardReadRemoteWrites {
+        if let ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(_)) = self.mode {
+        } else {
+            self.mode = ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(StandardReadRemoteWrites::new()));
+        }
+        match self.mode {
+            ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_standard_read_remote_writes(&mut self) -> StandardReadRemoteWrites {
+        if self.has_standard_read_remote_writes() {
+            match self.mode.take() {
+                ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            StandardReadRemoteWrites::new()
+        }
+    }
+
+    // .google.bigtable.admin.v2.DataBoostReadLocalWrites data_boost_read_local_writes = 4;
+
+    pub fn data_boost_read_local_writes(&self) -> &DataBoostReadLocalWrites {
+        match self.mode {
+            ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(ref v)) => v,
+            _ => <DataBoostReadLocalWrites as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_data_boost_read_local_writes(&mut self) {
+        self.mode = ::std::option::Option::None;
+    }
+
+    pub fn has_data_boost_read_local_writes(&self) -> bool {
+        match self.mode {
+            ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_data_boost_read_local_writes(&mut self, v: DataBoostReadLocalWrites) {
+        self.mode = ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_data_boost_read_local_writes(&mut self) -> &mut DataBoostReadLocalWrites {
+        if let ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(_)) = self.mode {
+        } else {
+            self.mode = ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(DataBoostReadLocalWrites::new()));
+        }
+        match self.mode {
+            ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_data_boost_read_local_writes(&mut self) -> DataBoostReadLocalWrites {
+        if self.has_data_boost_read_local_writes() {
+            match self.mode.take() {
+                ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            DataBoostReadLocalWrites::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
             |m: &CheckConsistencyRequest| { &m.name },
@@ -2182,6 +3646,21 @@ impl CheckConsistencyRequest {
             |m: &CheckConsistencyRequest| { &m.consistency_token },
             |m: &mut CheckConsistencyRequest| { &mut m.consistency_token },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, StandardReadRemoteWrites>(
+            "standard_read_remote_writes",
+            CheckConsistencyRequest::has_standard_read_remote_writes,
+            CheckConsistencyRequest::standard_read_remote_writes,
+            CheckConsistencyRequest::mut_standard_read_remote_writes,
+            CheckConsistencyRequest::set_standard_read_remote_writes,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DataBoostReadLocalWrites>(
+            "data_boost_read_local_writes",
+            CheckConsistencyRequest::has_data_boost_read_local_writes,
+            CheckConsistencyRequest::data_boost_read_local_writes,
+            CheckConsistencyRequest::mut_data_boost_read_local_writes,
+            CheckConsistencyRequest::set_data_boost_read_local_writes,
+        ));
+        oneofs.push(check_consistency_request::Mode::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CheckConsistencyRequest>(
             "CheckConsistencyRequest",
             fields,
@@ -2206,6 +3685,12 @@ impl ::protobuf::Message for CheckConsistencyRequest {
                 18 => {
                     self.consistency_token = is.read_string()?;
                 },
+                26 => {
+                    self.mode = ::std::option::Option::Some(check_consistency_request::Mode::StandardReadRemoteWrites(is.read_message()?));
+                },
+                34 => {
+                    self.mode = ::std::option::Option::Some(check_consistency_request::Mode::DataBoostReadLocalWrites(is.read_message()?));
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -2224,6 +3709,18 @@ impl ::protobuf::Message for CheckConsistencyRequest {
         if !self.consistency_token.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.consistency_token);
         }
+        if let ::std::option::Option::Some(ref v) = self.mode {
+            match v {
+                &check_consistency_request::Mode::StandardReadRemoteWrites(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &check_consistency_request::Mode::DataBoostReadLocalWrites(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -2235,6 +3732,16 @@ impl ::protobuf::Message for CheckConsistencyRequest {
         }
         if !self.consistency_token.is_empty() {
             os.write_string(2, &self.consistency_token)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.mode {
+            match v {
+                &check_consistency_request::Mode::StandardReadRemoteWrites(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+                },
+                &check_consistency_request::Mode::DataBoostReadLocalWrites(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2255,6 +3762,8 @@ impl ::protobuf::Message for CheckConsistencyRequest {
     fn clear(&mut self) {
         self.name.clear();
         self.consistency_token.clear();
+        self.mode = ::std::option::Option::None;
+        self.mode = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -2262,6 +3771,7 @@ impl ::protobuf::Message for CheckConsistencyRequest {
         static instance: CheckConsistencyRequest = CheckConsistencyRequest {
             name: ::std::string::String::new(),
             consistency_token: ::std::string::String::new(),
+            mode: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -2282,6 +3792,246 @@ impl ::std::fmt::Display for CheckConsistencyRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for CheckConsistencyRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `CheckConsistencyRequest`
+pub mod check_consistency_request {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:google.bigtable.admin.v2.CheckConsistencyRequest.mode)
+    pub enum Mode {
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.CheckConsistencyRequest.standard_read_remote_writes)
+        StandardReadRemoteWrites(super::StandardReadRemoteWrites),
+        // @@protoc_insertion_point(oneof_field:google.bigtable.admin.v2.CheckConsistencyRequest.data_boost_read_local_writes)
+        DataBoostReadLocalWrites(super::DataBoostReadLocalWrites),
+    }
+
+    impl ::protobuf::Oneof for Mode {
+    }
+
+    impl ::protobuf::OneofFull for Mode {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::CheckConsistencyRequest as ::protobuf::MessageFull>::descriptor().oneof_by_name("mode").unwrap()).clone()
+        }
+    }
+
+    impl Mode {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Mode>("mode")
+        }
+    }
+}
+
+///  Checks that all writes before the consistency token was generated are
+///  replicated in every cluster and readable.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.StandardReadRemoteWrites)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct StandardReadRemoteWrites {
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.StandardReadRemoteWrites.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a StandardReadRemoteWrites {
+    fn default() -> &'a StandardReadRemoteWrites {
+        <StandardReadRemoteWrites as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StandardReadRemoteWrites {
+    pub fn new() -> StandardReadRemoteWrites {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StandardReadRemoteWrites>(
+            "StandardReadRemoteWrites",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for StandardReadRemoteWrites {
+    const NAME: &'static str = "StandardReadRemoteWrites";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> StandardReadRemoteWrites {
+        StandardReadRemoteWrites::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static StandardReadRemoteWrites {
+        static instance: StandardReadRemoteWrites = StandardReadRemoteWrites {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for StandardReadRemoteWrites {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("StandardReadRemoteWrites").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for StandardReadRemoteWrites {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StandardReadRemoteWrites {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Checks that all writes before the consistency token was generated in the same
+///  cluster are readable by Databoost.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.DataBoostReadLocalWrites)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct DataBoostReadLocalWrites {
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.DataBoostReadLocalWrites.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a DataBoostReadLocalWrites {
+    fn default() -> &'a DataBoostReadLocalWrites {
+        <DataBoostReadLocalWrites as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DataBoostReadLocalWrites {
+    pub fn new() -> DataBoostReadLocalWrites {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DataBoostReadLocalWrites>(
+            "DataBoostReadLocalWrites",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for DataBoostReadLocalWrites {
+    const NAME: &'static str = "DataBoostReadLocalWrites";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> DataBoostReadLocalWrites {
+        DataBoostReadLocalWrites::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static DataBoostReadLocalWrites {
+        static instance: DataBoostReadLocalWrites = DataBoostReadLocalWrites {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for DataBoostReadLocalWrites {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("DataBoostReadLocalWrites").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for DataBoostReadLocalWrites {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DataBoostReadLocalWrites {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -2422,20 +4172,20 @@ impl ::protobuf::reflect::ProtobufValue for CheckConsistencyResponse {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct SnapshotTableRequest {
     // message fields
-    ///  The unique name of the table to have the snapshot taken.
+    ///  Required. The unique name of the table to have the snapshot taken.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/tables/<table>`.
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.SnapshotTableRequest.name)
     pub name: ::std::string::String,
-    ///  The name of the cluster where the snapshot will be created in.
+    ///  Required. The name of the cluster where the snapshot will be created in.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>`.
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.SnapshotTableRequest.cluster)
     pub cluster: ::std::string::String,
-    ///  The ID by which the new snapshot should be referred to within the parent
-    ///  cluster, e.g., `mysnapshot` of the form: `[_a-zA-Z0-9][-_.a-zA-Z0-9]*`
-    ///  rather than
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/snapshots/mysnapshot`.
+    ///  Required. The ID by which the new snapshot should be referred to within the
+    ///  parent cluster, e.g., `mysnapshot` of the form:
+    ///  `[_a-zA-Z0-9][-_.a-zA-Z0-9]*` rather than
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/mysnapshot`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.SnapshotTableRequest.snapshot_id)
     pub snapshot_id: ::std::string::String,
     ///  The amount of time that the new snapshot can stay active after it is
@@ -2639,9 +4389,9 @@ impl ::protobuf::reflect::ProtobufValue for SnapshotTableRequest {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetSnapshotRequest {
     // message fields
-    ///  The unique name of the requested snapshot.
+    ///  Required. The unique name of the requested snapshot.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/snapshots/<snapshot>`.
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.GetSnapshotRequest.name)
     pub name: ::std::string::String,
     // special fields
@@ -2771,11 +4521,11 @@ impl ::protobuf::reflect::ProtobufValue for GetSnapshotRequest {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct ListSnapshotsRequest {
     // message fields
-    ///  The unique name of the cluster for which snapshots should be listed.
-    ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>`.
-    ///  Use `<cluster> = '-'` to list snapshots for all clusters in an instance,
-    ///  e.g., `projects/<project>/instances/<instance>/clusters/-`.
+    ///  Required. The unique name of the cluster for which snapshots should be
+    ///  listed. Values are of the form
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
+    ///  Use `{cluster} = '-'` to list snapshots for all clusters in an instance,
+    ///  e.g., `projects/{project}/instances/{instance}/clusters/-`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListSnapshotsRequest.parent)
     pub parent: ::std::string::String,
     ///  The maximum number of snapshots to return per page.
@@ -3096,9 +4846,9 @@ impl ::protobuf::reflect::ProtobufValue for ListSnapshotsResponse {
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct DeleteSnapshotRequest {
     // message fields
-    ///  The unique name of the snapshot to be deleted.
+    ///  Required. The unique name of the snapshot to be deleted.
     ///  Values are of the form
-    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/snapshots/<snapshot>`.
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.
     // @@protoc_insertion_point(field:google.bigtable.admin.v2.DeleteSnapshotRequest.name)
     pub name: ::std::string::String,
     // special fields
@@ -3558,316 +5308,3580 @@ impl ::protobuf::reflect::ProtobufValue for CreateTableFromSnapshotMetadata {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+///  The request for
+///  [CreateBackup][google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.CreateBackupRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct CreateBackupRequest {
+    // message fields
+    ///  Required. This must be one of the clusters in the instance in which this
+    ///  table is located. The backup will be stored in this cluster. Values are
+    ///  of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Required. The id of the backup to be created. The `backup_id` along with
+    ///  the parent `parent` are combined as {parent}/backups/{backup_id} to create
+    ///  the full backup name, of the form:
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup_id}`.
+    ///  This string must be between 1 and 50 characters in length and match the
+    ///  regex [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupRequest.backup_id)
+    pub backup_id: ::std::string::String,
+    ///  Required. The backup to create.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupRequest.backup)
+    pub backup: ::protobuf::MessageField<super::table::Backup>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CreateBackupRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CreateBackupRequest {
+    fn default() -> &'a CreateBackupRequest {
+        <CreateBackupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateBackupRequest {
+    pub fn new() -> CreateBackupRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &CreateBackupRequest| { &m.parent },
+            |m: &mut CreateBackupRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "backup_id",
+            |m: &CreateBackupRequest| { &m.backup_id },
+            |m: &mut CreateBackupRequest| { &mut m.backup_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::table::Backup>(
+            "backup",
+            |m: &CreateBackupRequest| { &m.backup },
+            |m: &mut CreateBackupRequest| { &mut m.backup },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CreateBackupRequest>(
+            "CreateBackupRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CreateBackupRequest {
+    const NAME: &'static str = "CreateBackupRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.backup_id = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.backup)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.backup_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.backup_id);
+        }
+        if let Some(v) = self.backup.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.backup_id.is_empty() {
+            os.write_string(2, &self.backup_id)?;
+        }
+        if let Some(v) = self.backup.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CreateBackupRequest {
+        CreateBackupRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.backup_id.clear();
+        self.backup.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CreateBackupRequest {
+        static instance: CreateBackupRequest = CreateBackupRequest {
+            parent: ::std::string::String::new(),
+            backup_id: ::std::string::String::new(),
+            backup: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CreateBackupRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CreateBackupRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CreateBackupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateBackupRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Metadata type for the operation returned by
+///  [CreateBackup][google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.CreateBackupMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct CreateBackupMetadata {
+    // message fields
+    ///  The name of the backup being created.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupMetadata.name)
+    pub name: ::std::string::String,
+    ///  The name of the table the backup is created from.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupMetadata.source_table)
+    pub source_table: ::std::string::String,
+    ///  The time at which this operation started.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupMetadata.start_time)
+    pub start_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  If set, the time at which this operation finished or was cancelled.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateBackupMetadata.end_time)
+    pub end_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CreateBackupMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CreateBackupMetadata {
+    fn default() -> &'a CreateBackupMetadata {
+        <CreateBackupMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateBackupMetadata {
+    pub fn new() -> CreateBackupMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &CreateBackupMetadata| { &m.name },
+            |m: &mut CreateBackupMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_table",
+            |m: &CreateBackupMetadata| { &m.source_table },
+            |m: &mut CreateBackupMetadata| { &mut m.source_table },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "start_time",
+            |m: &CreateBackupMetadata| { &m.start_time },
+            |m: &mut CreateBackupMetadata| { &mut m.start_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "end_time",
+            |m: &CreateBackupMetadata| { &m.end_time },
+            |m: &mut CreateBackupMetadata| { &mut m.end_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CreateBackupMetadata>(
+            "CreateBackupMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CreateBackupMetadata {
+    const NAME: &'static str = "CreateBackupMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.source_table = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.start_time)?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.end_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.source_table.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.source_table);
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.source_table.is_empty() {
+            os.write_string(2, &self.source_table)?;
+        }
+        if let Some(v) = self.start_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if let Some(v) = self.end_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CreateBackupMetadata {
+        CreateBackupMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.source_table.clear();
+        self.start_time.clear();
+        self.end_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CreateBackupMetadata {
+        static instance: CreateBackupMetadata = CreateBackupMetadata {
+            name: ::std::string::String::new(),
+            source_table: ::std::string::String::new(),
+            start_time: ::protobuf::MessageField::none(),
+            end_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CreateBackupMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CreateBackupMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CreateBackupMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateBackupMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [UpdateBackup][google.bigtable.admin.v2.BigtableTableAdmin.UpdateBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UpdateBackupRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateBackupRequest {
+    // message fields
+    ///  Required. The backup to update. `backup.name`, and the fields to be updated
+    ///  as specified by `update_mask` are required. Other fields are ignored.
+    ///  Update is only supported for the following fields:
+    ///
+    ///   * `backup.expire_time`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateBackupRequest.backup)
+    pub backup: ::protobuf::MessageField<super::table::Backup>,
+    ///  Required. A mask specifying which fields (e.g. `expire_time`) in the
+    ///  Backup resource should be updated. This mask is relative to the Backup
+    ///  resource, not to the request message. The field mask must always be
+    ///  specified; this prevents any future fields from being erased accidentally
+    ///  by clients that do not know about them.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateBackupRequest.update_mask)
+    pub update_mask: ::protobuf::MessageField<::protobuf::well_known_types::field_mask::FieldMask>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UpdateBackupRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateBackupRequest {
+    fn default() -> &'a UpdateBackupRequest {
+        <UpdateBackupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateBackupRequest {
+    pub fn new() -> UpdateBackupRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::table::Backup>(
+            "backup",
+            |m: &UpdateBackupRequest| { &m.backup },
+            |m: &mut UpdateBackupRequest| { &mut m.backup },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::field_mask::FieldMask>(
+            "update_mask",
+            |m: &UpdateBackupRequest| { &m.update_mask },
+            |m: &mut UpdateBackupRequest| { &mut m.update_mask },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateBackupRequest>(
+            "UpdateBackupRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateBackupRequest {
+    const NAME: &'static str = "UpdateBackupRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.backup)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_mask)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.backup.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.backup.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateBackupRequest {
+        UpdateBackupRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.backup.clear();
+        self.update_mask.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateBackupRequest {
+        static instance: UpdateBackupRequest = UpdateBackupRequest {
+            backup: ::protobuf::MessageField::none(),
+            update_mask: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateBackupRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateBackupRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateBackupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateBackupRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [GetBackup][google.bigtable.admin.v2.BigtableTableAdmin.GetBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.GetBackupRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct GetBackupRequest {
+    // message fields
+    ///  Required. Name of the backup.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.GetBackupRequest.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.GetBackupRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a GetBackupRequest {
+    fn default() -> &'a GetBackupRequest {
+        <GetBackupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GetBackupRequest {
+    pub fn new() -> GetBackupRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &GetBackupRequest| { &m.name },
+            |m: &mut GetBackupRequest| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GetBackupRequest>(
+            "GetBackupRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for GetBackupRequest {
+    const NAME: &'static str = "GetBackupRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> GetBackupRequest {
+        GetBackupRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static GetBackupRequest {
+        static instance: GetBackupRequest = GetBackupRequest {
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for GetBackupRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("GetBackupRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for GetBackupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetBackupRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [DeleteBackup][google.bigtable.admin.v2.BigtableTableAdmin.DeleteBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.DeleteBackupRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct DeleteBackupRequest {
+    // message fields
+    ///  Required. Name of the backup to delete.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.DeleteBackupRequest.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.DeleteBackupRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteBackupRequest {
+    fn default() -> &'a DeleteBackupRequest {
+        <DeleteBackupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteBackupRequest {
+    pub fn new() -> DeleteBackupRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &DeleteBackupRequest| { &m.name },
+            |m: &mut DeleteBackupRequest| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DeleteBackupRequest>(
+            "DeleteBackupRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for DeleteBackupRequest {
+    const NAME: &'static str = "DeleteBackupRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> DeleteBackupRequest {
+        DeleteBackupRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static DeleteBackupRequest {
+        static instance: DeleteBackupRequest = DeleteBackupRequest {
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for DeleteBackupRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("DeleteBackupRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for DeleteBackupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteBackupRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [ListBackups][google.bigtable.admin.v2.BigtableTableAdmin.ListBackups].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.ListBackupsRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListBackupsRequest {
+    // message fields
+    ///  Required. The cluster to list backups from.  Values are of the
+    ///  form `projects/{project}/instances/{instance}/clusters/{cluster}`.
+    ///  Use `{cluster} = '-'` to list backups for all clusters in an instance,
+    ///  e.g., `projects/{project}/instances/{instance}/clusters/-`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsRequest.parent)
+    pub parent: ::std::string::String,
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsRequest.filter)
+    pub filter: ::std::string::String,
+    ///  An expression for specifying the sort order of the results of the request.
+    ///  The string value should specify one or more fields in
+    ///  [Backup][google.bigtable.admin.v2.Backup]. The full syntax is described at
+    ///  https://aip.dev/132#ordering.
+    ///
+    ///  Fields supported are:
+    ///
+    ///  * name
+    ///  * source_table
+    ///  * expire_time
+    ///  * start_time
+    ///  * end_time
+    ///  * size_bytes
+    ///  * state
+    ///
+    ///  For example, "start_time". The default sorting order is ascending.
+    ///  To specify descending order for the field, a suffix " desc" should
+    ///  be appended to the field name. For example, "start_time desc".
+    ///  Redundant space characters in the syntax are insigificant.
+    ///
+    ///  If order_by is empty, results will be sorted by `start_time` in descending
+    ///  order starting from the most recently created backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsRequest.order_by)
+    pub order_by: ::std::string::String,
+    ///  Number of backups to be returned in the response. If 0 or
+    ///  less, defaults to the server's maximum allowed page size.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsRequest.page_size)
+    pub page_size: i32,
+    ///  If non-empty, `page_token` should contain a
+    ///  [next_page_token][google.bigtable.admin.v2.ListBackupsResponse.next_page_token]
+    ///  from a previous
+    ///  [ListBackupsResponse][google.bigtable.admin.v2.ListBackupsResponse] to the
+    ///  same `parent` and with the same `filter`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsRequest.page_token)
+    pub page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ListBackupsRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListBackupsRequest {
+    fn default() -> &'a ListBackupsRequest {
+        <ListBackupsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListBackupsRequest {
+    pub fn new() -> ListBackupsRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &ListBackupsRequest| { &m.parent },
+            |m: &mut ListBackupsRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "filter",
+            |m: &ListBackupsRequest| { &m.filter },
+            |m: &mut ListBackupsRequest| { &mut m.filter },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "order_by",
+            |m: &ListBackupsRequest| { &m.order_by },
+            |m: &mut ListBackupsRequest| { &mut m.order_by },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_size",
+            |m: &ListBackupsRequest| { &m.page_size },
+            |m: &mut ListBackupsRequest| { &mut m.page_size },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_token",
+            |m: &ListBackupsRequest| { &m.page_token },
+            |m: &mut ListBackupsRequest| { &mut m.page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListBackupsRequest>(
+            "ListBackupsRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListBackupsRequest {
+    const NAME: &'static str = "ListBackupsRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.filter = is.read_string()?;
+                },
+                26 => {
+                    self.order_by = is.read_string()?;
+                },
+                32 => {
+                    self.page_size = is.read_int32()?;
+                },
+                42 => {
+                    self.page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.filter.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.filter);
+        }
+        if !self.order_by.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.order_by);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::int32_size(4, self.page_size);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.filter.is_empty() {
+            os.write_string(2, &self.filter)?;
+        }
+        if !self.order_by.is_empty() {
+            os.write_string(3, &self.order_by)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(4, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(5, &self.page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListBackupsRequest {
+        ListBackupsRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.filter.clear();
+        self.order_by.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListBackupsRequest {
+        static instance: ListBackupsRequest = ListBackupsRequest {
+            parent: ::std::string::String::new(),
+            filter: ::std::string::String::new(),
+            order_by: ::std::string::String::new(),
+            page_size: 0,
+            page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListBackupsRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListBackupsRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListBackupsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListBackupsRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The response for
+///  [ListBackups][google.bigtable.admin.v2.BigtableTableAdmin.ListBackups].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.ListBackupsResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListBackupsResponse {
+    // message fields
+    ///  The list of matching backups.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsResponse.backups)
+    pub backups: ::std::vec::Vec<super::table::Backup>,
+    ///  `next_page_token` can be sent in a subsequent
+    ///  [ListBackups][google.bigtable.admin.v2.BigtableTableAdmin.ListBackups] call
+    ///  to fetch more of the matching backups.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListBackupsResponse.next_page_token)
+    pub next_page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ListBackupsResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListBackupsResponse {
+    fn default() -> &'a ListBackupsResponse {
+        <ListBackupsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListBackupsResponse {
+    pub fn new() -> ListBackupsResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "backups",
+            |m: &ListBackupsResponse| { &m.backups },
+            |m: &mut ListBackupsResponse| { &mut m.backups },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "next_page_token",
+            |m: &ListBackupsResponse| { &m.next_page_token },
+            |m: &mut ListBackupsResponse| { &mut m.next_page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListBackupsResponse>(
+            "ListBackupsResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListBackupsResponse {
+    const NAME: &'static str = "ListBackupsResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.backups.push(is.read_message()?);
+                },
+                18 => {
+                    self.next_page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.backups {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.backups {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListBackupsResponse {
+        ListBackupsResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.backups.clear();
+        self.next_page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListBackupsResponse {
+        static instance: ListBackupsResponse = ListBackupsResponse {
+            backups: ::std::vec::Vec::new(),
+            next_page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListBackupsResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListBackupsResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListBackupsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListBackupsResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [CopyBackup][google.bigtable.admin.v2.BigtableTableAdmin.CopyBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.CopyBackupRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct CopyBackupRequest {
+    // message fields
+    ///  Required. The name of the destination cluster that will contain the backup
+    ///  copy. The cluster must already exist. Values are of the form:
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Required. The id of the new backup. The `backup_id` along with `parent`
+    ///  are combined as {parent}/backups/{backup_id} to create the full backup
+    ///  name, of the form:
+    ///  `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup_id}`.
+    ///  This string must be between 1 and 50 characters in length and match the
+    ///  regex [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupRequest.backup_id)
+    pub backup_id: ::std::string::String,
+    ///  Required. The source backup to be copied from.
+    ///  The source backup needs to be in READY state for it to be copied.
+    ///  Copying a copied backup is not allowed.
+    ///  Once CopyBackup is in progress, the source backup cannot be deleted or
+    ///  cleaned up on expiration until CopyBackup is finished.
+    ///  Values are of the form:
+    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/backups/<backup>`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupRequest.source_backup)
+    pub source_backup: ::std::string::String,
+    ///  Required. Required. The expiration time of the copied backup with
+    ///  microsecond granularity that must be at least 6 hours and at most 30 days
+    ///  from the time the request is received. Once the `expire_time` has
+    ///  passed, Cloud Bigtable will delete the backup and free the resources used
+    ///  by the backup.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupRequest.expire_time)
+    pub expire_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CopyBackupRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CopyBackupRequest {
+    fn default() -> &'a CopyBackupRequest {
+        <CopyBackupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CopyBackupRequest {
+    pub fn new() -> CopyBackupRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &CopyBackupRequest| { &m.parent },
+            |m: &mut CopyBackupRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "backup_id",
+            |m: &CopyBackupRequest| { &m.backup_id },
+            |m: &mut CopyBackupRequest| { &mut m.backup_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "source_backup",
+            |m: &CopyBackupRequest| { &m.source_backup },
+            |m: &mut CopyBackupRequest| { &mut m.source_backup },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "expire_time",
+            |m: &CopyBackupRequest| { &m.expire_time },
+            |m: &mut CopyBackupRequest| { &mut m.expire_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CopyBackupRequest>(
+            "CopyBackupRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CopyBackupRequest {
+    const NAME: &'static str = "CopyBackupRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.backup_id = is.read_string()?;
+                },
+                26 => {
+                    self.source_backup = is.read_string()?;
+                },
+                34 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.expire_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.backup_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.backup_id);
+        }
+        if !self.source_backup.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.source_backup);
+        }
+        if let Some(v) = self.expire_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.backup_id.is_empty() {
+            os.write_string(2, &self.backup_id)?;
+        }
+        if !self.source_backup.is_empty() {
+            os.write_string(3, &self.source_backup)?;
+        }
+        if let Some(v) = self.expire_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CopyBackupRequest {
+        CopyBackupRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.backup_id.clear();
+        self.source_backup.clear();
+        self.expire_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CopyBackupRequest {
+        static instance: CopyBackupRequest = CopyBackupRequest {
+            parent: ::std::string::String::new(),
+            backup_id: ::std::string::String::new(),
+            source_backup: ::std::string::String::new(),
+            expire_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CopyBackupRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CopyBackupRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CopyBackupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CopyBackupRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Metadata type for the google.longrunning.Operation returned by
+///  [CopyBackup][google.bigtable.admin.v2.BigtableTableAdmin.CopyBackup].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.CopyBackupMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct CopyBackupMetadata {
+    // message fields
+    ///  The name of the backup being created through the copy operation.
+    ///  Values are of the form
+    ///  `projects/<project>/instances/<instance>/clusters/<cluster>/backups/<backup>`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupMetadata.name)
+    pub name: ::std::string::String,
+    ///  Information about the source backup that is being copied from.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupMetadata.source_backup_info)
+    pub source_backup_info: ::protobuf::MessageField<super::table::BackupInfo>,
+    ///  The progress of the
+    ///  [CopyBackup][google.bigtable.admin.v2.BigtableTableAdmin.CopyBackup]
+    ///  operation.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CopyBackupMetadata.progress)
+    pub progress: ::protobuf::MessageField<super::common::OperationProgress>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CopyBackupMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CopyBackupMetadata {
+    fn default() -> &'a CopyBackupMetadata {
+        <CopyBackupMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CopyBackupMetadata {
+    pub fn new() -> CopyBackupMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &CopyBackupMetadata| { &m.name },
+            |m: &mut CopyBackupMetadata| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::table::BackupInfo>(
+            "source_backup_info",
+            |m: &CopyBackupMetadata| { &m.source_backup_info },
+            |m: &mut CopyBackupMetadata| { &mut m.source_backup_info },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::common::OperationProgress>(
+            "progress",
+            |m: &CopyBackupMetadata| { &m.progress },
+            |m: &mut CopyBackupMetadata| { &mut m.progress },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CopyBackupMetadata>(
+            "CopyBackupMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CopyBackupMetadata {
+    const NAME: &'static str = "CopyBackupMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.source_backup_info)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.progress)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if let Some(v) = self.source_backup_info.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if let Some(v) = self.source_backup_info.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.progress.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CopyBackupMetadata {
+        CopyBackupMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.source_backup_info.clear();
+        self.progress.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CopyBackupMetadata {
+        static instance: CopyBackupMetadata = CopyBackupMetadata {
+            name: ::std::string::String::new(),
+            source_backup_info: ::protobuf::MessageField::none(),
+            progress: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CopyBackupMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CopyBackupMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CopyBackupMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CopyBackupMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [CreateAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.CreateAuthorizedView]
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.CreateAuthorizedViewRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct CreateAuthorizedViewRequest {
+    // message fields
+    ///  Required. This is the name of the table the AuthorizedView belongs to.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateAuthorizedViewRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Required. The id of the AuthorizedView to create. This AuthorizedView must
+    ///  not already exist. The `authorized_view_id` appended to `parent` forms the
+    ///  full AuthorizedView name of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedView/{authorized_view}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateAuthorizedViewRequest.authorized_view_id)
+    pub authorized_view_id: ::std::string::String,
+    ///  Required. The AuthorizedView to create.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateAuthorizedViewRequest.authorized_view)
+    pub authorized_view: ::protobuf::MessageField<super::table::AuthorizedView>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CreateAuthorizedViewRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CreateAuthorizedViewRequest {
+    fn default() -> &'a CreateAuthorizedViewRequest {
+        <CreateAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateAuthorizedViewRequest {
+    pub fn new() -> CreateAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &CreateAuthorizedViewRequest| { &m.parent },
+            |m: &mut CreateAuthorizedViewRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "authorized_view_id",
+            |m: &CreateAuthorizedViewRequest| { &m.authorized_view_id },
+            |m: &mut CreateAuthorizedViewRequest| { &mut m.authorized_view_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::table::AuthorizedView>(
+            "authorized_view",
+            |m: &CreateAuthorizedViewRequest| { &m.authorized_view },
+            |m: &mut CreateAuthorizedViewRequest| { &mut m.authorized_view },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CreateAuthorizedViewRequest>(
+            "CreateAuthorizedViewRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CreateAuthorizedViewRequest {
+    const NAME: &'static str = "CreateAuthorizedViewRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                18 => {
+                    self.authorized_view_id = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.authorized_view)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if !self.authorized_view_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.authorized_view_id);
+        }
+        if let Some(v) = self.authorized_view.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if !self.authorized_view_id.is_empty() {
+            os.write_string(2, &self.authorized_view_id)?;
+        }
+        if let Some(v) = self.authorized_view.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CreateAuthorizedViewRequest {
+        CreateAuthorizedViewRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.authorized_view_id.clear();
+        self.authorized_view.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CreateAuthorizedViewRequest {
+        static instance: CreateAuthorizedViewRequest = CreateAuthorizedViewRequest {
+            parent: ::std::string::String::new(),
+            authorized_view_id: ::std::string::String::new(),
+            authorized_view: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CreateAuthorizedViewRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CreateAuthorizedViewRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CreateAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateAuthorizedViewRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The metadata for the Operation returned by CreateAuthorizedView.
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.CreateAuthorizedViewMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct CreateAuthorizedViewMetadata {
+    // message fields
+    ///  The request that prompted the initiation of this CreateInstance operation.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateAuthorizedViewMetadata.original_request)
+    pub original_request: ::protobuf::MessageField<CreateAuthorizedViewRequest>,
+    ///  The time at which the original request was received.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateAuthorizedViewMetadata.request_time)
+    pub request_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  The time at which the operation failed or was completed successfully.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.CreateAuthorizedViewMetadata.finish_time)
+    pub finish_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.CreateAuthorizedViewMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CreateAuthorizedViewMetadata {
+    fn default() -> &'a CreateAuthorizedViewMetadata {
+        <CreateAuthorizedViewMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CreateAuthorizedViewMetadata {
+    pub fn new() -> CreateAuthorizedViewMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, CreateAuthorizedViewRequest>(
+            "original_request",
+            |m: &CreateAuthorizedViewMetadata| { &m.original_request },
+            |m: &mut CreateAuthorizedViewMetadata| { &mut m.original_request },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "request_time",
+            |m: &CreateAuthorizedViewMetadata| { &m.request_time },
+            |m: &mut CreateAuthorizedViewMetadata| { &mut m.request_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "finish_time",
+            |m: &CreateAuthorizedViewMetadata| { &m.finish_time },
+            |m: &mut CreateAuthorizedViewMetadata| { &mut m.finish_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CreateAuthorizedViewMetadata>(
+            "CreateAuthorizedViewMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CreateAuthorizedViewMetadata {
+    const NAME: &'static str = "CreateAuthorizedViewMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.original_request)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.request_time)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.finish_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.original_request.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.request_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.finish_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.original_request.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.request_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.finish_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CreateAuthorizedViewMetadata {
+        CreateAuthorizedViewMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.original_request.clear();
+        self.request_time.clear();
+        self.finish_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CreateAuthorizedViewMetadata {
+        static instance: CreateAuthorizedViewMetadata = CreateAuthorizedViewMetadata {
+            original_request: ::protobuf::MessageField::none(),
+            request_time: ::protobuf::MessageField::none(),
+            finish_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CreateAuthorizedViewMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CreateAuthorizedViewMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CreateAuthorizedViewMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CreateAuthorizedViewMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Request message for
+///  [google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews][google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews]
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.ListAuthorizedViewsRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListAuthorizedViewsRequest {
+    // message fields
+    ///  Required. The unique name of the table for which AuthorizedViews should be
+    ///  listed. Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListAuthorizedViewsRequest.parent)
+    pub parent: ::std::string::String,
+    ///  Optional. Maximum number of results per page.
+    ///
+    ///  A page_size of zero lets the server choose the number of items to return.
+    ///  A page_size which is strictly positive will return at most that many items.
+    ///  A negative page_size will cause an error.
+    ///
+    ///  Following the first request, subsequent paginated calls are not required
+    ///  to pass a page_size. If a page_size is set in subsequent calls, it must
+    ///  match the page_size given in the first request.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListAuthorizedViewsRequest.page_size)
+    pub page_size: i32,
+    ///  Optional. The value of `next_page_token` returned by a previous call.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListAuthorizedViewsRequest.page_token)
+    pub page_token: ::std::string::String,
+    ///  Optional. The resource_view to be applied to the returned views' fields.
+    ///  Default to NAME_ONLY.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListAuthorizedViewsRequest.view)
+    pub view: ::protobuf::EnumOrUnknown<super::table::authorized_view::ResponseView>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ListAuthorizedViewsRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListAuthorizedViewsRequest {
+    fn default() -> &'a ListAuthorizedViewsRequest {
+        <ListAuthorizedViewsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListAuthorizedViewsRequest {
+    pub fn new() -> ListAuthorizedViewsRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "parent",
+            |m: &ListAuthorizedViewsRequest| { &m.parent },
+            |m: &mut ListAuthorizedViewsRequest| { &mut m.parent },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_size",
+            |m: &ListAuthorizedViewsRequest| { &m.page_size },
+            |m: &mut ListAuthorizedViewsRequest| { &mut m.page_size },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "page_token",
+            |m: &ListAuthorizedViewsRequest| { &m.page_token },
+            |m: &mut ListAuthorizedViewsRequest| { &mut m.page_token },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "view",
+            |m: &ListAuthorizedViewsRequest| { &m.view },
+            |m: &mut ListAuthorizedViewsRequest| { &mut m.view },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListAuthorizedViewsRequest>(
+            "ListAuthorizedViewsRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListAuthorizedViewsRequest {
+    const NAME: &'static str = "ListAuthorizedViewsRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.parent = is.read_string()?;
+                },
+                16 => {
+                    self.page_size = is.read_int32()?;
+                },
+                26 => {
+                    self.page_token = is.read_string()?;
+                },
+                32 => {
+                    self.view = is.read_enum_or_unknown()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.parent.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.parent);
+        }
+        if self.page_size != 0 {
+            my_size += ::protobuf::rt::int32_size(2, self.page_size);
+        }
+        if !self.page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.page_token);
+        }
+        if self.view != ::protobuf::EnumOrUnknown::new(super::table::authorized_view::ResponseView::RESPONSE_VIEW_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(4, self.view.value());
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.parent.is_empty() {
+            os.write_string(1, &self.parent)?;
+        }
+        if self.page_size != 0 {
+            os.write_int32(2, self.page_size)?;
+        }
+        if !self.page_token.is_empty() {
+            os.write_string(3, &self.page_token)?;
+        }
+        if self.view != ::protobuf::EnumOrUnknown::new(super::table::authorized_view::ResponseView::RESPONSE_VIEW_UNSPECIFIED) {
+            os.write_enum(4, ::protobuf::EnumOrUnknown::value(&self.view))?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListAuthorizedViewsRequest {
+        ListAuthorizedViewsRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.parent.clear();
+        self.page_size = 0;
+        self.page_token.clear();
+        self.view = ::protobuf::EnumOrUnknown::new(super::table::authorized_view::ResponseView::RESPONSE_VIEW_UNSPECIFIED);
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListAuthorizedViewsRequest {
+        static instance: ListAuthorizedViewsRequest = ListAuthorizedViewsRequest {
+            parent: ::std::string::String::new(),
+            page_size: 0,
+            page_token: ::std::string::String::new(),
+            view: ::protobuf::EnumOrUnknown::from_i32(0),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListAuthorizedViewsRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListAuthorizedViewsRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListAuthorizedViewsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListAuthorizedViewsRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Response message for
+///  [google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews][google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews]
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.ListAuthorizedViewsResponse)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ListAuthorizedViewsResponse {
+    // message fields
+    ///  The AuthorizedViews present in the requested table.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListAuthorizedViewsResponse.authorized_views)
+    pub authorized_views: ::std::vec::Vec<super::table::AuthorizedView>,
+    ///  Set if not all tables could be returned in a single response.
+    ///  Pass this value to `page_token` in another request to get the next
+    ///  page of results.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.ListAuthorizedViewsResponse.next_page_token)
+    pub next_page_token: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.ListAuthorizedViewsResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ListAuthorizedViewsResponse {
+    fn default() -> &'a ListAuthorizedViewsResponse {
+        <ListAuthorizedViewsResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ListAuthorizedViewsResponse {
+    pub fn new() -> ListAuthorizedViewsResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "authorized_views",
+            |m: &ListAuthorizedViewsResponse| { &m.authorized_views },
+            |m: &mut ListAuthorizedViewsResponse| { &mut m.authorized_views },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "next_page_token",
+            |m: &ListAuthorizedViewsResponse| { &m.next_page_token },
+            |m: &mut ListAuthorizedViewsResponse| { &mut m.next_page_token },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ListAuthorizedViewsResponse>(
+            "ListAuthorizedViewsResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ListAuthorizedViewsResponse {
+    const NAME: &'static str = "ListAuthorizedViewsResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.authorized_views.push(is.read_message()?);
+                },
+                18 => {
+                    self.next_page_token = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.authorized_views {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if !self.next_page_token.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.next_page_token);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.authorized_views {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        };
+        if !self.next_page_token.is_empty() {
+            os.write_string(2, &self.next_page_token)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ListAuthorizedViewsResponse {
+        ListAuthorizedViewsResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.authorized_views.clear();
+        self.next_page_token.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ListAuthorizedViewsResponse {
+        static instance: ListAuthorizedViewsResponse = ListAuthorizedViewsResponse {
+            authorized_views: ::std::vec::Vec::new(),
+            next_page_token: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ListAuthorizedViewsResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ListAuthorizedViewsResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ListAuthorizedViewsResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ListAuthorizedViewsResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Request message for
+///  [google.bigtable.admin.v2.BigtableTableAdmin.GetAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.GetAuthorizedView]
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.GetAuthorizedViewRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct GetAuthorizedViewRequest {
+    // message fields
+    ///  Required. The unique name of the requested AuthorizedView.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.GetAuthorizedViewRequest.name)
+    pub name: ::std::string::String,
+    ///  Optional. The resource_view to be applied to the returned AuthorizedView's
+    ///  fields. Default to BASIC.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.GetAuthorizedViewRequest.view)
+    pub view: ::protobuf::EnumOrUnknown<super::table::authorized_view::ResponseView>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.GetAuthorizedViewRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a GetAuthorizedViewRequest {
+    fn default() -> &'a GetAuthorizedViewRequest {
+        <GetAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GetAuthorizedViewRequest {
+    pub fn new() -> GetAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &GetAuthorizedViewRequest| { &m.name },
+            |m: &mut GetAuthorizedViewRequest| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "view",
+            |m: &GetAuthorizedViewRequest| { &m.view },
+            |m: &mut GetAuthorizedViewRequest| { &mut m.view },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GetAuthorizedViewRequest>(
+            "GetAuthorizedViewRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for GetAuthorizedViewRequest {
+    const NAME: &'static str = "GetAuthorizedViewRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                16 => {
+                    self.view = is.read_enum_or_unknown()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.view != ::protobuf::EnumOrUnknown::new(super::table::authorized_view::ResponseView::RESPONSE_VIEW_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(2, self.view.value());
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.view != ::protobuf::EnumOrUnknown::new(super::table::authorized_view::ResponseView::RESPONSE_VIEW_UNSPECIFIED) {
+            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.view))?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> GetAuthorizedViewRequest {
+        GetAuthorizedViewRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.view = ::protobuf::EnumOrUnknown::new(super::table::authorized_view::ResponseView::RESPONSE_VIEW_UNSPECIFIED);
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static GetAuthorizedViewRequest {
+        static instance: GetAuthorizedViewRequest = GetAuthorizedViewRequest {
+            name: ::std::string::String::new(),
+            view: ::protobuf::EnumOrUnknown::from_i32(0),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for GetAuthorizedViewRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("GetAuthorizedViewRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for GetAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetAuthorizedViewRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  The request for
+///  [UpdateAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.UpdateAuthorizedView].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UpdateAuthorizedViewRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateAuthorizedViewRequest {
+    // message fields
+    ///  Required. The AuthorizedView to update. The `name` in `authorized_view` is
+    ///  used to identify the AuthorizedView. AuthorizedView name must in this
+    ///  format
+    ///  projects/<project>/instances/<instance>/tables/<table>/authorizedViews/<authorized_view>
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateAuthorizedViewRequest.authorized_view)
+    pub authorized_view: ::protobuf::MessageField<super::table::AuthorizedView>,
+    ///  Optional. The list of fields to update.
+    ///  A mask specifying which fields in the AuthorizedView resource should be
+    ///  updated. This mask is relative to the AuthorizedView resource, not to the
+    ///  request message. A field will be overwritten if it is in the mask. If
+    ///  empty, all fields set in the request will be overwritten. A special value
+    ///  `*` means to overwrite all fields (including fields not set in the
+    ///  request).
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateAuthorizedViewRequest.update_mask)
+    pub update_mask: ::protobuf::MessageField<::protobuf::well_known_types::field_mask::FieldMask>,
+    ///  Optional. If true, ignore the safety checks when updating the
+    ///  AuthorizedView.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateAuthorizedViewRequest.ignore_warnings)
+    pub ignore_warnings: bool,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UpdateAuthorizedViewRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateAuthorizedViewRequest {
+    fn default() -> &'a UpdateAuthorizedViewRequest {
+        <UpdateAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateAuthorizedViewRequest {
+    pub fn new() -> UpdateAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::table::AuthorizedView>(
+            "authorized_view",
+            |m: &UpdateAuthorizedViewRequest| { &m.authorized_view },
+            |m: &mut UpdateAuthorizedViewRequest| { &mut m.authorized_view },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::field_mask::FieldMask>(
+            "update_mask",
+            |m: &UpdateAuthorizedViewRequest| { &m.update_mask },
+            |m: &mut UpdateAuthorizedViewRequest| { &mut m.update_mask },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "ignore_warnings",
+            |m: &UpdateAuthorizedViewRequest| { &m.ignore_warnings },
+            |m: &mut UpdateAuthorizedViewRequest| { &mut m.ignore_warnings },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateAuthorizedViewRequest>(
+            "UpdateAuthorizedViewRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateAuthorizedViewRequest {
+    const NAME: &'static str = "UpdateAuthorizedViewRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.authorized_view)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.update_mask)?;
+                },
+                24 => {
+                    self.ignore_warnings = is.read_bool()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.authorized_view.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if self.ignore_warnings != false {
+            my_size += 1 + 1;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.authorized_view.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.update_mask.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if self.ignore_warnings != false {
+            os.write_bool(3, self.ignore_warnings)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateAuthorizedViewRequest {
+        UpdateAuthorizedViewRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.authorized_view.clear();
+        self.update_mask.clear();
+        self.ignore_warnings = false;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateAuthorizedViewRequest {
+        static instance: UpdateAuthorizedViewRequest = UpdateAuthorizedViewRequest {
+            authorized_view: ::protobuf::MessageField::none(),
+            update_mask: ::protobuf::MessageField::none(),
+            ignore_warnings: false,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateAuthorizedViewRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateAuthorizedViewRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateAuthorizedViewRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Metadata for the google.longrunning.Operation returned by
+///  [UpdateAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.UpdateAuthorizedView].
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.UpdateAuthorizedViewMetadata)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct UpdateAuthorizedViewMetadata {
+    // message fields
+    ///  The request that prompted the initiation of this UpdateAuthorizedView
+    ///  operation.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateAuthorizedViewMetadata.original_request)
+    pub original_request: ::protobuf::MessageField<UpdateAuthorizedViewRequest>,
+    ///  The time at which the original request was received.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateAuthorizedViewMetadata.request_time)
+    pub request_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    ///  The time at which the operation failed or was completed successfully.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.UpdateAuthorizedViewMetadata.finish_time)
+    pub finish_time: ::protobuf::MessageField<::protobuf::well_known_types::timestamp::Timestamp>,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.UpdateAuthorizedViewMetadata.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateAuthorizedViewMetadata {
+    fn default() -> &'a UpdateAuthorizedViewMetadata {
+        <UpdateAuthorizedViewMetadata as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateAuthorizedViewMetadata {
+    pub fn new() -> UpdateAuthorizedViewMetadata {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, UpdateAuthorizedViewRequest>(
+            "original_request",
+            |m: &UpdateAuthorizedViewMetadata| { &m.original_request },
+            |m: &mut UpdateAuthorizedViewMetadata| { &mut m.original_request },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "request_time",
+            |m: &UpdateAuthorizedViewMetadata| { &m.request_time },
+            |m: &mut UpdateAuthorizedViewMetadata| { &mut m.request_time },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ::protobuf::well_known_types::timestamp::Timestamp>(
+            "finish_time",
+            |m: &UpdateAuthorizedViewMetadata| { &m.finish_time },
+            |m: &mut UpdateAuthorizedViewMetadata| { &mut m.finish_time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateAuthorizedViewMetadata>(
+            "UpdateAuthorizedViewMetadata",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for UpdateAuthorizedViewMetadata {
+    const NAME: &'static str = "UpdateAuthorizedViewMetadata";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.original_request)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.request_time)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.finish_time)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.original_request.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.request_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.finish_time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.original_request.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if let Some(v) = self.request_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.finish_time.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> UpdateAuthorizedViewMetadata {
+        UpdateAuthorizedViewMetadata::new()
+    }
+
+    fn clear(&mut self) {
+        self.original_request.clear();
+        self.request_time.clear();
+        self.finish_time.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static UpdateAuthorizedViewMetadata {
+        static instance: UpdateAuthorizedViewMetadata = UpdateAuthorizedViewMetadata {
+            original_request: ::protobuf::MessageField::none(),
+            request_time: ::protobuf::MessageField::none(),
+            finish_time: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for UpdateAuthorizedViewMetadata {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateAuthorizedViewMetadata").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for UpdateAuthorizedViewMetadata {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateAuthorizedViewMetadata {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Request message for
+///  [google.bigtable.admin.v2.BigtableTableAdmin.DeleteAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.DeleteAuthorizedView]
+// @@protoc_insertion_point(message:google.bigtable.admin.v2.DeleteAuthorizedViewRequest)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct DeleteAuthorizedViewRequest {
+    // message fields
+    ///  Required. The unique name of the AuthorizedView to be deleted.
+    ///  Values are of the form
+    ///  `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.DeleteAuthorizedViewRequest.name)
+    pub name: ::std::string::String,
+    ///  Optional. The current etag of the AuthorizedView.
+    ///  If an etag is provided and does not match the current etag of the
+    ///  AuthorizedView, deletion will be blocked and an ABORTED error will be
+    ///  returned.
+    // @@protoc_insertion_point(field:google.bigtable.admin.v2.DeleteAuthorizedViewRequest.etag)
+    pub etag: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.bigtable.admin.v2.DeleteAuthorizedViewRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteAuthorizedViewRequest {
+    fn default() -> &'a DeleteAuthorizedViewRequest {
+        <DeleteAuthorizedViewRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteAuthorizedViewRequest {
+    pub fn new() -> DeleteAuthorizedViewRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &DeleteAuthorizedViewRequest| { &m.name },
+            |m: &mut DeleteAuthorizedViewRequest| { &mut m.name },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "etag",
+            |m: &DeleteAuthorizedViewRequest| { &m.etag },
+            |m: &mut DeleteAuthorizedViewRequest| { &mut m.etag },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DeleteAuthorizedViewRequest>(
+            "DeleteAuthorizedViewRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for DeleteAuthorizedViewRequest {
+    const NAME: &'static str = "DeleteAuthorizedViewRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                18 => {
+                    self.etag = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.etag.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.etag);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.etag.is_empty() {
+            os.write_string(2, &self.etag)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> DeleteAuthorizedViewRequest {
+        DeleteAuthorizedViewRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.etag.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static DeleteAuthorizedViewRequest {
+        static instance: DeleteAuthorizedViewRequest = DeleteAuthorizedViewRequest {
+            name: ::std::string::String::new(),
+            etag: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for DeleteAuthorizedViewRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("DeleteAuthorizedViewRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for DeleteAuthorizedViewRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteAuthorizedViewRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n3google/bigtable/admin/v2/bigtable_table_admin.proto\x12\x18google.big\
-    table.admin.v2\x1a\x1cgoogle/api/annotations.proto\x1a$google/bigtable/a\
-    dmin/v2/table.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/\
-    iam/v1/policy.proto\x1a#google/longrunning/operations.proto\x1a\x1egoogl\
-    e/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoog\
-    le/protobuf/timestamp.proto\"\xf4\x01\n\x12CreateTableRequest\x12\x16\n\
-    \x06parent\x18\x01\x20\x01(\tR\x06parent\x12\x19\n\x08table_id\x18\x02\
-    \x20\x01(\tR\x07tableId\x125\n\x05table\x18\x03\x20\x01(\x0b2\x1f.google\
-    .bigtable.admin.v2.TableR\x05table\x12Y\n\x0einitial_splits\x18\x04\x20\
-    \x03(\x0b22.google.bigtable.admin.v2.CreateTableRequest.SplitR\rinitialS\
-    plits\x1a\x19\n\x05Split\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"\
-    |\n\x1eCreateTableFromSnapshotRequest\x12\x16\n\x06parent\x18\x01\x20\
-    \x01(\tR\x06parent\x12\x19\n\x08table_id\x18\x02\x20\x01(\tR\x07tableId\
-    \x12'\n\x0fsource_snapshot\x18\x03\x20\x01(\tR\x0esourceSnapshot\"\x99\
-    \x01\n\x13DropRowRangeRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04n\
-    ame\x12&\n\x0erow_key_prefix\x18\x02\x20\x01(\x0cH\0R\x0crowKeyPrefix\
-    \x12<\n\x1adelete_all_data_from_table\x18\x03\x20\x01(\x08H\0R\x16delete\
-    AllDataFromTableB\x08\n\x06target\"\xa1\x01\n\x11ListTablesRequest\x12\
-    \x16\n\x06parent\x18\x01\x20\x01(\tR\x06parent\x128\n\x04view\x18\x02\
-    \x20\x01(\x0e2$.google.bigtable.admin.v2.Table.ViewR\x04view\x12\x1b\n\t\
-    page_size\x18\x04\x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_token\x18\
-    \x03\x20\x01(\tR\tpageToken\"u\n\x12ListTablesResponse\x127\n\x06tables\
-    \x18\x01\x20\x03(\x0b2\x1f.google.bigtable.admin.v2.TableR\x06tables\x12\
-    &\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnextPageToken\"_\n\x0fGetTab\
-    leRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x128\n\x04view\
-    \x18\x02\x20\x01(\x0e2$.google.bigtable.admin.v2.Table.ViewR\x04view\"(\
-    \n\x12DeleteTableRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"\
-    \xdd\x02\n\x1bModifyColumnFamiliesRequest\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\x12h\n\rmodifications\x18\x02\x20\x03(\x0b2B.google.big\
-    table.admin.v2.ModifyColumnFamiliesRequest.ModificationR\rmodifications\
-    \x1a\xbf\x01\n\x0cModification\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \x12@\n\x06create\x18\x02\x20\x01(\x0b2&.google.bigtable.admin.v2.Column\
-    FamilyH\0R\x06create\x12@\n\x06update\x18\x03\x20\x01(\x0b2&.google.bigt\
-    able.admin.v2.ColumnFamilyH\0R\x06update\x12\x14\n\x04drop\x18\x04\x20\
-    \x01(\x08H\0R\x04dropB\x05\n\x03mod\"5\n\x1fGenerateConsistencyTokenRequ\
-    est\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"O\n\x20GenerateConsis\
-    tencyTokenResponse\x12+\n\x11consistency_token\x18\x01\x20\x01(\tR\x10co\
-    nsistencyToken\"Z\n\x17CheckConsistencyRequest\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12+\n\x11consistency_token\x18\x02\x20\x01(\tR\x10\
-    consistencyToken\":\n\x18CheckConsistencyResponse\x12\x1e\n\nconsistent\
-    \x18\x01\x20\x01(\x08R\nconsistent\"\xb4\x01\n\x14SnapshotTableRequest\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x18\n\x07cluster\x18\
-    \x02\x20\x01(\tR\x07cluster\x12\x1f\n\x0bsnapshot_id\x18\x03\x20\x01(\tR\
-    \nsnapshotId\x12+\n\x03ttl\x18\x04\x20\x01(\x0b2\x19.google.protobuf.Dur\
-    ationR\x03ttl\x12\x20\n\x0bdescription\x18\x05\x20\x01(\tR\x0bdescriptio\
-    n\"(\n\x12GetSnapshotRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04na\
-    me\"j\n\x14ListSnapshotsRequest\x12\x16\n\x06parent\x18\x01\x20\x01(\tR\
-    \x06parent\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\
-    \x1d\n\npage_token\x18\x03\x20\x01(\tR\tpageToken\"\x81\x01\n\x15ListSna\
-    pshotsResponse\x12@\n\tsnapshots\x18\x01\x20\x03(\x0b2\".google.bigtable\
-    .admin.v2.SnapshotR\tsnapshots\x12&\n\x0fnext_page_token\x18\x02\x20\x01\
-    (\tR\rnextPageToken\"+\n\x15DeleteSnapshotRequest\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\"\xee\x01\n\x15SnapshotTableMetadata\x12Y\n\x10\
-    original_request\x18\x01\x20\x01(\x0b2..google.bigtable.admin.v2.Snapsho\
-    tTableRequestR\x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01\
-    (\x0b2\x1a.google.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_ti\
-    me\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\
-    \x82\x02\n\x1fCreateTableFromSnapshotMetadata\x12c\n\x10original_request\
-    \x18\x01\x20\x01(\x0b28.google.bigtable.admin.v2.CreateTableFromSnapshot\
-    RequestR\x0foriginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\
-    \x1a.google.protobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\
-    \x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishTime2\x99\x15\n\
-    \x12BigtableTableAdmin\x12\x93\x01\n\x0bCreateTable\x12,.google.bigtable\
-    .admin.v2.CreateTableRequest\x1a\x1f.google.bigtable.admin.v2.Table\"5\
-    \x82\xd3\xe4\x93\x02/\"*/v2/{parent=projects/*/instances/*}/tables:\x01*\
-    \x12\xbc\x01\n\x17CreateTableFromSnapshot\x128.google.bigtable.admin.v2.\
-    CreateTableFromSnapshotRequest\x1a\x1d.google.longrunning.Operation\"H\
-    \x82\xd3\xe4\x93\x02B\"=/v2/{parent=projects/*/instances/*}/tables:creat\
-    eFromSnapshot:\x01*\x12\x9b\x01\n\nListTables\x12+.google.bigtable.admin\
-    .v2.ListTablesRequest\x1a,.google.bigtable.admin.v2.ListTablesResponse\"\
-    2\x82\xd3\xe4\x93\x02,\x12*/v2/{parent=projects/*/instances/*}/tables\
-    \x12\x8a\x01\n\x08GetTable\x12).google.bigtable.admin.v2.GetTableRequest\
-    \x1a\x1f.google.bigtable.admin.v2.Table\"2\x82\xd3\xe4\x93\x02,\x12*/v2/\
-    {name=projects/*/instances/*/tables/*}\x12\x87\x01\n\x0bDeleteTable\x12,\
-    .google.bigtable.admin.v2.DeleteTableRequest\x1a\x16.google.protobuf.Emp\
-    ty\"2\x82\xd3\xe4\x93\x02,**/v2/{name=projects/*/instances/*/tables/*}\
-    \x12\xba\x01\n\x14ModifyColumnFamilies\x125.google.bigtable.admin.v2.Mod\
-    ifyColumnFamiliesRequest\x1a\x1f.google.bigtable.admin.v2.Table\"J\x82\
-    \xd3\xe4\x93\x02D\"?/v2/{name=projects/*/instances/*/tables/*}:modifyCol\
-    umnFamilies:\x01*\x12\x99\x01\n\x0cDropRowRange\x12-.google.bigtable.adm\
-    in.v2.DropRowRangeRequest\x1a\x16.google.protobuf.Empty\"B\x82\xd3\xe4\
-    \x93\x02<\"7/v2/{name=projects/*/instances/*/tables/*}:dropRowRange:\x01\
-    *\x12\xe1\x01\n\x18GenerateConsistencyToken\x129.google.bigtable.admin.v\
-    2.GenerateConsistencyTokenRequest\x1a:.google.bigtable.admin.v2.Generate\
-    ConsistencyTokenResponse\"N\x82\xd3\xe4\x93\x02H\"C/v2/{name=projects/*/\
-    instances/*/tables/*}:generateConsistencyToken:\x01*\x12\xc1\x01\n\x10Ch\
-    eckConsistency\x121.google.bigtable.admin.v2.CheckConsistencyRequest\x1a\
-    2.google.bigtable.admin.v2.CheckConsistencyResponse\"F\x82\xd3\xe4\x93\
-    \x02@\";/v2/{name=projects/*/instances/*/tables/*}:checkConsistency:\x01\
-    *\x12\x9e\x01\n\rSnapshotTable\x12..google.bigtable.admin.v2.SnapshotTab\
-    leRequest\x1a\x1d.google.longrunning.Operation\">\x82\xd3\xe4\x93\x028\"\
-    3/v2/{name=projects/*/instances/*/tables/*}:snapshot:\x01*\x12\xa1\x01\n\
-    \x0bGetSnapshot\x12,.google.bigtable.admin.v2.GetSnapshotRequest\x1a\".g\
-    oogle.bigtable.admin.v2.Snapshot\"@\x82\xd3\xe4\x93\x02:\x128/v2/{name=p\
-    rojects/*/instances/*/clusters/*/snapshots/*}\x12\xb2\x01\n\rListSnapsho\
-    ts\x12..google.bigtable.admin.v2.ListSnapshotsRequest\x1a/.google.bigtab\
-    le.admin.v2.ListSnapshotsResponse\"@\x82\xd3\xe4\x93\x02:\x128/v2/{paren\
-    t=projects/*/instances/*/clusters/*}/snapshots\x12\x9b\x01\n\x0eDeleteSn\
-    apshot\x12/.google.bigtable.admin.v2.DeleteSnapshotRequest\x1a\x16.googl\
-    e.protobuf.Empty\"@\x82\xd3\xe4\x93\x02:*8/v2/{name=projects/*/instances\
-    /*/clusters/*/snapshots/*}\x12\x91\x01\n\x0cGetIamPolicy\x12\".google.ia\
-    m.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"F\x82\xd3\xe4\x93\
-    \x02@\";/v2/{resource=projects/*/instances/*/tables/*}:getIamPolicy:\x01\
-    *\x12\x91\x01\n\x0cSetIamPolicy\x12\".google.iam.v1.SetIamPolicyRequest\
-    \x1a\x15.google.iam.v1.Policy\"F\x82\xd3\xe4\x93\x02@\";/v2/{resource=pr\
-    ojects/*/instances/*/tables/*}:setIamPolicy:\x01*\x12\xb7\x01\n\x12TestI\
-    amPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.i\
-    am.v1.TestIamPermissionsResponse\"L\x82\xd3\xe4\x93\x02F\"A/v2/{resource\
-    =projects/*/instances/*/tables/*}:testIamPermissions:\x01*B\xba\x01\n\
-    \x1ccom.google.bigtable.admin.v2B\x17BigtableTableAdminProtoP\x01Z=googl\
-    e.golang.org/genproto/googleapis/bigtable/admin/v2;admin\xaa\x02\x1eGoog\
-    le.Cloud.Bigtable.Admin.V2\xca\x02\x1eGoogle\\Cloud\\Bigtable\\Admin\\V2\
-    J\xca\xa6\x01\n\x07\x12\x05\x0f\0\xab\x04\x01\n\xbe\x04\n\x01\x0c\x12\
-    \x03\x0f\0\x122\xb3\x04\x20Copyright\x202018\x20Google\x20LLC.\n\n\x20Li\
-    censed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\
-    \x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20excep\
-    t\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20obta\
-    in\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20htt\
-    p://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\
-    \x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20softwar\
-    e\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\
-    \x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CON\
-    DITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\
-    \x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20gover\
-    ning\x20permissions\x20and\n\x20limitations\x20under\x20the\x20License.\
-    \n\n\n\x08\n\x01\x02\x12\x03\x11\0!\n\t\n\x02\x03\0\x12\x03\x13\0&\n\t\n\
-    \x02\x03\x01\x12\x03\x14\0.\n\t\n\x02\x03\x02\x12\x03\x15\0(\n\t\n\x02\
-    \x03\x03\x12\x03\x16\0$\n\t\n\x02\x03\x04\x12\x03\x17\0-\n\t\n\x02\x03\
-    \x05\x12\x03\x18\0(\n\t\n\x02\x03\x06\x12\x03\x19\0%\n\t\n\x02\x03\x07\
-    \x12\x03\x1a\0)\n\x08\n\x01\x08\x12\x03\x1c\0;\n\t\n\x02\x08%\x12\x03\
-    \x1c\0;\n\x08\n\x01\x08\x12\x03\x1d\0T\n\t\n\x02\x08\x0b\x12\x03\x1d\0T\
-    \n\x08\n\x01\x08\x12\x03\x1e\0\"\n\t\n\x02\x08\n\x12\x03\x1e\0\"\n\x08\n\
-    \x01\x08\x12\x03\x1f\08\n\t\n\x02\x08\x08\x12\x03\x1f\08\n\x08\n\x01\x08\
-    \x12\x03\x20\05\n\t\n\x02\x08\x01\x12\x03\x20\05\n\x08\n\x01\x08\x12\x03\
-    !\0<\n\t\n\x02\x08)\x12\x03!\0<\n\xac\x01\n\x02\x06\0\x12\x05(\0\xd4\x01\
-    \x01\x1a\x9e\x01\x20Service\x20for\x20creating,\x20configuring,\x20and\
-    \x20deleting\x20Cloud\x20Bigtable\x20tables.\n\n\n\x20Provides\x20access\
-    \x20to\x20the\x20table\x20schemas\x20only,\x20not\x20the\x20data\x20stor\
-    ed\x20within\n\x20the\x20tables.\n\n\n\n\x03\x06\0\x01\x12\x03(\x08\x1a\
-    \n\xa0\x01\n\x04\x06\0\x02\0\x12\x04,\x021\x03\x1a\x91\x01\x20Creates\
-    \x20a\x20new\x20table\x20in\x20the\x20specified\x20instance.\n\x20The\
-    \x20table\x20can\x20be\x20created\x20with\x20a\x20full\x20set\x20of\x20i\
-    nitial\x20column\x20families,\n\x20specified\x20in\x20the\x20request.\n\
-    \n\x0c\n\x05\x06\0\x02\0\x01\x12\x03,\x06\x11\n\x0c\n\x05\x06\0\x02\0\
-    \x02\x12\x03,\x12$\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03,/4\n\r\n\x05\x06\
-    \0\x02\0\x04\x12\x04-\x040\x06\n\x11\n\t\x06\0\x02\0\x04\xb0\xca\xbc\"\
-    \x12\x04-\x040\x06\n\xca\x03\n\x04\x06\0\x02\x01\x12\x04;\x02A\x03\x1a\
-    \xbb\x03\x20Creates\x20a\x20new\x20table\x20from\x20the\x20specified\x20\
-    snapshot.\x20The\x20target\x20table\x20must\n\x20not\x20exist.\x20The\
-    \x20snapshot\x20and\x20the\x20table\x20must\x20be\x20in\x20the\x20same\
-    \x20instance.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20rel\
-    ease\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\
-    \x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20\
-    customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backw\
-    ard-incompatible\x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20\
-    production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20\
-    or\x20deprecation\n\x20policy.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03;\
-    \x06\x1d\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x03;\x1e<\n\x0c\n\x05\x06\0\
-    \x02\x01\x03\x12\x03<\x0f+\n\r\n\x05\x06\0\x02\x01\x04\x12\x04=\x04@\x06\
-    \n\x11\n\t\x06\0\x02\x01\x04\xb0\xca\xbc\"\x12\x04=\x04@\x06\nB\n\x04\
-    \x06\0\x02\x02\x12\x04D\x02H\x03\x1a4\x20Lists\x20all\x20tables\x20serve\
-    d\x20from\x20a\x20specified\x20instance.\n\n\x0c\n\x05\x06\0\x02\x02\x01\
-    \x12\x03D\x06\x10\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03D\x11\"\n\x0c\n\
-    \x05\x06\0\x02\x02\x03\x12\x03D-?\n\r\n\x05\x06\0\x02\x02\x04\x12\x04E\
-    \x04G\x06\n\x11\n\t\x06\0\x02\x02\x04\xb0\xca\xbc\"\x12\x04E\x04G\x06\nD\
-    \n\x04\x06\0\x02\x03\x12\x04K\x02O\x03\x1a6\x20Gets\x20metadata\x20infor\
-    mation\x20about\x20the\x20specified\x20table.\n\n\x0c\n\x05\x06\0\x02\
-    \x03\x01\x12\x03K\x06\x0e\n\x0c\n\x05\x06\0\x02\x03\x02\x12\x03K\x0f\x1e\
-    \n\x0c\n\x05\x06\0\x02\x03\x03\x12\x03K).\n\r\n\x05\x06\0\x02\x03\x04\
-    \x12\x04L\x04N\x06\n\x11\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\"\x12\x04L\
-    \x04N\x06\nJ\n\x04\x06\0\x02\x04\x12\x04R\x02V\x03\x1a<\x20Permanently\
-    \x20deletes\x20a\x20specified\x20table\x20and\x20all\x20of\x20its\x20dat\
-    a.\n\n\x0c\n\x05\x06\0\x02\x04\x01\x12\x03R\x06\x11\n\x0c\n\x05\x06\0\
-    \x02\x04\x02\x12\x03R\x12$\n\x0c\n\x05\x06\0\x02\x04\x03\x12\x03R/D\n\r\
-    \n\x05\x06\0\x02\x04\x04\x12\x04S\x04U\x06\n\x11\n\t\x06\0\x02\x04\x04\
-    \xb0\xca\xbc\"\x12\x04S\x04U\x06\n\x9b\x02\n\x04\x06\0\x02\x05\x12\x04\\\
-    \x02a\x03\x1a\x8c\x02\x20Performs\x20a\x20series\x20of\x20column\x20fami\
-    ly\x20modifications\x20on\x20the\x20specified\x20table.\n\x20Either\x20a\
-    ll\x20or\x20none\x20of\x20the\x20modifications\x20will\x20occur\x20befor\
-    e\x20this\x20method\n\x20returns,\x20but\x20data\x20requests\x20received\
+    table.admin.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/cli\
+    ent.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resou\
+    rce.proto\x1a%google/bigtable/admin/v2/common.proto\x1a$google/bigtable/\
+    admin/v2/table.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle\
+    /iam/v1/policy.proto\x1a#google/longrunning/operations.proto\x1a\x1egoog\
+    le/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x20goo\
+    gle/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\
+    \xca\x01\n\x13RestoreTableRequest\x12E\n\x06parent\x18\x01\x20\x01(\tR\
+    \x06parentB-\xfaA'\n%bigtableadmin.googleapis.com/Instance\xe0A\x02\x12\
+    \x1e\n\x08table_id\x18\x02\x20\x01(\tR\x07tableIdB\x03\xe0A\x02\x12B\n\
+    \x06backup\x18\x03\x20\x01(\tH\0R\x06backupB(\xfaA%\n#bigtableadmin.goog\
+    leapis.com/BackupB\x08\n\x06source\"\xdc\x02\n\x14RestoreTableMetadata\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12L\n\x0bsource_type\x18\
+    \x02\x20\x01(\x0e2+.google.bigtable.admin.v2.RestoreSourceTypeR\nsourceT\
+    ype\x12G\n\x0bbackup_info\x18\x03\x20\x01(\x0b2$.google.bigtable.admin.v\
+    2.BackupInfoH\0R\nbackupInfo\x12A\n\x1doptimize_table_operation_name\x18\
+    \x04\x20\x01(\tR\x1aoptimizeTableOperationName\x12G\n\x08progress\x18\
+    \x05\x20\x01(\x0b2+.google.bigtable.admin.v2.OperationProgressR\x08progr\
+    essB\r\n\x0bsource_info\"|\n\x1dOptimizeRestoredTableMetadata\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12G\n\x08progress\x18\x02\x20\x01(\
+    \x0b2+.google.bigtable.admin.v2.OperationProgressR\x08progress\"\xad\x02\
+    \n\x12CreateTableRequest\x12E\n\x06parent\x18\x01\x20\x01(\tR\x06parentB\
+    -\xfaA'\n%bigtableadmin.googleapis.com/Instance\xe0A\x02\x12\x1e\n\x08ta\
+    ble_id\x18\x02\x20\x01(\tR\x07tableIdB\x03\xe0A\x02\x12:\n\x05table\x18\
+    \x03\x20\x01(\x0b2\x1f.google.bigtable.admin.v2.TableR\x05tableB\x03\xe0\
+    A\x02\x12Y\n\x0einitial_splits\x18\x04\x20\x03(\x0b22.google.bigtable.ad\
+    min.v2.CreateTableRequest.SplitR\rinitialSplits\x1a\x19\n\x05Split\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"\xdf\x01\n\x1eCreateTableFro\
+    mSnapshotRequest\x12E\n\x06parent\x18\x01\x20\x01(\tR\x06parentB-\xfaA'\
+    \n%bigtableadmin.googleapis.com/Instance\xe0A\x02\x12\x1e\n\x08table_id\
+    \x18\x02\x20\x01(\tR\x07tableIdB\x03\xe0A\x02\x12V\n\x0fsource_snapshot\
+    \x18\x03\x20\x01(\tR\x0esourceSnapshotB-\xfaA'\n%bigtableadmin.googleapi\
+    s.com/Snapshot\xe0A\x02\"\xc5\x01\n\x13DropRowRangeRequest\x12>\n\x04nam\
+    e\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Ta\
+    ble\xe0A\x02\x12&\n\x0erow_key_prefix\x18\x02\x20\x01(\x0cH\0R\x0crowKey\
+    Prefix\x12<\n\x1adelete_all_data_from_table\x18\x03\x20\x01(\x08H\0R\x16\
+    deleteAllDataFromTableB\x08\n\x06target\"\xd0\x01\n\x11ListTablesRequest\
+    \x12E\n\x06parent\x18\x01\x20\x01(\tR\x06parentB-\xfaA'\n%bigtableadmin.\
+    googleapis.com/Instance\xe0A\x02\x128\n\x04view\x18\x02\x20\x01(\x0e2$.g\
+    oogle.bigtable.admin.v2.Table.ViewR\x04view\x12\x1b\n\tpage_size\x18\x04\
+    \x20\x01(\x05R\x08pageSize\x12\x1d\n\npage_token\x18\x03\x20\x01(\tR\tpa\
+    geToken\"u\n\x12ListTablesResponse\x127\n\x06tables\x18\x01\x20\x03(\x0b\
+    2\x1f.google.bigtable.admin.v2.TableR\x06tables\x12&\n\x0fnext_page_toke\
+    n\x18\x02\x20\x01(\tR\rnextPageToken\"\x8b\x01\n\x0fGetTableRequest\x12>\
+    \n\x04name\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleap\
+    is.com/Table\xe0A\x02\x128\n\x04view\x18\x02\x20\x01(\x0e2$.google.bigta\
+    ble.admin.v2.Table.ViewR\x04view\"\x92\x01\n\x12UpdateTableRequest\x12:\
+    \n\x05table\x18\x01\x20\x01(\x0b2\x1f.google.bigtable.admin.v2.TableR\
+    \x05tableB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\x1a.\
+    google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x02\"\x9b\x01\n\x13Upda\
+    teTableMetadata\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\nst\
+    art_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\
+    \x125\n\x08end_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\
+    \x07endTime\"T\n\x12DeleteTableRequest\x12>\n\x04name\x18\x01\x20\x01(\t\
+    R\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\x02\"V\n\
+    \x14UndeleteTableRequest\x12>\n\x04name\x18\x01\x20\x01(\tR\x04nameB*\
+    \xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\x02\"\x9d\x01\n\x15Und\
+    eleteTableMetadata\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\
+    \nstart_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstart\
+    Time\x125\n\x08end_time\x18\x03\x20\x01(\x0b2\x1a.google.protobuf.Timest\
+    ampR\x07endTime\"\xfe\x03\n\x1bModifyColumnFamiliesRequest\x12>\n\x04nam\
+    e\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Ta\
+    ble\xe0A\x02\x12m\n\rmodifications\x18\x02\x20\x03(\x0b2B.google.bigtabl\
+    e.admin.v2.ModifyColumnFamiliesRequest.ModificationR\rmodificationsB\x03\
+    \xe0A\x02\x12,\n\x0fignore_warnings\x18\x03\x20\x01(\x08R\x0eignoreWarni\
+    ngsB\x03\xe0A\x01\x1a\x81\x02\n\x0cModification\x12\x0e\n\x02id\x18\x01\
+    \x20\x01(\tR\x02id\x12@\n\x06create\x18\x02\x20\x01(\x0b2&.google.bigtab\
+    le.admin.v2.ColumnFamilyH\0R\x06create\x12@\n\x06update\x18\x03\x20\x01(\
+    \x0b2&.google.bigtable.admin.v2.ColumnFamilyH\0R\x06update\x12\x14\n\x04\
+    drop\x18\x04\x20\x01(\x08H\0R\x04drop\x12@\n\x0bupdate_mask\x18\x06\x20\
+    \x01(\x0b2\x1a.google.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x01B\x05\
+    \n\x03mod\"a\n\x1fGenerateConsistencyTokenRequest\x12>\n\x04name\x18\x01\
+    \x20\x01(\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\
+    \x02\"O\n\x20GenerateConsistencyTokenResponse\x12+\n\x11consistency_toke\
+    n\x18\x01\x20\x01(\tR\x10consistencyToken\"\xfe\x02\n\x17CheckConsistenc\
+    yRequest\x12>\n\x04name\x18\x01\x20\x01(\tR\x04nameB*\xfaA$\n\"bigtablea\
+    dmin.googleapis.com/Table\xe0A\x02\x120\n\x11consistency_token\x18\x02\
+    \x20\x01(\tR\x10consistencyTokenB\x03\xe0A\x02\x12s\n\x1bstandard_read_r\
+    emote_writes\x18\x03\x20\x01(\x0b22.google.bigtable.admin.v2.StandardRea\
+    dRemoteWritesH\0R\x18standardReadRemoteWrites\x12t\n\x1cdata_boost_read_\
+    local_writes\x18\x04\x20\x01(\x0b22.google.bigtable.admin.v2.DataBoostRe\
+    adLocalWritesH\0R\x18dataBoostReadLocalWritesB\x06\n\x04mode\"\x1a\n\x18\
+    StandardReadRemoteWrites\"\x1a\n\x18DataBoostReadLocalWrites\":\n\x18Che\
+    ckConsistencyResponse\x12\x1e\n\nconsistent\x18\x01\x20\x01(\x08R\nconsi\
+    stent\"\x93\x02\n\x14SnapshotTableRequest\x12>\n\x04name\x18\x01\x20\x01\
+    (\tR\x04nameB*\xfaA$\n\"bigtableadmin.googleapis.com/Table\xe0A\x02\x12F\
+    \n\x07cluster\x18\x02\x20\x01(\tR\x07clusterB,\xfaA&\n$bigtableadmin.goo\
+    gleapis.com/Cluster\xe0A\x02\x12$\n\x0bsnapshot_id\x18\x03\x20\x01(\tR\n\
+    snapshotIdB\x03\xe0A\x02\x12+\n\x03ttl\x18\x04\x20\x01(\x0b2\x19.google.\
+    protobuf.DurationR\x03ttl\x12\x20\n\x0bdescription\x18\x05\x20\x01(\tR\
+    \x0bdescription\"W\n\x12GetSnapshotRequest\x12A\n\x04name\x18\x01\x20\
+    \x01(\tR\x04nameB-\xfaA'\n%bigtableadmin.googleapis.com/Snapshot\xe0A\
+    \x02\"\x98\x01\n\x14ListSnapshotsRequest\x12D\n\x06parent\x18\x01\x20\
+    \x01(\tR\x06parentB,\xfaA&\n$bigtableadmin.googleapis.com/Cluster\xe0A\
+    \x02\x12\x1b\n\tpage_size\x18\x02\x20\x01(\x05R\x08pageSize\x12\x1d\n\np\
+    age_token\x18\x03\x20\x01(\tR\tpageToken\"\x81\x01\n\x15ListSnapshotsRes\
+    ponse\x12@\n\tsnapshots\x18\x01\x20\x03(\x0b2\".google.bigtable.admin.v2\
+    .SnapshotR\tsnapshots\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\rnex\
+    tPageToken\"Z\n\x15DeleteSnapshotRequest\x12A\n\x04name\x18\x01\x20\x01(\
+    \tR\x04nameB-\xfaA'\n%bigtableadmin.googleapis.com/Snapshot\xe0A\x02\"\
+    \xee\x01\n\x15SnapshotTableMetadata\x12Y\n\x10original_request\x18\x01\
+    \x20\x01(\x0b2..google.bigtable.admin.v2.SnapshotTableRequestR\x0forigin\
+    alRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\x1a.google.protob\
+    uf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\x03\x20\x01(\x0b2\
+    \x1a.google.protobuf.TimestampR\nfinishTime\"\x82\x02\n\x1fCreateTableFr\
+    omSnapshotMetadata\x12c\n\x10original_request\x18\x01\x20\x01(\x0b28.goo\
+    gle.bigtable.admin.v2.CreateTableFromSnapshotRequestR\x0foriginalRequest\
+    \x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.Timest\
+    ampR\x0brequestTime\x12;\n\x0bfinish_time\x18\x03\x20\x01(\x0b2\x1a.goog\
+    le.protobuf.TimestampR\nfinishTime\"\xbc\x01\n\x13CreateBackupRequest\
+    \x12D\n\x06parent\x18\x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtableadmin.\
+    googleapis.com/Cluster\xe0A\x02\x12\x20\n\tbackup_id\x18\x02\x20\x01(\tR\
+    \x08backupIdB\x03\xe0A\x02\x12=\n\x06backup\x18\x03\x20\x01(\x0b2\x20.go\
+    ogle.bigtable.admin.v2.BackupR\x06backupB\x03\xe0A\x02\"\xbf\x01\n\x14Cr\
+    eateBackupMetadata\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12!\n\
+    \x0csource_table\x18\x02\x20\x01(\tR\x0bsourceTable\x129\n\nstart_time\
+    \x18\x03\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\tstartTime\x125\n\
+    \x08end_time\x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\x07end\
+    Time\"\x96\x01\n\x13UpdateBackupRequest\x12=\n\x06backup\x18\x01\x20\x01\
+    (\x0b2\x20.google.bigtable.admin.v2.BackupR\x06backupB\x03\xe0A\x02\x12@\
+    \n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\x1a.google.protobuf.FieldMaskR\n\
+    updateMaskB\x03\xe0A\x02\"S\n\x10GetBackupRequest\x12?\n\x04name\x18\x01\
+    \x20\x01(\tR\x04nameB+\xfaA%\n#bigtableadmin.googleapis.com/Backup\xe0A\
+    \x02\"V\n\x13DeleteBackupRequest\x12?\n\x04name\x18\x01\x20\x01(\tR\x04n\
+    ameB+\xfaA%\n#bigtableadmin.googleapis.com/Backup\xe0A\x02\"\xc9\x01\n\
+    \x12ListBackupsRequest\x12D\n\x06parent\x18\x01\x20\x01(\tR\x06parentB,\
+    \xfaA&\n$bigtableadmin.googleapis.com/Cluster\xe0A\x02\x12\x16\n\x06filt\
+    er\x18\x02\x20\x01(\tR\x06filter\x12\x19\n\x08order_by\x18\x03\x20\x01(\
+    \tR\x07orderBy\x12\x1b\n\tpage_size\x18\x04\x20\x01(\x05R\x08pageSize\
+    \x12\x1d\n\npage_token\x18\x05\x20\x01(\tR\tpageToken\"y\n\x13ListBackup\
+    sResponse\x12:\n\x07backups\x18\x01\x20\x03(\x0b2\x20.google.bigtable.ad\
+    min.v2.BackupR\x07backups\x12&\n\x0fnext_page_token\x18\x02\x20\x01(\tR\
+    \rnextPageToken\"\x8f\x02\n\x11CopyBackupRequest\x12D\n\x06parent\x18\
+    \x01\x20\x01(\tR\x06parentB,\xfaA&\n$bigtableadmin.googleapis.com/Cluste\
+    r\xe0A\x02\x12\x20\n\tbackup_id\x18\x02\x20\x01(\tR\x08backupIdB\x03\xe0\
+    A\x02\x12P\n\rsource_backup\x18\x03\x20\x01(\tR\x0csourceBackupB+\xfaA%\
+    \n#bigtableadmin.googleapis.com/Backup\xe0A\x02\x12@\n\x0bexpire_time\
+    \x18\x04\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\nexpireTimeB\x03\
+    \xe0A\x02\"\xef\x01\n\x12CopyBackupMetadata\x12<\n\x04name\x18\x01\x20\
+    \x01(\tR\x04nameB(\xfaA%\n#bigtableadmin.googleapis.com/Backup\x12R\n\
+    \x12source_backup_info\x18\x02\x20\x01(\x0b2$.google.bigtable.admin.v2.B\
+    ackupInfoR\x10sourceBackupInfo\x12G\n\x08progress\x18\x03\x20\x01(\x0b2+\
+    .google.bigtable.admin.v2.OperationProgressR\x08progress\"\xf5\x01\n\x1b\
+    CreateAuthorizedViewRequest\x12K\n\x06parent\x18\x01\x20\x01(\tR\x06pare\
+    ntB3\xfaA-\x12+bigtableadmin.googleapis.com/AuthorizedView\xe0A\x02\x121\
+    \n\x12authorized_view_id\x18\x02\x20\x01(\tR\x10authorizedViewIdB\x03\
+    \xe0A\x02\x12V\n\x0fauthorized_view\x18\x03\x20\x01(\x0b2(.google.bigtab\
+    le.admin.v2.AuthorizedViewR\x0eauthorizedViewB\x03\xe0A\x02\"\xfc\x01\n\
+    \x1cCreateAuthorizedViewMetadata\x12`\n\x10original_request\x18\x01\x20\
+    \x01(\x0b25.google.bigtable.admin.v2.CreateAuthorizedViewRequestR\x0fori\
+    ginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\x1a.google.pro\
+    tobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\x03\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\xff\x01\n\x1aListAuth\
+    orizedViewsRequest\x12K\n\x06parent\x18\x01\x20\x01(\tR\x06parentB3\xfaA\
+    -\x12+bigtableadmin.googleapis.com/AuthorizedView\xe0A\x02\x12\x20\n\tpa\
+    ge_size\x18\x02\x20\x01(\x05R\x08pageSizeB\x03\xe0A\x01\x12\"\n\npage_to\
+    ken\x18\x03\x20\x01(\tR\tpageTokenB\x03\xe0A\x01\x12N\n\x04view\x18\x04\
+    \x20\x01(\x0e25.google.bigtable.admin.v2.AuthorizedView.ResponseViewR\
+    \x04viewB\x03\xe0A\x01\"\x9a\x01\n\x1bListAuthorizedViewsResponse\x12S\n\
+    \x10authorized_views\x18\x01\x20\x03(\x0b2(.google.bigtable.admin.v2.Aut\
+    horizedViewR\x0fauthorizedViews\x12&\n\x0fnext_page_token\x18\x02\x20\
+    \x01(\tR\rnextPageToken\"\xb3\x01\n\x18GetAuthorizedViewRequest\x12G\n\
+    \x04name\x18\x01\x20\x01(\tR\x04nameB3\xfaA-\n+bigtableadmin.googleapis.\
+    com/AuthorizedView\xe0A\x02\x12N\n\x04view\x18\x02\x20\x01(\x0e25.google\
+    .bigtable.admin.v2.AuthorizedView.ResponseViewR\x04viewB\x03\xe0A\x01\"\
+    \xe5\x01\n\x1bUpdateAuthorizedViewRequest\x12V\n\x0fauthorized_view\x18\
+    \x01\x20\x01(\x0b2(.google.bigtable.admin.v2.AuthorizedViewR\x0eauthoriz\
+    edViewB\x03\xe0A\x02\x12@\n\x0bupdate_mask\x18\x02\x20\x01(\x0b2\x1a.goo\
+    gle.protobuf.FieldMaskR\nupdateMaskB\x03\xe0A\x01\x12,\n\x0fignore_warni\
+    ngs\x18\x03\x20\x01(\x08R\x0eignoreWarningsB\x03\xe0A\x01\"\xfc\x01\n\
+    \x1cUpdateAuthorizedViewMetadata\x12`\n\x10original_request\x18\x01\x20\
+    \x01(\x0b25.google.bigtable.admin.v2.UpdateAuthorizedViewRequestR\x0fori\
+    ginalRequest\x12=\n\x0crequest_time\x18\x02\x20\x01(\x0b2\x1a.google.pro\
+    tobuf.TimestampR\x0brequestTime\x12;\n\x0bfinish_time\x18\x03\x20\x01(\
+    \x0b2\x1a.google.protobuf.TimestampR\nfinishTime\"\x7f\n\x1bDeleteAuthor\
+    izedViewRequest\x12G\n\x04name\x18\x01\x20\x01(\tR\x04nameB3\xfaA-\n+big\
+    tableadmin.googleapis.com/AuthorizedView\xe0A\x02\x12\x17\n\x04etag\x18\
+    \x02\x20\x01(\tR\x04etagB\x03\xe0A\x012\xb63\n\x12BigtableTableAdmin\x12\
+    \xab\x01\n\x0bCreateTable\x12,.google.bigtable.admin.v2.CreateTableReque\
+    st\x1a\x1f.google.bigtable.admin.v2.Table\"M\x82\xd3\xe4\x93\x02/\"*/v2/\
+    {parent=projects/*/instances/*}/tables:\x01*\xdaA\x15parent,table_id,tab\
+    le\x12\x8a\x02\n\x17CreateTableFromSnapshot\x128.google.bigtable.admin.v\
+    2.CreateTableFromSnapshotRequest\x1a\x1d.google.longrunning.Operation\"\
+    \x95\x01\xcaA(\n\x05Table\x12\x1fCreateTableFromSnapshotMetadata\x82\xd3\
+    \xe4\x93\x02B\"=/v2/{parent=projects/*/instances/*}/tables:createFromSna\
+    pshot:\x01*\xdaA\x1fparent,table_id,source_snapshot\x12\xa4\x01\n\nListT\
+    ables\x12+.google.bigtable.admin.v2.ListTablesRequest\x1a,.google.bigtab\
+    le.admin.v2.ListTablesResponse\";\x82\xd3\xe4\x93\x02,\x12*/v2/{parent=p\
+    rojects/*/instances/*}/tables\xdaA\x06parent\x12\x91\x01\n\x08GetTable\
+    \x12).google.bigtable.admin.v2.GetTableRequest\x1a\x1f.google.bigtable.a\
+    dmin.v2.Table\"9\x82\xd3\xe4\x93\x02,\x12*/v2/{name=projects/*/instances\
+    /*/tables/*}\xdaA\x04name\x12\xce\x01\n\x0bUpdateTable\x12,.google.bigta\
+    ble.admin.v2.UpdateTableRequest\x1a\x1d.google.longrunning.Operation\"r\
+    \xcaA\x1c\n\x05Table\x12\x13UpdateTableMetadata\x82\xd3\xe4\x93\x02920/v\
+    2/{table.name=projects/*/instances/*/tables/*}:\x05table\xdaA\x11table,u\
+    pdate_mask\x12\x8e\x01\n\x0bDeleteTable\x12,.google.bigtable.admin.v2.De\
+    leteTableRequest\x1a\x16.google.protobuf.Empty\"9\x82\xd3\xe4\x93\x02,**\
+    /v2/{name=projects/*/instances/*/tables/*}\xdaA\x04name\x12\xc6\x01\n\rU\
+    ndeleteTable\x12..google.bigtable.admin.v2.UndeleteTableRequest\x1a\x1d.\
+    google.longrunning.Operation\"f\xcaA\x1e\n\x05Table\x12\x15UndeleteTable\
+    Metadata\x82\xd3\xe4\x93\x028\"3/v2/{name=projects/*/instances/*/tables/\
+    *}:undelete:\x01*\xdaA\x04name\x12\xa1\x02\n\x14CreateAuthorizedView\x12\
+    5.google.bigtable.admin.v2.CreateAuthorizedViewRequest\x1a\x1d.google.lo\
+    ngrunning.Operation\"\xb2\x01\xcaA.\n\x0eAuthorizedView\x12\x1cCreateAut\
+    horizedViewMetadata\x82\xd3\xe4\x93\x02O\"</v2/{parent=projects/*/instan\
+    ces/*/tables/*}/authorizedViews:\x0fauthorized_view\xdaA)parent,authoriz\
+    ed_view,authorized_view_id\x12\xd1\x01\n\x13ListAuthorizedViews\x124.goo\
+    gle.bigtable.admin.v2.ListAuthorizedViewsRequest\x1a5.google.bigtable.ad\
+    min.v2.ListAuthorizedViewsResponse\"M\x82\xd3\xe4\x93\x02>\x12</v2/{pare\
+    nt=projects/*/instances/*/tables/*}/authorizedViews\xdaA\x06parent\x12\
+    \xbe\x01\n\x11GetAuthorizedView\x122.google.bigtable.admin.v2.GetAuthori\
+    zedViewRequest\x1a(.google.bigtable.admin.v2.AuthorizedView\"K\x82\xd3\
+    \xe4\x93\x02>\x12</v2/{name=projects/*/instances/*/tables/*/authorizedVi\
+    ews/*}\xdaA\x04name\x12\xa3\x02\n\x14UpdateAuthorizedView\x125.google.bi\
+    gtable.admin.v2.UpdateAuthorizedViewRequest\x1a\x1d.google.longrunning.O\
+    peration\"\xb4\x01\xcaA.\n\x0eAuthorizedView\x12\x1cUpdateAuthorizedView\
+    Metadata\x82\xd3\xe4\x93\x02_2L/v2/{authorized_view.name=projects/*/inst\
+    ances/*/tables/*/authorizedViews/*}:\x0fauthorized_view\xdaA\x1bauthoriz\
+    ed_view,update_mask\x12\xb2\x01\n\x14DeleteAuthorizedView\x125.google.bi\
+    gtable.admin.v2.DeleteAuthorizedViewRequest\x1a\x16.google.protobuf.Empt\
+    y\"K\x82\xd3\xe4\x93\x02>*</v2/{name=projects/*/instances/*/tables/*/aut\
+    horizedViews/*}\xdaA\x04name\x12\xcf\x01\n\x14ModifyColumnFamilies\x125.\
+    google.bigtable.admin.v2.ModifyColumnFamiliesRequest\x1a\x1f.google.bigt\
+    able.admin.v2.Table\"_\x82\xd3\xe4\x93\x02D\"?/v2/{name=projects/*/insta\
+    nces/*/tables/*}:modifyColumnFamilies:\x01*\xdaA\x12name,modifications\
+    \x12\x99\x01\n\x0cDropRowRange\x12-.google.bigtable.admin.v2.DropRowRang\
+    eRequest\x1a\x16.google.protobuf.Empty\"B\x82\xd3\xe4\x93\x02<\"7/v2/{na\
+    me=projects/*/instances/*/tables/*}:dropRowRange:\x01*\x12\xe8\x01\n\x18\
+    GenerateConsistencyToken\x129.google.bigtable.admin.v2.GenerateConsisten\
+    cyTokenRequest\x1a:.google.bigtable.admin.v2.GenerateConsistencyTokenRes\
+    ponse\"U\x82\xd3\xe4\x93\x02H\"C/v2/{name=projects/*/instances/*/tables/\
+    *}:generateConsistencyToken:\x01*\xdaA\x04name\x12\xda\x01\n\x10CheckCon\
+    sistency\x121.google.bigtable.admin.v2.CheckConsistencyRequest\x1a2.goog\
+    le.bigtable.admin.v2.CheckConsistencyResponse\"_\x82\xd3\xe4\x93\x02@\";\
+    /v2/{name=projects/*/instances/*/tables/*}:checkConsistency:\x01*\xdaA\
+    \x16name,consistency_token\x12\xea\x01\n\rSnapshotTable\x12..google.bigt\
+    able.admin.v2.SnapshotTableRequest\x1a\x1d.google.longrunning.Operation\
+    \"\x89\x01\xcaA!\n\x08Snapshot\x12\x15SnapshotTableMetadata\x82\xd3\xe4\
+    \x93\x028\"3/v2/{name=projects/*/instances/*/tables/*}:snapshot:\x01*\
+    \xdaA$name,cluster,snapshot_id,description\x12\xa8\x01\n\x0bGetSnapshot\
+    \x12,.google.bigtable.admin.v2.GetSnapshotRequest\x1a\".google.bigtable.\
+    admin.v2.Snapshot\"G\x82\xd3\xe4\x93\x02:\x128/v2/{name=projects/*/insta\
+    nces/*/clusters/*/snapshots/*}\xdaA\x04name\x12\xbb\x01\n\rListSnapshots\
+    \x12..google.bigtable.admin.v2.ListSnapshotsRequest\x1a/.google.bigtable\
+    .admin.v2.ListSnapshotsResponse\"I\x82\xd3\xe4\x93\x02:\x128/v2/{parent=\
+    projects/*/instances/*/clusters/*}/snapshots\xdaA\x06parent\x12\xa2\x01\
+    \n\x0eDeleteSnapshot\x12/.google.bigtable.admin.v2.DeleteSnapshotRequest\
+    \x1a\x16.google.protobuf.Empty\"G\x82\xd3\xe4\x93\x02:*8/v2/{name=projec\
+    ts/*/instances/*/clusters/*/snapshots/*}\xdaA\x04name\x12\xe0\x01\n\x0cC\
+    reateBackup\x12-.google.bigtable.admin.v2.CreateBackupRequest\x1a\x1d.go\
+    ogle.longrunning.Operation\"\x81\x01\xcaA\x1e\n\x06Backup\x12\x14CreateB\
+    ackupMetadata\x82\xd3\xe4\x93\x02@\"6/v2/{parent=projects/*/instances/*/\
+    clusters/*}/backups:\x06backup\xdaA\x17parent,backup_id,backup\x12\xa0\
+    \x01\n\tGetBackup\x12*.google.bigtable.admin.v2.GetBackupRequest\x1a\x20\
+    .google.bigtable.admin.v2.Backup\"E\x82\xd3\xe4\x93\x028\x126/v2/{name=p\
+    rojects/*/instances/*/clusters/*/backups/*}\xdaA\x04name\x12\xc3\x01\n\
+    \x0cUpdateBackup\x12-.google.bigtable.admin.v2.UpdateBackupRequest\x1a\
+    \x20.google.bigtable.admin.v2.Backup\"b\x82\xd3\xe4\x93\x02G2=/v2/{backu\
+    p.name=projects/*/instances/*/clusters/*/backups/*}:\x06backup\xdaA\x12b\
+    ackup,update_mask\x12\x9c\x01\n\x0cDeleteBackup\x12-.google.bigtable.adm\
+    in.v2.DeleteBackupRequest\x1a\x16.google.protobuf.Empty\"E\x82\xd3\xe4\
+    \x93\x028*6/v2/{name=projects/*/instances/*/clusters/*/backups/*}\xdaA\
+    \x04name\x12\xb3\x01\n\x0bListBackups\x12,.google.bigtable.admin.v2.List\
+    BackupsRequest\x1a-.google.bigtable.admin.v2.ListBackupsResponse\"G\x82\
+    \xd3\xe4\x93\x028\x126/v2/{parent=projects/*/instances/*/clusters/*}/bac\
+    kups\xdaA\x06parent\x12\xbb\x01\n\x0cRestoreTable\x12-.google.bigtable.a\
+    dmin.v2.RestoreTableRequest\x1a\x1d.google.longrunning.Operation\"]\xcaA\
+    \x1d\n\x05Table\x12\x14RestoreTableMetadata\x82\xd3\xe4\x93\x027\"2/v2/{\
+    parent=projects/*/instances/*}/tables:restore:\x01*\x12\xed\x01\n\nCopyB\
+    ackup\x12+.google.bigtable.admin.v2.CopyBackupRequest\x1a\x1d.google.lon\
+    grunning.Operation\"\x92\x01\xcaA\x1c\n\x06Backup\x12\x12CopyBackupMetad\
+    ata\x82\xd3\xe4\x93\x02@\";/v2/{parent=projects/*/instances/*/clusters/*\
+    }/backups:copy:\x01*\xdaA*parent,backup_id,source_backup,expire_time\x12\
+    \xec\x01\n\x0cGetIamPolicy\x12\".google.iam.v1.GetIamPolicyRequest\x1a\
+    \x15.google.iam.v1.Policy\"\xa0\x01\x82\xd3\xe4\x93\x02\x8e\x01\";/v2/{r\
+    esource=projects/*/instances/*/tables/*}:getIamPolicy:\x01*ZL\"G/v2/{res\
+    ource=projects/*/instances/*/clusters/*/backups/*}:getIamPolicy:\x01*\
+    \xdaA\x08resource\x12\xf3\x01\n\x0cSetIamPolicy\x12\".google.iam.v1.SetI\
+    amPolicyRequest\x1a\x15.google.iam.v1.Policy\"\xa7\x01\x82\xd3\xe4\x93\
+    \x02\x8e\x01\";/v2/{resource=projects/*/instances/*/tables/*}:setIamPoli\
+    cy:\x01*ZL\"G/v2/{resource=projects/*/instances/*/clusters/*/backups/*}:\
+    setIamPolicy:\x01*\xdaA\x0fresource,policy\x12\xa4\x02\n\x12TestIamPermi\
+    ssions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.T\
+    estIamPermissionsResponse\"\xb8\x01\x82\xd3\xe4\x93\x02\x9a\x01\"A/v2/{r\
+    esource=projects/*/instances/*/tables/*}:testIamPermissions:\x01*ZR\"M/v\
+    2/{resource=projects/*/instances/*/clusters/*/backups/*}:testIamPermissi\
+    ons:\x01*\xdaA\x14resource,permissions\x1a\xde\x02\xd2A\xbb\x02https://w\
+    ww.googleapis.com/auth/bigtable.admin,https://www.googleapis.com/auth/bi\
+    gtable.admin.table,https://www.googleapis.com/auth/cloud-bigtable.admin,\
+    https://www.googleapis.com/auth/cloud-bigtable.admin.table,https://www.g\
+    oogleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/cloud-\
+    platform.read-only\xcaA\x1cbigtableadmin.googleapis.comB\xda\x01\n\x1cco\
+    m.google.bigtable.admin.v2B\x17BigtableTableAdminProtoP\x01Z8cloud.googl\
+    e.com/go/bigtable/admin/apiv2/adminpb;adminpb\xaa\x02\x1eGoogle.Cloud.Bi\
+    gtable.Admin.V2\xca\x02\x1eGoogle\\Cloud\\Bigtable\\Admin\\V2\xea\x02\"G\
+    oogle::Cloud::Bigtable::Admin::V2J\xe4\x89\x03\n\x07\x12\x05\x0e\0\x99\
+    \x0b\x01\n\xbc\x04\n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x20\
+    2024\x20Google\x20LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20Licen\
+    se,\x20Version\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\
+    \x20use\x20this\x20file\x20except\x20in\x20compliance\x20with\x20the\x20\
+    License.\n\x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\
+    \x20at\n\n\x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\
+    \n\n\x20Unless\x20required\x20by\x20applicable\x20law\x20or\x20agreed\
+    \x20to\x20in\x20writing,\x20software\n\x20distributed\x20under\x20the\
+    \x20License\x20is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\
+    \x20WITHOUT\x20WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20e\
+    ither\x20express\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20\
+    the\x20specific\x20language\x20governing\x20permissions\x20and\n\x20limi\
+    tations\x20under\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0!\n\t\
+    \n\x02\x03\0\x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\x03\x13\0!\n\t\n\x02\
+    \x03\x02\x12\x03\x14\0)\n\t\n\x02\x03\x03\x12\x03\x15\0#\n\t\n\x02\x03\
+    \x04\x12\x03\x16\0/\n\t\n\x02\x03\x05\x12\x03\x17\0.\n\t\n\x02\x03\x06\
+    \x12\x03\x18\0(\n\t\n\x02\x03\x07\x12\x03\x19\0$\n\t\n\x02\x03\x08\x12\
+    \x03\x1a\0-\n\t\n\x02\x03\t\x12\x03\x1b\0(\n\t\n\x02\x03\n\x12\x03\x1c\0\
+    %\n\t\n\x02\x03\x0b\x12\x03\x1d\0*\n\t\n\x02\x03\x0c\x12\x03\x1e\0)\n\
+    \x08\n\x01\x08\x12\x03\x20\0;\n\t\n\x02\x08%\x12\x03\x20\0;\n\x08\n\x01\
+    \x08\x12\x03!\0O\n\t\n\x02\x08\x0b\x12\x03!\0O\n\x08\n\x01\x08\x12\x03\"\
+    \0\"\n\t\n\x02\x08\n\x12\x03\"\0\"\n\x08\n\x01\x08\x12\x03#\08\n\t\n\x02\
+    \x08\x08\x12\x03#\08\n\x08\n\x01\x08\x12\x03$\05\n\t\n\x02\x08\x01\x12\
+    \x03$\05\n\x08\n\x01\x08\x12\x03%\0<\n\t\n\x02\x08)\x12\x03%\0<\n\x08\n\
+    \x01\x08\x12\x03&\0;\n\t\n\x02\x08-\x12\x03&\0;\n\xac\x01\n\x02\x06\0\
+    \x12\x05-\0\xb4\x03\x01\x1a\x9e\x01\x20Service\x20for\x20creating,\x20co\
+    nfiguring,\x20and\x20deleting\x20Cloud\x20Bigtable\x20tables.\n\n\n\x20P\
+    rovides\x20access\x20to\x20the\x20table\x20schemas\x20only,\x20not\x20th\
+    e\x20data\x20stored\x20within\n\x20the\x20tables.\n\n\n\n\x03\x06\0\x01\
+    \x12\x03-\x08\x1a\n\n\n\x03\x06\0\x03\x12\x03.\x02D\n\x0c\n\x05\x06\0\
+    \x03\x99\x08\x12\x03.\x02D\n\x0b\n\x03\x06\0\x03\x12\x04/\x025A\n\r\n\
+    \x05\x06\0\x03\x9a\x08\x12\x04/\x025A\n\xa0\x01\n\x04\x06\0\x02\0\x12\
+    \x04:\x02@\x03\x1a\x91\x01\x20Creates\x20a\x20new\x20table\x20in\x20the\
+    \x20specified\x20instance.\n\x20The\x20table\x20can\x20be\x20created\x20\
+    with\x20a\x20full\x20set\x20of\x20initial\x20column\x20families,\n\x20sp\
+    ecified\x20in\x20the\x20request.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03:\
+    \x06\x11\n\x0c\n\x05\x06\0\x02\0\x02\x12\x03:\x12$\n\x0c\n\x05\x06\0\x02\
+    \0\x03\x12\x03:/4\n\r\n\x05\x06\0\x02\0\x04\x12\x04;\x04>\x06\n\x11\n\t\
+    \x06\0\x02\0\x04\xb0\xca\xbc\"\x12\x04;\x04>\x06\n\x0c\n\x05\x06\0\x02\0\
+    \x04\x12\x03?\x04C\n\x0f\n\x08\x06\0\x02\0\x04\x9b\x08\0\x12\x03?\x04C\n\
+    \xca\x03\n\x04\x06\0\x02\x01\x12\x04J\x02U\x03\x1a\xbb\x03\x20Creates\
+    \x20a\x20new\x20table\x20from\x20the\x20specified\x20snapshot.\x20The\
+    \x20target\x20table\x20must\n\x20not\x20exist.\x20The\x20snapshot\x20and\
+    \x20the\x20table\x20must\x20be\x20in\x20the\x20same\x20instance.\n\n\x20\
+    Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\
+    \x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currentl\
+    y\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\
+    \n\x20feature\x20might\x20be\x20changed\x20in\x20backward-incompatible\
+    \x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20production\x20us\
+    e.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecatio\
+    n\n\x20policy.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03J\x06\x1d\n\x0c\n\
+    \x05\x06\0\x02\x01\x02\x12\x03J\x1e<\n\x0c\n\x05\x06\0\x02\x01\x03\x12\
+    \x03K\x0f+\n\r\n\x05\x06\0\x02\x01\x04\x12\x04L\x04O\x06\n\x11\n\t\x06\0\
+    \x02\x01\x04\xb0\xca\xbc\"\x12\x04L\x04O\x06\n\x0c\n\x05\x06\0\x02\x01\
+    \x04\x12\x03P\x04M\n\x0f\n\x08\x06\0\x02\x01\x04\x9b\x08\0\x12\x03P\x04M\
+    \n\r\n\x05\x06\0\x02\x01\x04\x12\x04Q\x04T\x06\n\x0f\n\x07\x06\0\x02\x01\
+    \x04\x99\x08\x12\x04Q\x04T\x06\nB\n\x04\x06\0\x02\x02\x12\x04X\x02]\x03\
+    \x1a4\x20Lists\x20all\x20tables\x20served\x20from\x20a\x20specified\x20i\
+    nstance.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03X\x06\x10\n\x0c\n\x05\
+    \x06\0\x02\x02\x02\x12\x03X\x11\"\n\x0c\n\x05\x06\0\x02\x02\x03\x12\x03X\
+    -?\n\r\n\x05\x06\0\x02\x02\x04\x12\x04Y\x04[\x06\n\x11\n\t\x06\0\x02\x02\
+    \x04\xb0\xca\xbc\"\x12\x04Y\x04[\x06\n\x0c\n\x05\x06\0\x02\x02\x04\x12\
+    \x03\\\x044\n\x0f\n\x08\x06\0\x02\x02\x04\x9b\x08\0\x12\x03\\\x044\nD\n\
+    \x04\x06\0\x02\x03\x12\x04`\x02e\x03\x1a6\x20Gets\x20metadata\x20informa\
+    tion\x20about\x20the\x20specified\x20table.\n\n\x0c\n\x05\x06\0\x02\x03\
+    \x01\x12\x03`\x06\x0e\n\x0c\n\x05\x06\0\x02\x03\x02\x12\x03`\x0f\x1e\n\
+    \x0c\n\x05\x06\0\x02\x03\x03\x12\x03`).\n\r\n\x05\x06\0\x02\x03\x04\x12\
+    \x04a\x04c\x06\n\x11\n\t\x06\0\x02\x03\x04\xb0\xca\xbc\"\x12\x04a\x04c\
+    \x06\n\x0c\n\x05\x06\0\x02\x03\x04\x12\x03d\x042\n\x0f\n\x08\x06\0\x02\
+    \x03\x04\x9b\x08\0\x12\x03d\x042\n*\n\x04\x06\0\x02\x04\x12\x04h\x02r\
+    \x03\x1a\x1c\x20Updates\x20a\x20specified\x20table.\n\n\x0c\n\x05\x06\0\
+    \x02\x04\x01\x12\x03h\x06\x11\n\x0c\n\x05\x06\0\x02\x04\x02\x12\x03h\x12\
+    $\n\x0c\n\x05\x06\0\x02\x04\x03\x12\x03h/K\n\r\n\x05\x06\0\x02\x04\x04\
+    \x12\x04i\x04l\x06\n\x11\n\t\x06\0\x02\x04\x04\xb0\xca\xbc\"\x12\x04i\
+    \x04l\x06\n\x0c\n\x05\x06\0\x02\x04\x04\x12\x03m\x04?\n\x0f\n\x08\x06\0\
+    \x02\x04\x04\x9b\x08\0\x12\x03m\x04?\n\r\n\x05\x06\0\x02\x04\x04\x12\x04\
+    n\x04q\x06\n\x0f\n\x07\x06\0\x02\x04\x04\x99\x08\x12\x04n\x04q\x06\nJ\n\
+    \x04\x06\0\x02\x05\x12\x04u\x02z\x03\x1a<\x20Permanently\x20deletes\x20a\
+    \x20specified\x20table\x20and\x20all\x20of\x20its\x20data.\n\n\x0c\n\x05\
+    \x06\0\x02\x05\x01\x12\x03u\x06\x11\n\x0c\n\x05\x06\0\x02\x05\x02\x12\
+    \x03u\x12$\n\x0c\n\x05\x06\0\x02\x05\x03\x12\x03u/D\n\r\n\x05\x06\0\x02\
+    \x05\x04\x12\x04v\x04x\x06\n\x11\n\t\x06\0\x02\x05\x04\xb0\xca\xbc\"\x12\
+    \x04v\x04x\x06\n\x0c\n\x05\x06\0\x02\x05\x04\x12\x03y\x042\n\x0f\n\x08\
+    \x06\0\x02\x05\x04\x9b\x08\0\x12\x03y\x042\nK\n\x04\x06\0\x02\x06\x12\
+    \x05}\x02\x88\x01\x03\x1a<\x20Restores\x20a\x20specified\x20table\x20whi\
+    ch\x20was\x20accidentally\x20deleted.\n\n\x0c\n\x05\x06\0\x02\x06\x01\
+    \x12\x03}\x06\x13\n\x0c\n\x05\x06\0\x02\x06\x02\x12\x03}\x14(\n\x0c\n\
+    \x05\x06\0\x02\x06\x03\x12\x03~\x0f+\n\x0e\n\x05\x06\0\x02\x06\x04\x12\
+    \x05\x7f\x04\x82\x01\x06\n\x12\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\
+    \x05\x7f\x04\x82\x01\x06\n\r\n\x05\x06\0\x02\x06\x04\x12\x04\x83\x01\x04\
+    2\n\x10\n\x08\x06\0\x02\x06\x04\x9b\x08\0\x12\x04\x83\x01\x042\n\x0f\n\
+    \x05\x06\0\x02\x06\x04\x12\x06\x84\x01\x04\x87\x01\x06\n\x11\n\x07\x06\0\
+    \x02\x06\x04\x99\x08\x12\x06\x84\x01\x04\x87\x01\x06\n:\n\x04\x06\0\x02\
+    \x07\x12\x06\x8b\x01\x02\x97\x01\x03\x1a*\x20Creates\x20a\x20new\x20Auth\
+    orizedView\x20in\x20a\x20table.\n\n\r\n\x05\x06\0\x02\x07\x01\x12\x04\
+    \x8b\x01\x06\x1a\n\r\n\x05\x06\0\x02\x07\x02\x12\x04\x8b\x01\x1b6\n\r\n\
+    \x05\x06\0\x02\x07\x03\x12\x04\x8c\x01\x0f+\n\x0f\n\x05\x06\0\x02\x07\
+    \x04\x12\x06\x8d\x01\x04\x90\x01\x06\n\x13\n\t\x06\0\x02\x07\x04\xb0\xca\
+    \xbc\"\x12\x06\x8d\x01\x04\x90\x01\x06\n\x0f\n\x05\x06\0\x02\x07\x04\x12\
+    \x06\x91\x01\x04\x92\x014\n\x12\n\x08\x06\0\x02\x07\x04\x9b\x08\0\x12\
+    \x06\x91\x01\x04\x92\x014\n\x0f\n\x05\x06\0\x02\x07\x04\x12\x06\x93\x01\
+    \x04\x96\x01\x06\n\x11\n\x07\x06\0\x02\x07\x04\x99\x08\x12\x06\x93\x01\
+    \x04\x96\x01\x06\nB\n\x04\x06\0\x02\x08\x12\x06\x9a\x01\x02\xa0\x01\x03\
+    \x1a2\x20Lists\x20all\x20AuthorizedViews\x20from\x20a\x20specific\x20tab\
+    le.\n\n\r\n\x05\x06\0\x02\x08\x01\x12\x04\x9a\x01\x06\x19\n\r\n\x05\x06\
+    \0\x02\x08\x02\x12\x04\x9a\x01\x1a4\n\r\n\x05\x06\0\x02\x08\x03\x12\x04\
+    \x9b\x01\x0f*\n\x0f\n\x05\x06\0\x02\x08\x04\x12\x06\x9c\x01\x04\x9e\x01\
+    \x06\n\x13\n\t\x06\0\x02\x08\x04\xb0\xca\xbc\"\x12\x06\x9c\x01\x04\x9e\
+    \x01\x06\n\r\n\x05\x06\0\x02\x08\x04\x12\x04\x9f\x01\x044\n\x10\n\x08\
+    \x06\0\x02\x08\x04\x9b\x08\0\x12\x04\x9f\x01\x044\nC\n\x04\x06\0\x02\t\
+    \x12\x06\xa3\x01\x02\xa8\x01\x03\x1a3\x20Gets\x20information\x20from\x20\
+    a\x20specified\x20AuthorizedView.\n\n\r\n\x05\x06\0\x02\t\x01\x12\x04\
+    \xa3\x01\x06\x17\n\r\n\x05\x06\0\x02\t\x02\x12\x04\xa3\x01\x180\n\r\n\
+    \x05\x06\0\x02\t\x03\x12\x04\xa3\x01;I\n\x0f\n\x05\x06\0\x02\t\x04\x12\
+    \x06\xa4\x01\x04\xa6\x01\x06\n\x13\n\t\x06\0\x02\t\x04\xb0\xca\xbc\"\x12\
+    \x06\xa4\x01\x04\xa6\x01\x06\n\r\n\x05\x06\0\x02\t\x04\x12\x04\xa7\x01\
+    \x042\n\x10\n\x08\x06\0\x02\t\x04\x9b\x08\0\x12\x04\xa7\x01\x042\n7\n\
+    \x04\x06\0\x02\n\x12\x06\xab\x01\x02\xb6\x01\x03\x1a'\x20Updates\x20an\
+    \x20AuthorizedView\x20in\x20a\x20table.\n\n\r\n\x05\x06\0\x02\n\x01\x12\
+    \x04\xab\x01\x06\x1a\n\r\n\x05\x06\0\x02\n\x02\x12\x04\xab\x01\x1b6\n\r\
+    \n\x05\x06\0\x02\n\x03\x12\x04\xac\x01\x0f+\n\x0f\n\x05\x06\0\x02\n\x04\
+    \x12\x06\xad\x01\x04\xb0\x01\x06\n\x13\n\t\x06\0\x02\n\x04\xb0\xca\xbc\"\
+    \x12\x06\xad\x01\x04\xb0\x01\x06\n\r\n\x05\x06\0\x02\n\x04\x12\x04\xb1\
+    \x01\x04I\n\x10\n\x08\x06\0\x02\n\x04\x9b\x08\0\x12\x04\xb1\x01\x04I\n\
+    \x0f\n\x05\x06\0\x02\n\x04\x12\x06\xb2\x01\x04\xb5\x01\x06\n\x11\n\x07\
+    \x06\0\x02\n\x04\x99\x08\x12\x06\xb2\x01\x04\xb5\x01\x06\nA\n\x04\x06\0\
+    \x02\x0b\x12\x06\xb9\x01\x02\xbf\x01\x03\x1a1\x20Permanently\x20deletes\
+    \x20a\x20specified\x20AuthorizedView.\n\n\r\n\x05\x06\0\x02\x0b\x01\x12\
+    \x04\xb9\x01\x06\x1a\n\r\n\x05\x06\0\x02\x0b\x02\x12\x04\xb9\x01\x1b6\n\
+    \r\n\x05\x06\0\x02\x0b\x03\x12\x04\xba\x01\x0f$\n\x0f\n\x05\x06\0\x02\
+    \x0b\x04\x12\x06\xbb\x01\x04\xbd\x01\x06\n\x13\n\t\x06\0\x02\x0b\x04\xb0\
+    \xca\xbc\"\x12\x06\xbb\x01\x04\xbd\x01\x06\n\r\n\x05\x06\0\x02\x0b\x04\
+    \x12\x04\xbe\x01\x042\n\x10\n\x08\x06\0\x02\x0b\x04\x9b\x08\0\x12\x04\
+    \xbe\x01\x042\n\x9d\x02\n\x04\x06\0\x02\x0c\x12\x06\xc5\x01\x02\xcb\x01\
+    \x03\x1a\x8c\x02\x20Performs\x20a\x20series\x20of\x20column\x20family\
+    \x20modifications\x20on\x20the\x20specified\x20table.\n\x20Either\x20all\
+    \x20or\x20none\x20of\x20the\x20modifications\x20will\x20occur\x20before\
+    \x20this\x20method\n\x20returns,\x20but\x20data\x20requests\x20received\
     \x20prior\x20to\x20that\x20point\x20may\x20see\x20a\x20table\n\x20where\
-    \x20only\x20some\x20modifications\x20have\x20taken\x20effect.\n\n\x0c\n\
-    \x05\x06\0\x02\x05\x01\x12\x03\\\x06\x1a\n\x0c\n\x05\x06\0\x02\x05\x02\
-    \x12\x03\\\x1b6\n\x0c\n\x05\x06\0\x02\x05\x03\x12\x03\\AF\n\r\n\x05\x06\
-    \0\x02\x05\x04\x12\x04]\x04`\x06\n\x11\n\t\x06\0\x02\x05\x04\xb0\xca\xbc\
-    \"\x12\x04]\x04`\x06\n\xbb\x01\n\x04\x06\0\x02\x06\x12\x04f\x02k\x03\x1a\
-    \xac\x01\x20Permanently\x20drop/delete\x20a\x20row\x20range\x20from\x20a\
-    \x20specified\x20table.\x20The\x20request\x20can\n\x20specify\x20whether\
-    \x20to\x20delete\x20all\x20rows\x20in\x20a\x20table,\x20or\x20only\x20th\
-    ose\x20that\x20match\x20a\n\x20particular\x20prefix.\n\n\x0c\n\x05\x06\0\
-    \x02\x06\x01\x12\x03f\x06\x12\n\x0c\n\x05\x06\0\x02\x06\x02\x12\x03f\x13\
-    &\n\x0c\n\x05\x06\0\x02\x06\x03\x12\x03f1F\n\r\n\x05\x06\0\x02\x06\x04\
-    \x12\x04g\x04j\x06\n\x11\n\t\x06\0\x02\x06\x04\xb0\xca\xbc\"\x12\x04g\
-    \x04j\x06\n\xf3\x01\n\x04\x06\0\x02\x07\x12\x04q\x02w\x03\x1a\xe4\x01\
-    \x20Generates\x20a\x20consistency\x20token\x20for\x20a\x20Table,\x20whic\
-    h\x20can\x20be\x20used\x20in\n\x20CheckConsistency\x20to\x20check\x20whe\
-    ther\x20mutations\x20to\x20the\x20table\x20that\x20finished\n\x20before\
-    \x20this\x20call\x20started\x20have\x20been\x20replicated.\x20The\x20tok\
-    ens\x20will\x20be\x20available\n\x20for\x2090\x20days.\n\n\x0c\n\x05\x06\
-    \0\x02\x07\x01\x12\x03q\x06\x1e\n\x0c\n\x05\x06\0\x02\x07\x02\x12\x03q\
-    \x1f>\n\x0c\n\x05\x06\0\x02\x07\x03\x12\x03r\x0f/\n\r\n\x05\x06\0\x02\
-    \x07\x04\x12\x04s\x04v\x06\n\x11\n\t\x06\0\x02\x07\x04\xb0\xca\xbc\"\x12\
-    \x04s\x04v\x06\n\xbc\x01\n\x04\x06\0\x02\x08\x12\x05|\x02\x82\x01\x03\
-    \x1a\xac\x01\x20Checks\x20replication\x20consistency\x20based\x20on\x20a\
-    \x20consistency\x20token,\x20that\x20is,\x20if\n\x20replication\x20has\
-    \x20caught\x20up\x20based\x20on\x20the\x20conditions\x20specified\x20in\
-    \x20the\x20token\n\x20and\x20the\x20check\x20request.\n\n\x0c\n\x05\x06\
-    \0\x02\x08\x01\x12\x03|\x06\x16\n\x0c\n\x05\x06\0\x02\x08\x02\x12\x03|\
-    \x17.\n\x0c\n\x05\x06\0\x02\x08\x03\x12\x03}\x0f'\n\x0e\n\x05\x06\0\x02\
-    \x08\x04\x12\x05~\x04\x81\x01\x06\n\x12\n\t\x06\0\x02\x08\x04\xb0\xca\
-    \xbc\"\x12\x05~\x04\x81\x01\x06\n\xca\x03\n\x04\x06\0\x02\t\x12\x06\x8c\
-    \x01\x02\x92\x01\x03\x1a\xb9\x03\x20Creates\x20a\x20new\x20snapshot\x20i\
-    n\x20the\x20specified\x20cluster\x20from\x20the\x20specified\n\x20source\
-    \x20table.\x20The\x20cluster\x20and\x20the\x20table\x20must\x20be\x20in\
-    \x20the\x20same\x20instance.\n\n\x20Note:\x20This\x20is\x20a\x20private\
-    \x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\
-    \x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20Clou\
-    d\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20chang\
-    ed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\n\x20recom\
-    mended\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\
-    \x20any\x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\t\
-    \x01\x12\x04\x8c\x01\x06\x13\n\r\n\x05\x06\0\x02\t\x02\x12\x04\x8c\x01\
-    \x14(\n\r\n\x05\x06\0\x02\t\x03\x12\x04\x8d\x01\x0f+\n\x0f\n\x05\x06\0\
-    \x02\t\x04\x12\x06\x8e\x01\x04\x91\x01\x06\n\x13\n\t\x06\0\x02\t\x04\xb0\
-    \xca\xbc\"\x12\x06\x8e\x01\x04\x91\x01\x06\n\xf8\x02\n\x04\x06\0\x02\n\
-    \x12\x06\x9b\x01\x02\x9f\x01\x03\x1a\xe7\x02\x20Gets\x20metadata\x20info\
-    rmation\x20about\x20the\x20specified\x20snapshot.\n\n\x20Note:\x20This\
-    \x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\
-    \x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20availab\
-    le\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\
-    \x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\
-    \x20is\x20not\n\x20recommended\x20for\x20production\x20use.\x20It\x20is\
-    \x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\n\x20policy.\
-    \n\n\r\n\x05\x06\0\x02\n\x01\x12\x04\x9b\x01\x06\x11\n\r\n\x05\x06\0\x02\
-    \n\x02\x12\x04\x9b\x01\x12$\n\r\n\x05\x06\0\x02\n\x03\x12\x04\x9b\x01/7\
-    \n\x0f\n\x05\x06\0\x02\n\x04\x12\x06\x9c\x01\x04\x9e\x01\x06\n\x13\n\t\
-    \x06\0\x02\n\x04\xb0\xca\xbc\"\x12\x06\x9c\x01\x04\x9e\x01\x06\n\xfb\x02\
-    \n\x04\x06\0\x02\x0b\x12\x06\xa8\x01\x02\xac\x01\x03\x1a\xea\x02\x20List\
-    s\x20all\x20snapshots\x20associated\x20with\x20the\x20specified\x20clust\
-    er.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\
-    \x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\
-    \x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20custome\
-    rs.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-inc\
-    ompatible\x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20product\
-    ion\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20d\
-    eprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\x0b\x01\x12\x04\xa8\x01\
-    \x06\x13\n\r\n\x05\x06\0\x02\x0b\x02\x12\x04\xa8\x01\x14(\n\r\n\x05\x06\
-    \0\x02\x0b\x03\x12\x04\xa8\x013H\n\x0f\n\x05\x06\0\x02\x0b\x04\x12\x06\
-    \xa9\x01\x04\xab\x01\x06\n\x13\n\t\x06\0\x02\x0b\x04\xb0\xca\xbc\"\x12\
-    \x06\xa9\x01\x04\xab\x01\x06\n\xec\x02\n\x04\x06\0\x02\x0c\x12\x06\xb5\
-    \x01\x02\xb9\x01\x03\x1a\xdb\x02\x20Permanently\x20deletes\x20the\x20spe\
-    cified\x20snapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\
-    \x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20featur\
-    e\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigta\
-    ble\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\
-    \x20backward-incompatible\x20ways\x20and\x20is\x20not\n\x20recommended\
-    \x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\
-    \x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\n\x05\x06\0\x02\x0c\x01\
-    \x12\x04\xb5\x01\x06\x14\n\r\n\x05\x06\0\x02\x0c\x02\x12\x04\xb5\x01\x15\
-    *\n\r\n\x05\x06\0\x02\x0c\x03\x12\x04\xb5\x015J\n\x0f\n\x05\x06\0\x02\
-    \x0c\x04\x12\x06\xb6\x01\x04\xb8\x01\x06\n\x13\n\t\x06\0\x02\x0c\x04\xb0\
-    \xca\xbc\"\x12\x06\xb6\x01\x04\xb8\x01\x06\n\x93\x01\n\x04\x06\0\x02\r\
-    \x12\x06\xbd\x01\x02\xc2\x01\x03\x1a\x82\x01\x20Gets\x20the\x20access\
-    \x20control\x20policy\x20for\x20a\x20table\x20resource.\x20Returns\x20an\
-    \x20empty\n\x20policy\x20if\x20an\x20table\x20exists\x20but\x20does\x20n\
-    ot\x20have\x20a\x20policy\x20set.\n\n\r\n\x05\x06\0\x02\r\x01\x12\x04\
-    \xbd\x01\x06\x12\n\r\n\x05\x06\0\x02\r\x02\x12\x04\xbd\x01\x134\n\r\n\
-    \x05\x06\0\x02\r\x03\x12\x04\xbd\x01?S\n\x0f\n\x05\x06\0\x02\r\x04\x12\
-    \x06\xbe\x01\x04\xc1\x01\x06\n\x13\n\t\x06\0\x02\r\x04\xb0\xca\xbc\"\x12\
-    \x06\xbe\x01\x04\xc1\x01\x06\nd\n\x04\x06\0\x02\x0e\x12\x06\xc6\x01\x02\
-    \xcb\x01\x03\x1aT\x20Sets\x20the\x20access\x20control\x20policy\x20on\
-    \x20a\x20table\x20resource.\x20Replaces\x20any\x20existing\n\x20policy.\
-    \n\n\r\n\x05\x06\0\x02\x0e\x01\x12\x04\xc6\x01\x06\x12\n\r\n\x05\x06\0\
-    \x02\x0e\x02\x12\x04\xc6\x01\x134\n\r\n\x05\x06\0\x02\x0e\x03\x12\x04\
-    \xc6\x01?S\n\x0f\n\x05\x06\0\x02\x0e\x04\x12\x06\xc7\x01\x04\xca\x01\x06\
-    \n\x13\n\t\x06\0\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\xc7\x01\x04\xca\x01\
-    \x06\nZ\n\x04\x06\0\x02\x0f\x12\x06\xce\x01\x02\xd3\x01\x03\x1aJ\x20Retu\
-    rns\x20permissions\x20that\x20the\x20caller\x20has\x20on\x20the\x20speci\
-    fied\x20table\x20resource.\n\n\r\n\x05\x06\0\x02\x0f\x01\x12\x04\xce\x01\
-    \x06\x18\n\r\n\x05\x06\0\x02\x0f\x02\x12\x04\xce\x01\x19@\n\r\n\x05\x06\
-    \0\x02\x0f\x03\x12\x04\xce\x01Ks\n\x0f\n\x05\x06\0\x02\x0f\x04\x12\x06\
-    \xcf\x01\x04\xd2\x01\x06\n\x13\n\t\x06\0\x02\x0f\x04\xb0\xca\xbc\"\x12\
-    \x06\xcf\x01\x04\xd2\x01\x06\n\x98\x01\n\x02\x04\0\x12\x06\xd8\x01\0\xfb\
-    \x01\x01\x1a\x89\x01\x20Request\x20message\x20for\n\x20[google.bigtable.\
-    admin.v2.BigtableTableAdmin.CreateTable][google.bigtable.admin.v2.Bigtab\
-    leTableAdmin.CreateTable]\n\n\x0b\n\x03\x04\0\x01\x12\x04\xd8\x01\x08\
-    \x1a\nC\n\x04\x04\0\x03\0\x12\x06\xda\x01\x02\xdd\x01\x03\x1a3\x20An\x20\
-    initial\x20split\x20point\x20for\x20a\x20newly\x20created\x20table.\n\n\
-    \r\n\x05\x04\0\x03\0\x01\x12\x04\xda\x01\n\x0f\n?\n\x06\x04\0\x03\0\x02\
-    \0\x12\x04\xdc\x01\x04\x12\x1a/\x20Row\x20key\x20to\x20use\x20as\x20an\
-    \x20initial\x20tablet\x20boundary.\n\n\x0f\n\x07\x04\0\x03\0\x02\0\x05\
-    \x12\x04\xdc\x01\x04\t\n\x0f\n\x07\x04\0\x03\0\x02\0\x01\x12\x04\xdc\x01\
-    \n\r\n\x0f\n\x07\x04\0\x03\0\x02\0\x03\x12\x04\xdc\x01\x10\x11\n\x91\x01\
-    \n\x04\x04\0\x02\0\x12\x04\xe1\x01\x02\x14\x1a\x82\x01\x20The\x20unique\
-    \x20name\x20of\x20the\x20instance\x20in\x20which\x20to\x20create\x20the\
-    \x20table.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/<project\
-    >/instances/<instance>`.\n\n\r\n\x05\x04\0\x02\0\x05\x12\x04\xe1\x01\x02\
-    \x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xe1\x01\t\x0f\n\r\n\x05\x04\0\x02\
-    \0\x03\x12\x04\xe1\x01\x12\x13\n\x98\x01\n\x04\x04\0\x02\x01\x12\x04\xe5\
-    \x01\x02\x16\x1a\x89\x01\x20The\x20name\x20by\x20which\x20the\x20new\x20\
-    table\x20should\x20be\x20referred\x20to\x20within\x20the\x20parent\n\x20\
-    instance,\x20e.g.,\x20`foobar`\x20rather\x20than\x20`<parent>/tables/foo\
-    bar`.\n\n\r\n\x05\x04\0\x02\x01\x05\x12\x04\xe5\x01\x02\x08\n\r\n\x05\
-    \x04\0\x02\x01\x01\x12\x04\xe5\x01\t\x11\n\r\n\x05\x04\0\x02\x01\x03\x12\
-    \x04\xe5\x01\x14\x15\n$\n\x04\x04\0\x02\x02\x12\x04\xe8\x01\x02\x12\x1a\
-    \x16\x20The\x20Table\x20to\x20create.\n\n\r\n\x05\x04\0\x02\x02\x06\x12\
-    \x04\xe8\x01\x02\x07\n\r\n\x05\x04\0\x02\x02\x01\x12\x04\xe8\x01\x08\r\n\
-    \r\n\x05\x04\0\x02\x02\x03\x12\x04\xe8\x01\x10\x11\n\x99\x06\n\x04\x04\0\
-    \x02\x03\x12\x04\xfa\x01\x02$\x1a\x8a\x06\x20The\x20optional\x20list\x20\
+    \x20only\x20some\x20modifications\x20have\x20taken\x20effect.\n\n\r\n\
+    \x05\x06\0\x02\x0c\x01\x12\x04\xc5\x01\x06\x1a\n\r\n\x05\x06\0\x02\x0c\
+    \x02\x12\x04\xc5\x01\x1b6\n\r\n\x05\x06\0\x02\x0c\x03\x12\x04\xc5\x01AF\
+    \n\x0f\n\x05\x06\0\x02\x0c\x04\x12\x06\xc6\x01\x04\xc9\x01\x06\n\x13\n\t\
+    \x06\0\x02\x0c\x04\xb0\xca\xbc\"\x12\x06\xc6\x01\x04\xc9\x01\x06\n\r\n\
+    \x05\x06\0\x02\x0c\x04\x12\x04\xca\x01\x04@\n\x10\n\x08\x06\0\x02\x0c\
+    \x04\x9b\x08\0\x12\x04\xca\x01\x04@\n\xbd\x01\n\x04\x06\0\x02\r\x12\x06\
+    \xd0\x01\x02\xd5\x01\x03\x1a\xac\x01\x20Permanently\x20drop/delete\x20a\
+    \x20row\x20range\x20from\x20a\x20specified\x20table.\x20The\x20request\
+    \x20can\n\x20specify\x20whether\x20to\x20delete\x20all\x20rows\x20in\x20\
+    a\x20table,\x20or\x20only\x20those\x20that\x20match\x20a\n\x20particular\
+    \x20prefix.\n\n\r\n\x05\x06\0\x02\r\x01\x12\x04\xd0\x01\x06\x12\n\r\n\
+    \x05\x06\0\x02\r\x02\x12\x04\xd0\x01\x13&\n\r\n\x05\x06\0\x02\r\x03\x12\
+    \x04\xd0\x011F\n\x0f\n\x05\x06\0\x02\r\x04\x12\x06\xd1\x01\x04\xd4\x01\
+    \x06\n\x13\n\t\x06\0\x02\r\x04\xb0\xca\xbc\"\x12\x06\xd1\x01\x04\xd4\x01\
+    \x06\n\xf5\x01\n\x04\x06\0\x02\x0e\x12\x06\xdb\x01\x02\xe2\x01\x03\x1a\
+    \xe4\x01\x20Generates\x20a\x20consistency\x20token\x20for\x20a\x20Table,\
+    \x20which\x20can\x20be\x20used\x20in\n\x20CheckConsistency\x20to\x20chec\
+    k\x20whether\x20mutations\x20to\x20the\x20table\x20that\x20finished\n\
+    \x20before\x20this\x20call\x20started\x20have\x20been\x20replicated.\x20\
+    The\x20tokens\x20will\x20be\x20available\n\x20for\x2090\x20days.\n\n\r\n\
+    \x05\x06\0\x02\x0e\x01\x12\x04\xdb\x01\x06\x1e\n\r\n\x05\x06\0\x02\x0e\
+    \x02\x12\x04\xdb\x01\x1f>\n\r\n\x05\x06\0\x02\x0e\x03\x12\x04\xdc\x01\
+    \x0f/\n\x0f\n\x05\x06\0\x02\x0e\x04\x12\x06\xdd\x01\x04\xe0\x01\x06\n\
+    \x13\n\t\x06\0\x02\x0e\x04\xb0\xca\xbc\"\x12\x06\xdd\x01\x04\xe0\x01\x06\
+    \n\r\n\x05\x06\0\x02\x0e\x04\x12\x04\xe1\x01\x042\n\x10\n\x08\x06\0\x02\
+    \x0e\x04\x9b\x08\0\x12\x04\xe1\x01\x042\n\xbd\x01\n\x04\x06\0\x02\x0f\
+    \x12\x06\xe7\x01\x02\xee\x01\x03\x1a\xac\x01\x20Checks\x20replication\
+    \x20consistency\x20based\x20on\x20a\x20consistency\x20token,\x20that\x20\
+    is,\x20if\n\x20replication\x20has\x20caught\x20up\x20based\x20on\x20the\
+    \x20conditions\x20specified\x20in\x20the\x20token\n\x20and\x20the\x20che\
+    ck\x20request.\n\n\r\n\x05\x06\0\x02\x0f\x01\x12\x04\xe7\x01\x06\x16\n\r\
+    \n\x05\x06\0\x02\x0f\x02\x12\x04\xe7\x01\x17.\n\r\n\x05\x06\0\x02\x0f\
+    \x03\x12\x04\xe8\x01\x0f'\n\x0f\n\x05\x06\0\x02\x0f\x04\x12\x06\xe9\x01\
+    \x04\xec\x01\x06\n\x13\n\t\x06\0\x02\x0f\x04\xb0\xca\xbc\"\x12\x06\xe9\
+    \x01\x04\xec\x01\x06\n\r\n\x05\x06\0\x02\x0f\x04\x12\x04\xed\x01\x04D\n\
+    \x10\n\x08\x06\0\x02\x0f\x04\x9b\x08\0\x12\x04\xed\x01\x04D\n\xca\x03\n\
+    \x04\x06\0\x02\x10\x12\x06\xf8\x01\x02\x84\x02\x03\x1a\xb9\x03\x20Create\
+    s\x20a\x20new\x20snapshot\x20in\x20the\x20specified\x20cluster\x20from\
+    \x20the\x20specified\n\x20source\x20table.\x20The\x20cluster\x20and\x20t\
+    he\x20table\x20must\x20be\x20in\x20the\x20same\x20instance.\n\n\x20Note:\
+    \x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Big\
+    table\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20av\
+    ailable\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20fe\
+    ature\x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\
+    \x20and\x20is\x20not\n\x20recommended\x20for\x20production\x20use.\x20It\
+    \x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\n\x20p\
+    olicy.\n\n\r\n\x05\x06\0\x02\x10\x01\x12\x04\xf8\x01\x06\x13\n\r\n\x05\
+    \x06\0\x02\x10\x02\x12\x04\xf8\x01\x14(\n\r\n\x05\x06\0\x02\x10\x03\x12\
+    \x04\xf9\x01\x0f+\n\x0f\n\x05\x06\0\x02\x10\x04\x12\x06\xfa\x01\x04\xfd\
+    \x01\x06\n\x13\n\t\x06\0\x02\x10\x04\xb0\xca\xbc\"\x12\x06\xfa\x01\x04\
+    \xfd\x01\x06\n\x0f\n\x05\x06\0\x02\x10\x04\x12\x06\xfe\x01\x04\xff\x01/\
+    \n\x12\n\x08\x06\0\x02\x10\x04\x9b\x08\0\x12\x06\xfe\x01\x04\xff\x01/\n\
+    \x0f\n\x05\x06\0\x02\x10\x04\x12\x06\x80\x02\x04\x83\x02\x06\n\x11\n\x07\
+    \x06\0\x02\x10\x04\x99\x08\x12\x06\x80\x02\x04\x83\x02\x06\n\xf8\x02\n\
+    \x04\x06\0\x02\x11\x12\x06\x8d\x02\x02\x92\x02\x03\x1a\xe7\x02\x20Gets\
+    \x20metadata\x20information\x20about\x20the\x20specified\x20snapshot.\n\
+    \n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20C\
+    loud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20curr\
+    ently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20T\
+    his\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-incompatibl\
+    e\x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20production\x20u\
+    se.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecati\
+    on\n\x20policy.\n\n\r\n\x05\x06\0\x02\x11\x01\x12\x04\x8d\x02\x06\x11\n\
+    \r\n\x05\x06\0\x02\x11\x02\x12\x04\x8d\x02\x12$\n\r\n\x05\x06\0\x02\x11\
+    \x03\x12\x04\x8d\x02/7\n\x0f\n\x05\x06\0\x02\x11\x04\x12\x06\x8e\x02\x04\
+    \x90\x02\x06\n\x13\n\t\x06\0\x02\x11\x04\xb0\xca\xbc\"\x12\x06\x8e\x02\
+    \x04\x90\x02\x06\n\r\n\x05\x06\0\x02\x11\x04\x12\x04\x91\x02\x042\n\x10\
+    \n\x08\x06\0\x02\x11\x04\x9b\x08\0\x12\x04\x91\x02\x042\n\xfb\x02\n\x04\
+    \x06\0\x02\x12\x12\x06\x9b\x02\x02\xa0\x02\x03\x1a\xea\x02\x20Lists\x20a\
+    ll\x20snapshots\x20associated\x20with\x20the\x20specified\x20cluster.\n\
+    \n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20C\
+    loud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20curr\
+    ently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20T\
+    his\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-incompatibl\
+    e\x20ways\x20and\x20is\x20not\n\x20recommended\x20for\x20production\x20u\
+    se.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecati\
+    on\n\x20policy.\n\n\r\n\x05\x06\0\x02\x12\x01\x12\x04\x9b\x02\x06\x13\n\
+    \r\n\x05\x06\0\x02\x12\x02\x12\x04\x9b\x02\x14(\n\r\n\x05\x06\0\x02\x12\
+    \x03\x12\x04\x9b\x023H\n\x0f\n\x05\x06\0\x02\x12\x04\x12\x06\x9c\x02\x04\
+    \x9e\x02\x06\n\x13\n\t\x06\0\x02\x12\x04\xb0\xca\xbc\"\x12\x06\x9c\x02\
+    \x04\x9e\x02\x06\n\r\n\x05\x06\0\x02\x12\x04\x12\x04\x9f\x02\x044\n\x10\
+    \n\x08\x06\0\x02\x12\x04\x9b\x08\0\x12\x04\x9f\x02\x044\n\xec\x02\n\x04\
+    \x06\0\x02\x13\x12\x06\xa9\x02\x02\xae\x02\x03\x1a\xdb\x02\x20Permanentl\
+    y\x20deletes\x20the\x20specified\x20snapshot.\n\n\x20Note:\x20This\x20is\
+    \x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snaps\
+    hots.\x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\
+    \x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20migh\
+    t\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\
+    \x20not\n\x20recommended\x20for\x20production\x20use.\x20It\x20is\x20not\
+    \x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\n\x20policy.\n\n\r\
+    \n\x05\x06\0\x02\x13\x01\x12\x04\xa9\x02\x06\x14\n\r\n\x05\x06\0\x02\x13\
+    \x02\x12\x04\xa9\x02\x15*\n\r\n\x05\x06\0\x02\x13\x03\x12\x04\xa9\x025J\
+    \n\x0f\n\x05\x06\0\x02\x13\x04\x12\x06\xaa\x02\x04\xac\x02\x06\n\x13\n\t\
+    \x06\0\x02\x13\x04\xb0\xca\xbc\"\x12\x06\xaa\x02\x04\xac\x02\x06\n\r\n\
+    \x05\x06\0\x02\x13\x04\x12\x04\xad\x02\x042\n\x10\n\x08\x06\0\x02\x13\
+    \x04\x9b\x08\0\x12\x04\xad\x02\x042\n\x98\x04\n\x04\x06\0\x02\x14\x12\
+    \x06\xb8\x02\x02\xc2\x02\x03\x1a\x87\x04\x20Starts\x20creating\x20a\x20n\
+    ew\x20Cloud\x20Bigtable\x20Backup.\x20\x20The\x20returned\x20backup\n\
+    \x20[long-running\x20operation][google.longrunning.Operation]\x20can\x20\
+    be\x20used\x20to\n\x20track\x20creation\x20of\x20the\x20backup.\x20The\n\
+    \x20[metadata][google.longrunning.Operation.metadata]\x20field\x20type\
+    \x20is\n\x20[CreateBackupMetadata][google.bigtable.admin.v2.CreateBackup\
+    Metadata].\x20The\n\x20[response][google.longrunning.Operation.response]\
+    \x20field\x20type\x20is\n\x20[Backup][google.bigtable.admin.v2.Backup],\
+    \x20if\x20successful.\x20Cancelling\x20the\n\x20returned\x20operation\
+    \x20will\x20stop\x20the\x20creation\x20and\x20delete\x20the\x20backup.\n\
+    \n\r\n\x05\x06\0\x02\x14\x01\x12\x04\xb8\x02\x06\x12\n\r\n\x05\x06\0\x02\
+    \x14\x02\x12\x04\xb8\x02\x13&\n\r\n\x05\x06\0\x02\x14\x03\x12\x04\xb8\
+    \x021M\n\x0f\n\x05\x06\0\x02\x14\x04\x12\x06\xb9\x02\x04\xbc\x02\x06\n\
+    \x13\n\t\x06\0\x02\x14\x04\xb0\xca\xbc\"\x12\x06\xb9\x02\x04\xbc\x02\x06\
+    \n\r\n\x05\x06\0\x02\x14\x04\x12\x04\xbd\x02\x04E\n\x10\n\x08\x06\0\x02\
+    \x14\x04\x9b\x08\0\x12\x04\xbd\x02\x04E\n\x0f\n\x05\x06\0\x02\x14\x04\
+    \x12\x06\xbe\x02\x04\xc1\x02\x06\n\x11\n\x07\x06\0\x02\x14\x04\x99\x08\
+    \x12\x06\xbe\x02\x04\xc1\x02\x06\nP\n\x04\x06\0\x02\x15\x12\x06\xc5\x02\
+    \x02\xca\x02\x03\x1a@\x20Gets\x20metadata\x20on\x20a\x20pending\x20or\
+    \x20completed\x20Cloud\x20Bigtable\x20Backup.\n\n\r\n\x05\x06\0\x02\x15\
+    \x01\x12\x04\xc5\x02\x06\x0f\n\r\n\x05\x06\0\x02\x15\x02\x12\x04\xc5\x02\
+    \x10\x20\n\r\n\x05\x06\0\x02\x15\x03\x12\x04\xc5\x02+1\n\x0f\n\x05\x06\0\
+    \x02\x15\x04\x12\x06\xc6\x02\x04\xc8\x02\x06\n\x13\n\t\x06\0\x02\x15\x04\
+    \xb0\xca\xbc\"\x12\x06\xc6\x02\x04\xc8\x02\x06\n\r\n\x05\x06\0\x02\x15\
+    \x04\x12\x04\xc9\x02\x042\n\x10\n\x08\x06\0\x02\x15\x04\x9b\x08\0\x12\
+    \x04\xc9\x02\x042\nG\n\x04\x06\0\x02\x16\x12\x06\xcd\x02\x02\xd3\x02\x03\
+    \x1a7\x20Updates\x20a\x20pending\x20or\x20completed\x20Cloud\x20Bigtable\
+    \x20Backup.\n\n\r\n\x05\x06\0\x02\x16\x01\x12\x04\xcd\x02\x06\x12\n\r\n\
+    \x05\x06\0\x02\x16\x02\x12\x04\xcd\x02\x13&\n\r\n\x05\x06\0\x02\x16\x03\
+    \x12\x04\xcd\x0217\n\x0f\n\x05\x06\0\x02\x16\x04\x12\x06\xce\x02\x04\xd1\
+    \x02\x06\n\x13\n\t\x06\0\x02\x16\x04\xb0\xca\xbc\"\x12\x06\xce\x02\x04\
+    \xd1\x02\x06\n\r\n\x05\x06\0\x02\x16\x04\x12\x04\xd2\x02\x04@\n\x10\n\
+    \x08\x06\0\x02\x16\x04\x9b\x08\0\x12\x04\xd2\x02\x04@\nG\n\x04\x06\0\x02\
+    \x17\x12\x06\xd6\x02\x02\xdb\x02\x03\x1a7\x20Deletes\x20a\x20pending\x20\
+    or\x20completed\x20Cloud\x20Bigtable\x20backup.\n\n\r\n\x05\x06\0\x02\
+    \x17\x01\x12\x04\xd6\x02\x06\x12\n\r\n\x05\x06\0\x02\x17\x02\x12\x04\xd6\
+    \x02\x13&\n\r\n\x05\x06\0\x02\x17\x03\x12\x04\xd6\x021F\n\x0f\n\x05\x06\
+    \0\x02\x17\x04\x12\x06\xd7\x02\x04\xd9\x02\x06\n\x13\n\t\x06\0\x02\x17\
+    \x04\xb0\xca\xbc\"\x12\x06\xd7\x02\x04\xd9\x02\x06\n\r\n\x05\x06\0\x02\
+    \x17\x04\x12\x04\xda\x02\x042\n\x10\n\x08\x06\0\x02\x17\x04\x9b\x08\0\
+    \x12\x04\xda\x02\x042\n\\\n\x04\x06\0\x02\x18\x12\x06\xdf\x02\x02\xe4\
+    \x02\x03\x1aL\x20Lists\x20Cloud\x20Bigtable\x20backups.\x20Returns\x20bo\
+    th\x20completed\x20and\x20pending\n\x20backups.\n\n\r\n\x05\x06\0\x02\
+    \x18\x01\x12\x04\xdf\x02\x06\x11\n\r\n\x05\x06\0\x02\x18\x02\x12\x04\xdf\
+    \x02\x12$\n\r\n\x05\x06\0\x02\x18\x03\x12\x04\xdf\x02/B\n\x0f\n\x05\x06\
+    \0\x02\x18\x04\x12\x06\xe0\x02\x04\xe2\x02\x06\n\x13\n\t\x06\0\x02\x18\
+    \x04\xb0\xca\xbc\"\x12\x06\xe0\x02\x04\xe2\x02\x06\n\r\n\x05\x06\0\x02\
+    \x18\x04\x12\x04\xe3\x02\x044\n\x10\n\x08\x06\0\x02\x18\x04\x9b\x08\0\
+    \x12\x04\xe3\x02\x044\n\xe5\x03\n\x04\x06\0\x02\x19\x12\x06\xed\x02\x02\
+    \xf6\x02\x03\x1a\xd4\x03\x20Create\x20a\x20new\x20table\x20by\x20restori\
+    ng\x20from\x20a\x20completed\x20backup.\x20\x20The\n\x20returned\x20tabl\
+    e\x20[long-running\x20operation][google.longrunning.Operation]\x20can\n\
+    \x20be\x20used\x20to\x20track\x20the\x20progress\x20of\x20the\x20operati\
+    on,\x20and\x20to\x20cancel\x20it.\x20\x20The\n\x20[metadata][google.long\
+    running.Operation.metadata]\x20field\x20type\x20is\n\x20[RestoreTableMet\
+    adata][google.bigtable.admin.v2.RestoreTableMetadata].\x20\x20The\n\x20[\
+    response][google.longrunning.Operation.response]\x20type\x20is\n\x20[Tab\
+    le][google.bigtable.admin.v2.Table],\x20if\x20successful.\n\n\r\n\x05\
+    \x06\0\x02\x19\x01\x12\x04\xed\x02\x06\x12\n\r\n\x05\x06\0\x02\x19\x02\
+    \x12\x04\xed\x02\x13&\n\r\n\x05\x06\0\x02\x19\x03\x12\x04\xed\x021M\n\
+    \x0f\n\x05\x06\0\x02\x19\x04\x12\x06\xee\x02\x04\xf1\x02\x06\n\x13\n\t\
+    \x06\0\x02\x19\x04\xb0\xca\xbc\"\x12\x06\xee\x02\x04\xf1\x02\x06\n\x0f\n\
+    \x05\x06\0\x02\x19\x04\x12\x06\xf2\x02\x04\xf5\x02\x06\n\x11\n\x07\x06\0\
+    \x02\x19\x04\x99\x08\x12\x06\xf2\x02\x04\xf5\x02\x06\n\x8b\x01\n\x04\x06\
+    \0\x02\x1a\x12\x06\xfa\x02\x02\x85\x03\x03\x1a{\x20Copy\x20a\x20Cloud\
+    \x20Bigtable\x20backup\x20to\x20a\x20new\x20backup\x20in\x20the\x20desti\
+    nation\x20cluster\n\x20located\x20in\x20the\x20destination\x20instance\
+    \x20and\x20project.\n\n\r\n\x05\x06\0\x02\x1a\x01\x12\x04\xfa\x02\x06\
+    \x10\n\r\n\x05\x06\0\x02\x1a\x02\x12\x04\xfa\x02\x11\"\n\r\n\x05\x06\0\
+    \x02\x1a\x03\x12\x04\xfa\x02-I\n\x0f\n\x05\x06\0\x02\x1a\x04\x12\x06\xfb\
+    \x02\x04\xfe\x02\x06\n\x13\n\t\x06\0\x02\x1a\x04\xb0\xca\xbc\"\x12\x06\
+    \xfb\x02\x04\xfe\x02\x06\n\x0f\n\x05\x06\0\x02\x1a\x04\x12\x06\xff\x02\
+    \x04\x80\x035\n\x12\n\x08\x06\0\x02\x1a\x04\x9b\x08\0\x12\x06\xff\x02\
+    \x04\x80\x035\n\x0f\n\x05\x06\0\x02\x1a\x04\x12\x06\x81\x03\x04\x84\x03\
+    \x06\n\x11\n\x07\x06\0\x02\x1a\x04\x99\x08\x12\x06\x81\x03\x04\x84\x03\
+    \x06\n\xa2\x01\n\x04\x06\0\x02\x1b\x12\x06\x8a\x03\x02\x95\x03\x03\x1a\
+    \x91\x01\x20Gets\x20the\x20access\x20control\x20policy\x20for\x20a\x20Ta\
+    ble\x20or\x20Backup\x20resource.\n\x20Returns\x20an\x20empty\x20policy\
+    \x20if\x20the\x20resource\x20exists\x20but\x20does\x20not\x20have\x20a\
+    \x20policy\n\x20set.\n\n\r\n\x05\x06\0\x02\x1b\x01\x12\x04\x8a\x03\x06\
+    \x12\n\r\n\x05\x06\0\x02\x1b\x02\x12\x04\x8a\x03\x134\n\r\n\x05\x06\0\
+    \x02\x1b\x03\x12\x04\x8b\x03\x0f#\n\x0f\n\x05\x06\0\x02\x1b\x04\x12\x06\
+    \x8c\x03\x04\x93\x03\x06\n\x13\n\t\x06\0\x02\x1b\x04\xb0\xca\xbc\"\x12\
+    \x06\x8c\x03\x04\x93\x03\x06\n\r\n\x05\x06\0\x02\x1b\x04\x12\x04\x94\x03\
+    \x046\n\x10\n\x08\x06\0\x02\x1b\x04\x9b\x08\0\x12\x04\x94\x03\x046\nn\n\
+    \x04\x06\0\x02\x1c\x12\x06\x99\x03\x02\xa4\x03\x03\x1a^\x20Sets\x20the\
+    \x20access\x20control\x20policy\x20on\x20a\x20Table\x20or\x20Backup\x20r\
+    esource.\n\x20Replaces\x20any\x20existing\x20policy.\n\n\r\n\x05\x06\0\
+    \x02\x1c\x01\x12\x04\x99\x03\x06\x12\n\r\n\x05\x06\0\x02\x1c\x02\x12\x04\
+    \x99\x03\x134\n\r\n\x05\x06\0\x02\x1c\x03\x12\x04\x9a\x03\x0f#\n\x0f\n\
+    \x05\x06\0\x02\x1c\x04\x12\x06\x9b\x03\x04\xa2\x03\x06\n\x13\n\t\x06\0\
+    \x02\x1c\x04\xb0\xca\xbc\"\x12\x06\x9b\x03\x04\xa2\x03\x06\n\r\n\x05\x06\
+    \0\x02\x1c\x04\x12\x04\xa3\x03\x04=\n\x10\n\x08\x06\0\x02\x1c\x04\x9b\
+    \x08\0\x12\x04\xa3\x03\x04=\ne\n\x04\x06\0\x02\x1d\x12\x06\xa8\x03\x02\
+    \xb3\x03\x03\x1aU\x20Returns\x20permissions\x20that\x20the\x20caller\x20\
+    has\x20on\x20the\x20specified\x20Table\x20or\x20Backup\n\x20resource.\n\
+    \n\r\n\x05\x06\0\x02\x1d\x01\x12\x04\xa8\x03\x06\x18\n\r\n\x05\x06\0\x02\
+    \x1d\x02\x12\x04\xa8\x03\x19@\n\r\n\x05\x06\0\x02\x1d\x03\x12\x04\xa9\
+    \x03\x0f7\n\x0f\n\x05\x06\0\x02\x1d\x04\x12\x06\xaa\x03\x04\xb1\x03\x06\
+    \n\x13\n\t\x06\0\x02\x1d\x04\xb0\xca\xbc\"\x12\x06\xaa\x03\x04\xb1\x03\
+    \x06\n\r\n\x05\x06\0\x02\x1d\x04\x12\x04\xb2\x03\x04B\n\x10\n\x08\x06\0\
+    \x02\x1d\x04\x9b\x08\0\x12\x04\xb2\x03\x04B\nj\n\x02\x04\0\x12\x06\xb8\
+    \x03\0\xd0\x03\x01\x1a\\\x20The\x20request\x20for\n\x20[RestoreTable][go\
+    ogle.bigtable.admin.v2.BigtableTableAdmin.RestoreTable].\n\n\x0b\n\x03\
+    \x04\0\x01\x12\x04\xb8\x03\x08\x1b\n\x9f\x01\n\x04\x04\0\x02\0\x12\x06\
+    \xbb\x03\x02\xc0\x03\x04\x1a\x8e\x01\x20Required.\x20The\x20name\x20of\
+    \x20the\x20instance\x20in\x20which\x20to\x20create\x20the\x20restored\n\
+    \x20table.\x20Values\x20are\x20of\x20the\x20form\x20`projects/<project>/\
+    instances/<instance>`.\n\n\r\n\x05\x04\0\x02\0\x05\x12\x04\xbb\x03\x02\
+    \x08\n\r\n\x05\x04\0\x02\0\x01\x12\x04\xbb\x03\t\x0f\n\r\n\x05\x04\0\x02\
+    \0\x03\x12\x04\xbb\x03\x12\x13\n\x0f\n\x05\x04\0\x02\0\x08\x12\x06\xbb\
+    \x03\x14\xc0\x03\x03\n\x10\n\x08\x04\0\x02\0\x08\x9c\x08\0\x12\x04\xbc\
+    \x03\x04*\n\x11\n\x07\x04\0\x02\0\x08\x9f\x08\x12\x06\xbd\x03\x04\xbf\
+    \x03\x05\n\xf5\x01\n\x04\x04\0\x02\x01\x12\x04\xc6\x03\x02?\x1a\xe6\x01\
+    \x20Required.\x20The\x20id\x20of\x20the\x20table\x20to\x20create\x20and\
+    \x20restore\x20to.\x20This\n\x20table\x20must\x20not\x20already\x20exist\
+    .\x20The\x20`table_id`\x20appended\x20to\n\x20`parent`\x20forms\x20the\
+    \x20full\x20table\x20name\x20of\x20the\x20form\n\x20`projects/<project>/\
+    instances/<instance>/tables/<table_id>`.\n\n\r\n\x05\x04\0\x02\x01\x05\
+    \x12\x04\xc6\x03\x02\x08\n\r\n\x05\x04\0\x02\x01\x01\x12\x04\xc6\x03\t\
+    \x11\n\r\n\x05\x04\0\x02\x01\x03\x12\x04\xc6\x03\x14\x15\n\r\n\x05\x04\0\
+    \x02\x01\x08\x12\x04\xc6\x03\x16>\n\x10\n\x08\x04\0\x02\x01\x08\x9c\x08\
+    \0\x12\x04\xc6\x03\x17=\n=\n\x04\x04\0\x08\0\x12\x06\xc9\x03\x02\xcf\x03\
+    \x03\x1a-\x20Required.\x20The\x20source\x20from\x20which\x20to\x20restor\
+    e.\n\n\r\n\x05\x04\0\x08\0\x01\x12\x04\xc9\x03\x08\x0e\n\xa4\x01\n\x04\
+    \x04\0\x02\x02\x12\x06\xcc\x03\x04\xce\x03\x07\x1a\x93\x01\x20Name\x20of\
+    \x20the\x20backup\x20from\x20which\x20to\x20restore.\x20\x20Values\x20ar\
+    e\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>/clu\
+    sters/<cluster>/backups/<backup>`.\n\n\r\n\x05\x04\0\x02\x02\x05\x12\x04\
+    \xcc\x03\x04\n\n\r\n\x05\x04\0\x02\x02\x01\x12\x04\xcc\x03\x0b\x11\n\r\n\
+    \x05\x04\0\x02\x02\x03\x12\x04\xcc\x03\x14\x15\n\x0f\n\x05\x04\0\x02\x02\
+    \x08\x12\x06\xcc\x03\x16\xce\x03\x06\n\x11\n\x07\x04\0\x02\x02\x08\x9f\
+    \x08\x12\x06\xcc\x03\x17\xce\x03\x05\n\x94\x01\n\x02\x04\x01\x12\x06\xd4\
+    \x03\0\xf1\x03\x01\x1a\x85\x01\x20Metadata\x20type\x20for\x20the\x20long\
+    -running\x20operation\x20returned\x20by\n\x20[RestoreTable][google.bigta\
+    ble.admin.v2.BigtableTableAdmin.RestoreTable].\n\n\x0b\n\x03\x04\x01\x01\
+    \x12\x04\xd4\x03\x08\x1c\n@\n\x04\x04\x01\x02\0\x12\x04\xd6\x03\x02\x12\
+    \x1a2\x20Name\x20of\x20the\x20table\x20being\x20created\x20and\x20restor\
+    ed\x20to.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\xd6\x03\x02\x08\n\r\n\
+    \x05\x04\x01\x02\0\x01\x12\x04\xd6\x03\t\r\n\r\n\x05\x04\x01\x02\0\x03\
+    \x12\x04\xd6\x03\x10\x11\n/\n\x04\x04\x01\x02\x01\x12\x04\xd9\x03\x02$\
+    \x1a!\x20The\x20type\x20of\x20the\x20restore\x20source.\n\n\r\n\x05\x04\
+    \x01\x02\x01\x06\x12\x04\xd9\x03\x02\x13\n\r\n\x05\x04\x01\x02\x01\x01\
+    \x12\x04\xd9\x03\x14\x1f\n\r\n\x05\x04\x01\x02\x01\x03\x12\x04\xd9\x03\"\
+    #\n\xad\x01\n\x04\x04\x01\x08\0\x12\x06\xde\x03\x02\xe0\x03\x03\x1a\x9c\
+    \x01\x20Information\x20about\x20the\x20source\x20used\x20to\x20restore\
+    \x20the\x20table,\x20as\x20specified\x20by\n\x20`source`\x20in\n\x20[Res\
+    toreTableRequest][google.bigtable.admin.v2.RestoreTableRequest].\n\n\r\n\
+    \x05\x04\x01\x08\0\x01\x12\x04\xde\x03\x08\x13\n\x0c\n\x04\x04\x01\x02\
+    \x02\x12\x04\xdf\x03\x04\x1f\n\r\n\x05\x04\x01\x02\x02\x06\x12\x04\xdf\
+    \x03\x04\x0e\n\r\n\x05\x04\x01\x02\x02\x01\x12\x04\xdf\x03\x0f\x1a\n\r\n\
+    \x05\x04\x01\x02\x02\x03\x12\x04\xdf\x03\x1d\x1e\n\xca\x04\n\x04\x04\x01\
+    \x02\x03\x12\x04\xeb\x03\x02+\x1a\xbb\x04\x20If\x20exists,\x20the\x20nam\
+    e\x20of\x20the\x20long-running\x20operation\x20that\x20will\x20be\x20use\
+    d\x20to\n\x20track\x20the\x20post-restore\x20optimization\x20process\x20\
+    to\x20optimize\x20the\x20performance\x20of\n\x20the\x20restored\x20table\
+    .\x20The\x20metadata\x20type\x20of\x20the\x20long-running\x20operation\
+    \x20is\n\x20[OptimizeRestoreTableMetadata][].\x20The\x20response\x20type\
+    \x20is\n\x20[Empty][google.protobuf.Empty].\x20This\x20long-running\x20o\
+    peration\x20may\x20be\n\x20automatically\x20created\x20by\x20the\x20syst\
+    em\x20if\x20applicable\x20after\x20the\n\x20RestoreTable\x20long-running\
+    \x20operation\x20completes\x20successfully.\x20This\x20operation\n\x20ma\
+    y\x20not\x20be\x20created\x20if\x20the\x20table\x20is\x20already\x20opti\
+    mized\x20or\x20the\x20restore\x20was\n\x20not\x20successful.\n\n\r\n\x05\
+    \x04\x01\x02\x03\x05\x12\x04\xeb\x03\x02\x08\n\r\n\x05\x04\x01\x02\x03\
+    \x01\x12\x04\xeb\x03\t&\n\r\n\x05\x04\x01\x02\x03\x03\x12\x04\xeb\x03)*\
+    \ny\n\x04\x04\x01\x02\x04\x12\x04\xf0\x03\x02!\x1ak\x20The\x20progress\
+    \x20of\x20the\n\x20[RestoreTable][google.bigtable.admin.v2.BigtableTable\
+    Admin.RestoreTable]\n\x20operation.\n\n\r\n\x05\x04\x01\x02\x04\x06\x12\
+    \x04\xf0\x03\x02\x13\n\r\n\x05\x04\x01\x02\x04\x01\x12\x04\xf0\x03\x14\
+    \x1c\n\r\n\x05\x04\x01\x02\x04\x03\x12\x04\xf0\x03\x1f\x20\n\xa1\x02\n\
+    \x02\x04\x02\x12\x06\xf7\x03\0\xfd\x03\x01\x1a\x92\x02\x20Metadata\x20ty\
+    pe\x20for\x20the\x20long-running\x20operation\x20used\x20to\x20track\x20\
+    the\x20progress\n\x20of\x20optimizations\x20performed\x20on\x20a\x20newl\
+    y\x20restored\x20table.\x20This\x20long-running\n\x20operation\x20is\x20\
+    automatically\x20created\x20by\x20the\x20system\x20after\x20the\x20succe\
+    ssful\n\x20completion\x20of\x20a\x20table\x20restore,\x20and\x20cannot\
+    \x20be\x20cancelled.\n\n\x0b\n\x03\x04\x02\x01\x12\x04\xf7\x03\x08%\n;\n\
+    \x04\x04\x02\x02\0\x12\x04\xf9\x03\x02\x12\x1a-\x20Name\x20of\x20the\x20\
+    restored\x20table\x20being\x20optimized.\n\n\r\n\x05\x04\x02\x02\0\x05\
+    \x12\x04\xf9\x03\x02\x08\n\r\n\x05\x04\x02\x02\0\x01\x12\x04\xf9\x03\t\r\
+    \n\r\n\x05\x04\x02\x02\0\x03\x12\x04\xf9\x03\x10\x11\n?\n\x04\x04\x02\
+    \x02\x01\x12\x04\xfc\x03\x02!\x1a1\x20The\x20progress\x20of\x20the\x20po\
+    st-restore\x20optimizations.\n\n\r\n\x05\x04\x02\x02\x01\x06\x12\x04\xfc\
+    \x03\x02\x13\n\r\n\x05\x04\x02\x02\x01\x01\x12\x04\xfc\x03\x14\x1c\n\r\n\
+    \x05\x04\x02\x02\x01\x03\x12\x04\xfc\x03\x1f\x20\n\x98\x01\n\x02\x04\x03\
+    \x12\x06\x81\x04\0\xaa\x04\x01\x1a\x89\x01\x20Request\x20message\x20for\
+    \n\x20[google.bigtable.admin.v2.BigtableTableAdmin.CreateTable][google.b\
+    igtable.admin.v2.BigtableTableAdmin.CreateTable]\n\n\x0b\n\x03\x04\x03\
+    \x01\x12\x04\x81\x04\x08\x1a\nC\n\x04\x04\x03\x03\0\x12\x06\x83\x04\x02\
+    \x86\x04\x03\x1a3\x20An\x20initial\x20split\x20point\x20for\x20a\x20newl\
+    y\x20created\x20table.\n\n\r\n\x05\x04\x03\x03\0\x01\x12\x04\x83\x04\n\
+    \x0f\n?\n\x06\x04\x03\x03\0\x02\0\x12\x04\x85\x04\x04\x12\x1a/\x20Row\
+    \x20key\x20to\x20use\x20as\x20an\x20initial\x20tablet\x20boundary.\n\n\
+    \x0f\n\x07\x04\x03\x03\0\x02\0\x05\x12\x04\x85\x04\x04\t\n\x0f\n\x07\x04\
+    \x03\x03\0\x02\0\x01\x12\x04\x85\x04\n\r\n\x0f\n\x07\x04\x03\x03\0\x02\0\
+    \x03\x12\x04\x85\x04\x10\x11\n\x9d\x01\n\x04\x04\x03\x02\0\x12\x06\x8a\
+    \x04\x02\x8f\x04\x04\x1a\x8c\x01\x20Required.\x20The\x20unique\x20name\
+    \x20of\x20the\x20instance\x20in\x20which\x20to\x20create\x20the\x20table\
+    .\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/{project}/instanc\
+    es/{instance}`.\n\n\r\n\x05\x04\x03\x02\0\x05\x12\x04\x8a\x04\x02\x08\n\
+    \r\n\x05\x04\x03\x02\0\x01\x12\x04\x8a\x04\t\x0f\n\r\n\x05\x04\x03\x02\0\
+    \x03\x12\x04\x8a\x04\x12\x13\n\x0f\n\x05\x04\x03\x02\0\x08\x12\x06\x8a\
+    \x04\x14\x8f\x04\x03\n\x10\n\x08\x04\x03\x02\0\x08\x9c\x08\0\x12\x04\x8b\
+    \x04\x04*\n\x11\n\x07\x04\x03\x02\0\x08\x9f\x08\x12\x06\x8c\x04\x04\x8e\
+    \x04\x05\n\xba\x01\n\x04\x04\x03\x02\x01\x12\x04\x94\x04\x02?\x1a\xab\
+    \x01\x20Required.\x20The\x20name\x20by\x20which\x20the\x20new\x20table\
+    \x20should\x20be\x20referred\x20to\x20within\x20the\n\x20parent\x20insta\
+    nce,\x20e.g.,\x20`foobar`\x20rather\x20than\x20`{parent}/tables/foobar`.\
+    \n\x20Maximum\x2050\x20characters.\n\n\r\n\x05\x04\x03\x02\x01\x05\x12\
+    \x04\x94\x04\x02\x08\n\r\n\x05\x04\x03\x02\x01\x01\x12\x04\x94\x04\t\x11\
+    \n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\x94\x04\x14\x15\n\r\n\x05\x04\x03\
+    \x02\x01\x08\x12\x04\x94\x04\x16>\n\x10\n\x08\x04\x03\x02\x01\x08\x9c\
+    \x08\0\x12\x04\x94\x04\x17=\n.\n\x04\x04\x03\x02\x02\x12\x04\x97\x04\x02\
+    ;\x1a\x20\x20Required.\x20The\x20Table\x20to\x20create.\n\n\r\n\x05\x04\
+    \x03\x02\x02\x06\x12\x04\x97\x04\x02\x07\n\r\n\x05\x04\x03\x02\x02\x01\
+    \x12\x04\x97\x04\x08\r\n\r\n\x05\x04\x03\x02\x02\x03\x12\x04\x97\x04\x10\
+    \x11\n\r\n\x05\x04\x03\x02\x02\x08\x12\x04\x97\x04\x12:\n\x10\n\x08\x04\
+    \x03\x02\x02\x08\x9c\x08\0\x12\x04\x97\x04\x139\n\x99\x06\n\x04\x04\x03\
+    \x02\x03\x12\x04\xa9\x04\x02$\x1a\x8a\x06\x20The\x20optional\x20list\x20\
     of\x20row\x20keys\x20that\x20will\x20be\x20used\x20to\x20initially\x20sp\
     lit\x20the\n\x20table\x20into\x20several\x20tablets\x20(tablets\x20are\
     \x20similar\x20to\x20HBase\x20regions).\n\x20Given\x20two\x20split\x20ke\
@@ -3886,377 +8900,978 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \"}.`\n\x20\x20\x20\x20\x20-\x20Tablet\x204\x20`[customer_2,\x20other)\
     \x20\x20\x20\x20\x20\x20=>\x20{\"customer_2\"}.`\n\x20\x20\x20\x20\x20-\
     \x20Tablet\x205\x20`[other,\x20)\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20=>\x20{\"other\",\x20\"zz\"}.`\n\n\r\n\x05\x04\0\
-    \x02\x03\x04\x12\x04\xfa\x01\x02\n\n\r\n\x05\x04\0\x02\x03\x06\x12\x04\
-    \xfa\x01\x0b\x10\n\r\n\x05\x04\0\x02\x03\x01\x12\x04\xfa\x01\x11\x1f\n\r\
-    \n\x05\x04\0\x02\x03\x03\x12\x04\xfa\x01\"#\n\xdd\x03\n\x02\x04\x01\x12\
-    \x06\x84\x02\0\x92\x02\x01\x1a\xce\x03\x20Request\x20message\x20for\n\
-    \x20[google.bigtable.admin.v2.BigtableTableAdmin.CreateTableFromSnapshot\
-    ][google.bigtable.admin.v2.BigtableTableAdmin.CreateTableFromSnapshot]\n\
+    \x20\x20\x20\x20\x20\x20=>\x20{\"other\",\x20\"zz\"}.`\n\n\r\n\x05\x04\
+    \x03\x02\x03\x04\x12\x04\xa9\x04\x02\n\n\r\n\x05\x04\x03\x02\x03\x06\x12\
+    \x04\xa9\x04\x0b\x10\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xa9\x04\x11\
+    \x1f\n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\xa9\x04\"#\n\xdd\x03\n\x02\
+    \x04\x04\x12\x06\xb3\x04\0\xcb\x04\x01\x1a\xce\x03\x20Request\x20message\
+    \x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.CreateTableFro\
+    mSnapshot][google.bigtable.admin.v2.BigtableTableAdmin.CreateTableFromSn\
+    apshot]\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\
+    \x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20\
+    not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20cust\
+    omers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-\
+    incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20prod\
+    uction\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\
+    \x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x04\x01\x12\x04\xb3\x04\x08\
+    &\n\x9d\x01\n\x04\x04\x04\x02\0\x12\x06\xb6\x04\x02\xbb\x04\x04\x1a\x8c\
+    \x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20instance\x20i\
+    n\x20which\x20to\x20create\x20the\x20table.\n\x20Values\x20are\x20of\x20\
+    the\x20form\x20`projects/{project}/instances/{instance}`.\n\n\r\n\x05\
+    \x04\x04\x02\0\x05\x12\x04\xb6\x04\x02\x08\n\r\n\x05\x04\x04\x02\0\x01\
+    \x12\x04\xb6\x04\t\x0f\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\xb6\x04\x12\
+    \x13\n\x0f\n\x05\x04\x04\x02\0\x08\x12\x06\xb6\x04\x14\xbb\x04\x03\n\x10\
+    \n\x08\x04\x04\x02\0\x08\x9c\x08\0\x12\x04\xb7\x04\x04*\n\x11\n\x07\x04\
+    \x04\x02\0\x08\x9f\x08\x12\x06\xb8\x04\x04\xba\x04\x05\n\xa2\x01\n\x04\
+    \x04\x04\x02\x01\x12\x04\xbf\x04\x02?\x1a\x93\x01\x20Required.\x20The\
+    \x20name\x20by\x20which\x20the\x20new\x20table\x20should\x20be\x20referr\
+    ed\x20to\x20within\x20the\n\x20parent\x20instance,\x20e.g.,\x20`foobar`\
+    \x20rather\x20than\x20`{parent}/tables/foobar`.\n\n\r\n\x05\x04\x04\x02\
+    \x01\x05\x12\x04\xbf\x04\x02\x08\n\r\n\x05\x04\x04\x02\x01\x01\x12\x04\
+    \xbf\x04\t\x11\n\r\n\x05\x04\x04\x02\x01\x03\x12\x04\xbf\x04\x14\x15\n\r\
+    \n\x05\x04\x04\x02\x01\x08\x12\x04\xbf\x04\x16>\n\x10\n\x08\x04\x04\x02\
+    \x01\x08\x9c\x08\0\x12\x04\xbf\x04\x17=\n\x83\x02\n\x04\x04\x04\x02\x02\
+    \x12\x06\xc5\x04\x02\xca\x04\x04\x1a\xf2\x01\x20Required.\x20The\x20uniq\
+    ue\x20name\x20of\x20the\x20snapshot\x20from\x20which\x20to\x20restore\
+    \x20the\x20table.\n\x20The\x20snapshot\x20and\x20the\x20table\x20must\
+    \x20be\x20in\x20the\x20same\x20instance.\x20Values\x20are\x20of\x20the\n\
+    \x20form\n\x20`projects/{project}/instances/{instance}/clusters/{cluster\
+    }/snapshots/{snapshot}`.\n\n\r\n\x05\x04\x04\x02\x02\x05\x12\x04\xc5\x04\
+    \x02\x08\n\r\n\x05\x04\x04\x02\x02\x01\x12\x04\xc5\x04\t\x18\n\r\n\x05\
+    \x04\x04\x02\x02\x03\x12\x04\xc5\x04\x1b\x1c\n\x0f\n\x05\x04\x04\x02\x02\
+    \x08\x12\x06\xc5\x04\x1d\xca\x04\x03\n\x10\n\x08\x04\x04\x02\x02\x08\x9c\
+    \x08\0\x12\x04\xc6\x04\x04*\n\x11\n\x07\x04\x04\x02\x02\x08\x9f\x08\x12\
+    \x06\xc7\x04\x04\xc9\x04\x05\n\x9a\x01\n\x02\x04\x05\x12\x06\xcf\x04\0\
+    \xe3\x04\x01\x1a\x8b\x01\x20Request\x20message\x20for\n\x20[google.bigta\
+    ble.admin.v2.BigtableTableAdmin.DropRowRange][google.bigtable.admin.v2.B\
+    igtableTableAdmin.DropRowRange]\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xcf\
+    \x04\x08\x1b\n\xae\x01\n\x04\x04\x05\x02\0\x12\x06\xd3\x04\x02\xd8\x04\
+    \x04\x1a\x9d\x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20t\
+    able\x20on\x20which\x20to\x20drop\x20a\x20range\x20of\x20rows.\n\x20Valu\
+    es\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{insta\
+    nce}/tables/{table}`.\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\xd3\x04\x02\
+    \x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xd3\x04\t\r\n\r\n\x05\x04\x05\
+    \x02\0\x03\x12\x04\xd3\x04\x10\x11\n\x0f\n\x05\x04\x05\x02\0\x08\x12\x06\
+    \xd3\x04\x12\xd8\x04\x03\n\x10\n\x08\x04\x05\x02\0\x08\x9c\x08\0\x12\x04\
+    \xd4\x04\x04*\n\x11\n\x07\x04\x05\x02\0\x08\x9f\x08\x12\x06\xd5\x04\x04\
+    \xd7\x04\x05\n/\n\x04\x04\x05\x08\0\x12\x06\xdb\x04\x02\xe2\x04\x03\x1a\
+    \x1f\x20Delete\x20all\x20rows\x20or\x20by\x20prefix.\n\n\r\n\x05\x04\x05\
+    \x08\0\x01\x12\x04\xdb\x04\x08\x0e\nc\n\x04\x04\x05\x02\x01\x12\x04\xde\
+    \x04\x04\x1d\x1aU\x20Delete\x20all\x20rows\x20that\x20start\x20with\x20t\
+    his\x20row\x20key\x20prefix.\x20Prefix\x20cannot\x20be\n\x20zero\x20leng\
+    th.\n\n\r\n\x05\x04\x05\x02\x01\x05\x12\x04\xde\x04\x04\t\n\r\n\x05\x04\
+    \x05\x02\x01\x01\x12\x04\xde\x04\n\x18\n\r\n\x05\x04\x05\x02\x01\x03\x12\
+    \x04\xde\x04\x1b\x1c\nO\n\x04\x04\x05\x02\x02\x12\x04\xe1\x04\x04(\x1aA\
+    \x20Delete\x20all\x20rows\x20in\x20the\x20table.\x20Setting\x20this\x20t\
+    o\x20false\x20is\x20a\x20no-op.\n\n\r\n\x05\x04\x05\x02\x02\x05\x12\x04\
+    \xe1\x04\x04\x08\n\r\n\x05\x04\x05\x02\x02\x01\x12\x04\xe1\x04\t#\n\r\n\
+    \x05\x04\x05\x02\x02\x03\x12\x04\xe1\x04&'\n\x96\x01\n\x02\x04\x06\x12\
+    \x06\xe7\x04\0\x82\x05\x01\x1a\x87\x01\x20Request\x20message\x20for\n\
+    \x20[google.bigtable.admin.v2.BigtableTableAdmin.ListTables][google.bigt\
+    able.admin.v2.BigtableTableAdmin.ListTables]\n\n\x0b\n\x03\x04\x06\x01\
+    \x12\x04\xe7\x04\x08\x19\n\xa2\x01\n\x04\x04\x06\x02\0\x12\x06\xea\x04\
+    \x02\xef\x04\x04\x1a\x91\x01\x20Required.\x20The\x20unique\x20name\x20of\
+    \x20the\x20instance\x20for\x20which\x20tables\x20should\x20be\n\x20liste\
+    d.\x20Values\x20are\x20of\x20the\x20form\x20`projects/{project}/instance\
+    s/{instance}`.\n\n\r\n\x05\x04\x06\x02\0\x05\x12\x04\xea\x04\x02\x08\n\r\
+    \n\x05\x04\x06\x02\0\x01\x12\x04\xea\x04\t\x0f\n\r\n\x05\x04\x06\x02\0\
+    \x03\x12\x04\xea\x04\x12\x13\n\x0f\n\x05\x04\x06\x02\0\x08\x12\x06\xea\
+    \x04\x14\xef\x04\x03\n\x10\n\x08\x04\x06\x02\0\x08\x9c\x08\0\x12\x04\xeb\
+    \x04\x04*\n\x11\n\x07\x04\x06\x02\0\x08\x9f\x08\x12\x06\xec\x04\x04\xee\
+    \x04\x05\n\x84\x01\n\x04\x04\x06\x02\x01\x12\x04\xf3\x04\x02\x16\x1av\
+    \x20The\x20view\x20to\x20be\x20applied\x20to\x20the\x20returned\x20table\
+    s'\x20fields.\n\x20NAME_ONLY\x20view\x20(default)\x20and\x20REPLICATION_\
+    VIEW\x20are\x20supported.\n\n\r\n\x05\x04\x06\x02\x01\x06\x12\x04\xf3\
+    \x04\x02\x0c\n\r\n\x05\x04\x06\x02\x01\x01\x12\x04\xf3\x04\r\x11\n\r\n\
+    \x05\x04\x06\x02\x01\x03\x12\x04\xf3\x04\x14\x15\n\xbd\x03\n\x04\x04\x06\
+    \x02\x02\x12\x04\xfe\x04\x02\x16\x1a\xae\x03\x20Maximum\x20number\x20of\
+    \x20results\x20per\x20page.\n\n\x20A\x20page_size\x20of\x20zero\x20lets\
+    \x20the\x20server\x20choose\x20the\x20number\x20of\x20items\x20to\x20ret\
+    urn.\n\x20A\x20page_size\x20which\x20is\x20strictly\x20positive\x20will\
+    \x20return\x20at\x20most\x20that\x20many\x20items.\n\x20A\x20negative\
+    \x20page_size\x20will\x20cause\x20an\x20error.\n\n\x20Following\x20the\
+    \x20first\x20request,\x20subsequent\x20paginated\x20calls\x20are\x20not\
+    \x20required\n\x20to\x20pass\x20a\x20page_size.\x20If\x20a\x20page_size\
+    \x20is\x20set\x20in\x20subsequent\x20calls,\x20it\x20must\n\x20match\x20\
+    the\x20page_size\x20given\x20in\x20the\x20first\x20request.\n\n\r\n\x05\
+    \x04\x06\x02\x02\x05\x12\x04\xfe\x04\x02\x07\n\r\n\x05\x04\x06\x02\x02\
+    \x01\x12\x04\xfe\x04\x08\x11\n\r\n\x05\x04\x06\x02\x02\x03\x12\x04\xfe\
+    \x04\x14\x15\nK\n\x04\x04\x06\x02\x03\x12\x04\x81\x05\x02\x18\x1a=\x20Th\
+    e\x20value\x20of\x20`next_page_token`\x20returned\x20by\x20a\x20previous\
+    \x20call.\n\n\r\n\x05\x04\x06\x02\x03\x05\x12\x04\x81\x05\x02\x08\n\r\n\
+    \x05\x04\x06\x02\x03\x01\x12\x04\x81\x05\t\x13\n\r\n\x05\x04\x06\x02\x03\
+    \x03\x12\x04\x81\x05\x16\x17\n\x97\x01\n\x02\x04\x07\x12\x06\x86\x05\0\
+    \x8e\x05\x01\x1a\x88\x01\x20Response\x20message\x20for\n\x20[google.bigt\
+    able.admin.v2.BigtableTableAdmin.ListTables][google.bigtable.admin.v2.Bi\
+    gtableTableAdmin.ListTables]\n\n\x0b\n\x03\x04\x07\x01\x12\x04\x86\x05\
+    \x08\x1a\n=\n\x04\x04\x07\x02\0\x12\x04\x88\x05\x02\x1c\x1a/\x20The\x20t\
+    ables\x20present\x20in\x20the\x20requested\x20instance.\n\n\r\n\x05\x04\
+    \x07\x02\0\x04\x12\x04\x88\x05\x02\n\n\r\n\x05\x04\x07\x02\0\x06\x12\x04\
+    \x88\x05\x0b\x10\n\r\n\x05\x04\x07\x02\0\x01\x12\x04\x88\x05\x11\x17\n\r\
+    \n\x05\x04\x07\x02\0\x03\x12\x04\x88\x05\x1a\x1b\n\xa4\x01\n\x04\x04\x07\
+    \x02\x01\x12\x04\x8d\x05\x02\x1d\x1a\x95\x01\x20Set\x20if\x20not\x20all\
+    \x20tables\x20could\x20be\x20returned\x20in\x20a\x20single\x20response.\
+    \n\x20Pass\x20this\x20value\x20to\x20`page_token`\x20in\x20another\x20re\
+    quest\x20to\x20get\x20the\x20next\n\x20page\x20of\x20results.\n\n\r\n\
+    \x05\x04\x07\x02\x01\x05\x12\x04\x8d\x05\x02\x08\n\r\n\x05\x04\x07\x02\
+    \x01\x01\x12\x04\x8d\x05\t\x18\n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\x8d\
+    \x05\x1b\x1c\n\x92\x01\n\x02\x04\x08\x12\x06\x92\x05\0\xa0\x05\x01\x1a\
+    \x83\x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Big\
+    tableTableAdmin.GetTable][google.bigtable.admin.v2.BigtableTableAdmin.Ge\
+    tTable]\n\n\x0b\n\x03\x04\x08\x01\x12\x04\x92\x05\x08\x17\n\x97\x01\n\
+    \x04\x04\x08\x02\0\x12\x06\x96\x05\x02\x9b\x05\x04\x1a\x86\x01\x20Requir\
+    ed.\x20The\x20unique\x20name\x20of\x20the\x20requested\x20table.\n\x20Va\
+    lues\x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{ins\
+    tance}/tables/{table}`.\n\n\r\n\x05\x04\x08\x02\0\x05\x12\x04\x96\x05\
+    \x02\x08\n\r\n\x05\x04\x08\x02\0\x01\x12\x04\x96\x05\t\r\n\r\n\x05\x04\
+    \x08\x02\0\x03\x12\x04\x96\x05\x10\x11\n\x0f\n\x05\x04\x08\x02\0\x08\x12\
+    \x06\x96\x05\x12\x9b\x05\x03\n\x10\n\x08\x04\x08\x02\0\x08\x9c\x08\0\x12\
+    \x04\x97\x05\x04*\n\x11\n\x07\x04\x08\x02\0\x08\x9f\x08\x12\x06\x98\x05\
+    \x04\x9a\x05\x05\nq\n\x04\x04\x08\x02\x01\x12\x04\x9f\x05\x02\x16\x1ac\
+    \x20The\x20view\x20to\x20be\x20applied\x20to\x20the\x20returned\x20table\
+    's\x20fields.\n\x20Defaults\x20to\x20`SCHEMA_VIEW`\x20if\x20unspecified.\
+    \n\n\r\n\x05\x04\x08\x02\x01\x06\x12\x04\x9f\x05\x02\x0c\n\r\n\x05\x04\
+    \x08\x02\x01\x01\x12\x04\x9f\x05\r\x11\n\r\n\x05\x04\x08\x02\x01\x03\x12\
+    \x04\x9f\x05\x14\x15\nh\n\x02\x04\t\x12\x06\xa4\x05\0\xb7\x05\x01\x1aZ\
+    \x20The\x20request\x20for\n\x20[UpdateTable][google.bigtable.admin.v2.Bi\
+    gtableTableAdmin.UpdateTable].\n\n\x0b\n\x03\x04\t\x01\x12\x04\xa4\x05\
+    \x08\x1a\nq\n\x04\x04\t\x02\0\x12\x04\xa7\x05\x02;\x1ac\x20Required.\x20\
+    The\x20table\x20to\x20update.\n\x20The\x20table's\x20`name`\x20field\x20\
+    is\x20used\x20to\x20identify\x20the\x20table\x20to\x20update.\n\n\r\n\
+    \x05\x04\t\x02\0\x06\x12\x04\xa7\x05\x02\x07\n\r\n\x05\x04\t\x02\0\x01\
+    \x12\x04\xa7\x05\x08\r\n\r\n\x05\x04\t\x02\0\x03\x12\x04\xa7\x05\x10\x11\
+    \n\r\n\x05\x04\t\x02\0\x08\x12\x04\xa7\x05\x12:\n\x10\n\x08\x04\t\x02\0\
+    \x08\x9c\x08\0\x12\x04\xa7\x05\x139\n\x96\x04\n\x04\x04\t\x02\x01\x12\
+    \x06\xb5\x05\x02\xb6\x05/\x1a\x85\x04\x20Required.\x20The\x20list\x20of\
+    \x20fields\x20to\x20update.\n\x20A\x20mask\x20specifying\x20which\x20fie\
+    lds\x20(e.g.\x20`change_stream_config`)\x20in\x20the\x20`table`\n\x20fie\
+    ld\x20should\x20be\x20updated.\x20This\x20mask\x20is\x20relative\x20to\
+    \x20the\x20`table`\x20field,\x20not\x20to\n\x20the\x20request\x20message\
+    .\x20The\x20wildcard\x20(*)\x20path\x20is\x20currently\x20not\x20support\
+    ed.\n\x20Currently\x20UpdateTable\x20is\x20only\x20supported\x20for\x20t\
+    he\x20following\x20fields:\n\n\x20*\x20`change_stream_config`\n\x20*\x20\
+    `change_stream_config.retention_period`\n\x20*\x20`deletion_protection`\
+    \n\n\x20If\x20`column_families`\x20is\x20set\x20in\x20`update_mask`,\x20\
+    it\x20will\x20return\x20an\n\x20UNIMPLEMENTED\x20error.\n\n\r\n\x05\x04\
+    \t\x02\x01\x06\x12\x04\xb5\x05\x02\x1b\n\r\n\x05\x04\t\x02\x01\x01\x12\
+    \x04\xb5\x05\x1c'\n\r\n\x05\x04\t\x02\x01\x03\x12\x04\xb5\x05*+\n\r\n\
+    \x05\x04\t\x02\x01\x08\x12\x04\xb6\x05\x06.\n\x10\n\x08\x04\t\x02\x01\
+    \x08\x9c\x08\0\x12\x04\xb6\x05\x07-\n\x84\x01\n\x02\x04\n\x12\x06\xbb\
+    \x05\0\xc4\x05\x01\x1av\x20Metadata\x20type\x20for\x20the\x20operation\
+    \x20returned\x20by\n\x20[UpdateTable][google.bigtable.admin.v2.BigtableT\
+    ableAdmin.UpdateTable].\n\n\x0b\n\x03\x04\n\x01\x12\x04\xbb\x05\x08\x1b\
+    \n4\n\x04\x04\n\x02\0\x12\x04\xbd\x05\x02\x12\x1a&\x20The\x20name\x20of\
+    \x20the\x20table\x20being\x20updated.\n\n\r\n\x05\x04\n\x02\0\x05\x12\
+    \x04\xbd\x05\x02\x08\n\r\n\x05\x04\n\x02\0\x01\x12\x04\xbd\x05\t\r\n\r\n\
+    \x05\x04\n\x02\0\x03\x12\x04\xbd\x05\x10\x11\n9\n\x04\x04\n\x02\x01\x12\
+    \x04\xc0\x05\x02+\x1a+\x20The\x20time\x20at\x20which\x20this\x20operatio\
+    n\x20started.\n\n\r\n\x05\x04\n\x02\x01\x06\x12\x04\xc0\x05\x02\x1b\n\r\
+    \n\x05\x04\n\x02\x01\x01\x12\x04\xc0\x05\x1c&\n\r\n\x05\x04\n\x02\x01\
+    \x03\x12\x04\xc0\x05)*\nR\n\x04\x04\n\x02\x02\x12\x04\xc3\x05\x02)\x1aD\
+    \x20If\x20set,\x20the\x20time\x20at\x20which\x20this\x20operation\x20fin\
+    ished\x20or\x20was\x20canceled.\n\n\r\n\x05\x04\n\x02\x02\x06\x12\x04\
+    \xc3\x05\x02\x1b\n\r\n\x05\x04\n\x02\x02\x01\x12\x04\xc3\x05\x1c$\n\r\n\
+    \x05\x04\n\x02\x02\x03\x12\x04\xc3\x05'(\n\x98\x01\n\x02\x04\x0b\x12\x06\
+    \xc8\x05\0\xd2\x05\x01\x1a\x89\x01\x20Request\x20message\x20for\n\x20[go\
+    ogle.bigtable.admin.v2.BigtableTableAdmin.DeleteTable][google.bigtable.a\
+    dmin.v2.BigtableTableAdmin.DeleteTable]\n\n\x0b\n\x03\x04\x0b\x01\x12\
+    \x04\xc8\x05\x08\x1a\n\x9b\x01\n\x04\x04\x0b\x02\0\x12\x06\xcc\x05\x02\
+    \xd1\x05\x04\x1a\x8a\x01\x20Required.\x20The\x20unique\x20name\x20of\x20\
+    the\x20table\x20to\x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20\
+    form\n\x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\
+    \r\n\x05\x04\x0b\x02\0\x05\x12\x04\xcc\x05\x02\x08\n\r\n\x05\x04\x0b\x02\
+    \0\x01\x12\x04\xcc\x05\t\r\n\r\n\x05\x04\x0b\x02\0\x03\x12\x04\xcc\x05\
+    \x10\x11\n\x0f\n\x05\x04\x0b\x02\0\x08\x12\x06\xcc\x05\x12\xd1\x05\x03\n\
+    \x10\n\x08\x04\x0b\x02\0\x08\x9c\x08\0\x12\x04\xcd\x05\x04*\n\x11\n\x07\
+    \x04\x0b\x02\0\x08\x9f\x08\x12\x06\xce\x05\x04\xd0\x05\x05\n\x9c\x01\n\
+    \x02\x04\x0c\x12\x06\xd6\x05\0\xe0\x05\x01\x1a\x8d\x01\x20Request\x20mes\
+    sage\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTa\
+    ble][google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable]\n\n\x0b\
+    \n\x03\x04\x0c\x01\x12\x04\xd6\x05\x08\x1c\n\x9c\x01\n\x04\x04\x0c\x02\0\
+    \x12\x06\xda\x05\x02\xdf\x05\x04\x1a\x8b\x01\x20Required.\x20The\x20uniq\
+    ue\x20name\x20of\x20the\x20table\x20to\x20be\x20restored.\n\x20Values\
+    \x20are\x20of\x20the\x20form\n\x20`projects/{project}/instances/{instanc\
+    e}/tables/{table}`.\n\n\r\n\x05\x04\x0c\x02\0\x05\x12\x04\xda\x05\x02\
+    \x08\n\r\n\x05\x04\x0c\x02\0\x01\x12\x04\xda\x05\t\r\n\r\n\x05\x04\x0c\
+    \x02\0\x03\x12\x04\xda\x05\x10\x11\n\x0f\n\x05\x04\x0c\x02\0\x08\x12\x06\
+    \xda\x05\x12\xdf\x05\x03\n\x10\n\x08\x04\x0c\x02\0\x08\x9c\x08\0\x12\x04\
+    \xdb\x05\x04*\n\x11\n\x07\x04\x0c\x02\0\x08\x9f\x08\x12\x06\xdc\x05\x04\
+    \xde\x05\x05\n\xb5\x01\n\x02\x04\r\x12\x06\xe4\x05\0\xed\x05\x01\x1a\xa6\
+    \x01\x20Metadata\x20type\x20for\x20the\x20operation\x20returned\x20by\n\
+    \x20[google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable][google.b\
+    igtable.admin.v2.BigtableTableAdmin.UndeleteTable].\n\n\x0b\n\x03\x04\r\
+    \x01\x12\x04\xe4\x05\x08\x1d\n5\n\x04\x04\r\x02\0\x12\x04\xe6\x05\x02\
+    \x12\x1a'\x20The\x20name\x20of\x20the\x20table\x20being\x20restored.\n\n\
+    \r\n\x05\x04\r\x02\0\x05\x12\x04\xe6\x05\x02\x08\n\r\n\x05\x04\r\x02\0\
+    \x01\x12\x04\xe6\x05\t\r\n\r\n\x05\x04\r\x02\0\x03\x12\x04\xe6\x05\x10\
+    \x11\n9\n\x04\x04\r\x02\x01\x12\x04\xe9\x05\x02+\x1a+\x20The\x20time\x20\
+    at\x20which\x20this\x20operation\x20started.\n\n\r\n\x05\x04\r\x02\x01\
+    \x06\x12\x04\xe9\x05\x02\x1b\n\r\n\x05\x04\r\x02\x01\x01\x12\x04\xe9\x05\
+    \x1c&\n\r\n\x05\x04\r\x02\x01\x03\x12\x04\xe9\x05)*\nS\n\x04\x04\r\x02\
+    \x02\x12\x04\xec\x05\x02)\x1aE\x20If\x20set,\x20the\x20time\x20at\x20whi\
+    ch\x20this\x20operation\x20finished\x20or\x20was\x20cancelled.\n\n\r\n\
+    \x05\x04\r\x02\x02\x06\x12\x04\xec\x05\x02\x1b\n\r\n\x05\x04\r\x02\x02\
+    \x01\x12\x04\xec\x05\x1c$\n\r\n\x05\x04\r\x02\x02\x03\x12\x04\xec\x05'(\
+    \n\xaa\x01\n\x02\x04\x0e\x12\x06\xf1\x05\0\xa0\x06\x01\x1a\x9b\x01\x20Re\
+    quest\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmi\
+    n.ModifyColumnFamilies][google.bigtable.admin.v2.BigtableTableAdmin.Modi\
+    fyColumnFamilies]\n\n\x0b\n\x03\x04\x0e\x01\x12\x04\xf1\x05\x08#\nL\n\
+    \x04\x04\x0e\x03\0\x12\x06\xf3\x05\x02\x8b\x06\x03\x1a<\x20A\x20create,\
+    \x20update,\x20or\x20delete\x20of\x20a\x20particular\x20column\x20family\
+    .\n\n\r\n\x05\x04\x0e\x03\0\x01\x12\x04\xf3\x05\n\x16\n=\n\x06\x04\x0e\
+    \x03\0\x02\0\x12\x04\xf5\x05\x04\x12\x1a-\x20The\x20ID\x20of\x20the\x20c\
+    olumn\x20family\x20to\x20be\x20modified.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\
+    \0\x05\x12\x04\xf5\x05\x04\n\n\x0f\n\x07\x04\x0e\x03\0\x02\0\x01\x12\x04\
+    \xf5\x05\x0b\r\n\x0f\n\x07\x04\x0e\x03\0\x02\0\x03\x12\x04\xf5\x05\x10\
+    \x11\n0\n\x06\x04\x0e\x03\0\x08\0\x12\x06\xf8\x05\x04\x84\x06\x05\x1a\
+    \x1e\x20Column\x20family\x20modifications.\n\n\x0f\n\x07\x04\x0e\x03\0\
+    \x08\0\x01\x12\x04\xf8\x05\n\r\ny\n\x06\x04\x0e\x03\0\x02\x01\x12\x04\
+    \xfb\x05\x06\x1e\x1ai\x20Create\x20a\x20new\x20column\x20family\x20with\
+    \x20the\x20specified\x20schema,\x20or\x20fail\x20if\n\x20one\x20already\
+    \x20exists\x20with\x20the\x20given\x20ID.\n\n\x0f\n\x07\x04\x0e\x03\0\
+    \x02\x01\x06\x12\x04\xfb\x05\x06\x12\n\x0f\n\x07\x04\x0e\x03\0\x02\x01\
+    \x01\x12\x04\xfb\x05\x13\x19\n\x0f\n\x07\x04\x0e\x03\0\x02\x01\x03\x12\
+    \x04\xfb\x05\x1c\x1d\n\x82\x01\n\x06\x04\x0e\x03\0\x02\x02\x12\x04\xff\
+    \x05\x06\x1e\x1ar\x20Update\x20an\x20existing\x20column\x20family\x20to\
+    \x20the\x20specified\x20schema,\x20or\x20fail\n\x20if\x20no\x20column\
+    \x20family\x20exists\x20with\x20the\x20given\x20ID.\n\n\x0f\n\x07\x04\
+    \x0e\x03\0\x02\x02\x06\x12\x04\xff\x05\x06\x12\n\x0f\n\x07\x04\x0e\x03\0\
+    \x02\x02\x01\x12\x04\xff\x05\x13\x19\n\x0f\n\x07\x04\x0e\x03\0\x02\x02\
+    \x03\x12\x04\xff\x05\x1c\x1d\ng\n\x06\x04\x0e\x03\0\x02\x03\x12\x04\x83\
+    \x06\x06\x14\x1aW\x20Drop\x20(delete)\x20the\x20column\x20family\x20with\
+    \x20the\x20given\x20ID,\x20or\x20fail\x20if\x20no\x20such\n\x20family\
+    \x20exists.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x03\x05\x12\x04\x83\x06\x06\
+    \n\n\x0f\n\x07\x04\x0e\x03\0\x02\x03\x01\x12\x04\x83\x06\x0b\x0f\n\x0f\n\
+    \x07\x04\x0e\x03\0\x02\x03\x03\x12\x04\x83\x06\x12\x13\n\xed\x01\n\x06\
+    \x04\x0e\x03\0\x02\x04\x12\x06\x89\x06\x04\x8a\x061\x1a\xda\x01\x20Optio\
+    nal.\x20A\x20mask\x20specifying\x20which\x20fields\x20(e.g.\x20`gc_rule`\
+    )\x20in\x20the\x20`update`\n\x20mod\x20should\x20be\x20updated,\x20ignor\
+    ed\x20for\x20other\x20modification\x20types.\x20If\x20unset\x20or\n\x20e\
+    mpty,\x20we\x20treat\x20it\x20as\x20updating\x20`gc_rule`\x20to\x20be\
+    \x20backward\x20compatible.\n\n\x0f\n\x07\x04\x0e\x03\0\x02\x04\x06\x12\
+    \x04\x89\x06\x04\x1d\n\x0f\n\x07\x04\x0e\x03\0\x02\x04\x01\x12\x04\x89\
+    \x06\x1e)\n\x0f\n\x07\x04\x0e\x03\0\x02\x04\x03\x12\x04\x89\x06,-\n\x0f\
+    \n\x07\x04\x0e\x03\0\x02\x04\x08\x12\x04\x8a\x06\x080\n\x12\n\n\x04\x0e\
+    \x03\0\x02\x04\x08\x9c\x08\0\x12\x04\x8a\x06\t/\n\xaf\x01\n\x04\x04\x0e\
+    \x02\0\x12\x06\x90\x06\x02\x95\x06\x04\x1a\x9e\x01\x20Required.\x20The\
+    \x20unique\x20name\x20of\x20the\x20table\x20whose\x20families\x20should\
+    \x20be\x20modified.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projec\
+    ts/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04\x0e\
+    \x02\0\x05\x12\x04\x90\x06\x02\x08\n\r\n\x05\x04\x0e\x02\0\x01\x12\x04\
+    \x90\x06\t\r\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\x90\x06\x10\x11\n\x0f\n\
+    \x05\x04\x0e\x02\0\x08\x12\x06\x90\x06\x12\x95\x06\x03\n\x10\n\x08\x04\
+    \x0e\x02\0\x08\x9c\x08\0\x12\x04\x91\x06\x04*\n\x11\n\x07\x04\x0e\x02\0\
+    \x08\x9f\x08\x12\x06\x92\x06\x04\x94\x06\x05\n\x89\x02\n\x04\x04\x0e\x02\
+    \x01\x12\x06\x9b\x06\x02\x9c\x06/\x1a\xf8\x01\x20Required.\x20Modificati\
+    ons\x20to\x20be\x20atomically\x20applied\x20to\x20the\x20specified\x20ta\
+    ble's\n\x20families.\x20Entries\x20are\x20applied\x20in\x20order,\x20mea\
+    ning\x20that\x20earlier\x20modifications\n\x20can\x20be\x20masked\x20by\
+    \x20later\x20ones\x20(in\x20the\x20case\x20of\x20repeated\x20updates\x20\
+    to\x20the\x20same\n\x20family,\x20for\x20example).\n\n\r\n\x05\x04\x0e\
+    \x02\x01\x04\x12\x04\x9b\x06\x02\n\n\r\n\x05\x04\x0e\x02\x01\x06\x12\x04\
+    \x9b\x06\x0b\x17\n\r\n\x05\x04\x0e\x02\x01\x01\x12\x04\x9b\x06\x18%\n\r\
+    \n\x05\x04\x0e\x02\x01\x03\x12\x04\x9b\x06()\n\r\n\x05\x04\x0e\x02\x01\
+    \x08\x12\x04\x9c\x06\x06.\n\x10\n\x08\x04\x0e\x02\x01\x08\x9c\x08\0\x12\
+    \x04\x9c\x06\x07-\n[\n\x04\x04\x0e\x02\x02\x12\x04\x9f\x06\x02D\x1aM\x20\
+    Optional.\x20If\x20true,\x20ignore\x20safety\x20checks\x20when\x20modify\
+    ing\x20the\x20column\x20families.\n\n\r\n\x05\x04\x0e\x02\x02\x05\x12\
+    \x04\x9f\x06\x02\x06\n\r\n\x05\x04\x0e\x02\x02\x01\x12\x04\x9f\x06\x07\
+    \x16\n\r\n\x05\x04\x0e\x02\x02\x03\x12\x04\x9f\x06\x19\x1a\n\r\n\x05\x04\
+    \x0e\x02\x02\x08\x12\x04\x9f\x06\x1bC\n\x10\n\x08\x04\x0e\x02\x02\x08\
+    \x9c\x08\0\x12\x04\x9f\x06\x1cB\n\xb2\x01\n\x02\x04\x0f\x12\x06\xa4\x06\
+    \0\xae\x06\x01\x1a\xa3\x01\x20Request\x20message\x20for\n\x20[google.big\
+    table.admin.v2.BigtableTableAdmin.GenerateConsistencyToken][google.bigta\
+    ble.admin.v2.BigtableTableAdmin.GenerateConsistencyToken]\n\n\x0b\n\x03\
+    \x04\x0f\x01\x12\x04\xa4\x06\x08'\n\xb5\x01\n\x04\x04\x0f\x02\0\x12\x06\
+    \xa8\x06\x02\xad\x06\x04\x1a\xa4\x01\x20Required.\x20The\x20unique\x20na\
+    me\x20of\x20the\x20Table\x20for\x20which\x20to\x20create\x20a\x20consist\
+    ency\n\x20token.\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{p\
+    roject}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04\x0f\x02\0\
+    \x05\x12\x04\xa8\x06\x02\x08\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\xa8\x06\
+    \t\r\n\r\n\x05\x04\x0f\x02\0\x03\x12\x04\xa8\x06\x10\x11\n\x0f\n\x05\x04\
+    \x0f\x02\0\x08\x12\x06\xa8\x06\x12\xad\x06\x03\n\x10\n\x08\x04\x0f\x02\0\
+    \x08\x9c\x08\0\x12\x04\xa9\x06\x04*\n\x11\n\x07\x04\x0f\x02\0\x08\x9f\
+    \x08\x12\x06\xaa\x06\x04\xac\x06\x05\n\xb3\x01\n\x02\x04\x10\x12\x06\xb2\
+    \x06\0\xb5\x06\x01\x1a\xa4\x01\x20Response\x20message\x20for\n\x20[googl\
+    e.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyToken][google.\
+    bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyToken]\n\n\x0b\n\
+    \x03\x04\x10\x01\x12\x04\xb2\x06\x08(\n0\n\x04\x04\x10\x02\0\x12\x04\xb4\
+    \x06\x02\x1f\x1a\"\x20The\x20generated\x20consistency\x20token.\n\n\r\n\
+    \x05\x04\x10\x02\0\x05\x12\x04\xb4\x06\x02\x08\n\r\n\x05\x04\x10\x02\0\
+    \x01\x12\x04\xb4\x06\t\x1a\n\r\n\x05\x04\x10\x02\0\x03\x12\x04\xb4\x06\
+    \x1d\x1e\n\xa2\x01\n\x02\x04\x11\x12\x06\xb9\x06\0\xd4\x06\x01\x1a\x93\
+    \x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Bigtabl\
+    eTableAdmin.CheckConsistency][google.bigtable.admin.v2.BigtableTableAdmi\
+    n.CheckConsistency]\n\n\x0b\n\x03\x04\x11\x01\x12\x04\xb9\x06\x08\x1f\n\
+    \xb8\x01\n\x04\x04\x11\x02\0\x12\x06\xbd\x06\x02\xc2\x06\x04\x1a\xa7\x01\
+    \x20Required.\x20The\x20unique\x20name\x20of\x20the\x20Table\x20for\x20w\
+    hich\x20to\x20check\x20replication\n\x20consistency.\x20Values\x20are\
+    \x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/tabl\
+    es/{table}`.\n\n\r\n\x05\x04\x11\x02\0\x05\x12\x04\xbd\x06\x02\x08\n\r\n\
+    \x05\x04\x11\x02\0\x01\x12\x04\xbd\x06\t\r\n\r\n\x05\x04\x11\x02\0\x03\
+    \x12\x04\xbd\x06\x10\x11\n\x0f\n\x05\x04\x11\x02\0\x08\x12\x06\xbd\x06\
+    \x12\xc2\x06\x03\n\x10\n\x08\x04\x11\x02\0\x08\x9c\x08\0\x12\x04\xbe\x06\
+    \x04*\n\x11\n\x07\x04\x11\x02\0\x08\x9f\x08\x12\x06\xbf\x06\x04\xc1\x06\
+    \x05\nY\n\x04\x04\x11\x02\x01\x12\x04\xc5\x06\x02H\x1aK\x20Required.\x20\
+    The\x20token\x20created\x20using\x20GenerateConsistencyToken\x20for\x20t\
+    he\x20Table.\n\n\r\n\x05\x04\x11\x02\x01\x05\x12\x04\xc5\x06\x02\x08\n\r\
+    \n\x05\x04\x11\x02\x01\x01\x12\x04\xc5\x06\t\x1a\n\r\n\x05\x04\x11\x02\
+    \x01\x03\x12\x04\xc5\x06\x1d\x1e\n\r\n\x05\x04\x11\x02\x01\x08\x12\x04\
+    \xc5\x06\x1fG\n\x10\n\x08\x04\x11\x02\x01\x08\x9c\x08\0\x12\x04\xc5\x06\
+    \x20F\n\x7f\n\x04\x04\x11\x08\0\x12\x06\xc9\x06\x02\xd3\x06\x03\x1ao\x20\
+    Which\x20type\x20of\x20read\x20needs\x20to\x20consistently\x20observe\
+    \x20which\x20type\x20of\x20write?\n\x20Default:\x20`standard_read_remote\
+    _writes`\n\n\r\n\x05\x04\x11\x08\0\x01\x12\x04\xc9\x06\x08\x0c\n\xc3\x01\
+    \n\x04\x04\x11\x02\x02\x12\x04\xcd\x06\x04=\x1a\xb4\x01\x20Checks\x20tha\
+    t\x20reads\x20using\x20an\x20app\x20profile\x20with\x20`StandardIsolatio\
+    n`\x20can\n\x20see\x20all\x20writes\x20committed\x20before\x20the\x20tok\
+    en\x20was\x20created,\x20even\x20if\x20the\n\x20read\x20and\x20write\x20\
+    target\x20different\x20clusters.\n\n\r\n\x05\x04\x11\x02\x02\x06\x12\x04\
+    \xcd\x06\x04\x1c\n\r\n\x05\x04\x11\x02\x02\x01\x12\x04\xcd\x06\x1d8\n\r\
+    \n\x05\x04\x11\x02\x02\x03\x12\x04\xcd\x06;<\n\xce\x01\n\x04\x04\x11\x02\
+    \x03\x12\x04\xd2\x06\x04>\x1a\xbf\x01\x20Checks\x20that\x20reads\x20usin\
+    g\x20an\x20app\x20profile\x20with\x20`DataBoostIsolationReadOnly`\n\x20c\
+    an\x20see\x20all\x20writes\x20committed\x20before\x20the\x20token\x20was\
+    \x20created,\x20but\x20only\x20if\n\x20the\x20read\x20and\x20write\x20ta\
+    rget\x20the\x20same\x20cluster.\n\n\r\n\x05\x04\x11\x02\x03\x06\x12\x04\
+    \xd2\x06\x04\x1c\n\r\n\x05\x04\x11\x02\x03\x01\x12\x04\xd2\x06\x1d9\n\r\
+    \n\x05\x04\x11\x02\x03\x03\x12\x04\xd2\x06<=\n~\n\x02\x04\x12\x12\x04\
+    \xd8\x06\0#\x1ar\x20Checks\x20that\x20all\x20writes\x20before\x20the\x20\
+    consistency\x20token\x20was\x20generated\x20are\n\x20replicated\x20in\
+    \x20every\x20cluster\x20and\x20readable.\n\n\x0b\n\x03\x04\x12\x01\x12\
+    \x04\xd8\x06\x08\x20\n\x7f\n\x02\x04\x13\x12\x04\xdc\x06\0#\x1as\x20Chec\
+    ks\x20that\x20all\x20writes\x20before\x20the\x20consistency\x20token\x20\
+    was\x20generated\x20in\x20the\x20same\n\x20cluster\x20are\x20readable\
+    \x20by\x20Databoost.\n\n\x0b\n\x03\x04\x13\x01\x12\x04\xdc\x06\x08\x20\n\
+    \xa3\x01\n\x02\x04\x14\x12\x06\xe0\x06\0\xe4\x06\x01\x1a\x94\x01\x20Resp\
+    onse\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin\
+    .CheckConsistency][google.bigtable.admin.v2.BigtableTableAdmin.CheckCons\
+    istency]\n\n\x0b\n\x03\x04\x14\x01\x12\x04\xe0\x06\x08\x20\n\x9a\x01\n\
+    \x04\x04\x14\x02\0\x12\x04\xe3\x06\x02\x16\x1a\x8b\x01\x20True\x20only\
+    \x20if\x20the\x20token\x20is\x20consistent.\x20A\x20token\x20is\x20consi\
+    stent\x20if\x20replication\n\x20has\x20caught\x20up\x20with\x20the\x20re\
+    strictions\x20specified\x20in\x20the\x20request.\n\n\r\n\x05\x04\x14\x02\
+    \0\x05\x12\x04\xe3\x06\x02\x06\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\xe3\
+    \x06\x07\x11\n\r\n\x05\x04\x14\x02\0\x03\x12\x04\xe3\x06\x14\x15\n\xc9\
+    \x03\n\x02\x04\x15\x12\x06\xed\x06\0\x90\x07\x01\x1a\xba\x03\x20Request\
+    \x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.Sna\
+    pshotTable][google.bigtable.admin.v2.BigtableTableAdmin.SnapshotTable]\n\
     \n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20C\
     loud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20curr\
     ently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20T\
     his\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-incompatibl\
     e\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20production\x20u\
     se.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecati\
-    on\x20policy.\n\n\x0b\n\x03\x04\x01\x01\x12\x04\x84\x02\x08&\n\x91\x01\n\
-    \x04\x04\x01\x02\0\x12\x04\x87\x02\x02\x14\x1a\x82\x01\x20The\x20unique\
-    \x20name\x20of\x20the\x20instance\x20in\x20which\x20to\x20create\x20the\
-    \x20table.\n\x20Values\x20are\x20of\x20the\x20form\x20`projects/<project\
-    >/instances/<instance>`.\n\n\r\n\x05\x04\x01\x02\0\x05\x12\x04\x87\x02\
-    \x02\x08\n\r\n\x05\x04\x01\x02\0\x01\x12\x04\x87\x02\t\x0f\n\r\n\x05\x04\
-    \x01\x02\0\x03\x12\x04\x87\x02\x12\x13\n\x98\x01\n\x04\x04\x01\x02\x01\
-    \x12\x04\x8b\x02\x02\x16\x1a\x89\x01\x20The\x20name\x20by\x20which\x20th\
-    e\x20new\x20table\x20should\x20be\x20referred\x20to\x20within\x20the\x20\
-    parent\n\x20instance,\x20e.g.,\x20`foobar`\x20rather\x20than\x20`<parent\
-    >/tables/foobar`.\n\n\r\n\x05\x04\x01\x02\x01\x05\x12\x04\x8b\x02\x02\
-    \x08\n\r\n\x05\x04\x01\x02\x01\x01\x12\x04\x8b\x02\t\x11\n\r\n\x05\x04\
-    \x01\x02\x01\x03\x12\x04\x8b\x02\x14\x15\n\xf7\x01\n\x04\x04\x01\x02\x02\
-    \x12\x04\x91\x02\x02\x1d\x1a\xe8\x01\x20The\x20unique\x20name\x20of\x20t\
-    he\x20snapshot\x20from\x20which\x20to\x20restore\x20the\x20table.\x20The\
-    \n\x20snapshot\x20and\x20the\x20table\x20must\x20be\x20in\x20the\x20same\
-    \x20instance.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/<pr\
-    oject>/instances/<instance>/clusters/<cluster>/snapshots/<snapshot>`.\n\
-    \n\r\n\x05\x04\x01\x02\x02\x05\x12\x04\x91\x02\x02\x08\n\r\n\x05\x04\x01\
-    \x02\x02\x01\x12\x04\x91\x02\t\x18\n\r\n\x05\x04\x01\x02\x02\x03\x12\x04\
-    \x91\x02\x1b\x1c\n\x9a\x01\n\x02\x04\x02\x12\x06\x96\x02\0\xa5\x02\x01\
-    \x1a\x8b\x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2\
-    .BigtableTableAdmin.DropRowRange][google.bigtable.admin.v2.BigtableTable\
-    Admin.DropRowRange]\n\n\x0b\n\x03\x04\x02\x01\x12\x04\x96\x02\x08\x1b\n\
-    \xa2\x01\n\x04\x04\x02\x02\0\x12\x04\x9a\x02\x02\x12\x1a\x93\x01\x20The\
-    \x20unique\x20name\x20of\x20the\x20table\x20on\x20which\x20to\x20drop\
-    \x20a\x20range\x20of\x20rows.\n\x20Values\x20are\x20of\x20the\x20form\n\
-    \x20`projects/<project>/instances/<instance>/tables/<table>`.\n\n\r\n\
-    \x05\x04\x02\x02\0\x05\x12\x04\x9a\x02\x02\x08\n\r\n\x05\x04\x02\x02\0\
-    \x01\x12\x04\x9a\x02\t\r\n\r\n\x05\x04\x02\x02\0\x03\x12\x04\x9a\x02\x10\
-    \x11\n/\n\x04\x04\x02\x08\0\x12\x06\x9d\x02\x02\xa4\x02\x03\x1a\x1f\x20D\
-    elete\x20all\x20rows\x20or\x20by\x20prefix.\n\n\r\n\x05\x04\x02\x08\0\
-    \x01\x12\x04\x9d\x02\x08\x0e\nc\n\x04\x04\x02\x02\x01\x12\x04\xa0\x02\
-    \x04\x1d\x1aU\x20Delete\x20all\x20rows\x20that\x20start\x20with\x20this\
-    \x20row\x20key\x20prefix.\x20Prefix\x20cannot\x20be\n\x20zero\x20length.\
-    \n\n\r\n\x05\x04\x02\x02\x01\x05\x12\x04\xa0\x02\x04\t\n\r\n\x05\x04\x02\
-    \x02\x01\x01\x12\x04\xa0\x02\n\x18\n\r\n\x05\x04\x02\x02\x01\x03\x12\x04\
-    \xa0\x02\x1b\x1c\nO\n\x04\x04\x02\x02\x02\x12\x04\xa3\x02\x04(\x1aA\x20D\
-    elete\x20all\x20rows\x20in\x20the\x20table.\x20Setting\x20this\x20to\x20\
-    false\x20is\x20a\x20no-op.\n\n\r\n\x05\x04\x02\x02\x02\x05\x12\x04\xa3\
-    \x02\x04\x08\n\r\n\x05\x04\x02\x02\x02\x01\x12\x04\xa3\x02\t#\n\r\n\x05\
-    \x04\x02\x02\x02\x03\x12\x04\xa3\x02&'\n\x96\x01\n\x02\x04\x03\x12\x06\
-    \xa9\x02\0\xb8\x02\x01\x1a\x87\x01\x20Request\x20message\x20for\n\x20[go\
-    ogle.bigtable.admin.v2.BigtableTableAdmin.ListTables][google.bigtable.ad\
-    min.v2.BigtableTableAdmin.ListTables]\n\n\x0b\n\x03\x04\x03\x01\x12\x04\
-    \xa9\x02\x08\x19\n\x96\x01\n\x04\x04\x03\x02\0\x12\x04\xac\x02\x02\x14\
-    \x1a\x87\x01\x20The\x20unique\x20name\x20of\x20the\x20instance\x20for\
-    \x20which\x20tables\x20should\x20be\x20listed.\n\x20Values\x20are\x20of\
-    \x20the\x20form\x20`projects/<project>/instances/<instance>`.\n\n\r\n\
-    \x05\x04\x03\x02\0\x05\x12\x04\xac\x02\x02\x08\n\r\n\x05\x04\x03\x02\0\
-    \x01\x12\x04\xac\x02\t\x0f\n\r\n\x05\x04\x03\x02\0\x03\x12\x04\xac\x02\
-    \x12\x13\n\x93\x01\n\x04\x04\x03\x02\x01\x12\x04\xb0\x02\x02\x16\x1a\x84\
-    \x01\x20The\x20view\x20to\x20be\x20applied\x20to\x20the\x20returned\x20t\
-    ables'\x20fields.\n\x20Defaults\x20to\x20`NAME_ONLY`\x20if\x20unspecifie\
-    d;\x20no\x20others\x20are\x20currently\x20supported.\n\n\r\n\x05\x04\x03\
-    \x02\x01\x06\x12\x04\xb0\x02\x02\x0c\n\r\n\x05\x04\x03\x02\x01\x01\x12\
-    \x04\xb0\x02\r\x11\n\r\n\x05\x04\x03\x02\x01\x03\x12\x04\xb0\x02\x14\x15\
-    \nY\n\x04\x04\x03\x02\x02\x12\x04\xb4\x02\x02\x16\x1aK\x20Maximum\x20num\
-    ber\x20of\x20results\x20per\x20page.\n\x20CURRENTLY\x20UNIMPLEMENTED\x20\
-    AND\x20IGNORED.\n\n\r\n\x05\x04\x03\x02\x02\x05\x12\x04\xb4\x02\x02\x07\
-    \n\r\n\x05\x04\x03\x02\x02\x01\x12\x04\xb4\x02\x08\x11\n\r\n\x05\x04\x03\
-    \x02\x02\x03\x12\x04\xb4\x02\x14\x15\nK\n\x04\x04\x03\x02\x03\x12\x04\
-    \xb7\x02\x02\x18\x1a=\x20The\x20value\x20of\x20`next_page_token`\x20retu\
-    rned\x20by\x20a\x20previous\x20call.\n\n\r\n\x05\x04\x03\x02\x03\x05\x12\
-    \x04\xb7\x02\x02\x08\n\r\n\x05\x04\x03\x02\x03\x01\x12\x04\xb7\x02\t\x13\
-    \n\r\n\x05\x04\x03\x02\x03\x03\x12\x04\xb7\x02\x16\x17\n\x97\x01\n\x02\
-    \x04\x04\x12\x06\xbc\x02\0\xc4\x02\x01\x1a\x88\x01\x20Response\x20messag\
-    e\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.ListTables][g\
-    oogle.bigtable.admin.v2.BigtableTableAdmin.ListTables]\n\n\x0b\n\x03\x04\
-    \x04\x01\x12\x04\xbc\x02\x08\x1a\n=\n\x04\x04\x04\x02\0\x12\x04\xbe\x02\
-    \x02\x1c\x1a/\x20The\x20tables\x20present\x20in\x20the\x20requested\x20i\
-    nstance.\n\n\r\n\x05\x04\x04\x02\0\x04\x12\x04\xbe\x02\x02\n\n\r\n\x05\
-    \x04\x04\x02\0\x06\x12\x04\xbe\x02\x0b\x10\n\r\n\x05\x04\x04\x02\0\x01\
-    \x12\x04\xbe\x02\x11\x17\n\r\n\x05\x04\x04\x02\0\x03\x12\x04\xbe\x02\x1a\
-    \x1b\n\xa4\x01\n\x04\x04\x04\x02\x01\x12\x04\xc3\x02\x02\x1d\x1a\x95\x01\
-    \x20Set\x20if\x20not\x20all\x20tables\x20could\x20be\x20returned\x20in\
-    \x20a\x20single\x20response.\n\x20Pass\x20this\x20value\x20to\x20`page_t\
-    oken`\x20in\x20another\x20request\x20to\x20get\x20the\x20next\n\x20page\
-    \x20of\x20results.\n\n\r\n\x05\x04\x04\x02\x01\x05\x12\x04\xc3\x02\x02\
-    \x08\n\r\n\x05\x04\x04\x02\x01\x01\x12\x04\xc3\x02\t\x18\n\r\n\x05\x04\
-    \x04\x02\x01\x03\x12\x04\xc3\x02\x1b\x1c\n\x92\x01\n\x02\x04\x05\x12\x06\
-    \xc8\x02\0\xd1\x02\x01\x1a\x83\x01\x20Request\x20message\x20for\n\x20[go\
-    ogle.bigtable.admin.v2.BigtableTableAdmin.GetTable][google.bigtable.admi\
-    n.v2.BigtableTableAdmin.GetTable]\n\n\x0b\n\x03\x04\x05\x01\x12\x04\xc8\
-    \x02\x08\x17\n\x8a\x01\n\x04\x04\x05\x02\0\x12\x04\xcc\x02\x02\x12\x1a|\
-    \x20The\x20unique\x20name\x20of\x20the\x20requested\x20table.\n\x20Value\
-    s\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instan\
-    ce>/tables/<table>`.\n\n\r\n\x05\x04\x05\x02\0\x05\x12\x04\xcc\x02\x02\
-    \x08\n\r\n\x05\x04\x05\x02\0\x01\x12\x04\xcc\x02\t\r\n\r\n\x05\x04\x05\
-    \x02\0\x03\x12\x04\xcc\x02\x10\x11\nq\n\x04\x04\x05\x02\x01\x12\x04\xd0\
-    \x02\x02\x16\x1ac\x20The\x20view\x20to\x20be\x20applied\x20to\x20the\x20\
-    returned\x20table's\x20fields.\n\x20Defaults\x20to\x20`SCHEMA_VIEW`\x20i\
-    f\x20unspecified.\n\n\r\n\x05\x04\x05\x02\x01\x06\x12\x04\xd0\x02\x02\
-    \x0c\n\r\n\x05\x04\x05\x02\x01\x01\x12\x04\xd0\x02\r\x11\n\r\n\x05\x04\
-    \x05\x02\x01\x03\x12\x04\xd0\x02\x14\x15\n\x98\x01\n\x02\x04\x06\x12\x06\
-    \xd5\x02\0\xda\x02\x01\x1a\x89\x01\x20Request\x20message\x20for\n\x20[go\
-    ogle.bigtable.admin.v2.BigtableTableAdmin.DeleteTable][google.bigtable.a\
-    dmin.v2.BigtableTableAdmin.DeleteTable]\n\n\x0b\n\x03\x04\x06\x01\x12\
-    \x04\xd5\x02\x08\x1a\n\x8f\x01\n\x04\x04\x06\x02\0\x12\x04\xd9\x02\x02\
-    \x12\x1a\x80\x01\x20The\x20unique\x20name\x20of\x20the\x20table\x20to\
-    \x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`project\
-    s/<project>/instances/<instance>/tables/<table>`.\n\n\r\n\x05\x04\x06\
-    \x02\0\x05\x12\x04\xd9\x02\x02\x08\n\r\n\x05\x04\x06\x02\0\x01\x12\x04\
-    \xd9\x02\t\r\n\r\n\x05\x04\x06\x02\0\x03\x12\x04\xd9\x02\x10\x11\n\xaa\
-    \x01\n\x02\x04\x07\x12\x06\xde\x02\0\xfe\x02\x01\x1a\x9b\x01\x20Request\
-    \x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.Mod\
-    ifyColumnFamilies][google.bigtable.admin.v2.BigtableTableAdmin.ModifyCol\
-    umnFamilies]\n\n\x0b\n\x03\x04\x07\x01\x12\x04\xde\x02\x08#\nL\n\x04\x04\
-    \x07\x03\0\x12\x06\xe0\x02\x02\xf2\x02\x03\x1a<\x20A\x20create,\x20updat\
-    e,\x20or\x20delete\x20of\x20a\x20particular\x20column\x20family.\n\n\r\n\
-    \x05\x04\x07\x03\0\x01\x12\x04\xe0\x02\n\x16\n=\n\x06\x04\x07\x03\0\x02\
-    \0\x12\x04\xe2\x02\x04\x12\x1a-\x20The\x20ID\x20of\x20the\x20column\x20f\
-    amily\x20to\x20be\x20modified.\n\n\x0f\n\x07\x04\x07\x03\0\x02\0\x05\x12\
-    \x04\xe2\x02\x04\n\n\x0f\n\x07\x04\x07\x03\0\x02\0\x01\x12\x04\xe2\x02\
-    \x0b\r\n\x0f\n\x07\x04\x07\x03\0\x02\0\x03\x12\x04\xe2\x02\x10\x11\n1\n\
-    \x06\x04\x07\x03\0\x08\0\x12\x06\xe5\x02\x04\xf1\x02\x05\x1a\x1f\x20Colu\
-    mn\x20familiy\x20modifications.\n\n\x0f\n\x07\x04\x07\x03\0\x08\0\x01\
-    \x12\x04\xe5\x02\n\r\ny\n\x06\x04\x07\x03\0\x02\x01\x12\x04\xe8\x02\x06\
-    \x1e\x1ai\x20Create\x20a\x20new\x20column\x20family\x20with\x20the\x20sp\
-    ecified\x20schema,\x20or\x20fail\x20if\n\x20one\x20already\x20exists\x20\
-    with\x20the\x20given\x20ID.\n\n\x0f\n\x07\x04\x07\x03\0\x02\x01\x06\x12\
-    \x04\xe8\x02\x06\x12\n\x0f\n\x07\x04\x07\x03\0\x02\x01\x01\x12\x04\xe8\
-    \x02\x13\x19\n\x0f\n\x07\x04\x07\x03\0\x02\x01\x03\x12\x04\xe8\x02\x1c\
-    \x1d\n\x82\x01\n\x06\x04\x07\x03\0\x02\x02\x12\x04\xec\x02\x06\x1e\x1ar\
-    \x20Update\x20an\x20existing\x20column\x20family\x20to\x20the\x20specifi\
-    ed\x20schema,\x20or\x20fail\n\x20if\x20no\x20column\x20family\x20exists\
-    \x20with\x20the\x20given\x20ID.\n\n\x0f\n\x07\x04\x07\x03\0\x02\x02\x06\
-    \x12\x04\xec\x02\x06\x12\n\x0f\n\x07\x04\x07\x03\0\x02\x02\x01\x12\x04\
-    \xec\x02\x13\x19\n\x0f\n\x07\x04\x07\x03\0\x02\x02\x03\x12\x04\xec\x02\
-    \x1c\x1d\ng\n\x06\x04\x07\x03\0\x02\x03\x12\x04\xf0\x02\x06\x14\x1aW\x20\
-    Drop\x20(delete)\x20the\x20column\x20family\x20with\x20the\x20given\x20I\
-    D,\x20or\x20fail\x20if\x20no\x20such\n\x20family\x20exists.\n\n\x0f\n\
-    \x07\x04\x07\x03\0\x02\x03\x05\x12\x04\xf0\x02\x06\n\n\x0f\n\x07\x04\x07\
-    \x03\0\x02\x03\x01\x12\x04\xf0\x02\x0b\x0f\n\x0f\n\x07\x04\x07\x03\0\x02\
-    \x03\x03\x12\x04\xf0\x02\x12\x13\n\xa3\x01\n\x04\x04\x07\x02\0\x12\x04\
-    \xf7\x02\x02\x12\x1a\x94\x01\x20The\x20unique\x20name\x20of\x20the\x20ta\
-    ble\x20whose\x20families\x20should\x20be\x20modified.\n\x20Values\x20are\
-    \x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>/tabl\
-    es/<table>`.\n\n\r\n\x05\x04\x07\x02\0\x05\x12\x04\xf7\x02\x02\x08\n\r\n\
-    \x05\x04\x07\x02\0\x01\x12\x04\xf7\x02\t\r\n\r\n\x05\x04\x07\x02\0\x03\
-    \x12\x04\xf7\x02\x10\x11\n\xfd\x01\n\x04\x04\x07\x02\x01\x12\x04\xfd\x02\
-    \x02*\x1a\xee\x01\x20Modifications\x20to\x20be\x20atomically\x20applied\
-    \x20to\x20the\x20specified\x20table's\x20families.\n\x20Entries\x20are\
-    \x20applied\x20in\x20order,\x20meaning\x20that\x20earlier\x20modificatio\
-    ns\x20can\x20be\n\x20masked\x20by\x20later\x20ones\x20(in\x20the\x20case\
-    \x20of\x20repeated\x20updates\x20to\x20the\x20same\x20family,\n\x20for\
-    \x20example).\n\n\r\n\x05\x04\x07\x02\x01\x04\x12\x04\xfd\x02\x02\n\n\r\
-    \n\x05\x04\x07\x02\x01\x06\x12\x04\xfd\x02\x0b\x17\n\r\n\x05\x04\x07\x02\
-    \x01\x01\x12\x04\xfd\x02\x18%\n\r\n\x05\x04\x07\x02\x01\x03\x12\x04\xfd\
-    \x02()\n\xb2\x01\n\x02\x04\x08\x12\x06\x82\x03\0\x87\x03\x01\x1a\xa3\x01\
-    \x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTab\
-    leAdmin.GenerateConsistencyToken][google.bigtable.admin.v2.BigtableTable\
-    Admin.GenerateConsistencyToken]\n\n\x0b\n\x03\x04\x08\x01\x12\x04\x82\
-    \x03\x08'\n\xa9\x01\n\x04\x04\x08\x02\0\x12\x04\x86\x03\x02\x12\x1a\x9a\
-    \x01\x20The\x20unique\x20name\x20of\x20the\x20Table\x20for\x20which\x20t\
-    o\x20create\x20a\x20consistency\x20token.\n\x20Values\x20are\x20of\x20th\
-    e\x20form\n\x20`projects/<project>/instances/<instance>/tables/<table>`.\
-    \n\n\r\n\x05\x04\x08\x02\0\x05\x12\x04\x86\x03\x02\x08\n\r\n\x05\x04\x08\
-    \x02\0\x01\x12\x04\x86\x03\t\r\n\r\n\x05\x04\x08\x02\0\x03\x12\x04\x86\
-    \x03\x10\x11\n\xb3\x01\n\x02\x04\t\x12\x06\x8b\x03\0\x8e\x03\x01\x1a\xa4\
-    \x01\x20Response\x20message\x20for\n\x20[google.bigtable.admin.v2.Bigtab\
-    leTableAdmin.GenerateConsistencyToken][google.bigtable.admin.v2.Bigtable\
-    TableAdmin.GenerateConsistencyToken]\n\n\x0b\n\x03\x04\t\x01\x12\x04\x8b\
-    \x03\x08(\n0\n\x04\x04\t\x02\0\x12\x04\x8d\x03\x02\x1f\x1a\"\x20The\x20g\
-    enerated\x20consistency\x20token.\n\n\r\n\x05\x04\t\x02\0\x05\x12\x04\
-    \x8d\x03\x02\x08\n\r\n\x05\x04\t\x02\0\x01\x12\x04\x8d\x03\t\x1a\n\r\n\
-    \x05\x04\t\x02\0\x03\x12\x04\x8d\x03\x1d\x1e\n\xa2\x01\n\x02\x04\n\x12\
-    \x06\x92\x03\0\x9a\x03\x01\x1a\x93\x01\x20Request\x20message\x20for\n\
-    \x20[google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency][googl\
-    e.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency]\n\n\x0b\n\x03\
-    \x04\n\x01\x12\x04\x92\x03\x08\x1f\n\xac\x01\n\x04\x04\n\x02\0\x12\x04\
-    \x96\x03\x02\x12\x1a\x9d\x01\x20The\x20unique\x20name\x20of\x20the\x20Ta\
-    ble\x20for\x20which\x20to\x20check\x20replication\x20consistency.\n\x20V\
-    alues\x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<in\
-    stance>/tables/<table>`.\n\n\r\n\x05\x04\n\x02\0\x05\x12\x04\x96\x03\x02\
-    \x08\n\r\n\x05\x04\n\x02\0\x01\x12\x04\x96\x03\t\r\n\r\n\x05\x04\n\x02\0\
-    \x03\x12\x04\x96\x03\x10\x11\nO\n\x04\x04\n\x02\x01\x12\x04\x99\x03\x02\
-    \x1f\x1aA\x20The\x20token\x20created\x20using\x20GenerateConsistencyToke\
-    n\x20for\x20the\x20Table.\n\n\r\n\x05\x04\n\x02\x01\x05\x12\x04\x99\x03\
-    \x02\x08\n\r\n\x05\x04\n\x02\x01\x01\x12\x04\x99\x03\t\x1a\n\r\n\x05\x04\
-    \n\x02\x01\x03\x12\x04\x99\x03\x1d\x1e\n\xa3\x01\n\x02\x04\x0b\x12\x06\
-    \x9e\x03\0\xa2\x03\x01\x1a\x94\x01\x20Response\x20message\x20for\n\x20[g\
-    oogle.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency][google.bigt\
-    able.admin.v2.BigtableTableAdmin.CheckConsistency]\n\n\x0b\n\x03\x04\x0b\
-    \x01\x12\x04\x9e\x03\x08\x20\n\x9a\x01\n\x04\x04\x0b\x02\0\x12\x04\xa1\
-    \x03\x02\x16\x1a\x8b\x01\x20True\x20only\x20if\x20the\x20token\x20is\x20\
-    consistent.\x20A\x20token\x20is\x20consistent\x20if\x20replication\n\x20\
-    has\x20caught\x20up\x20with\x20the\x20restrictions\x20specified\x20in\
-    \x20the\x20request.\n\n\r\n\x05\x04\x0b\x02\0\x05\x12\x04\xa1\x03\x02\
-    \x06\n\r\n\x05\x04\x0b\x02\0\x01\x12\x04\xa1\x03\x07\x11\n\r\n\x05\x04\
-    \x0b\x02\0\x03\x12\x04\xa1\x03\x14\x15\n\xc9\x03\n\x02\x04\x0c\x12\x06\
-    \xab\x03\0\xc4\x03\x01\x1a\xba\x03\x20Request\x20message\x20for\n\x20[go\
-    ogle.bigtable.admin.v2.BigtableTableAdmin.SnapshotTable][google.bigtable\
-    .admin.v2.BigtableTableAdmin.SnapshotTable]\n\n\x20Note:\x20This\x20is\
-    \x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snaps\
-    hots.\x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\
-    \x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20migh\
-    t\x20be\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\
-    \x20not\x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\
-    \x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\
-    \n\x03\x04\x0c\x01\x12\x04\xab\x03\x08\x1c\n\x9c\x01\n\x04\x04\x0c\x02\0\
-    \x12\x04\xaf\x03\x02\x12\x1a\x8d\x01\x20The\x20unique\x20name\x20of\x20t\
-    he\x20table\x20to\x20have\x20the\x20snapshot\x20taken.\n\x20Values\x20ar\
-    e\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instance>/tab\
-    les/<table>`.\n\n\r\n\x05\x04\x0c\x02\0\x05\x12\x04\xaf\x03\x02\x08\n\r\
-    \n\x05\x04\x0c\x02\0\x01\x12\x04\xaf\x03\t\r\n\r\n\x05\x04\x0c\x02\0\x03\
-    \x12\x04\xaf\x03\x10\x11\n\xa6\x01\n\x04\x04\x0c\x02\x01\x12\x04\xb4\x03\
-    \x02\x15\x1a\x97\x01\x20The\x20name\x20of\x20the\x20cluster\x20where\x20\
-    the\x20snapshot\x20will\x20be\x20created\x20in.\n\x20Values\x20are\x20of\
-    \x20the\x20form\n\x20`projects/<project>/instances/<instance>/clusters/<\
-    cluster>`.\n\n\r\n\x05\x04\x0c\x02\x01\x05\x12\x04\xb4\x03\x02\x08\n\r\n\
-    \x05\x04\x0c\x02\x01\x01\x12\x04\xb4\x03\t\x10\n\r\n\x05\x04\x0c\x02\x01\
-    \x03\x12\x04\xb4\x03\x13\x14\n\x82\x02\n\x04\x04\x0c\x02\x02\x12\x04\xba\
-    \x03\x02\x19\x1a\xf3\x01\x20The\x20ID\x20by\x20which\x20the\x20new\x20sn\
-    apshot\x20should\x20be\x20referred\x20to\x20within\x20the\x20parent\n\
-    \x20cluster,\x20e.g.,\x20`mysnapshot`\x20of\x20the\x20form:\x20`[_a-zA-Z\
-    0-9][-_.a-zA-Z0-9]*`\n\x20rather\x20than\n\x20`projects/<project>/instan\
-    ces/<instance>/clusters/<cluster>/snapshots/mysnapshot`.\n\n\r\n\x05\x04\
-    \x0c\x02\x02\x05\x12\x04\xba\x03\x02\x08\n\r\n\x05\x04\x0c\x02\x02\x01\
-    \x12\x04\xba\x03\t\x14\n\r\n\x05\x04\x0c\x02\x02\x03\x12\x04\xba\x03\x17\
-    \x18\n\x9c\x02\n\x04\x04\x0c\x02\x03\x12\x04\xc0\x03\x02#\x1a\x8d\x02\
-    \x20The\x20amount\x20of\x20time\x20that\x20the\x20new\x20snapshot\x20can\
-    \x20stay\x20active\x20after\x20it\x20is\n\x20created.\x20Once\x20'ttl'\
-    \x20expires,\x20the\x20snapshot\x20will\x20get\x20deleted.\x20The\x20max\
-    imum\n\x20amount\x20of\x20time\x20a\x20snapshot\x20can\x20stay\x20active\
-    \x20is\x207\x20days.\x20If\x20'ttl'\x20is\x20not\n\x20specified,\x20the\
-    \x20default\x20value\x20of\x2024\x20hours\x20will\x20be\x20used.\n\n\r\n\
-    \x05\x04\x0c\x02\x03\x06\x12\x04\xc0\x03\x02\x1a\n\r\n\x05\x04\x0c\x02\
-    \x03\x01\x12\x04\xc0\x03\x1b\x1e\n\r\n\x05\x04\x0c\x02\x03\x03\x12\x04\
-    \xc0\x03!\"\n,\n\x04\x04\x0c\x02\x04\x12\x04\xc3\x03\x02\x19\x1a\x1e\x20\
-    Description\x20of\x20the\x20snapshot.\n\n\r\n\x05\x04\x0c\x02\x04\x05\
-    \x12\x04\xc3\x03\x02\x08\n\r\n\x05\x04\x0c\x02\x04\x01\x12\x04\xc3\x03\t\
-    \x14\n\r\n\x05\x04\x0c\x02\x04\x03\x12\x04\xc3\x03\x17\x18\n\xc5\x03\n\
-    \x02\x04\r\x12\x06\xcd\x03\0\xd2\x03\x01\x1a\xb6\x03\x20Request\x20messa\
-    ge\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.GetSnapshot]\
-    [google.bigtable.admin.v2.BigtableTableAdmin.GetSnapshot]\n\n\x20Note:\
+    on\x20policy.\n\n\x0b\n\x03\x04\x15\x01\x12\x04\xed\x06\x08\x1c\n\xa8\
+    \x01\n\x04\x04\x15\x02\0\x12\x06\xf1\x06\x02\xf6\x06\x04\x1a\x97\x01\x20\
+    Required.\x20The\x20unique\x20name\x20of\x20the\x20table\x20to\x20have\
+    \x20the\x20snapshot\x20taken.\n\x20Values\x20are\x20of\x20the\x20form\n\
+    \x20`projects/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\
+    \x05\x04\x15\x02\0\x05\x12\x04\xf1\x06\x02\x08\n\r\n\x05\x04\x15\x02\0\
+    \x01\x12\x04\xf1\x06\t\r\n\r\n\x05\x04\x15\x02\0\x03\x12\x04\xf1\x06\x10\
+    \x11\n\x0f\n\x05\x04\x15\x02\0\x08\x12\x06\xf1\x06\x12\xf6\x06\x03\n\x10\
+    \n\x08\x04\x15\x02\0\x08\x9c\x08\0\x12\x04\xf2\x06\x04*\n\x11\n\x07\x04\
+    \x15\x02\0\x08\x9f\x08\x12\x06\xf3\x06\x04\xf5\x06\x05\n\xb2\x01\n\x04\
+    \x04\x15\x02\x01\x12\x06\xfb\x06\x02\x80\x07\x04\x1a\xa1\x01\x20Required\
+    .\x20The\x20name\x20of\x20the\x20cluster\x20where\x20the\x20snapshot\x20\
+    will\x20be\x20created\x20in.\n\x20Values\x20are\x20of\x20the\x20form\n\
+    \x20`projects/{project}/instances/{instance}/clusters/{cluster}`.\n\n\r\
+    \n\x05\x04\x15\x02\x01\x05\x12\x04\xfb\x06\x02\x08\n\r\n\x05\x04\x15\x02\
+    \x01\x01\x12\x04\xfb\x06\t\x10\n\r\n\x05\x04\x15\x02\x01\x03\x12\x04\xfb\
+    \x06\x13\x14\n\x0f\n\x05\x04\x15\x02\x01\x08\x12\x06\xfb\x06\x15\x80\x07\
+    \x03\n\x10\n\x08\x04\x15\x02\x01\x08\x9c\x08\0\x12\x04\xfc\x06\x04*\n\
+    \x11\n\x07\x04\x15\x02\x01\x08\x9f\x08\x12\x06\xfd\x06\x04\xff\x06\x05\n\
+    \x8c\x02\n\x04\x04\x15\x02\x02\x12\x04\x86\x07\x02B\x1a\xfd\x01\x20Requi\
+    red.\x20The\x20ID\x20by\x20which\x20the\x20new\x20snapshot\x20should\x20\
+    be\x20referred\x20to\x20within\x20the\n\x20parent\x20cluster,\x20e.g.,\
+    \x20`mysnapshot`\x20of\x20the\x20form:\n\x20`[_a-zA-Z0-9][-_.a-zA-Z0-9]*\
+    `\x20rather\x20than\n\x20`projects/{project}/instances/{instance}/cluste\
+    rs/{cluster}/snapshots/mysnapshot`.\n\n\r\n\x05\x04\x15\x02\x02\x05\x12\
+    \x04\x86\x07\x02\x08\n\r\n\x05\x04\x15\x02\x02\x01\x12\x04\x86\x07\t\x14\
+    \n\r\n\x05\x04\x15\x02\x02\x03\x12\x04\x86\x07\x17\x18\n\r\n\x05\x04\x15\
+    \x02\x02\x08\x12\x04\x86\x07\x19A\n\x10\n\x08\x04\x15\x02\x02\x08\x9c\
+    \x08\0\x12\x04\x86\x07\x1a@\n\x9c\x02\n\x04\x04\x15\x02\x03\x12\x04\x8c\
+    \x07\x02#\x1a\x8d\x02\x20The\x20amount\x20of\x20time\x20that\x20the\x20n\
+    ew\x20snapshot\x20can\x20stay\x20active\x20after\x20it\x20is\n\x20create\
+    d.\x20Once\x20'ttl'\x20expires,\x20the\x20snapshot\x20will\x20get\x20del\
+    eted.\x20The\x20maximum\n\x20amount\x20of\x20time\x20a\x20snapshot\x20ca\
+    n\x20stay\x20active\x20is\x207\x20days.\x20If\x20'ttl'\x20is\x20not\n\
+    \x20specified,\x20the\x20default\x20value\x20of\x2024\x20hours\x20will\
+    \x20be\x20used.\n\n\r\n\x05\x04\x15\x02\x03\x06\x12\x04\x8c\x07\x02\x1a\
+    \n\r\n\x05\x04\x15\x02\x03\x01\x12\x04\x8c\x07\x1b\x1e\n\r\n\x05\x04\x15\
+    \x02\x03\x03\x12\x04\x8c\x07!\"\n,\n\x04\x04\x15\x02\x04\x12\x04\x8f\x07\
+    \x02\x19\x1a\x1e\x20Description\x20of\x20the\x20snapshot.\n\n\r\n\x05\
+    \x04\x15\x02\x04\x05\x12\x04\x8f\x07\x02\x08\n\r\n\x05\x04\x15\x02\x04\
+    \x01\x12\x04\x8f\x07\t\x14\n\r\n\x05\x04\x15\x02\x04\x03\x12\x04\x8f\x07\
+    \x17\x18\n\xc5\x03\n\x02\x04\x16\x12\x06\x99\x07\0\xa3\x07\x01\x1a\xb6\
+    \x03\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Bigtabl\
+    eTableAdmin.GetSnapshot][google.bigtable.admin.v2.BigtableTableAdmin.Get\
+    Snapshot]\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\
+    \x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20\
+    not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20cust\
+    omers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-\
+    incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20prod\
+    uction\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\
+    \x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x16\x01\x12\x04\x99\x07\x08\
+    \x1a\n\xb3\x01\n\x04\x04\x16\x02\0\x12\x06\x9d\x07\x02\xa2\x07\x04\x1a\
+    \xa2\x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20requested\
+    \x20snapshot.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projects/{pr\
+    oject}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot}`.\n\
+    \n\r\n\x05\x04\x16\x02\0\x05\x12\x04\x9d\x07\x02\x08\n\r\n\x05\x04\x16\
+    \x02\0\x01\x12\x04\x9d\x07\t\r\n\r\n\x05\x04\x16\x02\0\x03\x12\x04\x9d\
+    \x07\x10\x11\n\x0f\n\x05\x04\x16\x02\0\x08\x12\x06\x9d\x07\x12\xa2\x07\
+    \x03\n\x10\n\x08\x04\x16\x02\0\x08\x9c\x08\0\x12\x04\x9e\x07\x04*\n\x11\
+    \n\x07\x04\x16\x02\0\x08\x9f\x08\x12\x06\x9f\x07\x04\xa1\x07\x05\n\xc9\
+    \x03\n\x02\x04\x17\x12\x06\xac\x07\0\xbf\x07\x01\x1a\xba\x03\x20Request\
+    \x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.Lis\
+    tSnapshots][google.bigtable.admin.v2.BigtableTableAdmin.ListSnapshots]\n\
+    \n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20C\
+    loud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20curr\
+    ently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20T\
+    his\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-incompatibl\
+    e\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20production\x20u\
+    se.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecati\
+    on\x20policy.\n\n\x0b\n\x03\x04\x17\x01\x12\x04\xac\x07\x08\x1c\n\xbf\
+    \x02\n\x04\x04\x17\x02\0\x12\x06\xb2\x07\x02\xb7\x07\x04\x1a\xae\x02\x20\
+    Required.\x20The\x20unique\x20name\x20of\x20the\x20cluster\x20for\x20whi\
+    ch\x20snapshots\x20should\x20be\n\x20listed.\x20Values\x20are\x20of\x20t\
+    he\x20form\n\x20`projects/{project}/instances/{instance}/clusters/{clust\
+    er}`.\n\x20Use\x20`{cluster}\x20=\x20'-'`\x20to\x20list\x20snapshots\x20\
+    for\x20all\x20clusters\x20in\x20an\x20instance,\n\x20e.g.,\x20`projects/\
+    {project}/instances/{instance}/clusters/-`.\n\n\r\n\x05\x04\x17\x02\0\
+    \x05\x12\x04\xb2\x07\x02\x08\n\r\n\x05\x04\x17\x02\0\x01\x12\x04\xb2\x07\
+    \t\x0f\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xb2\x07\x12\x13\n\x0f\n\x05\
+    \x04\x17\x02\0\x08\x12\x06\xb2\x07\x14\xb7\x07\x03\n\x10\n\x08\x04\x17\
+    \x02\0\x08\x9c\x08\0\x12\x04\xb3\x07\x04*\n\x11\n\x07\x04\x17\x02\0\x08\
+    \x9f\x08\x12\x06\xb4\x07\x04\xb6\x07\x05\ni\n\x04\x04\x17\x02\x01\x12\
+    \x04\xbb\x07\x02\x16\x1a[\x20The\x20maximum\x20number\x20of\x20snapshots\
+    \x20to\x20return\x20per\x20page.\n\x20CURRENTLY\x20UNIMPLEMENTED\x20AND\
+    \x20IGNORED.\n\n\r\n\x05\x04\x17\x02\x01\x05\x12\x04\xbb\x07\x02\x07\n\r\
+    \n\x05\x04\x17\x02\x01\x01\x12\x04\xbb\x07\x08\x11\n\r\n\x05\x04\x17\x02\
+    \x01\x03\x12\x04\xbb\x07\x14\x15\nK\n\x04\x04\x17\x02\x02\x12\x04\xbe\
+    \x07\x02\x18\x1a=\x20The\x20value\x20of\x20`next_page_token`\x20returned\
+    \x20by\x20a\x20previous\x20call.\n\n\r\n\x05\x04\x17\x02\x02\x05\x12\x04\
+    \xbe\x07\x02\x08\n\r\n\x05\x04\x17\x02\x02\x01\x12\x04\xbe\x07\t\x13\n\r\
+    \n\x05\x04\x17\x02\x02\x03\x12\x04\xbe\x07\x16\x17\n\xca\x03\n\x02\x04\
+    \x18\x12\x06\xc8\x07\0\xd0\x07\x01\x1a\xbb\x03\x20Response\x20message\
+    \x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.ListSnapshots]\
+    [google.bigtable.admin.v2.BigtableTableAdmin.ListSnapshots]\n\n\x20Note:\
     \x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Big\
     table\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20av\
     ailable\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20fe\
     ature\x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\
     \x20and\x20is\x20not\x20recommended\n\x20for\x20production\x20use.\x20It\
     \x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20pol\
-    icy.\n\n\x0b\n\x03\x04\r\x01\x12\x04\xcd\x03\x08\x1a\n\xa7\x01\n\x04\x04\
-    \r\x02\0\x12\x04\xd1\x03\x02\x12\x1a\x98\x01\x20The\x20unique\x20name\
-    \x20of\x20the\x20requested\x20snapshot.\n\x20Values\x20are\x20of\x20the\
-    \x20form\n\x20`projects/<project>/instances/<instance>/clusters/<cluster\
-    >/snapshots/<snapshot>`.\n\n\r\n\x05\x04\r\x02\0\x05\x12\x04\xd1\x03\x02\
-    \x08\n\r\n\x05\x04\r\x02\0\x01\x12\x04\xd1\x03\t\r\n\r\n\x05\x04\r\x02\0\
-    \x03\x12\x04\xd1\x03\x10\x11\n\xc9\x03\n\x02\x04\x0e\x12\x06\xdb\x03\0\
-    \xe9\x03\x01\x1a\xba\x03\x20Request\x20message\x20for\n\x20[google.bigta\
-    ble.admin.v2.BigtableTableAdmin.ListSnapshots][google.bigtable.admin.v2.\
-    BigtableTableAdmin.ListSnapshots]\n\n\x20Note:\x20This\x20is\x20a\x20pri\
-    vate\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20Thi\
-    s\n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20C\
-    loud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20ch\
-    anged\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\x20reco\
-    mmended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20\
-    to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x0e\
-    \x01\x12\x04\xdb\x03\x08\x1c\n\xb3\x02\n\x04\x04\x0e\x02\0\x12\x04\xe1\
-    \x03\x02\x14\x1a\xa4\x02\x20The\x20unique\x20name\x20of\x20the\x20cluste\
-    r\x20for\x20which\x20snapshots\x20should\x20be\x20listed.\n\x20Values\
-    \x20are\x20of\x20the\x20form\n\x20`projects/<project>/instances/<instanc\
-    e>/clusters/<cluster>`.\n\x20Use\x20`<cluster>\x20=\x20'-'`\x20to\x20lis\
-    t\x20snapshots\x20for\x20all\x20clusters\x20in\x20an\x20instance,\n\x20e\
-    .g.,\x20`projects/<project>/instances/<instance>/clusters/-`.\n\n\r\n\
-    \x05\x04\x0e\x02\0\x05\x12\x04\xe1\x03\x02\x08\n\r\n\x05\x04\x0e\x02\0\
-    \x01\x12\x04\xe1\x03\t\x0f\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\xe1\x03\
-    \x12\x13\ni\n\x04\x04\x0e\x02\x01\x12\x04\xe5\x03\x02\x16\x1a[\x20The\
-    \x20maximum\x20number\x20of\x20snapshots\x20to\x20return\x20per\x20page.\
-    \n\x20CURRENTLY\x20UNIMPLEMENTED\x20AND\x20IGNORED.\n\n\r\n\x05\x04\x0e\
-    \x02\x01\x05\x12\x04\xe5\x03\x02\x07\n\r\n\x05\x04\x0e\x02\x01\x01\x12\
-    \x04\xe5\x03\x08\x11\n\r\n\x05\x04\x0e\x02\x01\x03\x12\x04\xe5\x03\x14\
-    \x15\nK\n\x04\x04\x0e\x02\x02\x12\x04\xe8\x03\x02\x18\x1a=\x20The\x20val\
-    ue\x20of\x20`next_page_token`\x20returned\x20by\x20a\x20previous\x20call\
-    .\n\n\r\n\x05\x04\x0e\x02\x02\x05\x12\x04\xe8\x03\x02\x08\n\r\n\x05\x04\
-    \x0e\x02\x02\x01\x12\x04\xe8\x03\t\x13\n\r\n\x05\x04\x0e\x02\x02\x03\x12\
-    \x04\xe8\x03\x16\x17\n\xca\x03\n\x02\x04\x0f\x12\x06\xf2\x03\0\xfa\x03\
-    \x01\x1a\xbb\x03\x20Response\x20message\x20for\n\x20[google.bigtable.adm\
-    in.v2.BigtableTableAdmin.ListSnapshots][google.bigtable.admin.v2.Bigtabl\
-    eTableAdmin.ListSnapshots]\n\n\x20Note:\x20This\x20is\x20a\x20private\
-    \x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\
-    \x20feature\x20is\x20not\x20currently\x20available\x20to\x20most\x20Clou\
-    d\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20be\x20chang\
-    ed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recomme\
-    nded\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\
-    \x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x0f\x01\
-    \x12\x04\xf2\x03\x08\x1d\n?\n\x04\x04\x0f\x02\0\x12\x04\xf4\x03\x02\"\
-    \x1a1\x20The\x20snapshots\x20present\x20in\x20the\x20requested\x20cluste\
-    r.\n\n\r\n\x05\x04\x0f\x02\0\x04\x12\x04\xf4\x03\x02\n\n\r\n\x05\x04\x0f\
-    \x02\0\x06\x12\x04\xf4\x03\x0b\x13\n\r\n\x05\x04\x0f\x02\0\x01\x12\x04\
-    \xf4\x03\x14\x1d\n\r\n\x05\x04\x0f\x02\0\x03\x12\x04\xf4\x03\x20!\n\xa7\
-    \x01\n\x04\x04\x0f\x02\x01\x12\x04\xf9\x03\x02\x1d\x1a\x98\x01\x20Set\
-    \x20if\x20not\x20all\x20snapshots\x20could\x20be\x20returned\x20in\x20a\
-    \x20single\x20response.\n\x20Pass\x20this\x20value\x20to\x20`page_token`\
-    \x20in\x20another\x20request\x20to\x20get\x20the\x20next\n\x20page\x20of\
-    \x20results.\n\n\r\n\x05\x04\x0f\x02\x01\x05\x12\x04\xf9\x03\x02\x08\n\r\
-    \n\x05\x04\x0f\x02\x01\x01\x12\x04\xf9\x03\t\x18\n\r\n\x05\x04\x0f\x02\
-    \x01\x03\x12\x04\xf9\x03\x1b\x1c\n\xcb\x03\n\x02\x04\x10\x12\x06\x83\x04\
-    \0\x88\x04\x01\x1a\xbc\x03\x20Request\x20message\x20for\n\x20[google.big\
-    table.admin.v2.BigtableTableAdmin.DeleteSnapshot][google.bigtable.admin.\
-    v2.BigtableTableAdmin.DeleteSnapshot]\n\n\x20Note:\x20This\x20is\x20a\
-    \x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\
-    \x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20mo\
-    st\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20b\
-    e\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\
-    \x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20sub\
-    ject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\
-    \x04\x10\x01\x12\x04\x83\x04\x08\x1d\n\xab\x01\n\x04\x04\x10\x02\0\x12\
-    \x04\x87\x04\x02\x12\x1a\x9c\x01\x20The\x20unique\x20name\x20of\x20the\
-    \x20snapshot\x20to\x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20\
-    form\n\x20`projects/<project>/instances/<instance>/clusters/<cluster>/sn\
-    apshots/<snapshot>`.\n\n\r\n\x05\x04\x10\x02\0\x05\x12\x04\x87\x04\x02\
-    \x08\n\r\n\x05\x04\x10\x02\0\x01\x12\x04\x87\x04\t\r\n\r\n\x05\x04\x10\
-    \x02\0\x03\x12\x04\x87\x04\x10\x11\n\xf7\x02\n\x02\x04\x11\x12\x06\x90\
-    \x04\0\x99\x04\x01\x1a\xe8\x02\x20The\x20metadata\x20for\x20the\x20Opera\
-    tion\x20returned\x20by\x20SnapshotTable.\n\n\x20Note:\x20This\x20is\x20a\
-    \x20private\x20alpha\x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\
-    \x20This\n\x20feature\x20is\x20not\x20currently\x20available\x20to\x20mo\
-    st\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20feature\x20might\x20b\
-    e\x20changed\x20in\x20backward-incompatible\x20ways\x20and\x20is\x20not\
-    \x20recommended\n\x20for\x20production\x20use.\x20It\x20is\x20not\x20sub\
-    ject\x20to\x20any\x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\
-    \x04\x11\x01\x12\x04\x90\x04\x08\x1d\nY\n\x04\x04\x11\x02\0\x12\x04\x92\
-    \x04\x02,\x1aK\x20The\x20request\x20that\x20prompted\x20the\x20initiatio\
-    n\x20of\x20this\x20SnapshotTable\x20operation.\n\n\r\n\x05\x04\x11\x02\0\
-    \x06\x12\x04\x92\x04\x02\x16\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\x92\x04\
-    \x17'\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\x92\x04*+\nD\n\x04\x04\x11\x02\
-    \x01\x12\x04\x95\x04\x02-\x1a6\x20The\x20time\x20at\x20which\x20the\x20o\
-    riginal\x20request\x20was\x20received.\n\n\r\n\x05\x04\x11\x02\x01\x06\
-    \x12\x04\x95\x04\x02\x1b\n\r\n\x05\x04\x11\x02\x01\x01\x12\x04\x95\x04\
-    \x1c(\n\r\n\x05\x04\x11\x02\x01\x03\x12\x04\x95\x04+,\nU\n\x04\x04\x11\
-    \x02\x02\x12\x04\x98\x04\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\
-    \x20operation\x20failed\x20or\x20was\x20completed\x20successfully.\n\n\r\
-    \n\x05\x04\x11\x02\x02\x06\x12\x04\x98\x04\x02\x1b\n\r\n\x05\x04\x11\x02\
-    \x02\x01\x12\x04\x98\x04\x1c'\n\r\n\x05\x04\x11\x02\x02\x03\x12\x04\x98\
-    \x04*+\n\x81\x03\n\x02\x04\x12\x12\x06\xa1\x04\0\xab\x04\x01\x1a\xf2\x02\
-    \x20The\x20metadata\x20for\x20the\x20Operation\x20returned\x20by\x20Crea\
-    teTableFromSnapshot.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\
-    \x20release\x20of\x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20featur\
-    e\x20is\x20not\x20currently\x20available\x20to\x20most\x20Cloud\x20Bigta\
-    ble\x20customers.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\
-    \x20backward-incompatible\x20ways\x20and\x20is\x20not\x20recommended\n\
-    \x20for\x20production\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\
-    \x20SLA\x20or\x20deprecation\x20policy.\n\n\x0b\n\x03\x04\x12\x01\x12\
-    \x04\xa1\x04\x08'\nd\n\x04\x04\x12\x02\0\x12\x04\xa4\x04\x026\x1aV\x20Th\
-    e\x20request\x20that\x20prompted\x20the\x20initiation\x20of\x20this\x20C\
-    reateTableFromSnapshot\n\x20operation.\n\n\r\n\x05\x04\x12\x02\0\x06\x12\
-    \x04\xa4\x04\x02\x20\n\r\n\x05\x04\x12\x02\0\x01\x12\x04\xa4\x04!1\n\r\n\
-    \x05\x04\x12\x02\0\x03\x12\x04\xa4\x0445\nD\n\x04\x04\x12\x02\x01\x12\
-    \x04\xa7\x04\x02-\x1a6\x20The\x20time\x20at\x20which\x20the\x20original\
-    \x20request\x20was\x20received.\n\n\r\n\x05\x04\x12\x02\x01\x06\x12\x04\
-    \xa7\x04\x02\x1b\n\r\n\x05\x04\x12\x02\x01\x01\x12\x04\xa7\x04\x1c(\n\r\
-    \n\x05\x04\x12\x02\x01\x03\x12\x04\xa7\x04+,\nU\n\x04\x04\x12\x02\x02\
-    \x12\x04\xaa\x04\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\x20opera\
-    tion\x20failed\x20or\x20was\x20completed\x20successfully.\n\n\r\n\x05\
-    \x04\x12\x02\x02\x06\x12\x04\xaa\x04\x02\x1b\n\r\n\x05\x04\x12\x02\x02\
-    \x01\x12\x04\xaa\x04\x1c'\n\r\n\x05\x04\x12\x02\x02\x03\x12\x04\xaa\x04*\
-    +b\x06proto3\
+    icy.\n\n\x0b\n\x03\x04\x18\x01\x12\x04\xc8\x07\x08\x1d\n?\n\x04\x04\x18\
+    \x02\0\x12\x04\xca\x07\x02\"\x1a1\x20The\x20snapshots\x20present\x20in\
+    \x20the\x20requested\x20cluster.\n\n\r\n\x05\x04\x18\x02\0\x04\x12\x04\
+    \xca\x07\x02\n\n\r\n\x05\x04\x18\x02\0\x06\x12\x04\xca\x07\x0b\x13\n\r\n\
+    \x05\x04\x18\x02\0\x01\x12\x04\xca\x07\x14\x1d\n\r\n\x05\x04\x18\x02\0\
+    \x03\x12\x04\xca\x07\x20!\n\xa7\x01\n\x04\x04\x18\x02\x01\x12\x04\xcf\
+    \x07\x02\x1d\x1a\x98\x01\x20Set\x20if\x20not\x20all\x20snapshots\x20coul\
+    d\x20be\x20returned\x20in\x20a\x20single\x20response.\n\x20Pass\x20this\
+    \x20value\x20to\x20`page_token`\x20in\x20another\x20request\x20to\x20get\
+    \x20the\x20next\n\x20page\x20of\x20results.\n\n\r\n\x05\x04\x18\x02\x01\
+    \x05\x12\x04\xcf\x07\x02\x08\n\r\n\x05\x04\x18\x02\x01\x01\x12\x04\xcf\
+    \x07\t\x18\n\r\n\x05\x04\x18\x02\x01\x03\x12\x04\xcf\x07\x1b\x1c\n\xcb\
+    \x03\n\x02\x04\x19\x12\x06\xd9\x07\0\xe3\x07\x01\x1a\xbc\x03\x20Request\
+    \x20message\x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.Del\
+    eteSnapshot][google.bigtable.admin.v2.BigtableTableAdmin.DeleteSnapshot]\
+    \n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\
+    \x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\
+    \x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20custome\
+    rs.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-inc\
+    ompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20product\
+    ion\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20d\
+    eprecation\x20policy.\n\n\x0b\n\x03\x04\x19\x01\x12\x04\xd9\x07\x08\x1d\
+    \n\xb7\x01\n\x04\x04\x19\x02\0\x12\x06\xdd\x07\x02\xe2\x07\x04\x1a\xa6\
+    \x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\x20snapshot\x20t\
+    o\x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`projec\
+    ts/{project}/instances/{instance}/clusters/{cluster}/snapshots/{snapshot\
+    }`.\n\n\r\n\x05\x04\x19\x02\0\x05\x12\x04\xdd\x07\x02\x08\n\r\n\x05\x04\
+    \x19\x02\0\x01\x12\x04\xdd\x07\t\r\n\r\n\x05\x04\x19\x02\0\x03\x12\x04\
+    \xdd\x07\x10\x11\n\x0f\n\x05\x04\x19\x02\0\x08\x12\x06\xdd\x07\x12\xe2\
+    \x07\x03\n\x10\n\x08\x04\x19\x02\0\x08\x9c\x08\0\x12\x04\xde\x07\x04*\n\
+    \x11\n\x07\x04\x19\x02\0\x08\x9f\x08\x12\x06\xdf\x07\x04\xe1\x07\x05\n\
+    \xf7\x02\n\x02\x04\x1a\x12\x06\xeb\x07\0\xf4\x07\x01\x1a\xe8\x02\x20The\
+    \x20metadata\x20for\x20the\x20Operation\x20returned\x20by\x20SnapshotTab\
+    le.\n\n\x20Note:\x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\
+    \x20Cloud\x20Bigtable\x20snapshots.\x20This\n\x20feature\x20is\x20not\
+    \x20currently\x20available\x20to\x20most\x20Cloud\x20Bigtable\x20custome\
+    rs.\x20This\n\x20feature\x20might\x20be\x20changed\x20in\x20backward-inc\
+    ompatible\x20ways\x20and\x20is\x20not\x20recommended\n\x20for\x20product\
+    ion\x20use.\x20It\x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20d\
+    eprecation\x20policy.\n\n\x0b\n\x03\x04\x1a\x01\x12\x04\xeb\x07\x08\x1d\
+    \nY\n\x04\x04\x1a\x02\0\x12\x04\xed\x07\x02,\x1aK\x20The\x20request\x20t\
+    hat\x20prompted\x20the\x20initiation\x20of\x20this\x20SnapshotTable\x20o\
+    peration.\n\n\r\n\x05\x04\x1a\x02\0\x06\x12\x04\xed\x07\x02\x16\n\r\n\
+    \x05\x04\x1a\x02\0\x01\x12\x04\xed\x07\x17'\n\r\n\x05\x04\x1a\x02\0\x03\
+    \x12\x04\xed\x07*+\nD\n\x04\x04\x1a\x02\x01\x12\x04\xf0\x07\x02-\x1a6\
+    \x20The\x20time\x20at\x20which\x20the\x20original\x20request\x20was\x20r\
+    eceived.\n\n\r\n\x05\x04\x1a\x02\x01\x06\x12\x04\xf0\x07\x02\x1b\n\r\n\
+    \x05\x04\x1a\x02\x01\x01\x12\x04\xf0\x07\x1c(\n\r\n\x05\x04\x1a\x02\x01\
+    \x03\x12\x04\xf0\x07+,\nU\n\x04\x04\x1a\x02\x02\x12\x04\xf3\x07\x02,\x1a\
+    G\x20The\x20time\x20at\x20which\x20the\x20operation\x20failed\x20or\x20w\
+    as\x20completed\x20successfully.\n\n\r\n\x05\x04\x1a\x02\x02\x06\x12\x04\
+    \xf3\x07\x02\x1b\n\r\n\x05\x04\x1a\x02\x02\x01\x12\x04\xf3\x07\x1c'\n\r\
+    \n\x05\x04\x1a\x02\x02\x03\x12\x04\xf3\x07*+\n\x81\x03\n\x02\x04\x1b\x12\
+    \x06\xfc\x07\0\x86\x08\x01\x1a\xf2\x02\x20The\x20metadata\x20for\x20the\
+    \x20Operation\x20returned\x20by\x20CreateTableFromSnapshot.\n\n\x20Note:\
+    \x20This\x20is\x20a\x20private\x20alpha\x20release\x20of\x20Cloud\x20Big\
+    table\x20snapshots.\x20This\n\x20feature\x20is\x20not\x20currently\x20av\
+    ailable\x20to\x20most\x20Cloud\x20Bigtable\x20customers.\x20This\n\x20fe\
+    ature\x20might\x20be\x20changed\x20in\x20backward-incompatible\x20ways\
+    \x20and\x20is\x20not\x20recommended\n\x20for\x20production\x20use.\x20It\
+    \x20is\x20not\x20subject\x20to\x20any\x20SLA\x20or\x20deprecation\x20pol\
+    icy.\n\n\x0b\n\x03\x04\x1b\x01\x12\x04\xfc\x07\x08'\nd\n\x04\x04\x1b\x02\
+    \0\x12\x04\xff\x07\x026\x1aV\x20The\x20request\x20that\x20prompted\x20th\
+    e\x20initiation\x20of\x20this\x20CreateTableFromSnapshot\n\x20operation.\
+    \n\n\r\n\x05\x04\x1b\x02\0\x06\x12\x04\xff\x07\x02\x20\n\r\n\x05\x04\x1b\
+    \x02\0\x01\x12\x04\xff\x07!1\n\r\n\x05\x04\x1b\x02\0\x03\x12\x04\xff\x07\
+    45\nD\n\x04\x04\x1b\x02\x01\x12\x04\x82\x08\x02-\x1a6\x20The\x20time\x20\
+    at\x20which\x20the\x20original\x20request\x20was\x20received.\n\n\r\n\
+    \x05\x04\x1b\x02\x01\x06\x12\x04\x82\x08\x02\x1b\n\r\n\x05\x04\x1b\x02\
+    \x01\x01\x12\x04\x82\x08\x1c(\n\r\n\x05\x04\x1b\x02\x01\x03\x12\x04\x82\
+    \x08+,\nU\n\x04\x04\x1b\x02\x02\x12\x04\x85\x08\x02,\x1aG\x20The\x20time\
+    \x20at\x20which\x20the\x20operation\x20failed\x20or\x20was\x20completed\
+    \x20successfully.\n\n\r\n\x05\x04\x1b\x02\x02\x06\x12\x04\x85\x08\x02\
+    \x1b\n\r\n\x05\x04\x1b\x02\x02\x01\x12\x04\x85\x08\x1c'\n\r\n\x05\x04\
+    \x1b\x02\x02\x03\x12\x04\x85\x08*+\nj\n\x02\x04\x1c\x12\x06\x8a\x08\0\
+    \x9f\x08\x01\x1a\\\x20The\x20request\x20for\n\x20[CreateBackup][google.b\
+    igtable.admin.v2.BigtableTableAdmin.CreateBackup].\n\n\x0b\n\x03\x04\x1c\
+    \x01\x12\x04\x8a\x08\x08\x1b\n\xef\x01\n\x04\x04\x1c\x02\0\x12\x06\x8e\
+    \x08\x02\x93\x08\x04\x1a\xde\x01\x20Required.\x20This\x20must\x20be\x20o\
+    ne\x20of\x20the\x20clusters\x20in\x20the\x20instance\x20in\x20which\x20t\
+    his\n\x20table\x20is\x20located.\x20The\x20backup\x20will\x20be\x20store\
+    d\x20in\x20this\x20cluster.\x20Values\x20are\n\x20of\x20the\x20form\x20`\
+    projects/{project}/instances/{instance}/clusters/{cluster}`.\n\n\r\n\x05\
+    \x04\x1c\x02\0\x05\x12\x04\x8e\x08\x02\x08\n\r\n\x05\x04\x1c\x02\0\x01\
+    \x12\x04\x8e\x08\t\x0f\n\r\n\x05\x04\x1c\x02\0\x03\x12\x04\x8e\x08\x12\
+    \x13\n\x0f\n\x05\x04\x1c\x02\0\x08\x12\x06\x8e\x08\x14\x93\x08\x03\n\x10\
+    \n\x08\x04\x1c\x02\0\x08\x9c\x08\0\x12\x04\x8f\x08\x04*\n\x11\n\x07\x04\
+    \x1c\x02\0\x08\x9f\x08\x12\x06\x90\x08\x04\x92\x08\x05\n\x89\x03\n\x04\
+    \x04\x1c\x02\x01\x12\x04\x9b\x08\x02@\x1a\xfa\x02\x20Required.\x20The\
+    \x20id\x20of\x20the\x20backup\x20to\x20be\x20created.\x20The\x20`backup_\
+    id`\x20along\x20with\n\x20the\x20parent\x20`parent`\x20are\x20combined\
+    \x20as\x20{parent}/backups/{backup_id}\x20to\x20create\n\x20the\x20full\
+    \x20backup\x20name,\x20of\x20the\x20form:\n\x20`projects/{project}/insta\
+    nces/{instance}/clusters/{cluster}/backups/{backup_id}`.\n\x20This\x20st\
+    ring\x20must\x20be\x20between\x201\x20and\x2050\x20characters\x20in\x20l\
+    ength\x20and\x20match\x20the\n\x20regex\x20[_a-zA-Z0-9][-_.a-zA-Z0-9]*.\
+    \n\n\r\n\x05\x04\x1c\x02\x01\x05\x12\x04\x9b\x08\x02\x08\n\r\n\x05\x04\
+    \x1c\x02\x01\x01\x12\x04\x9b\x08\t\x12\n\r\n\x05\x04\x1c\x02\x01\x03\x12\
+    \x04\x9b\x08\x15\x16\n\r\n\x05\x04\x1c\x02\x01\x08\x12\x04\x9b\x08\x17?\
+    \n\x10\n\x08\x04\x1c\x02\x01\x08\x9c\x08\0\x12\x04\x9b\x08\x18>\n/\n\x04\
+    \x04\x1c\x02\x02\x12\x04\x9e\x08\x02=\x1a!\x20Required.\x20The\x20backup\
+    \x20to\x20create.\n\n\r\n\x05\x04\x1c\x02\x02\x06\x12\x04\x9e\x08\x02\
+    \x08\n\r\n\x05\x04\x1c\x02\x02\x01\x12\x04\x9e\x08\t\x0f\n\r\n\x05\x04\
+    \x1c\x02\x02\x03\x12\x04\x9e\x08\x12\x13\n\r\n\x05\x04\x1c\x02\x02\x08\
+    \x12\x04\x9e\x08\x14<\n\x10\n\x08\x04\x1c\x02\x02\x08\x9c\x08\0\x12\x04\
+    \x9e\x08\x15;\n\x86\x01\n\x02\x04\x1d\x12\x06\xa3\x08\0\xaf\x08\x01\x1ax\
+    \x20Metadata\x20type\x20for\x20the\x20operation\x20returned\x20by\n\x20[\
+    CreateBackup][google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup].\
+    \n\n\x0b\n\x03\x04\x1d\x01\x12\x04\xa3\x08\x08\x1c\n5\n\x04\x04\x1d\x02\
+    \0\x12\x04\xa5\x08\x02\x12\x1a'\x20The\x20name\x20of\x20the\x20backup\
+    \x20being\x20created.\n\n\r\n\x05\x04\x1d\x02\0\x05\x12\x04\xa5\x08\x02\
+    \x08\n\r\n\x05\x04\x1d\x02\0\x01\x12\x04\xa5\x08\t\r\n\r\n\x05\x04\x1d\
+    \x02\0\x03\x12\x04\xa5\x08\x10\x11\nA\n\x04\x04\x1d\x02\x01\x12\x04\xa8\
+    \x08\x02\x1a\x1a3\x20The\x20name\x20of\x20the\x20table\x20the\x20backup\
+    \x20is\x20created\x20from.\n\n\r\n\x05\x04\x1d\x02\x01\x05\x12\x04\xa8\
+    \x08\x02\x08\n\r\n\x05\x04\x1d\x02\x01\x01\x12\x04\xa8\x08\t\x15\n\r\n\
+    \x05\x04\x1d\x02\x01\x03\x12\x04\xa8\x08\x18\x19\n9\n\x04\x04\x1d\x02\
+    \x02\x12\x04\xab\x08\x02+\x1a+\x20The\x20time\x20at\x20which\x20this\x20\
+    operation\x20started.\n\n\r\n\x05\x04\x1d\x02\x02\x06\x12\x04\xab\x08\
+    \x02\x1b\n\r\n\x05\x04\x1d\x02\x02\x01\x12\x04\xab\x08\x1c&\n\r\n\x05\
+    \x04\x1d\x02\x02\x03\x12\x04\xab\x08)*\nS\n\x04\x04\x1d\x02\x03\x12\x04\
+    \xae\x08\x02)\x1aE\x20If\x20set,\x20the\x20time\x20at\x20which\x20this\
+    \x20operation\x20finished\x20or\x20was\x20cancelled.\n\n\r\n\x05\x04\x1d\
+    \x02\x03\x06\x12\x04\xae\x08\x02\x1b\n\r\n\x05\x04\x1d\x02\x03\x01\x12\
+    \x04\xae\x08\x1c$\n\r\n\x05\x04\x1d\x02\x03\x03\x12\x04\xae\x08'(\nj\n\
+    \x02\x04\x1e\x12\x06\xb3\x08\0\xc2\x08\x01\x1a\\\x20The\x20request\x20fo\
+    r\n\x20[UpdateBackup][google.bigtable.admin.v2.BigtableTableAdmin.Update\
+    Backup].\n\n\x0b\n\x03\x04\x1e\x01\x12\x04\xb3\x08\x08\x1b\n\xf2\x01\n\
+    \x04\x04\x1e\x02\0\x12\x04\xb9\x08\x02=\x1a\xe3\x01\x20Required.\x20The\
+    \x20backup\x20to\x20update.\x20`backup.name`,\x20and\x20the\x20fields\
+    \x20to\x20be\x20updated\n\x20as\x20specified\x20by\x20`update_mask`\x20a\
+    re\x20required.\x20Other\x20fields\x20are\x20ignored.\n\x20Update\x20is\
+    \x20only\x20supported\x20for\x20the\x20following\x20fields:\n\n\x20\x20*\
+    \x20`backup.expire_time`.\n\n\r\n\x05\x04\x1e\x02\0\x06\x12\x04\xb9\x08\
+    \x02\x08\n\r\n\x05\x04\x1e\x02\0\x01\x12\x04\xb9\x08\t\x0f\n\r\n\x05\x04\
+    \x1e\x02\0\x03\x12\x04\xb9\x08\x12\x13\n\r\n\x05\x04\x1e\x02\0\x08\x12\
+    \x04\xb9\x08\x14<\n\x10\n\x08\x04\x1e\x02\0\x08\x9c\x08\0\x12\x04\xb9\
+    \x08\x15;\n\xd8\x02\n\x04\x04\x1e\x02\x01\x12\x06\xc0\x08\x02\xc1\x08/\
+    \x1a\xc7\x02\x20Required.\x20A\x20mask\x20specifying\x20which\x20fields\
+    \x20(e.g.\x20`expire_time`)\x20in\x20the\n\x20Backup\x20resource\x20shou\
+    ld\x20be\x20updated.\x20This\x20mask\x20is\x20relative\x20to\x20the\x20B\
+    ackup\n\x20resource,\x20not\x20to\x20the\x20request\x20message.\x20The\
+    \x20field\x20mask\x20must\x20always\x20be\n\x20specified;\x20this\x20pre\
+    vents\x20any\x20future\x20fields\x20from\x20being\x20erased\x20accidenta\
+    lly\n\x20by\x20clients\x20that\x20do\x20not\x20know\x20about\x20them.\n\
+    \n\r\n\x05\x04\x1e\x02\x01\x06\x12\x04\xc0\x08\x02\x1b\n\r\n\x05\x04\x1e\
+    \x02\x01\x01\x12\x04\xc0\x08\x1c'\n\r\n\x05\x04\x1e\x02\x01\x03\x12\x04\
+    \xc0\x08*+\n\r\n\x05\x04\x1e\x02\x01\x08\x12\x04\xc1\x08\x06.\n\x10\n\
+    \x08\x04\x1e\x02\x01\x08\x9c\x08\0\x12\x04\xc1\x08\x07-\nd\n\x02\x04\x1f\
+    \x12\x06\xc6\x08\0\xd0\x08\x01\x1aV\x20The\x20request\x20for\n\x20[GetBa\
+    ckup][google.bigtable.admin.v2.BigtableTableAdmin.GetBackup].\n\n\x0b\n\
+    \x03\x04\x1f\x01\x12\x04\xc6\x08\x08\x18\n\x98\x01\n\x04\x04\x1f\x02\0\
+    \x12\x06\xca\x08\x02\xcf\x08\x04\x1a\x87\x01\x20Required.\x20Name\x20of\
+    \x20the\x20backup.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`project\
+    s/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.\n\
+    \n\r\n\x05\x04\x1f\x02\0\x05\x12\x04\xca\x08\x02\x08\n\r\n\x05\x04\x1f\
+    \x02\0\x01\x12\x04\xca\x08\t\r\n\r\n\x05\x04\x1f\x02\0\x03\x12\x04\xca\
+    \x08\x10\x11\n\x0f\n\x05\x04\x1f\x02\0\x08\x12\x06\xca\x08\x12\xcf\x08\
+    \x03\n\x10\n\x08\x04\x1f\x02\0\x08\x9c\x08\0\x12\x04\xcb\x08\x04*\n\x11\
+    \n\x07\x04\x1f\x02\0\x08\x9f\x08\x12\x06\xcc\x08\x04\xce\x08\x05\nj\n\
+    \x02\x04\x20\x12\x06\xd4\x08\0\xde\x08\x01\x1a\\\x20The\x20request\x20fo\
+    r\n\x20[DeleteBackup][google.bigtable.admin.v2.BigtableTableAdmin.Delete\
+    Backup].\n\n\x0b\n\x03\x04\x20\x01\x12\x04\xd4\x08\x08\x1b\n\xa2\x01\n\
+    \x04\x04\x20\x02\0\x12\x06\xd8\x08\x02\xdd\x08\x04\x1a\x91\x01\x20Requir\
+    ed.\x20Name\x20of\x20the\x20backup\x20to\x20delete.\n\x20Values\x20are\
+    \x20of\x20the\x20form\n\x20`projects/{project}/instances/{instance}/clus\
+    ters/{cluster}/backups/{backup}`.\n\n\r\n\x05\x04\x20\x02\0\x05\x12\x04\
+    \xd8\x08\x02\x08\n\r\n\x05\x04\x20\x02\0\x01\x12\x04\xd8\x08\t\r\n\r\n\
+    \x05\x04\x20\x02\0\x03\x12\x04\xd8\x08\x10\x11\n\x0f\n\x05\x04\x20\x02\0\
+    \x08\x12\x06\xd8\x08\x12\xdd\x08\x03\n\x10\n\x08\x04\x20\x02\0\x08\x9c\
+    \x08\0\x12\x04\xd9\x08\x04*\n\x11\n\x07\x04\x20\x02\0\x08\x9f\x08\x12\
+    \x06\xda\x08\x04\xdc\x08\x05\nh\n\x02\x04!\x12\x06\xe2\x08\0\xb3\t\x01\
+    \x1aZ\x20The\x20request\x20for\n\x20[ListBackups][google.bigtable.admin.\
+    v2.BigtableTableAdmin.ListBackups].\n\n\x0b\n\x03\x04!\x01\x12\x04\xe2\
+    \x08\x08\x1a\n\x9a\x02\n\x04\x04!\x02\0\x12\x06\xe7\x08\x02\xec\x08\x04\
+    \x1a\x89\x02\x20Required.\x20The\x20cluster\x20to\x20list\x20backups\x20\
+    from.\x20\x20Values\x20are\x20of\x20the\n\x20form\x20`projects/{project}\
+    /instances/{instance}/clusters/{cluster}`.\n\x20Use\x20`{cluster}\x20=\
+    \x20'-'`\x20to\x20list\x20backups\x20for\x20all\x20clusters\x20in\x20an\
+    \x20instance,\n\x20e.g.,\x20`projects/{project}/instances/{instance}/clu\
+    sters/-`.\n\n\r\n\x05\x04!\x02\0\x05\x12\x04\xe7\x08\x02\x08\n\r\n\x05\
+    \x04!\x02\0\x01\x12\x04\xe7\x08\t\x0f\n\r\n\x05\x04!\x02\0\x03\x12\x04\
+    \xe7\x08\x12\x13\n\x0f\n\x05\x04!\x02\0\x08\x12\x06\xe7\x08\x14\xec\x08\
+    \x03\n\x10\n\x08\x04!\x02\0\x08\x9c\x08\0\x12\x04\xe8\x08\x04*\n\x11\n\
+    \x07\x04!\x02\0\x08\x9f\x08\x12\x06\xe9\x08\x04\xeb\x08\x05\n\xa8\x0c\n\
+    \x04\x04!\x02\x01\x12\x04\x8f\t\x02\x14\x1a\x99\x0c\x20A\x20filter\x20ex\
+    pression\x20that\x20filters\x20backups\x20listed\x20in\x20the\x20respons\
+    e.\n\x20The\x20expression\x20must\x20specify\x20the\x20field\x20name,\
+    \x20a\x20comparison\x20operator,\n\x20and\x20the\x20value\x20that\x20you\
+    \x20want\x20to\x20use\x20for\x20filtering.\x20The\x20value\x20must\x20be\
+    \x20a\n\x20string,\x20a\x20number,\x20or\x20a\x20boolean.\x20The\x20comp\
+    arison\x20operator\x20must\x20be\n\x20<,\x20>,\x20<=,\x20>=,\x20!=,\x20=\
+    ,\x20or\x20:.\x20Colon\x20':'\x20represents\x20a\x20HAS\x20operator\x20w\
+    hich\x20is\n\x20roughly\x20synonymous\x20with\x20equality.\x20Filter\x20\
+    rules\x20are\x20case\x20insensitive.\n\n\x20The\x20fields\x20eligible\
+    \x20for\x20filtering\x20are:\n\n\x20*\x20`name`\n\x20*\x20`source_table`\
+    \n\x20*\x20`state`\n\x20*\x20`start_time`\x20(and\x20values\x20are\x20of\
+    \x20the\x20format\x20YYYY-MM-DDTHH:MM:SSZ)\n\x20*\x20`end_time`\x20(and\
+    \x20values\x20are\x20of\x20the\x20format\x20YYYY-MM-DDTHH:MM:SSZ)\n\x20*\
+    \x20`expire_time`\x20(and\x20values\x20are\x20of\x20the\x20format\x20YYY\
+    Y-MM-DDTHH:MM:SSZ)\n\x20*\x20`size_bytes`\n\n\x20To\x20filter\x20on\x20m\
+    ultiple\x20expressions,\x20provide\x20each\x20separate\x20expression\x20\
+    within\n\x20parentheses.\x20By\x20default,\x20each\x20expression\x20is\
+    \x20an\x20AND\x20expression.\x20However,\n\x20you\x20can\x20include\x20A\
+    ND,\x20OR,\x20and\x20NOT\x20expressions\x20explicitly.\n\n\x20Some\x20ex\
+    amples\x20of\x20using\x20filters\x20are:\n\n\x20*\x20`name:\"exact\"`\
+    \x20-->\x20The\x20backup's\x20name\x20is\x20the\x20string\x20\"exact\".\
+    \n\x20*\x20`name:howl`\x20-->\x20The\x20backup's\x20name\x20contains\x20\
+    the\x20string\x20\"howl\".\n\x20*\x20`source_table:prod`\n\x20\x20\x20\
+    \x20\x20\x20\x20\x20-->\x20The\x20source_table's\x20name\x20contains\x20\
+    the\x20string\x20\"prod\".\n\x20*\x20`state:CREATING`\x20-->\x20The\x20b\
+    ackup\x20is\x20pending\x20creation.\n\x20*\x20`state:READY`\x20-->\x20Th\
+    e\x20backup\x20is\x20fully\x20created\x20and\x20ready\x20for\x20use.\n\
+    \x20*\x20`(name:howl)\x20AND\x20(start_time\x20<\x20\\\"2018-03-28T14:50\
+    :00Z\\\")`\n\x20\x20\x20\x20\x20\x20\x20\x20-->\x20The\x20backup\x20name\
+    \x20contains\x20the\x20string\x20\"howl\"\x20and\x20start_time\n\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20of\x20the\x20backup\x20is\x20bef\
+    ore\x202018-03-28T14:50:00Z.\n\x20*\x20`size_bytes\x20>\x2010000000000`\
+    \x20-->\x20The\x20backup's\x20size\x20is\x20greater\x20than\x2010GB\n\n\
+    \r\n\x05\x04!\x02\x01\x05\x12\x04\x8f\t\x02\x08\n\r\n\x05\x04!\x02\x01\
+    \x01\x12\x04\x8f\t\t\x0f\n\r\n\x05\x04!\x02\x01\x03\x12\x04\x8f\t\x12\
+    \x13\n\xf7\x05\n\x04\x04!\x02\x02\x12\x04\xa7\t\x02\x16\x1a\xe8\x05\x20A\
+    n\x20expression\x20for\x20specifying\x20the\x20sort\x20order\x20of\x20th\
+    e\x20results\x20of\x20the\x20request.\n\x20The\x20string\x20value\x20sho\
+    uld\x20specify\x20one\x20or\x20more\x20fields\x20in\n\x20[Backup][google\
+    .bigtable.admin.v2.Backup].\x20The\x20full\x20syntax\x20is\x20described\
+    \x20at\n\x20https://aip.dev/132#ordering.\n\n\x20Fields\x20supported\x20\
+    are:\n\n\x20*\x20name\n\x20*\x20source_table\n\x20*\x20expire_time\n\x20\
+    *\x20start_time\n\x20*\x20end_time\n\x20*\x20size_bytes\n\x20*\x20state\
+    \n\n\x20For\x20example,\x20\"start_time\".\x20The\x20default\x20sorting\
+    \x20order\x20is\x20ascending.\n\x20To\x20specify\x20descending\x20order\
+    \x20for\x20the\x20field,\x20a\x20suffix\x20\"\x20desc\"\x20should\n\x20b\
+    e\x20appended\x20to\x20the\x20field\x20name.\x20For\x20example,\x20\"sta\
+    rt_time\x20desc\".\n\x20Redundant\x20space\x20characters\x20in\x20the\
+    \x20syntax\x20are\x20insigificant.\n\n\x20If\x20order_by\x20is\x20empty,\
+    \x20results\x20will\x20be\x20sorted\x20by\x20`start_time`\x20in\x20desce\
+    nding\n\x20order\x20starting\x20from\x20the\x20most\x20recently\x20creat\
+    ed\x20backup.\n\n\r\n\x05\x04!\x02\x02\x05\x12\x04\xa7\t\x02\x08\n\r\n\
+    \x05\x04!\x02\x02\x01\x12\x04\xa7\t\t\x11\n\r\n\x05\x04!\x02\x02\x03\x12\
+    \x04\xa7\t\x14\x15\n\x84\x01\n\x04\x04!\x02\x03\x12\x04\xab\t\x02\x16\
+    \x1av\x20Number\x20of\x20backups\x20to\x20be\x20returned\x20in\x20the\
+    \x20response.\x20If\x200\x20or\n\x20less,\x20defaults\x20to\x20the\x20se\
+    rver's\x20maximum\x20allowed\x20page\x20size.\n\n\r\n\x05\x04!\x02\x03\
+    \x05\x12\x04\xab\t\x02\x07\n\r\n\x05\x04!\x02\x03\x01\x12\x04\xab\t\x08\
+    \x11\n\r\n\x05\x04!\x02\x03\x03\x12\x04\xab\t\x14\x15\n\x95\x02\n\x04\
+    \x04!\x02\x04\x12\x04\xb2\t\x02\x18\x1a\x86\x02\x20If\x20non-empty,\x20`\
+    page_token`\x20should\x20contain\x20a\n\x20[next_page_token][google.bigt\
+    able.admin.v2.ListBackupsResponse.next_page_token]\n\x20from\x20a\x20pre\
+    vious\n\x20[ListBackupsResponse][google.bigtable.admin.v2.ListBackupsRes\
+    ponse]\x20to\x20the\n\x20same\x20`parent`\x20and\x20with\x20the\x20same\
+    \x20`filter`.\n\n\r\n\x05\x04!\x02\x04\x05\x12\x04\xb2\t\x02\x08\n\r\n\
+    \x05\x04!\x02\x04\x01\x12\x04\xb2\t\t\x13\n\r\n\x05\x04!\x02\x04\x03\x12\
+    \x04\xb2\t\x16\x17\ni\n\x02\x04\"\x12\x06\xb7\t\0\xbf\t\x01\x1a[\x20The\
+    \x20response\x20for\n\x20[ListBackups][google.bigtable.admin.v2.Bigtable\
+    TableAdmin.ListBackups].\n\n\x0b\n\x03\x04\"\x01\x12\x04\xb7\t\x08\x1b\n\
+    -\n\x04\x04\"\x02\0\x12\x04\xb9\t\x02\x1e\x1a\x1f\x20The\x20list\x20of\
+    \x20matching\x20backups.\n\n\r\n\x05\x04\"\x02\0\x04\x12\x04\xb9\t\x02\n\
+    \n\r\n\x05\x04\"\x02\0\x06\x12\x04\xb9\t\x0b\x11\n\r\n\x05\x04\"\x02\0\
+    \x01\x12\x04\xb9\t\x12\x19\n\r\n\x05\x04\"\x02\0\x03\x12\x04\xb9\t\x1c\
+    \x1d\n\xb3\x01\n\x04\x04\"\x02\x01\x12\x04\xbe\t\x02\x1d\x1a\xa4\x01\x20\
+    `next_page_token`\x20can\x20be\x20sent\x20in\x20a\x20subsequent\n\x20[Li\
+    stBackups][google.bigtable.admin.v2.BigtableTableAdmin.ListBackups]\x20c\
+    all\n\x20to\x20fetch\x20more\x20of\x20the\x20matching\x20backups.\n\n\r\
+    \n\x05\x04\"\x02\x01\x05\x12\x04\xbe\t\x02\x08\n\r\n\x05\x04\"\x02\x01\
+    \x01\x12\x04\xbe\t\t\x18\n\r\n\x05\x04\"\x02\x01\x03\x12\x04\xbe\t\x1b\
+    \x1c\nf\n\x02\x04#\x12\x06\xc3\t\0\xeb\t\x01\x1aX\x20The\x20request\x20f\
+    or\n\x20[CopyBackup][google.bigtable.admin.v2.BigtableTableAdmin.CopyBac\
+    kup].\n\n\x0b\n\x03\x04#\x01\x12\x04\xc3\t\x08\x19\n\xdb\x01\n\x04\x04#\
+    \x02\0\x12\x06\xc7\t\x02\xcc\t\x04\x1a\xca\x01\x20Required.\x20The\x20na\
+    me\x20of\x20the\x20destination\x20cluster\x20that\x20will\x20contain\x20\
+    the\x20backup\n\x20copy.\x20The\x20cluster\x20must\x20already\x20exist.\
+    \x20Values\x20are\x20of\x20the\x20form:\n\x20`projects/{project}/instanc\
+    es/{instance}/clusters/{cluster}`.\n\n\r\n\x05\x04#\x02\0\x05\x12\x04\
+    \xc7\t\x02\x08\n\r\n\x05\x04#\x02\0\x01\x12\x04\xc7\t\t\x0f\n\r\n\x05\
+    \x04#\x02\0\x03\x12\x04\xc7\t\x12\x13\n\x0f\n\x05\x04#\x02\0\x08\x12\x06\
+    \xc7\t\x14\xcc\t\x03\n\x10\n\x08\x04#\x02\0\x08\x9c\x08\0\x12\x04\xc8\t\
+    \x04*\n\x11\n\x07\x04#\x02\0\x08\x9f\x08\x12\x06\xc9\t\x04\xcb\t\x05\n\
+    \xf4\x02\n\x04\x04#\x02\x01\x12\x04\xd4\t\x02@\x1a\xe5\x02\x20Required.\
+    \x20The\x20id\x20of\x20the\x20new\x20backup.\x20The\x20`backup_id`\x20al\
+    ong\x20with\x20`parent`\n\x20are\x20combined\x20as\x20{parent}/backups/{\
+    backup_id}\x20to\x20create\x20the\x20full\x20backup\n\x20name,\x20of\x20\
+    the\x20form:\n\x20`projects/{project}/instances/{instance}/clusters/{clu\
+    ster}/backups/{backup_id}`.\n\x20This\x20string\x20must\x20be\x20between\
+    \x201\x20and\x2050\x20characters\x20in\x20length\x20and\x20match\x20the\
+    \n\x20regex\x20[_a-zA-Z0-9][-_.a-zA-Z0-9]*.\n\n\r\n\x05\x04#\x02\x01\x05\
+    \x12\x04\xd4\t\x02\x08\n\r\n\x05\x04#\x02\x01\x01\x12\x04\xd4\t\t\x12\n\
+    \r\n\x05\x04#\x02\x01\x03\x12\x04\xd4\t\x15\x16\n\r\n\x05\x04#\x02\x01\
+    \x08\x12\x04\xd4\t\x17?\n\x10\n\x08\x04#\x02\x01\x08\x9c\x08\0\x12\x04\
+    \xd4\t\x18>\n\x96\x03\n\x04\x04#\x02\x02\x12\x06\xdd\t\x02\xe2\t\x04\x1a\
+    \x85\x03\x20Required.\x20The\x20source\x20backup\x20to\x20be\x20copied\
+    \x20from.\n\x20The\x20source\x20backup\x20needs\x20to\x20be\x20in\x20REA\
+    DY\x20state\x20for\x20it\x20to\x20be\x20copied.\n\x20Copying\x20a\x20cop\
+    ied\x20backup\x20is\x20not\x20allowed.\n\x20Once\x20CopyBackup\x20is\x20\
+    in\x20progress,\x20the\x20source\x20backup\x20cannot\x20be\x20deleted\
+    \x20or\n\x20cleaned\x20up\x20on\x20expiration\x20until\x20CopyBackup\x20\
+    is\x20finished.\n\x20Values\x20are\x20of\x20the\x20form:\n\x20`projects/\
+    <project>/instances/<instance>/clusters/<cluster>/backups/<backup>`.\n\n\
+    \r\n\x05\x04#\x02\x02\x05\x12\x04\xdd\t\x02\x08\n\r\n\x05\x04#\x02\x02\
+    \x01\x12\x04\xdd\t\t\x16\n\r\n\x05\x04#\x02\x02\x03\x12\x04\xdd\t\x19\
+    \x1a\n\x0f\n\x05\x04#\x02\x02\x08\x12\x06\xdd\t\x1b\xe2\t\x03\n\x10\n\
+    \x08\x04#\x02\x02\x08\x9c\x08\0\x12\x04\xde\t\x04*\n\x11\n\x07\x04#\x02\
+    \x02\x08\x9f\x08\x12\x06\xdf\t\x04\xe1\t\x05\n\xbd\x02\n\x04\x04#\x02\
+    \x03\x12\x06\xe9\t\x02\xea\t/\x1a\xac\x02\x20Required.\x20Required.\x20T\
+    he\x20expiration\x20time\x20of\x20the\x20copied\x20backup\x20with\n\x20m\
+    icrosecond\x20granularity\x20that\x20must\x20be\x20at\x20least\x206\x20h\
+    ours\x20and\x20at\x20most\x2030\x20days\n\x20from\x20the\x20time\x20the\
+    \x20request\x20is\x20received.\x20Once\x20the\x20`expire_time`\x20has\n\
+    \x20passed,\x20Cloud\x20Bigtable\x20will\x20delete\x20the\x20backup\x20a\
+    nd\x20free\x20the\x20resources\x20used\n\x20by\x20the\x20backup.\n\n\r\n\
+    \x05\x04#\x02\x03\x06\x12\x04\xe9\t\x02\x1b\n\r\n\x05\x04#\x02\x03\x01\
+    \x12\x04\xe9\t\x1c'\n\r\n\x05\x04#\x02\x03\x03\x12\x04\xe9\t*+\n\r\n\x05\
+    \x04#\x02\x03\x08\x12\x04\xea\t\x06.\n\x10\n\x08\x04#\x02\x03\x08\x9c\
+    \x08\0\x12\x04\xea\t\x07-\n\x96\x01\n\x02\x04$\x12\x06\xef\t\0\xfe\t\x01\
+    \x1a\x87\x01\x20Metadata\x20type\x20for\x20the\x20google.longrunning.Ope\
+    ration\x20returned\x20by\n\x20[CopyBackup][google.bigtable.admin.v2.Bigt\
+    ableTableAdmin.CopyBackup].\n\n\x0b\n\x03\x04$\x01\x12\x04\xef\t\x08\x1a\
+    \n\xbb\x01\n\x04\x04$\x02\0\x12\x06\xf3\t\x02\xf5\t\x05\x1a\xaa\x01\x20T\
+    he\x20name\x20of\x20the\x20backup\x20being\x20created\x20through\x20the\
+    \x20copy\x20operation.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`pro\
+    jects/<project>/instances/<instance>/clusters/<cluster>/backups/<backup>\
+    `.\n\n\r\n\x05\x04$\x02\0\x05\x12\x04\xf3\t\x02\x08\n\r\n\x05\x04$\x02\0\
+    \x01\x12\x04\xf3\t\t\r\n\r\n\x05\x04$\x02\0\x03\x12\x04\xf3\t\x10\x11\n\
+    \x0f\n\x05\x04$\x02\0\x08\x12\x06\xf3\t\x12\xf5\t\x04\n\x11\n\x07\x04$\
+    \x02\0\x08\x9f\x08\x12\x06\xf3\t\x13\xf5\t\x03\nN\n\x04\x04$\x02\x01\x12\
+    \x04\xf8\t\x02$\x1a@\x20Information\x20about\x20the\x20source\x20backup\
+    \x20that\x20is\x20being\x20copied\x20from.\n\n\r\n\x05\x04$\x02\x01\x06\
+    \x12\x04\xf8\t\x02\x0c\n\r\n\x05\x04$\x02\x01\x01\x12\x04\xf8\t\r\x1f\n\
+    \r\n\x05\x04$\x02\x01\x03\x12\x04\xf8\t\"#\nu\n\x04\x04$\x02\x02\x12\x04\
+    \xfd\t\x02!\x1ag\x20The\x20progress\x20of\x20the\n\x20[CopyBackup][googl\
+    e.bigtable.admin.v2.BigtableTableAdmin.CopyBackup]\n\x20operation.\n\n\r\
+    \n\x05\x04$\x02\x02\x06\x12\x04\xfd\t\x02\x13\n\r\n\x05\x04$\x02\x02\x01\
+    \x12\x04\xfd\t\x14\x1c\n\r\n\x05\x04$\x02\x02\x03\x12\x04\xfd\t\x1f\x20\
+    \ny\n\x02\x04%\x12\x06\x82\n\0\x95\n\x01\x1ak\x20The\x20request\x20for\n\
+    \x20[CreateAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.C\
+    reateAuthorizedView]\n\n\x0b\n\x03\x04%\x01\x12\x04\x82\n\x08#\n\xac\x01\
+    \n\x04\x04%\x02\0\x12\x06\x86\n\x02\x8b\n\x04\x1a\x9b\x01\x20Required.\
+    \x20This\x20is\x20the\x20name\x20of\x20the\x20table\x20the\x20Authorized\
+    View\x20belongs\x20to.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`pro\
+    jects/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04%\
+    \x02\0\x05\x12\x04\x86\n\x02\x08\n\r\n\x05\x04%\x02\0\x01\x12\x04\x86\n\
+    \t\x0f\n\r\n\x05\x04%\x02\0\x03\x12\x04\x86\n\x12\x13\n\x0f\n\x05\x04%\
+    \x02\0\x08\x12\x06\x86\n\x14\x8b\n\x03\n\x10\n\x08\x04%\x02\0\x08\x9c\
+    \x08\0\x12\x04\x87\n\x04*\n\x11\n\x07\x04%\x02\0\x08\x9f\x08\x12\x06\x88\
+    \n\x04\x8a\n\x05\n\xa9\x02\n\x04\x04%\x02\x01\x12\x04\x91\n\x02I\x1a\x9a\
+    \x02\x20Required.\x20The\x20id\x20of\x20the\x20AuthorizedView\x20to\x20c\
+    reate.\x20This\x20AuthorizedView\x20must\n\x20not\x20already\x20exist.\
+    \x20The\x20`authorized_view_id`\x20appended\x20to\x20`parent`\x20forms\
+    \x20the\n\x20full\x20AuthorizedView\x20name\x20of\x20the\x20form\n\x20`p\
+    rojects/{project}/instances/{instance}/tables/{table}/authorizedView/{au\
+    thorized_view}`.\n\n\r\n\x05\x04%\x02\x01\x05\x12\x04\x91\n\x02\x08\n\r\
+    \n\x05\x04%\x02\x01\x01\x12\x04\x91\n\t\x1b\n\r\n\x05\x04%\x02\x01\x03\
+    \x12\x04\x91\n\x1e\x1f\n\r\n\x05\x04%\x02\x01\x08\x12\x04\x91\n\x20H\n\
+    \x10\n\x08\x04%\x02\x01\x08\x9c\x08\0\x12\x04\x91\n!G\n7\n\x04\x04%\x02\
+    \x02\x12\x04\x94\n\x02N\x1a)\x20Required.\x20The\x20AuthorizedView\x20to\
+    \x20create.\n\n\r\n\x05\x04%\x02\x02\x06\x12\x04\x94\n\x02\x10\n\r\n\x05\
+    \x04%\x02\x02\x01\x12\x04\x94\n\x11\x20\n\r\n\x05\x04%\x02\x02\x03\x12\
+    \x04\x94\n#$\n\r\n\x05\x04%\x02\x02\x08\x12\x04\x94\n%M\n\x10\n\x08\x04%\
+    \x02\x02\x08\x9c\x08\0\x12\x04\x94\n&L\nP\n\x02\x04&\x12\x06\x98\n\0\xa1\
+    \n\x01\x1aB\x20The\x20metadata\x20for\x20the\x20Operation\x20returned\
+    \x20by\x20CreateAuthorizedView.\n\n\x0b\n\x03\x04&\x01\x12\x04\x98\n\x08\
+    $\nZ\n\x04\x04&\x02\0\x12\x04\x9a\n\x023\x1aL\x20The\x20request\x20that\
+    \x20prompted\x20the\x20initiation\x20of\x20this\x20CreateInstance\x20ope\
+    ration.\n\n\r\n\x05\x04&\x02\0\x06\x12\x04\x9a\n\x02\x1d\n\r\n\x05\x04&\
+    \x02\0\x01\x12\x04\x9a\n\x1e.\n\r\n\x05\x04&\x02\0\x03\x12\x04\x9a\n12\n\
+    D\n\x04\x04&\x02\x01\x12\x04\x9d\n\x02-\x1a6\x20The\x20time\x20at\x20whi\
+    ch\x20the\x20original\x20request\x20was\x20received.\n\n\r\n\x05\x04&\
+    \x02\x01\x06\x12\x04\x9d\n\x02\x1b\n\r\n\x05\x04&\x02\x01\x01\x12\x04\
+    \x9d\n\x1c(\n\r\n\x05\x04&\x02\x01\x03\x12\x04\x9d\n+,\nU\n\x04\x04&\x02\
+    \x02\x12\x04\xa0\n\x02,\x1aG\x20The\x20time\x20at\x20which\x20the\x20ope\
+    ration\x20failed\x20or\x20was\x20completed\x20successfully.\n\n\r\n\x05\
+    \x04&\x02\x02\x06\x12\x04\xa0\n\x02\x1b\n\r\n\x05\x04&\x02\x02\x01\x12\
+    \x04\xa0\n\x1c'\n\r\n\x05\x04&\x02\x02\x03\x12\x04\xa0\n*+\n\xa8\x01\n\
+    \x02\x04'\x12\x06\xa5\n\0\xc1\n\x01\x1a\x99\x01\x20Request\x20message\
+    \x20for\n\x20[google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorized\
+    Views][google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews]\
+    \n\n\x0b\n\x03\x04'\x01\x12\x04\xa5\n\x08\"\n\xb8\x01\n\x04\x04'\x02\0\
+    \x12\x06\xa9\n\x02\xae\n\x04\x1a\xa7\x01\x20Required.\x20The\x20unique\
+    \x20name\x20of\x20the\x20table\x20for\x20which\x20AuthorizedViews\x20sho\
+    uld\x20be\n\x20listed.\x20Values\x20are\x20of\x20the\x20form\n\x20`proje\
+    cts/{project}/instances/{instance}/tables/{table}`.\n\n\r\n\x05\x04'\x02\
+    \0\x05\x12\x04\xa9\n\x02\x08\n\r\n\x05\x04'\x02\0\x01\x12\x04\xa9\n\t\
+    \x0f\n\r\n\x05\x04'\x02\0\x03\x12\x04\xa9\n\x12\x13\n\x0f\n\x05\x04'\x02\
+    \0\x08\x12\x06\xa9\n\x14\xae\n\x03\n\x10\n\x08\x04'\x02\0\x08\x9c\x08\0\
+    \x12\x04\xaa\n\x04*\n\x11\n\x07\x04'\x02\0\x08\x9f\x08\x12\x06\xab\n\x04\
+    \xad\n\x05\n\xc7\x03\n\x04\x04'\x02\x01\x12\x04\xb9\n\x02?\x1a\xb8\x03\
+    \x20Optional.\x20Maximum\x20number\x20of\x20results\x20per\x20page.\n\n\
+    \x20A\x20page_size\x20of\x20zero\x20lets\x20the\x20server\x20choose\x20t\
+    he\x20number\x20of\x20items\x20to\x20return.\n\x20A\x20page_size\x20whic\
+    h\x20is\x20strictly\x20positive\x20will\x20return\x20at\x20most\x20that\
+    \x20many\x20items.\n\x20A\x20negative\x20page_size\x20will\x20cause\x20a\
+    n\x20error.\n\n\x20Following\x20the\x20first\x20request,\x20subsequent\
+    \x20paginated\x20calls\x20are\x20not\x20required\n\x20to\x20pass\x20a\
+    \x20page_size.\x20If\x20a\x20page_size\x20is\x20set\x20in\x20subsequent\
+    \x20calls,\x20it\x20must\n\x20match\x20the\x20page_size\x20given\x20in\
+    \x20the\x20first\x20request.\n\n\r\n\x05\x04'\x02\x01\x05\x12\x04\xb9\n\
+    \x02\x07\n\r\n\x05\x04'\x02\x01\x01\x12\x04\xb9\n\x08\x11\n\r\n\x05\x04'\
+    \x02\x01\x03\x12\x04\xb9\n\x14\x15\n\r\n\x05\x04'\x02\x01\x08\x12\x04\
+    \xb9\n\x16>\n\x10\n\x08\x04'\x02\x01\x08\x9c\x08\0\x12\x04\xb9\n\x17=\nU\
+    \n\x04\x04'\x02\x02\x12\x04\xbc\n\x02A\x1aG\x20Optional.\x20The\x20value\
+    \x20of\x20`next_page_token`\x20returned\x20by\x20a\x20previous\x20call.\
+    \n\n\r\n\x05\x04'\x02\x02\x05\x12\x04\xbc\n\x02\x08\n\r\n\x05\x04'\x02\
+    \x02\x01\x12\x04\xbc\n\t\x13\n\r\n\x05\x04'\x02\x02\x03\x12\x04\xbc\n\
+    \x16\x17\n\r\n\x05\x04'\x02\x02\x08\x12\x04\xbc\n\x18@\n\x10\n\x08\x04'\
+    \x02\x02\x08\x9c\x08\0\x12\x04\xbc\n\x19?\no\n\x04\x04'\x02\x03\x12\x04\
+    \xc0\n\x02P\x1aa\x20Optional.\x20The\x20resource_view\x20to\x20be\x20app\
+    lied\x20to\x20the\x20returned\x20views'\x20fields.\n\x20Default\x20to\
+    \x20NAME_ONLY.\n\n\r\n\x05\x04'\x02\x03\x06\x12\x04\xc0\n\x02\x1d\n\r\n\
+    \x05\x04'\x02\x03\x01\x12\x04\xc0\n\x1e\"\n\r\n\x05\x04'\x02\x03\x03\x12\
+    \x04\xc0\n%&\n\r\n\x05\x04'\x02\x03\x08\x12\x04\xc0\n'O\n\x10\n\x08\x04'\
+    \x02\x03\x08\x9c\x08\0\x12\x04\xc0\n(N\n\xa9\x01\n\x02\x04(\x12\x06\xc5\
+    \n\0\xcd\n\x01\x1a\x9a\x01\x20Response\x20message\x20for\n\x20[google.bi\
+    gtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews][google.bigtable.\
+    admin.v2.BigtableTableAdmin.ListAuthorizedViews]\n\n\x0b\n\x03\x04(\x01\
+    \x12\x04\xc5\n\x08#\nC\n\x04\x04(\x02\0\x12\x04\xc7\n\x02/\x1a5\x20The\
+    \x20AuthorizedViews\x20present\x20in\x20the\x20requested\x20table.\n\n\r\
+    \n\x05\x04(\x02\0\x04\x12\x04\xc7\n\x02\n\n\r\n\x05\x04(\x02\0\x06\x12\
+    \x04\xc7\n\x0b\x19\n\r\n\x05\x04(\x02\0\x01\x12\x04\xc7\n\x1a*\n\r\n\x05\
+    \x04(\x02\0\x03\x12\x04\xc7\n-.\n\xa4\x01\n\x04\x04(\x02\x01\x12\x04\xcc\
+    \n\x02\x1d\x1a\x95\x01\x20Set\x20if\x20not\x20all\x20tables\x20could\x20\
+    be\x20returned\x20in\x20a\x20single\x20response.\n\x20Pass\x20this\x20va\
+    lue\x20to\x20`page_token`\x20in\x20another\x20request\x20to\x20get\x20th\
+    e\x20next\n\x20page\x20of\x20results.\n\n\r\n\x05\x04(\x02\x01\x05\x12\
+    \x04\xcc\n\x02\x08\n\r\n\x05\x04(\x02\x01\x01\x12\x04\xcc\n\t\x18\n\r\n\
+    \x05\x04(\x02\x01\x03\x12\x04\xcc\n\x1b\x1c\n\xa4\x01\n\x02\x04)\x12\x06\
+    \xd1\n\0\xdf\n\x01\x1a\x95\x01\x20Request\x20message\x20for\n\x20[google\
+    .bigtable.admin.v2.BigtableTableAdmin.GetAuthorizedView][google.bigtable\
+    .admin.v2.BigtableTableAdmin.GetAuthorizedView]\n\n\x0b\n\x03\x04)\x01\
+    \x12\x04\xd1\n\x08\x20\n\xc2\x01\n\x04\x04)\x02\0\x12\x06\xd5\n\x02\xda\
+    \n\x04\x1a\xb1\x01\x20Required.\x20The\x20unique\x20name\x20of\x20the\
+    \x20requested\x20AuthorizedView.\n\x20Values\x20are\x20of\x20the\x20form\
+    \n\x20`projects/{project}/instances/{instance}/tables/{table}/authorized\
+    Views/{authorized_view}`.\n\n\r\n\x05\x04)\x02\0\x05\x12\x04\xd5\n\x02\
+    \x08\n\r\n\x05\x04)\x02\0\x01\x12\x04\xd5\n\t\r\n\r\n\x05\x04)\x02\0\x03\
+    \x12\x04\xd5\n\x10\x11\n\x0f\n\x05\x04)\x02\0\x08\x12\x06\xd5\n\x12\xda\
+    \n\x03\n\x10\n\x08\x04)\x02\0\x08\x9c\x08\0\x12\x04\xd6\n\x04*\n\x11\n\
+    \x07\x04)\x02\0\x08\x9f\x08\x12\x06\xd7\n\x04\xd9\n\x05\nu\n\x04\x04)\
+    \x02\x01\x12\x04\xde\n\x02P\x1ag\x20Optional.\x20The\x20resource_view\
+    \x20to\x20be\x20applied\x20to\x20the\x20returned\x20AuthorizedView's\n\
+    \x20fields.\x20Default\x20to\x20BASIC.\n\n\r\n\x05\x04)\x02\x01\x06\x12\
+    \x04\xde\n\x02\x1d\n\r\n\x05\x04)\x02\x01\x01\x12\x04\xde\n\x1e\"\n\r\n\
+    \x05\x04)\x02\x01\x03\x12\x04\xde\n%&\n\r\n\x05\x04)\x02\x01\x08\x12\x04\
+    \xde\n'O\n\x10\n\x08\x04)\x02\x01\x08\x9c\x08\0\x12\x04\xde\n(N\nz\n\x02\
+    \x04*\x12\x06\xe3\n\0\xf7\n\x01\x1al\x20The\x20request\x20for\n\x20[Upda\
+    teAuthorizedView][google.bigtable.admin.v2.BigtableTableAdmin.UpdateAuth\
+    orizedView].\n\n\x0b\n\x03\x04*\x01\x12\x04\xe3\n\x08#\n\x84\x02\n\x04\
+    \x04*\x02\0\x12\x04\xe8\n\x02N\x1a\xf5\x01\x20Required.\x20The\x20Author\
+    izedView\x20to\x20update.\x20The\x20`name`\x20in\x20`authorized_view`\
+    \x20is\n\x20used\x20to\x20identify\x20the\x20AuthorizedView.\x20Authoriz\
+    edView\x20name\x20must\x20in\x20this\n\x20format\n\x20projects/<project>\
+    /instances/<instance>/tables/<table>/authorizedViews/<authorized_view>\n\
+    \n\r\n\x05\x04*\x02\0\x06\x12\x04\xe8\n\x02\x10\n\r\n\x05\x04*\x02\0\x01\
+    \x12\x04\xe8\n\x11\x20\n\r\n\x05\x04*\x02\0\x03\x12\x04\xe8\n#$\n\r\n\
+    \x05\x04*\x02\0\x08\x12\x04\xe8\n%M\n\x10\n\x08\x04*\x02\0\x08\x9c\x08\0\
+    \x12\x04\xe8\n&L\n\xaf\x03\n\x04\x04*\x02\x01\x12\x06\xf1\n\x02\xf2\n/\
+    \x1a\x9e\x03\x20Optional.\x20The\x20list\x20of\x20fields\x20to\x20update\
+    .\n\x20A\x20mask\x20specifying\x20which\x20fields\x20in\x20the\x20Author\
+    izedView\x20resource\x20should\x20be\n\x20updated.\x20This\x20mask\x20is\
+    \x20relative\x20to\x20the\x20AuthorizedView\x20resource,\x20not\x20to\
+    \x20the\n\x20request\x20message.\x20A\x20field\x20will\x20be\x20overwrit\
+    ten\x20if\x20it\x20is\x20in\x20the\x20mask.\x20If\n\x20empty,\x20all\x20\
+    fields\x20set\x20in\x20the\x20request\x20will\x20be\x20overwritten.\x20A\
+    \x20special\x20value\n\x20`*`\x20means\x20to\x20overwrite\x20all\x20fiel\
+    ds\x20(including\x20fields\x20not\x20set\x20in\x20the\n\x20request).\n\n\
+    \r\n\x05\x04*\x02\x01\x06\x12\x04\xf1\n\x02\x1b\n\r\n\x05\x04*\x02\x01\
+    \x01\x12\x04\xf1\n\x1c'\n\r\n\x05\x04*\x02\x01\x03\x12\x04\xf1\n*+\n\r\n\
+    \x05\x04*\x02\x01\x08\x12\x04\xf2\n\x06.\n\x10\n\x08\x04*\x02\x01\x08\
+    \x9c\x08\0\x12\x04\xf2\n\x07-\n^\n\x04\x04*\x02\x02\x12\x04\xf6\n\x02D\
+    \x1aP\x20Optional.\x20If\x20true,\x20ignore\x20the\x20safety\x20checks\
+    \x20when\x20updating\x20the\n\x20AuthorizedView.\n\n\r\n\x05\x04*\x02\
+    \x02\x05\x12\x04\xf6\n\x02\x06\n\r\n\x05\x04*\x02\x02\x01\x12\x04\xf6\n\
+    \x07\x16\n\r\n\x05\x04*\x02\x02\x03\x12\x04\xf6\n\x19\x1a\n\r\n\x05\x04*\
+    \x02\x02\x08\x12\x04\xf6\n\x1bC\n\x10\n\x08\x04*\x02\x02\x08\x9c\x08\0\
+    \x12\x04\xf6\n\x1cB\n\xa5\x01\n\x02\x04+\x12\x06\xfb\n\0\x85\x0b\x01\x1a\
+    \x96\x01\x20Metadata\x20for\x20the\x20google.longrunning.Operation\x20re\
+    turned\x20by\n\x20[UpdateAuthorizedView][google.bigtable.admin.v2.Bigtab\
+    leTableAdmin.UpdateAuthorizedView].\n\n\x0b\n\x03\x04+\x01\x12\x04\xfb\n\
+    \x08$\na\n\x04\x04+\x02\0\x12\x04\xfe\n\x023\x1aS\x20The\x20request\x20t\
+    hat\x20prompted\x20the\x20initiation\x20of\x20this\x20UpdateAuthorizedVi\
+    ew\n\x20operation.\n\n\r\n\x05\x04+\x02\0\x06\x12\x04\xfe\n\x02\x1d\n\r\
+    \n\x05\x04+\x02\0\x01\x12\x04\xfe\n\x1e.\n\r\n\x05\x04+\x02\0\x03\x12\
+    \x04\xfe\n12\nD\n\x04\x04+\x02\x01\x12\x04\x81\x0b\x02-\x1a6\x20The\x20t\
+    ime\x20at\x20which\x20the\x20original\x20request\x20was\x20received.\n\n\
+    \r\n\x05\x04+\x02\x01\x06\x12\x04\x81\x0b\x02\x1b\n\r\n\x05\x04+\x02\x01\
+    \x01\x12\x04\x81\x0b\x1c(\n\r\n\x05\x04+\x02\x01\x03\x12\x04\x81\x0b+,\n\
+    U\n\x04\x04+\x02\x02\x12\x04\x84\x0b\x02,\x1aG\x20The\x20time\x20at\x20w\
+    hich\x20the\x20operation\x20failed\x20or\x20was\x20completed\x20successf\
+    ully.\n\n\r\n\x05\x04+\x02\x02\x06\x12\x04\x84\x0b\x02\x1b\n\r\n\x05\x04\
+    +\x02\x02\x01\x12\x04\x84\x0b\x1c'\n\r\n\x05\x04+\x02\x02\x03\x12\x04\
+    \x84\x0b*+\n\xaa\x01\n\x02\x04,\x12\x06\x89\x0b\0\x99\x0b\x01\x1a\x9b\
+    \x01\x20Request\x20message\x20for\n\x20[google.bigtable.admin.v2.Bigtabl\
+    eTableAdmin.DeleteAuthorizedView][google.bigtable.admin.v2.BigtableTable\
+    Admin.DeleteAuthorizedView]\n\n\x0b\n\x03\x04,\x01\x12\x04\x89\x0b\x08#\
+    \n\xc6\x01\n\x04\x04,\x02\0\x12\x06\x8d\x0b\x02\x92\x0b\x04\x1a\xb5\x01\
+    \x20Required.\x20The\x20unique\x20name\x20of\x20the\x20AuthorizedView\
+    \x20to\x20be\x20deleted.\n\x20Values\x20are\x20of\x20the\x20form\n\x20`p\
+    rojects/{project}/instances/{instance}/tables/{table}/authorizedViews/{a\
+    uthorized_view}`.\n\n\r\n\x05\x04,\x02\0\x05\x12\x04\x8d\x0b\x02\x08\n\r\
+    \n\x05\x04,\x02\0\x01\x12\x04\x8d\x0b\t\r\n\r\n\x05\x04,\x02\0\x03\x12\
+    \x04\x8d\x0b\x10\x11\n\x0f\n\x05\x04,\x02\0\x08\x12\x06\x8d\x0b\x12\x92\
+    \x0b\x03\n\x10\n\x08\x04,\x02\0\x08\x9c\x08\0\x12\x04\x8e\x0b\x04*\n\x11\
+    \n\x07\x04,\x02\0\x08\x9f\x08\x12\x06\x8f\x0b\x04\x91\x0b\x05\n\xd7\x01\
+    \n\x04\x04,\x02\x01\x12\x04\x98\x0b\x02;\x1a\xc8\x01\x20Optional.\x20The\
+    \x20current\x20etag\x20of\x20the\x20AuthorizedView.\n\x20If\x20an\x20eta\
+    g\x20is\x20provided\x20and\x20does\x20not\x20match\x20the\x20current\x20\
+    etag\x20of\x20the\n\x20AuthorizedView,\x20deletion\x20will\x20be\x20bloc\
+    ked\x20and\x20an\x20ABORTED\x20error\x20will\x20be\n\x20returned.\n\n\r\
+    \n\x05\x04,\x02\x01\x05\x12\x04\x98\x0b\x02\x08\n\r\n\x05\x04,\x02\x01\
+    \x01\x12\x04\x98\x0b\t\r\n\r\n\x05\x04,\x02\x01\x03\x12\x04\x98\x0b\x10\
+    \x11\n\r\n\x05\x04,\x02\x01\x08\x12\x04\x98\x0b\x12:\n\x10\n\x08\x04,\
+    \x02\x01\x08\x9c\x08\0\x12\x04\x98\x0b\x139b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -4273,27 +9888,41 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(8);
+            let mut deps = ::std::vec::Vec::with_capacity(13);
             deps.push(super::annotations::file_descriptor().clone());
+            deps.push(super::client::file_descriptor().clone());
+            deps.push(super::field_behavior::file_descriptor().clone());
+            deps.push(super::resource::file_descriptor().clone());
+            deps.push(super::common::file_descriptor().clone());
             deps.push(super::table::file_descriptor().clone());
             deps.push(super::iam_policy::file_descriptor().clone());
             deps.push(super::policy::file_descriptor().clone());
             deps.push(super::operations::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::duration::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::empty::file_descriptor().clone());
+            deps.push(::protobuf::well_known_types::field_mask::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(21);
+            let mut messages = ::std::vec::Vec::with_capacity(47);
+            messages.push(RestoreTableRequest::generated_message_descriptor_data());
+            messages.push(RestoreTableMetadata::generated_message_descriptor_data());
+            messages.push(OptimizeRestoredTableMetadata::generated_message_descriptor_data());
             messages.push(CreateTableRequest::generated_message_descriptor_data());
             messages.push(CreateTableFromSnapshotRequest::generated_message_descriptor_data());
             messages.push(DropRowRangeRequest::generated_message_descriptor_data());
             messages.push(ListTablesRequest::generated_message_descriptor_data());
             messages.push(ListTablesResponse::generated_message_descriptor_data());
             messages.push(GetTableRequest::generated_message_descriptor_data());
+            messages.push(UpdateTableRequest::generated_message_descriptor_data());
+            messages.push(UpdateTableMetadata::generated_message_descriptor_data());
             messages.push(DeleteTableRequest::generated_message_descriptor_data());
+            messages.push(UndeleteTableRequest::generated_message_descriptor_data());
+            messages.push(UndeleteTableMetadata::generated_message_descriptor_data());
             messages.push(ModifyColumnFamiliesRequest::generated_message_descriptor_data());
             messages.push(GenerateConsistencyTokenRequest::generated_message_descriptor_data());
             messages.push(GenerateConsistencyTokenResponse::generated_message_descriptor_data());
             messages.push(CheckConsistencyRequest::generated_message_descriptor_data());
+            messages.push(StandardReadRemoteWrites::generated_message_descriptor_data());
+            messages.push(DataBoostReadLocalWrites::generated_message_descriptor_data());
             messages.push(CheckConsistencyResponse::generated_message_descriptor_data());
             messages.push(SnapshotTableRequest::generated_message_descriptor_data());
             messages.push(GetSnapshotRequest::generated_message_descriptor_data());
@@ -4302,6 +9931,23 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(DeleteSnapshotRequest::generated_message_descriptor_data());
             messages.push(SnapshotTableMetadata::generated_message_descriptor_data());
             messages.push(CreateTableFromSnapshotMetadata::generated_message_descriptor_data());
+            messages.push(CreateBackupRequest::generated_message_descriptor_data());
+            messages.push(CreateBackupMetadata::generated_message_descriptor_data());
+            messages.push(UpdateBackupRequest::generated_message_descriptor_data());
+            messages.push(GetBackupRequest::generated_message_descriptor_data());
+            messages.push(DeleteBackupRequest::generated_message_descriptor_data());
+            messages.push(ListBackupsRequest::generated_message_descriptor_data());
+            messages.push(ListBackupsResponse::generated_message_descriptor_data());
+            messages.push(CopyBackupRequest::generated_message_descriptor_data());
+            messages.push(CopyBackupMetadata::generated_message_descriptor_data());
+            messages.push(CreateAuthorizedViewRequest::generated_message_descriptor_data());
+            messages.push(CreateAuthorizedViewMetadata::generated_message_descriptor_data());
+            messages.push(ListAuthorizedViewsRequest::generated_message_descriptor_data());
+            messages.push(ListAuthorizedViewsResponse::generated_message_descriptor_data());
+            messages.push(GetAuthorizedViewRequest::generated_message_descriptor_data());
+            messages.push(UpdateAuthorizedViewRequest::generated_message_descriptor_data());
+            messages.push(UpdateAuthorizedViewMetadata::generated_message_descriptor_data());
+            messages.push(DeleteAuthorizedViewRequest::generated_message_descriptor_data());
             messages.push(create_table_request::Split::generated_message_descriptor_data());
             messages.push(modify_column_families_request::Modification::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(0);

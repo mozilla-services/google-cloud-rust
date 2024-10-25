@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -34,14 +34,33 @@ pub struct Type {
     ///  Required. The [TypeCode][google.spanner.v1.TypeCode] for this type.
     // @@protoc_insertion_point(field:google.spanner.v1.Type.code)
     pub code: ::protobuf::EnumOrUnknown<TypeCode>,
-    ///  If [code][google.spanner.v1.Type.code] == [ARRAY][google.spanner.v1.TypeCode.ARRAY], then `array_element_type`
-    ///  is the type of the array elements.
+    ///  If [code][google.spanner.v1.Type.code] ==
+    ///  [ARRAY][google.spanner.v1.TypeCode.ARRAY], then `array_element_type` is the
+    ///  type of the array elements.
     // @@protoc_insertion_point(field:google.spanner.v1.Type.array_element_type)
     pub array_element_type: ::protobuf::MessageField<Type>,
-    ///  If [code][google.spanner.v1.Type.code] == [STRUCT][google.spanner.v1.TypeCode.STRUCT], then `struct_type`
-    ///  provides type information for the struct's fields.
+    ///  If [code][google.spanner.v1.Type.code] ==
+    ///  [STRUCT][google.spanner.v1.TypeCode.STRUCT], then `struct_type` provides
+    ///  type information for the struct's fields.
     // @@protoc_insertion_point(field:google.spanner.v1.Type.struct_type)
     pub struct_type: ::protobuf::MessageField<StructType>,
+    ///  The [TypeAnnotationCode][google.spanner.v1.TypeAnnotationCode] that
+    ///  disambiguates SQL type that Spanner will use to represent values of this
+    ///  type during query processing. This is necessary for some type codes because
+    ///  a single [TypeCode][google.spanner.v1.TypeCode] can be mapped to different
+    ///  SQL types depending on the SQL dialect.
+    ///  [type_annotation][google.spanner.v1.Type.type_annotation] typically is not
+    ///  needed to process the content of a value (it doesn't affect serialization)
+    ///  and clients can ignore it on the read path.
+    // @@protoc_insertion_point(field:google.spanner.v1.Type.type_annotation)
+    pub type_annotation: ::protobuf::EnumOrUnknown<TypeAnnotationCode>,
+    ///  If [code][google.spanner.v1.Type.code] ==
+    ///  [PROTO][google.spanner.v1.TypeCode.PROTO] or
+    ///  [code][google.spanner.v1.Type.code] ==
+    ///  [ENUM][google.spanner.v1.TypeCode.ENUM], then `proto_type_fqn` is the fully
+    ///  qualified name of the proto type representing the proto/enum definition.
+    // @@protoc_insertion_point(field:google.spanner.v1.Type.proto_type_fqn)
+    pub proto_type_fqn: ::std::string::String,
     // special fields
     // @@protoc_insertion_point(special_field:google.spanner.v1.Type.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -59,7 +78,7 @@ impl Type {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "code",
@@ -75,6 +94,16 @@ impl Type {
             "struct_type",
             |m: &Type| { &m.struct_type },
             |m: &mut Type| { &mut m.struct_type },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "type_annotation",
+            |m: &Type| { &m.type_annotation },
+            |m: &mut Type| { &mut m.type_annotation },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "proto_type_fqn",
+            |m: &Type| { &m.proto_type_fqn },
+            |m: &mut Type| { &mut m.proto_type_fqn },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Type>(
             "Type",
@@ -103,6 +132,12 @@ impl ::protobuf::Message for Type {
                 26 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.struct_type)?;
                 },
+                32 => {
+                    self.type_annotation = is.read_enum_or_unknown()?;
+                },
+                42 => {
+                    self.proto_type_fqn = is.read_string()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -126,6 +161,12 @@ impl ::protobuf::Message for Type {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if self.type_annotation != ::protobuf::EnumOrUnknown::new(TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED) {
+            my_size += ::protobuf::rt::int32_size(4, self.type_annotation.value());
+        }
+        if !self.proto_type_fqn.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.proto_type_fqn);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -140,6 +181,12 @@ impl ::protobuf::Message for Type {
         }
         if let Some(v) = self.struct_type.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        if self.type_annotation != ::protobuf::EnumOrUnknown::new(TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED) {
+            os.write_enum(4, ::protobuf::EnumOrUnknown::value(&self.type_annotation))?;
+        }
+        if !self.proto_type_fqn.is_empty() {
+            os.write_string(5, &self.proto_type_fqn)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -161,6 +208,8 @@ impl ::protobuf::Message for Type {
         self.code = ::protobuf::EnumOrUnknown::new(TypeCode::TYPE_CODE_UNSPECIFIED);
         self.array_element_type.clear();
         self.struct_type.clear();
+        self.type_annotation = ::protobuf::EnumOrUnknown::new(TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED);
+        self.proto_type_fqn.clear();
         self.special_fields.clear();
     }
 
@@ -169,6 +218,8 @@ impl ::protobuf::Message for Type {
             code: ::protobuf::EnumOrUnknown::from_i32(0),
             array_element_type: ::protobuf::MessageField::none(),
             struct_type: ::protobuf::MessageField::none(),
+            type_annotation: ::protobuf::EnumOrUnknown::from_i32(0),
+            proto_type_fqn: ::std::string::String::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -192,7 +243,8 @@ impl ::protobuf::reflect::ProtobufValue for Type {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-///  `StructType` defines the fields of a [STRUCT][google.spanner.v1.TypeCode.STRUCT] type.
+///  `StructType` defines the fields of a
+///  [STRUCT][google.spanner.v1.TypeCode.STRUCT] type.
 // @@protoc_insertion_point(message:google.spanner.v1.StructType)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct StructType {
@@ -200,9 +252,9 @@ pub struct StructType {
     ///  The list of fields that make up this struct. Order is
     ///  significant, because values of this struct type are represented as
     ///  lists, where the order of field values matches the order of
-    ///  fields in the [StructType][google.spanner.v1.StructType]. In turn, the order of fields
-    ///  matches the order of columns in a read request, or the order of
-    ///  fields in the `SELECT` clause of a query.
+    ///  fields in the [StructType][google.spanner.v1.StructType]. In turn, the
+    ///  order of fields matches the order of columns in a read request, or the
+    ///  order of fields in the `SELECT` clause of a query.
     // @@protoc_insertion_point(field:google.spanner.v1.StructType.fields)
     pub fields: ::std::vec::Vec<struct_type::Field>,
     // special fields
@@ -333,7 +385,7 @@ pub mod struct_type {
         ///  SQL queries, it is the column alias (e.g., `"Word"` in the
         ///  query `"SELECT 'hello' AS Word"`), or the column name (e.g.,
         ///  `"ColName"` in the query `"SELECT ColName FROM Table"`). Some
-        ///  columns might have an empty name (e.g., !"SELECT
+        ///  columns might have an empty name (e.g., `"SELECT
         ///  UPPER(ColName)"`). Note that a query result can contain
         ///  multiple fields with the same name.
         // @@protoc_insertion_point(field:google.spanner.v1.StructType.Field.name)
@@ -493,6 +545,8 @@ pub enum TypeCode {
     INT64 = 2,
     // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.FLOAT64)
     FLOAT64 = 3,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.FLOAT32)
+    FLOAT32 = 15,
     // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.TIMESTAMP)
     TIMESTAMP = 4,
     // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.DATE)
@@ -505,6 +559,16 @@ pub enum TypeCode {
     ARRAY = 8,
     // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.STRUCT)
     STRUCT = 9,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.NUMERIC)
+    NUMERIC = 10,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.JSON)
+    JSON = 11,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.PROTO)
+    PROTO = 13,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.ENUM)
+    ENUM = 14,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeCode.INTERVAL)
+    INTERVAL = 16,
 }
 
 impl ::protobuf::Enum for TypeCode {
@@ -520,12 +584,18 @@ impl ::protobuf::Enum for TypeCode {
             1 => ::std::option::Option::Some(TypeCode::BOOL),
             2 => ::std::option::Option::Some(TypeCode::INT64),
             3 => ::std::option::Option::Some(TypeCode::FLOAT64),
+            15 => ::std::option::Option::Some(TypeCode::FLOAT32),
             4 => ::std::option::Option::Some(TypeCode::TIMESTAMP),
             5 => ::std::option::Option::Some(TypeCode::DATE),
             6 => ::std::option::Option::Some(TypeCode::STRING),
             7 => ::std::option::Option::Some(TypeCode::BYTES),
             8 => ::std::option::Option::Some(TypeCode::ARRAY),
             9 => ::std::option::Option::Some(TypeCode::STRUCT),
+            10 => ::std::option::Option::Some(TypeCode::NUMERIC),
+            11 => ::std::option::Option::Some(TypeCode::JSON),
+            13 => ::std::option::Option::Some(TypeCode::PROTO),
+            14 => ::std::option::Option::Some(TypeCode::ENUM),
+            16 => ::std::option::Option::Some(TypeCode::INTERVAL),
             _ => ::std::option::Option::None
         }
     }
@@ -536,12 +606,18 @@ impl ::protobuf::Enum for TypeCode {
             "BOOL" => ::std::option::Option::Some(TypeCode::BOOL),
             "INT64" => ::std::option::Option::Some(TypeCode::INT64),
             "FLOAT64" => ::std::option::Option::Some(TypeCode::FLOAT64),
+            "FLOAT32" => ::std::option::Option::Some(TypeCode::FLOAT32),
             "TIMESTAMP" => ::std::option::Option::Some(TypeCode::TIMESTAMP),
             "DATE" => ::std::option::Option::Some(TypeCode::DATE),
             "STRING" => ::std::option::Option::Some(TypeCode::STRING),
             "BYTES" => ::std::option::Option::Some(TypeCode::BYTES),
             "ARRAY" => ::std::option::Option::Some(TypeCode::ARRAY),
             "STRUCT" => ::std::option::Option::Some(TypeCode::STRUCT),
+            "NUMERIC" => ::std::option::Option::Some(TypeCode::NUMERIC),
+            "JSON" => ::std::option::Option::Some(TypeCode::JSON),
+            "PROTO" => ::std::option::Option::Some(TypeCode::PROTO),
+            "ENUM" => ::std::option::Option::Some(TypeCode::ENUM),
+            "INTERVAL" => ::std::option::Option::Some(TypeCode::INTERVAL),
             _ => ::std::option::Option::None
         }
     }
@@ -551,12 +627,18 @@ impl ::protobuf::Enum for TypeCode {
         TypeCode::BOOL,
         TypeCode::INT64,
         TypeCode::FLOAT64,
+        TypeCode::FLOAT32,
         TypeCode::TIMESTAMP,
         TypeCode::DATE,
         TypeCode::STRING,
         TypeCode::BYTES,
         TypeCode::ARRAY,
         TypeCode::STRUCT,
+        TypeCode::NUMERIC,
+        TypeCode::JSON,
+        TypeCode::PROTO,
+        TypeCode::ENUM,
+        TypeCode::INTERVAL,
     ];
 }
 
@@ -567,7 +649,24 @@ impl ::protobuf::EnumFull for TypeCode {
     }
 
     fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-        let index = *self as usize;
+        let index = match self {
+            TypeCode::TYPE_CODE_UNSPECIFIED => 0,
+            TypeCode::BOOL => 1,
+            TypeCode::INT64 => 2,
+            TypeCode::FLOAT64 => 3,
+            TypeCode::FLOAT32 => 4,
+            TypeCode::TIMESTAMP => 5,
+            TypeCode::DATE => 6,
+            TypeCode::STRING => 7,
+            TypeCode::BYTES => 8,
+            TypeCode::ARRAY => 9,
+            TypeCode::STRUCT => 10,
+            TypeCode::NUMERIC => 11,
+            TypeCode::JSON => 12,
+            TypeCode::PROTO => 13,
+            TypeCode::ENUM => 14,
+            TypeCode::INTERVAL => 15,
+        };
         Self::enum_descriptor().value_by_index(index)
     }
 }
@@ -584,139 +683,328 @@ impl TypeCode {
     }
 }
 
+///  `TypeAnnotationCode` is used as a part of [Type][google.spanner.v1.Type] to
+///  disambiguate SQL types that should be used for a given Cloud Spanner value.
+///  Disambiguation is needed because the same Cloud Spanner type can be mapped to
+///  different SQL types depending on SQL dialect. TypeAnnotationCode doesn't
+///  affect the way value is serialized.
+#[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+// @@protoc_insertion_point(enum:google.spanner.v1.TypeAnnotationCode)
+pub enum TypeAnnotationCode {
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeAnnotationCode.TYPE_ANNOTATION_CODE_UNSPECIFIED)
+    TYPE_ANNOTATION_CODE_UNSPECIFIED = 0,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeAnnotationCode.PG_NUMERIC)
+    PG_NUMERIC = 2,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeAnnotationCode.PG_JSONB)
+    PG_JSONB = 3,
+    // @@protoc_insertion_point(enum_value:google.spanner.v1.TypeAnnotationCode.PG_OID)
+    PG_OID = 4,
+}
+
+impl ::protobuf::Enum for TypeAnnotationCode {
+    const NAME: &'static str = "TypeAnnotationCode";
+
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<TypeAnnotationCode> {
+        match value {
+            0 => ::std::option::Option::Some(TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED),
+            2 => ::std::option::Option::Some(TypeAnnotationCode::PG_NUMERIC),
+            3 => ::std::option::Option::Some(TypeAnnotationCode::PG_JSONB),
+            4 => ::std::option::Option::Some(TypeAnnotationCode::PG_OID),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn from_str(str: &str) -> ::std::option::Option<TypeAnnotationCode> {
+        match str {
+            "TYPE_ANNOTATION_CODE_UNSPECIFIED" => ::std::option::Option::Some(TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED),
+            "PG_NUMERIC" => ::std::option::Option::Some(TypeAnnotationCode::PG_NUMERIC),
+            "PG_JSONB" => ::std::option::Option::Some(TypeAnnotationCode::PG_JSONB),
+            "PG_OID" => ::std::option::Option::Some(TypeAnnotationCode::PG_OID),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    const VALUES: &'static [TypeAnnotationCode] = &[
+        TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED,
+        TypeAnnotationCode::PG_NUMERIC,
+        TypeAnnotationCode::PG_JSONB,
+        TypeAnnotationCode::PG_OID,
+    ];
+}
+
+impl ::protobuf::EnumFull for TypeAnnotationCode {
+    fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().enum_by_package_relative_name("TypeAnnotationCode").unwrap()).clone()
+    }
+
+    fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+        let index = match self {
+            TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED => 0,
+            TypeAnnotationCode::PG_NUMERIC => 1,
+            TypeAnnotationCode::PG_JSONB => 2,
+            TypeAnnotationCode::PG_OID => 3,
+        };
+        Self::enum_descriptor().value_by_index(index)
+    }
+}
+
+impl ::std::default::Default for TypeAnnotationCode {
+    fn default() -> Self {
+        TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED
+    }
+}
+
+impl TypeAnnotationCode {
+    fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+        ::protobuf::reflect::GeneratedEnumDescriptorData::new::<TypeAnnotationCode>("TypeAnnotationCode")
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x1cgoogle/spanner/v1/type.proto\x12\x11google.spanner.v1\x1a\x1cgoogl\
-    e/api/annotations.proto\"\xbe\x01\n\x04Type\x12/\n\x04code\x18\x01\x20\
-    \x01(\x0e2\x1b.google.spanner.v1.TypeCodeR\x04code\x12E\n\x12array_eleme\
-    nt_type\x18\x02\x20\x01(\x0b2\x17.google.spanner.v1.TypeR\x10arrayElemen\
-    tType\x12>\n\x0bstruct_type\x18\x03\x20\x01(\x0b2\x1d.google.spanner.v1.\
-    StructTypeR\nstructType\"\x93\x01\n\nStructType\x12;\n\x06fields\x18\x01\
-    \x20\x03(\x0b2#.google.spanner.v1.StructType.FieldR\x06fields\x1aH\n\x05\
-    Field\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12+\n\x04type\x18\
-    \x02\x20\x01(\x0b2\x17.google.spanner.v1.TypeR\x04type*\x8e\x01\n\x08Typ\
-    eCode\x12\x19\n\x15TYPE_CODE_UNSPECIFIED\x10\0\x12\x08\n\x04BOOL\x10\x01\
-    \x12\t\n\x05INT64\x10\x02\x12\x0b\n\x07FLOAT64\x10\x03\x12\r\n\tTIMESTAM\
+    \n\x1cgoogle/spanner/v1/type.proto\x12\x11google.spanner.v1\x1a\x1fgoogl\
+    e/api/field_behavior.proto\"\xb9\x02\n\x04Type\x124\n\x04code\x18\x01\
+    \x20\x01(\x0e2\x1b.google.spanner.v1.TypeCodeR\x04codeB\x03\xe0A\x02\x12\
+    E\n\x12array_element_type\x18\x02\x20\x01(\x0b2\x17.google.spanner.v1.Ty\
+    peR\x10arrayElementType\x12>\n\x0bstruct_type\x18\x03\x20\x01(\x0b2\x1d.\
+    google.spanner.v1.StructTypeR\nstructType\x12N\n\x0ftype_annotation\x18\
+    \x04\x20\x01(\x0e2%.google.spanner.v1.TypeAnnotationCodeR\x0etypeAnnotat\
+    ion\x12$\n\x0eproto_type_fqn\x18\x05\x20\x01(\tR\x0cprotoTypeFqn\"\x93\
+    \x01\n\nStructType\x12;\n\x06fields\x18\x01\x20\x03(\x0b2#.google.spanne\
+    r.v1.StructType.FieldR\x06fields\x1aH\n\x05Field\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12+\n\x04type\x18\x02\x20\x01(\x0b2\x17.google\
+    .spanner.v1.TypeR\x04type*\xd5\x01\n\x08TypeCode\x12\x19\n\x15TYPE_CODE_\
+    UNSPECIFIED\x10\0\x12\x08\n\x04BOOL\x10\x01\x12\t\n\x05INT64\x10\x02\x12\
+    \x0b\n\x07FLOAT64\x10\x03\x12\x0b\n\x07FLOAT32\x10\x0f\x12\r\n\tTIMESTAM\
     P\x10\x04\x12\x08\n\x04DATE\x10\x05\x12\n\n\x06STRING\x10\x06\x12\t\n\
-    \x05BYTES\x10\x07\x12\t\n\x05ARRAY\x10\x08\x12\n\n\x06STRUCT\x10\tB\x92\
-    \x01\n\x15com.google.spanner.v1B\tTypeProtoP\x01Z8google.golang.org/genp\
-    roto/googleapis/spanner/v1;spanner\xaa\x02\x17Google.Cloud.Spanner.V1\
-    \xca\x02\x17Google\\Cloud\\Spanner\\V1J\xfc!\n\x06\x12\x04\x0f\0v\x01\n\
-    \xbe\x04\n\x01\x0c\x12\x03\x0f\0\x122\xb3\x04\x20Copyright\x202019\x20Go\
-    ogle\x20LLC.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Ve\
-    rsion\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20t\
-    his\x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\
-    \x20You\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\
-    \x20\x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Un\
-    less\x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\
-    \x20writing,\x20software\n\x20distributed\x20under\x20the\x20License\x20\
-    is\x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20\
-    WARRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20expres\
-    s\x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
-    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
-    r\x20the\x20License.\n\n\n\x08\n\x01\x02\x12\x03\x11\0\x1a\n\t\n\x02\x03\
-    \0\x12\x03\x13\0&\n\x08\n\x01\x08\x12\x03\x15\04\n\t\n\x02\x08%\x12\x03\
-    \x15\04\n\x08\n\x01\x08\x12\x03\x16\0O\n\t\n\x02\x08\x0b\x12\x03\x16\0O\
-    \n\x08\n\x01\x08\x12\x03\x17\0\"\n\t\n\x02\x08\n\x12\x03\x17\0\"\n\x08\n\
-    \x01\x08\x12\x03\x18\0*\n\t\n\x02\x08\x08\x12\x03\x18\0*\n\x08\n\x01\x08\
-    \x12\x03\x19\0.\n\t\n\x02\x08\x01\x12\x03\x19\0.\n\x08\n\x01\x08\x12\x03\
-    \x1a\04\n\t\n\x02\x08)\x12\x03\x1a\04\n\xd9\x02\n\x02\x05\0\x12\x04#\0M\
-    \x01\x1a\xcc\x02\x20`TypeCode`\x20is\x20used\x20as\x20part\x20of\x20[Typ\
-    e][google.spanner.v1.Type]\x20to\n\x20indicate\x20the\x20type\x20of\x20a\
-    \x20Cloud\x20Spanner\x20value.\n\n\x20Each\x20legal\x20value\x20of\x20a\
-    \x20type\x20can\x20be\x20encoded\x20to\x20or\x20decoded\x20from\x20a\x20\
-    JSON\n\x20value,\x20using\x20the\x20encodings\x20described\x20below.\x20\
-    All\x20Cloud\x20Spanner\x20values\x20can\n\x20be\x20`null`,\x20regardles\
-    s\x20of\x20type;\x20`null`s\x20are\x20always\x20encoded\x20as\x20a\x20JS\
-    ON\n\x20`null`.\n\n\n\n\x03\x05\0\x01\x12\x03#\x05\r\n\x1d\n\x04\x05\0\
-    \x02\0\x12\x03%\x02\x1c\x1a\x10\x20Not\x20specified.\n\n\x0c\n\x05\x05\0\
-    \x02\0\x01\x12\x03%\x02\x17\n\x0c\n\x05\x05\0\x02\0\x02\x12\x03%\x1a\x1b\
-    \n1\n\x04\x05\0\x02\x01\x12\x03(\x02\x0b\x1a$\x20Encoded\x20as\x20JSON\
-    \x20`true`\x20or\x20`false`.\n\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03(\
-    \x02\x06\n\x0c\n\x05\x05\0\x02\x01\x02\x12\x03(\t\n\n6\n\x04\x05\0\x02\
-    \x02\x12\x03+\x02\x0c\x1a)\x20Encoded\x20as\x20`string`,\x20in\x20decima\
-    l\x20format.\n\n\x0c\n\x05\x05\0\x02\x02\x01\x12\x03+\x02\x07\n\x0c\n\
-    \x05\x05\0\x02\x02\x02\x12\x03+\n\x0b\n\\\n\x04\x05\0\x02\x03\x12\x03/\
-    \x02\x0e\x1aO\x20Encoded\x20as\x20`number`,\x20or\x20the\x20strings\x20`\
-    \"NaN\"`,\x20`\"Infinity\"`,\x20or\n\x20`\"-Infinity\"`.\n\n\x0c\n\x05\
-    \x05\0\x02\x03\x01\x12\x03/\x02\t\n\x0c\n\x05\x05\0\x02\x03\x02\x12\x03/\
-    \x0c\r\n\xdd\x02\n\x04\x05\0\x02\x04\x12\x039\x02\x10\x1a\xcf\x02\x20Enc\
-    oded\x20as\x20`string`\x20in\x20RFC\x203339\x20timestamp\x20format.\x20T\
-    he\x20time\x20zone\n\x20must\x20be\x20present,\x20and\x20must\x20be\x20`\
-    \"Z\"`.\n\n\x20If\x20the\x20schema\x20has\x20the\x20column\x20option\n\
-    \x20`allow_commit_timestamp=true`,\x20the\x20placeholder\x20string\n\x20\
-    `\"spanner.commit_timestamp()\"`\x20can\x20be\x20used\x20to\x20instruct\
-    \x20the\x20system\n\x20to\x20insert\x20the\x20commit\x20timestamp\x20ass\
-    ociated\x20with\x20the\x20transaction\n\x20commit.\n\n\x0c\n\x05\x05\0\
-    \x02\x04\x01\x12\x039\x02\x0b\n\x0c\n\x05\x05\0\x02\x04\x02\x12\x039\x0e\
-    \x0f\n;\n\x04\x05\0\x02\x05\x12\x03<\x02\x0b\x1a.\x20Encoded\x20as\x20`s\
-    tring`\x20in\x20RFC\x203339\x20date\x20format.\n\n\x0c\n\x05\x05\0\x02\
-    \x05\x01\x12\x03<\x02\x06\n\x0c\n\x05\x05\0\x02\x05\x02\x12\x03<\t\n\n#\
-    \n\x04\x05\0\x02\x06\x12\x03?\x02\r\x1a\x16\x20Encoded\x20as\x20`string`\
-    .\n\n\x0c\n\x05\x05\0\x02\x06\x01\x12\x03?\x02\x08\n\x0c\n\x05\x05\0\x02\
-    \x06\x02\x12\x03?\x0b\x0c\nZ\n\x04\x05\0\x02\x07\x12\x03C\x02\x0c\x1aM\
-    \x20Encoded\x20as\x20a\x20base64-encoded\x20`string`,\x20as\x20described\
-    \x20in\x20RFC\x204648,\n\x20section\x204.\n\n\x0c\n\x05\x05\0\x02\x07\
-    \x01\x12\x03C\x02\x07\n\x0c\n\x05\x05\0\x02\x07\x02\x12\x03C\n\x0b\n\x9a\
-    \x01\n\x04\x05\0\x02\x08\x12\x03H\x02\x0c\x1a\x8c\x01\x20Encoded\x20as\
-    \x20`list`,\x20where\x20the\x20list\x20elements\x20are\x20represented\n\
-    \x20according\x20to\n\x20[array_element_type][google.spanner.v1.Type.arr\
-    ay_element_type].\n\n\x0c\n\x05\x05\0\x02\x08\x01\x12\x03H\x02\x07\n\x0c\
-    \n\x05\x05\0\x02\x08\x02\x12\x03H\n\x0b\n\x94\x01\n\x04\x05\0\x02\t\x12\
-    \x03L\x02\r\x1a\x86\x01\x20Encoded\x20as\x20`list`,\x20where\x20list\x20\
-    element\x20`i`\x20is\x20represented\x20according\n\x20to\x20[struct_type\
-    .fields[i]][google.spanner.v1.StructType.fields].\n\n\x0c\n\x05\x05\0\
-    \x02\t\x01\x12\x03L\x02\x08\n\x0c\n\x05\x05\0\x02\t\x02\x12\x03L\x0b\x0c\
-    \n\x84\x01\n\x02\x04\0\x12\x04Q\0\\\x01\x1ax\x20`Type`\x20indicates\x20t\
-    he\x20type\x20of\x20a\x20Cloud\x20Spanner\x20value,\x20as\x20might\x20be\
-    \x20stored\x20in\x20a\n\x20table\x20cell\x20or\x20returned\x20from\x20an\
-    \x20SQL\x20query.\n\n\n\n\x03\x04\0\x01\x12\x03Q\x08\x0c\nR\n\x04\x04\0\
-    \x02\0\x12\x03S\x02\x14\x1aE\x20Required.\x20The\x20[TypeCode][google.sp\
-    anner.v1.TypeCode]\x20for\x20this\x20type.\n\n\x0c\n\x05\x04\0\x02\0\x06\
-    \x12\x03S\x02\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03S\x0b\x0f\n\x0c\n\x05\
-    \x04\0\x02\0\x03\x12\x03S\x12\x13\n\xa2\x01\n\x04\x04\0\x02\x01\x12\x03W\
-    \x02\x1e\x1a\x94\x01\x20If\x20[code][google.spanner.v1.Type.code]\x20==\
-    \x20[ARRAY][google.spanner.v1.TypeCode.ARRAY],\x20then\x20`array_element\
-    _type`\n\x20is\x20the\x20type\x20of\x20the\x20array\x20elements.\n\n\x0c\
-    \n\x05\x04\0\x02\x01\x06\x12\x03W\x02\x06\n\x0c\n\x05\x04\0\x02\x01\x01\
-    \x12\x03W\x07\x19\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03W\x1c\x1d\n\xad\
-    \x01\n\x04\x04\0\x02\x02\x12\x03[\x02\x1d\x1a\x9f\x01\x20If\x20[code][go\
-    ogle.spanner.v1.Type.code]\x20==\x20[STRUCT][google.spanner.v1.TypeCode.\
-    STRUCT],\x20then\x20`struct_type`\n\x20provides\x20type\x20information\
-    \x20for\x20the\x20struct's\x20fields.\n\n\x0c\n\x05\x04\0\x02\x02\x06\
-    \x12\x03[\x02\x0c\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03[\r\x18\n\x0c\n\
-    \x05\x04\0\x02\x02\x03\x12\x03[\x1b\x1c\nd\n\x02\x04\x01\x12\x04_\0v\x01\
-    \x1aX\x20`StructType`\x20defines\x20the\x20fields\x20of\x20a\x20[STRUCT]\
-    [google.spanner.v1.TypeCode.STRUCT]\x20type.\n\n\n\n\x03\x04\x01\x01\x12\
-    \x03_\x08\x12\n@\n\x04\x04\x01\x03\0\x12\x04a\x02m\x03\x1a2\x20Message\
-    \x20representing\x20a\x20single\x20field\x20of\x20a\x20struct.\n\n\x0c\n\
-    \x05\x04\x01\x03\0\x01\x12\x03a\n\x0f\n\x99\x03\n\x06\x04\x01\x03\0\x02\
-    \0\x12\x03i\x04\x14\x1a\x89\x03\x20The\x20name\x20of\x20the\x20field.\
-    \x20For\x20reads,\x20this\x20is\x20the\x20column\x20name.\x20For\n\x20SQ\
-    L\x20queries,\x20it\x20is\x20the\x20column\x20alias\x20(e.g.,\x20`\"Word\
-    \"`\x20in\x20the\n\x20query\x20`\"SELECT\x20'hello'\x20AS\x20Word\"`),\
-    \x20or\x20the\x20column\x20name\x20(e.g.,\n\x20`\"ColName\"`\x20in\x20th\
-    e\x20query\x20`\"SELECT\x20ColName\x20FROM\x20Table\"`).\x20Some\n\x20co\
-    lumns\x20might\x20have\x20an\x20empty\x20name\x20(e.g.,\x20!\"SELECT\n\
-    \x20UPPER(ColName)\"`).\x20Note\x20that\x20a\x20query\x20result\x20can\
-    \x20contain\n\x20multiple\x20fields\x20with\x20the\x20same\x20name.\n\n\
-    \x0e\n\x07\x04\x01\x03\0\x02\0\x05\x12\x03i\x04\n\n\x0e\n\x07\x04\x01\
-    \x03\0\x02\0\x01\x12\x03i\x0b\x0f\n\x0e\n\x07\x04\x01\x03\0\x02\0\x03\
-    \x12\x03i\x12\x13\n'\n\x06\x04\x01\x03\0\x02\x01\x12\x03l\x04\x12\x1a\
-    \x18\x20The\x20type\x20of\x20the\x20field.\n\n\x0e\n\x07\x04\x01\x03\0\
-    \x02\x01\x06\x12\x03l\x04\x08\n\x0e\n\x07\x04\x01\x03\0\x02\x01\x01\x12\
-    \x03l\t\r\n\x0e\n\x07\x04\x01\x03\0\x02\x01\x03\x12\x03l\x10\x11\n\x8a\
-    \x03\n\x04\x04\x01\x02\0\x12\x03u\x02\x1c\x1a\xfc\x02\x20The\x20list\x20\
-    of\x20fields\x20that\x20make\x20up\x20this\x20struct.\x20Order\x20is\n\
-    \x20significant,\x20because\x20values\x20of\x20this\x20struct\x20type\
-    \x20are\x20represented\x20as\n\x20lists,\x20where\x20the\x20order\x20of\
-    \x20field\x20values\x20matches\x20the\x20order\x20of\n\x20fields\x20in\
-    \x20the\x20[StructType][google.spanner.v1.StructType].\x20In\x20turn,\
-    \x20the\x20order\x20of\x20fields\n\x20matches\x20the\x20order\x20of\x20c\
-    olumns\x20in\x20a\x20read\x20request,\x20or\x20the\x20order\x20of\n\x20f\
-    ields\x20in\x20the\x20`SELECT`\x20clause\x20of\x20a\x20query.\n\n\x0c\n\
-    \x05\x04\x01\x02\0\x04\x12\x03u\x02\n\n\x0c\n\x05\x04\x01\x02\0\x06\x12\
-    \x03u\x0b\x10\n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03u\x11\x17\n\x0c\n\x05\
-    \x04\x01\x02\0\x03\x12\x03u\x1a\x1bb\x06proto3\
+    \x05BYTES\x10\x07\x12\t\n\x05ARRAY\x10\x08\x12\n\n\x06STRUCT\x10\t\x12\
+    \x0b\n\x07NUMERIC\x10\n\x12\x08\n\x04JSON\x10\x0b\x12\t\n\x05PROTO\x10\r\
+    \x12\x08\n\x04ENUM\x10\x0e\x12\x0c\n\x08INTERVAL\x10\x10*d\n\x12TypeAnno\
+    tationCode\x12$\n\x20TYPE_ANNOTATION_CODE_UNSPECIFIED\x10\0\x12\x0e\n\nP\
+    G_NUMERIC\x10\x02\x12\x0c\n\x08PG_JSONB\x10\x03\x12\n\n\x06PG_OID\x10\
+    \x04B\xac\x01\n\x15com.google.spanner.v1B\tTypeProtoP\x01Z5cloud.google.\
+    com/go/spanner/apiv1/spannerpb;spannerpb\xaa\x02\x17Google.Cloud.Spanner\
+    .V1\xca\x02\x17Google\\Cloud\\Spanner\\V1\xea\x02\x1aGoogle::Cloud::Span\
+    ner::V1J\xc2A\n\x07\x12\x05\x0e\0\xd1\x01\x01\n\xbc\x04\n\x01\x0c\x12\
+    \x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\x20LLC\n\n\x20Lic\
+    ensed\x20under\x20the\x20Apache\x20License,\x20Version\x202.0\x20(the\
+    \x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20file\x20excep\
+    t\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20may\x20obta\
+    in\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\x20\x20htt\
+    p://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20required\x20by\
+    \x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\x20softwar\
+    e\n\x20distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\
+    \x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\x20OR\x20CON\
+    DITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\x20implied.\n\
+    \x20See\x20the\x20License\x20for\x20the\x20specific\x20language\x20gover\
+    ning\x20permissions\x20and\n\x20limitations\x20under\x20the\x20License.\
+    \n\n\x08\n\x01\x02\x12\x03\x10\0\x1a\n\t\n\x02\x03\0\x12\x03\x12\0)\n\
+    \x08\n\x01\x08\x12\x03\x14\04\n\t\n\x02\x08%\x12\x03\x14\04\n\x08\n\x01\
+    \x08\x12\x03\x15\0L\n\t\n\x02\x08\x0b\x12\x03\x15\0L\n\x08\n\x01\x08\x12\
+    \x03\x16\0\"\n\t\n\x02\x08\n\x12\x03\x16\0\"\n\x08\n\x01\x08\x12\x03\x17\
+    \0*\n\t\n\x02\x08\x08\x12\x03\x17\0*\n\x08\n\x01\x08\x12\x03\x18\0.\n\t\
+    \n\x02\x08\x01\x12\x03\x18\0.\n\x08\n\x01\x08\x12\x03\x19\04\n\t\n\x02\
+    \x08)\x12\x03\x19\04\n\x08\n\x01\x08\x12\x03\x1a\03\n\t\n\x02\x08-\x12\
+    \x03\x1a\03\n\x84\x01\n\x02\x04\0\x12\x04\x1e\0<\x01\x1ax\x20`Type`\x20i\
+    ndicates\x20the\x20type\x20of\x20a\x20Cloud\x20Spanner\x20value,\x20as\
+    \x20might\x20be\x20stored\x20in\x20a\n\x20table\x20cell\x20or\x20returne\
+    d\x20from\x20an\x20SQL\x20query.\n\n\n\n\x03\x04\0\x01\x12\x03\x1e\x08\
+    \x0c\nR\n\x04\x04\0\x02\0\x12\x03\x20\x02=\x1aE\x20Required.\x20The\x20[\
+    TypeCode][google.spanner.v1.TypeCode]\x20for\x20this\x20type.\n\n\x0c\n\
+    \x05\x04\0\x02\0\x06\x12\x03\x20\x02\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\
+    \x03\x20\x0b\x0f\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x20\x12\x13\n\x0c\n\
+    \x05\x04\0\x02\0\x08\x12\x03\x20\x14<\n\x0f\n\x08\x04\0\x02\0\x08\x9c\
+    \x08\0\x12\x03\x20\x15;\n\xa3\x01\n\x04\x04\0\x02\x01\x12\x03%\x02\x1e\
+    \x1a\x95\x01\x20If\x20[code][google.spanner.v1.Type.code]\x20==\n\x20[AR\
+    RAY][google.spanner.v1.TypeCode.ARRAY],\x20then\x20`array_element_type`\
+    \x20is\x20the\n\x20type\x20of\x20the\x20array\x20elements.\n\n\x0c\n\x05\
+    \x04\0\x02\x01\x06\x12\x03%\x02\x06\n\x0c\n\x05\x04\0\x02\x01\x01\x12\
+    \x03%\x07\x19\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03%\x1c\x1d\n\xae\x01\n\
+    \x04\x04\0\x02\x02\x12\x03*\x02\x1d\x1a\xa0\x01\x20If\x20[code][google.s\
+    panner.v1.Type.code]\x20==\n\x20[STRUCT][google.spanner.v1.TypeCode.STRU\
+    CT],\x20then\x20`struct_type`\x20provides\n\x20type\x20information\x20fo\
+    r\x20the\x20struct's\x20fields.\n\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03*\
+    \x02\x0c\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03*\r\x18\n\x0c\n\x05\x04\0\
+    \x02\x02\x03\x12\x03*\x1b\x1c\n\xa4\x04\n\x04\x04\0\x02\x03\x12\x034\x02\
+    )\x1a\x96\x04\x20The\x20[TypeAnnotationCode][google.spanner.v1.TypeAnnot\
+    ationCode]\x20that\n\x20disambiguates\x20SQL\x20type\x20that\x20Spanner\
+    \x20will\x20use\x20to\x20represent\x20values\x20of\x20this\n\x20type\x20\
+    during\x20query\x20processing.\x20This\x20is\x20necessary\x20for\x20some\
+    \x20type\x20codes\x20because\n\x20a\x20single\x20[TypeCode][google.spann\
+    er.v1.TypeCode]\x20can\x20be\x20mapped\x20to\x20different\n\x20SQL\x20ty\
+    pes\x20depending\x20on\x20the\x20SQL\x20dialect.\n\x20[type_annotation][\
+    google.spanner.v1.Type.type_annotation]\x20typically\x20is\x20not\n\x20n\
+    eeded\x20to\x20process\x20the\x20content\x20of\x20a\x20value\x20(it\x20d\
+    oesn't\x20affect\x20serialization)\n\x20and\x20clients\x20can\x20ignore\
+    \x20it\x20on\x20the\x20read\x20path.\n\n\x0c\n\x05\x04\0\x02\x03\x06\x12\
+    \x034\x02\x14\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x034\x15$\n\x0c\n\x05\
+    \x04\0\x02\x03\x03\x12\x034'(\n\xa6\x02\n\x04\x04\0\x02\x04\x12\x03;\x02\
+    \x1c\x1a\x98\x02\x20If\x20[code][google.spanner.v1.Type.code]\x20==\n\
+    \x20[PROTO][google.spanner.v1.TypeCode.PROTO]\x20or\n\x20[code][google.s\
+    panner.v1.Type.code]\x20==\n\x20[ENUM][google.spanner.v1.TypeCode.ENUM],\
+    \x20then\x20`proto_type_fqn`\x20is\x20the\x20fully\n\x20qualified\x20nam\
+    e\x20of\x20the\x20proto\x20type\x20representing\x20the\x20proto/enum\x20\
+    definition.\n\n\x0c\n\x05\x04\0\x02\x04\x05\x12\x03;\x02\x08\n\x0c\n\x05\
+    \x04\0\x02\x04\x01\x12\x03;\t\x17\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x03;\
+    \x1a\x1b\ne\n\x02\x04\x01\x12\x04@\0W\x01\x1aY\x20`StructType`\x20define\
+    s\x20the\x20fields\x20of\x20a\n\x20[STRUCT][google.spanner.v1.TypeCode.S\
+    TRUCT]\x20type.\n\n\n\n\x03\x04\x01\x01\x12\x03@\x08\x12\n@\n\x04\x04\
+    \x01\x03\0\x12\x04B\x02N\x03\x1a2\x20Message\x20representing\x20a\x20sin\
+    gle\x20field\x20of\x20a\x20struct.\n\n\x0c\n\x05\x04\x01\x03\0\x01\x12\
+    \x03B\n\x0f\n\x99\x03\n\x06\x04\x01\x03\0\x02\0\x12\x03J\x04\x14\x1a\x89\
+    \x03\x20The\x20name\x20of\x20the\x20field.\x20For\x20reads,\x20this\x20i\
+    s\x20the\x20column\x20name.\x20For\n\x20SQL\x20queries,\x20it\x20is\x20t\
+    he\x20column\x20alias\x20(e.g.,\x20`\"Word\"`\x20in\x20the\n\x20query\
+    \x20`\"SELECT\x20'hello'\x20AS\x20Word\"`),\x20or\x20the\x20column\x20na\
+    me\x20(e.g.,\n\x20`\"ColName\"`\x20in\x20the\x20query\x20`\"SELECT\x20Co\
+    lName\x20FROM\x20Table\"`).\x20Some\n\x20columns\x20might\x20have\x20an\
+    \x20empty\x20name\x20(e.g.,\x20`\"SELECT\n\x20UPPER(ColName)\"`).\x20Not\
+    e\x20that\x20a\x20query\x20result\x20can\x20contain\n\x20multiple\x20fie\
+    lds\x20with\x20the\x20same\x20name.\n\n\x0e\n\x07\x04\x01\x03\0\x02\0\
+    \x05\x12\x03J\x04\n\n\x0e\n\x07\x04\x01\x03\0\x02\0\x01\x12\x03J\x0b\x0f\
+    \n\x0e\n\x07\x04\x01\x03\0\x02\0\x03\x12\x03J\x12\x13\n'\n\x06\x04\x01\
+    \x03\0\x02\x01\x12\x03M\x04\x12\x1a\x18\x20The\x20type\x20of\x20the\x20f\
+    ield.\n\n\x0e\n\x07\x04\x01\x03\0\x02\x01\x06\x12\x03M\x04\x08\n\x0e\n\
+    \x07\x04\x01\x03\0\x02\x01\x01\x12\x03M\t\r\n\x0e\n\x07\x04\x01\x03\0\
+    \x02\x01\x03\x12\x03M\x10\x11\n\x8a\x03\n\x04\x04\x01\x02\0\x12\x03V\x02\
+    \x1c\x1a\xfc\x02\x20The\x20list\x20of\x20fields\x20that\x20make\x20up\
+    \x20this\x20struct.\x20Order\x20is\n\x20significant,\x20because\x20value\
+    s\x20of\x20this\x20struct\x20type\x20are\x20represented\x20as\n\x20lists\
+    ,\x20where\x20the\x20order\x20of\x20field\x20values\x20matches\x20the\
+    \x20order\x20of\n\x20fields\x20in\x20the\x20[StructType][google.spanner.\
+    v1.StructType].\x20In\x20turn,\x20the\n\x20order\x20of\x20fields\x20matc\
+    hes\x20the\x20order\x20of\x20columns\x20in\x20a\x20read\x20request,\x20o\
+    r\x20the\n\x20order\x20of\x20fields\x20in\x20the\x20`SELECT`\x20clause\
+    \x20of\x20a\x20query.\n\n\x0c\n\x05\x04\x01\x02\0\x04\x12\x03V\x02\n\n\
+    \x0c\n\x05\x04\x01\x02\0\x06\x12\x03V\x0b\x10\n\x0c\n\x05\x04\x01\x02\0\
+    \x01\x12\x03V\x11\x17\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03V\x1a\x1b\n\
+    \xda\x02\n\x02\x05\0\x12\x05`\0\xb1\x01\x01\x1a\xcc\x02\x20`TypeCode`\
+    \x20is\x20used\x20as\x20part\x20of\x20[Type][google.spanner.v1.Type]\x20\
+    to\n\x20indicate\x20the\x20type\x20of\x20a\x20Cloud\x20Spanner\x20value.\
+    \n\n\x20Each\x20legal\x20value\x20of\x20a\x20type\x20can\x20be\x20encode\
+    d\x20to\x20or\x20decoded\x20from\x20a\x20JSON\n\x20value,\x20using\x20th\
+    e\x20encodings\x20described\x20below.\x20All\x20Cloud\x20Spanner\x20valu\
+    es\x20can\n\x20be\x20`null`,\x20regardless\x20of\x20type;\x20`null`s\x20\
+    are\x20always\x20encoded\x20as\x20a\x20JSON\n\x20`null`.\n\n\n\n\x03\x05\
+    \0\x01\x12\x03`\x05\r\n\x1d\n\x04\x05\0\x02\0\x12\x03b\x02\x1c\x1a\x10\
+    \x20Not\x20specified.\n\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03b\x02\x17\n\
+    \x0c\n\x05\x05\0\x02\0\x02\x12\x03b\x1a\x1b\n1\n\x04\x05\0\x02\x01\x12\
+    \x03e\x02\x0b\x1a$\x20Encoded\x20as\x20JSON\x20`true`\x20or\x20`false`.\
+    \n\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03e\x02\x06\n\x0c\n\x05\x05\0\x02\
+    \x01\x02\x12\x03e\t\n\n6\n\x04\x05\0\x02\x02\x12\x03h\x02\x0c\x1a)\x20En\
+    coded\x20as\x20`string`,\x20in\x20decimal\x20format.\n\n\x0c\n\x05\x05\0\
+    \x02\x02\x01\x12\x03h\x02\x07\n\x0c\n\x05\x05\0\x02\x02\x02\x12\x03h\n\
+    \x0b\n\\\n\x04\x05\0\x02\x03\x12\x03l\x02\x0e\x1aO\x20Encoded\x20as\x20`\
+    number`,\x20or\x20the\x20strings\x20`\"NaN\"`,\x20`\"Infinity\"`,\x20or\
+    \n\x20`\"-Infinity\"`.\n\n\x0c\n\x05\x05\0\x02\x03\x01\x12\x03l\x02\t\n\
+    \x0c\n\x05\x05\0\x02\x03\x02\x12\x03l\x0c\r\n\\\n\x04\x05\0\x02\x04\x12\
+    \x03p\x02\x0f\x1aO\x20Encoded\x20as\x20`number`,\x20or\x20the\x20strings\
+    \x20`\"NaN\"`,\x20`\"Infinity\"`,\x20or\n\x20`\"-Infinity\"`.\n\n\x0c\n\
+    \x05\x05\0\x02\x04\x01\x12\x03p\x02\t\n\x0c\n\x05\x05\0\x02\x04\x02\x12\
+    \x03p\x0c\x0e\n\xdd\x02\n\x04\x05\0\x02\x05\x12\x03z\x02\x10\x1a\xcf\x02\
+    \x20Encoded\x20as\x20`string`\x20in\x20RFC\x203339\x20timestamp\x20forma\
+    t.\x20The\x20time\x20zone\n\x20must\x20be\x20present,\x20and\x20must\x20\
+    be\x20`\"Z\"`.\n\n\x20If\x20the\x20schema\x20has\x20the\x20column\x20opt\
+    ion\n\x20`allow_commit_timestamp=true`,\x20the\x20placeholder\x20string\
+    \n\x20`\"spanner.commit_timestamp()\"`\x20can\x20be\x20used\x20to\x20ins\
+    truct\x20the\x20system\n\x20to\x20insert\x20the\x20commit\x20timestamp\
+    \x20associated\x20with\x20the\x20transaction\n\x20commit.\n\n\x0c\n\x05\
+    \x05\0\x02\x05\x01\x12\x03z\x02\x0b\n\x0c\n\x05\x05\0\x02\x05\x02\x12\
+    \x03z\x0e\x0f\n;\n\x04\x05\0\x02\x06\x12\x03}\x02\x0b\x1a.\x20Encoded\
+    \x20as\x20`string`\x20in\x20RFC\x203339\x20date\x20format.\n\n\x0c\n\x05\
+    \x05\0\x02\x06\x01\x12\x03}\x02\x06\n\x0c\n\x05\x05\0\x02\x06\x02\x12\
+    \x03}\t\n\n$\n\x04\x05\0\x02\x07\x12\x04\x80\x01\x02\r\x1a\x16\x20Encode\
+    d\x20as\x20`string`.\n\n\r\n\x05\x05\0\x02\x07\x01\x12\x04\x80\x01\x02\
+    \x08\n\r\n\x05\x05\0\x02\x07\x02\x12\x04\x80\x01\x0b\x0c\n[\n\x04\x05\0\
+    \x02\x08\x12\x04\x84\x01\x02\x0c\x1aM\x20Encoded\x20as\x20a\x20base64-en\
+    coded\x20`string`,\x20as\x20described\x20in\x20RFC\x204648,\n\x20section\
+    \x204.\n\n\r\n\x05\x05\0\x02\x08\x01\x12\x04\x84\x01\x02\x07\n\r\n\x05\
+    \x05\0\x02\x08\x02\x12\x04\x84\x01\n\x0b\n\x9b\x01\n\x04\x05\0\x02\t\x12\
+    \x04\x89\x01\x02\x0c\x1a\x8c\x01\x20Encoded\x20as\x20`list`,\x20where\
+    \x20the\x20list\x20elements\x20are\x20represented\n\x20according\x20to\n\
+    \x20[array_element_type][google.spanner.v1.Type.array_element_type].\n\n\
+    \r\n\x05\x05\0\x02\t\x01\x12\x04\x89\x01\x02\x07\n\r\n\x05\x05\0\x02\t\
+    \x02\x12\x04\x89\x01\n\x0b\n\x95\x01\n\x04\x05\0\x02\n\x12\x04\x8d\x01\
+    \x02\r\x1a\x86\x01\x20Encoded\x20as\x20`list`,\x20where\x20list\x20eleme\
+    nt\x20`i`\x20is\x20represented\x20according\n\x20to\x20[struct_type.fiel\
+    ds[i]][google.spanner.v1.StructType.fields].\n\n\r\n\x05\x05\0\x02\n\x01\
+    \x12\x04\x8d\x01\x02\x08\n\r\n\x05\x05\0\x02\n\x02\x12\x04\x8d\x01\x0b\
+    \x0c\n\xc5\x02\n\x04\x05\0\x02\x0b\x12\x04\x98\x01\x02\x0f\x1a\xb6\x02\
+    \x20Encoded\x20as\x20`string`,\x20in\x20decimal\x20format\x20or\x20scien\
+    tific\x20notation\x20format.\n\x20Decimal\x20format:\n\x20`[+-]Digits[.[\
+    Digits]]`\x20or\n\x20`[+-][Digits].Digits`\n\n\x20Scientific\x20notation\
+    :\n\x20`[+-]Digits[.[Digits]][ExponentIndicator[+-]Digits]`\x20or\n\x20`\
+    [+-][Digits].Digits[ExponentIndicator[+-]Digits]`\n\x20(ExponentIndicato\
+    r\x20is\x20`\"e\"`\x20or\x20`\"E\"`)\n\n\r\n\x05\x05\0\x02\x0b\x01\x12\
+    \x04\x98\x01\x02\t\n\r\n\x05\x05\0\x02\x0b\x02\x12\x04\x98\x01\x0c\x0e\n\
+    \x88\x03\n\x04\x05\0\x02\x0c\x12\x04\xa2\x01\x02\x0c\x1a\xf9\x02\x20Enco\
+    ded\x20as\x20a\x20JSON-formatted\x20`string`\x20as\x20described\x20in\
+    \x20RFC\x207159.\x20The\n\x20following\x20rules\x20are\x20applied\x20whe\
+    n\x20parsing\x20JSON\x20input:\n\n\x20-\x20Whitespace\x20characters\x20a\
+    re\x20not\x20preserved.\n\x20-\x20If\x20a\x20JSON\x20object\x20has\x20du\
+    plicate\x20keys,\x20only\x20the\x20first\x20key\x20is\x20preserved.\n\
+    \x20-\x20Members\x20of\x20a\x20JSON\x20object\x20are\x20not\x20guarantee\
+    d\x20to\x20have\x20their\x20order\n\x20\x20\x20preserved.\n\x20-\x20JSON\
+    \x20array\x20elements\x20will\x20have\x20their\x20order\x20preserved.\n\
+    \n\r\n\x05\x05\0\x02\x0c\x01\x12\x04\xa2\x01\x02\x06\n\r\n\x05\x05\0\x02\
+    \x0c\x02\x12\x04\xa2\x01\t\x0b\n[\n\x04\x05\0\x02\r\x12\x04\xa6\x01\x02\
+    \r\x1aM\x20Encoded\x20as\x20a\x20base64-encoded\x20`string`,\x20as\x20de\
+    scribed\x20in\x20RFC\x204648,\n\x20section\x204.\n\n\r\n\x05\x05\0\x02\r\
+    \x01\x12\x04\xa6\x01\x02\x07\n\r\n\x05\x05\0\x02\r\x02\x12\x04\xa6\x01\n\
+    \x0c\n7\n\x04\x05\0\x02\x0e\x12\x04\xa9\x01\x02\x0c\x1a)\x20Encoded\x20a\
+    s\x20`string`,\x20in\x20decimal\x20format.\n\n\r\n\x05\x05\0\x02\x0e\x01\
+    \x12\x04\xa9\x01\x02\x06\n\r\n\x05\x05\0\x02\x0e\x02\x12\x04\xa9\x01\t\
+    \x0b\n\x84\x02\n\x04\x05\0\x02\x0f\x12\x04\xb0\x01\x02\x10\x1a\xf5\x01\
+    \x20Encoded\x20as\x20`string`,\x20in\x20`ISO8601`\x20duration\x20format\
+    \x20-\n\x20`P[n]Y[n]M[n]DT[n]H[n]M[n[.fraction]]S`\n\x20where\x20`n`\x20\
+    is\x20an\x20integer.\n\x20For\x20example,\x20`P1Y2M3DT4H5M6.5S`\x20repre\
+    sents\x20time\x20duration\x20of\x201\x20year,\x202\n\x20months,\x203\x20\
+    days,\x204\x20hours,\x205\x20minutes,\x20and\x206.5\x20seconds.\n\n\r\n\
+    \x05\x05\0\x02\x0f\x01\x12\x04\xb0\x01\x02\n\n\r\n\x05\x05\0\x02\x0f\x02\
+    \x12\x04\xb0\x01\r\x0f\n\xe7\x02\n\x02\x05\x01\x12\x06\xb8\x01\0\xd1\x01\
+    \x01\x1a\xd8\x02\x20`TypeAnnotationCode`\x20is\x20used\x20as\x20a\x20par\
+    t\x20of\x20[Type][google.spanner.v1.Type]\x20to\n\x20disambiguate\x20SQL\
+    \x20types\x20that\x20should\x20be\x20used\x20for\x20a\x20given\x20Cloud\
+    \x20Spanner\x20value.\n\x20Disambiguation\x20is\x20needed\x20because\x20\
+    the\x20same\x20Cloud\x20Spanner\x20type\x20can\x20be\x20mapped\x20to\n\
+    \x20different\x20SQL\x20types\x20depending\x20on\x20SQL\x20dialect.\x20T\
+    ypeAnnotationCode\x20doesn't\n\x20affect\x20the\x20way\x20value\x20is\
+    \x20serialized.\n\n\x0b\n\x03\x05\x01\x01\x12\x04\xb8\x01\x05\x17\n\x1e\
+    \n\x04\x05\x01\x02\0\x12\x04\xba\x01\x02'\x1a\x10\x20Not\x20specified.\n\
+    \n\r\n\x05\x05\x01\x02\0\x01\x12\x04\xba\x01\x02\"\n\r\n\x05\x05\x01\x02\
+    \0\x02\x12\x04\xba\x01%&\n\xbd\x03\n\x04\x05\x01\x02\x01\x12\x04\xc3\x01\
+    \x02\x11\x1a\xae\x03\x20PostgreSQL\x20compatible\x20NUMERIC\x20type.\x20\
+    This\x20annotation\x20needs\x20to\x20be\x20applied\x20to\n\x20[Type][goo\
+    gle.spanner.v1.Type]\x20instances\x20having\n\x20[NUMERIC][google.spanne\
+    r.v1.TypeCode.NUMERIC]\x20type\x20code\x20to\x20specify\x20that\n\x20val\
+    ues\x20of\x20this\x20type\x20should\x20be\x20treated\x20as\x20PostgreSQL\
+    \x20NUMERIC\x20values.\n\x20Currently\x20this\x20annotation\x20is\x20alw\
+    ays\x20needed\x20for\n\x20[NUMERIC][google.spanner.v1.TypeCode.NUMERIC]\
+    \x20when\x20a\x20client\x20interacts\x20with\n\x20PostgreSQL-enabled\x20\
+    Spanner\x20databases.\n\n\r\n\x05\x05\x01\x02\x01\x01\x12\x04\xc3\x01\
+    \x02\x0c\n\r\n\x05\x05\x01\x02\x01\x02\x12\x04\xc3\x01\x0f\x10\n\xac\x03\
+    \n\x04\x05\x01\x02\x02\x12\x04\xcb\x01\x02\x0f\x1a\x9d\x03\x20PostgreSQL\
+    \x20compatible\x20JSONB\x20type.\x20This\x20annotation\x20needs\x20to\
+    \x20be\x20applied\x20to\n\x20[Type][google.spanner.v1.Type]\x20instances\
+    \x20having\n\x20[JSON][google.spanner.v1.TypeCode.JSON]\x20type\x20code\
+    \x20to\x20specify\x20that\x20values\x20of\n\x20this\x20type\x20should\
+    \x20be\x20treated\x20as\x20PostgreSQL\x20JSONB\x20values.\x20Currently\
+    \x20this\n\x20annotation\x20is\x20always\x20needed\x20for\x20[JSON][goog\
+    le.spanner.v1.TypeCode.JSON]\n\x20when\x20a\x20client\x20interacts\x20wi\
+    th\x20PostgreSQL-enabled\x20Spanner\x20databases.\n\n\r\n\x05\x05\x01\
+    \x02\x02\x01\x12\x04\xcb\x01\x02\n\n\r\n\x05\x05\x01\x02\x02\x02\x12\x04\
+    \xcb\x01\r\x0e\n\xde\x01\n\x04\x05\x01\x02\x03\x12\x04\xd0\x01\x02\r\x1a\
+    \xcf\x01\x20PostgreSQL\x20compatible\x20OID\x20type.\x20This\x20annotati\
+    on\x20can\x20be\x20used\x20by\x20a\x20client\n\x20interacting\x20with\
+    \x20PostgreSQL-enabled\x20Spanner\x20database\x20to\x20specify\x20that\
+    \x20a\n\x20value\x20should\x20be\x20treated\x20using\x20the\x20semantics\
+    \x20of\x20the\x20OID\x20type.\n\n\r\n\x05\x05\x01\x02\x03\x01\x12\x04\
+    \xd0\x01\x02\x08\n\r\n\x05\x05\x01\x02\x03\x02\x12\x04\xd0\x01\x0b\x0cb\
+    \x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -734,13 +1022,14 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
-            deps.push(super::annotations::file_descriptor().clone());
+            deps.push(super::field_behavior::file_descriptor().clone());
             let mut messages = ::std::vec::Vec::with_capacity(3);
             messages.push(Type::generated_message_descriptor_data());
             messages.push(StructType::generated_message_descriptor_data());
             messages.push(struct_type::Field::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(1);
+            let mut enums = ::std::vec::Vec::with_capacity(2);
             enums.push(TypeCode::generated_enum_descriptor_data());
+            enums.push(TypeAnnotationCode::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

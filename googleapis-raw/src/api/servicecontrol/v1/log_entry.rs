@@ -9,7 +9,7 @@
 #![allow(unused_attributes)]
 #![cfg_attr(rustfmt, rustfmt::skip)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -42,6 +42,16 @@ pub struct LogEntry {
     ///  `LogSeverity.DEFAULT`.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.severity)
     pub severity: ::protobuf::EnumOrUnknown<super::log_severity::LogSeverity>,
+    ///  Optional. Information about the HTTP request associated with this
+    ///  log entry, if applicable.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.http_request)
+    pub http_request: ::protobuf::MessageField<super::http_request::HttpRequest>,
+    ///  Optional. Resource name of the trace associated with the log entry, if any.
+    ///  If this field contains a relative resource name, you can assume the name is
+    ///  relative to `//tracing.googleapis.com`. Example:
+    ///  `projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.trace)
+    pub trace: ::std::string::String,
     ///  A unique ID for the log entry used for deduplication. If omitted,
     ///  the implementation will generate one based on operation_id.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.insert_id)
@@ -50,6 +60,14 @@ pub struct LogEntry {
     ///  information about the log entry.
     // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.labels)
     pub labels: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    ///  Optional. Information about an operation associated with the log entry, if
+    ///  applicable.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.operation)
+    pub operation: ::protobuf::MessageField<LogEntryOperation>,
+    ///  Optional. Source code location information associated with the log entry,
+    ///  if any.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntry.source_location)
+    pub source_location: ::protobuf::MessageField<LogEntrySourceLocation>,
     // message oneof groups
     pub payload: ::std::option::Option<log_entry::Payload>,
     // special fields
@@ -216,7 +234,7 @@ impl LogEntry {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(8);
+        let mut fields = ::std::vec::Vec::with_capacity(12);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -232,6 +250,16 @@ impl LogEntry {
             "severity",
             |m: &LogEntry| { &m.severity },
             |m: &mut LogEntry| { &mut m.severity },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::http_request::HttpRequest>(
+            "http_request",
+            |m: &LogEntry| { &m.http_request },
+            |m: &mut LogEntry| { &mut m.http_request },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "trace",
+            |m: &LogEntry| { &m.trace },
+            |m: &mut LogEntry| { &mut m.trace },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "insert_id",
@@ -263,6 +291,16 @@ impl LogEntry {
             LogEntry::mut_struct_payload,
             LogEntry::set_struct_payload,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, LogEntryOperation>(
+            "operation",
+            |m: &LogEntry| { &m.operation },
+            |m: &mut LogEntry| { &mut m.operation },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, LogEntrySourceLocation>(
+            "source_location",
+            |m: &LogEntry| { &m.source_location },
+            |m: &mut LogEntry| { &mut m.source_location },
+        ));
         oneofs.push(log_entry::Payload::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LogEntry>(
             "LogEntry",
@@ -291,6 +329,12 @@ impl ::protobuf::Message for LogEntry {
                 96 => {
                     self.severity = is.read_enum_or_unknown()?;
                 },
+                114 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.http_request)?;
+                },
+                122 => {
+                    self.trace = is.read_string()?;
+                },
                 34 => {
                     self.insert_id = is.read_string()?;
                 },
@@ -318,6 +362,12 @@ impl ::protobuf::Message for LogEntry {
                 50 => {
                     self.payload = ::std::option::Option::Some(log_entry::Payload::StructPayload(is.read_message()?));
                 },
+                130 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.operation)?;
+                },
+                138 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.source_location)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -340,6 +390,13 @@ impl ::protobuf::Message for LogEntry {
         if self.severity != ::protobuf::EnumOrUnknown::new(super::log_severity::LogSeverity::DEFAULT) {
             my_size += ::protobuf::rt::int32_size(12, self.severity.value());
         }
+        if let Some(v) = self.http_request.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.trace.is_empty() {
+            my_size += ::protobuf::rt::string_size(15, &self.trace);
+        }
         if !self.insert_id.is_empty() {
             my_size += ::protobuf::rt::string_size(4, &self.insert_id);
         }
@@ -349,6 +406,14 @@ impl ::protobuf::Message for LogEntry {
             entry_size += ::protobuf::rt::string_size(2, &v);
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(entry_size) + entry_size
         };
+        if let Some(v) = self.operation.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.source_location.as_ref() {
+            let len = v.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         if let ::std::option::Option::Some(ref v) = self.payload {
             match v {
                 &log_entry::Payload::ProtoPayload(ref v) => {
@@ -379,6 +444,12 @@ impl ::protobuf::Message for LogEntry {
         if self.severity != ::protobuf::EnumOrUnknown::new(super::log_severity::LogSeverity::DEFAULT) {
             os.write_enum(12, ::protobuf::EnumOrUnknown::value(&self.severity))?;
         }
+        if let Some(v) = self.http_request.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(14, v, os)?;
+        }
+        if !self.trace.is_empty() {
+            os.write_string(15, &self.trace)?;
+        }
         if !self.insert_id.is_empty() {
             os.write_string(4, &self.insert_id)?;
         }
@@ -391,6 +462,12 @@ impl ::protobuf::Message for LogEntry {
             os.write_string(1, &k)?;
             os.write_string(2, &v)?;
         };
+        if let Some(v) = self.operation.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(16, v, os)?;
+        }
+        if let Some(v) = self.source_location.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(17, v, os)?;
+        }
         if let ::std::option::Option::Some(ref v) = self.payload {
             match v {
                 &log_entry::Payload::ProtoPayload(ref v) => {
@@ -424,11 +501,15 @@ impl ::protobuf::Message for LogEntry {
         self.name.clear();
         self.timestamp.clear();
         self.severity = ::protobuf::EnumOrUnknown::new(super::log_severity::LogSeverity::DEFAULT);
+        self.http_request.clear();
+        self.trace.clear();
         self.insert_id.clear();
         self.labels.clear();
         self.payload = ::std::option::Option::None;
         self.payload = ::std::option::Option::None;
         self.payload = ::std::option::Option::None;
+        self.operation.clear();
+        self.source_location.clear();
         self.special_fields.clear();
     }
 
@@ -487,85 +568,524 @@ pub mod log_entry {
     }
 }
 
+///  Additional information about a potentially long-running operation with which
+///  a log entry is associated.
+// @@protoc_insertion_point(message:google.api.servicecontrol.v1.LogEntryOperation)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct LogEntryOperation {
+    // message fields
+    ///  Optional. An arbitrary operation identifier. Log entries with the
+    ///  same identifier are assumed to be part of the same operation.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntryOperation.id)
+    pub id: ::std::string::String,
+    ///  Optional. An arbitrary producer identifier. The combination of
+    ///  `id` and `producer` must be globally unique.  Examples for `producer`:
+    ///  `"MyDivision.MyBigCompany.com"`, `"github.com/MyProject/MyApplication"`.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntryOperation.producer)
+    pub producer: ::std::string::String,
+    ///  Optional. Set this to True if this is the first log entry in the operation.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntryOperation.first)
+    pub first: bool,
+    ///  Optional. Set this to True if this is the last log entry in the operation.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntryOperation.last)
+    pub last: bool,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.api.servicecontrol.v1.LogEntryOperation.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a LogEntryOperation {
+    fn default() -> &'a LogEntryOperation {
+        <LogEntryOperation as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl LogEntryOperation {
+    pub fn new() -> LogEntryOperation {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "id",
+            |m: &LogEntryOperation| { &m.id },
+            |m: &mut LogEntryOperation| { &mut m.id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "producer",
+            |m: &LogEntryOperation| { &m.producer },
+            |m: &mut LogEntryOperation| { &mut m.producer },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "first",
+            |m: &LogEntryOperation| { &m.first },
+            |m: &mut LogEntryOperation| { &mut m.first },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "last",
+            |m: &LogEntryOperation| { &m.last },
+            |m: &mut LogEntryOperation| { &mut m.last },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LogEntryOperation>(
+            "LogEntryOperation",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for LogEntryOperation {
+    const NAME: &'static str = "LogEntryOperation";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.id = is.read_string()?;
+                },
+                18 => {
+                    self.producer = is.read_string()?;
+                },
+                24 => {
+                    self.first = is.read_bool()?;
+                },
+                32 => {
+                    self.last = is.read_bool()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if !self.producer.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.producer);
+        }
+        if self.first != false {
+            my_size += 1 + 1;
+        }
+        if self.last != false {
+            my_size += 1 + 1;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if !self.producer.is_empty() {
+            os.write_string(2, &self.producer)?;
+        }
+        if self.first != false {
+            os.write_bool(3, self.first)?;
+        }
+        if self.last != false {
+            os.write_bool(4, self.last)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> LogEntryOperation {
+        LogEntryOperation::new()
+    }
+
+    fn clear(&mut self) {
+        self.id.clear();
+        self.producer.clear();
+        self.first = false;
+        self.last = false;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static LogEntryOperation {
+        static instance: LogEntryOperation = LogEntryOperation {
+            id: ::std::string::String::new(),
+            producer: ::std::string::String::new(),
+            first: false,
+            last: false,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for LogEntryOperation {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("LogEntryOperation").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for LogEntryOperation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for LogEntryOperation {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+///  Additional information about the source code location that produced the log
+///  entry.
+// @@protoc_insertion_point(message:google.api.servicecontrol.v1.LogEntrySourceLocation)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct LogEntrySourceLocation {
+    // message fields
+    ///  Optional. Source file name. Depending on the runtime environment, this
+    ///  might be a simple name or a fully-qualified name.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntrySourceLocation.file)
+    pub file: ::std::string::String,
+    ///  Optional. Line within the source file. 1-based; 0 indicates no line number
+    ///  available.
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntrySourceLocation.line)
+    pub line: i64,
+    ///  Optional. Human-readable name of the function or method being invoked, with
+    ///  optional context such as the class or package name. This information may be
+    ///  used in contexts such as the logs viewer, where a file and line number are
+    ///  less meaningful. The format can vary by language. For example:
+    ///  `qual.if.ied.Class.method` (Java), `dir/package.func` (Go), `function`
+    ///  (Python).
+    // @@protoc_insertion_point(field:google.api.servicecontrol.v1.LogEntrySourceLocation.function)
+    pub function: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:google.api.servicecontrol.v1.LogEntrySourceLocation.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a LogEntrySourceLocation {
+    fn default() -> &'a LogEntrySourceLocation {
+        <LogEntrySourceLocation as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl LogEntrySourceLocation {
+    pub fn new() -> LogEntrySourceLocation {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "file",
+            |m: &LogEntrySourceLocation| { &m.file },
+            |m: &mut LogEntrySourceLocation| { &mut m.file },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "line",
+            |m: &LogEntrySourceLocation| { &m.line },
+            |m: &mut LogEntrySourceLocation| { &mut m.line },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "function",
+            |m: &LogEntrySourceLocation| { &m.function },
+            |m: &mut LogEntrySourceLocation| { &mut m.function },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LogEntrySourceLocation>(
+            "LogEntrySourceLocation",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for LogEntrySourceLocation {
+    const NAME: &'static str = "LogEntrySourceLocation";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.file = is.read_string()?;
+                },
+                16 => {
+                    self.line = is.read_int64()?;
+                },
+                26 => {
+                    self.function = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.file.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.file);
+        }
+        if self.line != 0 {
+            my_size += ::protobuf::rt::int64_size(2, self.line);
+        }
+        if !self.function.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.function);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.file.is_empty() {
+            os.write_string(1, &self.file)?;
+        }
+        if self.line != 0 {
+            os.write_int64(2, self.line)?;
+        }
+        if !self.function.is_empty() {
+            os.write_string(3, &self.function)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> LogEntrySourceLocation {
+        LogEntrySourceLocation::new()
+    }
+
+    fn clear(&mut self) {
+        self.file.clear();
+        self.line = 0;
+        self.function.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static LogEntrySourceLocation {
+        static instance: LogEntrySourceLocation = LogEntrySourceLocation {
+            file: ::std::string::String::new(),
+            line: 0,
+            function: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for LogEntrySourceLocation {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("LogEntrySourceLocation").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for LogEntrySourceLocation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for LogEntrySourceLocation {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n,google/api/servicecontrol/v1/log_entry.proto\x12\x1cgoogle.api.servic\
-    econtrol.v1\x1a\x1cgoogle/api/annotations.proto\x1a&google/logging/type/\
-    log_severity.proto\x1a\x19google/protobuf/any.proto\x1a\x1cgoogle/protob\
-    uf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe9\x03\n\x08Lo\
-    gEntry\x12\x12\n\x04name\x18\n\x20\x01(\tR\x04name\x128\n\ttimestamp\x18\
-    \x0b\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\ttimestamp\x12<\n\x08s\
-    everity\x18\x0c\x20\x01(\x0e2\x20.google.logging.type.LogSeverityR\x08se\
-    verity\x12\x1b\n\tinsert_id\x18\x04\x20\x01(\tR\x08insertId\x12J\n\x06la\
-    bels\x18\r\x20\x03(\x0b22.google.api.servicecontrol.v1.LogEntry.LabelsEn\
-    tryR\x06labels\x12;\n\rproto_payload\x18\x02\x20\x01(\x0b2\x14.google.pr\
-    otobuf.AnyH\0R\x0cprotoPayload\x12#\n\x0ctext_payload\x18\x03\x20\x01(\t\
-    H\0R\x0btextPayload\x12@\n\x0estruct_payload\x18\x06\x20\x01(\x0b2\x17.g\
-    oogle.protobuf.StructH\0R\rstructPayload\x1a9\n\x0bLabelsEntry\x12\x10\n\
-    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
-    R\x05value:\x028\x01B\t\n\x07payloadB\x7f\n\x20com.google.api.servicecon\
-    trol.v1B\rLogEntryProtoP\x01ZJgoogle.golang.org/genproto/googleapis/api/\
-    servicecontrol/v1;servicecontrolJ\xee\x10\n\x06\x12\x04\x0e\0A\x01\n\xbd\
-    \x04\n\x01\x0c\x12\x03\x0e\0\x122\xb2\x04\x20Copyright\x202017\x20Google\
-    \x20Inc.\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Versio\
-    n\x202.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\
-    \x20file\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20Y\
-    ou\x20may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\
-    \x20\x20\x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\
-    \x20required\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20w\
-    riting,\x20software\n\x20distributed\x20under\x20the\x20License\x20is\
-    \x20distributed\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WA\
-    RRANTIES\x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\
-    \x20or\x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\
-    \x20language\x20governing\x20permissions\x20and\n\x20limitations\x20unde\
-    r\x20the\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0%\n\t\n\x02\x03\0\
-    \x12\x03\x12\0&\n\t\n\x02\x03\x01\x12\x03\x13\00\n\t\n\x02\x03\x02\x12\
-    \x03\x14\0#\n\t\n\x02\x03\x03\x12\x03\x15\0&\n\t\n\x02\x03\x04\x12\x03\
-    \x16\0)\n\x08\n\x01\x08\x12\x03\x18\0a\n\t\n\x02\x08\x0b\x12\x03\x18\0a\
-    \n\x08\n\x01\x08\x12\x03\x19\0\"\n\t\n\x02\x08\n\x12\x03\x19\0\"\n\x08\n\
-    \x01\x08\x12\x03\x1a\0.\n\t\n\x02\x08\x08\x12\x03\x1a\0.\n\x08\n\x01\x08\
-    \x12\x03\x1b\09\n\t\n\x02\x08\x01\x12\x03\x1b\09\n&\n\x02\x04\0\x12\x04\
-    \x1e\0A\x01\x1a\x1a\x20An\x20individual\x20log\x20entry.\n\n\n\n\x03\x04\
-    \0\x01\x12\x03\x1e\x08\x10\nf\n\x04\x04\0\x02\0\x12\x03!\x02\x13\x1aY\
-    \x20Required.\x20The\x20log\x20to\x20which\x20this\x20log\x20entry\x20be\
-    longs.\x20Examples:\x20`\"syslog\"`,\n\x20`\"book_log\"`.\n\n\x0c\n\x05\
-    \x04\0\x02\0\x05\x12\x03!\x02\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03!\t\
-    \r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03!\x10\x12\nu\n\x04\x04\0\x02\x01\
-    \x12\x03%\x02+\x1ah\x20The\x20time\x20the\x20event\x20described\x20by\
-    \x20the\x20log\x20entry\x20occurred.\x20If\n\x20omitted,\x20defaults\x20\
-    to\x20operation\x20start\x20time.\n\n\x0c\n\x05\x04\0\x02\x01\x06\x12\
-    \x03%\x02\x1b\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03%\x1c%\n\x0c\n\x05\
-    \x04\0\x02\x01\x03\x12\x03%(*\nZ\n\x04\x04\0\x02\x02\x12\x03)\x020\x1aM\
-    \x20The\x20severity\x20of\x20the\x20log\x20entry.\x20The\x20default\x20v\
-    alue\x20is\n\x20`LogSeverity.DEFAULT`.\n\n\x0c\n\x05\x04\0\x02\x02\x06\
-    \x12\x03)\x02!\n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03)\"*\n\x0c\n\x05\x04\
-    \0\x02\x02\x03\x12\x03)-/\n\x8e\x01\n\x04\x04\0\x02\x03\x12\x03-\x02\x17\
-    \x1a\x80\x01\x20A\x20unique\x20ID\x20for\x20the\x20log\x20entry\x20used\
-    \x20for\x20deduplication.\x20If\x20omitted,\n\x20the\x20implementation\
-    \x20will\x20generate\x20one\x20based\x20on\x20operation_id.\n\n\x0c\n\
-    \x05\x04\0\x02\x03\x05\x12\x03-\x02\x08\n\x0c\n\x05\x04\0\x02\x03\x01\
-    \x12\x03-\t\x12\n\x0c\n\x05\x04\0\x02\x03\x03\x12\x03-\x15\x16\nq\n\x04\
-    \x04\0\x02\x04\x12\x031\x02\"\x1ad\x20A\x20set\x20of\x20user-defined\x20\
-    (key,\x20value)\x20data\x20that\x20provides\x20additional\n\x20informati\
-    on\x20about\x20the\x20log\x20entry.\n\n\x0c\n\x05\x04\0\x02\x04\x06\x12\
-    \x031\x02\x15\n\x0c\n\x05\x04\0\x02\x04\x01\x12\x031\x16\x1c\n\x0c\n\x05\
-    \x04\0\x02\x04\x03\x12\x031\x1f!\nJ\n\x04\x04\0\x08\0\x12\x044\x02@\x03\
-    \x1a<\x20The\x20log\x20entry\x20payload,\x20which\x20can\x20be\x20one\
-    \x20of\x20multiple\x20types.\n\n\x0c\n\x05\x04\0\x08\0\x01\x12\x034\x08\
-    \x0f\n\xba\x01\n\x04\x04\0\x02\x05\x12\x038\x04*\x1a\xac\x01\x20The\x20l\
-    og\x20entry\x20payload,\x20represented\x20as\x20a\x20protocol\x20buffer\
-    \x20that\x20is\n\x20expressed\x20as\x20a\x20JSON\x20object.\x20The\x20on\
-    ly\x20accepted\x20type\x20currently\x20is\n\x20[AuditLog][google.cloud.a\
-    udit.AuditLog].\n\n\x0c\n\x05\x04\0\x02\x05\x06\x12\x038\x04\x17\n\x0c\n\
-    \x05\x04\0\x02\x05\x01\x12\x038\x18%\n\x0c\n\x05\x04\0\x02\x05\x03\x12\
-    \x038()\nN\n\x04\x04\0\x02\x06\x12\x03;\x04\x1c\x1aA\x20The\x20log\x20en\
-    try\x20payload,\x20represented\x20as\x20a\x20Unicode\x20string\x20(UTF-8\
-    ).\n\n\x0c\n\x05\x04\0\x02\x06\x05\x12\x03;\x04\n\n\x0c\n\x05\x04\0\x02\
-    \x06\x01\x12\x03;\x0b\x17\n\x0c\n\x05\x04\0\x02\x06\x03\x12\x03;\x1a\x1b\
-    \ne\n\x04\x04\0\x02\x07\x12\x03?\x04.\x1aX\x20The\x20log\x20entry\x20pay\
-    load,\x20represented\x20as\x20a\x20structure\x20that\n\x20is\x20expresse\
-    d\x20as\x20a\x20JSON\x20object.\n\n\x0c\n\x05\x04\0\x02\x07\x06\x12\x03?\
-    \x04\x1a\n\x0c\n\x05\x04\0\x02\x07\x01\x12\x03?\x1b)\n\x0c\n\x05\x04\0\
-    \x02\x07\x03\x12\x03?,-b\x06proto3\
+    econtrol.v1\x1a/google/api/servicecontrol/v1/http_request.proto\x1a&goog\
+    le/logging/type/log_severity.proto\x1a\x19google/protobuf/any.proto\x1a\
+    \x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\
+    \"\xfb\x05\n\x08LogEntry\x12\x12\n\x04name\x18\n\x20\x01(\tR\x04name\x12\
+    8\n\ttimestamp\x18\x0b\x20\x01(\x0b2\x1a.google.protobuf.TimestampR\ttim\
+    estamp\x12<\n\x08severity\x18\x0c\x20\x01(\x0e2\x20.google.logging.type.\
+    LogSeverityR\x08severity\x12L\n\x0chttp_request\x18\x0e\x20\x01(\x0b2).g\
+    oogle.api.servicecontrol.v1.HttpRequestR\x0bhttpRequest\x12\x14\n\x05tra\
+    ce\x18\x0f\x20\x01(\tR\x05trace\x12\x1b\n\tinsert_id\x18\x04\x20\x01(\tR\
+    \x08insertId\x12J\n\x06labels\x18\r\x20\x03(\x0b22.google.api.servicecon\
+    trol.v1.LogEntry.LabelsEntryR\x06labels\x12;\n\rproto_payload\x18\x02\
+    \x20\x01(\x0b2\x14.google.protobuf.AnyH\0R\x0cprotoPayload\x12#\n\x0ctex\
+    t_payload\x18\x03\x20\x01(\tH\0R\x0btextPayload\x12@\n\x0estruct_payload\
+    \x18\x06\x20\x01(\x0b2\x17.google.protobuf.StructH\0R\rstructPayload\x12\
+    M\n\toperation\x18\x10\x20\x01(\x0b2/.google.api.servicecontrol.v1.LogEn\
+    tryOperationR\toperation\x12]\n\x0fsource_location\x18\x11\x20\x01(\x0b2\
+    4.google.api.servicecontrol.v1.LogEntrySourceLocationR\x0esourceLocation\
+    \x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
+    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01B\t\n\x07payload\"\
+    i\n\x11LogEntryOperation\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\
+    \x1a\n\x08producer\x18\x02\x20\x01(\tR\x08producer\x12\x14\n\x05first\
+    \x18\x03\x20\x01(\x08R\x05first\x12\x12\n\x04last\x18\x04\x20\x01(\x08R\
+    \x04last\"\\\n\x16LogEntrySourceLocation\x12\x12\n\x04file\x18\x01\x20\
+    \x01(\tR\x04file\x12\x12\n\x04line\x18\x02\x20\x01(\x03R\x04line\x12\x1a\
+    \n\x08function\x18\x03\x20\x01(\tR\x08functionB\xe5\x01\n\x20com.google.\
+    api.servicecontrol.v1B\rLogEntryProtoP\x01ZJcloud.google.com/go/servicec\
+    ontrol/apiv1/servicecontrolpb;servicecontrolpb\xaa\x02\x1eGoogle.Cloud.S\
+    erviceControl.V1\xca\x02\x1eGoogle\\Cloud\\ServiceControl\\V1\xea\x02!Go\
+    ogle::Cloud::ServiceControl::V1J\xec$\n\x06\x12\x04\x0e\0}\x01\n\xbc\x04\
+    \n\x01\x0c\x12\x03\x0e\0\x122\xb1\x04\x20Copyright\x202024\x20Google\x20\
+    LLC\n\n\x20Licensed\x20under\x20the\x20Apache\x20License,\x20Version\x20\
+    2.0\x20(the\x20\"License\");\n\x20you\x20may\x20not\x20use\x20this\x20fi\
+    le\x20except\x20in\x20compliance\x20with\x20the\x20License.\n\x20You\x20\
+    may\x20obtain\x20a\x20copy\x20of\x20the\x20License\x20at\n\n\x20\x20\x20\
+    \x20\x20http://www.apache.org/licenses/LICENSE-2.0\n\n\x20Unless\x20requ\
+    ired\x20by\x20applicable\x20law\x20or\x20agreed\x20to\x20in\x20writing,\
+    \x20software\n\x20distributed\x20under\x20the\x20License\x20is\x20distri\
+    buted\x20on\x20an\x20\"AS\x20IS\"\x20BASIS,\n\x20WITHOUT\x20WARRANTIES\
+    \x20OR\x20CONDITIONS\x20OF\x20ANY\x20KIND,\x20either\x20express\x20or\
+    \x20implied.\n\x20See\x20the\x20License\x20for\x20the\x20specific\x20lan\
+    guage\x20governing\x20permissions\x20and\n\x20limitations\x20under\x20th\
+    e\x20License.\n\n\x08\n\x01\x02\x12\x03\x10\0%\n\t\n\x02\x03\0\x12\x03\
+    \x12\09\n\t\n\x02\x03\x01\x12\x03\x13\00\n\t\n\x02\x03\x02\x12\x03\x14\0\
+    #\n\t\n\x02\x03\x03\x12\x03\x15\0&\n\t\n\x02\x03\x04\x12\x03\x16\0)\n\
+    \x08\n\x01\x08\x12\x03\x18\0;\n\t\n\x02\x08%\x12\x03\x18\0;\n\x08\n\x01\
+    \x08\x12\x03\x19\0a\n\t\n\x02\x08\x0b\x12\x03\x19\0a\n\x08\n\x01\x08\x12\
+    \x03\x1a\0\"\n\t\n\x02\x08\n\x12\x03\x1a\0\"\n\x08\n\x01\x08\x12\x03\x1b\
+    \0.\n\t\n\x02\x08\x08\x12\x03\x1b\0.\n\x08\n\x01\x08\x12\x03\x1c\09\n\t\
+    \n\x02\x08\x01\x12\x03\x1c\09\n\x08\n\x01\x08\x12\x03\x1d\0;\n\t\n\x02\
+    \x08)\x12\x03\x1d\0;\n\x08\n\x01\x08\x12\x03\x1e\0:\n\t\n\x02\x08-\x12\
+    \x03\x1e\0:\n&\n\x02\x04\0\x12\x04!\0V\x01\x1a\x1a\x20An\x20individual\
+    \x20log\x20entry.\n\n\n\n\x03\x04\0\x01\x12\x03!\x08\x10\nf\n\x04\x04\0\
+    \x02\0\x12\x03$\x02\x13\x1aY\x20Required.\x20The\x20log\x20to\x20which\
+    \x20this\x20log\x20entry\x20belongs.\x20Examples:\x20`\"syslog\"`,\n\x20\
+    `\"book_log\"`.\n\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03$\x02\x08\n\x0c\n\
+    \x05\x04\0\x02\0\x01\x12\x03$\t\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03$\
+    \x10\x12\nu\n\x04\x04\0\x02\x01\x12\x03(\x02+\x1ah\x20The\x20time\x20the\
+    \x20event\x20described\x20by\x20the\x20log\x20entry\x20occurred.\x20If\n\
+    \x20omitted,\x20defaults\x20to\x20operation\x20start\x20time.\n\n\x0c\n\
+    \x05\x04\0\x02\x01\x06\x12\x03(\x02\x1b\n\x0c\n\x05\x04\0\x02\x01\x01\
+    \x12\x03(\x1c%\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03((*\nZ\n\x04\x04\0\
+    \x02\x02\x12\x03,\x020\x1aM\x20The\x20severity\x20of\x20the\x20log\x20en\
+    try.\x20The\x20default\x20value\x20is\n\x20`LogSeverity.DEFAULT`.\n\n\
+    \x0c\n\x05\x04\0\x02\x02\x06\x12\x03,\x02!\n\x0c\n\x05\x04\0\x02\x02\x01\
+    \x12\x03,\"*\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03,-/\nk\n\x04\x04\0\x02\
+    \x03\x12\x030\x02\x20\x1a^\x20Optional.\x20Information\x20about\x20the\
+    \x20HTTP\x20request\x20associated\x20with\x20this\n\x20log\x20entry,\x20\
+    if\x20applicable.\n\n\x0c\n\x05\x04\0\x02\x03\x06\x12\x030\x02\r\n\x0c\n\
+    \x05\x04\0\x02\x03\x01\x12\x030\x0e\x1a\n\x0c\n\x05\x04\0\x02\x03\x03\
+    \x12\x030\x1d\x1f\n\x9b\x02\n\x04\x04\0\x02\x04\x12\x036\x02\x14\x1a\x8d\
+    \x02\x20Optional.\x20Resource\x20name\x20of\x20the\x20trace\x20associate\
+    d\x20with\x20the\x20log\x20entry,\x20if\x20any.\n\x20If\x20this\x20field\
+    \x20contains\x20a\x20relative\x20resource\x20name,\x20you\x20can\x20assu\
+    me\x20the\x20name\x20is\n\x20relative\x20to\x20`//tracing.googleapis.com\
+    `.\x20Example:\n\x20`projects/my-projectid/traces/06796866738c859f2f19b7\
+    cfb3214824`\n\n\x0c\n\x05\x04\0\x02\x04\x05\x12\x036\x02\x08\n\x0c\n\x05\
+    \x04\0\x02\x04\x01\x12\x036\t\x0e\n\x0c\n\x05\x04\0\x02\x04\x03\x12\x036\
+    \x11\x13\n\x8e\x01\n\x04\x04\0\x02\x05\x12\x03:\x02\x17\x1a\x80\x01\x20A\
+    \x20unique\x20ID\x20for\x20the\x20log\x20entry\x20used\x20for\x20dedupli\
+    cation.\x20If\x20omitted,\n\x20the\x20implementation\x20will\x20generate\
+    \x20one\x20based\x20on\x20operation_id.\n\n\x0c\n\x05\x04\0\x02\x05\x05\
+    \x12\x03:\x02\x08\n\x0c\n\x05\x04\0\x02\x05\x01\x12\x03:\t\x12\n\x0c\n\
+    \x05\x04\0\x02\x05\x03\x12\x03:\x15\x16\nq\n\x04\x04\0\x02\x06\x12\x03>\
+    \x02\"\x1ad\x20A\x20set\x20of\x20user-defined\x20(key,\x20value)\x20data\
+    \x20that\x20provides\x20additional\n\x20information\x20about\x20the\x20l\
+    og\x20entry.\n\n\x0c\n\x05\x04\0\x02\x06\x06\x12\x03>\x02\x15\n\x0c\n\
+    \x05\x04\0\x02\x06\x01\x12\x03>\x16\x1c\n\x0c\n\x05\x04\0\x02\x06\x03\
+    \x12\x03>\x1f!\nJ\n\x04\x04\0\x08\0\x12\x04A\x02M\x03\x1a<\x20The\x20log\
+    \x20entry\x20payload,\x20which\x20can\x20be\x20one\x20of\x20multiple\x20\
+    types.\n\n\x0c\n\x05\x04\0\x08\0\x01\x12\x03A\x08\x0f\n\xba\x01\n\x04\
+    \x04\0\x02\x07\x12\x03E\x04*\x1a\xac\x01\x20The\x20log\x20entry\x20paylo\
+    ad,\x20represented\x20as\x20a\x20protocol\x20buffer\x20that\x20is\n\x20e\
+    xpressed\x20as\x20a\x20JSON\x20object.\x20The\x20only\x20accepted\x20typ\
+    e\x20currently\x20is\n\x20[AuditLog][google.cloud.audit.AuditLog].\n\n\
+    \x0c\n\x05\x04\0\x02\x07\x06\x12\x03E\x04\x17\n\x0c\n\x05\x04\0\x02\x07\
+    \x01\x12\x03E\x18%\n\x0c\n\x05\x04\0\x02\x07\x03\x12\x03E()\nN\n\x04\x04\
+    \0\x02\x08\x12\x03H\x04\x1c\x1aA\x20The\x20log\x20entry\x20payload,\x20r\
+    epresented\x20as\x20a\x20Unicode\x20string\x20(UTF-8).\n\n\x0c\n\x05\x04\
+    \0\x02\x08\x05\x12\x03H\x04\n\n\x0c\n\x05\x04\0\x02\x08\x01\x12\x03H\x0b\
+    \x17\n\x0c\n\x05\x04\0\x02\x08\x03\x12\x03H\x1a\x1b\ne\n\x04\x04\0\x02\t\
+    \x12\x03L\x04.\x1aX\x20The\x20log\x20entry\x20payload,\x20represented\
+    \x20as\x20a\x20structure\x20that\n\x20is\x20expressed\x20as\x20a\x20JSON\
+    \x20object.\n\n\x0c\n\x05\x04\0\x02\t\x06\x12\x03L\x04\x1a\n\x0c\n\x05\
+    \x04\0\x02\t\x01\x12\x03L\x1b)\n\x0c\n\x05\x04\0\x02\t\x03\x12\x03L,-\nf\
+    \n\x04\x04\0\x02\n\x12\x03Q\x02#\x1aY\x20Optional.\x20Information\x20abo\
+    ut\x20an\x20operation\x20associated\x20with\x20the\x20log\x20entry,\x20i\
+    f\n\x20applicable.\n\n\x0c\n\x05\x04\0\x02\n\x06\x12\x03Q\x02\x13\n\x0c\
+    \n\x05\x04\0\x02\n\x01\x12\x03Q\x14\x1d\n\x0c\n\x05\x04\0\x02\n\x03\x12\
+    \x03Q\x20\"\na\n\x04\x04\0\x02\x0b\x12\x03U\x02.\x1aT\x20Optional.\x20So\
+    urce\x20code\x20location\x20information\x20associated\x20with\x20the\x20\
+    log\x20entry,\n\x20if\x20any.\n\n\x0c\n\x05\x04\0\x02\x0b\x06\x12\x03U\
+    \x02\x18\n\x0c\n\x05\x04\0\x02\x0b\x01\x12\x03U\x19(\n\x0c\n\x05\x04\0\
+    \x02\x0b\x03\x12\x03U+-\nv\n\x02\x04\x01\x12\x04Z\0i\x01\x1aj\x20Additio\
+    nal\x20information\x20about\x20a\x20potentially\x20long-running\x20opera\
+    tion\x20with\x20which\n\x20a\x20log\x20entry\x20is\x20associated.\n\n\n\
+    \n\x03\x04\x01\x01\x12\x03Z\x08\x19\n\x90\x01\n\x04\x04\x01\x02\0\x12\
+    \x03]\x02\x10\x1a\x82\x01\x20Optional.\x20An\x20arbitrary\x20operation\
+    \x20identifier.\x20Log\x20entries\x20with\x20the\n\x20same\x20identifier\
+    \x20are\x20assumed\x20to\x20be\x20part\x20of\x20the\x20same\x20operation\
+    .\n\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03]\x02\x08\n\x0c\n\x05\x04\x01\
+    \x02\0\x01\x12\x03]\t\x0b\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03]\x0e\x0f\
+    \n\xe0\x01\n\x04\x04\x01\x02\x01\x12\x03b\x02\x16\x1a\xd2\x01\x20Optiona\
+    l.\x20An\x20arbitrary\x20producer\x20identifier.\x20The\x20combination\
+    \x20of\n\x20`id`\x20and\x20`producer`\x20must\x20be\x20globally\x20uniqu\
+    e.\x20\x20Examples\x20for\x20`producer`:\n\x20`\"MyDivision.MyBigCompany\
+    .com\"`,\x20`\"github.com/MyProject/MyApplication\"`.\n\n\x0c\n\x05\x04\
+    \x01\x02\x01\x05\x12\x03b\x02\x08\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\
+    \x03b\t\x11\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03b\x14\x15\nZ\n\x04\
+    \x04\x01\x02\x02\x12\x03e\x02\x11\x1aM\x20Optional.\x20Set\x20this\x20to\
+    \x20True\x20if\x20this\x20is\x20the\x20first\x20log\x20entry\x20in\x20th\
+    e\x20operation.\n\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03e\x02\x06\n\x0c\
+    \n\x05\x04\x01\x02\x02\x01\x12\x03e\x07\x0c\n\x0c\n\x05\x04\x01\x02\x02\
+    \x03\x12\x03e\x0f\x10\nY\n\x04\x04\x01\x02\x03\x12\x03h\x02\x10\x1aL\x20\
+    Optional.\x20Set\x20this\x20to\x20True\x20if\x20this\x20is\x20the\x20las\
+    t\x20log\x20entry\x20in\x20the\x20operation.\n\n\x0c\n\x05\x04\x01\x02\
+    \x03\x05\x12\x03h\x02\x06\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03h\x07\
+    \x0b\n\x0c\n\x05\x04\x01\x02\x03\x03\x12\x03h\x0e\x0f\na\n\x02\x04\x02\
+    \x12\x04m\0}\x01\x1aU\x20Additional\x20information\x20about\x20the\x20so\
+    urce\x20code\x20location\x20that\x20produced\x20the\x20log\n\x20entry.\n\
+    \n\n\n\x03\x04\x02\x01\x12\x03m\x08\x1e\n\x88\x01\n\x04\x04\x02\x02\0\
+    \x12\x03p\x02\x12\x1a{\x20Optional.\x20Source\x20file\x20name.\x20Depend\
+    ing\x20on\x20the\x20runtime\x20environment,\x20this\n\x20might\x20be\x20\
+    a\x20simple\x20name\x20or\x20a\x20fully-qualified\x20name.\n\n\x0c\n\x05\
+    \x04\x02\x02\0\x05\x12\x03p\x02\x08\n\x0c\n\x05\x04\x02\x02\0\x01\x12\
+    \x03p\t\r\n\x0c\n\x05\x04\x02\x02\0\x03\x12\x03p\x10\x11\ne\n\x04\x04\
+    \x02\x02\x01\x12\x03t\x02\x11\x1aX\x20Optional.\x20Line\x20within\x20the\
+    \x20source\x20file.\x201-based;\x200\x20indicates\x20no\x20line\x20numbe\
+    r\n\x20available.\n\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x03t\x02\x07\n\
+    \x0c\n\x05\x04\x02\x02\x01\x01\x12\x03t\x08\x0c\n\x0c\n\x05\x04\x02\x02\
+    \x01\x03\x12\x03t\x0f\x10\n\x87\x03\n\x04\x04\x02\x02\x02\x12\x03|\x02\
+    \x16\x1a\xf9\x02\x20Optional.\x20Human-readable\x20name\x20of\x20the\x20\
+    function\x20or\x20method\x20being\x20invoked,\x20with\n\x20optional\x20c\
+    ontext\x20such\x20as\x20the\x20class\x20or\x20package\x20name.\x20This\
+    \x20information\x20may\x20be\n\x20used\x20in\x20contexts\x20such\x20as\
+    \x20the\x20logs\x20viewer,\x20where\x20a\x20file\x20and\x20line\x20numbe\
+    r\x20are\n\x20less\x20meaningful.\x20The\x20format\x20can\x20vary\x20by\
+    \x20language.\x20For\x20example:\n\x20`qual.if.ied.Class.method`\x20(Jav\
+    a),\x20`dir/package.func`\x20(Go),\x20`function`\n\x20(Python).\n\n\x0c\
+    \n\x05\x04\x02\x02\x02\x05\x12\x03|\x02\x08\n\x0c\n\x05\x04\x02\x02\x02\
+    \x01\x12\x03|\t\x11\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03|\x14\x15b\
+    \x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -583,13 +1103,15 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(5);
-            deps.push(super::annotations::file_descriptor().clone());
+            deps.push(super::http_request::file_descriptor().clone());
             deps.push(super::log_severity::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::any::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::struct_::file_descriptor().clone());
             deps.push(::protobuf::well_known_types::timestamp::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(1);
+            let mut messages = ::std::vec::Vec::with_capacity(3);
             messages.push(LogEntry::generated_message_descriptor_data());
+            messages.push(LogEntryOperation::generated_message_descriptor_data());
+            messages.push(LogEntrySourceLocation::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(0);
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
