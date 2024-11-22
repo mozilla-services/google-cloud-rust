@@ -1,4 +1,8 @@
-use crate::r#type::date;
+// @generated
+use crate::{
+    api::{annotations, client, field_behavior, resource},
+    r#type::date,
+};
 
 pub mod agentendpoint;
 pub mod agentendpoint_grpc;

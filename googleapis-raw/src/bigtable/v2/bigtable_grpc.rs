@@ -5,7 +5,7 @@
 #![allow(unknown_lints)]
 #![allow(clippy::all)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -75,6 +75,13 @@ const METHOD_BIGTABLE_GENERATE_INITIAL_CHANGE_STREAM_PARTITIONS: ::grpcio::Metho
 const METHOD_BIGTABLE_READ_CHANGE_STREAM: ::grpcio::Method<super::bigtable::ReadChangeStreamRequest, super::bigtable::ReadChangeStreamResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::ServerStreaming,
     name: "/google.bigtable.v2.Bigtable/ReadChangeStream",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_BIGTABLE_EXECUTE_QUERY: ::grpcio::Method<super::bigtable::ExecuteQueryRequest, super::bigtable::ExecuteQueryResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::ServerStreaming,
+    name: "/google.bigtable.v2.Bigtable/ExecuteQuery",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -194,6 +201,14 @@ impl BigtableClient {
     pub fn read_change_stream(&self, req: &super::bigtable::ReadChangeStreamRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::ReadChangeStreamResponse>> {
         self.read_change_stream_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn execute_query_opt(&self, req: &super::bigtable::ExecuteQueryRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::ExecuteQueryResponse>> {
+        self.client.server_streaming(&METHOD_BIGTABLE_EXECUTE_QUERY, req, opt)
+    }
+
+    pub fn execute_query(&self, req: &super::bigtable::ExecuteQueryRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::bigtable::ExecuteQueryResponse>> {
+        self.execute_query_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -225,6 +240,9 @@ pub trait Bigtable {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn read_change_stream(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::ReadChangeStreamRequest, sink: ::grpcio::ServerStreamingSink<super::bigtable::ReadChangeStreamResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn execute_query(&mut self, ctx: ::grpcio::RpcContext, _req: super::bigtable::ExecuteQueryRequest, sink: ::grpcio::ServerStreamingSink<super::bigtable::ExecuteQueryResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -263,9 +281,13 @@ pub fn create_bigtable<S: Bigtable + Send + Clone + 'static>(s: S) -> ::grpcio::
     builder = builder.add_server_streaming_handler(&METHOD_BIGTABLE_GENERATE_INITIAL_CHANGE_STREAM_PARTITIONS, move |ctx, req, resp| {
         instance.generate_initial_change_stream_partitions(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_server_streaming_handler(&METHOD_BIGTABLE_READ_CHANGE_STREAM, move |ctx, req, resp| {
         instance.read_change_stream(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_server_streaming_handler(&METHOD_BIGTABLE_EXECUTE_QUERY, move |ctx, req, resp| {
+        instance.execute_query(ctx, req, resp)
     });
     builder.build()
 }

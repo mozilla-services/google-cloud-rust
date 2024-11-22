@@ -5,7 +5,7 @@
 #![allow(unknown_lints)]
 #![allow(clippy::all)]
 
-#![allow(box_pointers)]
+
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]

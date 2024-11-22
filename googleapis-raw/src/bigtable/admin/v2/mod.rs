@@ -1,6 +1,6 @@
 // @generated
-
 use crate::{
+    api::{annotations, client, field_behavior, resource},
     empty,
     iam::v1::{iam_policy, policy},
     longrunning::operations,
@@ -14,3 +14,4 @@ pub mod bigtable_table_admin_grpc;
 pub mod common;
 pub mod instance;
 pub mod table;
+pub mod types;

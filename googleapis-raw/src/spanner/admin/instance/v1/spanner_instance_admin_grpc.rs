@@ -4,8 +4,6 @@
 // https://github.com/Manishearth/rust-clippy/issues/702
 #![allow(unknown_lints)]
 #![allow(clippy::all)]
-
-#![allow(box_pointers)]
 #![allow(dead_code)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types)]
@@ -16,102 +14,340 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
-const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS: ::grpcio::Method<super::spanner_instance_admin::ListInstanceConfigsRequest, super::spanner_instance_admin::ListInstanceConfigsResponse> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS: ::grpcio::Method<
+    super::spanner_instance_admin::ListInstanceConfigsRequest,
+    super::spanner_instance_admin::ListInstanceConfigsResponse,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstanceConfigs",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::GetInstanceConfigRequest, super::spanner_instance_admin::InstanceConfig> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG: ::grpcio::Method<
+    super::spanner_instance_admin::GetInstanceConfigRequest,
+    super::spanner_instance_admin::InstanceConfig,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/GetInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::CreateInstanceConfigRequest, super::operations::Operation> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG: ::grpcio::Method<
+    super::spanner_instance_admin::CreateInstanceConfigRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/CreateInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::UpdateInstanceConfigRequest, super::operations::Operation> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG: ::grpcio::Method<
+    super::spanner_instance_admin::UpdateInstanceConfigRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/UpdateInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG: ::grpcio::Method<super::spanner_instance_admin::DeleteInstanceConfigRequest, super::empty::Empty> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG: ::grpcio::Method<
+    super::spanner_instance_admin::DeleteInstanceConfigRequest,
+    super::empty::Empty,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/DeleteInstanceConfig",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS: ::grpcio::Method<super::spanner_instance_admin::ListInstanceConfigOperationsRequest, super::spanner_instance_admin::ListInstanceConfigOperationsResponse> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS: ::grpcio::Method<
+    super::spanner_instance_admin::ListInstanceConfigOperationsRequest,
+    super::spanner_instance_admin::ListInstanceConfigOperationsResponse,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstanceConfigOperations",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_LIST_INSTANCES: ::grpcio::Method<super::spanner_instance_admin::ListInstancesRequest, super::spanner_instance_admin::ListInstancesResponse> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCES: ::grpcio::Method<
+    super::spanner_instance_admin::ListInstancesRequest,
+    super::spanner_instance_admin::ListInstancesResponse,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstances",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_GET_INSTANCE: ::grpcio::Method<super::spanner_instance_admin::GetInstanceRequest, super::spanner_instance_admin::Instance> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS: ::grpcio::Method<
+    super::spanner_instance_admin::ListInstancePartitionsRequest,
+    super::spanner_instance_admin::ListInstancePartitionsResponse,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstancePartitions",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_GET_INSTANCE: ::grpcio::Method<
+    super::spanner_instance_admin::GetInstanceRequest,
+    super::spanner_instance_admin::Instance,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/GetInstance",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE: ::grpcio::Method<super::spanner_instance_admin::CreateInstanceRequest, super::operations::Operation> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE: ::grpcio::Method<
+    super::spanner_instance_admin::CreateInstanceRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/CreateInstance",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE: ::grpcio::Method<super::spanner_instance_admin::UpdateInstanceRequest, super::operations::Operation> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE: ::grpcio::Method<
+    super::spanner_instance_admin::UpdateInstanceRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/UpdateInstance",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE: ::grpcio::Method<super::spanner_instance_admin::DeleteInstanceRequest, super::empty::Empty> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE: ::grpcio::Method<
+    super::spanner_instance_admin::DeleteInstanceRequest,
+    super::empty::Empty,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/DeleteInstance",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_SET_IAM_POLICY: ::grpcio::Method<super::iam_policy::SetIamPolicyRequest, super::policy::Policy> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_SET_IAM_POLICY: ::grpcio::Method<
+    super::iam_policy::SetIamPolicyRequest,
+    super::policy::Policy,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/SetIamPolicy",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_GET_IAM_POLICY: ::grpcio::Method<super::iam_policy::GetIamPolicyRequest, super::policy::Policy> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_GET_IAM_POLICY: ::grpcio::Method<
+    super::iam_policy::GetIamPolicyRequest,
+    super::policy::Policy,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/GetIamPolicy",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
-const METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS: ::grpcio::Method<super::iam_policy::TestIamPermissionsRequest, super::iam_policy::TestIamPermissionsResponse> = ::grpcio::Method {
+const METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS: ::grpcio::Method<
+    super::iam_policy::TestIamPermissionsRequest,
+    super::iam_policy::TestIamPermissionsResponse,
+> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/google.spanner.admin.instance.v1.InstanceAdmin/TestIamPermissions",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION: ::grpcio::Method<
+    super::spanner_instance_admin::GetInstancePartitionRequest,
+    super::spanner_instance_admin::InstancePartition,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/GetInstancePartition",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION: ::grpcio::Method<
+    super::spanner_instance_admin::CreateInstancePartitionRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/CreateInstancePartition",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION: ::grpcio::Method<
+    super::spanner_instance_admin::DeleteInstancePartitionRequest,
+    super::empty::Empty,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/DeleteInstancePartition",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION: ::grpcio::Method<
+    super::spanner_instance_admin::UpdateInstancePartitionRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/UpdateInstancePartition",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS: ::grpcio::Method<
+    super::spanner_instance_admin::ListInstancePartitionOperationsRequest,
+    super::spanner_instance_admin::ListInstancePartitionOperationsResponse,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/ListInstancePartitionOperations",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+};
+
+const METHOD_INSTANCE_ADMIN_MOVE_INSTANCE: ::grpcio::Method<
+    super::spanner_instance_admin::MoveInstanceRequest,
+    super::operations::Operation,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/google.spanner.admin.instance.v1.InstanceAdmin/MoveInstance",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pb_ser,
+        de: ::grpcio::pb_de,
+    },
 };
 
 #[derive(Clone)]
@@ -126,275 +362,916 @@ impl InstanceAdminClient {
         }
     }
 
-    pub fn list_instance_configs_opt(&self, req: &super::spanner_instance_admin::ListInstanceConfigsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigsResponse> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS, req, opt)
+    pub fn list_instance_configs_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigsResponse> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS, req, opt)
     }
 
-    pub fn list_instance_configs(&self, req: &super::spanner_instance_admin::ListInstanceConfigsRequest) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigsResponse> {
+    pub fn list_instance_configs(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigsRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigsResponse> {
         self.list_instance_configs_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_instance_configs_async_opt(&self, req: &super::spanner_instance_admin::ListInstanceConfigsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigsResponse>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS, req, opt)
+    pub fn list_instance_configs_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigsResponse>,
+    > {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS, req, opt)
     }
 
-    pub fn list_instance_configs_async(&self, req: &super::spanner_instance_admin::ListInstanceConfigsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigsResponse>> {
+    pub fn list_instance_configs_async(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigsRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigsResponse>,
+    > {
         self.list_instance_configs_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_instance_config_opt(&self, req: &super::spanner_instance_admin::GetInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::InstanceConfig> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG, req, opt)
+    pub fn get_instance_config_opt(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::InstanceConfig> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn get_instance_config(&self, req: &super::spanner_instance_admin::GetInstanceConfigRequest) -> ::grpcio::Result<super::spanner_instance_admin::InstanceConfig> {
+    pub fn get_instance_config(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceConfigRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::InstanceConfig> {
         self.get_instance_config_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_instance_config_async_opt(&self, req: &super::spanner_instance_admin::GetInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstanceConfig>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG, req, opt)
+    pub fn get_instance_config_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstanceConfig>,
+    > {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn get_instance_config_async(&self, req: &super::spanner_instance_admin::GetInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstanceConfig>> {
+    pub fn get_instance_config_async(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceConfigRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstanceConfig>,
+    > {
         self.get_instance_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn create_instance_config_opt(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, req, opt)
+    pub fn create_instance_config_opt(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn create_instance_config(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest) -> ::grpcio::Result<super::operations::Operation> {
+    pub fn create_instance_config(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceConfigRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
         self.create_instance_config_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn create_instance_config_async_opt(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, req, opt)
+    pub fn create_instance_config_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn create_instance_config_async(&self, req: &super::spanner_instance_admin::CreateInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+    pub fn create_instance_config_async(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceConfigRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
         self.create_instance_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn update_instance_config_opt(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, req, opt)
+    pub fn update_instance_config_opt(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn update_instance_config(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest) -> ::grpcio::Result<super::operations::Operation> {
+    pub fn update_instance_config(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceConfigRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
         self.update_instance_config_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn update_instance_config_async_opt(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, req, opt)
+    pub fn update_instance_config_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn update_instance_config_async(&self, req: &super::spanner_instance_admin::UpdateInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+    pub fn update_instance_config_async(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceConfigRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
         self.update_instance_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn delete_instance_config_opt(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, req, opt)
+    pub fn delete_instance_config_opt(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::empty::Empty> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn delete_instance_config(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest) -> ::grpcio::Result<super::empty::Empty> {
+    pub fn delete_instance_config(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceConfigRequest,
+    ) -> ::grpcio::Result<super::empty::Empty> {
         self.delete_instance_config_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn delete_instance_config_async_opt(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, req, opt)
+    pub fn delete_instance_config_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceConfigRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, req, opt)
     }
 
-    pub fn delete_instance_config_async(&self, req: &super::spanner_instance_admin::DeleteInstanceConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+    pub fn delete_instance_config_async(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceConfigRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_instance_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_instance_config_operations_opt(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigOperationsResponse> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS, req, opt)
+    pub fn list_instance_config_operations_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigOperationsResponse> {
+        self.client.unary_call(
+            &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS,
+            req,
+            opt,
+        )
     }
 
-    pub fn list_instance_config_operations(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigOperationsResponse> {
+    pub fn list_instance_config_operations(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstanceConfigOperationsResponse> {
         self.list_instance_config_operations_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_instance_config_operations_async_opt(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigOperationsResponse>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS, req, opt)
+    pub fn list_instance_config_operations_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<
+            super::spanner_instance_admin::ListInstanceConfigOperationsResponse,
+        >,
+    > {
+        self.client.unary_call_async(
+            &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS,
+            req,
+            opt,
+        )
     }
 
-    pub fn list_instance_config_operations_async(&self, req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstanceConfigOperationsResponse>> {
+    pub fn list_instance_config_operations_async(
+        &self,
+        req: &super::spanner_instance_admin::ListInstanceConfigOperationsRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<
+            super::spanner_instance_admin::ListInstanceConfigOperationsResponse,
+        >,
+    > {
         self.list_instance_config_operations_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_instances_opt(&self, req: &super::spanner_instance_admin::ListInstancesRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancesResponse> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCES, req, opt)
+    pub fn list_instances_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancesRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancesResponse> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCES, req, opt)
     }
 
-    pub fn list_instances(&self, req: &super::spanner_instance_admin::ListInstancesRequest) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancesResponse> {
+    pub fn list_instances(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancesRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancesResponse> {
         self.list_instances_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_instances_async_opt(&self, req: &super::spanner_instance_admin::ListInstancesRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancesResponse>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCES, req, opt)
+    pub fn list_instances_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancesRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancesResponse>,
+    > {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCES, req, opt)
     }
 
-    pub fn list_instances_async(&self, req: &super::spanner_instance_admin::ListInstancesRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancesResponse>> {
+    pub fn list_instances_async(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancesRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::ListInstancesResponse>,
+    > {
         self.list_instances_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_instance_opt(&self, req: &super::spanner_instance_admin::GetInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::spanner_instance_admin::Instance> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, req, opt)
+    pub fn list_instance_partitions_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionsResponse> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS, req, opt)
     }
 
-    pub fn get_instance(&self, req: &super::spanner_instance_admin::GetInstanceRequest) -> ::grpcio::Result<super::spanner_instance_admin::Instance> {
+    pub fn list_instance_partitions(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionsRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionsResponse> {
+        self.list_instance_partitions_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_instance_partitions_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<
+            super::spanner_instance_admin::ListInstancePartitionsResponse,
+        >,
+    > {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS, req, opt)
+    }
+
+    pub fn list_instance_partitions_async(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionsRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<
+            super::spanner_instance_admin::ListInstancePartitionsResponse,
+        >,
+    > {
+        self.list_instance_partitions_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_instance_opt(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::Instance> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, req, opt)
+    }
+
+    pub fn get_instance(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::Instance> {
         self.get_instance_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_instance_async_opt(&self, req: &super::spanner_instance_admin::GetInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::Instance>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, req, opt)
+    pub fn get_instance_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::Instance>>
+    {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, req, opt)
     }
 
-    pub fn get_instance_async(&self, req: &super::spanner_instance_admin::GetInstanceRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::Instance>> {
+    pub fn get_instance_async(
+        &self,
+        req: &super::spanner_instance_admin::GetInstanceRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::Instance>>
+    {
         self.get_instance_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn create_instance_opt(&self, req: &super::spanner_instance_admin::CreateInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE, req, opt)
+    pub fn create_instance_opt(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE, req, opt)
     }
 
-    pub fn create_instance(&self, req: &super::spanner_instance_admin::CreateInstanceRequest) -> ::grpcio::Result<super::operations::Operation> {
+    pub fn create_instance(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
         self.create_instance_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn create_instance_async_opt(&self, req: &super::spanner_instance_admin::CreateInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE, req, opt)
+    pub fn create_instance_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE, req, opt)
     }
 
-    pub fn create_instance_async(&self, req: &super::spanner_instance_admin::CreateInstanceRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+    pub fn create_instance_async(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstanceRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
         self.create_instance_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn update_instance_opt(&self, req: &super::spanner_instance_admin::UpdateInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::operations::Operation> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE, req, opt)
+    pub fn update_instance_opt(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE, req, opt)
     }
 
-    pub fn update_instance(&self, req: &super::spanner_instance_admin::UpdateInstanceRequest) -> ::grpcio::Result<super::operations::Operation> {
+    pub fn update_instance(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
         self.update_instance_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn update_instance_async_opt(&self, req: &super::spanner_instance_admin::UpdateInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE, req, opt)
+    pub fn update_instance_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE, req, opt)
     }
 
-    pub fn update_instance_async(&self, req: &super::spanner_instance_admin::UpdateInstanceRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+    pub fn update_instance_async(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstanceRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
         self.update_instance_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn delete_instance_opt(&self, req: &super::spanner_instance_admin::DeleteInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::empty::Empty> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE, req, opt)
+    pub fn delete_instance_opt(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::empty::Empty> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE, req, opt)
     }
 
-    pub fn delete_instance(&self, req: &super::spanner_instance_admin::DeleteInstanceRequest) -> ::grpcio::Result<super::empty::Empty> {
+    pub fn delete_instance(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceRequest,
+    ) -> ::grpcio::Result<super::empty::Empty> {
         self.delete_instance_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn delete_instance_async_opt(&self, req: &super::spanner_instance_admin::DeleteInstanceRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE, req, opt)
+    pub fn delete_instance_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE, req, opt)
     }
 
-    pub fn delete_instance_async(&self, req: &super::spanner_instance_admin::DeleteInstanceRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+    pub fn delete_instance_async(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstanceRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
         self.delete_instance_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn set_iam_policy_opt(&self, req: &super::iam_policy::SetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::policy::Policy> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_SET_IAM_POLICY, req, opt)
+    pub fn set_iam_policy_opt(
+        &self,
+        req: &super::iam_policy::SetIamPolicyRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::policy::Policy> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_SET_IAM_POLICY, req, opt)
     }
 
-    pub fn set_iam_policy(&self, req: &super::iam_policy::SetIamPolicyRequest) -> ::grpcio::Result<super::policy::Policy> {
+    pub fn set_iam_policy(
+        &self,
+        req: &super::iam_policy::SetIamPolicyRequest,
+    ) -> ::grpcio::Result<super::policy::Policy> {
         self.set_iam_policy_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn set_iam_policy_async_opt(&self, req: &super::iam_policy::SetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_SET_IAM_POLICY, req, opt)
+    pub fn set_iam_policy_async_opt(
+        &self,
+        req: &super::iam_policy::SetIamPolicyRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_SET_IAM_POLICY, req, opt)
     }
 
-    pub fn set_iam_policy_async(&self, req: &super::iam_policy::SetIamPolicyRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+    pub fn set_iam_policy_async(
+        &self,
+        req: &super::iam_policy::SetIamPolicyRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
         self.set_iam_policy_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_iam_policy_opt(&self, req: &super::iam_policy::GetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::policy::Policy> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_GET_IAM_POLICY, req, opt)
+    pub fn get_iam_policy_opt(
+        &self,
+        req: &super::iam_policy::GetIamPolicyRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::policy::Policy> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_GET_IAM_POLICY, req, opt)
     }
 
-    pub fn get_iam_policy(&self, req: &super::iam_policy::GetIamPolicyRequest) -> ::grpcio::Result<super::policy::Policy> {
+    pub fn get_iam_policy(
+        &self,
+        req: &super::iam_policy::GetIamPolicyRequest,
+    ) -> ::grpcio::Result<super::policy::Policy> {
         self.get_iam_policy_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_iam_policy_async_opt(&self, req: &super::iam_policy::GetIamPolicyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_GET_IAM_POLICY, req, opt)
+    pub fn get_iam_policy_async_opt(
+        &self,
+        req: &super::iam_policy::GetIamPolicyRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_GET_IAM_POLICY, req, opt)
     }
 
-    pub fn get_iam_policy_async(&self, req: &super::iam_policy::GetIamPolicyRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
+    pub fn get_iam_policy_async(
+        &self,
+        req: &super::iam_policy::GetIamPolicyRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::policy::Policy>> {
         self.get_iam_policy_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn test_iam_permissions_opt(&self, req: &super::iam_policy::TestIamPermissionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::iam_policy::TestIamPermissionsResponse> {
-        self.client.unary_call(&METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, req, opt)
+    pub fn test_iam_permissions_opt(
+        &self,
+        req: &super::iam_policy::TestIamPermissionsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::iam_policy::TestIamPermissionsResponse> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, req, opt)
     }
 
-    pub fn test_iam_permissions(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<super::iam_policy::TestIamPermissionsResponse> {
+    pub fn test_iam_permissions(
+        &self,
+        req: &super::iam_policy::TestIamPermissionsRequest,
+    ) -> ::grpcio::Result<super::iam_policy::TestIamPermissionsResponse> {
         self.test_iam_permissions_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn test_iam_permissions_async_opt(&self, req: &super::iam_policy::TestIamPermissionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
-        self.client.unary_call_async(&METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, req, opt)
+    pub fn test_iam_permissions_async_opt(
+        &self,
+        req: &super::iam_policy::TestIamPermissionsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>,
+    > {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, req, opt)
     }
 
-    pub fn test_iam_permissions_async(&self, req: &super::iam_policy::TestIamPermissionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>> {
+    pub fn test_iam_permissions_async(
+        &self,
+        req: &super::iam_policy::TestIamPermissionsRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::iam_policy::TestIamPermissionsResponse>,
+    > {
         self.test_iam_permissions_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
+
+    pub fn get_instance_partition_opt(
+        &self,
+        req: &super::spanner_instance_admin::GetInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::InstancePartition> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn get_instance_partition(
+        &self,
+        req: &super::spanner_instance_admin::GetInstancePartitionRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::InstancePartition> {
+        self.get_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_instance_partition_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::GetInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstancePartition>,
+    > {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn get_instance_partition_async(
+        &self,
+        req: &super::spanner_instance_admin::GetInstancePartitionRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<super::spanner_instance_admin::InstancePartition>,
+    > {
+        self.get_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_instance_partition_opt(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn create_instance_partition(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstancePartitionRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.create_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn create_instance_partition_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn create_instance_partition_async(
+        &self,
+        req: &super::spanner_instance_admin::CreateInstancePartitionRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.create_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_instance_partition_opt(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::empty::Empty> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn delete_instance_partition(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstancePartitionRequest,
+    ) -> ::grpcio::Result<super::empty::Empty> {
+        self.delete_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn delete_instance_partition_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn delete_instance_partition_async(
+        &self,
+        req: &super::spanner_instance_admin::DeleteInstancePartitionRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::empty::Empty>> {
+        self.delete_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_instance_partition_opt(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn update_instance_partition(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstancePartitionRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.update_instance_partition_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn update_instance_partition_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstancePartitionRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION, req, opt)
+    }
+
+    pub fn update_instance_partition_async(
+        &self,
+        req: &super::spanner_instance_admin::UpdateInstancePartitionRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.update_instance_partition_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_instance_partition_operations_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionOperationsResponse>
+    {
+        self.client.unary_call(
+            &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS,
+            req,
+            opt,
+        )
+    }
+
+    pub fn list_instance_partition_operations(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest,
+    ) -> ::grpcio::Result<super::spanner_instance_admin::ListInstancePartitionOperationsResponse>
+    {
+        self.list_instance_partition_operations_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn list_instance_partition_operations_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<
+            super::spanner_instance_admin::ListInstancePartitionOperationsResponse,
+        >,
+    > {
+        self.client.unary_call_async(
+            &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS,
+            req,
+            opt,
+        )
+    }
+
+    pub fn list_instance_partition_operations_async(
+        &self,
+        req: &super::spanner_instance_admin::ListInstancePartitionOperationsRequest,
+    ) -> ::grpcio::Result<
+        ::grpcio::ClientUnaryReceiver<
+            super::spanner_instance_admin::ListInstancePartitionOperationsResponse,
+        >,
+    > {
+        self.list_instance_partition_operations_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn move_instance_opt(
+        &self,
+        req: &super::spanner_instance_admin::MoveInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.client
+            .unary_call(&METHOD_INSTANCE_ADMIN_MOVE_INSTANCE, req, opt)
+    }
+
+    pub fn move_instance(
+        &self,
+        req: &super::spanner_instance_admin::MoveInstanceRequest,
+    ) -> ::grpcio::Result<super::operations::Operation> {
+        self.move_instance_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn move_instance_async_opt(
+        &self,
+        req: &super::spanner_instance_admin::MoveInstanceRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.client
+            .unary_call_async(&METHOD_INSTANCE_ADMIN_MOVE_INSTANCE, req, opt)
+    }
+
+    pub fn move_instance_async(
+        &self,
+        req: &super::spanner_instance_admin::MoveInstanceRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::operations::Operation>> {
+        self.move_instance_async_opt(req, ::grpcio::CallOption::default())
+    }
+    pub fn spawn<F>(&self, f: F)
+    where
+        F: ::std::future::Future<Output = ()> + Send + 'static,
+    {
         self.client.spawn(f)
     }
 }
 
 pub trait InstanceAdmin {
-    fn list_instance_configs(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstanceConfigsRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstanceConfigsResponse>) {
+    fn list_instance_configs(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::ListInstanceConfigsRequest,
+        sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstanceConfigsResponse>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn get_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::GetInstanceConfigRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::InstanceConfig>) {
+    fn get_instance_config(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::GetInstanceConfigRequest,
+        sink: ::grpcio::UnarySink<super::spanner_instance_admin::InstanceConfig>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn create_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::CreateInstanceConfigRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+    fn create_instance_config(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::CreateInstanceConfigRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn update_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::UpdateInstanceConfigRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+    fn update_instance_config(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::UpdateInstanceConfigRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn delete_instance_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::DeleteInstanceConfigRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
+    fn delete_instance_config(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::DeleteInstanceConfigRequest,
+        sink: ::grpcio::UnarySink<super::empty::Empty>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn list_instance_config_operations(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstanceConfigOperationsRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstanceConfigOperationsResponse>) {
+    fn list_instance_config_operations(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::ListInstanceConfigOperationsRequest,
+        sink: ::grpcio::UnarySink<
+            super::spanner_instance_admin::ListInstanceConfigOperationsResponse,
+        >,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn list_instances(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::ListInstancesRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancesResponse>) {
+    fn list_instances(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::ListInstancesRequest,
+        sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancesResponse>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn get_instance(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::GetInstanceRequest, sink: ::grpcio::UnarySink<super::spanner_instance_admin::Instance>) {
+    fn list_instance_partitions(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::ListInstancePartitionsRequest,
+        sink: ::grpcio::UnarySink<super::spanner_instance_admin::ListInstancePartitionsResponse>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn create_instance(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::CreateInstanceRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+    fn get_instance(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::GetInstanceRequest,
+        sink: ::grpcio::UnarySink<super::spanner_instance_admin::Instance>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn update_instance(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::UpdateInstanceRequest, sink: ::grpcio::UnarySink<super::operations::Operation>) {
+    fn create_instance(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::CreateInstanceRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn delete_instance(&mut self, ctx: ::grpcio::RpcContext, _req: super::spanner_instance_admin::DeleteInstanceRequest, sink: ::grpcio::UnarySink<super::empty::Empty>) {
+    fn update_instance(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::UpdateInstanceRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn set_iam_policy(&mut self, ctx: ::grpcio::RpcContext, _req: super::iam_policy::SetIamPolicyRequest, sink: ::grpcio::UnarySink<super::policy::Policy>) {
+    fn delete_instance(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::DeleteInstanceRequest,
+        sink: ::grpcio::UnarySink<super::empty::Empty>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn get_iam_policy(&mut self, ctx: ::grpcio::RpcContext, _req: super::iam_policy::GetIamPolicyRequest, sink: ::grpcio::UnarySink<super::policy::Policy>) {
+    fn set_iam_policy(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::iam_policy::SetIamPolicyRequest,
+        sink: ::grpcio::UnarySink<super::policy::Policy>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
-    fn test_iam_permissions(&mut self, ctx: ::grpcio::RpcContext, _req: super::iam_policy::TestIamPermissionsRequest, sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>) {
+    fn get_iam_policy(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::iam_policy::GetIamPolicyRequest,
+        sink: ::grpcio::UnarySink<super::policy::Policy>,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn test_iam_permissions(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::iam_policy::TestIamPermissionsRequest,
+        sink: ::grpcio::UnarySink<super::iam_policy::TestIamPermissionsResponse>,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_instance_partition(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::GetInstancePartitionRequest,
+        sink: ::grpcio::UnarySink<super::spanner_instance_admin::InstancePartition>,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn create_instance_partition(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::CreateInstancePartitionRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn delete_instance_partition(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::DeleteInstancePartitionRequest,
+        sink: ::grpcio::UnarySink<super::empty::Empty>,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update_instance_partition(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::UpdateInstancePartitionRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn list_instance_partition_operations(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::ListInstancePartitionOperationsRequest,
+        sink: ::grpcio::UnarySink<
+            super::spanner_instance_admin::ListInstancePartitionOperationsResponse,
+        >,
+    ) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn move_instance(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        _req: super::spanner_instance_admin::MoveInstanceRequest,
+        sink: ::grpcio::UnarySink<super::operations::Operation>,
+    ) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -402,60 +1279,109 @@ pub trait InstanceAdmin {
 pub fn create_instance_admin<S: InstanceAdmin + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS, move |ctx, req, resp| {
-        instance.list_instance_configs(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIGS,
+        move |ctx, req, resp| instance.list_instance_configs(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.get_instance_config(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_GET_INSTANCE_CONFIG,
+        move |ctx, req, resp| instance.get_instance_config(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.create_instance_config(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_CONFIG,
+        move |ctx, req, resp| instance.create_instance_config(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.update_instance_config(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_CONFIG,
+        move |ctx, req, resp| instance.update_instance_config(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG, move |ctx, req, resp| {
-        instance.delete_instance_config(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_CONFIG,
+        move |ctx, req, resp| instance.delete_instance_config(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS, move |ctx, req, resp| {
-        instance.list_instance_config_operations(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_CONFIG_OPERATIONS,
+        move |ctx, req, resp| instance.list_instance_config_operations(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_LIST_INSTANCES, move |ctx, req, resp| {
-        instance.list_instances(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_LIST_INSTANCES,
+        move |ctx, req, resp| instance.list_instances(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_INSTANCE, move |ctx, req, resp| {
-        instance.get_instance(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITIONS,
+        move |ctx, req, resp| instance.list_instance_partitions(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_CREATE_INSTANCE, move |ctx, req, resp| {
-        instance.create_instance(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_GET_INSTANCE,
+        move |ctx, req, resp| instance.get_instance(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE, move |ctx, req, resp| {
-        instance.update_instance(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_CREATE_INSTANCE,
+        move |ctx, req, resp| instance.create_instance(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_DELETE_INSTANCE, move |ctx, req, resp| {
-        instance.delete_instance(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE,
+        move |ctx, req, resp| instance.update_instance(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_SET_IAM_POLICY, move |ctx, req, resp| {
-        instance.set_iam_policy(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_DELETE_INSTANCE,
+        move |ctx, req, resp| instance.delete_instance(ctx, req, resp),
+    );
     let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_GET_IAM_POLICY, move |ctx, req, resp| {
-        instance.get_iam_policy(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_SET_IAM_POLICY,
+        move |ctx, req, resp| instance.set_iam_policy(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_GET_IAM_POLICY,
+        move |ctx, req, resp| instance.get_iam_policy(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS,
+        move |ctx, req, resp| instance.test_iam_permissions(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_GET_INSTANCE_PARTITION,
+        move |ctx, req, resp| instance.get_instance_partition(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_CREATE_INSTANCE_PARTITION,
+        move |ctx, req, resp| instance.create_instance_partition(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_DELETE_INSTANCE_PARTITION,
+        move |ctx, req, resp| instance.delete_instance_partition(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_UPDATE_INSTANCE_PARTITION,
+        move |ctx, req, resp| instance.update_instance_partition(ctx, req, resp),
+    );
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_LIST_INSTANCE_PARTITION_OPERATIONS,
+        move |ctx, req, resp| instance.list_instance_partition_operations(ctx, req, resp),
+    );
     let mut instance = s;
-    builder = builder.add_unary_handler(&METHOD_INSTANCE_ADMIN_TEST_IAM_PERMISSIONS, move |ctx, req, resp| {
-        instance.test_iam_permissions(ctx, req, resp)
-    });
+    builder = builder.add_unary_handler(
+        &METHOD_INSTANCE_ADMIN_MOVE_INSTANCE,
+        move |ctx, req, resp| instance.move_instance(ctx, req, resp),
+    );
     builder.build()
 }

@@ -36,6 +36,7 @@ slog-term = "2.6"
 slog-stdlog = "4.0"
 slog-async = "2.5"
 log = "0.4"
+protobuf-codegen = "3.4.0" # limited by grpcio-compiler
 
 [features]
 default = ["spanner"]

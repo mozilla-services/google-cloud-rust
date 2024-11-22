@@ -1,7 +1,6 @@
 // @generated
-
 use crate::{
-    api::{config_change, service},
+    api::{annotations, client, config_change, field_behavior, service},
     longrunning::operations,
 };
 

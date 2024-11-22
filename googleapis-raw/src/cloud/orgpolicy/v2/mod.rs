@@ -1,4 +1,6 @@
+// @generated
 use crate::{
+    api::{annotations, client, field_behavior, resource},
     empty,
     r#type::expr,
 };

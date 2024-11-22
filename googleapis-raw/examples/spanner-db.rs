@@ -19,18 +19,20 @@ use google_cloud_rust_raw::spanner::admin::database::v1::{
     spanner_database_admin::CreateDatabaseRequest, spanner_database_admin::DropDatabaseRequest,
     spanner_database_admin::GetDatabaseRequest, spanner_database_admin_grpc::DatabaseAdminClient,
 };
+use google_cloud_rust_raw::spanner::v1::transaction::transaction_options::{Mode, ReadWrite};
 use google_cloud_rust_raw::spanner::v1::{
-    mutation::Mutation, mutation::Mutation_Write, spanner::BeginTransactionRequest,
-    spanner::CommitRequest, spanner::CreateSessionRequest, spanner::Session,
-    spanner_grpc::SpannerClient, transaction::TransactionOptions,
-    transaction::TransactionOptions_ReadWrite,
+    mutation::mutation::Write,
+    mutation::Mutation,
+    spanner::{BeginTransactionRequest, CommitRequest, CreateSessionRequest, Session},
+    spanner_grpc::SpannerClient,
+    transaction::TransactionOptions,
 };
 use grpcio::{
     CallOption, Channel, ChannelBuilder, ChannelCredentials, ClientUnaryReceiver, EnvBuilder,
     MetadataBuilder,
 };
-use protobuf::well_known_types::{ListValue, Value};
-use protobuf::RepeatedField;
+use protobuf::well_known_types::struct_::{ListValue, Value};
+use protobuf::MessageField;
 #[allow(unused_imports)]
 use std::error::Error;
 use std::sync::Arc;
@@ -65,14 +67,16 @@ struct Singer {
 fn wait_operation_finished(channel: &Channel, operation: &str) {
     let operations_client = OperationsClient::new(channel.clone());
 
-    let mut request = GetOperationRequest::new();
-    request.set_name(operation.to_string());
+    let request = GetOperationRequest {
+        name: operation.to_string(),
+        ..Default::default()
+    };
 
     loop {
         println!("Checking operation: {}", operation);
         match operations_client.get_operation(&request) {
             Ok(response) => {
-                if response.get_done() {
+                if response.done {
                     println!("Operation {} finished", operation);
                     break;
                 }
@@ -95,10 +99,12 @@ fn create_database_if_not_exists(channel: &Channel, database_name: &str, instanc
     let client = DatabaseAdminClient::new(channel.clone());
     // find database
     println!("Finding database {}", database_name);
-    let mut request = GetDatabaseRequest::new();
-    request.set_name(database_name.to_string());
+    let request = GetDatabaseRequest {
+        name: database_name.to_string(),
+        ..Default::default()
+    };
     if let Ok(database) = client.get_database(&request) {
-        println!("Found database: {}", database.get_name());
+        println!("Found database: {}", database.name);
         return;
     } else {
         println!("Database not found");
@@ -111,17 +117,19 @@ fn create_database_if_not_exists(channel: &Channel, database_name: &str, instanc
         .map(|s| s.to_string())
         .collect();
 
-    let mut request = CreateDatabaseRequest::new();
-    request.set_parent(instance_id.to_string());
-    request.set_create_statement(CREATE_DATABASE.to_string());
-    request.set_extra_statements(RepeatedField::from_vec(statements));
+    let request = CreateDatabaseRequest {
+        parent: instance_id.to_string(),
+        create_statement: CREATE_DATABASE.to_string(),
+        extra_statements: vec![statements],
+        ..Default::default()
+    };
     let operation = client
         .create_database(&request)
         .expect("Failed to create database");
     dbg!(operation.clone());
 
     // check that operation is finished
-    wait_operation_finished(&channel, operation.get_name());
+    wait_operation_finished(&channel, &operation.name);
 }
 
 /// Deletes a given database
@@ -134,8 +142,10 @@ fn drop_database(
     println!("Drop database {}", database_name);
     let client = DatabaseAdminClient::new(channel.clone());
 
-    let mut request = DropDatabaseRequest::new();
-    request.set_database(database_name.to_string());
+    let request = DropDatabaseRequest {
+        database: database_name.to_string(),
+        ..Default::default()
+    };
 
     client.drop_database_async(&request)
 }
@@ -143,8 +153,10 @@ fn drop_database(
 /// Create a new session to communicate with Spanner
 ///
 fn create_session(client: &SpannerClient, database_name: &str) -> ::grpcio::Result<Session> {
-    let mut request = CreateSessionRequest::new();
-    request.set_database(database_name.to_string());
+    let request = CreateSessionRequest {
+        database: database_name.to_string(),
+        ..Default::default()
+    };
     let mut meta = MetadataBuilder::new();
     meta.add_str("google-cloud-resource-prefix", database_name)
         .expect("Failed to set meta data");
@@ -194,11 +206,15 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // insert data into database by using a transaction
     let client = SpannerClient::new(channel);
-    let mut request = BeginTransactionRequest::new();
-    let mut read_write = TransactionOptions::new();
-    read_write.set_read_write(TransactionOptions_ReadWrite::new());
-    request.set_session(session.get_name().to_string());
-    request.set_options(read_write);
+    let read_write = TransactionOptions {
+        mode: Some(Mode::ReadWrite(ReadWrite::default())),
+        ..Default::default()
+    };
+    let request = BeginTransactionRequest {
+        session: session.name.to_string(),
+        options: MessageField::from(Some(read_write)),
+        ..Default::default()
+    };
     let transaction = client.begin_transaction(&request)?;
 
     // the list of singers to add
@@ -245,28 +261,43 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut last_name = Value::new();
         last_name.set_string_value(singer.last_name.clone());
 
-        let mut list = ListValue::new();
-        list.set_values(RepeatedField::from_vec(vec![id, first_name, last_name]));
+        let list = ListValue {
+            values: vec![id, first_name, last_name],
+            ..Default::default()
+        };
         list_values.push(list);
     }
 
     // create a suitable mutation with all values
     println!("Preparing write mutation to add singers");
+    /*
     let mut mutation_write = Mutation_Write::new();
     mutation_write.set_table("Singers".to_string());
     mutation_write.set_columns(RepeatedField::from_vec(columns));
     mutation_write.set_values(RepeatedField::from_vec(list_values));
     println!("Mutation write object");
     dbg!(mutation_write.clone());
-
+    */
+    let mutation_write = Write {
+        table: "Singers".to_string(),
+        columns,
+        values: list_values,
+        ..Default::default()
+    };
     // finally commit to database
     println!("Commit data to database {}", database_name);
-    let mut commit = CommitRequest::new();
-    commit.set_transaction_id(transaction.get_id().to_vec());
-    commit.set_session(session.get_name().to_string());
     let mut mutation = Mutation::new();
     mutation.set_insert_or_update(mutation_write);
-    commit.set_mutations(RepeatedField::from_vec(vec![mutation]));
+    let commit = CommitRequest {
+        session: session.name.clone(),
+        mutations: vec![mutation],
+        transaction: Some(
+            google_cloud_rust_raw::spanner::v1::spanner::commit_request::Transaction::TransactionId(
+                transaction.id,
+            ),
+        ),
+        ..Default::default()
+    };
     let response = client.commit(&commit)?;
     dbg!(response);
 

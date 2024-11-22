@@ -1,7 +1,6 @@
 // @generated
-
 use crate::{
-    api::distribution as distribution_ex, // For Distribution::Exemplar
+    api::{annotations, client, distribution as api_distribution},
     logging::r#type::log_severity,
     rpc::status,
 };

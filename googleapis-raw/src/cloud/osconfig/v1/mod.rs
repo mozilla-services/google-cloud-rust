@@ -1,12 +1,9 @@
+// @generated
 use crate::{
+    api::{annotations, client, field_behavior, resource},
     empty,
     longrunning::operations,
-    r#type::{
-        date,
-        datetime,
-        dayofweek,
-        timeofday,
-    },
+    r#type::{date, datetime, dayofweek, timeofday},
 };
 
 pub mod inventory;

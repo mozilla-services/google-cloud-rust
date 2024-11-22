@@ -24,17 +24,19 @@ use google_cloud_rust_raw::pubsub::v1::{
     pubsub::Topic, pubsub_grpc::PublisherClient, pubsub_grpc::SubscriberClient,
 };
 use grpcio::{Channel, ChannelBuilder, ChannelCredentials, ClientUnaryReceiver, EnvBuilder};
-use protobuf::RepeatedField;
+use protobuf::{well_known_types::duration::Duration, MessageField};
 
 /// Creates a topic or finds an existing one, then returns the topic
 ///
 fn find_or_create_topic(client: &PublisherClient, topic_name: &str) -> ::grpcio::Result<Topic> {
     // find topic
     println!("Finding topic {}", topic_name);
-    let mut request = GetTopicRequest::new();
-    request.set_topic(topic_name.to_string());
+    let request = GetTopicRequest {
+        topic: topic_name.to_string(),
+        ..Default::default()
+    };
     if let Ok(topic) = client.get_topic(&request) {
-        println!("Found topic: {}", topic.get_name());
+        println!("Found topic: {}", topic.name);
         return Ok(topic);
     } else {
         println!("Topic not found");
@@ -44,9 +46,11 @@ fn find_or_create_topic(client: &PublisherClient, topic_name: &str) -> ::grpcio:
     println!("Creating topic {}", topic_name);
     let mut labels = HashMap::new();
     labels.insert("environment".to_string(), "test".to_string());
-    let mut topic = Topic::new();
-    topic.set_name(topic_name.to_string());
-    topic.set_labels(labels);
+    let topic = Topic {
+        name: topic_name.to_string(),
+        labels,
+        ..Default::default()
+    };
     client.create_topic(&topic)
 }
 
@@ -62,10 +66,12 @@ fn find_or_create_subscription(
         "Finding subscription {} for topic {}",
         subscription_name, topic_name
     );
-    let mut request = GetSubscriptionRequest::new();
-    request.set_subscription(subscription_name.to_string());
+    let request = GetSubscriptionRequest {
+        subscription: subscription_name.to_string(),
+        ..Default::default()
+    };
     if let Ok(subscription) = client.get_subscription(&request) {
-        println!("Found subscription: {}", subscription.get_name());
+        println!("Found subscription: {}", subscription.name);
         return Ok(subscription);
     } else {
         println!("Subscription not found");
@@ -77,16 +83,26 @@ fn find_or_create_subscription(
     labels.insert("environment".to_string(), "test".to_string());
     let mut attributes = HashMap::new();
     attributes.insert("attribute".to_string(), "hello".to_string());
-    let mut push_config = PushConfig::new();
-    let mut expiration_policy = ExpirationPolicy::new();
-    let mut expiration_duration = protobuf::well_known_types::Duration::new();
-    let mut subscription = Subscription::new();
-    push_config.set_attributes(attributes);
-    expiration_duration.set_seconds(60 * 60 * 48);
-    expiration_policy.set_ttl(expiration_duration);
-    subscription.set_name(subscription_name.to_string());
-    subscription.set_topic(topic_name.to_string());
-    subscription.set_ack_deadline_seconds(20);
+    let expiration_duration = Duration {
+        seconds: (60 * 60 * 48),
+        ..Default::default()
+    };
+    let expiration_policy = ExpirationPolicy {
+        ttl: protobuf::MessageField(Some(Box::new(expiration_duration))),
+        ..Default::default()
+    };
+    let push_config = PushConfig {
+        attributes,
+        ..Default::default()
+    };
+    let subscription = Subscription {
+        name: subscription_name.to_string(),
+        topic: topic_name.to_string(),
+        ack_deadline_seconds: 20,
+        expiration_policy: MessageField(Some(Box::new(expiration_policy))),
+        push_config: MessageField(Some(Box::new(push_config))),
+        ..Default::default()
+    };
     // subscription.set_expiration_policy(expiration_policy);
     // subscription.set_message_retention_duration(expiration_duration.clone());
     // subscription.set_push_config(push_config);
@@ -106,12 +122,16 @@ fn timestamp_in_seconds() -> u64 {
 ///
 fn create_pubsub_msg(message: &str) -> PubsubMessage {
     println!("Publishing message: {}", message);
-    let mut timestamp = ::protobuf::well_known_types::Timestamp::new();
-    timestamp.set_seconds(timestamp_in_seconds() as i64);
+    let timestamp = ::protobuf::well_known_types::timestamp::Timestamp {
+        seconds: timestamp_in_seconds() as i64,
+        ..Default::default()
+    };
 
-    let mut pubsub_msg = PubsubMessage::new();
-    pubsub_msg.set_data(message.to_string().into_bytes());
-    pubsub_msg.set_publish_time(timestamp);
+    let pubsub_msg = PubsubMessage {
+        data: message.to_owned().into_bytes(),
+        publish_time: protobuf::MessageField(Some(Box::new(timestamp))),
+        ..Default::default()
+    };
     pubsub_msg
 }
 
@@ -124,9 +144,11 @@ fn publish_msg_async(
 ) -> ::grpcio::Result<ClientUnaryReceiver<PublishResponse>> {
     let pub_messages = messages.iter().map(|msg| create_pubsub_msg(msg)).collect();
 
-    let mut request = PublishRequest::new();
-    request.set_topic(topic.get_name().to_string());
-    request.set_messages(RepeatedField::from_vec(pub_messages));
+    let request = PublishRequest {
+        topic: topic.name.to_string(),
+        messages: pub_messages,
+        ..Default::default()
+    };
     client.publish_async(&request)
 }
 
@@ -179,23 +201,27 @@ async fn async_main() {
 
     // Pubsub Subscription Pull, receive all messages
     println!("Pulling messages from subscription {:?}", subscription);
-    let mut request = PullRequest::new();
-    request.set_subscription(subscription_name.to_string());
-    request.set_max_messages(10);
+    let request = PullRequest {
+        subscription: subscription_name.to_string(),
+        max_messages: 10,
+        ..Default::default()
+    };
 
     loop {
         let future = subscriber.pull_async(&request).unwrap();
         let response = future.await.unwrap();
-        let pubsub_messages = response.get_received_messages();
+        let pubsub_messages = response.received_messages;
 
         println!("Handling {} messages", pubsub_messages.len());
-        for pubsub_message in pubsub_messages {
+        for pubsub_message in pubsub_messages.clone() {
             println!("  >> message: {:?}", pubsub_message);
-            let ack_id = pubsub_message.get_ack_id().to_string();
+            let ack_id = pubsub_message.ack_id;
 
-            let mut request = AcknowledgeRequest::new();
-            request.set_subscription(subscription_name.to_string());
-            request.set_ack_ids(RepeatedField::from_vec(vec![ack_id]));
+            let request = AcknowledgeRequest {
+                subscription: subscription_name.clone(),
+                ack_ids: vec![ack_id],
+                ..Default::default()
+            };
             subscriber.acknowledge(&request).unwrap();
         }
 

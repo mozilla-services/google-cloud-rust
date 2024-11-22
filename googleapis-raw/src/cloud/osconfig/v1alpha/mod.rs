@@ -1,6 +1,8 @@
+// @generated
 use crate::{
-    r#type::date,
+    api::{annotations, client, field_behavior, resource},
     longrunning::operations,
+    r#type::date,
 };
 
 pub mod config_common;
